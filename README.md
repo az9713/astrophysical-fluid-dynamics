@@ -23,7 +23,7 @@ names the source and gives the ratio.
 | # | Module | Status |
 |---|---|---|
 | 1 | **Why a Fluid at All?** — mean free path, the Coulomb logarithm, the Knudsen number, and the systems where the continuum picture fails | ready |
-| 2 | Continuity, Euler, Navier–Stokes, energy — moments of the Boltzmann equation; Lagrangian against Eulerian derivative | planned |
+| 2 | **Continuity, Euler, Navier–Stokes, energy** — moments of the Boltzmann equation, the closure gap, the Lagrangian against the Eulerian derivative | ready |
 | 3 | Hydrostatic equilibrium — scale height, polytropes, the Lane–Emden equation | planned |
 | 4 | Sound waves and linear perturbation theory — the method every later instability reuses | planned |
 
@@ -90,9 +90,23 @@ python splice.py ../module01.html
 python m01_problems_check.py   # verifies every problem-set answer
 ```
 
-`m01_numbers.py` prints a PUNCHLINE line for each comparison against a published
-value. Module 1's anchor result is a first-principles Coulomb mean free path of
-22.5 kpc against Sarazin (1988)'s published 23 kpc, a ratio of 0.978.
+Each module has the same four scripts, with `m02_` in place of `m01_` and so on.
+Every numbers script prints a PUNCHLINE line for each comparison against a
+published value.
+
+Module 1's anchor result is a first-principles Coulomb mean free path of 22.5 kpc
+against Sarazin (1988)'s published 23 kpc, a ratio of 0.978.
+
+Module 2's anchor is sharper, because it tests an exact conservation law
+rather than a coefficient. Steady spherically symmetric continuity requires
+that the radial exponents of solar wind density and speed, n ∝ r^−α and
+v ∝ r^+β, satisfy α − β = 2 exactly. Venzmer & Bothmer (2018) fitted the two
+exponents independently to Helios data, with no continuity constraint imposed
+on the fitting; their mean fits give 1.961 and their median fits 2.035,
+bracketing the prediction with a midpoint of 1.998. The same table breaks the
+adiabatic energy equation, whose predicted temperature exponent of −1.340 sits
+19.6 standard deviations from the measured −0.792 — the wind is heated as it
+expands.
 
 ## Sources checked against so far
 
@@ -103,6 +117,9 @@ value. Module 1's anchor result is a first-principles Coulomb mean free path of
   proton density and temperature at 1 AU.
 - Binney & Tremaine (2008), eq. 1.38 — the two-body relaxation time.
 - Maxwell (1867), Phil. Trans. 157, 49 — viscosity independent of density.
+- Venzmer & Bothmer (2018), A&A 611, A36 — radial power-law fits to Helios 1 and
+  2 solar wind data over 0.29–0.98 AU: density, speed and temperature exponents.
+- Verscharen, Bale & Velli (2021), MNRAS 506, 4993 — solar wind mass flux at 1 AU.
 
 ## Licence
 
