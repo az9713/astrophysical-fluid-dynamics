@@ -1,0 +1,8 @@
+# Local working files, not part of the textbook
+HANDOFF.md
+.ignore/
+
+# Scratch renders written by the check scripts
+afd/figs/_*
+__pycache__/
+*.pyc

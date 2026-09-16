@@ -1,0 +1,51 @@
+<svg class="setupfig" viewBox="0 0 760 352" width="100%" role="img" aria-label="logarithmic Knudsen number axis with astrophysical systems and fluid-model validity regimes">
+<rect x="60.0" y="110" width="480.0" height="32" fill="#2dd4bf" fill-opacity="0.22" stroke="#2dd4bf" stroke-opacity="0.55" stroke-width="1"/>
+<rect x="540.0" y="110" width="40.0" height="32" fill="#a78bfa" fill-opacity="0.22" stroke="#a78bfa" stroke-opacity="0.55" stroke-width="1"/>
+<rect x="580.0" y="110" width="80.0" height="32" fill="#facc15" fill-opacity="0.22" stroke="#facc15" stroke-opacity="0.55" stroke-width="1"/>
+<rect x="660.0" y="110" width="40.0" height="32" fill="#f87171" fill-opacity="0.22" stroke="#f87171" stroke-opacity="0.55" stroke-width="1"/>
+<text x="300" y="131" font-size="11.5" text-anchor="middle" fill="#2dd4bf">Euler: ideal fluid</text>
+<rect x="60" y="31" width="16" height="11" fill="#a78bfa" fill-opacity="0.35" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="1"/>
+<text x="82" y="40" font-size="11" fill="#a78bfa">Navier–Stokes: first-order transport   <tspan fill="#94a3b8">(Kn = 10⁻²–10⁻¹)</tspan></text>
+<rect x="60" y="48" width="16" height="11" fill="#facc15" fill-opacity="0.35" stroke="#facc15" stroke-opacity="0.7" stroke-width="1"/>
+<text x="82" y="57" font-size="11" fill="#facc15">transition: no closed fluid closure   <tspan fill="#94a3b8">(Kn = 10⁻¹–10¹)</tspan></text>
+<rect x="60" y="65" width="16" height="11" fill="#f87171" fill-opacity="0.35" stroke="#f87171" stroke-opacity="0.7" stroke-width="1"/>
+<text x="82" y="74" font-size="11" fill="#f87171">free molecular   <tspan fill="#94a3b8">(Kn ≥ 10¹)</tspan></text>
+<line x1="60.0" y1="150.0" x2="700.0" y2="150.0" stroke="#94a3b8" stroke-width="1.6"/>
+<line x1="60.0" y1="145" x2="60.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="60.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻¹⁴</text>
+<line x1="140.0" y1="145" x2="140.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="140.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻¹²</text>
+<line x1="220.0" y1="145" x2="220.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="220.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻¹⁰</text>
+<line x1="300.0" y1="145" x2="300.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="300.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻⁸</text>
+<line x1="380.0" y1="145" x2="380.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="380.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻⁶</text>
+<line x1="460.0" y1="145" x2="460.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="460.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻⁴</text>
+<line x1="540.0" y1="145" x2="540.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="540.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻²</text>
+<line x1="620.0" y1="145" x2="620.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="620.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁰</text>
+<line x1="700.0" y1="145" x2="700.0" y2="155" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="700.0" y="168" font-size="10.5" text-anchor="middle" fill="#94a3b8">10²</text>
+<line x1="245.8" y1="158" x2="245.8" y2="194.0" stroke="#fb923c" stroke-width="1.1" stroke-opacity="0.8"/>
+<circle cx="245.8" cy="150" r="4" fill="#fb923c" stroke="#0f172a" stroke-width="1"/>
+<text x="238.8" y="198.0" font-size="11.5" text-anchor="end" fill="#f8fafc">solar photosphere  <tspan font-size="9.5" fill="#94a3b8">λ = 66 µm, L = 150 km</tspan></text>
+<line x1="314.2" y1="158" x2="314.2" y2="218.0" stroke="#fb923c" stroke-width="1.1" stroke-opacity="0.8"/>
+<circle cx="314.2" cy="150" r="4" fill="#fb923c" stroke="#0f172a" stroke-width="1"/>
+<text x="307.2" y="222.0" font-size="11.5" text-anchor="end" fill="#f8fafc">room air  <tspan font-size="9.5" fill="#94a3b8">λ = 68 nm, L = 3 m</tspan></text>
+<line x1="412.5" y1="158" x2="412.5" y2="242.0" stroke="#fb923c" stroke-width="1.1" stroke-opacity="0.8"/>
+<circle cx="412.5" cy="150" r="4" fill="#fb923c" stroke="#0f172a" stroke-width="1"/>
+<text x="405.5" y="246.0" font-size="11.5" text-anchor="end" fill="#f8fafc">warm neutral ISM  <tspan font-size="9.5" fill="#94a3b8">λ = 134 AU, L = 100 pc</tspan></text>
+<line x1="513.7" y1="158" x2="513.7" y2="266.0" stroke="#fb923c" stroke-width="1.1" stroke-opacity="0.8"/>
+<circle cx="513.7" cy="150" r="4" fill="#fb923c" stroke="#0f172a" stroke-width="1"/>
+<text x="506.7" y="270.0" font-size="11.5" text-anchor="end" fill="#f8fafc">intracluster medium, core  <tspan font-size="9.5" fill="#94a3b8">λ = 0.2 kpc, L = 100 kpc</tspan></text>
+<line x1="581.9" y1="158" x2="581.9" y2="290.0" stroke="#fb923c" stroke-width="1.1" stroke-opacity="0.8"/>
+<circle cx="581.9" cy="150" r="4" fill="#fb923c" stroke="#0f172a" stroke-width="1"/>
+<text x="574.9" y="294.0" font-size="11.5" text-anchor="end" fill="#f8fafc">intracluster medium, outskirts  <tspan font-size="9.5" fill="#94a3b8">λ = 222 kpc, L = 2 Mpc</tspan></text>
+<line x1="631.5" y1="158" x2="631.5" y2="314.0" stroke="#fb923c" stroke-width="1.1" stroke-opacity="0.8"/>
+<circle cx="631.5" cy="150" r="4" fill="#fb923c" stroke="#0f172a" stroke-width="1"/>
+<text x="624.5" y="318.0" font-size="11.5" text-anchor="end" fill="#f8fafc">solar wind at 1 AU  <tspan font-size="9.5" fill="#94a3b8">λ = 1.9 AU, L = 1 AU</tspan></text>
+<text x="380" y="340" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Knudsen number Kn = λ / L</text>
+</svg>

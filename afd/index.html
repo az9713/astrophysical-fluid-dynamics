@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Astrophysical Fluid Dynamics</title>
+<style>
+  :root{ --bg:#0f172a; --box:#1e293b; --fg:#e2e8f0; --fg2:#cbd5e1;
+         --muted:#94a3b8; --accent:#fb923c; --accent2:#2dd4bf; --rule:#334155; }
+  html{ background:var(--bg); -webkit-text-size-adjust:100%; }
+  body{ max-width:52rem; margin:2.5rem auto; padding:0 1.25rem 6rem;
+        font:16px/1.7 Georgia,'Times New Roman',serif; color:var(--fg); background:var(--bg); }
+  h1{ font-size:2rem; color:#f8fafc; margin:.2rem 0; }
+  h2{ font-size:1.2rem; margin:2.2rem 0 .5rem; color:#f8fafc;
+      border-bottom:2px solid var(--accent); padding-bottom:.2rem; }
+  .sub{ color:var(--muted); font-style:italic; margin-top:0; }
+  a{ color:var(--accent2); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  ol{ list-style:none; counter-reset:m; padding-left:0; }
+  li{ counter-increment:m; margin:.55rem 0; padding-left:2.6rem; position:relative; }
+  li::before{ content:counter(m) "."; position:absolute; left:0; width:2rem;
+              text-align:right; color:var(--accent); font-weight:bold; }
+  li.todo{ color:var(--muted); }
+  li.todo::before{ color:var(--rule); }
+  .tag{ font-size:.75rem; letter-spacing:.04em; text-transform:uppercase;
+        border:1px solid var(--accent2); color:var(--accent2);
+        border-radius:3px; padding:.05rem .35rem; margin-left:.5rem; }
+  .desc{ display:block; font-size:.9rem; color:var(--muted); }
+  .note{ background:var(--box); border:1px solid var(--rule); border-radius:6px;
+         padding:.7rem 1rem; font-size:.92rem; color:var(--fg2); }
+</style>
+</head>
+<body>
+
+<h1>Astrophysical Fluid Dynamics</h1>
+<p class="sub">One field, four equations, and a different regime in every chapter. Final-year undergraduate to first-year graduate level; derivations shown in full.</p>
+
+<div class="note">
+Each module follows the same three-part shape: derive the terrestrial result, change the regime to the astrophysical one, then check the answer against a measured astronomical number. Numbers compared with published values are named at the point of use; numbers used as inputs carry a provenance note.
+</div>
+
+<h2>Foundations</h2>
+<ol>
+<li><a href="module01.html">Why a Fluid at All?</a><span class="tag">ready</span>
+  <span class="desc">Mean free path, the Coulomb logarithm, the Knudsen number, and the systems where the continuum picture fails.</span></li>
+<li class="todo">Continuity, Euler, Navier–Stokes, energy
+  <span class="desc">Moments of the Boltzmann equation; Lagrangian against Eulerian derivative.</span></li>
+<li class="todo">Hydrostatic equilibrium
+  <span class="desc">Scale height, polytropes, the Lane–Emden equation. Why a star does not collapse.</span></li>
+<li class="todo">Sound waves and linear perturbation theory
+  <span class="desc">The method every later instability reuses.</span></li>
+</ol>
+
+<h2>Instability</h2>
+<ol start="5" style="counter-reset:m 4">
+<li class="todo">Jeans instability
+  <span class="desc">Gravity against pressure; the Jeans mass; the Jeans swindle stated openly, then repaired.</span></li>
+<li class="todo">Convection and thermal instability
+  <span class="desc">Schwarzschild and Field criteria; the multiphase interstellar medium.</span></li>
+<li class="todo">Rayleigh–Taylor and Kelvin–Helmholtz
+  <span class="desc">Supernova ejecta fingers; shredded clouds.</span></li>
+</ol>
+
+<h2>Shocks and flows</h2>
+<ol start="8" style="counter-reset:m 7">
+<li class="todo">Shocks and the Sedov–Taylor blast wave
+  <span class="desc">Rankine–Hugoniot jump conditions; the strong-shock limit; a remnant radius checked against observation.</span></li>
+<li class="todo">Bondi accretion and the Parker wind
+  <span class="desc">One critical-point calculation, the velocity sign reversed. Taught as one module.</span></li>
+<li class="todo">Turbulence
+  <span class="desc">Kolmogorov in the laboratory; the steeper supersonic spectrum of the interstellar medium.</span></li>
+</ol>
+
+<h2>Where the field gets hard</h2>
+<ol start="11" style="counter-reset:m 10">
+<li class="todo">Accretion discs
+  <span class="desc">Angular momentum transport and the Shakura–Sunyaev prescription, with the timescale gap that forces it.</span></li>
+<li class="todo">Magnetohydrodynamics
+  <span class="desc">Flux freezing, magnetic pressure and tension, Alfvén waves, and the magnetorotational instability.</span></li>
+<li class="todo">Radiation hydrodynamics
+  <span class="desc">The Eddington limit; radiation pressure; optically thick and thin regimes.</span></li>
+<li class="todo">Numerics
+  <span class="desc">Grid against smoothed-particle hydrodynamics; the Courant condition; which earlier results came from a simulation.</span></li>
+</ol>
+
+<p class="sub" style="margin-top:2.5rem">Figure data and every quoted number are regenerated by the scripts in <code>figs/</code>.</p>
+
+</body>
+</html>
