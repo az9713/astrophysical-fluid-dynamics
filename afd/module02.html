@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Module 2 — Continuity, Euler, Navier–Stokes, Energy | Astrophysical Fluid Dynamics</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags: 'ams' },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js" async></script>
+<style>
+  :root{
+    --bg:#0f172a; --box:#1e293b; --fg:#e2e8f0; --fg2:#cbd5e1;
+    --muted:#94a3b8; --accent:#fb923c; --accent2:#2dd4bf;
+    --rule:#334155; --rule2:#1e293b;
+  }
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{ max-width: 52rem; margin: 2.5rem auto; padding: 0 1.25rem 6rem;
+        font: 16px/1.7 Georgia, 'Times New Roman', serif; color:var(--fg);
+        background:var(--bg); counter-reset: fig; }
+  h1{ font-size: 1.9rem; line-height:1.2; margin:.2rem 0 .2rem; color:#f8fafc; }
+  h2{ font-size:1.35rem; margin:2.6rem 0 .6rem; border-bottom:2px solid var(--accent);
+      padding-bottom:.2rem; color:#f8fafc; }
+  h3{ font-size:1.08rem; margin:1.7rem 0 .4rem; color:var(--accent); }
+  h4{ font-size:1rem; margin:1.2rem 0 .3rem; color:var(--accent2); }
+  .sub{ color:var(--muted); font-style:italic; margin-top:0; }
+  a{ color:var(--accent2); }
+  code{ font-family: ui-monospace,'SFMono-Regular',Consolas,monospace; font-size:.92em;
+        background:#111c33; color:#e2e8f0; padding:.05rem .28rem; border-radius:3px;
+        border:1px solid var(--rule2); }
+  pre{ background:#0b1324; border:1px solid var(--rule); padding:.8rem 1rem; border-radius:5px;
+       overflow:auto; font-size:.84rem; line-height:1.45; color:#e2e8f0; }
+  pre code{ background:none; padding:0; border:none; }
+  .codewrap{ position:relative; }
+  .copybtn{ position:absolute; top:.5rem; right:.5rem; display:inline-flex; align-items:center; gap:.3rem;
+    font:600 .72rem/1 ui-monospace,Consolas,monospace; color:var(--muted);
+    background:var(--box); border:1px solid var(--rule); border-radius:5px; padding:.32rem .5rem; cursor:pointer; }
+  .copybtn:hover{ color:var(--accent); border-color:var(--accent); }
+  .copybtn.copied{ color:var(--accent2); border-color:var(--accent2); }
+  .copybtn svg{ width:13px; height:13px; }
+  .thm,.def,.lem,.prop{ background:var(--box); border-left:4px solid var(--accent);
+      padding:.6rem .9rem; margin:1rem 0; border-radius:0 4px 4px 0; }
+  .def{ border-left-color:var(--accent2); }
+  .thm b,.lem b,.prop b{ color:var(--accent); }
+  .def b{ color:var(--accent2); }
+  .proof{ border-left:2px solid var(--rule); padding-left:.9rem; margin:.8rem 0 1.2rem; color:var(--fg2); }
+  .proof::before{ content:"Proof."; font-style:italic; font-weight:bold; margin-right:.4rem; color:var(--muted); }
+  .qed{ float:right; color:var(--accent); }
+  table{ border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+  th,td{ border:1px solid var(--rule); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+  th{ background:var(--box); color:#f8fafc; }
+  figure{ margin:1.6rem 0; text-align:center; counter-increment: fig; }
+  figcaption{ color:var(--muted); font-size:.9rem; font-style:italic; margin-top:.4rem; text-align:left; }
+  figcaption::before{ content:"Fig. " counter(fig) ". "; font-weight:bold; font-style:normal; color:var(--accent); }
+  .proof figure,.thm figure,.lem figure,.prop figure{ margin:.2rem auto .7rem; max-width:480px;
+      background:var(--bg); border:1px solid var(--rule); border-radius:5px; padding:.4rem; }
+  .proof figcaption,.thm figcaption,.lem figcaption,.prop figcaption{ font-size:.8rem; line-height:1.45; }
+  .setupfig{ display:block; }
+  .setupfig text{ paint-order:stroke; stroke:#0f172a; stroke-width:3px; stroke-linejoin:round; }
+  .setupfig text.onfill{ stroke:none; }
+  figure svg text{ font-family:"STIX Two Math",STIXGeneral,"Times New Roman",Georgia,serif; fill:#cbd5e1; }
+  figure svg text.v{ font-style:italic; }
+  figure svg text.vb{ font-weight:bold; }
+  .secref{ color:var(--accent); text-decoration:none; border-bottom:1px dotted #9a6a3a; }
+  .secref:hover{ border-bottom:1px solid var(--accent); }
+  .toc{ background:var(--box); padding:.8rem 1.2rem; border-radius:6px; font-size:.95rem; border:1px solid var(--rule); }
+  .toc ul{ list-style:none; padding-left:.3rem; margin:.3rem 0; }
+  .toc a{ color:var(--accent2); text-decoration:none; }
+  .toc a:hover{ text-decoration:underline; }
+  .small{ font-size:.88rem; color:var(--muted); }
+  hr{ border:none; border-top:1px solid var(--rule); margin:2.5rem 0; }
+  .keyresult{ background:#2a2410; border:1px solid #6b5a1f; padding:.5rem .9rem; border-radius:4px; color:#fde68a; }
+  .prov{ display:block; border-left:3px solid #c08a00; padding:.15rem .7rem;
+         margin:.5rem 0; font-size:.94em; color:var(--muted); }
+  .prov::before{ content:"provenance — "; font-variant:small-caps; letter-spacing:.04em; color:#d4a017; }
+  .warn{ display:block; border-left:3px solid #f87171; background:#2a1414; padding:.4rem .8rem;
+         margin:.8rem 0; font-size:.95em; color:#fecaca; border-radius:0 4px 4px 0; }
+  .prob{ background:var(--box); border:1px solid var(--rule); border-radius:5px;
+         padding:.6rem .9rem; margin:.9rem 0; }
+  .prob b{ color:var(--accent); }
+  details.sol{ margin-top:.5rem; }
+  details.sol summary{ cursor:pointer; color:var(--accent2); font-size:.9rem; }
+  details.sol > div{ border-top:1px solid var(--rule); margin-top:.5rem; padding-top:.5rem; color:var(--fg2); }
+</style>
+</head>
+<body>
+
+<h1>Module 2 — Continuity, Euler, Navier–Stokes, Energy</h1>
+<p class="sub">Taking moments of the Boltzmann equation: how six dimensions become four, why the procedure never closes on its own, and a measured flow that tests the first equation to two per cent while breaking the third by forty.</p>
+
+<div class="toc">
+<b>Contents</b>
+<ul>
+<li><b>1.</b> <a href="#problem">The problem: five fields, and a function of seven variables</a></li>
+<li><b>2.</b> <a href="#moments">The moments of a distribution function</a></li>
+<li><b>3.</b> <a href="#invariants">Why there are exactly five exact equations</a></li>
+<li><b>4.</b> <a href="#transfer">The general moment equation, and the gap it leaves</a></li>
+<li><b>5.</b> <a href="#continuity">Mass: the continuity equation</a></li>
+<li><b>6.</b> <a href="#lagrange">Following the parcel: the Lagrangian derivative</a></li>
+<li><b>7.</b> <a href="#momentum">Momentum: Cauchy, Euler, Navier–Stokes</a></li>
+<li><b>8.</b> <a href="#energy">Energy, and the three forms it takes</a></li>
+<li><b>9.</b> <a href="#closure">The closure problem, and the licence to use Euler</a></li>
+<li><b>10.</b> <a href="#solarwind">The check: does a measured flow obey these equations?</a></li>
+<li><b>11.</b> <a href="#limits">What this model captures, and what it misses</a></li>
+<li><b>12.</b> <a href="#problems">Problems</a></li>
+<li><b>—</b> <a href="#notation">Notation</a> · <a href="#sources">Sources</a></li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="problem">1. The problem: five fields, and a function of seven variables</h2>
+
+<p>Module 1 ended by licensing the fluid description. It established that in almost every astrophysical gas the mean free path is very much shorter than the structure of interest, that collisions therefore hold the local velocity distribution close to a Maxwellian, and that the fraction by which the true distribution departs from that Maxwellian is of order the Knudsen number. It closed with the sentence: <em>Module 2 writes the equations down.</em> This module does that.</p>
+
+<p>The starting point is the object Module 1 introduced but never solved for. A gas of identical particles of mass $m$ is described completely by its distribution function $f(\mathbf{x},\mathbf{v},t)$, which obeys the Boltzmann equation, equation (2.1) of Module 1:</p>
+
+$$ \frac{\partial f}{\partial t} \;+\; \mathbf{v}\cdot\nabla_{\mathbf{x}} f \;+\; \mathbf{a}\cdot\nabla_{\mathbf{v}} f \;=\; \left(\frac{\partial f}{\partial t}\right)_{\!\mathrm{coll}}. \tag{1.1}$$
+
+<p>Here $\mathbf{x}$ is position, $\mathbf{v}$ is particle velocity, $t$ is time, and $\mathbf{a}$ is the acceleration produced by any smooth external force, gravity in most of this book. The right-hand side is the collision term, which we will write $C[f]$ from now on.</p>
+
+<p>This is a complete description and it is almost useless. The unknown $f$ is a function of seven independent variables — three of position, three of velocity, one of time — and the collision term is a five-fold integral over the velocities of colliding pairs. Nobody solves (1.1) for a star.</p>
+
+<p>What we want instead is a description in terms of quantities a telescope could in principle measure: a mass density $\rho(\mathbf{x},t)$, a bulk velocity $\mathbf{u}(\mathbf{x},t)$ with three components, and a temperature $T(\mathbf{x},t)$. That is five scalar fields over four variables rather than one field over seven. The reduction is enormous, and it is not free.</p>
+
+<p>The procedure that performs it is called <em>taking moments</em>. Multiply (1.1) by a function of velocity and integrate over all velocities; what survives is an equation among the reduced fields. Doing this with the three quantities that a collision cannot change produces exactly the four equations this module is named after. The cost appears immediately and never goes away: <strong>each moment equation contains the next moment</strong>, so the set of equations is never closed by itself. Closing it requires an extra assumption, and the quality of that assumption is what separates the Euler equations from the Navier–Stokes equations.</p>
+
+<p>The route is as follows. <a class="secref" href="#moments">§2</a> defines the moments and the fields they produce. <a class="secref" href="#invariants">§3</a> proves that exactly five of them obey exact equations, and explains why there are five and not six. <a class="secref" href="#transfer">§4</a> derives the general moment equation and exhibits the gap. <a class="secref" href="#continuity">§5</a> to <a class="secref" href="#energy">§8</a> work out the three cases: mass, momentum and energy. <a class="secref" href="#closure">§9</a> closes the system and states what licence we have to do so. <a class="secref" href="#solarwind">§10</a> takes the first of the resulting equations to a measured astronomical flow and checks it.</p>
+
+<h2 id="moments">2. The moments of a distribution function</h2>
+
+<p>Every fluid variable in this book is an average over the local velocity distribution. This section defines them once, with their units, so that no later equation contains an undefined symbol.</p>
+
+<div class="def"><b>Definition 1 (distribution function).</b> $f(\mathbf{x},\mathbf{v},t)\,d^3x\,d^3v$ is the number of particles at time $t$ occupying the volume $d^3x$ about $\mathbf{x}$ and the velocity-space volume $d^3v$ about $\mathbf{v}$. Its units are $\mathrm{cm^{-6}\,s^{3}}$, and it is non-negative.</div>
+
+<div class="def"><b>Definition 2 (velocity average).</b> For any function $\psi(\mathbf{x},\mathbf{v},t)$, the local average is
+$$ \langle \psi\rangle(\mathbf{x},t) \;\equiv\; \frac{1}{n(\mathbf{x},t)}\int \psi\, f\, d^3v, \qquad n(\mathbf{x},t) \;\equiv\; \int f\, d^3v, \tag{2.1}$$
+in which $n$ is the number density in $\mathrm{cm^{-3}}$ and the integral runs over all of velocity space. The mass density is $\rho \equiv m n$, in $\mathrm{g\,cm^{-3}}$.</div>
+
+<p>The first moment of the velocity itself defines the flow field.</p>
+
+<div class="def"><b>Definition 3 (bulk velocity and peculiar velocity).</b> The bulk velocity is $\mathbf{u} \equiv \langle\mathbf{v}\rangle$, in $\mathrm{cm\,s^{-1}}$. The peculiar velocity of a particle is its departure from the local bulk motion,
+$$ \mathbf{w} \;\equiv\; \mathbf{v}-\mathbf{u}(\mathbf{x},t), \qquad\text{so that}\qquad \langle\mathbf{w}\rangle \;=\; \mathbf{0} \tag{2.2}$$
+identically, by the definition of $\mathbf{u}$.</div>
+
+<p>The distinction between $\mathbf{v}$ and $\mathbf{w}$ is the single most important bookkeeping step in this module. A particle's velocity contains the motion of the gas as a whole plus a random part. Bulk motion carries momentum and kinetic energy from place to place; random motion is what we call pressure and heat. Every fluid equation below is what appears after those two contributions have been separated.</p>
+
+<div class="def"><b>Definition 4 (pressure tensor and scalar pressure).</b> The pressure tensor is the flux of peculiar momentum carried by peculiar motion,
+$$ P_{ij} \;\equiv\; \rho\,\langle w_i w_j\rangle \;=\; m\int w_i w_j\, f\, d^3v, \tag{2.3}$$
+in $\mathrm{dyn\,cm^{-2}}$. It is symmetric, $P_{ij}=P_{ji}$, because $w_iw_j = w_jw_i$. The scalar pressure is one third of its trace,
+$$ p \;\equiv\; \tfrac{1}{3}P_{ii} \;=\; \tfrac{1}{3}\rho\,\langle |\mathbf{w}|^2\rangle, \tag{2.4}$$
+with the repeated index summed, and the kinetic temperature is <em>defined</em> by $p \equiv n k_B T$.</div>
+
+<div class="def"><b>Definition 5 (heat flux).</b> The heat flux is the flux of peculiar kinetic energy carried by peculiar motion,
+$$ \mathbf{q} \;\equiv\; \tfrac{1}{2}\rho\,\langle |\mathbf{w}|^2\,\mathbf{w}\rangle \;=\; \tfrac{1}{2}m\int |\mathbf{w}|^2\,\mathbf{w}\, f\, d^3v, \tag{2.5}$$
+in $\mathrm{erg\,cm^{-2}\,s^{-1}}$.</div>
+
+<p>Two remarks make the later algebra shorter. First, $P_{ij}$ and $\mathbf{q}$ are defined for <em>any</em> $f$, not only a Maxwellian; nothing so far assumes the gas is near equilibrium. Second, if $f$ is the local Maxwellian $f_M$ of Module 1, equation (2.2), then the isotropy of $f_M$ in $\mathbf{w}$ forces $P_{ij}=p\,\delta_{ij}$ and $\mathbf{q}=\mathbf{0}$ exactly, because the integrand of (2.3) with $i\ne j$ and the integrand of (2.5) are both odd in $\mathbf{w}$. This is the fact <a class="secref" href="#closure">§9</a> will lean on.</p>
+
+<p>One identity is used repeatedly and is worth recording now.</p>
+
+<div class="prop"><b>Proposition 1 (equipartition identity).</b> For any distribution function whatsoever,
+$$ \tfrac{1}{2}\rho\,\langle|\mathbf{w}|^2\rangle \;=\; \tfrac{3}{2}p, \tag{2.6}$$
+so the specific internal energy $e \equiv \tfrac{1}{2}\langle|\mathbf{w}|^2\rangle$ satisfies $\rho e = \tfrac{3}{2}p$.</div>
+
+<div class="proof">
+By (2.4), $p=\tfrac{1}{3}\rho\langle|\mathbf{w}|^2\rangle$, so $\rho\langle|\mathbf{w}|^2\rangle = 3p$ and half of it is $\tfrac{3}{2}p$. The result is an identity, not a thermodynamic statement: it follows from the definition of $p$ as one third of the trace of $P_{ij}$ and holds however far $f$ is from equilibrium. What <em>is</em> a physical assumption is the identification $p = nk_BT$ with a thermodynamic temperature, which requires the gas to be close enough to a Maxwellian for the concept to mean anything. Module 1 quantified "close enough" as $\mathrm{Kn}\ll 1$. <span class="qed">∎</span>
+</div>
+
+<p>For a monatomic gas, (2.6) is the statement that the internal energy per particle is $\tfrac{3}{2}k_BT$, one half of $k_BT$ for each of the three translational degrees of freedom. Writing it as $\rho e = p/(\gamma-1)$ with $\gamma=5/3$ is the same statement; <a class="secref" href="#energy">§8</a> uses that form.</p>
+
+<h2 id="invariants">3. Why there are exactly five exact equations</h2>
+
+<p>The moment procedure can be applied with any function $\psi(\mathbf{v})$. It produces an <em>exact</em> equation — one with no residual collision term to model — only for the special functions that a collision leaves unchanged. There are exactly five of them, and that is why there are exactly five conservation laws.</p>
+
+<div class="def"><b>Definition 6 (collision invariant).</b> A function $\psi(\mathbf{v})$ is a collision invariant if, for every binary elastic collision taking a pair of velocities $(\mathbf{v},\mathbf{v}_1)$ to $(\mathbf{v}',\mathbf{v}_1')$,
+$$ \psi(\mathbf{v}) + \psi(\mathbf{v}_1) \;=\; \psi(\mathbf{v}') + \psi(\mathbf{v}_1'). \tag{3.1}$$</div>
+
+<div class="prop"><b>Proposition 2 (the collision term is blind to its invariants).</b> If $\psi$ satisfies (3.1), then for every $f$
+$$ \int \psi(\mathbf{v})\, C[f]\, d^3v \;=\; 0. \tag{3.2}$$
+The collision invariants of a simple gas of structureless particles are exactly the five functions
+$$ \psi \;\in\; \{\,1,\;\; m v_x,\;\; m v_y,\;\; m v_z,\;\; \tfrac{1}{2}m|\mathbf{v}|^2\,\}, \tag{3.3}$$
+and every other invariant is a linear combination of these.</div>
+
+<div class="proof">
+Write the Boltzmann collision term in its standard bilinear form,
+$$ C[f] \;=\; \int\!\!\int \left(f'f_1' - f f_1\right) g\, \sigma(g,\Omega)\, d\Omega\, d^3v_1, $$
+in which $f\equiv f(\mathbf{v})$, $f_1\equiv f(\mathbf{v}_1)$, $f'\equiv f(\mathbf{v}')$, $f_1'\equiv f(\mathbf{v}_1')$, $g=|\mathbf{v}-\mathbf{v}_1|$ is the relative speed, and $\sigma$ is the differential cross-section.
+
+Multiply by $\psi(\mathbf{v})$ and integrate over $\mathbf{v}$. The resulting expression is invariant under three relabellings of the integration variables, each of which leaves the measure $g\,\sigma\,d\Omega\,d^3v\,d^3v_1$ unchanged. Swapping the labels of the two incoming particles, $\mathbf{v}\leftrightarrow\mathbf{v}_1$, is a relabelling of a symmetric double integral. Replacing the collision by its time reverse, $(\mathbf{v},\mathbf{v}_1)\leftrightarrow(\mathbf{v}',\mathbf{v}_1')$, leaves the measure unchanged because elastic collisions are reversible and the Jacobian of the transformation is unity — this is the property of <em>microscopic reversibility</em>, and it is an assumption about the interaction, not a mathematical identity. Averaging the integral over the identity and those three relabellings gives
+
+$$ \int \psi\, C[f]\, d^3v \;=\; \tfrac{1}{4}\int\!\!\int\!\!\int \left(\psi+\psi_1-\psi'-\psi_1'\right)\left(f'f_1'-ff_1\right) g\,\sigma\, d\Omega\, d^3v_1\, d^3v. $$
+
+The first bracket vanishes identically when $\psi$ obeys (3.1), so the whole integral vanishes. That proves (3.2).
+
+For the converse — that (3.3) exhausts the invariants — note that an elastic collision between structureless particles of equal mass conserves exactly the number of particles, the total momentum and the total kinetic energy, and nothing else. Any $\psi$ obeying (3.1) for <em>all</em> collision geometries is therefore a linear combination of $1$, the three components of $m\mathbf{v}$, and $\tfrac{1}{2}m|\mathbf{v}|^2$. The full proof of this last step is Boltzmann's, and is a functional-equation argument; we take it as given. <span class="qed">∎</span>
+</div>
+
+<p>The consequence is worth stating plainly, because it is the structural reason this book has four equations and not five or three. The number of exact fluid conservation laws equals the number of collision invariants. There are five, so there are five: one scalar mass equation, three components of a momentum equation, and one energy equation. Had the particles possessed internal degrees of freedom that collisions could excite, the energy invariant would change form and the adiabatic index would change with it. Had collisions been able to destroy particles, there would be no mass equation.</p>
+
+<p>Choosing any other $\psi$ — the pressure tensor's $\psi = m w_iw_j$, for example — produces an equation with a surviving collision term on the right. Such an equation is not wrong, and Chapman–Enskog theory uses exactly that kind of equation to compute the viscosity. But it is not a conservation law, and it cannot be written down without modelling the collisions.</p>
+
+<h2 id="transfer">4. The general moment equation, and the gap it leaves</h2>
+
+<p>We now perform the moment operation once, in general, and read off the structure of the result. Everything in <a class="secref" href="#continuity">§5</a> to <a class="secref" href="#energy">§8</a> is a special case.</p>
+
+<div class="prop"><b>Proposition 3 (Maxwell's equation of transfer).</b> Let $\psi(\mathbf{v})$ depend on velocity alone and be a collision invariant. Suppose the acceleration field satisfies $\nabla_{\mathbf{v}}\cdot\mathbf{a}=0$ and $f\to 0$ faster than any power of $|\mathbf{v}|$ as $|\mathbf{v}|\to\infty$. Then
+$$ \frac{\partial}{\partial t}\Big(n\langle\psi\rangle\Big) \;+\; \nabla\cdot\Big(n\langle\mathbf{v}\,\psi\rangle\Big) \;=\; n\,\big\langle \mathbf{a}\cdot\nabla_{\mathbf{v}}\psi\big\rangle. \tag{4.1}$$</div>
+
+<div class="proof">
+Multiply the Boltzmann equation (1.1) by $\psi(\mathbf{v})$ and integrate over all velocities, taking the three terms on the left in turn.
+
+The first term. Because $\psi$ does not depend on $t$, the time derivative passes outside the velocity integral:
+$$ \int \psi\,\frac{\partial f}{\partial t}\, d^3v \;=\; \frac{\partial}{\partial t}\int \psi f\, d^3v \;=\; \frac{\partial}{\partial t}\big(n\langle\psi\rangle\big). $$
+
+The second term. Because $\psi$ and $\mathbf{v}$ do not depend on $\mathbf{x}$, and because $\mathbf{x}$ and $\mathbf{v}$ are independent coordinates of phase space, the spatial divergence passes outside as well:
+$$ \int \psi\,\mathbf{v}\cdot\nabla_{\mathbf{x}}f\, d^3v \;=\; \nabla\cdot\int \psi\,\mathbf{v} f\, d^3v \;=\; \nabla\cdot\big(n\langle\mathbf{v}\psi\rangle\big). $$
+
+The third term is the one that does work. Integrate by parts in velocity space:
+$$ \int \psi\,\mathbf{a}\cdot\nabla_{\mathbf{v}}f\, d^3v \;=\; \int \nabla_{\mathbf{v}}\cdot\big(\psi\,\mathbf{a}\,f\big)\, d^3v \;-\; \int f\,\nabla_{\mathbf{v}}\cdot\big(\psi\,\mathbf{a}\big)\, d^3v. $$
+The first integral on the right is the divergence of a vector field over the whole of velocity space, and by the divergence theorem equals a surface integral at $|\mathbf{v}|\to\infty$, which vanishes because $f$ decays faster than any power. In the second integral, $\nabla_{\mathbf{v}}\cdot(\psi\mathbf{a}) = \psi\,\nabla_{\mathbf{v}}\cdot\mathbf{a} + \mathbf{a}\cdot\nabla_{\mathbf{v}}\psi$, and the first piece vanishes by hypothesis. So the third term equals $-n\langle\mathbf{a}\cdot\nabla_{\mathbf{v}}\psi\rangle$, and moving it to the right-hand side gives the sign in (4.1).
+
+The right-hand side of (1.1) contributes $\int\psi\,C[f]\,d^3v$, which is zero by Proposition 2. <span class="qed">∎</span>
+</div>
+
+<p>The hypothesis $\nabla_{\mathbf{v}}\cdot\mathbf{a}=0$ deserves a note, because it is the reason this derivation covers the two forces that matter in this book. For gravity, $\mathbf{a}=\mathbf{g}(\mathbf{x})$ does not depend on $\mathbf{v}$ at all, so its velocity divergence is trivially zero. For the Lorentz force on a charge, $\mathbf{a} = (q/mc)\,\mathbf{v}\times\mathbf{B}$ does depend on $\mathbf{v}$, but $\nabla_{\mathbf{v}}\cdot(\mathbf{v}\times\mathbf{B}) = 0$ because the $i$th component of $\mathbf{v}\times\mathbf{B}$ contains no $v_i$. Magnetohydrodynamics, in Module 12, therefore inherits (4.1) unchanged.</p>
+
+<p>Now read the structure of (4.1). The storage term holds $\langle\psi\rangle$. The flux term holds $\langle\mathbf{v}\psi\rangle$, which contains <em>one further power of velocity</em>. Choose $\psi=m$ and the flux term produces $\mathbf{u}$; choose $\psi=m\mathbf{v}$ and the flux term produces $\langle\mathbf{v}\mathbf{v}\rangle$, from which the pressure tensor emerges; choose $\psi=\tfrac{1}{2}m|\mathbf{v}|^2$ and the flux term produces a third moment, from which the heat flux emerges. Each equation reaches up into the next rung, for ever. Fig. 1 shows the ladder.</p>
+
+<figure>
+<svg class="setupfig" viewBox="0 0 700 316" width="100%" role="img" aria-label="A three-rung ladder. Each rung shows a choice of the weight function psi, the fluid quantity it produces, and the higher moment that appears in its flux term. Arrows run from each rung's flux term to the quantity defined on the rung above, showing that every equation needs the next one. A dashed arrow leaves the top rung and ends in a question mark, marking the point where the hierarchy must be cut.">
+<rect x="26" y="26" width="612" height="62" rx="5" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+<rect x="26" y="116" width="612" height="62" rx="5" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+<rect x="26" y="206" width="612" height="62" rx="5" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+<text x="42" y="50" font-size="12.5" fill="#2dd4bf">energy</text>
+<text x="42" y="68" font-size="11.5" class="v" fill="#94a3b8">ψ = ½m|v|²</text>
+<text x="212" y="50" font-size="12.5" fill="#cbd5e1">gives the energy equation</text>
+<text x="212" y="68" font-size="11.5" class="v" fill="#94a3b8">stores ½u² + e</text>
+<text x="622" y="50" font-size="12.5" text-anchor="end" fill="#fb923c">flux contains q</text>
+<text x="622" y="68" font-size="11.5" text-anchor="end" fill="#94a3b8">the heat flux</text>
+<text x="42" y="140" font-size="12.5" fill="#2dd4bf">momentum</text>
+<text x="42" y="158" font-size="11.5" class="v" fill="#94a3b8">ψ = mv</text>
+<text x="212" y="140" font-size="12.5" fill="#cbd5e1">gives the momentum equation</text>
+<text x="212" y="158" font-size="11.5" class="v" fill="#94a3b8">stores ρu</text>
+<text x="622" y="140" font-size="12.5" text-anchor="end" fill="#fb923c">flux contains P</text>
+<text x="622" y="158" font-size="11.5" text-anchor="end" fill="#94a3b8">the pressure tensor</text>
+<text x="42" y="230" font-size="12.5" fill="#2dd4bf">mass</text>
+<text x="42" y="248" font-size="11.5" class="v" fill="#94a3b8">ψ = m</text>
+<text x="212" y="230" font-size="12.5" fill="#cbd5e1">gives the continuity equation</text>
+<text x="212" y="248" font-size="11.5" class="v" fill="#94a3b8">stores ρ</text>
+<text x="622" y="230" font-size="12.5" text-anchor="end" fill="#fb923c">flux contains u</text>
+<text x="622" y="248" font-size="11.5" text-anchor="end" fill="#94a3b8">the bulk velocity</text>
+<path d="M 566,206 C 596,196 596,188 566,178" fill="none" stroke="#fb923c" stroke-width="1.6" marker-end="url(#m2a1)"/>
+<path d="M 566,116 C 596,106 596,98 566,88" fill="none" stroke="#fb923c" stroke-width="1.6" marker-end="url(#m2a1)"/>
+<path d="M 566,26 C 596,16 610,12 634,12" fill="none" stroke="#f87171" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#m2a2)"/>
+<text x="648" y="16" font-size="17" fill="#f87171">?</text>
+<text x="26" y="296" font-size="11.5" fill="#94a3b8">Each equation's flux term is the quantity stored one rung higher. The top rung has nowhere to reach, so the</text>
+<text x="26" y="311" font-size="11.5" fill="#94a3b8">hierarchy must be cut by hand — that cut is the closure, and the subject of Section 9.</text>
+<defs>
+<marker id="m2a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c"/></marker>
+<marker id="m2a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171"/></marker>
+</defs>
+</svg>
+<figcaption>The moment hierarchy. Taking the moment of the Boltzmann equation with weight $\psi$ produces an equation whose storage term is the average of $\psi$ and whose flux term is the average of $\mathbf{v}\psi$ — one power of velocity higher. Mass needs the velocity, momentum needs the pressure tensor, energy needs the heat flux, and the pattern does not stop. No finite subset of these equations is closed, which is why a closure assumption is unavoidable rather than merely convenient.</figcaption>
+</figure>
+
+<h2 id="continuity">5. Mass: the continuity equation</h2>
+
+<p>Take $\psi = m$, a constant. It is the first entry of (3.3), so Proposition 3 applies.</p>
+
+<div class="prop"><b>Proposition 4 (continuity).</b> For any gas obeying (1.1), whether or not it is close to equilibrium,
+$$ \frac{\partial \rho}{\partial t} \;+\; \nabla\cdot\big(\rho\mathbf{u}\big) \;=\; 0. \tag{5.1}$$</div>
+
+<div class="proof">
+With $\psi=m$: the storage term is $n\langle m\rangle = mn = \rho$; the flux term is $n\langle m\mathbf{v}\rangle = mn\langle\mathbf{v}\rangle = \rho\mathbf{u}$ by Definition 3; and the source term is $n\langle\mathbf{a}\cdot\nabla_{\mathbf{v}}m\rangle=0$ because $m$ is a constant, so its velocity gradient vanishes. Substituting into (4.1) gives (5.1). <span class="qed">∎</span>
+</div>
+
+<p>Three features of this result are worth naming, because they do not survive into the later equations.</p>
+
+<p>First, no approximation was made. Equation (5.1) contains no closure assumption, no expansion in the Knudsen number, and no appeal to a Maxwellian. It is a consequence of counting particles and of the fact that collisions do not create or destroy them. A collisionless plasma obeys it; so does a galaxy, with "density" meaning the mass density of stars. This is why <a class="secref" href="#solarwind">§10</a> can use it as a sharp test: a measured departure from (5.1) would mean the measurement is wrong, or that mass is entering the flow from outside it, and nothing else.</p>
+
+<p>Second, the equation is exact but not closed. It relates two unknowns, $\rho$ and $\mathbf{u}$, and supplies one equation. The momentum equation is needed to determine $\mathbf{u}$.</p>
+
+<p>Third, its structure is the standard form of every conservation law: a rate of change of a stored density, plus the divergence of its flux, equals zero. Integrating (5.1) over a fixed volume $V$ with surface $S$ and applying the divergence theorem gives the statement in its original form,</p>
+
+$$ \frac{d}{dt}\int_V \rho\, d^3x \;=\; -\oint_S \rho\,\mathbf{u}\cdot d\mathbf{S}, \tag{5.2}$$
+
+<p>the mass inside a fixed region changes only by flowing through its boundary.</p>
+
+<h2 id="lagrange">6. Following the parcel: the Lagrangian derivative</h2>
+
+<p>Equation (5.1) is written in the frame of a fixed observer: $\partial\rho/\partial t$ is the rate of change of density at a fixed point in space. That is the <em>Eulerian</em> description. There is a second, equally natural choice — follow a particular parcel of fluid and ask how its properties change as it moves. That is the <em>Lagrangian</em> description, and the equations become substantially easier to interpret in it.</p>
+
+<div class="def"><b>Definition 7 (Lagrangian derivative).</b> The Lagrangian, material, or convective derivative of a field $\phi(\mathbf{x},t)$ is
+$$ \frac{D\phi}{Dt} \;\equiv\; \frac{\partial \phi}{\partial t} \;+\; \big(\mathbf{u}\cdot\nabla\big)\phi. \tag{6.1}$$
+It is the rate of change of $\phi$ measured by an observer carried along with the fluid at velocity $\mathbf{u}$.</div>
+
+<p>The justification is the chain rule. Let $\mathbf{X}(t)$ be the path of a parcel, so $d\mathbf{X}/dt = \mathbf{u}(\mathbf{X}(t),t)$. Then the value of $\phi$ experienced by that parcel is $\phi(\mathbf{X}(t),t)$, and</p>
+
+$$ \frac{d}{dt}\,\phi\big(\mathbf{X}(t),t\big) \;=\; \frac{\partial\phi}{\partial t} \;+\; \frac{d\mathbf{X}}{dt}\cdot\nabla\phi \;=\; \frac{\partial\phi}{\partial t} \;+\; \big(\mathbf{u}\cdot\nabla\big)\phi, \tag{6.2}$$
+
+<p>which is (6.1). The two terms have different physical meanings and it is worth keeping them apart. The first is genuine local change — the gas at this point is getting denser. The second is advection — the gas at this point is not changing, but a denser parcel has arrived from upstream. Fig. 2 shows the distinction with a single flow.</p>
+
+<figure>
+<svg class="setupfig" viewBox="0 0 700 300" width="100%" role="img" aria-label="A steady flow moving left to right through a shaded region that grows denser towards the right. A fixed probe pinned at one point reads a constant value because the pattern does not move. A parcel carried along by the flow, drawn at three successive times, reads a rising value because it travels into the denser region. The two readings differ although the flow is steady.">
+<defs>
+<linearGradient id="m2grad" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#2dd4bf" stop-opacity="0.06"/>
+<stop offset="1" stop-color="#2dd4bf" stop-opacity="0.42"/>
+</linearGradient>
+<marker id="m2fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker>
+<marker id="m2pa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c"/></marker>
+</defs>
+<rect x="60" y="54" width="580" height="150" fill="url(#m2grad)" stroke="#334155" stroke-width="1"/>
+<text x="60" y="44" font-size="12" fill="#2dd4bf">density rises towards the right, and the pattern never moves: ∂ρ/∂t = 0 everywhere</text>
+<line x1="78" y1="88" x2="200" y2="88" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#m2fa)"/>
+<line x1="78" y1="170" x2="200" y2="170" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#m2fa)"/>
+<text x="78" y="79" font-size="11.5" fill="#94a3b8">steady flow u</text>
+<line x1="250" y1="54" x2="250" y2="204" stroke="#facc15" stroke-width="1.6" stroke-dasharray="4 3"/>
+<circle cx="250" cy="129" r="6" fill="#facc15"/>
+<text x="250" y="226" font-size="12" text-anchor="middle" fill="#facc15">fixed probe</text>
+<text x="250" y="242" font-size="11" text-anchor="middle" fill="#94a3b8">reads ∂ρ/∂t = 0</text>
+<text x="250" y="257" font-size="11" text-anchor="middle" fill="#94a3b8">the value never changes</text>
+<circle cx="360" cy="129" r="9" fill="#fb923c" fill-opacity="0.35" stroke="#fb923c" stroke-width="1.5"/>
+<circle cx="470" cy="129" r="9" fill="#fb923c" fill-opacity="0.6" stroke="#fb923c" stroke-width="1.5"/>
+<circle cx="580" cy="129" r="9" fill="#fb923c" fill-opacity="0.9" stroke="#fb923c" stroke-width="1.5"/>
+<line x1="374" y1="129" x2="452" y2="129" stroke="#fb923c" stroke-width="1.4" marker-end="url(#m2pa)"/>
+<line x1="484" y1="129" x2="562" y2="129" stroke="#fb923c" stroke-width="1.4" marker-end="url(#m2pa)"/>
+<text x="360" y="110" font-size="11" text-anchor="middle" fill="#fb923c">t₁</text>
+<text x="470" y="110" font-size="11" text-anchor="middle" fill="#fb923c">t₂</text>
+<text x="580" y="110" font-size="11" text-anchor="middle" fill="#fb923c">t₃</text>
+<text x="470" y="226" font-size="12" text-anchor="middle" fill="#fb923c">one parcel, carried by the flow</text>
+<text x="470" y="242" font-size="11" text-anchor="middle" fill="#94a3b8">reads Dρ/Dt = (u·∇)ρ ≠ 0</text>
+<text x="470" y="257" font-size="11" text-anchor="middle" fill="#94a3b8">it is being compressed as it travels</text>
+<text x="60" y="286" font-size="11.5" fill="#94a3b8">Same flow, two answers. The difference between them is the advection term, and it is the reason the two derivatives need separate names.</text>
+</svg>
+<figcaption>Eulerian against Lagrangian. The flow is steady, so a probe pinned at a fixed point records no change at all: $\partial\rho/\partial t=0$. A parcel carried by the same flow is compressed as it moves into the denser region, so it records $D\rho/Dt=(\mathbf{u}\cdot\nabla)\rho\neq 0$. Neither reading is wrong; they answer different questions. The momentum equation needs the parcel's answer, because Newton's second law applies to a body, not to a point in space.</figcaption>
+</figure>
+
+<p>Rewriting continuity in this language exposes its meaning.</p>
+
+<div class="prop"><b>Proposition 5 (continuity in Lagrangian form).</b> Equation (5.1) is equivalent to
+$$ \frac{D\rho}{Dt} \;=\; -\rho\,\nabla\cdot\mathbf{u}. \tag{6.3}$$
+A flow is called <em>incompressible</em> when $D\rho/Dt=0$, which by (6.3) holds if and only if $\nabla\cdot\mathbf{u}=0$.</div>
+
+<div class="proof">
+Expand the divergence in (5.1) by the product rule: $\nabla\cdot(\rho\mathbf{u}) = \mathbf{u}\cdot\nabla\rho + \rho\,\nabla\cdot\mathbf{u}$. Then
+$$ 0 \;=\; \frac{\partial\rho}{\partial t} + \mathbf{u}\cdot\nabla\rho + \rho\,\nabla\cdot\mathbf{u} \;=\; \frac{D\rho}{Dt} + \rho\,\nabla\cdot\mathbf{u} $$
+by Definition 7, which rearranges to (6.3). Since $\rho\gt 0$ for any real gas, $D\rho/Dt=0$ and $\nabla\cdot\mathbf{u}=0$ imply one another. <span class="qed">∎</span>
+</div>
+
+<p>Equation (6.3) says that a parcel's density changes only when the flow converges or diverges around it, at a fractional rate equal to $-\nabla\cdot\mathbf{u}$. This is the correct reading of $\nabla\cdot\mathbf{u}$: it is the fractional rate at which a comoving volume element expands,</p>
+
+$$ \frac{1}{\delta V}\frac{D(\delta V)}{Dt} \;=\; \nabla\cdot\mathbf{u}, \tag{6.4}$$
+
+<p>which follows from (6.3) and the constancy of the parcel's mass $\rho\,\delta V$.</p>
+
+<div class="warn"><b>Incompressible does not mean uniform.</b> The condition is $D\rho/Dt = 0$, not $\nabla\rho = 0$. A stratified atmosphere in which every parcel keeps its own density while the density varies strongly with height is incompressible in this sense and not uniform in any sense. The confusion matters in Module 6, where convection is driven by exactly such a stratification. Note also that incompressibility is a statement about the <em>flow</em>, not about the <em>substance</em>: the same gas is compressible in a shock and effectively incompressible in a slow subsonic eddy, and the dividing line is the Mach number, which Module 4 derives.</div>
+
+<h2 id="momentum">7. Momentum: Cauchy, Euler, Navier–Stokes</h2>
+
+<p>Take $\psi = m v_i$, the second entry of (3.3). This is where the separation of bulk from peculiar velocity does its work.</p>
+
+<div class="prop"><b>Proposition 6 (the momentum equation, in conservative and Lagrangian form).</b> For any gas obeying (1.1) under a gravitational acceleration $\mathbf{g}(\mathbf{x},t)$,
+$$ \frac{\partial}{\partial t}\big(\rho u_i\big) \;+\; \frac{\partial}{\partial x_j}\Big(\rho u_i u_j + P_{ij}\Big) \;=\; \rho g_i, \tag{7.1}$$
+and, after using continuity, equivalently
+$$ \rho\,\frac{D u_i}{Dt} \;=\; -\frac{\partial P_{ij}}{\partial x_j} \;+\; \rho g_i. \tag{7.2}$$
+Equation (7.2) is the Cauchy momentum equation. Like continuity, it is exact: no closure has yet been assumed.</div>
+
+<div class="proof">
+With $\psi = mv_i$, the storage term of (4.1) is $n\langle mv_i\rangle = \rho u_i$. The flux term is $n\langle m v_i v_j\rangle = \rho\langle v_iv_j\rangle$. Substituting $\mathbf{v}=\mathbf{u}+\mathbf{w}$ and expanding,
+$$ \langle v_iv_j\rangle \;=\; \langle (u_i+w_i)(u_j+w_j)\rangle \;=\; u_iu_j \;+\; u_i\langle w_j\rangle \;+\; u_j\langle w_i\rangle \;+\; \langle w_iw_j\rangle \;=\; u_iu_j + \langle w_iw_j\rangle, $$
+because $\mathbf{u}$ is not a random variable and may be taken outside the average, and because $\langle\mathbf{w}\rangle=\mathbf{0}$ by (2.2) kills the two cross terms. Multiplying by $\rho$ and using Definition 4 gives $\rho\langle v_iv_j\rangle = \rho u_iu_j + P_{ij}$, which is the flux in (7.1).
+
+The source term is $n\langle \mathbf{a}\cdot\nabla_{\mathbf{v}}(mv_i)\rangle$. Since $\nabla_{\mathbf{v}}(mv_i)$ is $m$ times the unit vector $\hat{\mathbf{e}}_i$, this equals $n m\langle a_i\rangle = \rho g_i$ for an acceleration independent of velocity. That establishes (7.1).
+
+For (7.2), expand the left-hand side of (7.1) and subtract $u_i$ times continuity (5.1):
+$$ \rho\frac{\partial u_i}{\partial t} + u_i\frac{\partial\rho}{\partial t} + \rho u_j\frac{\partial u_i}{\partial x_j} + u_i\frac{\partial(\rho u_j)}{\partial x_j} + \frac{\partial P_{ij}}{\partial x_j} \;=\; \rho g_i. $$
+The second and fourth terms are $u_i$ times the left side of (5.1) and therefore cancel, leaving $\rho(\partial_t u_i + u_j\partial_j u_i) = \rho\,Du_i/Dt$ on the left. <span class="qed">∎</span>
+</div>
+
+<p>Equation (7.2) is Newton's second law for a fluid parcel, and it reads that way: mass per unit volume times acceleration following the parcel equals the surface force per unit volume, $-\partial_j P_{ij}$, plus the body force per unit volume, $\rho g_i$. It is the reason <a class="secref" href="#lagrange">§6</a> was needed. Newton's law applies to a body; $D/Dt$ is what converts a statement about a body into a statement about a field.</p>
+
+<p>The equation is still not usable, because $P_{ij}$ is six unknown functions and we have no equation for them. This is the closure gap of Fig. 1, arrived at concretely. Two closures are standard.</p>
+
+<h3 id="euler">7.1 Zeroth order in the Knudsen number: the Euler equation</h3>
+
+<p>If the distribution is exactly the local Maxwellian, $P_{ij}=p\,\delta_{ij}$, as noted after Definition 5. Module 1 showed that the departure from the local Maxwellian is of order $\mathrm{Kn}=\lambda/L$; so setting $P_{ij}=p\,\delta_{ij}$ is the leading term of an expansion in $\mathrm{Kn}$, correct up to a fractional error of that size.</p>
+
+<div class="prop"><b>Proposition 7 (Euler's equation).</b> With the zeroth-order closure $P_{ij}=p\,\delta_{ij}$, equation (7.2) becomes
+$$ \boxed{\;\rho\,\frac{D\mathbf{u}}{Dt} \;=\; \rho\left[\frac{\partial\mathbf{u}}{\partial t} + (\mathbf{u}\cdot\nabla)\mathbf{u}\right] \;=\; -\nabla p \;+\; \rho\,\mathbf{g}\;} \tag{7.3}$$
+with a fractional error of order $\mathrm{Kn}$.</div>
+
+<div class="proof">
+Substitute $P_{ij}=p\,\delta_{ij}$ into (7.2). The divergence of the pressure tensor becomes
+$$ \frac{\partial P_{ij}}{\partial x_j} \;=\; \frac{\partial}{\partial x_j}\big(p\,\delta_{ij}\big) \;=\; \frac{\partial p}{\partial x_i}, $$
+since $\delta_{ij}$ is constant and the sum over $j$ selects $j=i$. Writing the result in vector form gives (7.3), and expanding $D/Dt$ by Definition 7 gives the bracketed form. The error statement follows from the Chapman–Enskog ordering of Module 1, <a class="secref" href="#closure">§9</a> below: the neglected part of $P_{ij}$ is the first-order viscous stress, whose ratio to $p$ is of order $\mathrm{Kn}$. <span class="qed">∎</span>
+</div>
+
+<p>Equation (7.3) is the single most used equation in this book. Modules 3 to 11 are, with few exceptions, applications of it under different geometries and different force terms.</p>
+
+<h3 id="ns">7.2 First order in the Knudsen number: the Navier–Stokes equation</h3>
+
+<p>Retaining the first-order term produces a viscous stress. Module 1 computed the transport coefficient in its Proposition 4; here we give the tensor it multiplies.</p>
+
+<div class="prop"><b>Proposition 8 (Navier–Stokes equation).</b> At first order in $\mathrm{Kn}$ the pressure tensor takes the form
+$$ P_{ij} \;=\; p\,\delta_{ij} \;-\; \sigma_{ij}, \qquad \sigma_{ij} \;=\; \mu\left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} - \frac{2}{3}\,\delta_{ij}\,\nabla\cdot\mathbf{u}\right) \;+\; \zeta\,\delta_{ij}\,\nabla\cdot\mathbf{u}, \tag{7.4}$$
+in which $\mu$ is the dynamic viscosity of Module 1, equation (6.2), and $\zeta$ is the bulk viscosity, which vanishes for a monatomic gas. Equation (7.2) then becomes
+$$ \rho\,\frac{D\mathbf{u}}{Dt} \;=\; -\nabla p \;+\; \mu\nabla^2\mathbf{u} \;+\; \left(\zeta+\tfrac{1}{3}\mu\right)\nabla\big(\nabla\cdot\mathbf{u}\big) \;+\; \rho\,\mathbf{g}, \tag{7.5}$$
+for spatially uniform $\mu$ and $\zeta$.</div>
+
+<div class="proof">
+The form of (7.4) is fixed by three requirements rather than derived here from the collision integral. The stress must be symmetric, because $P_{ij}$ is. It must be a linear function of the velocity gradient, because a first-order expansion in $\mathrm{Kn}$ is by construction linear in gradients. And it must be isotropic, because a gas has no preferred direction; the most general isotropic linear relation between two symmetric tensors has exactly two independent coefficients. Splitting the velocity gradient into its trace-free and trace parts assigns one coefficient to each: $\mu$ multiplies the trace-free rate of strain, $\zeta$ multiplies the isotropic expansion. The value of $\mu$ is what Chapman–Enskog theory computes, and Module 1's Proposition 4 estimated it as $\mu\simeq\tfrac{1}{3}\rho v_{\rm th}\lambda$. That $\zeta=0$ for a monatomic gas follows from the fact that isotropic compression changes only the translational energy, which is already in $p$; a gas with internal degrees of freedom, which relax more slowly, has $\zeta\neq 0$.
+
+To obtain (7.5), take the divergence of (7.4) with $\mu,\zeta$ constant:
+$$ \frac{\partial \sigma_{ij}}{\partial x_j} \;=\; \mu\left(\nabla^2 u_i + \frac{\partial}{\partial x_i}\nabla\cdot\mathbf{u} - \frac{2}{3}\frac{\partial}{\partial x_i}\nabla\cdot\mathbf{u}\right) + \zeta\,\frac{\partial}{\partial x_i}\nabla\cdot\mathbf{u}, $$
+using $\partial_j\partial_j u_i = \nabla^2u_i$ and $\partial_j\partial_iu_j = \partial_i(\nabla\cdot\mathbf{u})$. Collecting the two gradient-of-divergence terms gives the coefficient $\zeta+\tfrac{1}{3}\mu$, and substituting $-\partial_jP_{ij} = -\partial_ip + \partial_j\sigma_{ij}$ into (7.2) gives (7.5). <span class="qed">∎</span>
+</div>
+
+<p>For an incompressible flow, $\nabla\cdot\mathbf{u}=0$ by Proposition 5, the third term of (7.5) drops out, and the equation reduces to the form in which it is usually met. <a class="secref" href="#closure">§9</a> gives the number that decides whether the viscous term is worth keeping at all.</p>
+
+<h2 id="energy">8. Energy, and the three forms it takes</h2>
+
+<p>Take $\psi = \tfrac{1}{2}m|\mathbf{v}|^2$, the last entry of (3.3). The same decomposition into bulk and peculiar parts now separates kinetic energy from internal energy.</p>
+
+<div class="prop"><b>Proposition 9 (total energy equation).</b> Let $e \equiv \tfrac{1}{2}\langle|\mathbf{w}|^2\rangle$ be the specific internal energy, so that $\rho e = \tfrac{3}{2}p$ by Proposition 1. Then
+$$ \frac{\partial}{\partial t}\left[\rho\left(\tfrac{1}{2}|\mathbf{u}|^2 + e\right)\right] \;+\; \nabla\cdot\left[\rho\mathbf{u}\left(\tfrac{1}{2}|\mathbf{u}|^2 + e\right) + \mathsf{P}\cdot\mathbf{u} + \mathbf{q}\right] \;=\; \rho\,\mathbf{u}\cdot\mathbf{g}, \tag{8.1}$$
+in which $(\mathsf{P}\cdot\mathbf{u})_j = P_{jk}u_k$.</div>
+
+<div class="proof">
+With $\psi=\tfrac{1}{2}m|\mathbf{v}|^2$, the storage term is $\tfrac{1}{2}\rho\langle|\mathbf{v}|^2\rangle$. Substituting $\mathbf{v}=\mathbf{u}+\mathbf{w}$,
+$$ \langle|\mathbf{v}|^2\rangle \;=\; |\mathbf{u}|^2 + 2\,\mathbf{u}\cdot\langle\mathbf{w}\rangle + \langle|\mathbf{w}|^2\rangle \;=\; |\mathbf{u}|^2 + 2e, $$
+again because $\langle\mathbf{w}\rangle=\mathbf{0}$, so the storage term is $\rho(\tfrac{1}{2}|\mathbf{u}|^2+e)$.
+
+The flux term is $\tfrac{1}{2}\rho\langle |\mathbf{v}|^2 v_j\rangle$. Expanding the same way and dropping every term containing a single factor of $\mathbf{w}$ inside an average,
+$$ \tfrac{1}{2}\langle|\mathbf{v}|^2v_j\rangle \;=\; \tfrac{1}{2}|\mathbf{u}|^2u_j \;+\; e\,u_j \;+\; u_k\langle w_jw_k\rangle \;+\; \tfrac{1}{2}\langle|\mathbf{w}|^2w_j\rangle. $$
+Multiplying by $\rho$ identifies the four pieces in order: the flux of bulk kinetic energy, the advection of internal energy, the work done by the pressure tensor $P_{jk}u_k$, and the heat flux $q_j$ of Definition 5.
+
+The source term is $n\langle\mathbf{a}\cdot\nabla_{\mathbf{v}}(\tfrac{1}{2}m|\mathbf{v}|^2)\rangle = n\langle m\,\mathbf{a}\cdot\mathbf{v}\rangle = \rho\,\mathbf{g}\cdot\mathbf{u}$ for a velocity-independent $\mathbf{a}=\mathbf{g}$. Substituting all three into (4.1) gives (8.1). <span class="qed">∎</span>
+</div>
+
+<p>Equation (8.1) conserves total energy, but it mixes two physically different things, and for most purposes the internal energy alone is wanted. Subtracting the bulk kinetic energy gives the second form.</p>
+
+<div class="prop"><b>Proposition 10 (internal energy equation).</b> Equation (8.1), combined with continuity and the momentum equation, is equivalent to
+$$ \rho\,\frac{De}{Dt} \;=\; -p\,\nabla\cdot\mathbf{u} \;+\; \sigma_{ij}\frac{\partial u_i}{\partial x_j} \;-\; \nabla\cdot\mathbf{q}. \tag{8.2}$$</div>
+
+<div class="proof">
+Form the kinetic-energy equation by taking the dot product of the Cauchy equation (7.2) with $\mathbf{u}$:
+$$ \rho\,\frac{D}{Dt}\left(\tfrac{1}{2}|\mathbf{u}|^2\right) \;=\; -u_i\frac{\partial P_{ij}}{\partial x_j} \;+\; \rho\,\mathbf{u}\cdot\mathbf{g}. $$
+Rewrite (8.1) in Lagrangian form using continuity, which converts $\partial_t(\rho\Phi)+\nabla\cdot(\rho\mathbf{u}\Phi)$ into $\rho\,D\Phi/Dt$ for any $\Phi$; with $\Phi=\tfrac{1}{2}|\mathbf{u}|^2+e$ this gives
+$$ \rho\,\frac{D}{Dt}\left(\tfrac{1}{2}|\mathbf{u}|^2+e\right) \;=\; -\frac{\partial}{\partial x_j}\big(P_{jk}u_k\big) \;-\; \nabla\cdot\mathbf{q} \;+\; \rho\,\mathbf{u}\cdot\mathbf{g}. $$
+Subtract the kinetic-energy equation from this. The gravitational terms cancel. The two stress terms combine as
+$$ -\frac{\partial}{\partial x_j}\big(P_{jk}u_k\big) + u_k\frac{\partial P_{kj}}{\partial x_j} \;=\; -P_{jk}\frac{\partial u_k}{\partial x_j}, $$
+using the symmetry of $P$. Finally substitute $P_{jk}=p\,\delta_{jk}-\sigma_{jk}$ from (7.4): the isotropic part gives $-p\,\partial_ku_k = -p\,\nabla\cdot\mathbf{u}$ and the viscous part gives $+\sigma_{jk}\partial_ku_j$, which is the second term of (8.2) after relabelling. <span class="qed">∎</span>
+</div>
+
+<p>Each term of (8.2) has a name and a sign that can be checked. The first is $p\,dV$ work: a parcel that expands, $\nabla\cdot\mathbf{u}\gt 0$, loses internal energy. The second is viscous dissipation, which is non-negative and converts bulk kinetic energy irreversibly into heat. The third is conduction, which redistributes heat without creating it. Setting the last two to zero — the Euler closure of $\sigma_{ij}=0$ and $\mathbf{q}=\mathbf{0}$ — leaves a parcel whose internal energy changes only by doing work, which is the definition of adiabatic. That gives the third and most used form.</p>
+
+<div class="prop"><b>Proposition 11 (adiabatic form).</b> For an ideal monatomic gas with $\rho e = p/(\gamma-1)$ and $\gamma=5/3$, under the Euler closure $\sigma_{ij}=0$ and $\mathbf{q}=\mathbf{0}$, equation (8.2) is equivalent to
+$$ \boxed{\;\frac{D}{Dt}\left(\frac{p}{\rho^{\gamma}}\right) \;=\; 0\;} \tag{8.3}$$
+— each fluid parcel conserves its own entropy, though different parcels may carry different values.</div>
+
+<div class="proof">
+With $\sigma_{ij}=0$ and $\mathbf{q}=\mathbf{0}$, equation (8.2) is $\rho\,De/Dt = -p\,\nabla\cdot\mathbf{u}$. Use Proposition 5 to replace the divergence, $\nabla\cdot\mathbf{u} = -\rho^{-1}D\rho/Dt$, giving
+$$ \rho\,\frac{De}{Dt} \;=\; \frac{p}{\rho}\frac{D\rho}{Dt}. $$
+Now substitute $e = p/[(\gamma-1)\rho]$ and differentiate the quotient:
+$$ \frac{De}{Dt} \;=\; \frac{1}{\gamma-1}\left(\frac{1}{\rho}\frac{Dp}{Dt} - \frac{p}{\rho^2}\frac{D\rho}{Dt}\right). $$
+Multiplying by $\rho$ and equating to the right-hand side above,
+$$ \frac{1}{\gamma-1}\left(\frac{Dp}{Dt} - \frac{p}{\rho}\frac{D\rho}{Dt}\right) \;=\; \frac{p}{\rho}\frac{D\rho}{Dt} \quad\Longrightarrow\quad \frac{Dp}{Dt} \;=\; \frac{\gamma p}{\rho}\frac{D\rho}{Dt}. $$
+Finally, apply $D/Dt$ to $p\rho^{-\gamma}$ directly:
+$$ \frac{D}{Dt}\left(\frac{p}{\rho^\gamma}\right) \;=\; \frac{1}{\rho^\gamma}\frac{Dp}{Dt} - \frac{\gamma p}{\rho^{\gamma+1}}\frac{D\rho}{Dt} \;=\; \frac{1}{\rho^\gamma}\left(\frac{Dp}{Dt} - \frac{\gamma p}{\rho}\frac{D\rho}{Dt}\right) \;=\; 0 $$
+by the relation just obtained. <span class="qed">∎</span>
+</div>
+
+<p>Equation (8.3) is not the statement that the entropy is the same everywhere. It is the statement that each parcel carries its entropy with it unchanged. A flow in which every parcel happens to carry the <em>same</em> value is called isentropic, and then $p\rho^{-\gamma}$ is a single constant for the whole flow; that stronger condition is assumed in Modules 3 and 4 and must be justified separately each time. <a class="secref" href="#solarwind">§10</a> shows a real flow in which (8.3) fails outright while (5.1) holds.</p>
+
+<p>With Propositions 4, 7 and 11 we have the closed set this book uses:</p>
+
+$$ \frac{\partial\rho}{\partial t} + \nabla\cdot(\rho\mathbf{u}) = 0, \qquad \rho\frac{D\mathbf{u}}{Dt} = -\nabla p + \rho\mathbf{g}, \qquad \frac{D}{Dt}\left(\frac{p}{\rho^\gamma}\right) = 0, \qquad p = \frac{\rho k_B T}{\mu_{\rm m} m_p}. \tag{8.4}$$
+
+<p>Five equations — one scalar, one vector, one scalar — for five unknowns $\rho$, $\mathbf{u}$, $p$, with the equation of state supplying $T$ afterwards. Here $\mu_{\rm m}$ is the mean molecular weight, the mean mass per particle in units of the proton mass, equal to $0.6$ for a fully ionised gas of cosmic composition.</p>
+
+<h2 id="closure">9. The closure problem, and the licence to use Euler</h2>
+
+<p>The system (8.4) was obtained by cutting the hierarchy of Fig. 1 at the first rung, setting $P_{ij}=p\,\delta_{ij}$ and $\mathbf{q}=\mathbf{0}$. That cut is an assumption, and Module 1 supplies the number that says when it is safe.</p>
+
+<p>The Chapman–Enskog expansion writes $f = f_M(1 + \phi_1 + \phi_2 + \dots)$ with $\phi_k = O(\mathrm{Kn}^k)$. At zeroth order $P_{ij}=p\,\delta_{ij}$ and $\mathbf{q}=\mathbf{0}$ exactly, and the fluid equations are Euler's. At first order the corrections are the viscous stress and Fourier conduction, and the equations are Navier–Stokes. So the fractional error committed by using Euler rather than Navier–Stokes is of order $\mathrm{Kn}$, the same number Module 1 tabulated for every astrophysical gas.</p>
+
+<p>There is a second, equivalent way to say this, in terms of a number an engineer would recognise.</p>
+
+<div class="prop"><b>Proposition 12 (the Reynolds number is fixed by the Knudsen and Mach numbers).</b> Define the Reynolds number $\mathrm{Re}\equiv \rho u L/\mu$, the thermal Mach number $\mathrm{Ma}_{\rm th}\equiv u/v_{\rm th}$ with $v_{\rm th}=\sqrt{2k_BT/m}$, and the Knudsen number $\mathrm{Kn}\equiv\lambda/L$. Then, with Module 1's estimate $\mu\simeq\tfrac{1}{3}\rho v_{\rm th}\lambda$,
+$$ \mathrm{Re} \;\simeq\; \frac{3\,\mathrm{Ma}_{\rm th}}{\mathrm{Kn}}. \tag{9.1}$$
+The density cancels, so the Reynolds number of a gas depends on its temperature, speed and size but not on how much of it there is.</div>
+
+<div class="proof">
+Substitute Module 1's equation (6.2), $\mu = \tfrac{1}{3}\rho v_{\rm th}\lambda$, into the definition:
+$$ \mathrm{Re} \;=\; \frac{\rho u L}{\tfrac{1}{3}\rho v_{\rm th}\lambda} \;=\; 3\,\frac{u}{v_{\rm th}}\,\frac{L}{\lambda} \;=\; \frac{3\,\mathrm{Ma}_{\rm th}}{\mathrm{Kn}}, $$
+the factor $\rho$ cancelling between numerator and denominator. The cancellation is the density-independence of viscosity established in Module 1: $\lambda\propto 1/n$ falls exactly as fast as the number of momentum carriers $n$ rises. <span class="qed">∎</span>
+</div>
+
+<p>Since the ratio of the viscous term to the inertial term in (7.5) is of order $1/\mathrm{Re}$, equation (9.1) converts Module 1's Knudsen census directly into a statement about which term may be dropped. The table applies (9.1) to four systems, using for each the same density, temperature and length that Module 1's census used, and its own mean free path — Coulomb for the ionised cases, hard-sphere for the neutral warm interstellar medium.</p>
+
+<table>
+<tr><th>System</th><th>$\mathrm{Kn}=\lambda/L$</th><th>$\mathrm{Ma}_{\rm th}=u/v_{\rm th}$</th><th>$\mathrm{Re}$</th><th>viscous / inertial $\sim 1/\mathrm{Re}$</th></tr>
+<tr><td>Solar convection zone</td><td>$1.6\times10^{-16}$</td><td>$5.5\times10^{-4}$</td><td>$1.0\times10^{13}$</td><td>$9.8\times10^{-14}$</td></tr>
+<tr><td>Warm interstellar medium</td><td>$6.5\times10^{-6}$</td><td>$0.87$</td><td>$4.0\times10^{5}$</td><td>$2.5\times10^{-6}$</td></tr>
+<tr><td>Intracluster medium, cluster core</td><td>$2.2\times10^{-3}$</td><td>$0.43$</td><td>$580$</td><td>$1.7\times10^{-3}$</td></tr>
+<tr><td>Solar wind at 1 AU</td><td>$1.9$</td><td>$9.2$</td><td>$14$</td><td>$7.0\times10^{-2}$</td></tr>
+</table>
+
+<p>The first two rows carry the argument for most of this book: the viscous term is smaller than the inertial term by ten or more orders of magnitude, and dropping it is not an approximation anyone need worry about. Modules 3 to 11 accordingly use the Euler equations (8.4), as Module 1 promised they would.</p>
+
+<p>The last two rows are the interesting ones and both were anticipated in Module 1. The intracluster medium has $\mathrm{Re}\approx 600$, which is not large; if the Spitzer viscosity of Module 1's Proposition 4 acted unsuppressed, the intracluster medium would be a nearly laminar fluid rather than the turbulent one that observations of cluster cores indicate. This is the same tension as the thermal-conduction problem Module 1 raised, it has the same suspected resolution — magnetic suppression of transport across field lines — and Module 12 treats both together. The solar wind at 1 AU has $\mathrm{Kn}\approx 1.9$, so the Chapman–Enskog expansion is not merely inaccurate there, it does not converge; neither Euler nor Navier–Stokes is licensed by this argument. Module 1, §8.1, gave the reason a fluid description nonetheless works for the solar wind: the proton gyroradius, not the mean free path, sets the scale across the magnetic field.</p>
+
+<span class="prov">Every entry of the table is computed in <code>figs/m02_numbers.py</code>, CHECK 4 and CHECK 5, from the mean free paths of Module 1. Three of the four inputs carry caveats inherited from Module 1. The warm interstellar medium uses a neutral hard-sphere cross-section of $10^{-15}\ \mathrm{cm^2}$, good to a factor of about two. The convection-zone entry uses $n=10^{23}\ \mathrm{cm^{-3}}$, $T=2\times10^{6}$ K, at which the Coulomb logarithm is only $3.2$; the Coulomb-logarithm treatment is marginal in that regime, but no plausible correction moves a Knudsen number of $10^{-16}$. The characteristic speeds $u$ are order-of-magnitude choices, and $\mathrm{Re}$ is linear in $u$, so read every Reynolds number here to one significant figure at best. None of the conclusions drawn from the table depends on more precision than that.</span>
+
+<h2 id="solarwind">10. The check: does a measured flow obey these equations?</h2>
+
+<p>The equations are written. The question this section asks is whether a real astronomical flow obeys them, and it is worth being careful about what would count as an answer. Testing a closure is hard, because a closure is an approximation and disagreement can always be blamed on the approximation. Testing a conservation law is clean, because it has no free parameter: it predicts an exact number.</p>
+
+<p>The solar wind supplies the test. It is the only astrophysical flow whose density and speed have been measured <em>in situ</em> at many heliocentric distances by instruments flying through it, so the radial dependence is a measurement rather than an inference.</p>
+
+<h3 id="prediction">10.1 What continuity predicts, with no adjustable constant</h3>
+
+<div class="prop"><b>Proposition 13 (steady spherical outflow).</b> Let a flow be steady, $\partial/\partial t = 0$, and spherically symmetric with radial velocity $v(r)$ and density $\rho(r)$. Then continuity (5.1) requires
+$$ 4\pi r^2 \rho(r)\, v(r) \;=\; \dot M \;=\; \text{constant}, \tag{10.1}$$
+and if, over some range of radius, $n\propto r^{-\alpha}$ and $v\propto r^{+\beta}$ with constant exponents, then
+$$ \boxed{\;\alpha - \beta \;=\; 2\;} \tag{10.2}$$
+exactly.</div>
+
+<div class="proof">
+In spherical coordinates the divergence of a purely radial vector field $\mathbf{A}=A(r)\hat{\mathbf{r}}$ is $r^{-2}\,d(r^2A)/dr$. With $\partial\rho/\partial t=0$, equation (5.1) reduces to
+$$ \frac{1}{r^2}\frac{d}{dr}\Big(r^2\rho v\Big) \;=\; 0 \quad\Longrightarrow\quad r^2\rho v \;=\; \text{constant}, $$
+and multiplying by $4\pi$ names the constant $\dot M$, the mass crossing every sphere per unit time. For (10.2), substitute the power laws. With $\rho = mn \propto r^{-\alpha}$ and $v\propto r^{\beta}$,
+$$ r^2\rho v \;\propto\; r^{\,2-\alpha+\beta}, $$
+which is independent of $r$ if and only if the exponent vanishes, that is $\alpha-\beta=2$. <span class="qed">∎</span>
+</div>
+
+<p>Equation (10.2) is the ideal test object. It contains no coefficient to be fitted, no cross-section, no efficiency factor and no calibration. Two exponents are measured independently and their difference is predicted to be an integer.</p>
+
+<h3 id="helios">10.2 The measurement</h3>
+
+<p>Venzmer and Bothmer (2018) fitted power laws in heliocentric distance to the combined data of Helios 1 and Helios 2, two spacecraft that between 1974 and 1981 repeatedly traversed the range $0.29$ to $0.98$ AU. Their equation (10) is $x(r)=d\,r^{e}$ with $r$ in AU, and their Table 3 reports $d$ and $e$ separately for the mean and for the median of each parameter's distribution. The relevant entries are</p>
+
+<table>
+<tr><th>Quantity</th><th>Mean fit, 1 AU value $d$</th><th>Mean exponent $e$</th><th>Median fit, 1 AU value $d$</th><th>Median exponent $e$</th></tr>
+<tr><td>Proton density $n$</td><td>$7.57\pm0.30\ \mathrm{cm^{-3}}$</td><td>$-2.010\pm0.038$</td><td>$5.61\pm0.27\ \mathrm{cm^{-3}}$</td><td>$-2.093\pm0.046$</td></tr>
+<tr><td>Proton speed $v$</td><td>$435.6\pm2.4\ \mathrm{km\,s^{-1}}$</td><td>$+0.049\pm0.010$</td><td>$410.7\pm2.8\ \mathrm{km\,s^{-1}}$</td><td>$+0.058\pm0.013$</td></tr>
+<tr><td>Proton temperature $T$</td><td>$(9.67\pm0.21)\times10^{4}\ \mathrm{K}$</td><td>$-0.792\pm0.028$</td><td>$(7.14\pm0.23)\times10^{4}\ \mathrm{K}$</td><td>$-0.913\pm0.039$</td></tr>
+</table>
+
+<p>The critical property of this table, for our purposes, is that the density exponent and the speed exponent were fitted <em>separately</em>, each to its own parameter's distribution. No continuity constraint was imposed on the fitting. Whatever $\alpha-\beta$ comes out to be, it was not put in.</p>
+
+<h3 id="verdict">10.3 The comparison</h3>
+
+<p>Taking the mean fits, $\alpha = 2.010$ and $\beta=0.049$, so $\alpha-\beta = 1.961$. Taking the median fits, $\alpha=2.093$ and $\beta=0.058$, so $\alpha-\beta = 2.035$. Fig. 3 shows both against the prediction.</p>
+
+<div class="keyresult"><b>Check against a published measurement.</b> Continuity requires $\alpha-\beta=2$ exactly. The Helios mean fits give $1.961$, a ratio to the prediction of $0.980$; the median fits give $2.035$, a ratio of $1.018$. The two bracket the predicted value and their midpoint is $1.998$. Propagating the formal fit errors of Venzmer &amp; Bothmer (2018), Table 3, the mean fits sit $0.99\sigma$ from 2 and the median fits $0.73\sigma$; propagating instead the year-to-year scatter of the exponents from their Fig. 9, a more honest uncertainty, the departures fall to $0.53\sigma$ and $0.48\sigma$. Continuity is confirmed at the two per cent level over a factor of $3.4$ in heliocentric distance.</div>
+
+<figure>
+<!--FIG_FLUX-->
+<svg class="setupfig" viewBox="0 0 760 470" width="100%" role="img" aria-label="Upper panel: the difference between the fitted radial exponents of solar wind density and speed, for the mean and median Helios fits, each with a formal and a yearly-variation error bar, compared with the value 2 that continuity requires exactly. Lower panel: the mass flux those fits imply, divided by its value at 1 au, against the constant value continuity requires.">
+<text x="422" y="42" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Measured exponent difference α − β, against the exact prediction</text>
+<rect x="150" y="58" width="544" height="138" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="405.5" y1="58" x2="405.5" y2="196" stroke="#facc15" stroke-width="2"/>
+<text x="414.5" y="184" font-size="11" fill="#facc15">continuity demands exactly 2</text>
+<line x1="158.2" y1="196" x2="158.2" y2="201" stroke="#334155" stroke-width="1"/>
+<text x="158.2" y="214" font-size="11" text-anchor="middle" fill="#94a3b8">1.85</text>
+<line x1="240.7" y1="196" x2="240.7" y2="201" stroke="#334155" stroke-width="1"/>
+<text x="240.7" y="214" font-size="11" text-anchor="middle" fill="#94a3b8">1.90</text>
+<line x1="323.1" y1="196" x2="323.1" y2="201" stroke="#334155" stroke-width="1"/>
+<text x="323.1" y="214" font-size="11" text-anchor="middle" fill="#94a3b8">1.95</text>
+<line x1="405.5" y1="196" x2="405.5" y2="201" stroke="#334155" stroke-width="1"/>
+<text x="405.5" y="214" font-size="11" text-anchor="middle" fill="#94a3b8">2.00</text>
+<line x1="487.9" y1="196" x2="487.9" y2="201" stroke="#334155" stroke-width="1"/>
+<text x="487.9" y="214" font-size="11" text-anchor="middle" fill="#94a3b8">2.05</text>
+<line x1="570.4" y1="196" x2="570.4" y2="201" stroke="#334155" stroke-width="1"/>
+<text x="570.4" y="214" font-size="11" text-anchor="middle" fill="#94a3b8">2.10</text>
+<line x1="652.8" y1="196" x2="652.8" y2="201" stroke="#334155" stroke-width="1"/>
+<text x="652.8" y="214" font-size="11" text-anchor="middle" fill="#94a3b8">2.15</text>
+<line x1="220.9" y1="106" x2="461.6" y2="106" stroke="#fb923c" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="220.9" y1="100" x2="220.9" y2="112" stroke="#fb923c" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="461.6" y1="100" x2="461.6" y2="112" stroke="#fb923c" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="276.4" y1="106" x2="406.0" y2="106" stroke="#fb923c" stroke-width="4"/>
+<circle cx="341.2" cy="106" r="4.5" fill="#fb923c"/>
+<text x="140" y="110" font-size="11.5" text-anchor="end" fill="#cbd5e1">mean fits</text>
+<text x="140" y="124" font-size="10" text-anchor="end" fill="#94a3b8">1.961 (0.53σ)</text>
+<line x1="342.9" y1="156" x2="583.5" y2="156" stroke="#fb923c" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="342.9" y1="150" x2="342.9" y2="162" stroke="#fb923c" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="583.5" y1="150" x2="583.5" y2="162" stroke="#fb923c" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="384.4" y1="156" x2="542.0" y2="156" stroke="#fb923c" stroke-width="4"/>
+<circle cx="463.2" cy="156" r="4.5" fill="#fb923c"/>
+<text x="140" y="160" font-size="11.5" text-anchor="end" fill="#cbd5e1">median fits</text>
+<text x="140" y="174" font-size="10" text-anchor="end" fill="#94a3b8">2.035 (0.48σ)</text>
+<text x="158" y="76" font-size="10" fill="#94a3b8">thick bar: formal fit σ  ·  pale bar: year-to-year σ of the exponents</text>
+<text x="393" y="246" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Mass flux 4πr²ρv implied by those fits, divided by its value at 1 au</text>
+<rect x="92" y="262" width="602" height="130" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="92" y="283.7" width="602" height="86.7" fill="#2dd4bf" fill-opacity="0.10"/>
+<line x1="92" y1="370.3" x2="694" y2="370.3" stroke="#334155" stroke-width="1.0"/>
+<text x="83" y="374.3" font-size="11" text-anchor="end" fill="#94a3b8">0.95</text>
+<line x1="92" y1="327.0" x2="694" y2="327.0" stroke="#facc15" stroke-width="2.0"/>
+<text x="83" y="331.0" font-size="11" text-anchor="end" fill="#94a3b8">1.00</text>
+<line x1="92" y1="283.7" x2="694" y2="283.7" stroke="#334155" stroke-width="1.0"/>
+<text x="83" y="287.7" font-size="11" text-anchor="end" fill="#94a3b8">1.05</text>
+<line x1="131.4" y1="392" x2="131.4" y2="397" stroke="#334155" stroke-width="1"/>
+<text x="131.4" y="410" font-size="11" text-anchor="middle" fill="#94a3b8">0.3</text>
+<line x1="261.6" y1="392" x2="261.6" y2="397" stroke="#334155" stroke-width="1"/>
+<text x="261.6" y="410" font-size="11" text-anchor="middle" fill="#94a3b8">0.4</text>
+<line x1="362.6" y1="392" x2="362.6" y2="397" stroke="#334155" stroke-width="1"/>
+<text x="362.6" y="410" font-size="11" text-anchor="middle" fill="#94a3b8">0.5</text>
+<line x1="445.1" y1="392" x2="445.1" y2="397" stroke="#334155" stroke-width="1"/>
+<text x="445.1" y="410" font-size="11" text-anchor="middle" fill="#94a3b8">0.6</text>
+<line x1="575.3" y1="392" x2="575.3" y2="397" stroke="#334155" stroke-width="1"/>
+<text x="575.3" y="410" font-size="11" text-anchor="middle" fill="#94a3b8">0.8</text>
+<line x1="676.3" y1="392" x2="676.3" y2="397" stroke="#334155" stroke-width="1"/>
+<text x="676.3" y="410" font-size="11" text-anchor="middle" fill="#94a3b8">1.0</text>
+<path d="M 116.0,407.1 L 120.5,406.4 L 125.0,405.8 L 129.4,405.2 L 133.7,404.6 L 138.0,404.1 L 142.3,403.5 L 146.5,402.9 L 150.7,402.3 L 154.9,401.8 L 159.0,401.2 L 163.1,400.6 L 167.1,400.1 L 171.1,399.5 L 175.1,399.0 L 179.0,398.4 L 182.9,397.9 L 186.8,397.4 L 190.6,396.8 L 194.4,396.3 L 198.2,395.8 L 202.0,395.3 L 205.7,394.8 L 209.3,394.3 L 213.0,393.7 L 216.6,393.2 L 220.2,392.7 L 223.8,392.3 L 227.3,391.8 L 230.8,391.3 L 234.3,390.8 L 237.8,390.3 L 241.2,389.8 L 244.6,389.4 L 248.0,388.9 L 251.3,388.4 L 254.7,388.0 L 258.0,387.5 L 261.2,387.0 L 264.5,386.6 L 267.7,386.1 L 270.9,385.7 L 274.1,385.2 L 277.3,384.8 L 280.4,384.4 L 283.6,383.9 L 286.7,383.5 L 289.7,383.1 L 292.8,382.6 L 295.8,382.2 L 298.9,381.8 L 301.9,381.4 L 304.8,380.9 L 307.8,380.5 L 310.7,380.1 L 313.7,379.7 L 316.6,379.3 L 319.4,378.9 L 322.3,378.5 L 325.2,378.1 L 328.0,377.7 L 330.8,377.3 L 333.6,376.9 L 336.4,376.5 L 339.1,376.1 L 341.9,375.7 L 344.6,375.3 L 347.3,374.9 L 350.0,374.6 L 352.7,374.2 L 355.3,373.8 L 358.0,373.4 L 360.6,373.1 L 363.2,372.7 L 365.8,372.3 L 368.4,371.9 L 371.0,371.6 L 373.6,371.2 L 376.1,370.9 L 378.6,370.5 L 381.1,370.1 L 383.6,369.8 L 386.1,369.4 L 388.6,369.1 L 391.1,368.7 L 393.5,368.4 L 395.9,368.0 L 398.4,367.7 L 400.8,367.3 L 403.2,367.0 L 405.6,366.7 L 407.9,366.3 L 410.3,366.0 L 412.6,365.6 L 415.0,365.3 L 417.3,365.0 L 419.6,364.6 L 421.9,364.3 L 424.2,364.0 L 426.5,363.7 L 428.7,363.3 L 431.0,363.0 L 433.2,362.7 L 435.4,362.4 L 437.7,362.0 L 439.9,361.7 L 442.1,361.4 L 444.2,361.1 L 446.4,360.8 L 448.6,360.5 L 450.7,360.2 L 452.9,359.9 L 455.0,359.5 L 457.2,359.2 L 459.3,358.9 L 461.4,358.6 L 463.5,358.3 L 465.6,358.0 L 467.6,357.7 L 469.7,357.4 L 471.8,357.1 L 473.8,356.8 L 475.8,356.5 L 477.9,356.2 L 479.9,355.9 L 481.9,355.7 L 483.9,355.4 L 485.9,355.1 L 487.9,354.8 L 489.9,354.5 L 491.8,354.2 L 493.8,353.9 L 495.7,353.6 L 497.7,353.4 L 499.6,353.1 L 501.5,352.8 L 503.5,352.5 L 505.4,352.2 L 507.3,352.0 L 509.2,351.7 L 511.1,351.4 L 512.9,351.1 L 514.8,350.9 L 516.7,350.6 L 518.5,350.3 L 520.4,350.1 L 522.2,349.8 L 524.0,349.5 L 525.9,349.3 L 527.7,349.0 L 529.5,348.7 L 531.3,348.5 L 533.1,348.2 L 534.9,347.9 L 536.7,347.7 L 538.4,347.4 L 540.2,347.2 L 542.0,346.9 L 543.7,346.6 L 545.5,346.4 L 547.2,346.1 L 549.0,345.9 L 550.7,345.6 L 552.4,345.4 L 554.1,345.1 L 555.8,344.9 L 557.5,344.6 L 559.2,344.4 L 560.9,344.1 L 562.6,343.9 L 564.3,343.6 L 565.9,343.4 L 567.6,343.1 L 569.3,342.9 L 570.9,342.7 L 572.6,342.4 L 574.2,342.2 L 575.8,341.9 L 577.5,341.7 L 579.1,341.4 L 580.7,341.2 L 582.3,341.0 L 583.9,340.7 L 585.5,340.5 L 587.1,340.3 L 588.7,340.0 L 590.3,339.8 L 591.9,339.6 L 593.4,339.3 L 595.0,339.1 L 596.6,338.9 L 598.1,338.6 L 599.7,338.4 L 601.2,338.2 L 602.7,338.0 L 604.3,337.7 L 605.8,337.5 L 607.3,337.3 L 608.9,337.0 L 610.4,336.8 L 611.9,336.6 L 613.4,336.4 L 614.9,336.2 L 616.4,335.9 L 617.9,335.7 L 619.3,335.5 L 620.8,335.3 L 622.3,335.1 L 623.8,334.8 L 625.2,334.6 L 626.7,334.4 L 628.1,334.2 L 629.6,334.0 L 631.0,333.8 L 632.5,333.5 L 633.9,333.3 L 635.4,333.1 L 636.8,332.9 L 638.2,332.7 L 639.6,332.5 L 641.0,332.3 L 642.4,332.1 L 643.9,331.8 L 645.3,331.6 L 646.7,331.4 L 648.0,331.2 L 649.4,331.0 L 650.8,330.8 L 652.2,330.6 L 653.6,330.4 L 654.9,330.2 L 656.3,330.0 L 657.7,329.8 L 659.0,329.6 L 660.4,329.4 L 661.7,329.2 L 663.1,329.0 L 664.4,328.8 L 665.8,328.6 L 667.1,328.4 L 667.1,327.0 L 665.8,327.0 L 664.4,327.0 L 663.1,327.0 L 661.7,327.0 L 660.4,327.0 L 659.0,327.0 L 657.7,327.0 L 656.3,327.0 L 654.9,327.0 L 653.6,327.0 L 652.2,327.0 L 650.8,327.0 L 649.4,327.0 L 648.0,327.0 L 646.7,327.0 L 645.3,327.0 L 643.9,327.0 L 642.4,327.0 L 641.0,327.0 L 639.6,327.0 L 638.2,327.0 L 636.8,327.0 L 635.4,327.0 L 633.9,327.0 L 632.5,327.0 L 631.0,327.0 L 629.6,327.0 L 628.1,327.0 L 626.7,327.0 L 625.2,327.0 L 623.8,327.0 L 622.3,327.0 L 620.8,327.0 L 619.3,327.0 L 617.9,327.0 L 616.4,327.0 L 614.9,327.0 L 613.4,327.0 L 611.9,327.0 L 610.4,327.0 L 608.9,327.0 L 607.3,327.0 L 605.8,327.0 L 604.3,327.0 L 602.7,327.0 L 601.2,327.0 L 599.7,327.0 L 598.1,327.0 L 596.6,327.0 L 595.0,327.0 L 593.4,327.0 L 591.9,327.0 L 590.3,327.0 L 588.7,327.0 L 587.1,326.9 L 585.5,326.9 L 583.9,326.9 L 582.3,326.9 L 580.7,326.9 L 579.1,326.9 L 577.5,326.9 L 575.8,326.9 L 574.2,326.9 L 572.6,326.9 L 570.9,326.9 L 569.3,326.9 L 567.6,326.9 L 565.9,326.9 L 564.3,326.9 L 562.6,326.9 L 560.9,326.9 L 559.2,326.9 L 557.5,326.9 L 555.8,326.9 L 554.1,326.9 L 552.4,326.9 L 550.7,326.9 L 549.0,326.9 L 547.2,326.9 L 545.5,326.9 L 543.7,326.9 L 542.0,326.9 L 540.2,326.9 L 538.4,326.9 L 536.7,326.9 L 534.9,326.9 L 533.1,326.9 L 531.3,326.9 L 529.5,326.9 L 527.7,326.9 L 525.9,326.9 L 524.0,326.9 L 522.2,326.9 L 520.4,326.9 L 518.5,326.9 L 516.7,326.9 L 514.8,326.9 L 512.9,326.9 L 511.1,326.9 L 509.2,326.9 L 507.3,326.9 L 505.4,326.9 L 503.5,326.9 L 501.5,326.9 L 499.6,326.9 L 497.7,326.9 L 495.7,326.9 L 493.8,326.9 L 491.8,326.9 L 489.9,326.9 L 487.9,326.9 L 485.9,326.9 L 483.9,326.9 L 481.9,326.9 L 479.9,326.9 L 477.9,326.9 L 475.8,326.9 L 473.8,326.9 L 471.8,326.9 L 469.7,326.9 L 467.6,326.9 L 465.6,326.9 L 463.5,326.9 L 461.4,326.9 L 459.3,326.9 L 457.2,326.9 L 455.0,326.9 L 452.9,326.9 L 450.7,326.9 L 448.6,326.9 L 446.4,326.9 L 444.2,326.9 L 442.1,326.9 L 439.9,326.9 L 437.7,326.9 L 435.4,326.9 L 433.2,326.9 L 431.0,326.9 L 428.7,326.9 L 426.5,326.9 L 424.2,326.9 L 421.9,326.9 L 419.6,326.9 L 417.3,326.9 L 415.0,326.9 L 412.6,326.9 L 410.3,326.9 L 407.9,326.8 L 405.6,326.8 L 403.2,326.8 L 400.8,326.8 L 398.4,326.8 L 395.9,326.8 L 393.5,326.8 L 391.1,326.8 L 388.6,326.8 L 386.1,326.8 L 383.6,326.8 L 381.1,326.8 L 378.6,326.8 L 376.1,326.8 L 373.6,326.8 L 371.0,326.8 L 368.4,326.8 L 365.8,326.8 L 363.2,326.8 L 360.6,326.8 L 358.0,326.8 L 355.3,326.8 L 352.7,326.8 L 350.0,326.8 L 347.3,326.8 L 344.6,326.8 L 341.9,326.8 L 339.1,326.8 L 336.4,326.8 L 333.6,326.8 L 330.8,326.8 L 328.0,326.8 L 325.2,326.8 L 322.3,326.8 L 319.4,326.8 L 316.6,326.8 L 313.7,326.8 L 310.7,326.8 L 307.8,326.8 L 304.8,326.8 L 301.9,326.8 L 298.9,326.8 L 295.8,326.8 L 292.8,326.8 L 289.7,326.8 L 286.7,326.8 L 283.6,326.8 L 280.4,326.8 L 277.3,326.8 L 274.1,326.8 L 270.9,326.8 L 267.7,326.8 L 264.5,326.8 L 261.2,326.8 L 258.0,326.8 L 254.7,326.8 L 251.3,326.8 L 248.0,326.8 L 244.6,326.8 L 241.2,326.8 L 237.8,326.8 L 234.3,326.8 L 230.8,326.7 L 227.3,326.7 L 223.8,326.7 L 220.2,326.7 L 216.6,326.7 L 213.0,326.7 L 209.3,326.7 L 205.7,326.7 L 202.0,326.7 L 198.2,326.7 L 194.4,326.7 L 190.6,326.7 L 186.8,326.7 L 182.9,326.7 L 179.0,326.7 L 175.1,326.7 L 171.1,326.7 L 167.1,326.7 L 163.1,326.7 L 159.0,326.7 L 154.9,326.7 L 150.7,326.7 L 146.5,326.7 L 142.3,326.7 L 138.0,326.7 L 133.7,326.7 L 129.4,326.7 L 125.0,326.7 L 120.5,326.7 L 116.0,326.7 Z" fill="#fb923c" fill-opacity="0.13" stroke="none"/>
+<path d="M 116.0,367.8 L 120.5,367.5 L 125.0,367.2 L 129.4,366.9 L 133.7,366.6 L 138.0,366.3 L 142.3,366.0 L 146.5,365.7 L 150.7,365.4 L 154.9,365.1 L 159.0,364.8 L 163.1,364.5 L 167.1,364.2 L 171.1,363.9 L 175.1,363.6 L 179.0,363.4 L 182.9,363.1 L 186.8,362.8 L 190.6,362.5 L 194.4,362.2 L 198.2,362.0 L 202.0,361.7 L 205.7,361.4 L 209.3,361.2 L 213.0,360.9 L 216.6,360.7 L 220.2,360.4 L 223.8,360.1 L 227.3,359.9 L 230.8,359.6 L 234.3,359.4 L 237.8,359.1 L 241.2,358.9 L 244.6,358.6 L 248.0,358.4 L 251.3,358.2 L 254.7,357.9 L 258.0,357.7 L 261.2,357.4 L 264.5,357.2 L 267.7,357.0 L 270.9,356.7 L 274.1,356.5 L 277.3,356.3 L 280.4,356.1 L 283.6,355.8 L 286.7,355.6 L 289.7,355.4 L 292.8,355.2 L 295.8,355.0 L 298.9,354.7 L 301.9,354.5 L 304.8,354.3 L 307.8,354.1 L 310.7,353.9 L 313.7,353.7 L 316.6,353.5 L 319.4,353.2 L 322.3,353.0 L 325.2,352.8 L 328.0,352.6 L 330.8,352.4 L 333.6,352.2 L 336.4,352.0 L 339.1,351.8 L 341.9,351.6 L 344.6,351.4 L 347.3,351.2 L 350.0,351.0 L 352.7,350.8 L 355.3,350.6 L 358.0,350.4 L 360.6,350.3 L 363.2,350.1 L 365.8,349.9 L 368.4,349.7 L 371.0,349.5 L 373.6,349.3 L 376.1,349.1 L 378.6,348.9 L 381.1,348.8 L 383.6,348.6 L 386.1,348.4 L 388.6,348.2 L 391.1,348.0 L 393.5,347.9 L 395.9,347.7 L 398.4,347.5 L 400.8,347.3 L 403.2,347.2 L 405.6,347.0 L 407.9,346.8 L 410.3,346.6 L 412.6,346.5 L 415.0,346.3 L 417.3,346.1 L 419.6,346.0 L 421.9,345.8 L 424.2,345.6 L 426.5,345.5 L 428.7,345.3 L 431.0,345.1 L 433.2,345.0 L 435.4,344.8 L 437.7,344.6 L 439.9,344.5 L 442.1,344.3 L 444.2,344.2 L 446.4,344.0 L 448.6,343.8 L 450.7,343.7 L 452.9,343.5 L 455.0,343.4 L 457.2,343.2 L 459.3,343.1 L 461.4,342.9 L 463.5,342.7 L 465.6,342.6 L 467.6,342.4 L 469.7,342.3 L 471.8,342.1 L 473.8,342.0 L 475.8,341.8 L 477.9,341.7 L 479.9,341.5 L 481.9,341.4 L 483.9,341.2 L 485.9,341.1 L 487.9,341.0 L 489.9,340.8 L 491.8,340.7 L 493.8,340.5 L 495.7,340.4 L 497.7,340.2 L 499.6,340.1 L 501.5,340.0 L 503.5,339.8 L 505.4,339.7 L 507.3,339.5 L 509.2,339.4 L 511.1,339.3 L 512.9,339.1 L 514.8,339.0 L 516.7,338.8 L 518.5,338.7 L 520.4,338.6 L 522.2,338.4 L 524.0,338.3 L 525.9,338.2 L 527.7,338.0 L 529.5,337.9 L 531.3,337.8 L 533.1,337.6 L 534.9,337.5 L 536.7,337.4 L 538.4,337.2 L 540.2,337.1 L 542.0,337.0 L 543.7,336.8 L 545.5,336.7 L 547.2,336.6 L 549.0,336.5 L 550.7,336.3 L 552.4,336.2 L 554.1,336.1 L 555.8,335.9 L 557.5,335.8 L 559.2,335.7 L 560.9,335.6 L 562.6,335.4 L 564.3,335.3 L 565.9,335.2 L 567.6,335.1 L 569.3,335.0 L 570.9,334.8 L 572.6,334.7 L 574.2,334.6 L 575.8,334.5 L 577.5,334.3 L 579.1,334.2 L 580.7,334.1 L 582.3,334.0 L 583.9,333.9 L 585.5,333.8 L 587.1,333.6 L 588.7,333.5 L 590.3,333.4 L 591.9,333.3 L 593.4,333.2 L 595.0,333.0 L 596.6,332.9 L 598.1,332.8 L 599.7,332.7 L 601.2,332.6 L 602.7,332.5 L 604.3,332.4 L 605.8,332.2 L 607.3,332.1 L 608.9,332.0 L 610.4,331.9 L 611.9,331.8 L 613.4,331.7 L 614.9,331.6 L 616.4,331.5 L 617.9,331.4 L 619.3,331.2 L 620.8,331.1 L 622.3,331.0 L 623.8,330.9 L 625.2,330.8 L 626.7,330.7 L 628.1,330.6 L 629.6,330.5 L 631.0,330.4 L 632.5,330.3 L 633.9,330.2 L 635.4,330.0 L 636.8,329.9 L 638.2,329.8 L 639.6,329.7 L 641.0,329.6 L 642.4,329.5 L 643.9,329.4 L 645.3,329.3 L 646.7,329.2 L 648.0,329.1 L 649.4,329.0 L 650.8,328.9 L 652.2,328.8 L 653.6,328.7 L 654.9,328.6 L 656.3,328.5 L 657.7,328.4 L 659.0,328.3 L 660.4,328.2 L 661.7,328.1 L 663.1,328.0 L 664.4,327.9 L 665.8,327.8 L 667.1,327.7" fill="none" stroke="#fb923c" stroke-width="2.2"/>
+<path d="M 116.0,288.6 L 120.5,288.9 L 125.0,289.3 L 129.4,289.6 L 133.7,289.9 L 138.0,290.2 L 142.3,290.5 L 146.5,290.8 L 150.7,291.0 L 154.9,291.3 L 159.0,291.6 L 163.1,291.9 L 167.1,292.2 L 171.1,292.5 L 175.1,292.7 L 179.0,293.0 L 182.9,293.3 L 186.8,293.6 L 190.6,293.8 L 194.4,294.1 L 198.2,294.4 L 202.0,294.6 L 205.7,294.9 L 209.3,295.1 L 213.0,295.4 L 216.6,295.6 L 220.2,295.9 L 223.8,296.1 L 227.3,296.4 L 230.8,296.6 L 234.3,296.9 L 237.8,297.1 L 241.2,297.3 L 244.6,297.6 L 248.0,297.8 L 251.3,298.0 L 254.7,298.3 L 258.0,298.5 L 261.2,298.7 L 264.5,299.0 L 267.7,299.2 L 270.9,299.4 L 274.1,299.6 L 277.3,299.8 L 280.4,300.1 L 283.6,300.3 L 286.7,300.5 L 289.7,300.7 L 292.8,300.9 L 295.8,301.1 L 298.9,301.3 L 301.9,301.5 L 304.8,301.7 L 307.8,301.9 L 310.7,302.2 L 313.7,302.4 L 316.6,302.6 L 319.4,302.8 L 322.3,302.9 L 325.2,303.1 L 328.0,303.3 L 330.8,303.5 L 333.6,303.7 L 336.4,303.9 L 339.1,304.1 L 341.9,304.3 L 344.6,304.5 L 347.3,304.7 L 350.0,304.9 L 352.7,305.0 L 355.3,305.2 L 358.0,305.4 L 360.6,305.6 L 363.2,305.8 L 365.8,305.9 L 368.4,306.1 L 371.0,306.3 L 373.6,306.5 L 376.1,306.6 L 378.6,306.8 L 381.1,307.0 L 383.6,307.2 L 386.1,307.3 L 388.6,307.5 L 391.1,307.7 L 393.5,307.8 L 395.9,308.0 L 398.4,308.2 L 400.8,308.3 L 403.2,308.5 L 405.6,308.7 L 407.9,308.8 L 410.3,309.0 L 412.6,309.1 L 415.0,309.3 L 417.3,309.5 L 419.6,309.6 L 421.9,309.8 L 424.2,309.9 L 426.5,310.1 L 428.7,310.2 L 431.0,310.4 L 433.2,310.6 L 435.4,310.7 L 437.7,310.9 L 439.9,311.0 L 442.1,311.2 L 444.2,311.3 L 446.4,311.5 L 448.6,311.6 L 450.7,311.8 L 452.9,311.9 L 455.0,312.0 L 457.2,312.2 L 459.3,312.3 L 461.4,312.5 L 463.5,312.6 L 465.6,312.8 L 467.6,312.9 L 469.7,313.0 L 471.8,313.2 L 473.8,313.3 L 475.8,313.5 L 477.9,313.6 L 479.9,313.7 L 481.9,313.9 L 483.9,314.0 L 485.9,314.1 L 487.9,314.3 L 489.9,314.4 L 491.8,314.6 L 493.8,314.7 L 495.7,314.8 L 497.7,314.9 L 499.6,315.1 L 501.5,315.2 L 503.5,315.3 L 505.4,315.5 L 507.3,315.6 L 509.2,315.7 L 511.1,315.9 L 512.9,316.0 L 514.8,316.1 L 516.7,316.2 L 518.5,316.4 L 520.4,316.5 L 522.2,316.6 L 524.0,316.7 L 525.9,316.9 L 527.7,317.0 L 529.5,317.1 L 531.3,317.2 L 533.1,317.4 L 534.9,317.5 L 536.7,317.6 L 538.4,317.7 L 540.2,317.8 L 542.0,318.0 L 543.7,318.1 L 545.5,318.2 L 547.2,318.3 L 549.0,318.4 L 550.7,318.5 L 552.4,318.7 L 554.1,318.8 L 555.8,318.9 L 557.5,319.0 L 559.2,319.1 L 560.9,319.2 L 562.6,319.3 L 564.3,319.5 L 565.9,319.6 L 567.6,319.7 L 569.3,319.8 L 570.9,319.9 L 572.6,320.0 L 574.2,320.1 L 575.8,320.2 L 577.5,320.4 L 579.1,320.5 L 580.7,320.6 L 582.3,320.7 L 583.9,320.8 L 585.5,320.9 L 587.1,321.0 L 588.7,321.1 L 590.3,321.2 L 591.9,321.3 L 593.4,321.4 L 595.0,321.5 L 596.6,321.6 L 598.1,321.7 L 599.7,321.9 L 601.2,322.0 L 602.7,322.1 L 604.3,322.2 L 605.8,322.3 L 607.3,322.4 L 608.9,322.5 L 610.4,322.6 L 611.9,322.7 L 613.4,322.8 L 614.9,322.9 L 616.4,323.0 L 617.9,323.1 L 619.3,323.2 L 620.8,323.3 L 622.3,323.4 L 623.8,323.5 L 625.2,323.6 L 626.7,323.7 L 628.1,323.8 L 629.6,323.9 L 631.0,324.0 L 632.5,324.1 L 633.9,324.2 L 635.4,324.3 L 636.8,324.4 L 638.2,324.4 L 639.6,324.5 L 641.0,324.6 L 642.4,324.7 L 643.9,324.8 L 645.3,324.9 L 646.7,325.0 L 648.0,325.1 L 649.4,325.2 L 650.8,325.3 L 652.2,325.4 L 653.6,325.5 L 654.9,325.6 L 656.3,325.7 L 657.7,325.8 L 659.0,325.8 L 660.4,325.9 L 661.7,326.0 L 663.1,326.1 L 664.4,326.2 L 665.8,326.3 L 667.1,326.4" fill="none" stroke="#fb923c" stroke-width="1.6" stroke-dasharray="5 3"/>
+<text x="174.5" y="384.8" font-size="10.5" fill="#fb923c">mean fit, +4.9% across the range</text>
+<text x="174.5" y="279.6" font-size="10.5" fill="#fb923c">median fit, −4.2%</text>
+<text x="686" y="319.0" font-size="11" text-anchor="end" fill="#facc15">continuity: exactly constant</text>
+<text x="686" y="278" font-size="10" text-anchor="end" fill="#94a3b8">shading: ±1σ on the mean-fit exponent  ·  pale band: ±5%</text>
+<text x="393" y="432" font-size="12.5" text-anchor="middle" fill="#cbd5e1">heliocentric distance r / au</text>
+<text x="34" y="456" font-size="10.5" fill="#94a3b8">Fits: Venzmer &amp; Bothmer (2018), A&amp;A 611, A36, Table 3, Helios 1 + 2 over 0.29–0.98 au. Drawn from the published power laws, not from the underlying points.</text>
+</svg>
+<!--/FIG_FLUX-->
+<figcaption>The continuity test. Upper panel: the measured exponent difference $\alpha-\beta$ for the mean and median Helios fits, with the formal fit uncertainty as the thick bar and the larger year-to-year scatter of the exponents as the pale bar, against the value $2$ that Proposition 13 requires exactly. Both fits agree with the prediction within one standard deviation and they bracket it. Lower panel: the same fits expressed as the mass flux $4\pi r^2\rho v$, divided by its value at 1 AU. A flow obeying (10.1) would trace the flat line. The mean fit drifts upward by $4.9$ per cent across the observed range and the median fit downward by $4.2$ per cent, both inside the $\pm 5$ per cent band. The residual is a measurement of how far the real wind departs from being steady and spherical, not of any failure of the equation.</figcaption>
+</figure>
+
+<p>The lower panel of Fig. 3 restates the same result as a physical quantity. The mass flux implied by the mean fits rises by $4.9$ per cent between $0.29$ and $0.98$ AU, and that implied by the median fits falls by $4.2$ per cent. The disagreement between the two is itself informative: the mean of a lognormal distribution exceeds its median, and the density distribution is more skewed than the speed distribution, so mean and median fits weight the dense slow wind differently. The true answer lies between them, which is where the prediction is.</p>
+
+<h3 id="mdot">10.4 A secondary check: the solar mass loss rate</h3>
+
+<p>The same fits give the constant in (10.1). Using the median 1 AU values, $n = 5.61\ \mathrm{cm^{-3}}$ and $v=410.7\ \mathrm{km\,s^{-1}}$, and counting protons only,</p>
+
+$$ \dot M \;=\; 4\pi r^2 \rho v \;=\; 4\pi\big(1.496\times10^{13}\big)^2\big(5.61\times1.673\times10^{-24}\big)\big(4.107\times10^{7}\big) \;=\; 1.08\times10^{12}\ \mathrm{g\,s^{-1}}. \tag{10.3}$$
+
+<div class="keyresult"><b>Check against a published value.</b> Chhiber et&nbsp;al. (2021), <em>MNRAS</em> <b>506</b>, 4993, quote $4\pi r^2 U_r N M \approx 10^{12}\ \mathrm{g\,s^{-1}}$ for the ecliptic solar wind at solar minimum. Our (10.3) gives $1.08\times10^{12}\ \mathrm{g\,s^{-1}}$, a ratio of $1.08$. Including helium at four per cent by number raises the figure to $1.26\times10^{12}\ \mathrm{g\,s^{-1}}$. The mean rather than median fits would give $1.55\times10^{12}\ \mathrm{g\,s^{-1}}$.</div>
+
+<p>This second check is weaker than the first and the difference is worth naming, because it is the difference between two kinds of evidence. Equation (10.2) compares a measured exponent with an exact integer that the equation predicts and nothing else could have produced. Equation (10.3) compares one number against another number of the same kind, derived from overlapping data; agreement confirms that neither calculation contains a gross error, but it does not test the equation, because any flux at all could have been accommodated by a different $\dot M$. Treat (10.3) as a calibration, and (10.2) as the result.</p>
+
+<p>In more familiar units, (10.3) is $1.72\times10^{-14}\,M_\odot\,\mathrm{yr^{-1}}$. Sustained for the Sun's present age of $4.6$ Gyr, that removes $7.9\times10^{-5}\,M_\odot$, eight parts in $10^{5}$ of the Sun's mass. The solar wind is dynamically important for the heliosphere and irrelevant to the Sun's own evolution.</p>
+
+<h3 id="broken">10.5 The same data breaks the energy equation</h3>
+
+<p>A test that only ever confirms is not much of a test. The third column of the Helios table gives a way to check that this one can also fail, using the same data, the same paper and the same method.</p>
+
+<p>Proposition 11 says that under the Euler closure each parcel conserves $p\rho^{-\gamma}$. For an ideal gas, $T\propto p/\rho$, so adiabatic expansion gives $T\propto\rho^{\gamma-1}$. With $\rho\propto r^{-\alpha}$, the temperature must then fall as</p>
+
+$$ T \;\propto\; r^{-\alpha(\gamma-1)} \;=\; r^{-2\alpha/3} \quad\text{for}\quad \gamma=\tfrac{5}{3}. \tag{10.4}$$
+
+<p>The mean fits have $\alpha = 2.010$, so (10.4) predicts a temperature exponent of $-1.340$. The measured mean exponent is $-0.792\pm0.028$.</p>
+
+<div class="warn"><b>The adiabatic closure fails here, and by a wide margin.</b> Measured $-0.792$ against predicted $-1.340$: the ratio is $0.591$, so $40.9$ per cent of the adiabatic cooling is not happening. The formal significance is $19.6\sigma$. The median fits give $-0.913$ against a predicted $-1.395$, a ratio of $0.654$ and a departure of $12.4\sigma$. The solar wind is heated as it expands, at a rate sufficient to cancel two fifths of its adiabatic cooling; the accepted mechanism is the dissipation of a turbulent cascade, which is outside the equations of this module.</div>
+
+<p>This is the most useful result in the section and it is a negative one. Continuity, an exact consequence of a collision invariant, is verified to two per cent. The adiabatic energy equation, which is not exact but a closure that assumes no heating and no conduction, is wrong by forty per cent at nearly twenty standard deviations. The test is sharp enough to tell the two apart. That distinction — between the equations that follow from counting and the equations that follow from an assumption about the microphysics — is what this module was for, and any reader who takes only one thing from it should take that.</p>
+
+<span class="prov">All Helios fit coefficients are inputs quoted from Venzmer &amp; Bothmer (2018), Table 3, not results of this book. Two caveats attach to the anchor result. First, the fits describe the mean and median of a highly variable flow, not any single stream; the solar wind at a given radius contains slow and fast components with different densities and speeds, and the $\pm 5$ per cent residual in Fig. 3 is dominated by that structure rather than by measurement error. Second, the Helios orbits sampled a narrow band of heliographic latitude near the ecliptic, so (10.2) is tested for the ecliptic wind only; Ulysses found the polar wind faster and less dense, and the test has not been repeated here for those data. The mass loss rate (10.3) additionally assumes the ecliptic values hold over the whole sphere, which they do not.</span>
+
+<h2 id="limits">11. What this model captures, and what it misses</h2>
+
+<p>The four equations (8.4) are an idealisation and this section names the idealisations one at a time, with the module that repays each.</p>
+
+<table>
+<tr><th>Idealisation made here</th><th>What it costs</th><th>Where it is repaid</th></tr>
+<tr><td>$P_{ij}=p\,\delta_{ij}$: pressure is isotropic and there is no viscosity</td><td>A fractional error of order $\mathrm{Kn}$. Harmless where $\mathrm{Kn}\lt10^{-3}$; fatal in the solar wind, where $\mathrm{Kn}\approx1.9$ and the pressure is measurably anisotropic</td><td>Navier–Stokes here, <a class="secref" href="#ns">§7.2</a>; the magnetised anisotropic case in Module 12</td></tr>
+<tr><td>$\mathbf{q}=\mathbf{0}$: no heat conduction</td><td>Erases thermal conduction, which Module 1 showed scales as $T^{5/2}$ and is therefore enormous in hot plasma</td><td>Module 6 for thermal instability; Module 12 for magnetic suppression</td></tr>
+<tr><td>No heating or cooling source in (8.2)</td><td>The failure documented in <a class="secref" href="#broken">§10.5</a>: the real solar wind is heated and cools far more slowly than adiabatically</td><td>Module 6 (radiative cooling), Module 10 (turbulent dissipation), Module 13 (radiation)</td></tr>
+<tr><td>A single fluid with one temperature</td><td>Ions and electrons in a hot plasma equilibrate slowly — Module 1 gave $t_{\rm eq}(p,e)\approx6\times10^{8}$ yr for the intracluster medium — so a single $T$ is often wrong</td><td>Module 12; two-temperature accretion flows in Module 11</td></tr>
+<tr><td>No magnetic field: $\mathbf{a}=\mathbf{g}$ alone</td><td>Omits magnetic pressure and tension, and the flux-freezing constraint. Proposition 3 was proved in a form that admits the Lorentz force, so nothing here needs redoing</td><td>Module 12</td></tr>
+<tr><td>$\gamma=5/3$, monatomic and non-relativistic</td><td>Wrong for molecular gas, for a partially ionised gas where ionisation absorbs energy, and for radiation-dominated interiors where $\gamma\to4/3$</td><td>Module 13</td></tr>
+<tr><td>Gravity as an externally prescribed $\mathbf{g}$</td><td>The gas is not allowed to be the source of its own gravity, which forbids self-gravitating collapse</td><td>Module 5, which couples in Poisson's equation</td></tr>
+</table>
+
+<p>One structural limitation is worth separating from the list, because no later module repairs it. The moment hierarchy of Fig. 1 does not close, and there is no choice of closure that is correct in general. Chapman–Enskog produces an asymptotic expansion in $\mathrm{Kn}$, and an asymptotic expansion is not a convergent one: truncating at second order gives the Burnett equations, which are not uniformly better than Navier–Stokes and can be unstable. Where $\mathrm{Kn}$ is of order unity there is no fluid model at all, only the Boltzmann equation itself or a direct simulation of particles. The solar wind sits there, and the reason the fluid picture survives in it is not that the expansion converges but that a magnetic field supplies a shorter transverse length scale, as Module 1 §8.1 set out.</p>
+
+<h3 id="lab">11.1 Reproducing the numbers</h3>
+
+<p>Every number quoted in this module is produced by <code>figs/m02_numbers.py</code> and every figure by <code>figs/m02_build_figs.py</code>. The anchor comparison is the following, which needs nothing but the four fitted exponents.</p>
+
+<div class="codewrap">
+<button class="copybtn" onclick="copyCode(this)" aria-label="Copy code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+<pre><code>"""Continuity from two independently fitted exponents.
+
+Venzmer & Bothmer (2018), A&A 611, A36, Table 3, Helios 1+2,
+0.29-0.98 au.  n ~ r^-alpha and v ~ r^+beta were fitted
+separately; steady spherical continuity demands alpha - beta = 2.
+"""
+import numpy as np
+FITS = {  # (alpha, sigma_alpha, beta, sigma_beta)
+    "mean": (2.010, 0.038, 0.049, 0.010),
+    "median": (2.093, 0.046, 0.058, 0.013),
+}
+SPAN = 0.98/0.29
+for name, (a, sa, b, sb) in FITS.items():
+    diff = a-b
+    sigma = np.hypot(sa, sb)
+    drift = SPAN**(2.0-diff)-1.0
+    print(f"{name:>7s}: alpha-beta = {diff:.3f} +/- {sigma:.3f}"
+          f"   ratio to 2 = {diff/2:.3f}"
+          f"   flux drift = {drift*100:+.1f}%")
+assert abs(0.5*(2.010-0.049+2.093-0.058)/2-1.0) &lt; 0.002
+</code></pre>
+</div>
+
+<p>Running it prints $\alpha-\beta=1.961\pm0.039$ for the mean fits and $2.035\pm0.048$ for the median fits, with mass-flux drifts of $+4.9$ and $-4.2$ per cent. The assertion checks that the midpoint of the two agrees with the predicted value of 2 to better than two parts in a thousand.</p>
+
+<h2 id="problems">12. Problems</h2>
+
+<p class="small">Solutions are given for every problem. Each numerical answer is verified by <code>figs/m02_problems_check.py</code>.</p>
+
+<h3 id="conceptual">Conceptual <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>C1.</b> A student proposes to obtain a sixth exact fluid equation by taking the moment of the Boltzmann equation with $\psi = m|\mathbf{v}|^4$. Explain precisely what goes wrong.
+<details class="sol"><summary>Solution</summary><div>
+Nothing goes wrong with the integration; equation (4.1) can be formed with any $\psi$. What fails is the step that removed the collision term. Proposition 2 guarantees $\int\psi\,C[f]\,d^3v=0$ only when $\psi$ satisfies (3.1), and $m|\mathbf{v}|^4$ does not: a collision conserves $|\mathbf{v}|^2$ summed over the pair, but not $|\mathbf{v}|^4$. The resulting equation therefore carries a collision integral on its right-hand side which cannot be evaluated without modelling the collision operator. It is a valid equation and not a conservation law, and it introduces a new unknown — the fourth moment — while requiring a model for the collision term, so it makes the closure problem worse rather than better.
+</div></details></div>
+
+<div class="prob"><b>C2.</b> A gas flows along a channel. Its density varies by a factor of ten from one end to the other, and the flow is steady. Can this flow be incompressible?
+<details class="sol"><summary>Solution</summary><div>
+Yes. Incompressibility is $D\rho/Dt=0$, which by Proposition 5 is $\nabla\cdot\mathbf{u}=0$, and it concerns what happens to a parcel, not how density is distributed in space. If each parcel retains its own density while parcels of different density occupy different parts of the channel, the flow is incompressible and strongly stratified at the same time. What the condition <em>does</em> forbid, in a steady flow, is a parcel's density changing as it travels: with $\partial\rho/\partial t=0$, $D\rho/Dt=(\mathbf{u}\cdot\nabla)\rho$, so incompressibility requires $\rho$ to be constant along each streamline. The tenfold variation must therefore be across streamlines, not along them.
+</div></details></div>
+
+<div class="prob"><b>C3.</b> The intracluster medium has $\mathrm{Re}\approx600$ by the table in <a class="secref" href="#closure">§9</a>. Observations of cluster cores indicate turbulent motions. State the tension and name the two ways it might be resolved.
+<details class="sol"><summary>Solution</summary><div>
+A Reynolds number of order $10^{2}$ to $10^{3}$ is marginal for sustained turbulence; laboratory pipe flow becomes turbulent near $\mathrm{Re}\approx2\times10^{3}$. If the Spitzer viscosity of Module 1's Proposition 4 acted unsuppressed, viscous damping would remove small-scale motions in the intracluster medium and it would be close to laminar. Two resolutions are available. The first is that the viscosity is suppressed: a tangled magnetic field prevents momentum transport across field lines, which raises the effective Reynolds number, and the same mechanism is invoked for thermal conduction in Module 1 §6. The second is that the estimate of $u$ or $L$ in the table is wrong; $\mathrm{Re}$ is linear in both, so a factor of a few in either changes the conclusion. The first is the accepted answer and Module 12 develops it, but the second is the reason the table entry is quoted to one significant figure.
+</div></details></div>
+
+<div class="prob"><b>C4.</b> Continuity (5.1) was derived without assuming the gas is collisional, yet Module 1 spent its length establishing that astrophysical gases <em>are</em> collisional. If continuity does not need collisions, what does?
+<details class="sol"><summary>Solution</summary><div>
+Continuity needs only that particles are conserved and that $\mathbf{u}$ is defined as the mean velocity; both hold for any $f$, so it applies to a collisionless system such as a galaxy. Collisions are needed for everything that follows from a <em>closure</em>. Setting $P_{ij}=p\,\delta_{ij}$ requires the distribution to be nearly isotropic in the peculiar velocity, and collisions are what make it so; a collisionless system retains whatever anisotropy it was born with, which is why a galaxy has a velocity-dispersion tensor with unequal eigenvalues and no scalar pressure. The same applies to $\mathbf{q}=\mathbf{0}$. So continuity survives without collisions, and the momentum and energy equations survive only in their exact Cauchy forms (7.2) and (8.2), which contain unknown tensors and are not a closed system.
+</div></details></div>
+
+<h3 id="derivational">Derivational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>D1.</b> Show that for any field $\Phi$, continuity implies $\dfrac{\partial}{\partial t}(\rho\Phi) + \nabla\cdot(\rho\mathbf{u}\Phi) = \rho\dfrac{D\Phi}{Dt}$. This identity was used twice in <a class="secref" href="#energy">§8</a>.
+<details class="sol"><summary>Solution</summary><div>
+Expand both terms by the product rule:
+$$ \frac{\partial}{\partial t}(\rho\Phi) + \nabla\cdot(\rho\mathbf{u}\Phi) = \rho\frac{\partial\Phi}{\partial t} + \Phi\frac{\partial\rho}{\partial t} + \rho\,\mathbf{u}\cdot\nabla\Phi + \Phi\,\nabla\cdot(\rho\mathbf{u}). $$
+The second and fourth terms are $\Phi$ times the left-hand side of continuity (5.1) and therefore vanish together. The first and third combine into $\rho(\partial_t\Phi + \mathbf{u}\cdot\nabla\Phi) = \rho\,D\Phi/Dt$ by Definition 7.
+</div></details></div>
+
+<div class="prob"><b>D2.</b> Derive equation (6.4), $\dfrac{1}{\delta V}\dfrac{D(\delta V)}{Dt} = \nabla\cdot\mathbf{u}$, from Proposition 5.
+<details class="sol"><summary>Solution</summary><div>
+A fluid parcel is a material volume, so the mass it contains, $\delta m = \rho\,\delta V$, does not change: $D(\rho\,\delta V)/Dt = 0$. Expanding the product,
+$$ \delta V\frac{D\rho}{Dt} + \rho\frac{D(\delta V)}{Dt} = 0 \quad\Longrightarrow\quad \frac{1}{\delta V}\frac{D(\delta V)}{Dt} = -\frac{1}{\rho}\frac{D\rho}{Dt}. $$
+Substituting Proposition 5, $D\rho/Dt = -\rho\nabla\cdot\mathbf{u}$, gives $-\rho^{-1}(-\rho\nabla\cdot\mathbf{u}) = \nabla\cdot\mathbf{u}$. So $\nabla\cdot\mathbf{u}$ is the fractional rate of expansion of a comoving volume, and Proposition 5 is the statement that a parcel's density falls exactly as fast as its volume grows.
+</div></details></div>
+
+<div class="prob"><b>D3.</b> Show that the isothermal analogue of Proposition 11 is $p = c_T^2\rho$ with $c_T^2$ constant, and identify what physical assumption replaces the adiabatic one.
+<details class="sol"><summary>Solution</summary><div>
+If $T$ is held fixed at $T_0$ throughout the flow, the equation of state in (8.4) gives $p = \rho k_BT_0/(\mu_{\rm m}m_p) \equiv c_T^2\rho$ with $c_T^2=k_BT_0/(\mu_{\rm m}m_p)$ constant. This replaces (8.3) and closes the system with one fewer equation, since $T$ is no longer an unknown. The physical assumption is the opposite extreme from adiabatic: instead of assuming that a parcel exchanges <em>no</em> heat with its surroundings, it assumes that heating and cooling are so efficient that the parcel is held at the ambient temperature however fast it is compressed. Formally, the term $-\nabla\cdot\mathbf{q}$ in (8.2), together with any radiative source, is taken to be large enough to cancel $-p\nabla\cdot\mathbf{u}$ at all times. It is the standard closure for interstellar clouds, where line cooling is fast, and Module 5 uses it.
+</div></details></div>
+
+<div class="prob"><b>D4.</b> A steady spherical flow has $n\propto r^{-\alpha}$ and $v\propto r^{\beta}$. Show that the adiabatic closure fixes a second relation between exponents, and give it for $\gamma=5/3$.
+<details class="sol"><summary>Solution</summary><div>
+Adiabatic flow conserves $p\rho^{-\gamma}$ along a streamline, and in a steady spherical flow the streamlines are radial, so $p\propto\rho^{\gamma}\propto r^{-\alpha\gamma}$. With $p = nk_BT$ and $n\propto r^{-\alpha}$,
+$$ T \;\propto\; \frac{p}{n} \;\propto\; r^{-\alpha\gamma+\alpha} \;=\; r^{-\alpha(\gamma-1)}. $$
+Writing $T\propto r^{-\tau}$, the relation is $\tau = \alpha(\gamma-1)$, which for $\gamma=5/3$ is $\tau = 2\alpha/3$. This is equation (10.4). Note that it involves $\alpha$ and $\tau$ only, and is independent of $\beta$: continuity constrains the density–speed pair, the energy equation constrains the density–temperature pair, and the two tests in <a class="secref" href="#solarwind">§10</a> are therefore independent of one another.
+</div></details></div>
+
+<h3 id="computational">Computational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>K1.</b> Using the Helios mean fits, $\alpha=2.010$ and $\beta=0.049$, compute the factor by which the inferred mass flux $4\pi r^2\rho v$ changes between $0.29$ and $0.98$ AU. Express it as a percentage.
+<details class="sol"><summary>Solution</summary><div>
+From the proof of Proposition 13, $r^2\rho v\propto r^{2-\alpha+\beta}$. The residual exponent is $2-2.010+0.049 = 0.039$. The radial span is $0.98/0.29 = 3.379$, so the flux changes by the factor $3.379^{0.039}$. Taking logarithms, $0.039\times\ln 3.379 = 0.039\times1.2176 = 0.04749$, and $e^{0.04749} = 1.0486$. The mass flux therefore rises by $4.9$ per cent across the range. For the median fits the residual exponent is $2-2.093+0.058 = -0.035$, giving $3.379^{-0.035} = 0.958$, a fall of $4.2$ per cent.
+</div></details></div>
+
+<div class="prob"><b>K2.</b> Compute $\dot M$ from the Helios median 1 AU values, $n=5.61\ \mathrm{cm^{-3}}$ and $v = 410.7\ \mathrm{km\,s^{-1}}$, counting protons only. Give the answer in $\mathrm{g\,s^{-1}}$, in $M_\odot\,\mathrm{yr^{-1}}$, and as the fraction of the Sun's mass lost in $4.6$ Gyr.
+<details class="sol"><summary>Solution</summary><div>
+The mass density is $\rho = n m_p = 5.61\times1.6726\times10^{-24} = 9.383\times10^{-24}\ \mathrm{g\,cm^{-3}}$. With $r = 1\ \mathrm{AU} = 1.496\times10^{13}\ \mathrm{cm}$, the sphere area is $4\pi r^2 = 2.812\times10^{27}\ \mathrm{cm^2}$, and $v = 4.107\times10^{7}\ \mathrm{cm\,s^{-1}}$. Then
+$$ \dot M = 2.812\times10^{27}\times9.383\times10^{-24}\times4.107\times10^{7} = 1.084\times10^{12}\ \mathrm{g\,s^{-1}}. $$
+Converting, $1.084\times10^{12}\times3.156\times10^{7}/1.989\times10^{33} = 1.72\times10^{-14}\,M_\odot\,\mathrm{yr^{-1}}$. Over $4.6\times10^{9}$ yr this removes $1.72\times10^{-14}\times4.6\times10^{9} = 7.9\times10^{-5}\,M_\odot$, which is $0.0079$ per cent of the Sun's mass.
+</div></details></div>
+
+<div class="prob"><b>K3.</b> The intracluster medium of a cluster core has $n=10^{-2}\ \mathrm{cm^{-3}}$, $T=3\times10^{7}$ K, a Coulomb mean free path of $\lambda = 0.22$ kpc from Module 1, a characteristic length $L=100$ kpc and a characteristic speed $u = 300\ \mathrm{km\,s^{-1}}$. Compute $\mathrm{Kn}$, $\mathrm{Ma}_{\rm th}$ and $\mathrm{Re}$.
+<details class="sol"><summary>Solution</summary><div>
+The Knudsen number is $\mathrm{Kn} = \lambda/L = 0.22/100 = 2.2\times10^{-3}$. The proton thermal speed is
+$$ v_{\rm th} = \sqrt{\frac{2k_BT}{m_p}} = \sqrt{\frac{2\times1.381\times10^{-16}\times3\times10^{7}}{1.673\times10^{-24}}} = 7.04\times10^{7}\ \mathrm{cm\,s^{-1}}, $$
+so $\mathrm{Ma}_{\rm th} = 3\times10^{7}/7.04\times10^{7} = 0.426$. By Proposition 12, $\mathrm{Re} = 3\times0.426/2.2\times10^{-3} = 5.8\times10^{2}$. The viscous term is therefore smaller than the inertial term by a factor of about $600$, which is a large ratio by everyday standards and a small one by astrophysical standards — compare $10^{13}$ for the solar convection zone.
+</div></details></div>
+
+<div class="prob"><b>K4.</b> Test the adiabatic closure against the Helios median fits: $\alpha=2.093$ and a measured temperature exponent $-0.913\pm0.039$. By what factor and by how many standard deviations does it fail?
+<details class="sol"><summary>Solution</summary><div>
+From D4, the adiabatic prediction is $\tau = 2\alpha/3 = 2\times2.093/3 = 1.395$, that is $T\propto r^{-1.395}$. The measured exponent is $-0.913$, so the ratio of measured to predicted is $0.913/1.395 = 0.654$: the wind cools only $65$ per cent as steeply as adiabatic expansion alone would make it, leaving $34.6$ per cent of the adiabatic cooling unaccounted for. The departure is $|{-0.913}-({-1.395})|/0.039 = 0.482/0.039 = 12.4$ standard deviations. The mean fits give a ratio of $0.591$ and a departure of $19.6\sigma$. By either fit the adiabatic closure is excluded, while continuity is confirmed in the same data to within one standard deviation.
+</div></details></div>
+
+<h2 id="notation">Notation</h2>
+
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Units (CGS)</th><th>First used</th></tr>
+<tr><td>$f(\mathbf{x},\mathbf{v},t)$</td><td>distribution function</td><td>$\mathrm{cm^{-6}\,s^{3}}$</td><td>Definition 1</td></tr>
+<tr><td>$C[f]$</td><td>collision term of the Boltzmann equation</td><td>$\mathrm{cm^{-6}\,s^{2}}$</td><td>(1.1)</td></tr>
+<tr><td>$\psi(\mathbf{v})$</td><td>weight function in a moment; a collision invariant where exact</td><td>varies</td><td>Definition 6</td></tr>
+<tr><td>$\langle\cdot\rangle$</td><td>local average over the velocity distribution</td><td>—</td><td>(2.1)</td></tr>
+<tr><td>$n$, $\rho=mn$</td><td>number density, mass density</td><td>$\mathrm{cm^{-3}}$, $\mathrm{g\,cm^{-3}}$</td><td>(2.1)</td></tr>
+<tr><td>$\mathbf{u}=\langle\mathbf{v}\rangle$</td><td>bulk velocity</td><td>$\mathrm{cm\,s^{-1}}$</td><td>Definition 3</td></tr>
+<tr><td>$\mathbf{w}=\mathbf{v}-\mathbf{u}$</td><td>peculiar velocity, $\langle\mathbf{w}\rangle=\mathbf{0}$</td><td>$\mathrm{cm\,s^{-1}}$</td><td>(2.2)</td></tr>
+<tr><td>$P_{ij}=\rho\langle w_iw_j\rangle$</td><td>pressure tensor</td><td>$\mathrm{dyn\,cm^{-2}}$</td><td>(2.3)</td></tr>
+<tr><td>$p=\tfrac{1}{3}P_{ii}$</td><td>scalar pressure; $p\equiv nk_BT$ defines $T$</td><td>$\mathrm{dyn\,cm^{-2}}$</td><td>(2.4)</td></tr>
+<tr><td>$\mathbf{q}$</td><td>heat flux</td><td>$\mathrm{erg\,cm^{-2}\,s^{-1}}$</td><td>(2.5)</td></tr>
+<tr><td>$e=\tfrac{1}{2}\langle|\mathbf{w}|^2\rangle$</td><td>specific internal energy; $\rho e=\tfrac{3}{2}p$</td><td>$\mathrm{erg\,g^{-1}}$</td><td>Proposition 1</td></tr>
+<tr><td>$D/Dt$</td><td>Lagrangian derivative, $\partial_t + \mathbf{u}\cdot\nabla$</td><td>$\mathrm{s^{-1}}$</td><td>Definition 7</td></tr>
+<tr><td>$\sigma_{ij}$</td><td>viscous stress tensor</td><td>$\mathrm{dyn\,cm^{-2}}$</td><td>(7.4)</td></tr>
+<tr><td>$\mu$, $\zeta$</td><td>dynamic viscosity, bulk viscosity</td><td>$\mathrm{g\,cm^{-1}\,s^{-1}}$</td><td>(7.4)</td></tr>
+<tr><td>$\gamma$</td><td>adiabatic index, $5/3$ for a monatomic gas</td><td>—</td><td>Proposition 11</td></tr>
+<tr><td>$\mu_{\rm m}$</td><td>mean molecular weight, $0.6$ if fully ionised</td><td>—</td><td>(8.4)</td></tr>
+<tr><td>$\mathrm{Kn}=\lambda/L$</td><td>Knudsen number, from Module 1</td><td>—</td><td>Proposition 12</td></tr>
+<tr><td>$\mathrm{Ma}_{\rm th}=u/v_{\rm th}$</td><td>thermal Mach number, $v_{\rm th}=\sqrt{2k_BT/m}$</td><td>—</td><td>Proposition 12</td></tr>
+<tr><td>$\mathrm{Re}=\rho uL/\mu$</td><td>Reynolds number</td><td>—</td><td>Proposition 12</td></tr>
+<tr><td>$\dot M$</td><td>mass flux through a sphere, $4\pi r^2\rho v$</td><td>$\mathrm{g\,s^{-1}}$</td><td>(10.1)</td></tr>
+<tr><td>$\alpha$, $\beta$, $\tau$</td><td>radial exponents: $n\propto r^{-\alpha}$, $v\propto r^{\beta}$, $T\propto r^{-\tau}$</td><td>—</td><td>(10.2)</td></tr>
+</table>
+
+<h2 id="sources">Sources</h2>
+
+<p class="small">Every published value this module compares against, with what was taken from it.</p>
+
+<ol>
+<li><b>Radial power-law fits to the solar wind.</b> M. S. Venzmer and V. Bothmer, <em>Solar-wind predictions for the Parker Solar Probe orbit. Near-Sun extrapolations derived from an empirical solar-wind model based on Helios and OMNI observations</em>, <em>Astronomy &amp; Astrophysics</em> <b>611</b>, A36 (2018), <a href="https://arxiv.org/abs/1711.07534">arXiv:1711.07534</a>. Quoted: equation (10), $x(r)=d\,r^{e}$, and Table 3 for the combined Helios 1 and 2 data over $0.29$–$0.98$ AU — density $7.57(30)\,r^{-2.010(38)}\ \mathrm{cm^{-3}}$ and $5.61(27)\,r^{-2.093(46)}\ \mathrm{cm^{-3}}$; velocity $435.6(24)\,r^{+0.049(10)}$ and $410.7(28)\,r^{+0.058(13)}\ \mathrm{km\,s^{-1}}$; temperature $9.67(21)\times10^{4}\,r^{-0.792(28)}$ and $7.14(23)\times10^{4}\,r^{-0.913(39)}$ K, mean and median respectively. The year-to-year exponent scatter used as the second error bar is from their Fig. 9 and Table 3: $0.072$ for density, $0.012$ for velocity, $0.050$ for temperature.</li>
+<li><b>Solar wind mass flux.</b> R. Chhiber, A. V. Usmanov, W. H. Matthaeus and M. L. Goldstein, <em>Flux conservation, radial scalings, Mach numbers, and critical distances in the solar wind: magnetohydrodynamics and Ulysses observations</em>, <em>Monthly Notices of the Royal Astronomical Society</em> <b>506</b>, 4993 (2021), <a href="https://academic.oup.com/mnras/article/506/4/4993/6324014">doi:10.1093/mnras/stab1911</a>. Quoted: $4\pi r^2 U_r N M \approx 10^{12}\ \mathrm{g\,s^{-1}}$ at 1 AU in the ecliptic at solar minimum, and the statement that the radial mass flux per steradian is constant with heliocentric distance.</li>
+<li><b>Mean free paths, transport coefficients and the Knudsen census.</b> Module 1 of this book, equations (4.1), (5.6), (6.2) and (6.3), and its §7 census. The intracluster figure there was itself checked against Sarazin (1988), §5.4.</li>
+<li><b>The moment method and the Chapman–Enskog closure.</b> Standard and not re-derived from the original sources here: Maxwell's equation of transfer is Proposition 3, and the ordering $P_{ij}=p\delta_{ij}+O(\mathrm{Kn})$, $\mathbf{q}=O(\mathrm{Kn})$ is quoted from Chapman–Enskog theory rather than derived. Proposition 8 states the form of the viscous stress from symmetry and isotropy and does not compute $\mu$ from the collision integral; Module 1's Proposition 4 gives the order-of-magnitude estimate that is used numerically.</li>
+<li><b>Boltzmann's theorem on collision invariants.</b> The claim in Proposition 2 that $\{1, m\mathbf{v}, \tfrac{1}{2}m|\mathbf{v}|^2\}$ exhausts the collision invariants is quoted, not proved; the proof is a functional-equation argument found in standard kinetic theory texts.</li>
+</ol>
+
+<hr>
+<p class="small">Module 2 of <a href="index.html">Astrophysical Fluid Dynamics</a>. Previous: <a href="module01.html">Module 1 — Why a Fluid at All?</a></p>
+
+<script>
+function copyCode(btn){
+  var code = btn.parentElement.querySelector('code');
+  var text = code.textContent;
+  function done(){
+    btn.classList.add('copied');
+    var old = btn.lastChild.nodeValue;
+    btn.lastChild.nodeValue = 'Copied!';
+    setTimeout(function(){ btn.classList.remove('copied'); btn.lastChild.nodeValue = old; }, 1500);
+  }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); } finally { document.body.removeChild(ta); }
+  }
+}
+</script>
+
+</body>
+</html>
