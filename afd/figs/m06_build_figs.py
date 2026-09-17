@@ -34,12 +34,34 @@ measures its distance to every drawn curve sample (at full resolution, not
 the decimated drawing) and to every other label, then prints the result.
 A figure with a collision is reported, not silently written.
 """
+import re
+
 import numpy as np
 
 import m06_numbers as N
 
 BG, FG, MUT, RULE = "#0f172a", "#cbd5e1", "#94a3b8", "#334155"
 ACC, ACC2, VIO, YEL = "#fb923c", "#2dd4bf", "#a78bfa", "#facc15"
+
+_TEXT = re.compile(r"(<text\b[^>]*>)(.*?)(</text>)", re.S)
+_SUB = re.compile(r"_([A-Za-z]+)")
+
+
+def subscripts(svg):
+    """Turn every x_sub inside <text> content into a real subscript.
+
+    Labels are written with underscores because they read cleanly in the
+    source, but check_svg rejects a literal underscore in a rendered label.
+    Only text CONTENT is rewritten, never attributes.  Ported from
+    m05_build_figs.py, where the same rule was settled.
+    """
+    def fix(m):
+        body = _SUB.sub(
+            r'<tspan baseline-shift="sub" font-size="75%">\1</tspan>',
+            m.group(2))
+        return m.group(1) + body + m.group(3)
+    return _TEXT.sub(fix, svg)
+
 
 CHAR_W = 0.56          # average glyph advance as a fraction of font size
 CLEAR_PX = 4.0         # minimum label-to-curve clearance
@@ -288,9 +310,16 @@ def build_brunt():
           f'fill="{YEL}"/>')
     f.add(f'<line x1="{xp:.1f}" y1="{yp_all+6:.1f}" x2="{xp:.1f}" '
           f'y2="{yp_meas-6:.1f}" stroke="{MUT}" stroke-width="1"/>')
-    f.text(xp - 12, yp_all + 4, f"photosphere, carrying all of L: "
+    # Both photospheric labels end clear of the dashed "table ends" rule at
+    # xt, with a leader line back to their point; anchoring them at xp - 12
+    # put them across that rule.
+    f.add(f'<line x1="{xt - 4:.1f}" y1="{yp_all:.1f}" x2="{xp - 7:.1f}" '
+          f'y2="{yp_all:.1f}" stroke="{MUT}" stroke-width="0.8"/>')
+    f.add(f'<line x1="{xt - 4:.1f}" y1="{yp_meas:.1f}" x2="{xp - 7:.1f}" '
+          f'y2="{yp_meas:.1f}" stroke="{MUT}" stroke-width="0.8"/>')
+    f.text(xt - 10, yp_all + 4, f"photosphere, carrying all of L: "
            f"{ph['excess']:.2f}", anchor="end", fill=VIO)
-    f.text(xp - 12, yp_meas + 4, f"carrying the measured "
+    f.text(xt - 10, yp_meas + 4, f"carrying the measured "
            f"{100*F_meas/ph['F']:.1f}% of L: {ex_meas:.3f}", anchor="end",
            fill=YEL)
 
@@ -526,7 +555,7 @@ def build_check():
     bars = [("static two-phase medium", "prediction", 0.0, MUT),
             ("lognormal fit, their eq. 3", "same survey, fitted", f_below,
              ACC),
-            ("measured, all sight lines", "Jenkins & Tripp §10.1.2",
+            ("measured, all sight lines", "Jenkins & Tripp, section 10.1.2",
              100.0*N.JT11_FRAC_BELOW_PMIN, YEL),
             ("measured, low starlight", "their abstract",
              100.0*N.JT11_FRAC_BELOW_LOWI, YEL)]
@@ -561,7 +590,7 @@ if __name__ == "__main__":
     for name, fn in (("m06_fig_brunt.svg", build_brunt),
                      ("m06_fig_phase.svg", build_phase),
                      ("m06_fig_check.svg", build_check)):
-        body = fn()
+        body = subscripts(fn())
         with open(name, "w", encoding="utf-8") as fh:
             fh.write(body)
         print(f"wrote {name} ({len(body)} bytes)")

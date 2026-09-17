@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Module 6 — Convection and Thermal Instability | Astrophysical Fluid Dynamics</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags: 'ams' },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js" async></script>
+<style>
+  :root{
+    --bg:#0f172a; --box:#1e293b; --fg:#e2e8f0; --fg2:#cbd5e1;
+    --muted:#94a3b8; --accent:#fb923c; --accent2:#2dd4bf;
+    --rule:#334155; --rule2:#1e293b;
+  }
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{ max-width: 52rem; margin: 2.5rem auto; padding: 0 1.25rem 6rem;
+        font: 16px/1.7 Georgia, 'Times New Roman', serif; color:var(--fg);
+        background:var(--bg); counter-reset: fig; }
+  h1{ font-size: 1.9rem; line-height:1.2; margin:.2rem 0 .2rem; color:#f8fafc; }
+  h2{ font-size:1.35rem; margin:2.6rem 0 .6rem; border-bottom:2px solid var(--accent);
+      padding-bottom:.2rem; color:#f8fafc; }
+  h3{ font-size:1.08rem; margin:1.7rem 0 .4rem; color:var(--accent); }
+  h4{ font-size:1rem; margin:1.2rem 0 .3rem; color:var(--accent2); }
+  .sub{ color:var(--muted); font-style:italic; margin-top:0; }
+  a{ color:var(--accent2); }
+  code{ font-family: ui-monospace,'SFMono-Regular',Consolas,monospace; font-size:.92em;
+        background:#111c33; color:#e2e8f0; padding:.05rem .28rem; border-radius:3px;
+        border:1px solid var(--rule2); }
+  pre{ background:#0b1324; border:1px solid var(--rule); padding:.8rem 1rem; border-radius:5px;
+       overflow:auto; font-size:.84rem; line-height:1.45; color:#e2e8f0; }
+  pre code{ background:none; padding:0; border:none; }
+  .codewrap{ position:relative; }
+  .copybtn{ position:absolute; top:.5rem; right:.5rem; display:inline-flex; align-items:center; gap:.3rem;
+    font:600 .72rem/1 ui-monospace,Consolas,monospace; color:var(--muted);
+    background:var(--box); border:1px solid var(--rule); border-radius:5px; padding:.32rem .5rem; cursor:pointer; }
+  .copybtn:hover{ color:var(--accent); border-color:var(--accent); }
+  .copybtn.copied{ color:var(--accent2); border-color:var(--accent2); }
+  .copybtn svg{ width:13px; height:13px; }
+  .thm,.def,.lem,.prop{ background:var(--box); border-left:4px solid var(--accent);
+      padding:.6rem .9rem; margin:1rem 0; border-radius:0 4px 4px 0; }
+  .def{ border-left-color:var(--accent2); }
+  .thm b,.lem b,.prop b{ color:var(--accent); }
+  .def b{ color:var(--accent2); }
+  .proof{ border-left:2px solid var(--rule); padding-left:.9rem; margin:.8rem 0 1.2rem; color:var(--fg2); }
+  .proof::before{ content:"Proof."; font-style:italic; font-weight:bold; margin-right:.4rem; color:var(--muted); }
+  .qed{ float:right; color:var(--accent); }
+  table{ border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+  th,td{ border:1px solid var(--rule); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+  th{ background:var(--box); color:#f8fafc; }
+  figure{ margin:1.6rem 0; text-align:center; counter-increment: fig; }
+  figcaption{ color:var(--muted); font-size:.9rem; font-style:italic; margin-top:.4rem; text-align:left; }
+  figcaption::before{ content:"Fig. " counter(fig) ". "; font-weight:bold; font-style:normal; color:var(--accent); }
+  .proof figure,.thm figure,.lem figure,.prop figure{ margin:.2rem auto .7rem; max-width:480px;
+      background:var(--bg); border:1px solid var(--rule); border-radius:5px; padding:.4rem; }
+  .proof figcaption,.thm figcaption,.lem figcaption,.prop figcaption{ font-size:.8rem; line-height:1.45; }
+  .setupfig{ display:block; }
+  .setupfig text{ paint-order:stroke; stroke:#0f172a; stroke-width:3px; stroke-linejoin:round; }
+  .setupfig text.onfill{ stroke:none; }
+  figure svg text{ font-family:"STIX Two Math",STIXGeneral,"Times New Roman",Georgia,serif; fill:#cbd5e1; }
+  figure svg text.v{ font-style:italic; }
+  figure svg text.vb{ font-weight:bold; }
+  .secref{ color:var(--accent); text-decoration:none; border-bottom:1px dotted #9a6a3a; }
+  .secref:hover{ border-bottom:1px solid var(--accent); }
+  .toc{ background:var(--box); padding:.8rem 1.2rem; border-radius:6px; font-size:.95rem; border:1px solid var(--rule); }
+  .toc ul{ list-style:none; padding-left:.3rem; margin:.3rem 0; }
+  .toc a{ color:var(--accent2); text-decoration:none; }
+  .toc a:hover{ text-decoration:underline; }
+  .small{ font-size:.88rem; color:var(--muted); }
+  hr{ border:none; border-top:1px solid var(--rule); margin:2.5rem 0; }
+  .keyresult{ background:#2a2410; border:1px solid #6b5a1f; padding:.5rem .9rem; border-radius:4px; color:#fde68a; }
+  .prov{ display:block; border-left:3px solid #c08a00; padding:.15rem .7rem;
+         margin:.5rem 0; font-size:.94em; color:var(--muted); }
+  .prov::before{ content:"provenance — "; font-variant:small-caps; letter-spacing:.04em; color:#d4a017; }
+  .warn{ display:block; border-left:3px solid #f87171; background:#2a1414; padding:.4rem .8rem;
+         margin:.8rem 0; font-size:.95em; color:#fecaca; border-radius:0 4px 4px 0; }
+  .prob{ background:var(--box); border:1px solid var(--rule); border-radius:5px;
+         padding:.6rem .9rem; margin:.9rem 0; }
+  .prob b{ color:var(--accent); }
+  details.sol{ margin-top:.5rem; }
+  details.sol summary{ cursor:pointer; color:var(--accent2); font-size:.9rem; }
+  details.sol > div{ border-top:1px solid var(--rule); margin-top:.5rem; padding-top:.5rem; color:var(--fg2); }
+</style>
+</head>
+<body>
+
+<h1>Module 6 — Convection and Thermal Instability</h1>
+<p class="sub">Hydrostatic balance is not stability. A stratified fluid can fail in two independent ways: buoyancy can stop restoring a displaced parcel, which is convection, and cooling can run away under compression, which is thermal instability. The Schwarzschild and Ledoux criteria, the collapse of the adiabatic gradient in an ionisation zone, mixing-length theory and its price, then Field's criterion and the two-phase interstellar medium. Two checks against measured data: mixing-length theory against solar granulation, and the predicted two-phase pressure window against 89 measured lines of sight.</p>
+
+<div class="toc">
+<b>Contents</b>
+<ul>
+<li><b>1.</b> <a href="#problem">Two fluids that will not sit still</a></li>
+<li><b>2.</b> <a href="#schwarz">The displaced parcel and the Schwarzschild criterion</a></li>
+<li><b>3.</b> <a href="#brunt">The buoyancy frequency, and where the Sun's convection zone starts</a></li>
+<li><b>4.</b> <a href="#ledoux">Ledoux: what a composition gradient does</a></li>
+<li><b>5.</b> <a href="#ionisation">The collapse of $\nabla_{\rm ad}$ in a partially ionised gas</a></li>
+<li><b>6.</b> <a href="#mlt">Mixing-length theory, and how superadiabatic the Sun must be</a></li>
+<li><b>7.</b> <a href="#checka">Check A: mixing-length theory against solar granulation</a></li>
+<li><b>8.</b> <a href="#field">Thermal instability: the loss function and Field's criteria</a></li>
+<li><b>9.</b> <a href="#window">The two-phase window</a></li>
+<li><b>10.</b> <a href="#anchor">The anchor: Jenkins &amp; Tripp (2011) against the window</a></li>
+<li><b>11.</b> <a href="#limits">What this model captures, and what it misses</a></li>
+<li><b>12.</b> <a href="#problems">Problems</a></li>
+<li><b>—</b> <a href="#notation">Notation</a> · <a href="#sources">Sources</a></li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="problem">1. Two fluids that will not sit still</h2>
+
+<p>Module 3 solved the hydrostatic equation and built stars out of it. Nothing in that module asked whether the solutions it found would survive being disturbed. A stratified fluid in hydrostatic balance has every force balanced at every point, and that is a statement about the fluid at rest; it says nothing about what happens to a parcel of it that is nudged. Balance is not stability.</p>
+
+<p>This module asks the stability question twice, of two different restoring mechanisms, and gets two different instabilities.</p>
+
+<p><b>The first is buoyancy.</b> Displace a parcel upward a little and it expands to the lower ambient pressure. If it arrives denser than its new surroundings it sinks back and the layer is stable. If it arrives lighter it keeps rising, and the layer convects. <a class="secref" href="#schwarz">§2</a> turns that sentence into an inequality between two logarithmic derivatives, one belonging to the star and one to the gas, and <a class="secref" href="#brunt">§3</a> turns the inequality into a frequency. <a class="secref" href="#ledoux">§4</a> asks what a composition gradient does to it and <a class="secref" href="#ionisation">§5</a> what partial ionisation does. <a class="secref" href="#mlt">§6</a> then asks the quantitative question the criterion cannot answer — how much heat a convecting layer carries — and <a class="secref" href="#checka">§7</a> takes the answer to two measurements of the solar surface.</p>
+
+<p><b>The second is cooling.</b> Compress a parcel of interstellar gas a little, at the pressure of its surroundings. If the compression makes it radiate away energy faster than it gains it, the parcel cools, and at fixed pressure a cooler parcel is denser, so it contracts further. No gravity is involved at all. <a class="secref" href="#field">§8</a> derives Field's criterion for that runaway, <a class="secref" href="#window">§9</a> shows that it carves the interstellar medium into two stable phases separated by a narrow band of pressures, and <a class="secref" href="#anchor">§10</a> compares the predicted band with 89 measured sight lines. That comparison is the anchor of this module, and it confirms one prediction and refutes another from the same measurement.</p>
+
+<p>A terrestrial case sets the difficulty of the first question immediately. The International Standard Atmosphere fixes the tropospheric lapse rate at $6.50\ \mathrm{K\,km^{-1}}$, against a dry adiabatic value $g/c_p = 9.761\ \mathrm{K\,km^{-1}}$ for dry air. The ratio is $0.6659$, which makes the standard troposphere a polytrope of index $n = 4.2558$, with $\nabla = 1/(n+1) = 0.19026$ against the diatomic adiabatic value $2/7 = 0.28571$. By the criterion of <a class="secref" href="#schwarz">§2</a> the troposphere is stable, with $33$ per cent to spare. It nevertheless convects every afternoon. The resolution is that air is not dry: a saturated parcel releases about $2.5\times10^{10}\ \mathrm{erg\,g^{-1}}$ of latent heat as it rises and condenses, which warms it on the way up and lowers its effective lapse rate to $5$–$6\ \mathrm{K\,km^{-1}}$, below the ambient $6.5$. Moist convection is unstable where dry convection is not. Problem C1 works this through.</p>
+
+<p>The Sun has no latent-heat term of that kind, so the solar criterion is the clean one, and it is derived first.</p>
+
+<h2 id="schwarz">2. The displaced parcel and the Schwarzschild criterion</h2>
+
+<p>The whole of this section follows from the Euler equation of Module 2 and one assumption about the parcel. No transport theory is needed, and none is used.</p>
+
+<div class="def"><b>Definition 1 (the two logarithmic gradients).</b> For a stratified fluid in hydrostatic balance, the <em>stratification gradient</em> is the logarithmic temperature gradient of the background, taken along the radius,
+$$ \nabla \;\equiv\; \frac{d\ln T}{d\ln P}, \tag{2.1}$$
+which is Module 3, Definition 5. The <em>adiabatic gradient</em> is the corresponding derivative for a parcel of the gas at fixed specific entropy $s$,
+$$ \nabla_{\rm ad} \;\equiv\; \left(\frac{\partial\ln T}{\partial\ln P}\right)_{\!s}. \tag{2.2}$$
+The first is a property of the star; the second is a property of the gas. <b>Notation.</b> In this module the symbol $\nabla$ with no argument always means (2.1). The vector operator is written only with an argument attached, as in $\nabla\!\cdot\mathbf{u}$ or $\nabla\Phi$.</div>
+
+<figure><svg class="setupfig" viewBox="0 0 470 214" width="100%" role="img" aria-label="two columns of gas: a parcel displaced upward by delta r arrives at the ambient pressure with its own temperature, hotter or cooler than its new surroundings">
+  <defs>
+    <marker id="m6up" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fb923c"/></marker>
+    <marker id="m6dn" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#2dd4bf"/></marker>
+    <marker id="m6ax" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker>
+  </defs>
+  <line x1="46" y1="196" x2="46" y2="24" stroke="#94a3b8" stroke-width="1" marker-end="url(#m6ax)"/>
+  <text x="34" y="30" font-size="12" class="v" fill="#94a3b8">r</text>
+  <line x1="70" y1="160" x2="440" y2="160" stroke="#334155" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <line x1="70" y1="72" x2="440" y2="72" stroke="#334155" stroke-width="1.1" stroke-dasharray="5 4"/>
+  <text x="446" y="164" font-size="11" fill="#94a3b8">P</text>
+  <text x="446" y="76" font-size="11" fill="#94a3b8">P</text>
+  <text x="455" y="167" font-size="8" fill="#94a3b8">0</text>
+  <text x="455" y="79" font-size="8" fill="#94a3b8">1</text>
+  <circle cx="150" cy="160" r="13" fill="#fb923c" fill-opacity=".85" stroke="#0f172a" stroke-width="1"/>
+  <line x1="150" y1="143" x2="150" y2="89" stroke="#fb923c" stroke-width="1.4" marker-end="url(#m6up)"/>
+  <text x="160" y="120" font-size="12" class="v" fill="#fb923c">δr</text>
+  <circle cx="150" cy="72" r="13" fill="#fb923c" fill-opacity=".45" stroke="#fb923c" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="150" y="212" font-size="11" text-anchor="middle" fill="#cbd5e1">the parcel: adiabatic</text>
+  <text x="330" y="212" font-size="11" text-anchor="middle" fill="#cbd5e1">the surroundings</text>
+  <circle cx="330" cy="160" r="13" fill="#2dd4bf" fill-opacity=".35" stroke="#2dd4bf" stroke-width="1.2"/>
+  <circle cx="330" cy="72" r="13" fill="#2dd4bf" fill-opacity=".35" stroke="#2dd4bf" stroke-width="1.2"/>
+  <text x="186" y="66" font-size="11" fill="#e2e8f0">T</text>
+  <text x="196" y="69" font-size="8" fill="#e2e8f0">p</text>
+  <text x="290" y="66" font-size="11" fill="#e2e8f0">T</text>
+  <text x="212" y="66" font-size="11" fill="#e2e8f0">vs</text>
+  <text x="238" y="42" font-size="11" fill="#fb923c">hotter ⇒ lighter ⇒ rises on</text>
+  <text x="238" y="56" font-size="11" fill="#2dd4bf">cooler ⇒ heavier ⇒ falls back</text>
+  <text x="80" y="176" font-size="11" fill="#94a3b8">both at P</text>
+  <text x="129" y="179" font-size="8" fill="#94a3b8">0</text>
+  <text x="80" y="88" font-size="11" fill="#94a3b8">both at P</text>
+  <text x="129" y="91" font-size="8" fill="#94a3b8">1</text>
+</svg><figcaption><b>Setup for Proposition 1.</b> A parcel at the level where the ambient pressure is $P_0$ is displaced upward by $\delta r$ to the level $P_1$. It stays in pressure balance with its new surroundings throughout, and changes state adiabatically, so it arrives at $P_1$ with its own temperature $T_{\rm p}$. Only the comparison of $T_{\rm p}$ with the ambient $T$ at the same pressure decides the sign of the buoyancy force, because at equal pressure a hotter ideal gas of the same composition is the lighter one.</figcaption></figure>
+
+<div class="prop"><b>Proposition 1 (the Schwarzschild criterion).</b> Consider a plane-parallel stratification of an ideal gas in hydrostatic balance, with (i) uniform chemical composition, so that the mean molecular weight $\mu$ is the same in the parcel and its surroundings, and (ii) $\rho = \mu m_u P/(k_BT)$. Displace a parcel from the level $r$ by $\delta r$ with $|\delta r| \ll H$, where $H \equiv P/(\rho g)$ is the pressure scale height, subject to (iii) instantaneous pressure balance with the surroundings, and (iv) adiabatic change of state. Then to first order in $\delta r$ the density contrast the parcel acquires is
+$$ \frac{\Delta\rho}{\rho} \;=\; -\,(\nabla-\nabla_{\rm ad})\,\frac{\delta r}{H}, \tag{2.3}$$
+and the buoyancy force per unit mass on it is $+g\,(\nabla-\nabla_{\rm ad})\,\delta r/H$, directed along $\delta r$. The force therefore restores the parcel to its starting level if and only if
+$$ \nabla \;\lt \; \nabla_{\rm ad}. \tag{2.4}$$</div>
+
+<div class="proof">
+<p>Write $\Delta$ for the difference between the parcel and its surroundings at the same height, and $\delta$ for the change along the displacement. Both the parcel and the surroundings are ideal gases of the same $\mu$ by (i) and (ii), so $\ln\rho = \ln P - \ln T + \mathrm{const}$ for each, and</p>
+$$ \delta\ln\rho \;=\; \delta\ln P - \delta\ln T .$$
+<p>By (iii) the parcel's pressure is the ambient pressure at every instant, so $\delta\ln P$ is the same number for both. By (iv) the parcel's temperature follows its own adiabat, $\delta\ln T_{\rm p} = \nabla_{\rm ad}\,\delta\ln P$, while the surroundings supply $\delta\ln T = \nabla\,\delta\ln P$ by (2.1). Subtracting,</p>
+$$ \frac{\Delta\rho}{\rho} \;=\; \delta\ln\rho_{\rm p} - \delta\ln\rho \;=\; -(\nabla_{\rm ad}-\nabla)\,\delta\ln P \;=\;(\nabla-\nabla_{\rm ad})\,\delta\ln P .$$
+<p>Hydrostatic balance gives $dP/dr = -\rho g$, so $d\ln P/dr = -\rho g/P = -1/H$ and $\delta\ln P = -\delta r/H$ to first order. Substituting gives (2.3).</p>
+<p>Archimedes' principle in the Euler equation is the statement that a parcel of density $\rho+\Delta\rho$ in surroundings of density $\rho$ feels a net force per unit mass $-g\,\Delta\rho/\rho$ in the direction of increasing $r$. With (2.3) that force is $+g(\nabla-\nabla_{\rm ad})\delta r/H$. Since $g$, $H$ and $\rho$ are positive, the force has the sign of $(\nabla-\nabla_{\rm ad})\,\delta r$: it points along $\delta r$, and so amplifies the displacement, when $\nabla \gt \nabla_{\rm ad}$, and against $\delta r$, restoring it, when $\nabla \lt \nabla_{\rm ad}$. <span class="qed">∎</span></p>
+</div>
+
+<p>Four premises were used and each will be paid for later. Premise (i), uniform composition, is lifted in <a class="secref" href="#ledoux">§4</a>. Premise (iii), instantaneous pressure balance, requires the parcel to move slowly compared with the sound speed, and <a class="secref" href="#mlt">§6</a> finds $v_c/c_s = 0.4271$ at the solar photosphere, where the premise is therefore spent. Premise (iv), adiabatic change, requires the parcel to lose no appreciable heat while it travels, and <a class="secref" href="#mlt">§6</a> and <a class="secref" href="#checka">§7</a> find that at the photosphere radiation carries $98.7$ per cent of the flux, so it is spent there too. Only premise (ii) survives everywhere this module uses the criterion.</p>
+
+<p>The criterion has one immediate consequence. For an ideal gas with a constant ratio of specific heats $\gamma$, an adiabatic change obeys $P\propto\rho^\gamma$ and the ideal gas law gives $P\propto\rho T$, so $T\propto P^{(\gamma-1)/\gamma}$ and</p>
+
+$$ \nabla_{\rm ad} \;=\; \frac{\gamma-1}{\gamma}, \tag{2.5}$$
+
+<p>which is $2/5 = 0.400000$ for a monatomic gas and $2/7 = 0.285714$ for a diatomic one. These are the two numbers <a class="secref" href="#brunt">§3</a> and Problem C1 compare against. Everything later in the module either changes the left-hand side of (2.4), which <a class="secref" href="#brunt">§3</a> does by reading $\nabla$ off a solar model, or the right-hand side, which <a class="secref" href="#ionisation">§5</a> does by breaking the constancy of $\gamma$.</p>
+
+<h2 id="brunt">3. The buoyancy frequency, and where the Sun's convection zone starts</h2>
+
+<p>Proposition 1 gives a sign. Its magnitude is a frequency, and the frequency is a measurable property of a star.</p>
+
+<div class="prop"><b>Proposition 2 (the Brunt–Väisälä frequency).</b> Under the hypotheses of Proposition 1, and neglecting any drag on the parcel, the displacement obeys
+$$ \ddot{\delta r} \;=\; -N^2\,\delta r, \qquad N^2 \;\equiv\; \frac{g}{H}\,(\nabla_{\rm ad}-\nabla). \tag{3.1}$$
+The layer is stable if and only if $N^2\gt 0$, and a displaced parcel then oscillates about its starting level with angular frequency $N$.</div>
+
+<div class="proof">
+<p>The parcel has unit mass and the force per unit mass computed in Proposition 1 is $+g(\nabla-\nabla_{\rm ad})\delta r/H$. Newton's second law gives $\ddot{\delta r} = g(\nabla-\nabla_{\rm ad})\delta r/H = -(g/H)(\nabla_{\rm ad}-\nabla)\,\delta r$, which is (3.1). When $N^2\gt 0$ this is the equation of a harmonic oscillator of angular frequency $N$; when $N^2\lt 0$ its general solution is $A e^{|N|t}+Be^{-|N|t}$ and the growing branch is convection. The coefficients $g$, $H$, $\nabla$ and $\nabla_{\rm ad}$ are evaluated at the starting level and held fixed, which is the same first-order approximation used in Proposition 1. <span class="qed">∎</span></p>
+</div>
+
+<p>Equation (3.1) is the Schwarzschild criterion again, with a rate attached. It also identifies what the criterion costs when it is close: $N^2$ is a small difference of two numbers of order $0.4$, so a model table has to resolve $\nabla$ well to give $N^2$ at all inside a convection zone. That limit is stated below and respected.</p>
+
+<h3 id="ssm">3.1 Reading the criterion off a solar model</h3>
+
+<p>The stratification is the tabulated standard solar model BS2005-AGS,OP of Bahcall, Serenelli &amp; Basu (2005), the same table Module 3 used. From its columns $\nabla$ is a sliding least-squares slope of $\ln T$ against $\ln P$ over $\pm25$ rows, $g = Gm(r)/r^2$ from the tabulated mass fraction, and $H = P/(\rho g)$.</p>
+
+<span class="prov">The table is an input, not a checked quantity. It is used here only as a stratification: a set of $(P,\rho,T,m)$ values to differentiate. Module 3 measured its adiabatic plateau, $\nabla = 0.3957$ over $0.80$–$0.92\,R$, and located the base of its convection zone at $0.7269\,R$; this module's script recovers both numbers with the same locator. That agreement demonstrates that the two scripts read the table identically. It is not a check, because both numbers come from the same file.</span>
+
+<p>Table 1 gives the result. $N$ is computed twice on the right: once with the ideal monatomic $\nabla_{\rm ad} = 0.4$, and once with the model's own measured plateau $0.3957$, which is what its equation of state — including Coulomb corrections and a little radiation pressure — actually delivers. The last column adds the composition term of <a class="secref" href="#ledoux">§4</a>.</p>
+
+<table>
+<caption class="small" style="text-align:left;caption-side:bottom;padding-top:.4rem;">Table 1. The buoyancy frequency through BS2005-AGS,OP. "imaginary" means $N^2\lt 0$ at the quoted precision, which inside the convection zone is not a measurement; see the limit stated below.</caption>
+<tr><th>$r/R$</th><th>$\nabla$</th><th>$\nabla_\mu$</th><th>$H$ [cm]</th><th>$N$ [$\mu$Hz], $\nabla_{\rm ad}=0.4$</th><th>$N$ [$\mu$Hz], plateau</th><th>$N$ [$\mu$Hz], $+$ Ledoux</th></tr>
+<tr><td>0.0500</td><td>0.3251</td><td>$+0.37196$</td><td>$1.194\times10^{10}$</td><td>144.84</td><td>140.59</td><td>352.04</td></tr>
+<tr><td>0.0999</td><td>0.3220</td><td>$+0.22043$</td><td>$7.510\times10^{9}$</td><td>233.70</td><td>227.12</td><td>453.84</td></tr>
+<tr><td>0.1496</td><td>0.3032</td><td>$+0.09531$</td><td>$6.127\times10^{9}$</td><td>306.06</td><td>299.15</td><td>426.24</td></tr>
+<tr><td>0.1996</td><td>0.2629</td><td>$+0.02629$</td><td>$5.393\times10^{9}$</td><td>386.01</td><td>379.87</td><td>415.78</td></tr>
+<tr><td>0.3016</td><td>0.2116</td><td>$+0.00256$</td><td>$4.861\times10^{9}$</td><td>427.47</td><td>422.53</td><td>425.46</td></tr>
+<tr><td>0.4002</td><td>0.1968</td><td>$+0.00134$</td><td>$5.027\times10^{9}$</td><td>373.34</td><td>369.35</td><td>370.59</td></tr>
+<tr><td>0.5018</td><td>0.1962</td><td>$+0.00155$</td><td>$5.424\times10^{9}$</td><td>304.51</td><td>301.26</td><td>302.43</td></tr>
+<tr><td>0.5979</td><td>0.2074</td><td>$+0.00166$</td><td>$5.759\times10^{9}$</td><td>247.82</td><td>245.02</td><td>246.09</td></tr>
+<tr><td>0.6804</td><td>0.2616</td><td>$+0.00906$</td><td>$5.781\times10^{9}$</td><td>186.66</td><td>183.72</td><td>189.83</td></tr>
+<tr><td>0.7099</td><td>0.3259</td><td>$+0.02423$</td><td>$5.661\times10^{9}$</td><td>132.67</td><td>128.73</td><td>149.43</td></tr>
+<tr><td>0.7500</td><td>0.3963</td><td>$-0.00307$</td><td>$5.197\times10^{9}$</td><td>29.34</td><td>imaginary</td><td>imaginary</td></tr>
+<tr><td>0.8493</td><td>0.3960</td><td>$-0.00390$</td><td>$3.477\times10^{9}$</td><td>33.20</td><td>imaginary</td><td>imaginary</td></tr>
+<tr><td>0.9499</td><td>0.3870</td><td>$-0.01165$</td><td>$1.199\times10^{9}$</td><td>91.25</td><td>74.51</td><td>imaginary</td></tr>
+<tr><td>0.9800</td><td>0.3466</td><td>$-0.02543$</td><td>$4.374\times10^{8}$</td><td>297.04</td><td>284.75</td><td>197.70</td></tr>
+</table>
+
+<p>The maximum of $N$ in the radiative interior, over $0.05$–$0.65\,R$, is</p>
+
+$$ N_{\max} = 2.7022\times10^{-3}\ \mathrm{rad\,s^{-1}} = 430.06\ \mu\mathrm{Hz} \quad\text{at}\quad r = 0.2670\,R, $$
+
+<p>and the corresponding buoyancy period $2\pi/N_{\max}$ is $38.8$ minutes. Since a gravity mode of the star is a standing pattern of the oscillation of Proposition 2, and no such oscillation can be faster than the local $N$, every solar g mode must have a period longer than $39$ minutes. The Sun's famous five-minute oscillations are therefore acoustic, as Module 4 treated them, and the two mode families cannot be confused by their periods. This is a prediction of the model read through Proposition 2, not a check: no measured g-mode period is compared against it here, and no claim is made in this module about whether solar g modes have been detected.</p>
+
+<h3 id="base">3.2 Why the convection zone reaches down to $0.727\,R$</h3>
+
+<p>Read the $\nabla$ column of Table 1 from the inside out. It falls to $0.1962$ at $0.5018\,R$ and then <em>rises</em>: $0.1968$ at $0.4002\,R$, $0.2616$ at $0.6804\,R$, $0.3259$ at $0.7099\,R$, and $0.3963$ at $0.7500\,R$. The rise from $0.4002\,R$ to $0.7500\,R$ is a factor $2.014$, and it carries $\nabla$ straight across the flat adiabatic plateau $0.3957$. The base of the convection zone is where the crossing happens, at $0.7269\,R$, which is $T = 2.02\times10^{6}$ K in the same table.</p>
+
+<p>It is worth being exact about which side moves. In this star the convection zone opens because $\nabla$ rises to meet $\nabla_{\rm ad}$, not because $\nabla_{\rm ad}$ falls to meet $\nabla$: over the whole radiative interior $\nabla_{\rm ad}$ is the flat plateau value. A radiative layer carries its flux with $\nabla = \nabla_{\rm rad}\propto \kappa L P/(m\,T^4)$, so a rising opacity $\kappa$ and a falling temperature both push $\nabla$ up, and both are happening here. <b>This module computes neither.</b> It reads the rise off the model and does not apportion it between opacity and temperature; doing so would need the opacity tables the model was built with, which are not part of this module. <a class="secref" href="#ionisation">§5</a> shows the other mechanism, the one that moves $\nabla_{\rm ad}$, and shows that it operates somewhere else entirely.</p>
+
+<span class="warn"><b>Honest limit on the sign of $N^2$ inside the convection zone.</b> At $r = 0.90\,R$ the table gives $\nabla = 0.394599$ against the plateau $0.395673$, a difference of $-1.07\times10^{-3}$. <a class="secref" href="#mlt">§6</a> shows that the true superadiabatic excess there is about $1.9\times10^{-6}$, three orders of magnitude smaller. The table quotes $P$, $\rho$ and $T$ to four significant figures and cannot resolve a difference that small. So $N^2$ in the convection zone is reported here as zero to within the table's precision, and the "imaginary" entries of Table 1 are <em>not</em> a measurement of a negative $N^2$. The radiative-interior maximum is robust by contrast, because there $\nabla_{\rm ad}-\nabla$ is of order $0.1$.</span>
+
+<figure>
+<!--FIG_BRUNT-->
+<svg class="setupfig" viewBox="0 0 760 640" width="100%" role="img" aria-label="Upper panel: the buoyancy frequency N against fractional radius in a standard solar model. It rises from the centre to a maximum of 430 microhertz at 0.27 of the solar radius and falls to the base of the convection zone at 0.727, beyond which it is zero to the precision of the table. A dashed curve adds the composition term, which roughly doubles N inside 0.1 of the radius and makes no difference outside 0.3. Lower panel: the superadiabatic excess needed to carry the solar luminosity by mixing-length convection, on a logarithmic axis, rising from about one part in ten million at the base of the convection zone to order unity at the photosphere.">
+<text x="392.0" y="28.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Buoyancy frequency through the Sun</text>
+<rect x="531.8" y="56" width="157.8" height="220" fill="#2dd4bf" fill-opacity="0.08"/>
+<rect x="84" y="56" width="616" height="220" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="84.0" y1="276" x2="84.0" y2="281" stroke="#334155" stroke-width="1"/>
+<text x="84.0" y="294.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.0</text>
+<line x1="207.2" y1="276" x2="207.2" y2="281" stroke="#334155" stroke-width="1"/>
+<text x="207.2" y="294.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.2</text>
+<line x1="330.4" y1="276" x2="330.4" y2="281" stroke="#334155" stroke-width="1"/>
+<text x="330.4" y="294.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.4</text>
+<line x1="453.6" y1="276" x2="453.6" y2="281" stroke="#334155" stroke-width="1"/>
+<text x="453.6" y="294.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.6</text>
+<line x1="576.8" y1="276" x2="576.8" y2="281" stroke="#334155" stroke-width="1"/>
+<text x="576.8" y="294.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.8</text>
+<line x1="700.0" y1="276" x2="700.0" y2="281" stroke="#334155" stroke-width="1"/>
+<text x="700.0" y="294.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1.0</text>
+<line x1="79" y1="276.0" x2="84" y2="276.0" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="280.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="79" y1="233.7" x2="84" y2="233.7" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="237.7" font-size="10.5" text-anchor="end" fill="#94a3b8">100</text>
+<line x1="79" y1="191.4" x2="84" y2="191.4" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="195.4" font-size="10.5" text-anchor="end" fill="#94a3b8">200</text>
+<line x1="79" y1="149.1" x2="84" y2="149.1" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="153.1" font-size="10.5" text-anchor="end" fill="#94a3b8">300</text>
+<line x1="79" y1="106.8" x2="84" y2="106.8" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="110.8" font-size="10.5" text-anchor="end" fill="#94a3b8">400</text>
+<line x1="79" y1="64.5" x2="84" y2="64.5" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="68.5" font-size="10.5" text-anchor="end" fill="#94a3b8">500</text>
+<text x="392.0" y="312.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">r / R</text>
+<text x="34.0" y="166.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 34 166)">N / 2π  (µHz)</text>
+<path d="M 102.5,174.5 L 102.8,173.4 L 102.9,172.8 L 103.0,172.1 L 103.2,171.6 L 103.4,170.6 L 103.6,169.8 L 103.8,168.7 L 104.0,167.8 L 104.2,167.2 L 104.4,166.2 L 104.5,165.6 L 104.7,164.6 L 104.9,164.1 L 105.1,163.2 L 105.3,162.6 L 105.5,161.7 L 105.6,161.1 L 105.9,160.2 L 106.1,159.1 L 106.3,158.4 L 106.7,157.1 L 106.9,156.1 L 107.1,155.3 L 107.4,154.1 L 107.6,153.3 L 108.0,151.6 L 108.2,150.9 L 108.6,149.2 L 108.8,148.4 L 109.2,146.8 L 109.5,145.9 L 109.9,144.2 L 110.4,142.4 L 110.8,140.8 L 110.9,140.3 L 111.4,138.5 L 111.7,137.5 L 112.1,135.7 L 112.3,135.2 L 112.8,133.5 L 113.1,132.4 L 113.7,130.5 L 114.0,129.8 L 114.4,128.2 L 114.8,127.1 L 115.1,126.1 L 115.6,124.3 L 115.8,123.9 L 116.4,122.2 L 116.7,121.2 L 117.2,119.7 L 117.7,118.6 L 117.9,117.8 L 118.4,116.7 L 118.8,115.4 L 119.4,113.8 L 119.9,112.5 L 120.3,111.7 L 120.6,110.8 L 120.9,110.3 L 121.3,109.3 L 121.9,107.9 L 122.2,107.0 L 122.8,105.7 L 123.3,104.5 L 123.8,103.2 L 124.2,102.5 L 124.5,102.1 L 125.0,101.2 L 125.6,99.9 L 126.0,99.2 L 126.6,98.2 L 126.9,97.6 L 127.5,96.6 L 127.9,95.9 L 128.4,94.9 L 128.8,94.4 L 129.3,93.7 L 129.5,93.4 L 129.9,93.1 L 130.3,92.3 L 130.7,91.9 L 131.0,91.6 L 131.5,91.0 L 131.9,90.4 L 132.4,89.7 L 132.8,89.3 L 133.2,89.0 L 133.6,88.6 L 134.0,88.2 L 134.5,87.6 L 134.9,87.2 L 135.3,86.7 L 135.9,86.2 L 136.2,86.1 L 136.7,85.5 L 137.0,85.5 L 137.4,85.1 L 137.7,85.1 L 138.1,84.7 L 138.4,84.6 L 138.9,84.3 L 139.2,84.3 L 139.6,83.9 L 139.9,84.0 L 140.3,83.7 L 140.6,83.7 L 141.0,83.6 L 141.4,83.3 L 142.0,83.0 L 142.3,83.1 L 142.7,82.9 L 143.0,83.1 L 143.3,83.2 L 143.6,83.2 L 143.9,83.4 L 144.2,83.7 L 144.5,83.8 L 145.0,83.8 L 145.3,83.9 L 145.5,84.0 L 146.0,83.8 L 146.3,84.0 L 146.7,83.9 L 147.0,84.1 L 147.5,83.9 L 147.9,83.9 L 148.2,84.1 L 148.5,84.3 L 148.9,84.4 L 149.2,84.6 L 149.5,84.8 L 150.0,84.8 L 150.2,85.0 L 150.8,84.9 L 151.1,85.1 L 151.6,85.1 L 152.1,85.0 L 152.6,85.1 L 152.9,85.3 L 153.2,85.5 L 153.7,85.5 L 154.1,85.7 L 154.3,85.9 L 154.7,86.1 L 155.0,86.2 L 155.3,86.5 L 155.8,86.4 L 156.3,86.5 L 156.6,86.7 L 157.1,86.8 L 157.6,86.7 L 158.2,86.6 L 158.7,86.7 L 159.0,87.0 L 159.4,87.2 L 159.9,87.2 L 160.3,87.4 L 160.6,87.7 L 161.0,88.0 L 161.5,88.1 L 162.1,88.2 L 162.5,88.5 L 162.7,88.8 L 163.1,89.0 L 163.4,89.3 L 163.9,89.6 L 164.2,89.8 L 164.5,90.1 L 164.9,90.4 L 165.2,90.7 L 165.6,90.8 L 166.0,91.1 L 166.3,91.4 L 166.6,91.7 L 167.1,91.8 L 167.5,92.0 L 168.0,92.2 L 168.4,92.4 L 168.9,92.5 L 169.3,92.8 L 169.8,92.9 L 170.3,92.9 L 170.6,93.2 L 171.2,93.2 L 171.6,93.3 L 172.1,93.4 L 172.5,93.6 L 172.8,93.8 L 173.4,93.9 L 173.7,94.1 L 174.0,94.4 L 174.4,94.5 L 174.8,94.8 L 175.1,95.0 L 175.5,95.2 L 175.8,95.4 L 176.1,95.7 L 176.7,95.8 L 177.0,96.0 L 177.4,96.3 L 177.8,96.6 L 178.3,96.7 L 178.6,96.9 L 179.1,97.0 L 179.4,97.3 L 179.9,97.4 L 180.1,97.6 L 180.5,97.8 L 180.8,98.0 L 181.2,98.1 L 181.6,98.3 L 182.0,98.4 L 182.3,98.5 L 183.0,98.5 L 183.3,98.7 L 184.0,98.7 L 184.5,98.8 L 184.8,98.9 L 185.3,99.0 L 185.9,99.1 L 186.2,99.2 L 186.8,99.3 L 187.3,99.4 L 187.7,99.5 L 188.3,99.6 L 188.8,99.7 L 189.1,99.8 L 189.6,99.9 L 190.1,100.0 L 190.4,100.2 L 190.9,100.2 L 191.5,100.3 L 191.7,100.4 L 192.3,100.5 L 192.5,100.6 L 193.1,100.7 L 193.4,100.8 L 193.9,100.9 L 194.5,100.9 L 195.2,100.9 L 195.9,101.0 L 196.7,100.9 L 197.4,100.9 L 197.8,101.0 L 198.6,100.9 L 198.9,101.0 L 199.7,100.9 L 200.1,100.9 L 200.9,100.9 L 201.7,100.8 L 202.0,100.7 L 202.8,100.7 L 203.2,100.6 L 204.0,100.5 L 204.7,100.4 L 205.3,100.4 L 206.1,100.2 L 206.9,100.1 L 207.8,100.0 L 208.6,99.8 L 209.5,99.7 L 210.3,99.6 L 211.2,99.4 L 212.1,99.3 L 212.7,99.2 L 213.4,99.0 L 214.5,98.8 L 215.5,98.6 L 216.5,98.3 L 217.4,98.1 L 218.4,97.8 L 219.3,97.5 L 220.2,97.2 L 221.7,96.8 L 223.3,96.5 L 224.6,96.1 L 225.7,95.7 L 226.8,95.3 L 227.9,94.9 L 228.9,94.6 L 230.0,94.2 L 231.5,94.0 L 233.0,93.8 L 234.1,93.5 L 235.1,93.2 L 236.2,93.0 L 237.2,92.7 L 238.3,92.4 L 239.4,92.1 L 241.6,92.0 L 243.8,91.9 L 246.1,92.0 L 248.5,92.1 L 250.9,92.2 L 253.4,92.4 L 255.9,92.8 L 258.5,93.3 L 261.2,93.8 L 264.0,94.5 L 266.9,95.2 L 269.8,96.0 L 272.9,97.0 L 275.8,97.9 L 278.5,98.7 L 280.9,99.5 L 282.9,100.1 L 284.6,100.5 L 286.5,101.1 L 289.4,102.1 L 291.4,102.8 L 294.8,104.1 L 298.6,105.7 L 302.5,107.3 L 306.5,109.0 L 310.7,110.9 L 315.1,112.8 L 319.1,114.6 L 322.5,116.0 L 325.1,117.1 L 327.0,117.9 L 329.0,118.7" fill="none" stroke="#2dd4bf" stroke-width="1.8" stroke-dasharray="5 3"/>
+<path d="M 102.5,237.3 L 102.8,237.0 L 102.9,236.6 L 103.0,236.4 L 103.2,236.3 L 103.4,235.6 L 103.6,235.4 L 103.8,234.9 L 104.0,234.4 L 104.2,234.0 L 104.4,233.5 L 104.5,233.4 L 104.7,233.0 L 104.9,232.6 L 105.1,232.3 L 105.3,232.1 L 105.5,231.9 L 105.6,231.7 L 105.9,231.2 L 106.1,230.7 L 106.3,230.4 L 106.7,229.7 L 106.9,229.3 L 107.1,229.1 L 107.4,228.5 L 107.6,228.2 L 108.0,227.5 L 108.2,227.1 L 108.6,226.4 L 108.8,226.2 L 109.2,225.6 L 109.5,225.3 L 109.9,224.5 L 110.4,223.7 L 110.8,223.1 L 110.9,222.7 L 111.4,221.9 L 111.7,221.4 L 112.1,220.6 L 112.3,220.3 L 112.8,219.6 L 113.1,219.1 L 113.7,218.3 L 114.0,217.8 L 114.4,217.1 L 114.8,216.5 L 115.1,216.0 L 115.6,215.1 L 115.8,215.0 L 116.4,214.0 L 116.7,213.5 L 117.2,212.8 L 117.7,212.3 L 117.9,211.9 L 118.4,211.3 L 118.8,210.7 L 119.4,209.9 L 119.9,209.3 L 120.3,208.9 L 120.6,208.4 L 120.9,207.9 L 121.3,207.3 L 121.9,206.5 L 122.2,206.1 L 122.8,205.4 L 123.3,204.7 L 123.8,203.9 L 124.2,203.5 L 124.5,203.1 L 125.0,202.4 L 125.6,201.8 L 126.0,201.3 L 126.6,200.6 L 126.9,200.1 L 127.5,199.6 L 127.9,199.1 L 128.4,198.5 L 128.8,198.1 L 129.3,197.6 L 129.5,197.2 L 129.9,196.9 L 130.3,196.4 L 130.7,196.0 L 131.0,195.7 L 131.5,195.3 L 131.9,194.8 L 132.4,194.2 L 132.8,193.8 L 133.2,193.3 L 133.6,192.8 L 134.0,192.3 L 134.5,191.8 L 134.9,191.4 L 135.3,191.0 L 135.9,190.5 L 136.2,190.0 L 136.7,189.4 L 137.0,189.0 L 137.4,188.5 L 137.7,188.3 L 138.1,187.7 L 138.4,187.3 L 138.9,186.8 L 139.2,186.5 L 139.6,186.1 L 139.9,185.9 L 140.3,185.6 L 140.6,185.2 L 141.0,184.8 L 141.4,184.4 L 142.0,183.8 L 142.3,183.6 L 142.7,183.2 L 143.0,182.8 L 143.3,182.6 L 143.6,182.3 L 143.9,181.7 L 144.2,181.4 L 144.5,181.1 L 145.0,180.5 L 145.3,180.0 L 145.5,179.9 L 146.0,179.5 L 146.3,179.2 L 146.7,178.7 L 147.0,178.6 L 147.5,178.3 L 147.9,177.7 L 148.2,177.5 L 148.5,177.3 L 148.9,176.8 L 149.2,176.4 L 149.5,176.1 L 150.0,175.5 L 150.2,175.2 L 150.8,174.9 L 151.1,174.5 L 151.6,174.1 L 152.1,173.6 L 152.6,173.1 L 152.9,172.6 L 153.2,172.1 L 153.7,171.6 L 154.1,171.3 L 154.3,171.0 L 154.7,170.6 L 155.0,170.1 L 155.3,169.7 L 155.8,169.2 L 156.3,168.9 L 156.6,168.7 L 157.1,168.2 L 157.6,167.7 L 158.2,167.1 L 158.7,166.7 L 159.0,166.3 L 159.4,166.0 L 159.9,165.5 L 160.3,165.0 L 160.6,164.7 L 161.0,164.3 L 161.5,163.7 L 162.1,163.2 L 162.5,163.0 L 162.7,162.6 L 163.1,162.2 L 163.4,161.8 L 163.9,161.4 L 164.2,161.1 L 164.5,160.8 L 164.9,160.5 L 165.2,160.0 L 165.6,159.7 L 166.0,159.3 L 166.3,158.9 L 166.6,158.6 L 167.1,158.2 L 167.5,157.9 L 168.0,157.4 L 168.4,157.2 L 168.9,156.8 L 169.3,156.6 L 169.8,156.1 L 170.3,155.8 L 170.6,155.3 L 171.2,154.9 L 171.6,154.6 L 172.1,154.1 L 172.5,153.9 L 172.8,153.5 L 173.4,153.1 L 173.7,152.6 L 174.0,152.2 L 174.4,151.9 L 174.8,151.5 L 175.1,151.1 L 175.5,150.4 L 175.8,149.9 L 176.1,149.4 L 176.7,148.9 L 177.0,148.5 L 177.4,148.0 L 177.8,147.5 L 178.3,146.9 L 178.6,146.4 L 179.1,145.9 L 179.4,145.3 L 179.9,144.9 L 180.1,144.4 L 180.5,143.9 L 180.8,143.4 L 181.2,142.9 L 181.6,142.5 L 182.0,141.9 L 182.3,141.5 L 183.0,140.9 L 183.3,140.4 L 184.0,139.8 L 184.5,139.2 L 184.8,138.7 L 185.3,138.2 L 185.9,137.6 L 186.2,137.1 L 186.8,136.5 L 187.3,135.9 L 187.7,135.4 L 188.3,134.8 L 188.8,134.3 L 189.1,133.8 L 189.6,133.2 L 190.1,132.7 L 190.4,132.2 L 190.9,131.7 L 191.5,131.2 L 191.7,130.7 L 192.3,130.1 L 192.5,129.6 L 193.1,129.0 L 193.4,128.5 L 193.9,127.9 L 194.5,127.2 L 195.2,126.6 L 195.9,126.0 L 196.7,125.4 L 197.4,124.8 L 197.8,124.2 L 198.6,123.6 L 198.9,123.0 L 199.7,122.4 L 200.1,121.8 L 200.9,121.2 L 201.7,120.5 L 202.0,119.8 L 202.8,119.1 L 203.2,118.5 L 204.0,117.8 L 204.7,117.2 L 205.3,116.6 L 206.1,115.9 L 206.9,115.3 L 207.8,114.6 L 208.6,113.9 L 209.5,113.3 L 210.3,112.7 L 211.2,112.1 L 212.1,111.4 L 212.7,110.8 L 213.4,110.1 L 214.5,109.4 L 215.5,108.7 L 216.5,107.9 L 217.4,107.1 L 218.4,106.3 L 219.3,105.5 L 220.2,104.6 L 221.7,103.8 L 223.3,103.0 L 224.6,102.3 L 225.7,101.4 L 226.8,100.7 L 227.9,99.9 L 228.9,99.3 L 230.0,98.6 L 231.5,98.1 L 233.0,97.6 L 234.1,97.1 L 235.1,96.6 L 236.2,96.2 L 237.2,95.7 L 238.3,95.3 L 239.4,94.7 L 241.6,94.5 L 243.8,94.2 L 246.1,94.1 L 248.5,94.1 L 250.9,94.1 L 253.4,94.2 L 255.9,94.4 L 258.5,94.8 L 261.2,95.3 L 264.0,95.9 L 266.9,96.5 L 269.8,97.2 L 272.9,98.2 L 275.8,99.0 L 278.5,99.8 L 280.9,100.5 L 282.9,101.1 L 284.6,101.5 L 286.5,102.0 L 289.4,103.0 L 291.4,103.6 L 294.8,104.9 L 298.6,106.4 L 302.5,108.0 L 306.5,109.7 L 310.7,111.5 L 315.1,113.4 L 319.1,115.2 L 322.5,116.6 L 325.1,117.7 L 327.0,118.4 L 329.0,119.2 L 330.5,119.7 L 332.6,120.6 L 335.1,121.7 L 337.7,122.8 L 340.3,124.0 L 342.2,124.8 L 344.2,125.7 L 346.9,126.9 L 349.3,128.0 L 351.7,129.2 L 356.2,131.3 L 360.8,133.5 L 363.1,134.5 L 365.5,135.6 L 367.8,136.7 L 370.2,137.9 L 372.7,139.0 L 375.3,140.2 L 379.8,142.3 L 383.0,143.8 L 384.8,144.7 L 386.9,145.6 L 388.8,146.6 L 393.1,148.5 L 397.2,150.4 L 401.2,152.1 L 405.0,153.7 L 408.8,155.4 L 412.6,156.9 L 416.2,158.4 L 419.8,159.9 L 423.4,161.3 L 426.9,162.7 L 430.3,164.1 L 433.7,165.4 L 437.0,166.6 L 440.2,167.9 L 443.4,169.0 L 446.5,170.2 L 449.5,171.3 L 452.3,172.3 L 455.0,173.3 L 457.3,174.2 L 459.4,175.1 L 462.5,176.1 L 464.4,176.9 L 467.1,177.9 L 469.8,178.8 L 472.5,179.8 L 475.1,180.8 L 477.7,181.7 L 480.2,182.7 L 481.4,183.3 L 482.6,184.0 L 483.8,184.6 L 485.0,185.2 L 486.2,185.9 L 487.3,186.6 L 488.4,187.3 L 489.5,187.9 L 491.0,188.7 L 492.6,189.4 L 493.6,190.1 L 495.0,190.8 L 495.7,191.4 L 496.6,192.1 L 497.5,192.8 L 498.6,193.5 L 499.2,194.1 L 499.7,194.8 L 500.4,195.5 L 501.1,196.2 L 501.7,196.9 L 502.4,197.6 L 503.1,198.3 L 503.7,198.9 L 504.4,199.4 L 505.0,199.9 L 505.5,200.4 L 506.1,201.0 L 506.7,201.5 L 507.2,202.0 L 507.8,202.5 L 508.3,203.0 L 508.7,203.5 L 509.1,204.1 L 509.5,204.6 L 510.0,205.0 L 510.5,205.5 L 510.8,205.9 L 511.3,206.3 L 511.7,206.7 L 511.8,207.0 L 512.2,207.4 L 512.3,207.7 L 512.7,208.1 L 513.0,208.4 L 513.2,208.7 L 513.5,209.1 L 513.9,209.5 L 514.0,209.8 L 514.4,210.2 L 514.6,210.5 L 514.9,210.9 L 515.1,211.3 L 515.3,211.6 L 515.4,212.0 L 515.6,212.3 L 515.8,212.6 L 516.0,213.0 L 516.1,213.3 L 516.3,213.6 L 516.5,213.9 L 516.6,214.2 L 516.8,214.5 L 517.0,214.8 L 517.2,215.1 L 517.3,215.3 L 517.5,215.7 L 517.7,215.9 L 517.8,216.2 L 518.0,216.5 L 518.2,216.7 L 518.4,217.0 L 518.5,217.3 L 518.7,217.6 L 518.9,217.8 L 519.2,218.1 L 519.4,218.2 L 519.6,218.5 L 519.8,218.8 L 519.9,219.0 L 520.1,219.3 L 520.2,219.5 L 520.4,219.8 L 520.5,220.0 L 520.7,220.3 L 520.8,220.6 L 521.0,220.8 L 521.1,221.2 L 521.3,221.5 L 521.4,221.8 L 521.6,222.2 L 521.7,222.5 L 521.9,222.8 L 522.0,223.1 L 522.2,223.3 L 522.3,223.7 L 522.5,224.0 L 522.7,224.3 L 522.8,224.7 L 523.0,225.0 L 523.1,225.2 L 523.3,225.7 L 523.4,226.1 L 523.6,226.4 L 523.7,226.6 L 523.9,226.8 L 524.0,227.2 L 524.2,227.5 L 524.3,227.8 L 524.5,228.2 L 524.6,228.6 L 524.8,229.0 L 524.9,229.4 L 525.1,229.7 L 525.2,230.1 L 525.4,230.4 L 525.5,230.7 L 525.6,231.3 L 525.8,231.8 L 525.9,232.3 L 526.1,232.7 L 526.2,233.1 L 526.4,233.4 L 526.5,233.8 L 526.7,234.4 L 526.8,234.8 L 527.0,235.2 L 527.1,235.6 L 527.2,236.0 L 527.4,236.6 L 527.5,237.1 L 527.7,237.5 L 527.8,238.0 L 528.0,238.7 L 528.1,239.3 L 528.3,239.7 L 528.4,240.3 L 528.6,240.8 L 528.7,241.6 L 528.9,242.4 L 529.0,243.3 L 529.2,244.1 L 529.3,245.0 L 529.4,246.1 L 529.6,247.1 L 529.7,248.0 L 529.9,249.3 L 530.0,250.4 L 530.1,251.7 L 530.3,252.9 L 530.4,253.9 L 530.6,255.0 L 530.7,256.2 L 530.8,257.5 L 531.0,258.6 L 531.1,259.2 L 531.3,260.2 L 531.4,261.2 L 531.5,262.0 L 531.7,262.9" fill="none" stroke="#facc15" stroke-width="2.6"/>
+<circle cx="248.5" cy="94.1" r="4" fill="#facc15"/>
+<line x1="248.5" y1="100.1" x2="276.5" y2="200.5" stroke="#facc15" stroke-width="1"/>
+<text x="256.5" y="212.5" font-size="10.5" text-anchor="start" fill="#facc15">maximum 430 µHz at 0.27 R</text>
+<text x="256.5" y="227.5" font-size="10.5" text-anchor="start" fill="#94a3b8">so every g mode has period &gt; 38.8 min</text>
+<text x="92.0" y="72.0" font-size="10.5" text-anchor="start" fill="#2dd4bf">with the Ledoux composition term</text>
+<text x="539.8" y="72.0" font-size="10.5" text-anchor="start" fill="#2dd4bf">convection zone</text>
+<text x="539.8" y="250.0" font-size="10.5" text-anchor="start" fill="#94a3b8">N² = 0 to the</text>
+<text x="539.8" y="265.0" font-size="10.5" text-anchor="start" fill="#94a3b8">table's precision</text>
+<text x="523.8" y="265.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">base 0.727 R</text>
+<text x="392.0" y="348.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">How superadiabatic the convection zone must be to carry the Sun's luminosity</text>
+<rect x="84" y="376" width="616" height="200" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="84.0" y1="576" x2="84.0" y2="581" stroke="#334155" stroke-width="1"/>
+<text x="84.0" y="594.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.70</text>
+<line x1="185.0" y1="576" x2="185.0" y2="581" stroke="#334155" stroke-width="1"/>
+<text x="185.0" y="594.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.75</text>
+<line x1="286.0" y1="576" x2="286.0" y2="581" stroke="#334155" stroke-width="1"/>
+<text x="286.0" y="594.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.80</text>
+<line x1="387.0" y1="576" x2="387.0" y2="581" stroke="#334155" stroke-width="1"/>
+<text x="387.0" y="594.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.85</text>
+<line x1="487.9" y1="576" x2="487.9" y2="581" stroke="#334155" stroke-width="1"/>
+<text x="487.9" y="594.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.90</text>
+<line x1="588.9" y1="576" x2="588.9" y2="581" stroke="#334155" stroke-width="1"/>
+<text x="588.9" y="594.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.95</text>
+<line x1="689.9" y1="576" x2="689.9" y2="581" stroke="#334155" stroke-width="1"/>
+<text x="689.9" y="594.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1.00</text>
+<line x1="79" y1="568.4" x2="84" y2="568.4" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="572.4" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻⁷</text>
+<line x1="79" y1="543.1" x2="84" y2="543.1" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="547.1" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻⁶</text>
+<line x1="79" y1="517.8" x2="84" y2="517.8" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="521.8" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻⁵</text>
+<line x1="79" y1="492.5" x2="84" y2="492.5" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="496.5" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻⁴</text>
+<line x1="79" y1="467.1" x2="84" y2="467.1" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="471.1" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻³</text>
+<line x1="79" y1="441.8" x2="84" y2="441.8" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="445.8" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻²</text>
+<line x1="79" y1="416.5" x2="84" y2="416.5" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="420.5" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻¹</text>
+<line x1="79" y1="391.2" x2="84" y2="391.2" stroke="#334155" stroke-width="1"/>
+<text x="75.0" y="395.2" font-size="10.5" text-anchor="end" fill="#94a3b8">1</text>
+<text x="392.0" y="612.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">r / R</text>
+<text x="32.0" y="476.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 32 476)">∇ − ∇<tspan baseline-shift="sub" font-size="75%">ad</tspan></text>
+<path d="M 138.9,560.6 L 139.4,560.6 L 140.3,560.5 L 141.0,560.5 L 141.7,560.4 L 142.4,560.4 L 143.1,560.4 L 144.1,560.3 L 145.4,560.3 L 146.7,560.2 L 147.6,560.2 L 148.9,560.1 L 149.8,560.1 L 151.1,560.0 L 151.5,560.0 L 152.9,559.9 L 153.7,559.9 L 155.1,559.8 L 156.4,559.8 L 157.3,559.7 L 158.6,559.7 L 159.5,559.6 L 160.8,559.6 L 161.7,559.5 L 163.0,559.5 L 164.8,559.4 L 165.7,559.3 L 167.1,559.3 L 168.4,559.2 L 169.3,559.2 L 170.6,559.1 L 171.6,559.1 L 172.9,559.0 L 174.7,558.9 L 176.5,558.8 L 178.3,558.8 L 179.4,558.7 L 181.3,558.6 L 183.3,558.5 L 184.9,558.4 L 186.4,558.4 L 187.7,558.3 L 189.0,558.2 L 191.0,558.1 L 192.4,558.1 L 194.4,558.0 L 196.5,557.9 L 198.0,557.8 L 199.6,557.7 L 201.9,557.6 L 204.3,557.5 L 205.9,557.4 L 208.3,557.3 L 209.8,557.2 L 211.4,557.1 L 213.6,557.0 L 215.1,556.9 L 217.4,556.8 L 219.0,556.7 L 221.3,556.6 L 222.8,556.5 L 224.2,556.4 L 225.7,556.4 L 227.1,556.3 L 228.6,556.2 L 230.1,556.1 L 231.6,556.1 L 234.5,555.9 L 237.3,555.8 L 240.2,555.6 L 241.6,555.5 L 244.5,555.4 L 247.2,555.2 L 249.9,555.1 L 252.7,554.9 L 255.5,554.7 L 258.1,554.6 L 260.8,554.5 L 263.5,554.3 L 266.2,554.1 L 268.7,554.0 L 271.3,553.9 L 273.8,553.7 L 276.4,553.6 L 278.9,553.4 L 281.4,553.3 L 283.8,553.1 L 286.4,553.0 L 288.8,552.8 L 291.1,552.7 L 293.6,552.5 L 296.0,552.4 L 298.3,552.2 L 300.7,552.1 L 303.0,552.0 L 305.4,551.8 L 309.9,551.5 L 314.4,551.2 L 318.8,550.9 L 323.3,550.7 L 327.5,550.4 L 331.8,550.1 L 336.0,549.8 L 340.2,549.5 L 344.2,549.2 L 348.3,549.0 L 352.2,548.7 L 356.2,548.4 L 359.9,548.1 L 363.8,547.8 L 367.5,547.6 L 371.3,547.3 L 374.8,547.0 L 378.4,546.7 L 381.9,546.5 L 385.5,546.2 L 388.8,545.9 L 392.3,545.6 L 395.6,545.4 L 398.9,545.1 L 402.1,544.8 L 405.4,544.6 L 408.5,544.3 L 411.7,544.0 L 414.7,543.8 L 417.8,543.5 L 420.8,543.2 L 423.8,543.0 L 426.7,542.7 L 429.6,542.4 L 432.4,542.2 L 435.3,541.9 L 438.0,541.7 L 440.8,541.4 L 443.5,541.1 L 446.2,540.9 L 448.8,540.6 L 451.5,540.3 L 454.0,540.1 L 456.5,539.8 L 459.0,539.6 L 461.5,539.3 L 463.9,539.1 L 466.4,538.8 L 468.7,538.6 L 471.1,538.3 L 473.4,538.0 L 475.7,537.8 L 478.0,537.5 L 480.2,537.3 L 482.4,537.0 L 484.6,536.8 L 486.8,536.5 L 488.9,536.3 L 491.0,536.0 L 493.1,535.8 L 495.2,535.5 L 497.2,535.3 L 499.2,535.0 L 501.2,534.8 L 503.2,534.5 L 505.2,534.2 L 507.8,533.9 L 510.8,533.5 L 512.7,533.2 L 514.6,533.0 L 516.5,532.7 L 518.3,532.5 L 520.1,532.2 L 522.0,532.0 L 523.7,531.7 L 525.5,531.4 L 527.2,531.2 L 528.9,530.9 L 530.6,530.7 L 532.3,530.4 L 533.9,530.2 L 535.6,529.9 L 537.1,529.7 L 538.7,529.4 L 540.3,529.2 L 541.8,528.9 L 543.4,528.7 L 544.9,528.4 L 546.3,528.2 L 547.8,527.9 L 549.3,527.7 L 550.7,527.4 L 552.1,527.2 L 553.6,526.9 L 554.9,526.7 L 556.3,526.4 L 557.7,526.2 L 559.0,525.9 L 560.3,525.7 L 561.7,525.4 L 562.9,525.2 L 564.2,524.9 L 565.5,524.7 L 566.8,524.5 L 568.0,524.2 L 569.2,524.0 L 570.4,523.7 L 571.6,523.5 L 572.7,523.2 L 573.9,523.0 L 575.0,522.7 L 576.2,522.5 L 577.3,522.3 L 578.4,522.0 L 579.5,521.8 L 580.6,521.5 L 581.6,521.3 L 582.7,521.0 L 583.7,520.8 L 584.8,520.6 L 585.8,520.3 L 586.8,520.1 L 587.8,519.8 L 588.8,519.6 L 589.8,519.4 L 590.8,519.1 L 591.7,518.9 L 592.7,518.6 L 593.6,518.4 L 594.5,518.2 L 595.4,517.9 L 596.3,517.7 L 597.2,517.5 L 598.1,517.2 L 598.9,517.0 L 599.8,516.7 L 600.6,516.5 L 601.5,516.3 L 602.3,516.0 L 603.1,515.8 L 603.9,515.6 L 604.8,515.3 L 605.5,515.1 L 606.3,514.9 L 607.1,514.6 L 607.9,514.4 L 609.4,513.9 L 610.9,513.4 L 612.3,513.0 L 613.0,512.7 L 613.8,512.5 L 614.7,512.2 L 615.3,512.0 L 616.0,511.7 L 616.7,511.5 L 617.4,511.2 L 618.1,511.0 L 618.7,510.8 L 619.4,510.5 L 620.7,510.1 L 622.0,509.6 L 623.2,509.1 L 624.4,508.6 L 625.6,508.2 L 626.8,507.7 L 627.9,507.2 L 629.0,506.7 L 630.1,506.3 L 631.2,505.8 L 632.2,505.3 L 633.2,504.9 L 634.2,504.4 L 635.2,503.9 L 636.2,503.5 L 637.1,503.0 L 638.0,502.5 L 638.9,502.1 L 639.7,501.6 L 640.6,501.2 L 641.4,500.7 L 642.2,500.3 L 643.0,499.8 L 643.8,499.4 L 644.6,498.9 L 645.4,498.5 L 646.1,498.0 L 646.8,497.5 L 647.5,497.1 L 648.3,496.6 L 648.9,496.2 L 649.6,495.7 L 650.3,495.3 L 650.9,494.8 L 651.5,494.4 L 652.2,493.9 L 652.8,493.5 L 653.4,493.1 L 654.0,492.6 L 654.5,492.2 L 654.8,492.0 L 655.2,491.7 L 655.7,491.2" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<circle cx="488.9" cy="536.3" r="4" fill="#fb923c"/>
+<text x="478.9" y="506.3" font-size="10.5" text-anchor="end" fill="#fb923c">1.9×10⁻⁶ at 0.90 R:</text>
+<text x="478.9" y="521.3" font-size="10.5" text-anchor="end" fill="#94a3b8">adiabatic to one part in 5×10⁵</text>
+<line x1="655.7" y1="376" x2="655.7" y2="576" stroke="#334155" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="649.7" y="566.0" font-size="10.5" text-anchor="end" fill="#94a3b8">table ends 0.983 R</text>
+<circle cx="689.9" cy="396.7" r="4.5" fill="none" stroke="#a78bfa" stroke-width="2"/>
+<circle cx="689.9" cy="428.4" r="4.5" fill="#facc15"/>
+<line x1="689.9" y1="402.7" x2="689.9" y2="422.4" stroke="#94a3b8" stroke-width="1"/>
+<line x1="651.7" y1="396.7" x2="682.9" y2="396.7" stroke="#94a3b8" stroke-width="0.8"/>
+<line x1="651.7" y1="428.4" x2="682.9" y2="428.4" stroke="#94a3b8" stroke-width="0.8"/>
+<text x="645.7" y="400.7" font-size="10.5" text-anchor="end" fill="#a78bfa">photosphere, carrying all of L: 0.61</text>
+<text x="645.7" y="432.4" font-size="10.5" text-anchor="end" fill="#facc15">carrying the measured 1.3% of L: 0.034</text>
+<text x="92.0" y="392.0" font-size="10.5" text-anchor="start" fill="#fb923c">mixing-length theory, α = 2, L(r) from the table</text>
+<text x="32.0" y="628.0" font-size="10.5" text-anchor="start" fill="#94a3b8">Stratification: BS2005-AGS,OP (Bahcall, Serenelli &amp; Basu 2005). N² uses the measured adiabatic plateau ∇ = 0.3957, not 0.4.</text>
+</svg>
+<!--/FIG_BRUNT-->
+<figcaption><b>Convection in the Sun.</b> Upper panel: the buoyancy frequency $N(r)$ of Proposition 2 through BS2005-AGS,OP, computed with the model's measured adiabatic plateau $\nabla_{\rm ad} = 0.3957$ rather than $0.4$. It rises from the centre to $430.06\ \mu$Hz at $0.2670\,R$ and falls to zero at the base of the convection zone, $0.7269\,R$; the shaded band beyond it is where $N^2$ is zero to the table's precision. The dashed curve adds the Ledoux composition term of <a class="secref" href="#ledoux">§4</a>, which roughly doubles $N$ inside $0.1\,R$ and makes no difference outside $0.3\,R$. Lower panel: the superadiabatic excess $\nabla-\nabla_{\rm ad}$ that mixing-length theory needs to carry the solar luminosity (<a class="secref" href="#mlt">§6</a>), on a logarithmic axis, from $1.9\times10^{-6}$ at $0.90\,R$ to order unity at the photosphere. The photospheric point is drawn twice: once carrying all of $L$, and once carrying only the convective flux measured in <a class="secref" href="#checka">§7</a>.</figcaption>
+</figure>
+
+<h2 id="ledoux">4. Ledoux: what a composition gradient does</h2>
+
+<p>Premise (i) of Proposition 1 was uniform composition. The Sun has burned hydrogen in its core for $4.6$ Gyr, so its $\mu$ is not uniform, and the premise has to be paid for.</p>
+
+<div class="prop"><b>Proposition 3 (the Ledoux criterion).</b> Let the composition vary with depth, with $\nabla_\mu \equiv d\ln\mu/d\ln P$ the logarithmic gradient of the mean molecular weight of the <em>surroundings</em>, and let the displaced parcel carry its own composition unchanged. Write $\delta \equiv -(\partial\ln\rho/\partial\ln T)_{P,\mu}$ and $\varphi \equiv (\partial\ln\rho/\partial\ln\mu)_{P,T}$, both equal to $1$ for an ideal gas. Then (2.3) becomes
+$$ \frac{\Delta\rho}{\rho} \;=\; -\left[\nabla-\nabla_{\rm ad}-\frac{\varphi}{\delta}\nabla_\mu\right]\delta\,\frac{\delta r}{H}, $$
+the buoyancy frequency becomes
+$$ N^2 \;=\; \frac{g\delta}{H}\left[\nabla_{\rm ad}-\nabla+\frac{\varphi}{\delta}\,\nabla_\mu\right], \tag{4.1}$$
+and the layer is stable if and only if $\nabla \lt \nabla_{\rm ad} + (\varphi/\delta)\,\nabla_\mu$.</div>
+
+<div class="proof">
+<p>For a general equation of state $\rho = \rho(P,T,\mu)$, the first-order change in density along the displacement is $\delta\ln\rho = \alpha_P\,\delta\ln P - \delta\,\delta\ln T + \varphi\,\delta\ln\mu$ with $\alpha_P \equiv (\partial\ln\rho/\partial\ln P)_{T,\mu}$. The parcel and its surroundings share $\delta\ln P$ by premise (iii), so the $\alpha_P$ terms cancel in the difference, exactly as in Proposition 1. The parcel carries its composition with it, so $\delta\ln\mu_{\rm p}=0$, while the surroundings supply $\delta\ln\mu = \nabla_\mu\,\delta\ln P$. Subtracting parcel from surroundings,</p>
+$$ \frac{\Delta\rho}{\rho} = -\delta\,(\nabla_{\rm ad}-\nabla)\,\delta\ln P - \varphi\,\nabla_\mu\,\delta\ln P = \left[\delta(\nabla-\nabla_{\rm ad}) - \varphi\nabla_\mu\right]\delta\ln P,$$
+<p>and $\delta\ln P = -\delta r/H$ as before gives the displayed contrast. Newton's second law with the buoyancy force $-g\Delta\rho/\rho$ then gives (4.1). Stability is $N^2\gt 0$, which is the stated inequality after dividing by $\delta\gt 0$. For an ideal gas $\rho\propto \mu P/T$, so $\alpha_P=\delta=\varphi=1$ and (4.1) reduces to (3.1) when $\nabla_\mu=0$. <span class="qed">∎</span></p>
+</div>
+
+<p>The sign is the physical content. A $\mu$ that increases inward means $\nabla_\mu \gt 0$, since $P$ also increases inward; a parcel carried up from such a layer keeps its heavy composition and arrives <em>denser</em> than its new surroundings, which stabilises the stratification even where $\nabla \gt \nabla_{\rm ad}$.</p>
+
+<p>Table 1's $\nabla_\mu$ column shows the Sun's. The $\mu$ used there is the table's own, $\mu = \rho k_BT/(P\,m_u)$, so no ionisation assumption enters. The share of $N^2$ contributed by the Ledoux term is $+84.05$ per cent at $0.050\,R$ ($\mu = 0.77684$, $\nabla_\mu = +0.37196$), $+74.96$ per cent at $0.100\,R$ ($\mu = 0.69264$, $\nabla_\mu = +0.22043$), $+50.74$ per cent at $0.150\,R$, $+16.53$ per cent at $0.200\,R$, $+3.07$ per cent at $0.251\,R$, $+1.37$ per cent at $0.302\,R$ and $+0.67$ per cent at $0.400\,R$. The gradient left by hydrogen burning is large where it exists and dies away outside the burning core.</p>
+
+<div class="keyresult"><b>The answer is no, and the measured size of the "no" is worth printing.</b> The Ledoux term matters only where the two criteria could disagree, which is where $\nabla$ is close to $\nabla_{\rm ad}$. Where $\nabla_\mu$ is large, inside $0.2\,R$, the Schwarzschild margin $\nabla_{\rm ad}-\nabla$ runs from $0.0706$ at $0.050\,R$ to $0.1328$ at $0.200\,R$, so those layers are stable by a wide margin under either criterion. Through the radiative zone outside the burning core, over $0.30$–$0.60\,R$, $|\nabla_\mu| \le 0.00256$. Locating the base of the convection zone again with $\nabla_{\rm ad}+\nabla_\mu$ in place of $\nabla_{\rm ad}$, using the same locator, moves it from $0.7269\,R$ to $0.7306\,R$: a shift of $0.0037\,R$, or $0.37$ per cent of the solar radius. And that is an upper bound, because the $\nabla_\mu$ the table gives near the base is partly the effective-$\mu$ artefact described next.</div>
+
+<span class="warn"><b>One caution on the outer rows of Table 1, and it is not a footnote.</b> Beyond about $0.72\,R$ the $\mu$ printed there is an <em>effective</em> $\mu = \rho k_BT/(P\,m_u)$, which absorbs the changing ionisation state of hydrogen and helium as well as the composition. Its gradient in those rows is an ionisation effect, not a composition gradient, and it must not be fed into Proposition 3: the parcel does not carry its ionisation state unchanged, it re-ionises. The percentages quoted above therefore stop at $0.60\,R$.</span>
+
+<p>The case where the choice of criterion does matter is a star with a receding convective core, which leaves a large $\nabla_\mu$ and a near-neutral layer in the same place. Such a layer is Schwarzschild-unstable and Ledoux-stable at once, and mixes on a thermal rather than a dynamical timescale — semiconvection. Problem D2 puts numbers on it and shows why the Sun escapes the ambiguity. This module does not develop semiconvection further.</p>
+
+<p>The right-hand side of (2.4) has been treated so far as the constant $0.4$. It is not a constant.</p>
+<h2 id="ionisation">5. The collapse of $\nabla_{\rm ad}$ in a partially ionised gas</h2>
+
+<p>Equation (2.5) assumed a constant $\gamma$. In a gas that is partly ionised, some of the energy a compressed parcel receives goes into pulling electrons off atoms instead of into raising the temperature, and the parcel therefore heats less for the same compression. That lowers $\nabla_{\rm ad}$, and it lowers it a long way.</p>
+
+<div class="def"><b>Definition 2 (Saha equilibrium for pure hydrogen).</b> Let $x \equiv n_{\rm II}/n_{\rm H}$ be the ionisation fraction, with $n_{\rm H}$ the total density of hydrogen nuclei, so that $n_e = n_{\rm II} = x\,n_{\rm H}$ and $n_{\rm I} = (1-x)\,n_{\rm H}$. Saha's equation with the statistical weight ratio $g_{\rm II}/g_{\rm I} = 1/2$ for hydrogen is
+$$ \frac{n_e\,n_{\rm II}}{n_{\rm I}} \;=\; \left(\frac{2\pi m_ek_BT}{h^2}\right)^{3/2}\exp\!\left(-\frac{\chi_{\rm H}}{k_BT}\right) \;\equiv\; A(T), \tag{5.1}$$
+with $\chi_{\rm H} = 13.5984340$ eV the ionisation energy of hydrogen.</div>
+
+<p>The total particle density is $n_{\rm H}(1+x)$, so the gas pressure is $P = n_{\rm H}(1+x)k_BT$. Eliminating $n_{\rm H}$ between this and (5.1) gives a closed form with no iteration:</p>
+
+$$ \frac{x^2}{1-x^2} \;=\; \frac{A(T)\,k_BT}{P} \;\equiv\; B(T,P), \qquad x \;=\; \sqrt{\frac{B}{1+B}}. \tag{5.2}$$
+
+<div class="prop"><b>Proposition 4 (the ionisation zone lowers $\nabla_{\rm ad}$).</b> For a pure-hydrogen ideal gas in Saha equilibrium, with $x$ from (5.2),
+$$ \nabla_{\rm ad} \;=\; \frac{2+x(1-x)\Phi}{5+x(1-x)\Phi^2}, \qquad \Phi \;\equiv\; \frac{5}{2}+\frac{\chi_{\rm H}}{k_BT}, \tag{5.3}$$
+(Kippenhahn &amp; Weigert, section 14.3). Then $\nabla_{\rm ad} \lt 2/5$ at every $0\lt x\lt 1$, with equality only at $x=0$ and $x=1$.</div>
+
+<div class="proof">
+<p>Write $q \equiv x(1-x)$, which is positive for $0\lt x\lt 1$ and zero at both ends. Comparing (5.3) with $2/5$ by cross-multiplication, and noting that both denominators are positive,</p>
+$$ \nabla_{\rm ad} \lt \tfrac25 \iff 5\,(2+q\Phi) \lt 2\,(5+q\Phi^2) \iff 5q\Phi \lt 2q\Phi^2 \iff q\,\Phi\,(2\Phi-5) \gt 0 .$$
+<p>Now $\Phi = 5/2 + \chi_{\rm H}/(k_BT) \gt 5/2$ for every finite $T$, so $2\Phi-5 \gt 0$ and $\Phi\gt 0$. The inequality therefore holds exactly when $q\gt 0$, that is for $0\lt x\lt 1$. At $x=0$ or $x=1$, $q=0$ and (5.3) returns $2/5$, the monatomic value of (2.5). <span class="qed">∎</span></p>
+</div>
+
+<p>The size of the effect is set by $\Phi$, and $\Phi$ is large: at the temperature where $x = 1/2$ at photospheric pressure, $\chi_{\rm H}/k_BT = 12.9$. The energy reservoir the parcel can pour heat into is more than twelve times the thermal reservoir of a particle, which is why the depression is not a small correction. Table 2 evaluates (5.2) and (5.3) along an isobar at the photospheric pressure $P = 1.2\times10^{5}\ \mathrm{dyn\,cm^{-2}}$.</p>
+
+<table>
+<caption class="small" style="text-align:left;caption-side:bottom;padding-top:.4rem;">Table 2. Ionisation fraction and adiabatic gradient of pure hydrogen along the isobar $P = 1.2\times10^{5}\ \mathrm{dyn\,cm^{-2}}$, from (5.2) and (5.3).</caption>
+<tr><th>$T$ [K]</th><th>$x$</th><th>$\nabla_{\rm ad}$</th><th>$\nabla_{\rm ad}/0.4$</th></tr>
+<tr><td>4000</td><td>0.0000</td><td>0.39998</td><td>1.0000</td></tr>
+<tr><td>6000</td><td>0.0002</td><td>0.38991</td><td>0.9748</td></tr>
+<tr><td>8000</td><td>0.0066</td><td>0.26086</td><td>0.6521</td></tr>
+<tr><td>10000</td><td>0.0623</td><td>0.12512</td><td>0.3128</td></tr>
+<tr><td>12000</td><td>0.2803</td><td>0.09479</td><td>0.2370</td></tr>
+<tr><td>15000</td><td>0.8209</td><td>0.13080</td><td>0.3270</td></tr>
+<tr><td>20000</td><td>0.9916</td><td>0.35374</td><td>0.8844</td></tr>
+<tr><td>30000</td><td>0.9998</td><td>0.39928</td><td>0.9982</td></tr>
+<tr><td>100000</td><td>1.0000</td><td>0.40000</td><td>1.0000</td></tr>
+</table>
+
+<div class="keyresult"><b>The hydrogen ionisation zone drops $\nabla_{\rm ad}$ from $0.4000$ to $0.09448$, a factor $4.23$.</b> The minimum along this isobar is at $T = 12266$ K, where $x = 0.3271$.</div>
+
+<p>The minimum does not sit at $x = 1/2$, and the reason is worth one sentence. At fixed $\Phi$ the numerator and denominator of (5.3) both depend on $x$ only through $q = x(1-x)$, which peaks at $x = 1/2$; but $\Phi$ falls as $T$ rises, so moving along the isobar changes $q$ and $\Phi$ together, and the two effects put the minimum at $x = 0.3271$, on the cool side of half ionisation. Problem K1 follows the minimum across five decades of pressure and finds it drifts from $0.08097$ at $10580$ K to $0.12933$ at $16798$ K — Saha equilibrium needs a hotter gas to ionise a denser one.</p>
+
+<h3 id="whereis">5.1 What this explains, and what it does not</h3>
+
+<p>It would be natural to say that the collapse of $\nabla_{\rm ad}$ is what makes the outer part of the Sun convective. The model table says otherwise, and the numbers are unambiguous.</p>
+
+<ul>
+<li>The base of the convection zone is at $0.7269\,R$, where the table gives $T = 2.02\times10^{6}$ K. At that temperature hydrogen and helium are fully ionised, $x=1$, and (5.3) returns $\nabla_{\rm ad}=2/5$. The measured plateau, $0.3957$, is the evidence: it is the ideal value to within the model's equation-of-state corrections, right across the convection zone.</li>
+<li>The collapse of Table 2 sits between about $1.06\times10^{4}$ and $1.68\times10^{4}$ K, the band Problem K1 maps.</li>
+<li>The outermost row of the table, $0.98308\,R$, is already at $T = 8.12\times10^{4}$ K — above the whole collapse band.</li>
+</ul>
+
+<p>So the hydrogen ionisation zone lies <em>outside</em> $0.983\,R$, in the outermost $1.7$ per cent of the radius. It does not open the convection zone, whose outer $27.3$ per cent by radius, from $0.7269\,R$ to the surface, is set the other way round by $\nabla$ rising, as <a class="secref" href="#base">§3.2</a> showed. What Proposition 4 explains is why convection reaches all the way <em>up</em> to the photosphere instead of stopping below it, and why the strongly superadiabatic layer of <a class="secref" href="#mlt">§6</a> sits where it does.</p>
+
+<div class="keyresult"><b>Two mechanisms, two depths.</b> $\nabla$ rising to meet a flat $\nabla_{\rm ad}$ sets the base of the solar convection zone at $0.7269\,R$. $\nabla_{\rm ad}$ collapsing by the factor $4.23$ in the partial-ionisation zone sets its top, above $0.983\,R$, where $\nabla-\nabla_{\rm ad}$ runs from $1.9\times10^{-6}$ to $0.61$.</div>
+
+<p>The criterion has now been derived, corrected for composition, and corrected for ionisation. It still says only whether convection happens. It says nothing about how much heat it carries.</p>
+
+<h2 id="mlt">6. Mixing-length theory, and how superadiabatic the Sun must be</h2>
+
+<p>A stability criterion cannot give a flux, because it contains no statement about how far a parcel travels before it merges with its surroundings. Mixing-length theory supplies exactly one such statement and derives everything else from it.</p>
+
+<div class="def"><b>Definition 3 (the mixing length).</b> A convecting parcel is assumed to rise a distance $\ell$, keeping its identity, and then to dissolve into its surroundings and deliver its excess heat. The mixing length is taken proportional to the local pressure scale height,
+$$ \ell \;\equiv\; \alpha\,H, \qquad H = \frac{P}{\rho g}, \tag{6.1}$$
+with $\alpha$ a dimensionless parameter of order unity. This module uses $\alpha = 2.0$.
+<br><b>Notation.</b> Within this module $\alpha$ is the mixing-length parameter and nothing else. Module 5's $\alpha$, the length scale of the isothermal sphere, is not meant here.</div>
+
+<span class="prov">$\alpha$ is not derived. It is calibrated: a value near $2$ is what makes a solar evolution model reach the observed solar radius at the solar age. Every prediction in <a class="secref" href="#checka">§7</a> therefore rests on a parameter that was fitted to the Sun, and the checks say so where they are made. Problem C3 measures how much freedom that leaves.</span>
+
+<div class="prop"><b>Proposition 5 (mixing-length flux and velocity, efficient limit).</b> Let a layer have $\nabla \gt \nabla_{\rm ad}$ and write the superadiabatic excess $\Delta\nabla \equiv \nabla-\nabla_{\rm ad}$. Assume the parcel loses no heat while it travels, so that it follows its own adiabat over the whole mixing length, and take the ideal-gas value $\delta = 1$. Then the mean temperature excess a parcel carries, its velocity, and the convective flux are
+$$ \delta T \;=\; T\,\Delta\nabla\,\frac{\ell}{2H}, \qquad v_c \;=\; \frac{\ell}{H}\sqrt{\frac{gH\,\Delta\nabla}{8}}, \tag{6.2}$$
+$$ F \;=\; \rho\,v_c\,c_P\,\delta T \;=\; \rho\,c_P\,T\,\alpha^2\sqrt{\frac{gH}{32}}\;\Delta\nabla^{3/2}. \tag{6.3}$$
+Consequently, at a fixed flux $F$, $\Delta\nabla\propto\alpha^{-4/3}$ and $v_c\propto\alpha^{1/3}$.</div>
+
+<div class="proof">
+<p>Proposition 1 gives the temperature difference a parcel acquires after rising a distance $\Delta r$: subtracting the two logarithmic temperature changes at equal pressure, $\Delta T/T = \Delta\nabla\,\Delta r/H$. Averaging over the parcel's life, which is taken to be the mean displacement $\ell/2$, gives the first of (6.2).</p>
+<p>For the velocity, the buoyancy force per unit mass at displacement $\Delta r$ is $-g\,\Delta\rho/\rho = g\,\Delta T/T = g\,\Delta\nabla\,\Delta r/H$, using $\Delta\rho/\rho = -\Delta T/T$ for an ideal gas at fixed pressure. The work done over the mean displacement is
+$$ W = \int_0^{\ell/2} \frac{g\,\Delta\nabla}{H}\,\Delta r\;d(\Delta r) = \frac{g\,\Delta\nabla\,\ell^2}{8H}. $$
+Half of that work is assumed to go into the kinetic energy of the parcel and half into pushing the surroundings aside, so $\tfrac12 v_c^2 = \tfrac12 W$, that is $v_c^2 = g\Delta\nabla\,\ell^2/(8H)$, which is the second of (6.2).</p>
+<p>The enthalpy a parcel carries per unit mass is $c_P\,\delta T$, and the mass flux carried upward by the convecting fluid is $\rho v_c$, so $F = \rho v_c c_P \delta T$. Substituting (6.2) and $\ell = \alpha H$,
+$$ F = \rho c_P\,T\,\Delta\nabla\frac{\alpha}{2}\cdot\alpha\sqrt{\frac{gH\Delta\nabla}{8}} = \rho c_P T\,\alpha^2\sqrt{\frac{gH}{32}}\,\Delta\nabla^{3/2},$$
+since $\tfrac12\sqrt{1/8} = \sqrt{1/32}$. Holding $F$, $\rho$, $c_P$, $T$, $g$ and $H$ fixed and varying $\alpha$ in (6.3) gives $\Delta\nabla\propto\alpha^{-4/3}$, and putting that into (6.2) gives $v_c\propto\alpha\cdot\Delta\nabla^{1/2}\propto\alpha^{1/3}$. <span class="qed">∎</span></p>
+</div>
+
+<p>The factors $1/2$ in $\delta T$ and $1/8$ in $v_c^2$ are the two averaging conventions of the standard theory. A different convention would move both by a numerical factor, which is absorbed into a different calibrated $\alpha$; it changes no physics and no scaling. What the scalings say is that $\alpha$ is a weak handle on the velocity and a strong one on the excess, and Problem C3 exploits exactly that.</p>
+
+<h3 id="deepmlt">6.1 The excess through the solar convection zone</h3>
+
+<p>Inverting (6.3) for $\Delta\nabla$ at the flux the star must actually carry, $F = L(r)/(4\pi r^2)$ from the model's own luminosity column, gives Table 3. The local $L(r)$ is used rather than $L_\odot$; inside the convection zone the two agree to five figures.</p>
+
+<table>
+<caption class="small" style="text-align:left;caption-side:bottom;padding-top:.4rem;">Table 3. Mixing-length theory through the solar convection zone at $\alpha = 2.0$, from (6.2) and (6.3) with the BS2005-AGS,OP stratification. $c_s$ is the adiabatic sound speed $\sqrt{(5/3)P/\rho}$.</caption>
+<tr><th>$r/R$</th><th>$T$ [K]</th><th>$H$ [cm]</th><th>$F$ [erg cm$^{-2}$ s$^{-1}$]</th><th>$\nabla-\nabla_{\rm ad}$</th><th>$v_c$ [cm s$^{-1}$]</th><th>$v_c/c_s$</th><th>$\ell/v_c$ [s]</th></tr>
+<tr><td>0.7200</td><td>$2.083\times10^{6}$</td><td>$5.589\times10^{9}$</td><td>$1.2161\times10^{11}$</td><td>$1.925\times10^{-7}$</td><td>$5.2750\times10^{3}$</td><td>0.00024</td><td>2118871</td></tr>
+<tr><td>0.7500</td><td>$1.791\times10^{6}$</td><td>$5.197\times10^{9}$</td><td>$1.1209\times10^{11}$</td><td>$2.478\times10^{-7}$</td><td>$5.5548\times10^{3}$</td><td>0.00027</td><td>1871201</td></tr>
+<tr><td>0.8002</td><td>$1.341\times10^{6}$</td><td>$4.391\times10^{9}$</td><td>$9.8460\times10^{10}$</td><td>$4.072\times10^{-7}$</td><td>$6.1562\times10^{3}$</td><td>0.00035</td><td>1426538</td></tr>
+<tr><td>0.8493</td><td>$9.504\times10^{5}$</td><td>$3.477\times10^{9}$</td><td>$8.7413\times10^{10}$</td><td>$7.543\times10^{-7}$</td><td>$7.0417\times10^{3}$</td><td>0.00048</td><td>987565</td></tr>
+<tr><td>0.9005</td><td>$5.852\times10^{5}$</td><td>$2.385\times10^{9}$</td><td>$7.7748\times10^{10}$</td><td>$1.861\times10^{-6}$</td><td>$8.6531\times10^{3}$</td><td>0.00075</td><td>551281</td></tr>
+<tr><td>0.9499</td><td>$2.690\times10^{5}$</td><td>$1.199\times10^{9}$</td><td>$6.9864\times10^{10}$</td><td>$8.469\times10^{-6}$</td><td>$1.2415\times10^{4}$</td><td>0.00159</td><td>193192</td></tr>
+<tr><td>0.9800</td><td>$9.740\times10^{4}$</td><td>$4.374\times10^{8}$</td><td>$6.5639\times10^{10}$</td><td>$7.413\times10^{-5}$</td><td>$2.1505\times10^{4}$</td><td>0.00472</td><td>40681</td></tr>
+<tr><td>0.9831</td><td>$8.120\times10^{4}$</td><td>$3.617\times10^{8}$</td><td>$6.5235\times10^{10}$</td><td>$1.122\times10^{-4}$</td><td>$2.3984\times10^{4}$</td><td>0.00580</td><td>30159</td></tr>
+</table>
+
+<div class="keyresult"><b>At $r = 0.90\,R$ the superadiabatic excess needed to carry the whole solar luminosity is $\nabla-\nabla_{\rm ad} = 1.861\times10^{-6}$</b>, which is $4.7\times10^{-4}$ per cent of $\nabla_{\rm ad}$ itself. The stratification there is adiabatic to one part in $5\times10^{5}$.</div>
+
+<p>That number repays a debt to Module 3. Module 3 fitted the solar convection zone with a polytrope of index $n = 3/2$ — the index of an adiabatic monatomic gas — and found $n_{\rm eff} = 1.5273$, agreeing to $1.8$ per cent. Table 3 says why such a fit can work at all: convection deep in the envelope is so efficient that the departure from an adiabat is six orders of magnitude below the adiabat itself. The polytrope is not an approximation that happens to be good; it is good because the transport is fast.</p>
+
+<h3 id="photmlt">6.2 The photosphere, where the same theory is strained</h3>
+
+<p>The BS2005-AGS,OP table stops at $r = 0.98308\,R$, well below the photosphere, so the surface layer is computed from independent photospheric inputs: the IAU 2015 nominal effective temperature $T = 5772$ K, a gas pressure $P = 1.2\times10^{5}\ \mathrm{dyn\,cm^{-2}}$ at optical depth $\tau = 2/3$, and $\mu = 1.2250$ from the model's surface hydrogen and helium fractions, as Module 4 eq. (4.7) computes it. The gravity is the IAU nominal $g = GM_\odot/R_\odot^2 = 2.7420\times10^{4}\ \mathrm{cm\,s^{-2}}$, and $c_P = (5/2)k_B/(\mu m_u)$ is the monatomic ideal-gas value.</p>
+
+<span class="prov">All four photospheric inputs are inputs, not checked quantities, and two of them are model-dependent: $P$ at $\tau=2/3$ and $\mu$ both come from a solar atmosphere calculation. Module 3 used a round $\mu = 1.3$ for the same layer. One convention differs from Module 4: the gravity here uses the IAU nominal radius, as Module 3 does and as every other photospheric constant in this module does, while Module 4 used the model table's radius $6.9598\times10^{10}$ cm. The consequence is $H = 142.9$ km here against the $143.0$ km Module 4 prints. That $0.1$ km is the choice of radius and nothing else; the composition is the same in both.</span>
+
+<p>With those inputs, and requiring convection to carry the entire emergent flux $F = L_\odot/(4\pi R_\odot^2)$:</p>
+
+<table>
+<tr><th>Quantity</th><th>Value</th></tr>
+<tr><td>$H = k_BT/(\mu m_u g)$</td><td>$142.9$ km</td></tr>
+<tr><td>$\rho = P\mu m_u/(k_BT)$</td><td>$3.0631\times10^{-7}\ \mathrm{g\,cm^{-3}}$</td></tr>
+<tr><td>$c_P$</td><td>$1.6968\times10^{8}\ \mathrm{erg\,g^{-1}\,K^{-1}}$</td></tr>
+<tr><td>$F = L_\odot/(4\pi R_\odot^2)$</td><td>$6.2939\times10^{10}\ \mathrm{erg\,cm^{-2}\,s^{-1}}$</td></tr>
+<tr><td>$\nabla-\nabla_{\rm ad}$ (upper bound)</td><td>$0.6079$</td></tr>
+<tr><td>$v_c$</td><td>$3.451\ \mathrm{km\,s^{-1}}$</td></tr>
+<tr><td>$c_s$</td><td>$8.080\ \mathrm{km\,s^{-1}}$</td></tr>
+<tr><td>$v_c/c_s$</td><td>$0.4271$</td></tr>
+<tr><td>$\ell = \alpha H$</td><td>$286$ km</td></tr>
+<tr><td>turnover $\ell/v_c$</td><td>$1.38$ min</td></tr>
+</table>
+
+<div class="keyresult"><b>The superadiabatic excess runs from $1.9\times10^{-6}$ at $0.90\,R$ to $0.61$ at the photosphere, a factor $3\times10^{5}$.</b> Convection is efficient in the deep envelope and inefficient at the surface, where a parcel is optically thin and radiates its heat excess away before it has travelled a mixing length.</div>
+
+<span class="warn"><b>Two premises are spent here, and the text says where.</b> (a) The photospheric excess and velocity above are <em>upper bounds</em> on what mixing-length theory predicts, because they were obtained by demanding that convection carry all of $L_\odot$ at $\tau = 2/3$. Radiation already carries most of that flux there. <a class="secref" href="#checka">§7</a> measures the split and finds convection carries $1.3$ per cent. (b) $v_c/c_s = 0.4271$, so premise (iii) of Proposition 1 — a slow parcel in instantaneous pressure balance — has failed at the photosphere by a wide margin. Both warnings are independent of any measurement, and both are consequences of the numbers in the table above.</span>
+
+<p>The range of turnover times is a separate result. Table 3 and Problem K2 give $\ell/v_c = 21.66$ d at $0.750\,R$, $8.38$ h at the last tabulated row $0.9831\,R$, and $1.38$ min at the photosphere: a factor $2\times10^{4}$ between the two ends of one convection zone. No single mixing length describes both.</p>
+
+<h2 id="checka">7. Check A: mixing-length theory against solar granulation</h2>
+
+<p>Mixing-length theory makes two predictions about the solar photosphere that can be compared with measurements taken there. Both measurements are of the quiet Sun at disk centre, and neither used a stellar model to produce the quantity compared.</p>
+
+<h3 id="a1">7.1 A1: the size of a granule</h3>
+
+<p>The overturning eddy of Definition 3 is one mixing length across. Seen from above, a convection cell has upflow in the middle and downflow at its edges, one mixing length each way, so the natural prediction for the diameter of a granule is $2\ell$. With $H = 143$ km and $\alpha = 2$, that is $\ell = 286$ km and $2\ell = 572$ km.</p>
+
+<p>Abramenko et al. (2012) measured granule sizes with the New Solar Telescope and fitted the regular-granule population with a Gaussian, obtaining, in their section 3, a mean diameter $d_0 = 1050\pm22$ km and a width $\sigma_d = 480\pm11$ km.</p>
+
+<p>Those two numbers are different quantities and this module prints both, with each denominator named, because they answer different questions.</p>
+
+<table>
+<tr><th>Denominator</th><th>What it is</th><th>Value</th><th>Departure of $2\ell = 572$ km</th></tr>
+<tr><td>$22$ km</td><td>the error on the mean diameter</td><td>$1050\pm22$ km</td><td><b>$21.7\,\sigma$</b></td></tr>
+<tr><td>$480$ km</td><td>the width of the granule population</td><td>$\sigma_d = 480\pm11$ km</td><td><b>$1.00\,\sigma$</b></td></tr>
+</table>
+
+<p>The ratio of measured to predicted is $1050/572 = 1.84$; against $\ell$ alone it is $3.67$. Read the two departures together: $21.7\,\sigma$ says the <em>mean</em> granule is not $572$ km across, and $1.00\,\sigma$ says a $572$ km cell is an entirely ordinary member of the granule population. Abramenko's own Conclusions print "$1050\pm480$ km", which reads as an error bar and is not one; a reader who opens the paper will meet that line, and it is the population width.</p>
+
+<div class="keyresult"><b>A1: the scale is confirmed, the number disagrees.</b> The pressure scale height sets the granule size — $H = 143$ km against a $1050$ km granule, with $\alpha$ of order unity, is the content of the agreement — and the identification of the cell with $2\ell$ is itself ambiguous, since $2\ell$ gives a ratio $1.84$ and $\ell$ alone gives $3.67$. The specific prediction $2\ell = 572$ km is $21.7\,\sigma$ from the measured mean of $1050\pm22$ km. Module 3 reported its $29.4\,\sigma$ as a disagreement rather than a refutation, and this module follows that precedent. Note also that $\alpha = 2$ was calibrated on the solar radius, so this is not a parameter-free prediction; what is parameter-free is that the scale is set by $H$ at all.</div>
+
+<h3 id="a2">7.2 A2: the speed of the upflow</h3>
+
+<p>Oba, Iida &amp; Shimizu (2017) measured photospheric velocities with the Hinode spectropolarimeter, using a bisector analysis of Fe I $630.15$ nm with a subsonic filter applied to remove the five-minute oscillation. They find an upward speed falling from $0.65\ \mathrm{km\,s^{-1}}$ at a geometrical height $h = 40$ km to $0.40\ \mathrm{km\,s^{-1}}$ at $h = 163$ km, and an rms filtered convective velocity running from $0.6\ \mathrm{km\,s^{-1}}$ at the deepest level sampled to $0.3\ \mathrm{km\,s^{-1}}$ at the highest.</p>
+
+<span class="prov">Two properties of that measurement must travel with it. Their stated velocity error, $0.18\ \mathrm{km\,s^{-1}}$, is a zero-point systematic used as a threshold for calling a pixel up or down; it is not a random error on the quoted speeds, and it is not used as a $\sigma$ anywhere in this module. Their heights are derived from the VAL81 atmosphere model at each intensity level, not measured directly.</span>
+
+<p>Against the $3.451\ \mathrm{km\,s^{-1}}$ of <a class="secref" href="#photmlt">§6.2</a>, the ratios are $5.3$ against the $0.65\ \mathrm{km\,s^{-1}}$ upflow and $5.8$ against the $0.6\ \mathrm{km\,s^{-1}}$ rms. Too fast by a factor $5.3$ is far outside any reasonable tolerance for an order-unity theory.</p>
+
+<p>The right response is not to stop here. The calculation of <a class="secref" href="#photmlt">§6.2</a> contains an assumption that is no part of mixing-length theory at all: that convection carries the whole luminosity at $\tau = 2/3$. That assumption can be tested against the same two measurements, and the independent warning $v_c/c_s = 0.43$ already says the theory has been pushed past its own premise.</p>
+
+<h3 id="a3">7.3 A3, worked: what flux does the measured granulation actually carry?</h3>
+
+<p>This subsection uses no stellar model beyond the photospheric inputs already in use, and it rests on two assumptions that must be named before the numbers: the density $\rho$ at $\tau = 2/3$ is an input carried from Module 3, not a measurement; and the observed intensity contrast is converted to a temperature contrast through a Planck source function, as if the contrast formed at a single depth.</p>
+
+<p><b>Step 1: from intensity contrast to temperature contrast.</b> Abramenko et al. report an rms intensity contrast of $15.5\pm0.6$ per cent at $705.7$ nm. For a Planck function, $\delta I/I = (d\ln B_\lambda/d\ln T)\,(\delta T/T)$ with</p>
+
+$$ \frac{d\ln B_\lambda}{d\ln T} \;=\; \frac{x\,e^x}{e^x-1}, \qquad x \;\equiv\; \frac{hc}{\lambda k_BT}. \tag{7.1}$$
+
+<p>At $\lambda = 705.7$ nm and $T = 5772$ K, $x = 3.5322$ and $d\ln B/d\ln T = 3.6386$. So $\delta T/T = 0.155/3.6386 = 0.04260$, that is $\delta T = 245.9$ K. The bandpass amplifies the contrast by a factor $3.64$: a $15.5$ per cent intensity contrast is only a $4.3$ per cent temperature contrast, and reading the intensity contrast as a temperature contrast directly would overstate the flux by that same factor.</p>
+
+<p><b>Step 2: the convective flux the measurements imply.</b> Feed the measured $\delta T$ and the measured velocity into the mixing-length flux expression $F = \rho\,v\,c_P\,\delta T$ of Proposition 5, which needs no $\alpha$ once $v$ and $\delta T$ are given:</p>
+
+<table>
+<tr><th>Quantity</th><th>Value</th><th>Source</th></tr>
+<tr><td>$\rho$ at $\tau = 2/3$</td><td>$3.0631\times10^{-7}\ \mathrm{g\,cm^{-3}}$</td><td>input, from the photospheric $P$, $T$, $\mu$</td></tr>
+<tr><td>$v$</td><td>$0.65\ \mathrm{km\,s^{-1}}$</td><td>measured, Oba et al. (2017)</td></tr>
+<tr><td>$c_P$</td><td>$1.6968\times10^{8}\ \mathrm{erg\,g^{-1}\,K^{-1}}$</td><td>input, $(5/2)k_B/(\mu m_u)$</td></tr>
+<tr><td>$\delta T$</td><td>$245.9$ K</td><td>measured contrast through (7.1)</td></tr>
+<tr><td>$F_{\rm conv}$</td><td>$8.3067\times10^{8}\ \mathrm{erg\,cm^{-2}\,s^{-1}}$</td><td>the product</td></tr>
+<tr><td>$F_{\rm total} = L_\odot/(4\pi R_\odot^2)$</td><td>$6.2939\times10^{10}\ \mathrm{erg\,cm^{-2}\,s^{-1}}$</td><td>input</td></tr>
+</table>
+
+<div class="keyresult"><b>$F_{\rm conv}/F_{\rm total} = 0.0132$.</b> Convection carries $1.3$ per cent of the flux at $\tau = 2/3$; the other $98.7$ per cent is radiation.</div>
+
+<p><b>Step 3: run the theory again, on the flux it should have been given.</b> The calculation of <a class="secref" href="#photmlt">§6.2</a> over-drove mixing-length theory by a factor $76$ in flux. Since $v_c\propto F^{1/3}$ at fixed $\alpha$ by (6.3), that is a factor $76^{1/3} = 4.2$ in velocity, which is most of the discrepancy of $5.3$ found in <a class="secref" href="#a2">§7.2</a>. Inverting (6.3) at $F = F_{\rm conv}$ instead gives $\nabla-\nabla_{\rm ad} = 0.0340$ and</p>
+
+$$ v_c = 0.816\ \mathrm{km\,s^{-1}} \quad\text{against the measured } 0.65\ \mathrm{km\,s^{-1}}, \quad\text{a ratio of } 1.25. $$
+
+<div class="keyresult"><b>The verdict, in this order. REFUTED:</b> the proposition that convection carries the solar flux at $\tau = 2/3$, which fails by a factor of $76$. <b>SURVIVES:</b> the mixing-length velocity law itself, to $25$ per cent, once it is asked a question it can answer.</div>
+
+<p>What remains genuinely outside mixing-length theory is the <em>split</em> of the flux between radiation and convection, which needs an atmosphere model with radiative transfer that this module does not build. And the honest position on the rest is uncomfortable: deep in the convection zone, where all four premises of Proposition 1 do hold, the excess is $10^{-6}$ and there is nothing to measure directly. The theory is checkable against data only in the one layer where it works worst.</p>
+
+<p>Buoyancy is one way a stratified fluid loses its footing. The other needs no gravity at all.</p>
+<h2 id="field">8. Thermal instability: the loss function and Field's criteria</h2>
+
+<p>The question is the same one Proposition 1 asked — a parcel is perturbed, does the perturbation grow? — with a different restoring mechanism. Compress a parcel of interstellar gas slightly at the pressure of its surroundings. Its density rises, so it radiates more; if it also loses the ability to be reheated fast enough, it cools, and at fixed pressure a cooler parcel is denser still. Nothing in this argument involves gravity, buoyancy or a stratification.</p>
+
+<div class="def"><b>Definition 4 (Field's net loss function).</b> Let $\mathcal{L}(\rho,T)$ be the energy losses minus the energy gains of the gas, per gram per second, exclusive of thermal conduction (Field 1965, p. 532). Thermal equilibrium is $\mathcal{L} = 0$.
+<br><b>Notation.</b> The loss function is always written $\mathcal{L}$ in this module. The plain letter $L$ is the solar luminosity, as in <a class="secref" href="#mlt">§6</a>. The cooling coefficient below is always written $\Lambda(T)$ with its argument shown, to keep it distinct from Module 1's Coulomb logarithm $\ln\Lambda$, which reappears in Problem K3.</div>
+
+<div class="prop"><b>Proposition 6 (Field's criteria, 1965, eqs. 4a and 4b).</b> A parcel perturbed <em>at constant density</em> runs away if and only if
+$$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!\rho} \lt 0 \qquad\text{(isochoric, Field 4a)}, \tag{8.1}$$
+and a parcel perturbed <em>at constant pressure</em> runs away if and only if
+$$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!P} \;=\; \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!\rho} - \frac{\rho_0}{T_0}\left(\frac{\partial\mathcal{L}}{\partial\rho}\right)_{\!T} \;\lt \;0 \qquad\text{(isobaric, Field 4b)}. \tag{8.2}$$
+If $(\partial\mathcal{L}/\partial\rho)_T \gt 0$, as it is for any cooling rate that increases with density, then (8.1) implies (8.2) and not conversely: the isobaric criterion is strictly the weaker condition, and is met over a wider range of states.</div>
+
+<div class="proof">
+<p>Let the gas sit at $(\rho_0,T_0)$ with $\mathcal{L}(\rho_0,T_0) = 0$, and perturb the temperature by $\delta T$. The energy equation gives $c\,\dot{\delta T} = -\delta\mathcal{L}$ for the appropriate specific heat $c\gt 0$, so the perturbation grows exactly when $\delta\mathcal{L}$ and $\delta T$ have opposite signs, that is when the derivative of $\mathcal{L}$ with respect to $T$ along the path of the perturbation is negative. At constant density that derivative is $(\partial\mathcal{L}/\partial T)_\rho$, which is (8.1).</p>
+<p>At constant pressure the density is not free: for an ideal gas of fixed composition $\rho \propto P/T$, so $(\partial\rho/\partial T)_P = -\rho_0/T_0$. The chain rule then gives
+$$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!P} = \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!\rho} + \left(\frac{\partial\mathcal{L}}{\partial\rho}\right)_{\!T}\left(\frac{\partial\rho}{\partial T}\right)_{\!P} = \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!\rho} - \frac{\rho_0}{T_0}\left(\frac{\partial\mathcal{L}}{\partial\rho}\right)_{\!T},$$
+which is (8.2). The subtracted term is positive when $(\partial\mathcal{L}/\partial\rho)_T\gt 0$, so $(\partial\mathcal{L}/\partial T)_P \lt (\partial\mathcal{L}/\partial T)_\rho$, and a state satisfying (8.1) satisfies (8.2) while the converse fails whenever the two derivatives straddle zero. <span class="qed">∎</span></p>
+</div>
+
+<p>Which criterion applies is not a matter of taste. A parcel held at fixed density but given a different temperature is at the wrong pressure for its surroundings, and the force equation will not let it stay there: it expands or contracts on a sound-crossing time, which in the interstellar medium is far shorter than the cooling time of the warm gas. The isobaric criterion is the one compatible with the momentum equation, and that was Field's point in 1965 against Parker's earlier isochoric treatment. Because (8.2) is the weaker condition, far more of the interstellar medium is unstable than the isochoric criterion would suggest.</p>
+
+<span class="prov">A form $(\partial(\mathcal{L}/T)/\partial T)_P \lt 0$ appears in some later texts. It coincides with (8.2) only on the equilibrium curve, where $\mathcal{L} = 0$. This module uses (8.2) as Field printed it.</span>
+
+<h3 id="coolfn">8.1 The cooling function, tested before it is used</h3>
+
+<p>The interstellar gas of this section is heated by photoelectric emission from small grains and polycyclic aromatic hydrocarbons at a rate $\Gamma$ per hydrogen nucleus, taken independent of density and temperature, and cooled at a rate $n^2\Lambda(T)$ per unit volume. Koyama &amp; Inutsuka (2002) fitted $\Lambda(T)$ over the range of the neutral medium with two terms: Lyman-$\alpha$ cooling, which switches on above about $8000$ K, and the [C II] $158\ \mu$m fine-structure line, whose $92$ K excitation temperature appears explicitly in the exponent and which is what cools the cold neutral medium.</p>
+
+<span class="warn"><b>Their equation (4) as printed contains two typographical errors, and using it would have destroyed this module.</b> As printed, with coefficient $14$ on the second term and $114800$ in the first exponent, the equilibrium relation of (8.3) below gives $P/k = 1.7924\ \mathrm{K\,cm^{-3}}$ at $100$ K and $6.3632$ at $8000$ K. Corrected, the same relation gives $1792.4$ and $388.6$. Measured interstellar pressures are near $3802\ \mathrm{K\,cm^{-3}}$ (<a class="secref" href="#anchor">§10</a>). The printed form misses by three orders of magnitude.
+<br>The correction is not a guess. Vázquez-Semadeni et al. (2007) print the corrected equations (3) and (4), and their footnote 5 reads: "Note that eq. (4) in Koyama &amp; Inutsuka (2002) contains two typographical errors. The form used here incorporates the necesary corrections, kindly provided by H. Koyama." The change $114800 \to 1.184\times10^{5}$ is a transposition of digits, since $114800 = 1.148\times10^{5}$, not a change of notation.</span>
+
+<p>The corrected function, used everywhere below, is</p>
+
+$$ \frac{\Lambda(T)}{\Gamma} \;=\; 10^{7}\exp\!\left(\frac{-1.184\times10^{5}}{T+1000}\right) + 1.4\times10^{-2}\,\sqrt{T}\,\exp\!\left(\frac{-92}{T}\right)\ \mathrm{cm^{3}}, \qquad \Gamma = 2\times10^{-26}\ \mathrm{erg\,s^{-1}}. \tag{8.3}$$
+
+<div class="prop"><b>Proposition 7 (the criterion for this heating law).</b> Let the volumetric heating be $n\Gamma$ and the volumetric cooling $n^2\Lambda(T)$, with $\Gamma$ constant and $n = \rho/m_{\rm H}$. Then thermal equilibrium is
+$$ n_{\rm eq}(T) \;=\; \frac{\Gamma}{\Lambda(T)}, \tag{8.4}$$
+and Field's isobaric criterion (8.2) reduces at every equilibrium state to
+$$ \frac{d\ln\Lambda}{d\ln T} \;\lt \; 1 \quad\text{for stability}. \tag{8.5}$$</div>
+
+<div class="proof">
+<p>Per gram, the losses are $n^2\Lambda/\rho = \rho\Lambda/m_{\rm H}^2$ and the gains are $n\Gamma/\rho = \Gamma/m_{\rm H}$, so
+$$ \mathcal{L}(\rho,T) = \frac{\rho\,\Lambda(T)}{m_{\rm H}^2} - \frac{\Gamma}{m_{\rm H}} .$$
+Setting $\mathcal{L}=0$ gives $\rho = m_{\rm H}\Gamma/\Lambda(T)$, that is (8.4). Differentiating,
+$$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!\rho} = \frac{\rho}{m_{\rm H}^2}\frac{d\Lambda}{dT}, \qquad \left(\frac{\partial\mathcal{L}}{\partial\rho}\right)_{\!T} = \frac{\Lambda}{m_{\rm H}^2},$$
+so (8.2) reads
+$$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!P} = \frac{\rho}{m_{\rm H}^2}\left[\frac{d\Lambda}{dT} - \frac{\Lambda}{T}\right] \lt 0 \iff \frac{T}{\Lambda}\frac{d\Lambda}{dT} \lt 1,$$
+after dividing by the positive factor $\rho\Lambda/(m_{\rm H}^2T)$. That is (8.5). Note also that $(\partial\mathcal{L}/\partial\rho)_T = \Lambda/m_{\rm H}^2\gt 0$, so Proposition 6's ordering of the two criteria applies: the isochoric criterion here is $d\ln\Lambda/d\ln T \lt 0$, which is strictly harder to satisfy. <span class="qed">∎</span></p>
+</div>
+
+<table>
+<caption class="small" style="text-align:left;caption-side:bottom;padding-top:.4rem;">Table 4. The corrected Koyama–Inutsuka cooling function, its logarithmic slope, the equilibrium state from (8.4), and the two Field criteria. "UNSTABLE" in the isobaric column means (8.5) is violated.</caption>
+<tr><th>$T$ [K]</th><th>$\Lambda$ [erg cm$^3$ s$^{-1}$]</th><th>$d\ln\Lambda/d\ln T$</th><th>$n_{\rm eq}$ [cm$^{-3}$]</th><th>$P/k$ [K cm$^{-3}$]</th><th>isobaric (8.2)</th><th>isochoric (8.1)</th></tr>
+<tr><td>20</td><td>$1.2587\times10^{-29}$</td><td>5.1000</td><td>1588.9549</td><td>31779.1</td><td>stable</td><td>stable</td></tr>
+<tr><td>40</td><td>$1.7755\times10^{-28}$</td><td>2.8000</td><td>112.6469</td><td>4505.9</td><td>stable</td><td>stable</td></tr>
+<tr><td>80</td><td>$7.9298\times10^{-28}$</td><td>1.6500</td><td>25.2212</td><td>2017.7</td><td>stable</td><td>stable</td></tr>
+<tr><td>100</td><td>$1.1159\times10^{-27}$</td><td>1.4200</td><td>17.9235</td><td>1792.4</td><td>stable</td><td>stable</td></tr>
+<tr><td>184</td><td>$2.3037\times10^{-27}$</td><td>1.0000</td><td>8.6818</td><td>1597.5</td><td>stable</td><td>stable</td></tr>
+<tr><td>300</td><td>$3.5689\times10^{-27}$</td><td>0.8067</td><td>5.6040</td><td>1681.2</td><td><b>UNSTABLE</b></td><td>stable</td></tr>
+<tr><td>600</td><td>$5.8836\times10^{-27}$</td><td>0.6533</td><td>3.3993</td><td>2039.6</td><td><b>UNSTABLE</b></td><td>stable</td></tr>
+<tr><td>1000</td><td>$8.0761\times10^{-27}$</td><td>0.5920</td><td>2.4764</td><td>2476.4</td><td><b>UNSTABLE</b></td><td>stable</td></tr>
+<tr><td>2000</td><td>$1.1959\times10^{-26}$</td><td>0.5460</td><td>1.6724</td><td>3344.8</td><td><b>UNSTABLE</b></td><td>stable</td></tr>
+<tr><td>5039</td><td>$2.0128\times10^{-26}$</td><td>0.9994</td><td>0.9936</td><td>5007.0</td><td><b>UNSTABLE</b></td><td>stable</td></tr>
+<tr><td>6000</td><td>$3.0380\times10^{-26}$</td><td>4.6673</td><td>0.6583</td><td>3950.0</td><td>stable</td><td>stable</td></tr>
+<tr><td>8000</td><td>$4.1170\times10^{-25}$</td><td>11.0214</td><td>0.0486</td><td>388.6</td><td>stable</td><td>stable</td></tr>
+<tr><td>10000</td><td>$4.2587\times10^{-24}$</td><td>9.7247</td><td>0.0047</td><td>47.0</td><td>stable</td><td>stable</td></tr>
+</table>
+
+<p>Read the two right-hand columns together. The isochoric criterion is satisfied nowhere in this table: $\Lambda$ increases with $T$ throughout, so $d\Lambda/dT\gt 0$ everywhere and (8.1) never fires. The isobaric criterion is satisfied over a wide band. That is the whole content of Field's 1965 correction, in one table.</p>
+
+<p>The slope crosses $1$ twice: at $T = 184.0$ K, where $n_{\rm eq} = 8.682\ \mathrm{cm^{-3}}$ and $P/k = 1597.5\ \mathrm{K\,cm^{-3}}$, and again at $T = 5039.4$ K, where $n_{\rm eq} = 0.994\ \mathrm{cm^{-3}}$ and $P/k = 5007.0\ \mathrm{K\,cm^{-3}}$. Those two states bound the unstable branch, and <a class="secref" href="#window">§9</a> shows they are also the turning points of the equilibrium pressure.</p>
+
+<h2 id="window">9. The two-phase window</h2>
+
+<div class="prop"><b>Proposition 8 (the pressure window).</b> On the thermal-equilibrium curve (8.4), the equilibrium pressure satisfies
+$$ \frac{P}{k_B} \;=\; n_{\rm eq}(T)\,T \;=\; \frac{\Gamma\,T}{\Lambda(T)}, \qquad \frac{d\ln P}{d\ln T} \;=\; 1 - \frac{d\ln\Lambda}{d\ln T}. \tag{9.1}$$
+Hence $P$ has a turning point exactly where Field's isobaric criterion (8.5) changes sign, and $dP/dn\lt 0$ exactly on the unstable branch. Between the local minimum $P_{\min}$ and the local maximum $P_{\max}$ of the curve, a single pressure is attained at three densities, of which the two extreme ones are stable and the middle one is not: two stable phases coexist at the same pressure.</div>
+
+<div class="proof">
+<p>(9.1) is (8.4) multiplied by $T$, and its logarithmic derivative. A turning point of $P$ along the curve is $d\ln P/d\ln T = 0$, which by (9.1) is $d\ln\Lambda/d\ln T = 1$, which is the boundary case of (8.5). For the density, (8.4) gives $d\ln n/d\ln T = -\,d\ln\Lambda/d\ln T \equiv -s$, so on any part of the curve with $s\neq0$,
+$$ \frac{d\ln P}{d\ln n} = \frac{1-s}{-s} = 1 - \frac{1}{s}.$$
+For $s\gt 1$, which is the stable cold branch of Table 4, this is positive and less than $1$; for $0\lt s\lt 1$, the unstable branch, $1/s\gt 1$ and the expression is negative, so $dP/dn\lt 0$ there. A continuous curve that rises, falls and rises again in $P$ as $n$ increases takes every value of $P$ strictly between the local minimum and the local maximum at three densities, one on each monotone piece. The outer two lie on branches with $s\gt 1$, which satisfy (8.5) and are stable; the middle one lies on the falling branch, which does not. <span class="qed">∎</span></p>
+</div>
+
+<p>From the corrected fit (8.3), the turning points are</p>
+
+$$ \frac{P_{\min}}{k_B} = 1597.5\ \mathrm{K\,cm^{-3}} \ \ (T = 184.0\ \mathrm{K},\ n = 8.682\ \mathrm{cm^{-3}}), \qquad \frac{P_{\max}}{k_B} = 5007.0\ \mathrm{K\,cm^{-3}}\ \ (T = 5039.4\ \mathrm{K},\ n = 0.994\ \mathrm{cm^{-3}}), $$
+
+<p>with geometric mean $2828.2\ \mathrm{K\,cm^{-3}}$ and width $P_{\max}/P_{\min} = 3.134$.</p>
+
+<figure>
+<!--FIG_PHASE-->
+<svg class="setupfig" viewBox="0 0 760 520" width="100%" role="img" aria-label="Thermal-equilibrium pressure against density for neutral interstellar gas heated by grain photoelectric emission and cooled by carbon and hydrogen line emission. Pressure rises along the warm branch to a maximum of about 5000, falls along a thermally unstable branch, reaches a minimum of about 1600, and rises again along the cold branch. A horizontal band marks the two-phase pressure window computed by Wolfire and collaborators, 1960 to 4810. A vertical bar marks the measured cold-gas pressures of Jenkins and Tripp, centred on 3802 with a spread of 0.175 dex, inside the window.">
+<text x="395.0" y="28.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Thermal equilibrium of neutral interstellar gas, and where the cold gas is measured</text>
+<rect x="90" y="216.2" width="610" height="68.1" fill="#2dd4bf" fill-opacity="0.13"/>
+<rect x="90" y="56" width="610" height="384" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="90.0" y1="440" x2="90.0" y2="445" stroke="#334155" stroke-width="1"/>
+<text x="90.0" y="458.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻²</text>
+<line x1="205.1" y1="440" x2="205.1" y2="445" stroke="#334155" stroke-width="1"/>
+<text x="205.1" y="458.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻¹</text>
+<line x1="320.2" y1="440" x2="320.2" y2="445" stroke="#334155" stroke-width="1"/>
+<text x="320.2" y="458.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1</text>
+<line x1="435.3" y1="440" x2="435.3" y2="445" stroke="#334155" stroke-width="1"/>
+<text x="435.3" y="458.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10</text>
+<line x1="550.4" y1="440" x2="550.4" y2="445" stroke="#334155" stroke-width="1"/>
+<text x="550.4" y="458.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10²</text>
+<line x1="665.5" y1="440" x2="665.5" y2="445" stroke="#334155" stroke-width="1"/>
+<text x="665.5" y="458.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10³</text>
+<line x1="85" y1="426.5" x2="90" y2="426.5" stroke="#334155" stroke-width="1"/>
+<text x="81.0" y="430.5" font-size="10.5" text-anchor="end" fill="#94a3b8">300</text>
+<line x1="85" y1="335.3" x2="90" y2="335.3" stroke="#334155" stroke-width="1"/>
+<text x="81.0" y="339.3" font-size="10.5" text-anchor="end" fill="#94a3b8">1000</text>
+<line x1="85" y1="252.0" x2="90" y2="252.0" stroke="#334155" stroke-width="1"/>
+<text x="81.0" y="256.0" font-size="10.5" text-anchor="end" fill="#94a3b8">3000</text>
+<line x1="85" y1="160.7" x2="90" y2="160.7" stroke="#334155" stroke-width="1"/>
+<text x="81.0" y="164.7" font-size="10.5" text-anchor="end" fill="#94a3b8">10000</text>
+<line x1="85" y1="77.4" x2="90" y2="77.4" stroke="#334155" stroke-width="1"/>
+<text x="81.0" y="81.4" font-size="10.5" text-anchor="end" fill="#94a3b8">30000</text>
+<text x="395.0" y="476.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">hydrogen density n  (cm⁻³)</text>
+<text x="36.0" y="248.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 36 248)">P / k  (K cm⁻³)</text>
+<path d="M 319.9,213.2 L 319.8,213.2 L 319.8,213.2 L 319.7,213.2 L 319.7,213.2 L 319.7,213.2 L 319.6,213.2 L 319.6,213.2 L 319.5,213.2 L 319.5,213.2 L 319.4,213.2 L 319.4,213.2 L 319.3,213.2 L 319.3,213.2 L 319.3,213.2 L 319.2,213.2 L 319.2,213.2 L 319.1,213.2 L 319.1,213.2 L 319.0,213.2 L 319.0,213.2 L 318.9,213.3 L 318.9,213.3 L 318.8,213.3 L 318.8,213.3 L 318.7,213.3 L 318.7,213.3 L 318.6,213.3 L 318.6,213.3 L 318.5,213.3 L 318.5,213.4 L 318.4,213.4 L 318.4,213.4 L 318.3,213.4 L 318.3,213.4 L 318.2,213.4 L 318.2,213.4 L 318.1,213.5 L 318.1,213.5 L 318.0,213.5 L 318.0,213.5 L 317.9,213.5 L 317.9,213.5 L 317.8,213.6 L 317.8,213.6 L 317.7,213.6 L 317.6,213.6 L 317.6,213.7 L 317.5,213.7 L 317.5,213.7 L 317.4,213.7 L 317.4,213.8 L 317.3,213.8 L 317.2,213.8 L 317.2,213.8 L 317.1,213.9 L 317.1,213.9 L 317.0,213.9 L 316.9,213.9 L 316.9,214.0 L 316.8,214.0 L 316.8,214.0 L 316.7,214.1 L 316.6,214.1 L 316.6,214.1 L 316.5,214.2 L 316.4,214.2 L 316.4,214.2 L 316.3,214.3 L 316.2,214.3 L 316.2,214.4 L 316.1,214.4 L 316.0,214.4 L 316.0,214.5 L 315.9,214.5 L 315.8,214.6 L 315.8,214.6 L 315.7,214.6 L 315.6,214.7 L 315.5,214.7 L 315.5,214.8 L 315.4,214.8 L 315.3,214.9 L 315.2,214.9 L 315.2,215.0 L 315.1,215.0 L 315.0,215.1 L 314.9,215.1 L 314.9,215.2 L 314.8,215.2 L 314.7,215.3 L 314.6,215.3 L 314.6,215.4 L 314.5,215.5 L 314.4,215.5 L 314.3,215.6 L 314.2,215.6 L 314.2,215.7 L 314.1,215.8 L 314.0,215.8 L 313.9,215.9 L 313.8,216.0 L 313.7,216.0 L 313.6,216.1 L 313.6,216.2 L 313.5,216.2 L 313.4,216.3 L 313.3,216.4 L 313.2,216.5 L 313.1,216.5 L 313.0,216.6 L 312.9,216.7 L 312.8,216.8 L 312.7,216.8 L 312.6,216.9 L 312.6,217.0 L 312.5,217.1 L 312.4,217.2 L 312.3,217.2 L 312.2,217.3 L 312.1,217.4 L 312.0,217.5 L 311.9,217.6 L 311.8,217.7 L 311.7,217.8 L 311.6,217.9 L 311.5,218.0 L 311.4,218.1 L 311.2,218.2 L 311.1,218.3 L 311.0,218.4 L 310.9,218.5 L 310.8,218.6 L 310.7,218.7 L 310.6,218.8 L 310.5,218.9 L 310.4,219.0 L 310.3,219.1 L 310.1,219.2 L 310.0,219.3 L 309.9,219.4 L 309.8,219.5 L 309.7,219.6 L 309.6,219.8 L 309.4,219.9 L 309.3,220.0 L 309.2,220.1 L 309.1,220.2 L 309.0,220.4 L 308.8,220.5 L 308.7,220.6 L 308.6,220.7 L 308.5,220.9 L 308.3,221.0 L 308.2,221.1 L 308.1,221.3 L 307.9,221.4 L 307.8,221.5 L 307.7,221.7 L 307.5,221.8 L 307.4,222.0 L 307.3,222.1 L 307.1,222.3 L 307.0,222.4 L 306.8,222.6 L 306.7,222.7 L 306.6,222.9 L 306.4,223.0 L 306.3,223.2 L 306.1,223.3 L 306.0,223.5 L 305.8,223.6 L 305.7,223.8 L 305.5,224.0 L 305.4,224.1 L 305.2,224.3 L 305.1,224.5 L 304.9,224.6 L 304.8,224.8 L 304.6,225.0 L 304.5,225.2 L 304.3,225.3 L 304.1,225.5 L 304.0,225.7 L 303.8,225.9 L 303.7,226.1 L 303.5,226.2 L 303.3,226.4 L 303.2,226.6 L 303.0,226.8 L 302.8,227.0 L 302.7,227.2 L 302.5,227.4 L 302.3,227.6 L 302.1,227.8 L 302.0,228.0 L 301.8,228.2 L 301.6,228.4 L 301.4,228.6 L 301.2,228.8 L 301.1,229.0 L 300.9,229.3 L 300.7,229.5 L 300.5,229.7 L 300.3,229.9 L 300.1,230.1 L 300.0,230.4 L 299.8,230.6 L 299.6,230.8 L 299.4,231.0 L 299.2,231.3 L 299.0,231.5 L 298.8,231.7 L 298.6,232.0 L 298.4,232.2 L 298.2,232.5 L 298.0,232.7 L 297.8,233.0 L 297.6,233.2 L 297.4,233.4 L 297.2,233.7 L 297.0,234.0 L 296.7,234.2 L 296.5,234.5 L 296.3,234.7 L 296.1,235.0 L 295.9,235.3 L 295.7,235.5 L 295.5,235.8 L 295.2,236.1 L 295.0,236.3 L 294.8,236.6 L 294.6,236.9 L 294.3,237.2 L 294.1,237.4 L 293.9,237.7 L 293.7,238.0 L 293.4,238.3 L 293.2,238.6 L 293.0,238.9 L 292.7,239.2 L 292.5,239.5 L 292.2,239.8 L 292.0,240.1 L 291.8,240.4 L 291.5,240.7 L 291.3,241.0 L 291.0,241.3 L 290.8,241.6 L 290.5,241.9 L 290.3,242.2 L 290.0,242.5 L 289.8,242.9 L 289.5,243.2 L 289.3,243.5 L 289.0,243.8 L 288.8,244.2 L 288.5,244.5 L 288.2,244.8 L 288.0,245.2 L 287.7,245.5 L 287.5,245.8 L 287.2,246.2 L 286.9,246.5 L 286.7,246.9 L 286.4,247.2 L 286.1,247.6 L 285.8,247.9 L 285.6,248.3 L 285.3,248.6 L 285.0,249.0 L 284.7,249.3 L 284.5,249.7 L 284.2,250.1 L 283.9,250.4 L 283.6,250.8 L 283.3,251.2 L 283.0,251.5 L 282.7,251.9 L 282.5,252.3 L 282.2,252.7 L 281.9,253.0 L 281.6,253.4 L 281.3,253.8 L 281.0,254.2 L 280.7,254.6 L 280.4,255.0 L 280.1,255.4 L 279.8,255.8 L 279.5,256.2 L 279.2,256.6 L 278.9,257.0 L 278.6,257.4 L 278.2,257.8 L 277.9,258.2 L 277.6,258.6 L 277.3,259.0 L 277.0,259.4 L 276.7,259.8 L 276.4,260.3 L 276.0,260.7 L 275.7,261.1 L 275.4,261.5 L 275.1,261.9 L 274.8,262.4 L 274.4,262.8 L 274.1,263.2 L 273.8,263.7 L 273.5,264.1 L 273.1,264.5 L 272.8,265.0 L 272.5,265.4 L 272.1,265.9 L 271.8,266.3 L 271.5,266.8 L 271.1,267.2 L 270.8,267.7 L 270.4,268.1 L 270.1,268.6 L 269.8,269.0 L 269.4,269.5 L 269.1,269.9 L 268.7,270.4 L 268.4,270.9 L 268.0,271.3 L 267.7,271.8 L 267.3,272.3 L 267.0,272.7 L 266.6,273.2 L 266.3,273.7 L 265.9,274.2 L 265.5,274.6 L 265.2,275.1 L 264.8,275.6 L 264.5,276.1 L 264.1,276.6 L 263.7,277.1 L 263.4,277.5 L 263.0,278.0 L 262.7,278.5 L 262.3,279.0 L 261.9,279.5 L 261.5,280.0 L 261.2,280.5 L 260.8,281.0 L 260.4,281.5 L 260.1,282.0 L 259.7,282.5 L 259.3,283.0 L 258.9,283.5 L 258.6,284.0 L 258.2,284.6 L 257.8,285.1 L 257.4,285.6 L 257.0,286.1 L 256.7,286.6 L 256.3,287.1 L 255.9,287.7 L 255.5,288.2 L 255.1,288.7 L 254.7,289.2 L 254.3,289.7 L 253.9,290.3 L 253.6,290.8 L 253.2,291.3 L 252.8,291.9 L 252.4,292.4 L 252.0,292.9 L 251.6,293.5 L 251.2,294.0 L 250.8,294.5 L 250.4,295.1 L 250.0,295.6 L 249.6,296.2 L 249.2,296.7 L 248.8,297.3 L 248.4,297.8 L 248.0,298.4 L 247.6,298.9 L 247.2,299.5 L 246.8,300.0 L 246.4,300.6 L 246.0,301.1 L 245.6,301.7 L 245.1,302.2 L 244.7,302.8 L 244.3,303.3 L 243.9,303.9 L 243.5,304.5 L 243.1,305.0 L 242.7,305.6 L 242.3,306.2 L 241.9,306.7 L 241.4,307.3 L 241.0,307.9 L 240.6,308.4 L 240.2,309.0 L 239.8,309.6 L 239.3,310.1 L 238.9,310.7 L 238.5,311.3 L 238.1,311.9 L 237.7,312.4 L 237.2,313.0 L 236.8,313.6 L 236.4,314.2 L 236.0,314.8 L 235.5,315.3 L 235.1,315.9 L 234.7,316.5 L 234.3,317.1 L 233.8,317.7 L 233.4,318.3 L 233.0,318.8 L 232.6,319.4 L 232.1,320.0 L 231.7,320.6 L 231.3,321.2 L 230.8,321.8 L 230.4,322.4 L 230.0,323.0 L 229.5,323.6 L 229.1,324.2 L 228.7,324.8 L 228.2,325.4 L 227.8,326.0 L 227.4,326.5 L 226.9,327.1 L 226.5,327.7 L 226.1,328.3 L 225.6,328.9 L 225.2,329.5 L 224.7,330.1 L 224.3,330.8 L 223.9,331.4 L 223.4,332.0 L 223.0,332.6 L 222.5,333.2 L 222.1,333.8 L 221.7,334.4 L 221.2,335.0 L 220.8,335.6 L 220.3,336.2 L 219.9,336.8 L 219.4,337.4 L 219.0,338.0 L 218.6,338.6 L 218.1,339.3 L 217.7,339.9 L 217.2,340.5 L 216.8,341.1 L 216.3,341.7 L 215.9,342.3 L 215.4,342.9 L 215.0,343.6 L 214.5,344.2 L 214.1,344.8 L 213.6,345.4 L 213.2,346.0 L 212.7,346.6 L 212.3,347.3 L 211.8,347.9 L 211.4,348.5 L 210.9,349.1 L 210.5,349.7 L 210.0,350.3 L 209.6,351.0 L 209.1,351.6 L 208.7,352.2 L 208.2,352.8 L 207.8,353.5 L 207.3,354.1 L 206.9,354.7 L 206.4,355.3 L 206.0,355.9 L 205.5,356.6 L 205.1,357.2 L 204.6,357.8 L 204.2,358.4 L 203.7,359.1 L 203.3,359.7 L 202.8,360.3 L 202.3,361.0 L 201.9,361.6 L 201.4,362.2 L 201.0,362.8 L 200.5,363.5 L 200.1,364.1 L 199.6,364.7 L 199.2,365.3 L 198.7,366.0 L 198.2,366.6 L 197.8,367.2 L 197.3,367.9 L 196.9,368.5 L 196.4,369.1 L 196.0,369.7 L 195.5,370.4 L 195.0,371.0 L 194.6,371.6 L 194.1,372.3 L 193.7,372.9 L 193.2,373.5 L 192.8,374.2 L 192.3,374.8 L 191.8,375.4 L 191.4,376.1 L 190.9,376.7 L 190.5,377.3 L 190.0,378.0 L 189.6,378.6 L 189.1,379.2 L 188.6,379.8 L 188.2,380.5 L 187.7,381.1 L 187.3,381.7 L 186.8,382.4 L 186.3,383.0 L 185.9,383.6 L 185.4,384.3 L 185.0,384.9 L 184.5,385.5 L 184.0,386.2 L 183.6,386.8 L 183.1,387.4 L 182.7,388.1 L 182.2,388.7 L 181.7,389.3 L 181.3,390.0 L 180.8,390.6 L 180.4,391.2 L 179.9,391.9 L 179.5,392.5 L 179.0,393.1 L 178.5,393.8 L 178.1,394.4 L 177.6,395.0 L 177.2,395.7 L 176.7,396.3 L 176.2,396.9 L 175.8,397.6 L 175.3,398.2 L 174.9,398.8 L 174.4,399.5 L 173.9,400.1 L 173.5,400.7 L 173.0,401.4 L 172.6,402.0 L 172.1,402.6 L 171.6,403.3 L 171.2,403.9 L 170.7,404.5 L 170.3,405.2 L 169.8,405.8 L 169.3,406.4 L 168.9,407.1 L 168.4,407.7 L 168.0,408.3 L 167.5,409.0 L 167.1,409.6 L 166.6,410.2 L 166.1,410.9 L 165.7,411.5 L 165.2,412.1 L 164.8,412.8 L 164.3,413.4 L 163.8,414.0 L 163.4,414.7 L 162.9,415.3 L 162.5,415.9 L 162.0,416.6 L 161.6,417.2 L 161.1,417.8 L 160.6,418.5 L 160.2,419.1 L 159.7,419.7 L 159.3,420.3 L 158.8,421.0 L 158.4,421.6 L 157.9,422.2 L 157.4,422.9 L 157.0,423.5 L 156.5,424.1 L 156.1,424.8 L 155.6,425.4 L 155.2,426.0 L 154.7,426.6 L 154.2,427.3 L 153.8,427.9 L 153.3,428.5 L 152.9,429.2 L 152.4,429.8 L 152.0,430.4 L 151.5,431.0 L 151.1,431.7 L 150.6,432.3 L 150.1,432.9 L 149.7,433.5 L 149.2,434.2 L 148.8,434.8 L 148.3,435.4 L 147.9,436.1 L 147.4,436.7 L 147.0,437.3 L 146.5,437.9 L 146.1,438.6 L 145.6,439.2 L 145.1,439.8 L 145.0,440.0" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<path d="M 700.0,59.1 L 699.0,60.4 L 698.0,61.6 L 697.0,62.8 L 696.0,64.0 L 695.1,65.2 L 694.1,66.4 L 693.1,67.6 L 692.1,68.8 L 691.2,70.0 L 690.2,71.2 L 689.2,72.3 L 688.3,73.5 L 687.3,74.7 L 686.4,75.8 L 685.4,77.0 L 684.5,78.1 L 683.5,79.3 L 682.6,80.4 L 681.7,81.5 L 680.7,82.7 L 679.8,83.8 L 678.9,84.9 L 677.9,86.0 L 677.0,87.1 L 676.1,88.2 L 675.2,89.3 L 674.3,90.4 L 673.4,91.5 L 672.5,92.6 L 671.6,93.7 L 670.7,94.8 L 669.8,95.9 L 668.9,96.9 L 668.0,98.0 L 667.1,99.1 L 666.2,100.1 L 665.3,101.2 L 664.5,102.2 L 663.6,103.2 L 662.7,104.3 L 661.8,105.3 L 661.0,106.3 L 660.1,107.4 L 659.3,108.4 L 658.4,109.4 L 657.5,110.4 L 656.7,111.4 L 655.8,112.4 L 655.0,113.4 L 654.2,114.4 L 653.3,115.4 L 652.5,116.4 L 651.6,117.4 L 650.8,118.4 L 650.0,119.3 L 649.2,120.3 L 648.3,121.3 L 647.5,122.2 L 646.7,123.2 L 645.9,124.1 L 645.1,125.1 L 644.3,126.0 L 643.4,127.0 L 642.6,127.9 L 641.8,128.8 L 641.0,129.8 L 640.2,130.7 L 639.4,131.6 L 638.7,132.5 L 637.9,133.4 L 637.1,134.3 L 636.3,135.2 L 635.5,136.1 L 634.7,137.0 L 634.0,137.9 L 633.2,138.8 L 632.4,139.7 L 631.6,140.6 L 630.9,141.5 L 630.1,142.3 L 629.4,143.2 L 628.6,144.1 L 627.8,144.9 L 627.1,145.8 L 626.3,146.6 L 625.6,147.5 L 624.8,148.3 L 624.1,149.2 L 623.4,150.0 L 622.6,150.9 L 621.9,151.7 L 621.1,152.5 L 620.4,153.3 L 619.7,154.2 L 619.0,155.0 L 618.2,155.8 L 617.5,156.6 L 616.8,157.4 L 616.1,158.2 L 615.4,159.0 L 614.6,159.8 L 613.9,160.6 L 613.2,161.4 L 612.5,162.2 L 611.8,163.0 L 611.1,163.7 L 610.4,164.5 L 609.7,165.3 L 609.0,166.0 L 608.3,166.8 L 607.6,167.6 L 607.0,168.3 L 606.3,169.1 L 605.6,169.8 L 604.9,170.6 L 604.2,171.3 L 603.6,172.1 L 602.9,172.8 L 602.2,173.5 L 601.5,174.3 L 600.9,175.0 L 600.2,175.7 L 599.5,176.4 L 598.9,177.2 L 598.2,177.9 L 597.6,178.6 L 596.9,179.3 L 596.3,180.0 L 595.6,180.7 L 595.0,181.4 L 594.3,182.1 L 593.7,182.8 L 593.0,183.5 L 592.4,184.2 L 591.7,184.9 L 591.1,185.5 L 590.5,186.2 L 589.8,186.9 L 589.2,187.6 L 588.6,188.2 L 588.0,188.9 L 587.3,189.6 L 586.7,190.2 L 586.1,190.9 L 585.5,191.5 L 584.9,192.2 L 584.2,192.8 L 583.6,193.5 L 583.0,194.1 L 582.4,194.7 L 581.8,195.4 L 581.2,196.0 L 580.6,196.6 L 580.0,197.3 L 579.4,197.9 L 578.8,198.5 L 578.2,199.1 L 577.6,199.7 L 577.0,200.4 L 576.4,201.0 L 575.8,201.6 L 575.3,202.2 L 574.7,202.8 L 574.1,203.4 L 573.5,204.0 L 572.9,204.6 L 572.4,205.2 L 571.8,205.7 L 571.2,206.3 L 570.6,206.9 L 570.1,207.5 L 569.5,208.1 L 568.9,208.6 L 568.4,209.2 L 567.8,209.8 L 567.2,210.3 L 566.7,210.9 L 566.1,211.5 L 565.6,212.0 L 565.0,212.6 L 564.5,213.1 L 563.9,213.7 L 563.4,214.2 L 562.8,214.8 L 562.3,215.3 L 561.7,215.8 L 561.2,216.4 L 560.6,216.9 L 560.1,217.5 L 559.6,218.0 L 559.0,218.5 L 558.5,219.0 L 558.0,219.6 L 557.4,220.1 L 556.9,220.6 L 556.4,221.1 L 555.9,221.6 L 555.3,222.1 L 554.8,222.6 L 554.3,223.1 L 553.8,223.6 L 553.3,224.1 L 552.7,224.6 L 552.2,225.1 L 551.7,225.6 L 551.2,226.1 L 550.7,226.6 L 550.2,227.1 L 549.7,227.6 L 549.2,228.0 L 548.7,228.5 L 548.2,229.0 L 547.7,229.5 L 547.2,229.9 L 546.7,230.4 L 546.2,230.9 L 545.7,231.3 L 545.2,231.8 L 544.7,232.3 L 544.2,232.7 L 543.7,233.2 L 543.2,233.6 L 542.8,234.1 L 542.3,234.5 L 541.8,235.0 L 541.3,235.4 L 540.8,235.9 L 540.3,236.3 L 539.9,236.7 L 539.4,237.2 L 538.9,237.6 L 538.5,238.0 L 538.0,238.5 L 537.5,238.9 L 537.0,239.3 L 536.6,239.7 L 536.1,240.2 L 535.6,240.6 L 535.2,241.0 L 534.7,241.4 L 534.3,241.8 L 533.8,242.2 L 533.4,242.6 L 532.9,243.1 L 532.4,243.5 L 532.0,243.9 L 531.5,244.3 L 531.1,244.7 L 530.6,245.1 L 530.2,245.4 L 529.7,245.8 L 529.3,246.2 L 528.9,246.6 L 528.4,247.0 L 528.0,247.4 L 527.5,247.8 L 527.1,248.1 L 526.7,248.5 L 526.2,248.9 L 525.8,249.3 L 525.4,249.6 L 524.9,250.0 L 524.5,250.4 L 524.1,250.7 L 523.6,251.1 L 523.2,251.5 L 522.8,251.8 L 522.4,252.2 L 521.9,252.6 L 521.5,252.9 L 521.1,253.3 L 520.7,253.6 L 520.3,254.0 L 519.8,254.3 L 519.4,254.7 L 519.0,255.0 L 518.6,255.3 L 518.2,255.7 L 517.8,256.0 L 517.4,256.4 L 517.0,256.7 L 516.5,257.0 L 516.1,257.4 L 515.7,257.7 L 515.3,258.0 L 514.9,258.3 L 514.5,258.7 L 514.1,259.0 L 513.7,259.3 L 513.3,259.6 L 512.9,259.9 L 512.5,260.3 L 512.1,260.6 L 511.8,260.9 L 511.4,261.2 L 511.0,261.5 L 510.6,261.8 L 510.2,262.1 L 509.8,262.4 L 509.4,262.7 L 509.0,263.0 L 508.6,263.3 L 508.3,263.6 L 507.9,263.9 L 507.5,264.2 L 507.1,264.5 L 506.7,264.8 L 506.4,265.1 L 506.0,265.4 L 505.6,265.6 L 505.2,265.9 L 504.9,266.2 L 504.5,266.5 L 504.1,266.8 L 503.7,267.0 L 503.4,267.3 L 503.0,267.6 L 502.6,267.9 L 502.3,268.1 L 501.9,268.4 L 501.5,268.7 L 501.2,268.9 L 500.8,269.2 L 500.4,269.5 L 500.1,269.7 L 499.7,270.0 L 499.4,270.3 L 499.0,270.5 L 498.7,270.8 L 498.3,271.0 L 497.9,271.3 L 497.6,271.5 L 497.2,271.8 L 496.9,272.0 L 496.5,272.3 L 496.2,272.5 L 495.8,272.8 L 495.5,273.0 L 495.1,273.2 L 494.8,273.5 L 494.5,273.7 L 494.1,274.0 L 493.8,274.2 L 493.4,274.4 L 493.1,274.7 L 492.7,274.9 L 492.4,275.1 L 492.1,275.4 L 491.7,275.6 L 491.4,275.8 L 491.1,276.0 L 490.7,276.3 L 490.4,276.5 L 490.1,276.7 L 489.7,276.9 L 489.4,277.1 L 489.1,277.3 L 488.7,277.6 L 488.4,277.8 L 488.1,278.0 L 487.7,278.2 L 487.4,278.4 L 487.1,278.6 L 486.8,278.8 L 486.4,279.0 L 486.1,279.2 L 485.8,279.4 L 485.5,279.6 L 485.2,279.8 L 484.8,280.0 L 484.5,280.2 L 484.2,280.4 L 483.9,280.6 L 483.6,280.8 L 483.3,281.0 L 482.9,281.2 L 482.6,281.4 L 482.3,281.6 L 482.0,281.8 L 481.7,282.0 L 481.4,282.1 L 481.1,282.3 L 480.8,282.5 L 480.5,282.7 L 480.2,282.9 L 479.9,283.0 L 479.5,283.2 L 479.2,283.4 L 478.9,283.6 L 478.6,283.8 L 478.3,283.9 L 478.0,284.1 L 477.7,284.3 L 477.4,284.4 L 477.1,284.6 L 476.8,284.8 L 476.5,284.9 L 476.2,285.1 L 475.9,285.3 L 475.7,285.4 L 475.4,285.6 L 475.1,285.8 L 474.8,285.9 L 474.5,286.1 L 474.2,286.2 L 473.9,286.4 L 473.6,286.5 L 473.3,286.7 L 473.0,286.8 L 472.7,287.0 L 472.5,287.1 L 472.2,287.3 L 471.9,287.4 L 471.6,287.6 L 471.3,287.7 L 471.0,287.9 L 470.7,288.0 L 470.5,288.2 L 470.2,288.3 L 469.9,288.5 L 469.6,288.6 L 469.3,288.7 L 469.1,288.9 L 468.8,289.0 L 468.5,289.1 L 468.2,289.3 L 468.0,289.4 L 467.7,289.5 L 467.4,289.7 L 467.1,289.8 L 466.9,289.9 L 466.6,290.1 L 466.3,290.2 L 466.0,290.3 L 465.8,290.4 L 465.5,290.6 L 465.2,290.7 L 465.0,290.8 L 464.7,290.9 L 464.4,291.0 L 464.2,291.2 L 463.9,291.3 L 463.6,291.4 L 463.4,291.5 L 463.1,291.6 L 462.8,291.7 L 462.6,291.9 L 462.3,292.0 L 462.1,292.1 L 461.8,292.2 L 461.5,292.3 L 461.3,292.4 L 461.0,292.5 L 460.8,292.6 L 460.5,292.7 L 460.3,292.8 L 460.0,292.9 L 459.7,293.0 L 459.5,293.1 L 459.2,293.2 L 459.0,293.3 L 458.7,293.4 L 458.5,293.5 L 458.2,293.6 L 458.0,293.7 L 457.7,293.8 L 457.5,293.9 L 457.2,294.0 L 457.0,294.1 L 456.7,294.2 L 456.5,294.3 L 456.2,294.4 L 456.0,294.5 L 455.7,294.6 L 455.5,294.7 L 455.2,294.7 L 455.0,294.8 L 454.7,294.9 L 454.5,295.0 L 454.3,295.1 L 454.0,295.2 L 453.8,295.2 L 453.5,295.3 L 453.3,295.4 L 453.1,295.5 L 452.8,295.6 L 452.6,295.6 L 452.3,295.7 L 452.1,295.8 L 451.9,295.9 L 451.6,295.9 L 451.4,296.0 L 451.2,296.1 L 450.9,296.2 L 450.7,296.2 L 450.5,296.3 L 450.2,296.4 L 450.0,296.4 L 449.8,296.5 L 449.5,296.6 L 449.3,296.6 L 449.1,296.7 L 448.8,296.8 L 448.6,296.8 L 448.4,296.9 L 448.1,297.0 L 447.9,297.0 L 447.7,297.1 L 447.5,297.1 L 447.2,297.2 L 447.0,297.3 L 446.8,297.3 L 446.6,297.4 L 446.3,297.4 L 446.1,297.5 L 445.9,297.5 L 445.7,297.6 L 445.4,297.7 L 445.2,297.7 L 445.0,297.8 L 444.8,297.8 L 444.5,297.9 L 444.3,297.9 L 444.1,298.0 L 443.9,298.0 L 443.7,298.1 L 443.4,298.1 L 443.2,298.1 L 443.0,298.2 L 442.8,298.2 L 442.6,298.3 L 442.4,298.3 L 442.1,298.4 L 441.9,298.4 L 441.7,298.4 L 441.5,298.5 L 441.3,298.5 L 441.1,298.6 L 440.9,298.6 L 440.6,298.6 L 440.4,298.7 L 440.2,298.7 L 440.0,298.8 L 439.8,298.8 L 439.6,298.8 L 439.4,298.9 L 439.2,298.9 L 439.0,298.9 L 438.7,299.0 L 438.5,299.0 L 438.3,299.0 L 438.1,299.0 L 437.9,299.1 L 437.7,299.1 L 437.5,299.1 L 437.3,299.2 L 437.1,299.2 L 436.9,299.2 L 436.7,299.2 L 436.5,299.3 L 436.3,299.3 L 436.1,299.3 L 435.9,299.3 L 435.7,299.4 L 435.5,299.4 L 435.3,299.4 L 435.1,299.4 L 434.9,299.4 L 434.7,299.5 L 434.5,299.5 L 434.3,299.5 L 434.1,299.5 L 433.9,299.5 L 433.7,299.5 L 433.5,299.6 L 433.3,299.6 L 433.1,299.6 L 432.9,299.6 L 432.7,299.6 L 432.5,299.6 L 432.3,299.6 L 432.1,299.7 L 431.9,299.7 L 431.7,299.7 L 431.5,299.7 L 431.3,299.7 L 431.1,299.7 L 430.9,299.7 L 430.7,299.7 L 430.5,299.7 L 430.3,299.7 L 430.2,299.7 L 430.0,299.7 L 429.8,299.7 L 429.6,299.8 L 429.4,299.8 L 429.2,299.8 L 429.0,299.8 L 428.8,299.8 L 428.6,299.8 L 428.4,299.8 L 428.3,299.8 L 428.2,299.8" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<path d="M 428.2,299.8 L 427.9,299.8 L 427.7,299.8 L 427.4,299.8 L 427.1,299.8 L 426.8,299.8 L 426.6,299.7 L 426.3,299.7 L 426.0,299.7 L 425.8,299.7 L 425.5,299.7 L 425.2,299.7 L 425.0,299.7 L 424.7,299.7 L 424.4,299.7 L 424.2,299.6 L 423.9,299.6 L 423.6,299.6 L 423.4,299.6 L 423.1,299.6 L 422.9,299.5 L 422.6,299.5 L 422.3,299.5 L 422.1,299.5 L 421.8,299.4 L 421.6,299.4 L 421.3,299.4 L 421.0,299.4 L 420.8,299.3 L 420.5,299.3 L 420.3,299.3 L 420.0,299.2 L 419.8,299.2 L 419.5,299.2 L 419.3,299.1 L 419.0,299.1 L 418.8,299.1 L 418.5,299.0 L 418.3,299.0 L 418.0,298.9 L 417.8,298.9 L 417.5,298.9 L 417.3,298.8 L 417.0,298.8 L 416.8,298.7 L 416.5,298.7 L 416.3,298.6 L 416.0,298.6 L 415.8,298.5 L 415.6,298.5 L 415.3,298.4 L 415.1,298.4 L 414.8,298.3 L 414.6,298.3 L 414.3,298.2 L 414.1,298.2 L 413.9,298.1 L 413.6,298.1 L 413.4,298.0 L 413.1,298.0 L 412.9,297.9 L 412.7,297.8 L 412.4,297.8 L 412.2,297.7 L 412.0,297.7 L 411.7,297.6 L 411.5,297.5 L 411.3,297.5 L 411.0,297.4 L 410.8,297.3 L 410.6,297.3 L 410.3,297.2 L 410.1,297.1 L 409.9,297.1 L 409.7,297.0 L 409.4,296.9 L 409.2,296.9 L 409.0,296.8 L 408.7,296.7 L 408.5,296.6 L 408.3,296.6 L 408.1,296.5 L 407.8,296.4 L 407.6,296.3 L 407.4,296.3 L 407.2,296.2 L 406.9,296.1 L 406.7,296.0 L 406.5,295.9 L 406.3,295.9 L 406.0,295.8 L 405.8,295.7 L 405.6,295.6 L 405.4,295.5 L 405.2,295.5 L 404.9,295.4 L 404.7,295.3 L 404.5,295.2 L 404.3,295.1 L 404.1,295.0 L 403.8,294.9 L 403.6,294.8 L 403.4,294.8 L 403.2,294.7 L 403.0,294.6 L 402.8,294.5 L 402.6,294.4 L 402.3,294.3 L 402.1,294.2 L 401.9,294.1 L 401.7,294.0 L 401.5,293.9 L 401.3,293.8 L 401.1,293.7 L 400.9,293.6 L 400.6,293.5 L 400.4,293.4 L 400.2,293.3 L 400.0,293.2 L 399.8,293.1 L 399.6,293.0 L 399.4,292.9 L 399.2,292.8 L 399.0,292.7 L 398.8,292.6 L 398.6,292.5 L 398.3,292.4 L 398.1,292.3 L 397.9,292.2 L 397.7,292.1 L 397.5,292.0 L 397.3,291.9 L 397.1,291.8 L 396.9,291.7 L 396.7,291.6 L 396.5,291.5 L 396.3,291.3 L 396.1,291.2 L 395.9,291.1 L 395.7,291.0 L 395.5,290.9 L 395.3,290.8 L 395.1,290.7 L 394.9,290.6 L 394.7,290.4 L 394.5,290.3 L 394.3,290.2 L 394.1,290.1 L 393.9,290.0 L 393.7,289.9 L 393.5,289.7 L 393.3,289.6 L 393.1,289.5 L 392.9,289.4 L 392.7,289.3 L 392.5,289.2 L 392.3,289.0 L 392.1,288.9 L 391.9,288.8 L 391.7,288.7 L 391.5,288.5 L 391.3,288.4 L 391.1,288.3 L 390.9,288.2 L 390.8,288.1 L 390.6,287.9 L 390.4,287.8 L 390.2,287.7 L 390.0,287.6 L 389.8,287.4 L 389.6,287.3 L 389.4,287.2 L 389.2,287.0 L 389.0,286.9 L 388.8,286.8 L 388.6,286.7 L 388.4,286.5 L 388.3,286.4 L 388.1,286.3 L 387.9,286.1 L 387.7,286.0 L 387.5,285.9 L 387.3,285.7 L 387.1,285.6 L 386.9,285.5 L 386.8,285.3 L 386.6,285.2 L 386.4,285.1 L 386.2,284.9 L 386.0,284.8 L 385.8,284.7 L 385.6,284.5 L 385.4,284.4 L 385.3,284.3 L 385.1,284.1 L 384.9,284.0 L 384.7,283.9 L 384.5,283.7 L 384.3,283.6 L 384.2,283.4 L 384.0,283.3 L 383.8,283.2 L 383.6,283.0 L 383.4,282.9 L 383.2,282.7 L 383.1,282.6 L 382.9,282.5 L 382.7,282.3 L 382.5,282.2 L 382.3,282.0 L 382.1,281.9 L 382.0,281.7 L 381.8,281.6 L 381.6,281.4 L 381.4,281.3 L 381.2,281.2 L 381.1,281.0 L 380.9,280.9 L 380.7,280.7 L 380.5,280.6 L 380.3,280.4 L 380.2,280.3 L 380.0,280.1 L 379.8,280.0 L 379.6,279.8 L 379.5,279.7 L 379.3,279.5 L 379.1,279.4 L 378.9,279.2 L 378.7,279.1 L 378.6,278.9 L 378.4,278.8 L 378.2,278.6 L 378.0,278.5 L 377.9,278.3 L 377.7,278.2 L 377.5,278.0 L 377.3,277.9 L 377.2,277.7 L 377.0,277.6 L 376.8,277.4 L 376.6,277.3 L 376.5,277.1 L 376.3,277.0 L 376.1,276.8 L 375.9,276.7 L 375.8,276.5 L 375.6,276.3 L 375.4,276.2 L 375.3,276.0 L 375.1,275.9 L 374.9,275.7 L 374.7,275.6 L 374.6,275.4 L 374.4,275.3 L 374.2,275.1 L 374.0,274.9 L 373.9,274.8 L 373.7,274.6 L 373.5,274.5 L 373.4,274.3 L 373.2,274.1 L 373.0,274.0 L 372.9,273.8 L 372.7,273.7 L 372.5,273.5 L 372.3,273.3 L 372.2,273.2 L 372.0,273.0 L 371.8,272.9 L 371.7,272.7 L 371.5,272.5 L 371.3,272.4 L 371.2,272.2 L 371.0,272.0 L 370.8,271.9 L 370.7,271.7 L 370.5,271.6 L 370.3,271.4 L 370.2,271.2 L 370.0,271.1 L 369.8,270.9 L 369.7,270.7 L 369.5,270.6 L 369.3,270.4 L 369.2,270.2 L 369.0,270.1 L 368.8,269.9 L 368.7,269.7 L 368.5,269.6 L 368.3,269.4 L 368.2,269.2 L 368.0,269.1 L 367.8,268.9 L 367.7,268.7 L 367.5,268.6 L 367.3,268.4 L 367.2,268.2 L 367.0,268.1 L 366.8,267.9 L 366.7,267.7 L 366.5,267.6 L 366.3,267.4 L 366.2,267.2 L 366.0,267.1 L 365.9,266.9 L 365.7,266.7 L 365.5,266.5 L 365.4,266.4 L 365.2,266.2 L 365.0,266.0 L 364.9,265.9 L 364.7,265.7 L 364.6,265.5 L 364.4,265.3 L 364.2,265.2 L 364.1,265.0 L 363.9,264.8 L 363.7,264.7 L 363.6,264.5 L 363.4,264.3 L 363.3,264.1 L 363.1,264.0 L 362.9,263.8 L 362.8,263.6 L 362.6,263.4 L 362.5,263.3 L 362.3,263.1 L 362.1,262.9 L 362.0,262.7 L 361.8,262.6 L 361.7,262.4 L 361.5,262.2 L 361.3,262.0 L 361.2,261.9 L 361.0,261.7 L 360.9,261.5 L 360.7,261.3 L 360.5,261.2 L 360.4,261.0 L 360.2,260.8 L 360.1,260.6 L 359.9,260.5 L 359.7,260.3 L 359.6,260.1 L 359.4,259.9 L 359.3,259.7 L 359.1,259.6 L 359.0,259.4 L 358.8,259.2 L 358.6,259.0 L 358.5,258.9 L 358.3,258.7 L 358.2,258.5 L 358.0,258.3 L 357.8,258.1 L 357.7,258.0 L 357.5,257.8 L 357.4,257.6 L 357.2,257.4 L 357.1,257.2 L 356.9,257.1 L 356.7,256.9 L 356.6,256.7 L 356.4,256.5 L 356.3,256.3 L 356.1,256.2 L 356.0,256.0 L 355.8,255.8 L 355.7,255.6 L 355.5,255.4 L 355.3,255.2 L 355.2,255.1 L 355.0,254.9 L 354.9,254.7 L 354.7,254.5 L 354.6,254.3 L 354.4,254.2 L 354.3,254.0 L 354.1,253.8 L 353.9,253.6 L 353.8,253.4 L 353.6,253.2 L 353.5,253.1 L 353.3,252.9 L 353.2,252.7 L 353.0,252.5 L 352.9,252.3 L 352.7,252.1 L 352.6,252.0 L 352.4,251.8 L 352.3,251.6 L 352.1,251.4 L 351.9,251.2 L 351.8,251.0 L 351.6,250.8 L 351.5,250.7 L 351.3,250.5 L 351.2,250.3 L 351.0,250.1 L 350.9,249.9 L 350.7,249.7 L 350.6,249.5 L 350.4,249.4 L 350.3,249.2 L 350.1,249.0 L 350.0,248.8 L 349.8,248.6 L 349.7,248.4 L 349.5,248.2 L 349.3,248.0 L 349.2,247.9 L 349.0,247.7 L 348.9,247.5 L 348.7,247.3 L 348.6,247.1 L 348.4,246.9 L 348.3,246.7 L 348.1,246.5 L 348.0,246.4 L 347.8,246.2 L 347.7,246.0 L 347.5,245.8 L 347.4,245.6 L 347.2,245.4 L 347.1,245.2 L 346.9,245.0 L 346.8,244.9 L 346.6,244.7 L 346.5,244.5 L 346.3,244.3 L 346.2,244.1 L 346.0,243.9 L 345.9,243.7 L 345.7,243.5 L 345.6,243.3 L 345.4,243.1 L 345.3,243.0 L 345.1,242.8 L 345.0,242.6 L 344.8,242.4 L 344.7,242.2 L 344.5,242.0 L 344.4,241.8 L 344.2,241.6 L 344.1,241.4 L 343.9,241.2 L 343.8,241.0 L 343.6,240.9 L 343.5,240.7 L 343.3,240.5 L 343.2,240.3 L 343.0,240.1 L 342.9,239.9 L 342.7,239.7 L 342.6,239.5 L 342.4,239.3 L 342.3,239.1 L 342.1,238.9 L 342.0,238.7 L 341.8,238.6 L 341.7,238.4 L 341.5,238.2 L 341.4,238.0 L 341.2,237.8 L 341.1,237.6 L 340.9,237.4 L 340.8,237.2 L 340.6,237.0 L 340.5,236.8 L 340.3,236.6 L 340.2,236.4 L 340.0,236.2 L 339.9,236.0 L 339.8,235.9 L 339.6,235.7 L 339.5,235.5 L 339.3,235.3 L 339.2,235.1 L 339.0,234.9 L 338.9,234.7 L 338.7,234.5 L 338.6,234.3 L 338.4,234.1 L 338.3,233.9 L 338.1,233.7 L 338.0,233.5 L 337.8,233.3 L 337.7,233.1 L 337.5,232.9 L 337.4,232.7 L 337.2,232.5 L 337.1,232.4 L 337.0,232.2 L 336.8,232.0 L 336.7,231.8 L 336.5,231.6 L 336.4,231.4 L 336.2,231.2 L 336.1,231.0 L 335.9,230.8 L 335.8,230.6 L 335.6,230.4 L 335.5,230.2 L 335.3,230.0 L 335.2,229.8 L 335.0,229.6 L 334.9,229.4 L 334.8,229.2 L 334.6,229.0 L 334.5,228.8 L 334.3,228.6 L 334.2,228.4 L 334.0,228.2 L 333.9,228.0 L 333.7,227.8 L 333.6,227.7 L 333.4,227.5 L 333.3,227.3 L 333.2,227.1 L 333.0,226.9 L 332.9,226.7 L 332.7,226.5 L 332.6,226.3 L 332.4,226.1 L 332.3,225.9 L 332.1,225.7 L 332.0,225.5 L 331.8,225.3 L 331.7,225.1 L 331.6,224.9 L 331.4,224.7 L 331.3,224.5 L 331.1,224.3 L 331.0,224.1 L 330.8,223.9 L 330.7,223.7 L 330.5,223.5 L 330.4,223.3 L 330.2,223.1 L 330.1,222.9 L 330.0,222.7 L 329.8,222.5 L 329.7,222.3 L 329.5,222.1 L 329.4,221.9 L 329.2,221.7 L 329.1,221.5 L 328.9,221.3 L 328.8,221.1 L 328.6,220.9 L 328.5,220.7 L 328.4,220.5 L 328.2,220.4 L 328.1,220.2 L 327.9,220.0 L 327.8,219.8 L 327.6,219.6 L 327.5,219.4 L 327.3,219.2 L 327.2,219.0 L 327.0,218.8 L 326.9,218.6 L 326.7,218.4 L 326.6,218.2 L 326.4,218.0 L 326.3,217.8 L 326.1,217.6 L 326.0,217.5 L 325.8,217.3 L 325.7,217.1 L 325.5,216.9 L 325.4,216.7 L 325.2,216.5 L 325.1,216.3 L 324.9,216.2 L 324.7,216.0 L 324.6,215.8 L 324.4,215.6 L 324.3,215.5 L 324.1,215.3 L 323.9,215.1 L 323.8,215.0 L 323.6,214.8 L 323.4,214.7 L 323.2,214.5 L 323.1,214.4 L 322.9,214.2 L 322.7,214.1 L 322.5,214.0 L 322.3,213.9 L 322.1,213.7 L 321.9,213.6 L 321.7,213.5 L 321.5,213.5 L 321.2,213.4 L 321.0,213.3 L 320.8,213.3 L 320.5,213.2 L 320.3,213.2 L 320.0,213.2 L 319.9,213.2" fill="none" stroke="#a78bfa" stroke-width="2.4" stroke-dasharray="6 4"/>
+<circle cx="319.9" cy="213.2" r="4.5" fill="#facc15"/>
+<text x="311.9" y="201.2" font-size="10.5" text-anchor="end" fill="#facc15">P<tspan baseline-shift="sub" font-size="75%">max</tspan> = 5007</text>
+<circle cx="428.2" cy="299.8" r="4.5" fill="#facc15"/>
+<text x="436.2" y="319.8" font-size="10.5" text-anchor="start" fill="#facc15">P<tspan baseline-shift="sub" font-size="75%">min</tspan> = 1597</text>
+<text x="225.8" y="364.0" font-size="10.5" text-anchor="start" fill="#fb923c">warm neutral medium</text>
+<text x="571.5" y="191.5" font-size="10.5" text-anchor="end" fill="#fb923c">cold neutral medium</text>
+<line x1="360.2" y1="266.8" x2="394.7" y2="334.5" stroke="#a78bfa" stroke-width="1"/>
+<text x="354.7" y="347.5" font-size="10.5" text-anchor="start" fill="#a78bfa">thermally unstable branch:</text>
+<text x="354.7" y="362.5" font-size="10.5" text-anchor="start" fill="#a78bfa">dP/dn &lt; 0, Field (1965) eq. 4b</text>
+<text x="98.0" y="232.2" font-size="10.5" text-anchor="start" fill="#2dd4bf">two-phase window,</text>
+<text x="98.0" y="247.2" font-size="10.5" text-anchor="start" fill="#2dd4bf">Wolfire et al. (2003)</text>
+<text x="98.0" y="262.2" font-size="10.5" text-anchor="start" fill="#2dd4bf">1960 to 4810</text>
+<line x1="648.2" y1="203.5" x2="648.2" y2="264.6" stroke="#facc15" stroke-width="3"/>
+<line x1="641.2" y1="203.5" x2="655.2" y2="203.5" stroke="#facc15" stroke-width="2"/>
+<line x1="641.2" y1="264.6" x2="655.2" y2="264.6" stroke="#facc15" stroke-width="2"/>
+<circle cx="648.2" cy="234.0" r="5" fill="#facc15"/>
+<text x="636.2" y="284.6" font-size="10.5" text-anchor="end" fill="#facc15">measured CNM pressure,</text>
+<text x="636.2" y="299.6" font-size="10.5" text-anchor="end" fill="#facc15">median 3802 ± 0.175 dex</text>
+<text x="636.2" y="314.6" font-size="10.5" text-anchor="end" fill="#facc15">Jenkins &amp; Tripp (2011)</text>
+</svg>
+<!--/FIG_PHASE-->
+<figcaption><b>The thermal-equilibrium curve of the neutral interstellar medium.</b> Pressure against density along (8.4), on logarithmic axes, with the thermally unstable branch — where $dP/dn\lt 0$ and Field's isobaric criterion (8.5) is violated — drawn separately from the two stable branches. $P_{\min}$ and $P_{\max}$ mark the turning points of Proposition 8; the band is the two-phase window computed by Wolfire et al. (2003), and the bar is the pressure distribution measured by Jenkins &amp; Tripp (2011) that <a class="secref" href="#anchor">§10</a> compares against. Curve: Koyama &amp; Inutsuka (2002) eq. 4 with the two typographical corrections printed by Vázquez-Semadeni et al. (2007), $\Lambda/\Gamma = 10^{7}\exp[-1.184\times10^{5}/(T+1000)] + 1.4\times10^{-2}\sqrt{T}\exp(-92/T)\ \mathrm{cm^3}$, $\Gamma = 2\times10^{-26}\ \mathrm{erg\,s^{-1}}$, equilibrium $n = \Gamma/\Lambda(T)$.</figcaption>
+</figure>
+
+<h3 id="arith">9.1 The same window from a full calculation</h3>
+
+<p>Wolfire, McKee, Hollenbach &amp; Tielens (2003) computed the same curve without a two-term fit: real gas-phase abundances of carbon and oxygen, grain and PAH photoelectric heating, [C II] and [O I] line cooling, and a radiation field appropriate to the solar neighbourhood. Their Table 3, at galactocentric radius $R = 8.5$ kpc with a cloud column $N_{\rm cl} = 10^{19}\ \mathrm{cm^{-2}}$, gives the row this module uses throughout.</p>
+
+<table>
+<caption class="small" style="text-align:left;caption-side:bottom;padding-top:.4rem;">Table 5. The two-term fit against the full calculation. <b>Both columns are calculations.</b> This is a check on the arithmetic of <a class="secref" href="#field">§8</a> and <a class="secref" href="#window">§9</a>, not a check against nature.</caption>
+<tr><th>Quantity</th><th>KI02 fit, this module</th><th>W03 full calculation</th><th>ratio</th></tr>
+<tr><td>$P_{\min}/k$ [K cm$^{-3}$]</td><td>1597.5</td><td>1960.0</td><td>0.815</td></tr>
+<tr><td>$P_{\max}/k$ [K cm$^{-3}$]</td><td>5007.0</td><td>4810.0</td><td>1.041</td></tr>
+<tr><td>geometric mean [K cm$^{-3}$]</td><td>2828.2</td><td>3070.0</td><td>0.921</td></tr>
+<tr><td>$T$ at $P_{\max}$ [K]</td><td>5039.4</td><td>5040.0</td><td>0.9999</td></tr>
+<tr><td>$T$ at $P_{\min}$ [K]</td><td>184.0</td><td>258.0</td><td>0.713</td></tr>
+<tr><td>$n$ at $P_{\max}$ [cm$^{-3}$]</td><td>0.994</td><td>0.860</td><td>1.155</td></tr>
+<tr><td>$n$ at $P_{\min}$ [cm$^{-3}$]</td><td>8.682</td><td>6.910</td><td>1.256</td></tr>
+</table>
+
+<p>A two-term analytic fit reproduces both edges of the window to better than $20$ per cent, and the coldest temperature the warm phase can reach to $0.01$ per cent. Wolfire et al. also quote the general result of Field, Goldsmith &amp; Habing (1969) that $P_{\max}$ is at most about $3P_{\min}$: here the fit gives $3.13$ and the full calculation $2.45$. From <a class="secref" href="#anchor">§10</a> onward the <b>full calculation's</b> window $[1960, 4810]$ is the prediction under test, because it is the one whose inputs are traceable to independent measurements.</p>
+
+<span class="warn"><b>A comparison that is refused.</b> Heiles &amp; Troland (2003) call $500$–$5000$ K the thermally unstable range for the warm neutral medium; the curve here gives $184$–$5039$ K. The <em>upper</em> edges match to $0.8$ per cent, and that is the edge that matters for their measurement, because a warm parcel becomes unstable by cooling down through it. The <em>lower</em> edges are not the same quantity: $500$ K is a round number they adopt to classify 21-cm absorption components, and $184$ K is where this particular cooling fit turns over. The two lower numbers are not reported here as a check.</span>
+
+<p>The window is narrow in pressure and wide in everything else: a factor $3.13$ in pressure, $8.7$ in density and $27.4$ in temperature (Problem C2). That asymmetry is what makes a pressure survey worth doing, and eight years after Wolfire et al. published the window, somebody measured the pressures.</p>
+
+<h2 id="anchor">10. The anchor: Jenkins &amp; Tripp (2011) against the window</h2>
+
+<p>Jenkins &amp; Tripp (2011) measured thermal pressures in the diffuse cold neutral medium along 89 sight lines, from the fine-structure excitation of neutral carbon observed with the STIS echelle spectrograph on the Hubble Space Telescope. Their mass-weighted lognormal fit, their equation (3), has mean $\log(p/k) = 3.58$ dex and an rms dispersion $\sigma_{\log P} = 0.175$ dex, which they state is a lower limit. The median is $3801.9\ \mathrm{K\,cm^{-3}}$ and the $\pm1\sigma$ range is $2541$ to $5689\ \mathrm{K\,cm^{-3}}$.</p>
+
+<p>This module takes two predictions to that measurement, in the shape Module 2 used: one confirmed and one refuted, from the same source table.</p>
+
+<h3 id="confirmed">10.1 Confirmed: the measured centre lies inside the predicted window</h3>
+
+<div class="keyresult"><b>CONFIRMED.</b> The predicted window is $[1960, 4810]\ \mathrm{K\,cm^{-3}}$ with predicted average pressure $3070$. The measured median $3801.9\ \mathrm{K\,cm^{-3}}$ lies inside it, at a ratio $1.238$ to the predicted average, and $0.738$ of the way from $P_{\min}$ to $P_{\max}$ measured in dex.</div>
+
+<p>The content of that confirmation is that a factor-$2.5$ window exists at all, and sits where it does. Neither of its edges was fitted to a pressure value. Wolfire et al. computed $P_{\min}$ and $P_{\max}$ from grain photoelectric heating and [C II]/[O I] cooling, with gas-phase carbon and oxygen abundances fixed by independent Hubble absorption-line studies and a PAH abundance fixed by ISO infrared emission data. One heating parameter, $\varphi_{\rm PAH} = 0.5$, was calibrated to an observed C I/C II column-density ratio; Wolfire's own detailed working credits that ratio to the C I and H I data compiled by Welty &amp; Hobbs (2001), although an earlier passage cites Jenkins &amp; Tripp (2001) alongside it. Jenkins &amp; Tripp (2001) is the predecessor of, and distinct from, the 2011 pressure measurement compared here.</p>
+
+<span class="prov">Two things this module does <em>not</em> claim. It does not claim that the $\varphi_{\rm PAH}$ calibration and the 2011 pressures share a technique or a set of sight lines: a search of the 2001 paper's own text finds no C I/C II ratio, no total carbon column and no N(C II) reported in it. And it does not claim that the two lineages are wholly separate: Wolfire et al. also compared their predicted average pressure against Jenkins &amp; Tripp's (2001) derived value of $2240\ \mathrm{K\,cm^{-3}}$, after the fact and without adjusting any parameter, reporting their own value about $0.19$ dex higher. The 2011 revision from $2240$ to $3801.9$ is attributed by its authors to three reasons of their own — updated C I atomic rates, revised optical pumping, and a corrected temperature — none of which depends on Wolfire et al.</span>
+
+<h3 id="robust">10.2 How far the confirmation survives its own parameters</h3>
+
+<p>$\varphi_{\rm PAH}$ is a real lever on the window, not a formality. Wolfire's Table 4 tests five model variants, three of which vary $\varphi_{\rm PAH}$ discretely while two hold it at $0.5$ and vary other parameters. Raising $\varphi_{\rm PAH}$ raises all three pressures monotonically, and the authors state the size of the effect themselves: over $\varphi_{\rm PAH} = 0.25$ to $1$, $P_{\min}$ changes by a factor $1.5$ and $P_{\max}$ by $1.9$, with $P_{\max}$ decreasing by about $35$ per cent at $\varphi_{\rm PAH} = 0.25$.</p>
+
+<table>
+<caption class="small" style="text-align:left;caption-side:bottom;padding-top:.4rem;">Table 6. The measured median $3801.9\ \mathrm{K\,cm^{-3}}$ against all five variants of Wolfire et al. Table 4. The last column is Wolfire's own treatment of each row, on evidence that is not a pressure.</caption>
+<tr><th>Model</th><th>$\varphi_{\rm PAH}$</th><th>$P_{\min}/k$</th><th>$P_{\max}/k$</th><th>$P_{\rm ave}/k$</th><th>median inside?</th><th>med/$P_{\max}$</th><th>med/$P_{\rm ave}$</th><th>Wolfire's treatment</th></tr>
+<tr><td>Standard</td><td>0.50</td><td>1960</td><td>4810</td><td>3070</td><td>YES</td><td>0.790</td><td>1.238</td><td>adopted</td></tr>
+<tr><td>Low $\varphi_{\rm PAH}$</td><td>0.25</td><td>1560</td><td>3150</td><td>2220</td><td><b>NO</b></td><td><b>1.207</b></td><td>1.713</td><td>poorly matched</td></tr>
+<tr><td>High $\varphi_{\rm PAH}$</td><td>1.00</td><td>2270</td><td>5970</td><td>3680</td><td>YES</td><td>0.637</td><td>1.033</td><td>safely ruled out</td></tr>
+<tr><td>Low $n_{\rm PAH}/n$</td><td>0.50</td><td>1580</td><td>3920</td><td>2490</td><td>YES</td><td>0.970</td><td>1.527</td><td>poorly matched</td></tr>
+<tr><td>Low $G_0$</td><td>0.50</td><td>1460</td><td>3980</td><td>2410</td><td>YES</td><td>0.955</td><td>1.578</td><td>safely ruled out</td></tr>
+</table>
+
+<div class="keyresult"><b>The confirmation is not robust across the variants its own authors tested.</b> The median is inside four of the five windows, and in two of those only narrowly, at $0.970$ and $0.955$ of $P_{\max}$ — margins of $118$ and $178\ \mathrm{K\,cm^{-3}}$. In "Low $\varphi_{\rm PAH}$" it lies <em>above</em> $P_{\max} = 3150$, by a factor $1.207$.</div>
+
+<p>What mitigates that must be stated as precisely as the defect, and it is stronger than one row. Wolfire et al. disfavour <em>every</em> non-standard variant, on evidence that is not a pressure. Their four-item summary reads, in their order: "Low $\varphi_{\rm PAH}$" models poorly match the C I*/C$_{\rm tot}$ ratio and the C$^+$ cooling rate, with values lower than observed; "High $\varphi_{\rm PAH}$" models produce temperatures and C I/C II ratios higher than observed; "Low PAH" — Table 4's "Low $n_{\rm PAH}/n$" — gives low C I*/C$_{\rm tot}$ ratios and C$^+$ cooling rate; "Low $G_0$" gives low C I*/C$_{\rm tot}$ and high C I/C II. Separately, they write that only "High $\varphi_{\rm PAH}$" and "Low $G_0$" "can be safely ruled out by the required C I/C II ratio".</p>
+
+<p>The two tiers must be kept apart. Two rows are ruled out in those words. Two more, including the one that breaks the confirmation, are called a worse fit on two independent diagnostics without being ruled out. The only variant Wolfire et al. do not argue against is the standard one, and the standard one contains the measured median.</p>
+
+<span class="prov">In the same paragraph as their own "$P_{\max}$ decreases by $\sim35$ per cent", Wolfire et al. call the phases "very robust against variations in the PAH physical and chemical characteristics". This module prints the $35$ per cent and the five rows of Table 6, and does not print the adjective.</span>
+
+<p><b>One number is stable across all five variants:</b> the measured median exceeds every predicted <em>average</em> pressure, from $1.033$ times the "High $\varphi_{\rm PAH}$" value to $1.713$ times the "Low $\varphi_{\rm PAH}$" one. The measurement runs high against the central model value whatever the parameters. Only the window verdict moves.</p>
+
+<h3 id="refuted">10.3 Refuted: a static two-phase medium cannot put cold gas below $P_{\min}$</h3>
+
+<p>Below $P_{\min}$ the equilibrium curve has no cold branch: by Proposition 8 the only equilibrium state at such a pressure is the warm one. A strict, static two-phase medium therefore allows <em>none</em> of the cold neutral medium to sit below $P_{\min}$. Jenkins &amp; Tripp measured the cold medium, and they report in their section 10.1.2 that $29$ per cent of it is there.</p>
+
+<table>
+<tr><th>Fraction of the cold neutral medium</th><th>Value</th><th>Status</th></tr>
+<tr><td>below $P_{\min}$, static two-phase prediction</td><td>$0$ per cent</td><td>predicted</td></tr>
+<tr><td>below $P_{\min}$, their own fitted lognormal</td><td>$5.0$ per cent</td><td>fitted</td></tr>
+<tr><td>below $P_{\min}$, measured, all sight lines</td><td>$29$ per cent</td><td>measured</td></tr>
+<tr><td>below $P_{\min}$, measured, low-starlight subsample</td><td>$23$ per cent</td><td>measured</td></tr>
+<tr><td>inside the window, from the fit</td><td>$67.0$ per cent</td><td>fitted</td></tr>
+<tr><td>above $P_{\max}$, from the fit</td><td>$28.0$ per cent</td><td>fitted</td></tr>
+<tr><td>above $\log(p/k) = 5.5$, measured</td><td>$0.050$ per cent</td><td>measured</td></tr>
+</table>
+
+<div class="keyresult"><b>REFUTED.</b> A static two-phase medium allows $0$ per cent of the cold mass below $P_{\min}$. Jenkins &amp; Tripp's own fitted lognormal already gives $5.0$ per cent. The measurement gives $29$ per cent, an excess over the fit of $5.8$ times. The prediction fails twice over: the fit violates it, and the data violate the fit.</div>
+
+<span class="prov">Both $29$ per cent and $23$ per cent are read off the observed histograms of their Fig. 9, not produced by a fit: integrating their eq. (3) lognormal below $P_{\min}$ gives $5.0$ per cent and their eq. (4) polynomial gives $17.4$ per cent, so no fit of theirs can produce $29$. The two numbers describe different populations — $29$ per cent is the complete sample and $23$ per cent the low-starlight subsample — and are not two estimates of one quantity.</span>
+
+<p><b>What is not refuted.</b> Gas <em>above</em> $P_{\max}$ is allowed. Only the warm phase is forbidden there, and this survey measures the cold phase, so the $28$ per cent above $P_{\max}$ violates nothing and is not counted. The refutation rests on the low side alone, where a static cold medium is genuinely impossible.</p>
+
+<p><b>The refutation survives the parameter sweep that the confirmation does not.</b> Only the fitted fraction can be re-evaluated at another $P_{\min}$; the measured $29$ per cent is tied to $P_{\min} = 1960\ \mathrm{K\,cm^{-3}}$, the value Jenkins &amp; Tripp themselves quote, and cannot be moved without their data. Across the five variants of Table 6, the fitted lognormal below $P_{\min}$ gives $5.0$ per cent (Standard, $P_{\min}=1960$), $1.4$ (Low $\varphi_{\rm PAH}$, $1560$), $10.0$ (High $\varphi_{\rm PAH}$, $2270$), $1.5$ (Low $n_{\rm PAH}/n$, $1580$) and $0.9$ (Low $G_0$, $1460$) — a range of $0.9$ to $10.0$ per cent, against the $0$ per cent a static medium allows, in every variant.</p>
+
+<span class="warn"><b>Two limits on that sweep.</b> First, only the fit-against-static half of the refutation was re-evaluated; the measured excess over the fit, $29$ per cent against $5.0$, exists only at the standard $P_{\min}$. Second, Jenkins &amp; Tripp state that their lognormal understates the observed material outside $3.2 \lt \log(p/k) \lt 4.0$, that is below $1585\ \mathrm{K\,cm^{-3}}$. Three of the five variants have $P_{\min}$ below that line — $1560$, $1580$ and $1460$ — so their $1.4$, $1.5$ and $0.9$ per cent are extrapolations of a fit its own authors say runs low there, and the true fractions are larger. The direction favours the refutation; the rows are labelled extrapolated anyway.</span>
+
+<h3 id="whatfails">10.4 What fails, precisely: the word "static", not the criterion</h3>
+
+<p>Jenkins &amp; Tripp offer two readings of their own excess and prefer the second: either the Wolfire curve does not apply to the gas they observe, or, in their words, "rarefactions caused by turbulence create momentary excursions below the curve". Their dispersion of $0.175$ dex is itself read as turbulence at Mach $1$ to $4$. On that reading the thermal-equilibrium curve is an attractor, and the gas is pushed off it faster than it relaxes back. Problem D3 makes the comparison quantitative by putting the cooling time against the crossing time of a turbulent eddy, and finds the two phases differ by a factor $794$ in cooling length.</p>
+
+<p><b>The same failure seen from the warm side.</b> Heiles &amp; Troland (2003), from 21-cm absorption, find that at least $48$ per cent of the warm neutral medium by column density lies at $500$–$5000$ K, inside the thermally unstable band; a strict two-phase medium allows only the small fraction in transit between phases. Their other numbers: the warm medium is $61$ per cent of the H I column at $|b|\gt 10^\circ$, and the cold-medium spin-temperature histogram peaks at $40$ K with a column-weighted median of $70$ K. Both the $0.61$ and the $0.48$ are column-density weighted and both are lower bounds.</p>
+
+<div class="keyresult"><b>The mean state is right; the spread around it is not there.</b> Wolfire et al. compute a cold-medium temperature of $85.0$ K at the average pressure, a ratio of $1.21$ to Heiles &amp; Troland's measured column-weighted median of $70$ K. The two-phase calculation gets the typical temperature and the typical pressure of the neutral interstellar medium right, and gets the width of both distributions wrong, in the same direction, from both ends.</div>
+
+<figure>
+<!--FIG_CHECK-->
+<svg class="setupfig" viewBox="0 0 760 590" width="100%" role="img" aria-label="Upper panel: on a logarithmic pressure axis, the two-phase window predicted by Wolfire and collaborators from 1960 to 4810 with its geometric mean 3070, the window from the analytic cooling fit from 1597 to 5007, and the measured cold-gas pressure of Jenkins and Tripp at 3802 with a spread of 0.175 dex. The measurement lies inside both windows. Lower panel: the fraction of cold gas below the minimum pressure. A static two-phase medium allows none, the fitted lognormal gives 5 per cent, and the measurement gives 29 per cent for all sight lines and 23 per cent for the low-starlight subsample.">
+<text x="475.0" y="40.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">CONFIRMED: the measured centre lies inside the predicted window</text>
+<rect x="250" y="58" width="450" height="160" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="267.3" y1="218" x2="267.3" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="267.3" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1000</text>
+<line x1="371.5" y1="218" x2="371.5" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="371.5" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">2000</text>
+<line x1="432.5" y1="218" x2="432.5" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="432.5" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">3000</text>
+<line x1="509.3" y1="218" x2="509.3" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="509.3" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">5000</text>
+<line x1="613.5" y1="218" x2="613.5" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="613.5" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10000</text>
+<line x1="674.4" y1="218" x2="674.4" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="674.4" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">15000</text>
+<text x="475.0" y="254.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">P / k  (K cm⁻³), logarithmic</text>
+<line x1="468.1" y1="58" x2="468.1" y2="218" stroke="#facc15" stroke-width="1.2" stroke-opacity="0.5"/>
+<line x1="368.5" y1="92" x2="503.4" y2="92" stroke="#2dd4bf" stroke-width="6" stroke-opacity="0.75"/>
+<line x1="368.5" y1="83" x2="368.5" y2="101" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="503.4" y1="83" x2="503.4" y2="101" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="436.0" y1="86" x2="436.0" y2="98" stroke="#0f172a" stroke-width="2"/>
+<text x="240.0" y="96.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">Wolfire et al. (2003)</text>
+<text x="240.0" y="110.0" font-size="10.5" text-anchor="end" fill="#94a3b8">predicted window: 1960–4810</text>
+<line x1="337.7" y1="138" x2="509.5" y2="138" stroke="#fb923c" stroke-width="6" stroke-opacity="0.75"/>
+<line x1="337.7" y1="129" x2="337.7" y2="147" stroke="#fb923c" stroke-width="2"/>
+<line x1="509.5" y1="129" x2="509.5" y2="147" stroke="#fb923c" stroke-width="2"/>
+<line x1="423.6" y1="132" x2="423.6" y2="144" stroke="#0f172a" stroke-width="2"/>
+<text x="240.0" y="142.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">Koyama–Inutsuka fit</text>
+<text x="240.0" y="156.0" font-size="10.5" text-anchor="end" fill="#94a3b8">window, this module: 1597–5007</text>
+<line x1="407.5" y1="188" x2="528.7" y2="188" stroke="#facc15" stroke-width="3"/>
+<line x1="407.5" y1="181" x2="407.5" y2="195" stroke="#facc15" stroke-width="2"/>
+<line x1="528.7" y1="181" x2="528.7" y2="195" stroke="#facc15" stroke-width="2"/>
+<circle cx="468.1" cy="188" r="5" fill="#facc15"/>
+<text x="240.0" y="192.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">Jenkins &amp; Tripp (2011)</text>
+<text x="240.0" y="206.0" font-size="10.5" text-anchor="end" fill="#94a3b8">measured: 3802, ±0.175 dex</text>
+<text x="692.0" y="74.0" font-size="10.5" text-anchor="end" fill="#facc15">median / predicted mean = 3802 / 3070 = 1.238</text>
+<text x="258.0" y="74.0" font-size="10.5" text-anchor="start" fill="#94a3b8">notch = geometric mean</text>
+<text x="475.0" y="288.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">REFUTED: cold gas below P<tspan baseline-shift="sub" font-size="75%">min</tspan>, which a static medium forbids</text>
+<rect x="250" y="306" width="450" height="180" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="250.0" y1="486" x2="250.0" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="250.0" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0</text>
+<line x1="306.2" y1="486" x2="306.2" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="306.2" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">5</text>
+<line x1="362.5" y1="486" x2="362.5" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="362.5" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10</text>
+<line x1="418.8" y1="486" x2="418.8" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="418.8" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">15</text>
+<line x1="475.0" y1="486" x2="475.0" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="475.0" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">20</text>
+<line x1="531.2" y1="486" x2="531.2" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="531.2" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">25</text>
+<line x1="587.5" y1="486" x2="587.5" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="587.5" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">30</text>
+<line x1="643.8" y1="486" x2="643.8" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="643.8" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">35</text>
+<line x1="700.0" y1="486" x2="700.0" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="700.0" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">40</text>
+<text x="475.0" y="522.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">per cent of CNM mass below P<tspan baseline-shift="sub" font-size="75%">min</tspan> = 1960 K cm⁻³</text>
+<line x1="250" y1="328" x2="250" y2="344" stroke="#94a3b8" stroke-width="3"/>
+<text x="240.0" y="337.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">static two-phase medium</text>
+<text x="240.0" y="351.0" font-size="10.5" text-anchor="end" fill="#94a3b8">prediction</text>
+<text x="258.0" y="340.0" font-size="10.5" text-anchor="start" fill="#94a3b8">0.0%</text>
+<rect x="250" y="370" width="56.3" height="16" fill="#fb923c" fill-opacity="0.8"/>
+<text x="240.0" y="379.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">lognormal fit, their eq. 3</text>
+<text x="240.0" y="393.0" font-size="10.5" text-anchor="end" fill="#94a3b8">same survey, fitted</text>
+<text x="314.3" y="382.0" font-size="10.5" text-anchor="start" fill="#fb923c">5.0%</text>
+<rect x="250" y="412" width="326.2" height="16" fill="#facc15" fill-opacity="0.8"/>
+<text x="240.0" y="421.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">measured, all sight lines</text>
+<text x="240.0" y="435.0" font-size="10.5" text-anchor="end" fill="#94a3b8">Jenkins &amp; Tripp, section 10.1.2</text>
+<text x="584.2" y="424.0" font-size="10.5" text-anchor="start" fill="#facc15">29%</text>
+<rect x="250" y="454" width="258.8" height="16" fill="#facc15" fill-opacity="0.8"/>
+<text x="240.0" y="463.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">measured, low starlight</text>
+<text x="240.0" y="477.0" font-size="10.5" text-anchor="end" fill="#94a3b8">their abstract</text>
+<text x="516.8" y="466.0" font-size="10.5" text-anchor="start" fill="#facc15">23%</text>
+<text x="620.2" y="424.0" font-size="10.5" text-anchor="start" fill="#cbd5e1">5.8 × the fit</text>
+<text x="20.0" y="562.0" font-size="10.5" text-anchor="start" fill="#94a3b8">What fails is the word static: Jenkins &amp; Tripp read the excess as turbulent rarefaction, Mach 1–4. Gas above P<tspan baseline-shift="sub" font-size="75%">max</tspan> is allowed</text>
+<text x="20.0" y="578.0" font-size="10.5" text-anchor="start" fill="#94a3b8">for the cold phase and is not counted. Window: Wolfire et al. (2003) Table 3, R = 8.5 kpc, N<tspan baseline-shift="sub" font-size="75%">cl</tspan> = 10¹⁹ cm⁻².</text>
+</svg>
+<!--/FIG_CHECK-->
+<figcaption><b>The anchor.</b> Upper panel: on a logarithmic pressure axis, the two-phase window computed by Wolfire et al. (2003) from $1960$ to $4810\ \mathrm{K\,cm^{-3}}$ with its predicted average $3070$, the window from the analytic cooling fit of <a class="secref" href="#window">§9</a> from $1597$ to $5007$, and the pressure distribution measured by Jenkins &amp; Tripp (2011), median $3801.9$ with a dispersion of $0.175$ dex. The measured centre lies inside both windows. Lower panel: the fraction of cold gas below $P_{\min}$, the quantity that carries the disagreement. A static two-phase medium allows none; the fitted lognormal gives $5.0$ per cent; the measurement gives $29$ per cent for the complete sample and $23$ per cent for the low-starlight subsample.</figcaption>
+</figure>
+
+<p class="small">For reference, against the analytic-fit window $[1597, 5007]$ the same lognormal puts $73.7$ per cent of the mass inside, rather than the $67.0$ per cent quoted above for $[1960, 4810]$.</p>
+
+<h2 id="limits">11. What this model captures, and what it misses</h2>
+
+<p>Each idealisation, and where it is repaid if it is repaid at all.</p>
+
+<ul>
+<li><b>No radiative transfer.</b> The split of the flux between radiation and convection is not predicted anywhere in this module. <a class="secref" href="#checka">§7</a> measures it at $1.3$ per cent at $\tau = 2/3$ and stops there. This is the single largest gap, because it is what makes the most direct test of mixing-length theory a test of something the theory does not claim. It is not repaid in Modules 1–10.</li>
+<li><b>Mixing-length theory is a one-parameter closure calibrated on the answer.</b> $\alpha = 2$ was fitted to the solar radius. Problem C3 shows the freedom that leaves is small for the velocity, $\alpha^{1/3}$, and large for the superadiabatic excess, $\alpha^{-4/3}$. Not repaid.</li>
+<li><b>No rotation and no magnetic field.</b> Both change convection in the Sun, and the magnetic case changes it qualitatively at the surface. Neither is treated in Modules 1–10.</li>
+<li><b>Linear stability only.</b> Both criteria, Schwarzschild's and Field's, say that a perturbation grows. Neither says what it grows into. Module 5's Bonnor–Ebert analysis has exactly the same limit, and <a class="secref" href="#anchor">§10</a> shows the cost: the measured distribution of interstellar pressures is a statement about the non-linear, turbulent state, and the linear criterion can only say that the state it predicts is not the one observed.</li>
+<li><b>The two-phase medium is treated as static.</b> The anchor identifies this as the assumption that fails. Turbulence is named as the mechanism, on Jenkins &amp; Tripp's own reading of their data, and is not modelled here.</li>
+<li><b>The solar opacity is read off a model, not computed.</b> <a class="secref" href="#base">§3.2</a> reads the rise of $\nabla$ from the table and deliberately does not apportion it between the opacity and the temperature, because this module computes neither.</li>
+<li><b>The parcel picture itself.</b> Propositions 1 and 5 follow a single blob against a background that does not respond. Real convection is a connected flow with narrow fast downdrafts and broad slow upflows, which is why Oba et al. measure different upward and downward speeds at the same height. Nothing in this module distinguishes them.</li>
+</ul>
+<h2 id="problems">12. Problems</h2>
+
+<p class="small">Nine problems in the house set: three conceptual (C), three derivational (D), three computational (K). Every printed answer is reproduced independently by <code>afd/figs/m06_problems_check.py</code>.</p>
+
+<h3 id="conceptual">Conceptual <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>C1.</b> The International Standard Atmosphere fixes the tropospheric lapse rate at $6.50\ \mathrm{K\,km^{-1}}$. Show that the standard troposphere is Schwarzschild-stable, give its polytropic index, and then explain why thunderstorms exist.
+<details class="sol"><summary>Solution</summary><div>
+For a plane-parallel ideal-gas atmosphere with lapse rate $\Gamma_{\rm lapse} \equiv -dT/dz$, hydrostatic balance gives $d\ln P/dz = -1/H$ with $H = k_BT/(\mu m_u g)$, so
+$$ \nabla = \frac{d\ln T}{d\ln P} = \frac{(1/T)(dT/dz)}{-1/H} = \frac{\Gamma_{\rm lapse}\,H}{T} = \frac{\Gamma_{\rm lapse}}{g/c_p}\cdot\frac{k_B}{\mu m_u c_p} = \frac{\Gamma_{\rm lapse}}{g/c_p}\,\nabla_{\rm ad},$$
+using $c_p - k_B/(\mu m_u) = c_v$ and $\nabla_{\rm ad} = (\gamma-1)/\gamma = k_B/(\mu m_u c_p)$ from (2.5). So $\nabla/\nabla_{\rm ad}$ is just the ratio of the actual lapse rate to the dry adiabatic one. With $c_p = 1.0047\times10^{7}\ \mathrm{erg\,g^{-1}\,K^{-1}}$ for dry air and $g = 980.665\ \mathrm{cm\,s^{-2}}$, the dry adiabatic lapse rate is $g/c_p = 9.761\ \mathrm{K\,km^{-1}}$ and the ratio is $6.50/9.761 = 0.6659$. With $\gamma = 7/5$, $\nabla_{\rm ad} = 2/7 = 0.28571$ and $\nabla = 0.19026$. By Definition 5 of Module 3, $n_{\rm eff} = 1/\nabla - 1 = 4.2558$.
+<br>So $\nabla \lt \nabla_{\rm ad}$: the standard troposphere is stable by Proposition 1, with $33$ per cent of margin, and yet it convects on any warm afternoon. The premise that fails is (iv), adiabatic change of state. A rising parcel of moist air reaches saturation and then releases latent heat as water condenses, about $2.5\times10^{10}\ \mathrm{erg\,g^{-1}}$, which warms it on the way up. Its effective lapse rate is then $5$–$6\ \mathrm{K\,km^{-1}}$, below the ambient $6.5$, so the moist parcel arrives warmer than its surroundings and keeps rising. Moist convection is unstable where dry convection is not. The Sun has no comparable latent-heat term in its convection zone, which is why <a class="secref" href="#schwarz">§2</a> derives the criterion there.
+</div></details></div>
+
+<div class="prob"><b>C2.</b> Express the thermally unstable branch of <a class="secref" href="#field">§8</a> as a range in each of temperature, density and pressure. Why does the asymmetry between those three ranges make a pressure survey the right measurement to make?
+<details class="sol"><summary>Solution</summary><div>
+From the turning points of Proposition 8 on the corrected fit: temperature $184.0$ to $5039.4$ K, a factor $27.4$; density $0.994$ to $8.682\ \mathrm{cm^{-3}}$, a factor $8.7$; pressure $1597$ to $5007\ \mathrm{K\,cm^{-3}}$, a factor $3.13$. The pressure range is by far the narrowest, and it is narrow for the reason Proposition 8 gives: $P = n_{\rm eq}T$ runs along a curve on which $n$ and $T$ move in opposite directions, so the product barely changes while each factor changes by an order of magnitude.
+<br>That is exactly what makes pressure the useful observable. A measured temperature or a measured density of one cloud says little, because both vary by a large factor within the allowed states; a measured pressure pins the state of the medium to within a factor of three, and any excursion outside that factor is immediately a violation of the static two-phase picture rather than a normal fluctuation. <a class="secref" href="#anchor">§10</a> is the measurement, and $29$ per cent of its mass falls outside.
+</div></details></div>
+
+<div class="prob"><b>C3.</b> The mixing-length parameter $\alpha$ was fitted, not derived. Determine how much of the disagreement in <a class="secref" href="#a2">§7.2</a> could be removed by choosing a different $\alpha$, and state what the answer implies about the freedom in the theory.
+<details class="sol"><summary>Solution</summary><div>
+By Proposition 5, at a fixed flux $F$ the superadiabatic excess scales as $\alpha^{-4/3}$ and the velocity only as $\alpha^{1/3}$. Repeating the photospheric calculation of <a class="secref" href="#photmlt">§6.2</a> at four values:
+<table>
+<tr><th>$\alpha$</th><th>$\nabla-\nabla_{\rm ad}$</th><th>$v_c$ [km s$^{-1}$]</th><th>$v_c/c_s$</th><th>$\ell$ [km]</th></tr>
+<tr><td>1.0</td><td>1.5319</td><td>2.74</td><td>0.339</td><td>143</td></tr>
+<tr><td>1.5</td><td>0.8922</td><td>3.14</td><td>0.388</td><td>214</td></tr>
+<tr><td>2.0</td><td>0.6079</td><td>3.45</td><td>0.427</td><td>286</td></tr>
+<tr><td>3.0</td><td>0.3541</td><td>3.95</td><td>0.489</td><td>429</td></tr>
+</table>
+Changing $\alpha$ by a factor of $3$ changes the predicted velocity by only $1.44$, in the wrong direction to help: the smallest $\alpha$ gives the slowest parcel, $2.74\ \mathrm{km\,s^{-1}}$, still $4.2$ times the measured $0.65$. The factor $5.3$ of <a class="secref" href="#a2">§7.2</a> cannot be tuned away with $\alpha$. It was removed instead by fixing the flux the theory was asked to carry, in <a class="secref" href="#a3">§7.3</a>, which is a statement about the physics and not about the parameter. Note also that the excess moves by a factor $4.3$ across the same range, so $\alpha$ is a strong handle on the stratification and a weak one on the velocity — which is why calibrating $\alpha$ on a stellar radius works, and why the radius calibration says little about the surface flow.
+</div></details></div>
+
+<h3 id="derivational">Derivational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>D1.</b> Show that for a plane-parallel ideal-gas atmosphere the buoyancy frequency of Proposition 2 can be written $N^2 = (g/T)\,(dT/dz + g/c_p)$, and evaluate it for the isothermal lower stratosphere at $T = 216.65$ K and for the standard troposphere at $T = 288.15$ K.
+<details class="sol"><summary>Solution</summary><div>
+From (3.1), $N^2 = (g/H)(\nabla_{\rm ad}-\nabla)$ with $H = k_BT/(\mu m_u g)$. As in C1, $\nabla = -(H/T)\,dT/dz$ and $\nabla_{\rm ad} = k_B/(\mu m_u c_p)$, so
+$$ N^2 = \frac{g}{H}\left[\frac{k_B}{\mu m_u c_p} + \frac{H}{T}\frac{dT}{dz}\right] = \frac{g\,k_B}{\mu m_u c_p H} + \frac{g}{T}\frac{dT}{dz}.$$
+Substituting $H = k_BT/(\mu m_u g)$ in the first term gives $g^2/(c_pT)$, so $N^2 = (g/T)(g/c_p + dT/dz)$ as required. The bracket is the difference between the dry adiabatic lapse rate and the actual one, with signs arranged so that a shallower actual lapse means a stiffer atmosphere.
+<br>Isothermal lower stratosphere, $dT/dz = 0$, $T = 216.65$ K: $N^2 = (980.665/216.65)(9.7608\times10^{-5}) = 4.4182\times10^{-4}\ \mathrm{s^{-2}}$, $N = 0.02102\ \mathrm{rad\,s^{-1}}$, period $2\pi/N = 4.98$ min. Troposphere at the ISA lapse rate, $dT/dz = -6.5\times10^{-5}\ \mathrm{K\,cm^{-1}}$, $T = 288.15$ K: $N^2 = 1.1098\times10^{-4}\ \mathrm{s^{-2}}$, $N = 0.01053\ \mathrm{rad\,s^{-1}}$, period $9.94$ min. Both are positive, confirming C1's verdict, and both are of order ten minutes: these are the periods of the lee waves that make the stacked wave clouds downwind of a mountain ridge.
+</div></details></div>
+
+<div class="prob"><b>D2.</b> A layer has $\nabla = 0.45$ and $\nabla_{\rm ad} = 0.4$. Find the composition gradient that just holds it together, tabulate the Ledoux verdict for $\nabla_\mu = 0$, $0.02$, $0.05$, $0.10$, and explain why the Sun never presents this ambiguity although its $\nabla_\mu$ reaches four times the critical value.
+<details class="sol"><summary>Solution</summary><div>
+Proposition 3 gives stability when $\nabla \lt \nabla_{\rm ad} + (\varphi/\delta)\nabla_\mu$, and for an ideal gas $\varphi/\delta = 1$. The layer is marginal when $\nabla_\mu = \nabla - \nabla_{\rm ad} = 0.050$. Writing the Ledoux margin as $\nabla_{\rm ad} + \nabla_\mu - \nabla$:
+<table>
+<tr><th>$\nabla_\mu$</th><th>Schwarzschild</th><th>Ledoux margin</th><th>Ledoux</th></tr>
+<tr><td>0.00</td><td>UNSTABLE</td><td>$-0.050$</td><td>UNSTABLE</td></tr>
+<tr><td>0.02</td><td>UNSTABLE</td><td>$-0.030$</td><td>UNSTABLE</td></tr>
+<tr><td>0.05</td><td>UNSTABLE</td><td>$+0.000$</td><td>stable (marginal)</td></tr>
+<tr><td>0.10</td><td>UNSTABLE</td><td>$+0.050$</td><td>stable</td></tr>
+</table>
+A layer that is Schwarzschild-unstable and Ledoux-stable is semiconvective: the temperature structure drives overturning, the composition structure resists it, and the layer mixes on a thermal rather than a dynamical timescale, because the parcel must first exchange heat with its surroundings before it can move.
+<br>The Sun escapes the ambiguity, and not because its $\nabla_\mu$ is small. At $0.10\,R$ it reaches $\nabla_\mu = 0.220$, more than four times the $0.050$ above. The reason is that the Sun's large $\nabla_\mu$ and its near-neutral layer are in different places. Inside $0.2\,R$, where $\nabla_\mu$ is large, $\nabla_{\rm ad}-\nabla$ runs from $0.0706$ at $0.050\,R$ to $0.1328$ at $0.200\,R$, so the layer is stable by a wide margin under either criterion — more than twice the $0.050$ this problem needed. Where the criterion is delicate, at $0.72$–$0.75\,R$, $|\nabla_\mu| \le 0.0270$. A star with a receding convective core puts the two in the same place, and then the choice of criterion changes the star's lifetime.
+</div></details></div>
+
+<div class="prob"><b>D3.</b> Define the cooling length $c_st_{\rm cool}$ and the Field length $\lambda_F$, evaluate both for the cold and the warm phases on the equilibrium curve, and use the result to explain why $48$ per cent of the warm gas is found off the equilibrium curve but only $29$ per cent of the cold gas.
+<details class="sol"><summary>Solution</summary><div>
+Take the cooling time as the thermal energy divided by the net radiated power, $t_{\rm cool} = \tfrac32 nk_BT/(n^2\Lambda(T))$, and the Field length as $\lambda_F = \sqrt{\kappa T/(n^2\Lambda)}$, the wavelength at which conduction erases a temperature contrast as fast as cooling builds it, with the neutral-gas conductivity $\kappa = 2.5\times10^{3}\sqrt{T}$ adopted by Koyama &amp; Inutsuka after Parker (1953). Both phases are taken at the states the observations report: $T = 70$ K for the cold medium, Heiles &amp; Troland's column-weighted median spin temperature, and $T = 6000$ K for the warm medium, a point on the warm branch near $P_{\max}$.
+<table>
+<tr><th></th><th>$n_{\rm eq}$ [cm$^{-3}$]</th><th>$P/k$ [K cm$^{-3}$]</th><th>$t_{\rm cool}$</th><th>$c_s$ [km s$^{-1}$]</th><th>$c_st_{\rm cool}$</th><th>$\lambda_F$</th></tr>
+<tr><td>CNM, $T = 70$ K</td><td>31.777</td><td>2224</td><td>$7.248\times10^{11}$ s $= 0.023$ Myr</td><td>0.874</td><td>0.020 pc</td><td>0.00049 pc $= 101$ au</td></tr>
+<tr><td>WNM, $T = 6000$ K</td><td>0.658</td><td>3950</td><td>$6.213\times10^{13}$ s $= 1.969$ Myr</td><td>8.091</td><td>16.29 pc</td><td>0.09627 pc $= 19857$ au</td></tr>
+</table>
+A disturbance smaller than $c_st_{\rm cool}$ is erased by cooling before sound can cross it, so the gas relaxes back onto the equilibrium curve; a disturbance larger than $c_st_{\rm cool}$ outruns the cooling and carries the gas off the curve. The two cooling lengths differ by a factor $794$. For the cold medium $c_st_{\rm cool} = 0.020$ pc, far below any scale a survey resolves or turbulence drives, so cold gas relaxes back almost instantly and its excursions below $P_{\min}$ must be transient rarefactions rather than a sustained state — which is exactly how Jenkins &amp; Tripp read their own $29$ per cent. For the warm medium $c_st_{\rm cool} = 16.29$ pc, the size of a whole molecular cloud, so turbulence driven on tens of parsecs holds a large part of the warm volume permanently off the curve, which is Heiles &amp; Troland's $48$ per cent. The asymmetry in the two measured fractions follows from the asymmetry in the two cooling lengths.
+<br>The Field lengths set something different: the resolution a simulation needs, since a grid coarser than $\lambda_F$ cannot represent the smallest condensation the instability makes. Koyama &amp; Inutsuka used $140$ au cells on a $2048\times512$ grid over $1.44\times0.36$ pc for exactly this reason.
+</div></details></div>
+
+<h3 id="computational">Computational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>K1.</b> Follow the minimum of $\nabla_{\rm ad}$ from (5.3) across five decades of pressure, from $10^{4}$ to $10^{7}\ \mathrm{dyn\,cm^{-2}}$, and say what the trend implies about the depth of the solar convection zone.
+<details class="sol"><summary>Solution</summary><div>
+Solving (5.2) and minimising (5.3) along each isobar:
+<table>
+<tr><th>$P$ [dyn cm$^{-2}$]</th><th>minimum $\nabla_{\rm ad}$</th><th>at $T$ [K]</th></tr>
+<tr><td>$1.0\times10^{4}$</td><td>0.08097</td><td>10580</td></tr>
+<tr><td>$1.0\times10^{5}$</td><td>0.09337</td><td>12126</td></tr>
+<tr><td>$1.2\times10^{5}$</td><td>0.09448</td><td>12266</td></tr>
+<tr><td>$1.0\times10^{6}$</td><td>0.10912</td><td>14129</td></tr>
+<tr><td>$1.0\times10^{7}$</td><td>0.12933</td><td>16798</td></tr>
+</table>
+The zone moves to higher temperature as the pressure rises, because Saha equilibrium needs a hotter gas to ionise a denser one: raising $P$ at fixed $T$ in (5.2) lowers $B$ and therefore lowers $x$. The depression also becomes shallower, from a factor $4.94$ below $2/5$ at $10^{4}$ to a factor $3.09$ at $10^{7}$. The zone is therefore not a thin surface skin fixed at one temperature — but the whole band, $1.06\times10^{4}$ to $1.68\times10^{4}$ K, still lies far above the $2.02\times10^{6}$ K at the base of the solar convection zone. The trend deepens the ionisation zone; it does not deepen it anywhere near $0.727\,R$, which <a class="secref" href="#whereis">§5.1</a> shows is set by $\nabla$ instead.
+</div></details></div>
+
+<div class="prob"><b>K2.</b> Compute the convective turnover time $\ell/v_c$ from the base of the solar convection zone to the photosphere, and state the problem the answer poses for a theory of the solar dynamo.
+<details class="sol"><summary>Solution</summary><div>
+From Table 3 and <a class="secref" href="#photmlt">§6.2</a>, with $\ell = 2H$ at each radius:
+<table>
+<tr><th>$r/R$</th><th>$\ell$</th><th>$v_c$ [km s$^{-1}$]</th><th>$\ell/v_c$</th></tr>
+<tr><td>0.750</td><td>$1.039\times10^{10}$ cm $= 103941$ km</td><td>0.056</td><td>21.66 d</td></tr>
+<tr><td>0.849</td><td>69541 km</td><td>0.070</td><td>11.43 d</td></tr>
+<tr><td>0.900</td><td>47703 km</td><td>0.087</td><td>6.38 d</td></tr>
+<tr><td>0.950</td><td>23985 km</td><td>0.124</td><td>2.24 d</td></tr>
+<tr><td>0.9831</td><td>7233 km</td><td>0.240</td><td>8.38 h</td></tr>
+<tr><td>photosphere, $\tau = 2/3$</td><td>286 km</td><td>3.45</td><td>1.38 min</td></tr>
+</table>
+The turnover time falls by a factor $2\times10^{4}$ across one convection zone, from $21.66$ days at the base to $1.38$ minutes at the photosphere. Both the length and the velocity contribute: $\ell$ falls by $364$ and $v_c$ rises by $62$. The dynamo problem is that a single fluid carries eddies whose turnover times differ by four orders of magnitude, so no single mixing length, and no single ratio of turnover time to rotation period, describes the whole zone. The slow deep eddies and the fast surface ones couple to the rotation entirely differently.
+</div></details></div>
+
+<div class="prob"><b>K3.</b> Is the hot gas of a galaxy cluster thermally unstable? Take $T = 10^{8}$ K, $n_{\rm H} = 10^{-3}\ \mathrm{cm^{-3}}$, $\mu = 0.6$, bremsstrahlung cooling $\Lambda = 2.1\times10^{-27}\sqrt{T}\ \mathrm{erg\,cm^{3}\,s^{-1}}$, a cluster radius of $1$ Mpc, and $n_e = 1.2\,n_{\rm H}$, $n_{\rm tot} = 2.3\,n_{\rm H}$ for a fully ionised cosmic mixture. Compare the cooling time with the sound-crossing time and the Field length with the cluster radius, then repeat for a cool core at $n_{\rm H} = 10^{-2}\ \mathrm{cm^{-3}}$, $T = 3\times10^{7}$ K, $R = 50$ kpc.
+<details class="sol"><summary>Solution</summary><div>
+$\Lambda = 2.1\times10^{-27}\sqrt{10^{8}} = 2.1000\times10^{-23}\ \mathrm{erg\,cm^{3}\,s^{-1}}$. The thermal energy density is $\tfrac32 n_{\rm tot}k_BT = 4.7632\times10^{-11}\ \mathrm{erg\,cm^{-3}}$ and the radiated power is $n_en_{\rm H}\Lambda = 2.5200\times10^{-29}\ \mathrm{erg\,cm^{-3}\,s^{-1}}$, so $t_{\rm cool} = 1.8902\times10^{18}\ \mathrm{s} = 59.90$ Gyr. The sound speed $\sqrt{(5/3)k_BT/(\mu m_u)} = 1520\ \mathrm{km\,s^{-1}}$ crosses $1$ Mpc in $2.0304\times10^{16}\ \mathrm{s} = 0.643$ Gyr, so $t_{\rm cool}/t_{\rm sound} = 93.1$.
+<br>For conduction, the Spitzer electron conductivity through Sarazin eq. (5.37), $\kappa = 1.84\times10^{-5}T^{5/2}/\ln\Lambda$ with Module 1's $\ln\Lambda = 37.8$ for the intracluster medium, gives $\kappa = 4.8677\times10^{13}\ \mathrm{erg\,s^{-1}\,cm^{-1}\,K^{-1}}$ and a Field length $\sqrt{\kappa T/(n_en_{\rm H}\Lambda)} = 4504$ kpc, which is $4.50$ times the cluster radius. Both tests agree: conduction smooths any thermally unstable mode before it can grow, and the gas would not have cooled appreciably in a Hubble time even if it could.
+<br>The cool core is a different matter, and the reason is geometry rather than microphysics. At fixed $T$, $t_{\rm cool}\propto 1/n$ and $\lambda_F\propto1/n$, so both shrink together and the dimensionless ratio $\lambda_F/(c_st_{\rm cool})$ does not change with density at all. What changes is the size of the region they are compared with. At $n_{\rm H} = 10^{-2}$ and $T = 3\times10^{7}$ K: $t_{\rm cool} = 3.28$ Gyr, $\lambda_F = 74.0$ kpc, $\lambda_F/R = 1.48$ and $t_{\rm cool}/t_{\rm sound} = 55.9$. The core cools well inside a Hubble time and its Field length is a sizeable fraction of its radius rather than several times it. Thermal instability in clusters is a cool-core phenomenon.
+</div></details></div>
+
+<h2 id="notation">Notation</h2>
+
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Units (CGS)</th><th>First used</th></tr>
+<tr><td>$\nabla$</td><td>the stratification's logarithmic temperature gradient $d\ln T/d\ln P$. With no argument attached it is never the vector operator in this module</td><td>—</td><td>(2.1)</td></tr>
+<tr><td>$\nabla_{\rm ad}$, $\nabla_\mu$</td><td>adiabatic gradient $(\partial\ln T/\partial\ln P)_s$; composition gradient $d\ln\mu/d\ln P$</td><td>—</td><td>(2.2), Proposition 3</td></tr>
+<tr><td>$\Delta\nabla$</td><td>the superadiabatic excess $\nabla-\nabla_{\rm ad}$</td><td>—</td><td>Proposition 5</td></tr>
+<tr><td>$H$</td><td>pressure scale height $P/(\rho g)$. Book-wide from this module</td><td>cm</td><td>Proposition 1</td></tr>
+<tr><td>$N$</td><td>Brunt–Väisälä (buoyancy) frequency. Module-local: Module 1's $N$ is a particle count and does not appear here</td><td>$\mathrm{rad\,s^{-1}}$</td><td>(3.1)</td></tr>
+<tr><td>$\delta$, $\varphi$</td><td>$-(\partial\ln\rho/\partial\ln T)_{P,\mu}$ and $(\partial\ln\rho/\partial\ln\mu)_{P,T}$; both $1$ for an ideal gas</td><td>—</td><td>Proposition 3</td></tr>
+<tr><td>$\gamma$</td><td>ratio of specific heats; $5/3$ monatomic, $7/5$ diatomic. Module 4's $\Gamma_1$ is the same quantity for a general gas</td><td>—</td><td>(2.5)</td></tr>
+<tr><td>$x$, $\chi_{\rm H}$, $\Phi$</td><td>hydrogen ionisation fraction; ionisation energy $13.5984340$ eV; the combination $5/2+\chi_{\rm H}/k_BT$</td><td>—, erg, —</td><td>Definition 2, (5.3)</td></tr>
+<tr><td>$\alpha$</td><td><b>module-local:</b> the mixing-length parameter $\ell/H$, here $2.0$. Module 5's $\alpha$, the length scale of the isothermal sphere, is not meant</td><td>—</td><td>Definition 3</td></tr>
+<tr><td>$\ell$, $v_c$, $\delta T$</td><td>mixing length $\alpha H$; convective velocity; parcel temperature excess</td><td>cm, $\mathrm{cm\,s^{-1}}$, K</td><td>Definition 3, (6.2)</td></tr>
+<tr><td>$c_P$, $c_p$, $c_s$</td><td>specific heat at constant pressure, $(5/2)k_B/(\mu m_u)$ for a monatomic gas; the same for dry air in C1 and D1; adiabatic sound speed $\sqrt{(5/3)P/\rho}$</td><td>$\mathrm{erg\,g^{-1}\,K^{-1}}$, $\mathrm{cm\,s^{-1}}$</td><td>(6.3), Table 3</td></tr>
+<tr><td>$L$, $F$</td><td><b>the solar luminosity</b> and the flux $L/(4\pi r^2)$. Module 1's $L$, the smallest scale to resolve, does not appear in this module</td><td>$\mathrm{erg\,s^{-1}}$, $\mathrm{erg\,cm^{-2}\,s^{-1}}$</td><td><a class="secref" href="#deepmlt">§6.1</a></td></tr>
+<tr><td>$\mathcal{L}(\rho,T)$</td><td>Field's net loss function: losses minus gains, per gram per second, exclusive of conduction. Never written $L$</td><td>$\mathrm{erg\,g^{-1}\,s^{-1}}$</td><td>Definition 4</td></tr>
+<tr><td>$\Lambda(T)$, $\Gamma$</td><td>cooling coefficient, always written with its argument; photoelectric heating rate per hydrogen nucleus, $2\times10^{-26}\ \mathrm{erg\,s^{-1}}$. <b>Module-local:</b> Module 3's $\Gamma$ is a lapse rate, written $\Gamma_{\rm lapse}$ in C1; Module 1's $\ln\Lambda$ is the Coulomb logarithm and keeps that form in K3</td><td>$\mathrm{erg\,cm^{3}\,s^{-1}}$, $\mathrm{erg\,s^{-1}}$</td><td>(8.3)</td></tr>
+<tr><td>$n$</td><td>number density. In C1 only, $n$ is also a polytropic index, written $n_{\rm eff}$ after Module 3</td><td>$\mathrm{cm^{-3}}$</td><td>(8.4), C1</td></tr>
+<tr><td>$P_{\min}$, $P_{\max}$, $P_{\rm ave}$</td><td>the two turning points of the equilibrium curve and the model's predicted average pressure</td><td>$\mathrm{dyn\,cm^{-2}}$, quoted as $P/k_B$ in $\mathrm{K\,cm^{-3}}$</td><td>Proposition 8</td></tr>
+<tr><td>$t_{\rm cool}$, $\lambda_F$</td><td>cooling time $\tfrac32 nk_BT/(n^2\Lambda)$; Field length $\sqrt{\kappa T/(n^2\Lambda)}$. Never written $\tau_{\rm cool}$: $\tau$ already carries other meanings in this book</td><td>s, cm</td><td>D3, K3</td></tr>
+<tr><td>$\sigma_d$, $\sigma_{\log P}$</td><td>the width of the granule-size distribution, $480$ km; the dispersion of $\log(p/k)$, $0.175$ dex. Both statistical widths are subscripted, because from this module a bare $\sigma$ is a collision cross-section</td><td>cm, dex</td><td><a class="secref" href="#a1">§7.1</a>, <a class="secref" href="#anchor">§10</a></td></tr>
+<tr><td>$\varphi_{\rm PAH}$</td><td>Wolfire et al.'s scale factor on electron–PAH collision rates; $0.5$ in their standard model</td><td>—</td><td><a class="secref" href="#robust">§10.2</a></td></tr>
+<tr><td>$\mu$, $m_u$, $k_B$, $m_{\rm H}$</td><td>mean molecular weight per particle, measured against $m_u$; atomic mass unit; Boltzmann's constant; hydrogen mass</td><td>—, g, $\mathrm{erg\,K^{-1}}$, g</td><td>Proposition 1, Proposition 7</td></tr>
+<tr><td>$\tau$</td><td>optical depth, in "$\tau = 2/3$" only</td><td>—</td><td><a class="secref" href="#photmlt">§6.2</a></td></tr>
+</table>
+
+<h2 id="sources">Sources</h2>
+
+<p class="small">Every published value this module compares against, with what was taken from it.</p>
+
+<ol>
+<li><b>Thermal instability.</b> G. B. Field, <em>Thermal Instability</em>, <em>The Astrophysical Journal</em> <b>142</b>, 531 (1965), <a href="https://articles.adsabs.harvard.edu/pdf/1965ApJ...142..531F">ADS scan</a>. Quoted from p. 532, equations (1)–(4b): $\mathcal{L}(\rho,T)$ defined as "energy losses minus energy gains, per gram of material per second exclusive of thermal conduction"; (4a) the isochoric criterion $(\partial\mathcal{L}/\partial T)_\rho\lt 0$; (4b) the isobaric criterion $(\partial\mathcal{L}/\partial T)_P = (\partial\mathcal{L}/\partial T)_\rho - (\rho_0/T_0)(\partial\mathcal{L}/\partial\rho)_T\lt 0$, and Field's statement that condensations are governed by (4b) rather than by Parker's (4a). The later form $(\partial(\mathcal{L}/T)/\partial T)_P\lt 0$ coincides with (4b) only on the equilibrium curve; this module uses (4b) as printed.</li>
+<li><b>The two-phase window (the prediction under test).</b> M. G. Wolfire, C. F. McKee, D. Hollenbach and A. G. G. M. Tielens, <em>Neutral Atomic Phases of the Interstellar Medium in the Galaxy</em>, <em>The Astrophysical Journal</em> <b>587</b>, 278–311 (2003), <a href="https://arxiv.org/abs/astro-ph/0207098">arXiv:astro-ph/0207098</a>. Quoted: Table 3, row $R = 8.5$ kpc, $N_{\rm cl} = 10^{19}\ \mathrm{cm^{-2}}$ — $P_{\min}/k = 1960$, $P_{\max}/k = 4810$, $P_{\rm th,ave}/k = 3070\ \mathrm{K\,cm^{-3}}$, warm-phase $T$ from $8310$ to $5040$ K and $n$ from $0.209$ to $0.860\ \mathrm{cm^{-3}}$, cold-phase $T$ from $258$ to $61.6$ K and $n$ from $6.91$ to $71.0\ \mathrm{cm^{-3}}$, cold-phase $T_{\rm ave} = 85.0$ K; Table 4, all five model variants of <a class="secref" href="#robust">§10.2</a>; the sentences ruling out "High $\varphi_{\rm PAH}$" and "Low $G_0$" and the four-item summary disfavouring all four non-standard variants; the $\varphi_{\rm PAH} = 0.5$ calibration on a C I/C II ratio, credited in their section 8.1 working to Welty &amp; Hobbs (2001); their statements that $P_{\min}$ changes by a factor $1.5$ and $P_{\max}$ by $1.9$ over $\varphi_{\rm PAH} = 0.25$ to $1$, with $P_{\max}$ falling by about $35$ per cent at $0.25$; their section 8.1 post-hoc comparison against Jenkins &amp; Tripp's (2001) mean pressure of $2240\ \mathrm{K\,cm^{-3}}$. Their gas-phase abundances come from HST absorption studies (Sofia et al. 1997; Cardelli et al. 1996; Meyer et al. 1998) and their PAH abundance from ISO emission (Tielens 1999); those papers were not opened here. Their photoelectric-heating formula was not re-derived, and Bakes &amp; Tielens (1994) and Draine (1978, 1987) were not opened, so whether the heating physics carries a further pressure dependence beyond $\varphi_{\rm PAH}$ is an open question, not a closed one.</li>
+<li><b>The measured pressures (the anchor).</b> E. B. Jenkins and T. M. Tripp, <em>The Distribution of Thermal Pressures in the Diffuse, Cold Neutral Medium of our Galaxy. II. An Expanded Survey of Interstellar C I Fine-Structure Excitations</em>, <em>The Astrophysical Journal</em> <b>734</b>, 65–86 (2011), <a href="https://arxiv.org/abs/1104.2323">arXiv:1104.2323</a>. Quoted: abstract and eq. (3) — mass-weighted lognormal with mean $\log(p/k) = 3.58$, rms dispersion at least $0.175$ dex, normalisation $2.30\times10^{23}\ \mathrm{cm^{-2}}$ per dex, and the statement that outside $3.2\lt \log(p/k)\lt 4.0$ the fit understates the observed material; section 10.1.2 — "A substantial fraction of the material (29%) … is detected at pressures below those permissible for a static CNM, $(p/k)_{\min} = 1960\ \mathrm{cm^{-3}\,K}$, as defined by the standard model … presented by Wolfire et al. (2003)", read by them as turbulent rarefaction; abstract — $23$ per cent for the low-intensity subsample, about $0.05$ per cent above $\log(p/k) = 5.5$, turbulent Mach number $1\lt M\lt 4$; and their attribution of the rise from the 2001 value to updated C I atomic rates, revised optical pumping and a corrected temperature.</li>
+<li><b>Paper I, cited but not compared against.</b> E. B. Jenkins and T. M. Tripp, <em>The Distribution of Thermal Pressures in the Interstellar Medium from a Survey of C I Fine-Structure Excitation</em>, <em>The Astrophysical Journal Supplement Series</em> <b>137</b>, 297–340 (2001), <a href="https://arxiv.org/abs/astro-ph/0107177">arXiv:astro-ph/0107177</a>. Its mean pressure of $2240\ \mathrm{K\,cm^{-3}}$ enters only through Wolfire et al.'s section 8.1. Its text was searched for a C I/C II column-density ratio, a total carbon column and an N(C II): none appears, which is why <a class="secref" href="#confirmed">§10.1</a> does not claim a shared technique between the $\varphi_{\rm PAH}$ calibration and the 2011 pressures.</li>
+<li><b>The warm-side measurement.</b> C. Heiles and T. H. Troland, <em>The Millennium Arecibo 21 Centimeter Absorption-Line Survey. II.</em>, <em>The Astrophysical Journal</em> <b>586</b>, 1067–1093 (2003), <a href="https://arxiv.org/abs/astro-ph/0207105">arXiv:astro-ph/0207105</a>. Quoted from the abstract and sections 2.3.2 and 9.2.1: at least $48$ per cent of the warm neutral medium by column density lies in the thermally unstable range $500$–$5000$ K; $61$ per cent of H I is warm at $|b|\gt 10^\circ$; the cold-medium spin-temperature histogram peaks at $40$ K with a column-weighted median of $70$ K. Both fractions are column-density weighted lower bounds. Their $500$ K is a classification boundary, not a computed turning point, and <a class="secref" href="#window">§9</a> declines to compare it with the $184$ K of the fit.</li>
+<li><b>The cooling function, and its two typographical errors.</b> H. Koyama and S. Inutsuka, <em>An Origin of Supersonic Motions in Interstellar Clouds</em>, <em>The Astrophysical Journal</em> <b>564</b>, L97 (2002), <a href="https://arxiv.org/abs/astro-ph/0112420">arXiv:astro-ph/0112420</a>, equations (4) and (5), and their $140$ au grid cells on $2048\times512$ over $1.44\times0.36$ pc. The corrected form is printed as equations (3) and (4) of E. Vázquez-Semadeni, G. C. Gómez, A. K. Jappsen, J. Ballesteros-Paredes, R. F. González and R. S. Klessen, <em>Molecular Cloud Evolution. II.</em>, <em>The Astrophysical Journal</em> <b>657</b>, 870–883 (2007), <a href="https://arxiv.org/abs/astro-ph/0608375">arXiv:astro-ph/0608375</a>, whose footnote 5 reads: "Note that eq. (4) in Koyama &amp; Inutsuka (2002) contains two typographical errors. The form used here incorporates the necesary corrections, kindly provided by H. Koyama."</li>
+<li><b>Granule velocities.</b> T. Oba, Y. Iida and T. Shimizu, <em>Height Dependence of the Velocity Structure of Photospheric Convection in Granules and Intergranular Lanes with Hinode/SOT</em>, <em>The Astrophysical Journal</em> <b>836</b>, 40 (2017), <a href="https://arxiv.org/abs/1612.06175">arXiv:1612.06175</a>. Quoted from the abstract and section 4.4: upward speed falling from $0.65$ to $0.40\ \mathrm{km\,s^{-1}}$ with height and downward speed rising from $0.30$ to $0.50\ \mathrm{km\,s^{-1}}$ with depth; rms filtered convective velocity $0.6\ \mathrm{km\,s^{-1}}$ at $I/I_0 = 0.75$ falling to $0.3$ at $I/I_0 = 0.40$; stated velocity error $0.18\ \mathrm{km\,s^{-1}}$; Table 1, which places $I/I_0 = 0.75$ at $h = 40$ km, $\tau_{500} = 0.55$ and $I/I_0 = 0.40$ at $h = 163$ km, $\tau_{500} = 0.10$. Those heights are derived from the VAL81 model atmosphere, not measured.</li>
+<li><b>Granule sizes and contrast.</b> V. I. Abramenko, V. B. Yurchyshyn, P. R. Goode, I. N. Kitiashvili and A. G. Kosovichev, <em>Detection of Small-scale Granular Structures in the Quiet Sun with the New Solar Telescope</em>, <em>The Astrophysical Journal Letters</em> <b>756</b>, L27 (2012), <a href="https://arxiv.org/abs/1208.4337">arXiv:1208.4337</a>. Quoted from their section 3: the regular granules are Gaussian with $d_0 = 1050\pm22$ km and $\sigma_d = 480\pm11$ km; the mini-granules below $600$ km follow a power law of index $-1.82\pm0.12$; the area-contribution function peaks at $1080$–$1300$ km; and the rms intensity contrast $15.5\pm0.6$ per cent at $705.7$ nm.</li>
+<li><b>The solar stratification.</b> J. N. Bahcall, A. M. Serenelli and S. Basu, <em>The Astrophysical Journal</em> <b>621</b>, L85–L88 (2005). The tabulated model BS2005-AGS,OP, at <code>afd/data/bs05_agsop.dat</code>, used here only as a stratification, exactly as Module 3 used it.</li>
+<li><b>The textbook results.</b> R. Kippenhahn and A. Weigert, <em>Stellar Structure and Evolution</em> (Springer, 1990), sections 6.1, 7.2 and 14.3: the Schwarzschild and Ledoux criteria, the mixing-length flux and velocity in the efficient limit with their $1/2$ and $1/8$ conventions, and $\nabla_{\rm ad}$ for a partially ionised gas, equation (5.3).</li>
+<li><b>Cited through Wolfire et al., not read.</b> D. E. Welty and L. M. Hobbs, <em>The Astrophysical Journal Supplement Series</em> <b>133</b>, 345 (2001), for the C I and H I data behind the $\varphi_{\rm PAH}$ calibration; G. B. Field, D. W. Goldsmith and H. J. Habing, <em>The Astrophysical Journal</em> <b>155</b>, L149 (1969), for the general result that $P_{\max}\lesssim 3P_{\min}$.</li>
+<li><b>Transport coefficients.</b> The electron conductivity $\kappa = 1.84\times10^{-5}T^{5/2}/\ln\Lambda$ was read from C. L. Sarazin, <em>X-ray Emissions from Clusters of Galaxies</em> (1988), eq. (5.37), which attributes it to L. Spitzer, <em>Physics of Fully Ionized Gases</em>; Spitzer's book was not opened, and its 1956 and 1962 printings are its first and second editions. Sarazin section 5.4 also supplies $\ln\Lambda = 37.8$ for the intracluster medium, carried over from Module 1. The neutral-gas conductivity $K = 2.5\times10^{3}\sqrt{T}$ is E. N. Parker (1953) as adopted by Koyama &amp; Inutsuka below their eq. (3); Parker's paper was not opened.</li>
+<li><b>Constants and standards.</b> CODATA 2018 for $k_B$, $m_u$, $m_e$, $h$, $G$ and $\chi_{\rm H}$; IAU 2015 Resolution B3 for $GM_\odot$, $R_\odot$, $L_\odot$ and $T_{\rm eff,\odot} = 5772$ K; ISO 2533:1975 and the US Standard Atmosphere 1976 for the ISA lapse rate, $T_0 = 288.15$ K and the tropopause temperature $216.65$ K.</li>
+<li><b>Earlier modules.</b> The Euler equation (7.3) of Module 2; the hydrostatic equation, the temperature gradient $\nabla$ of Definition 5, the $n = 3/2$ polytrope and the photospheric inputs of Module 3; the composition $\mu = 1.2250$ of Module 4 eq. (4.7) and its photospheric scale height at <code>module04.html:260</code>; the Coulomb logarithm of Module 1, Definition 5.</li>
+</ol>
+
+<hr>
+<p class="small">Module 6 of <a href="index.html">Astrophysical Fluid Dynamics</a>. Previous: <a href="module05.html">Module 5 — The Jeans Instability</a></p>
+
+<script>
+function copyCode(btn){
+  var code = btn.parentElement.querySelector('code');
+  var text = code.textContent;
+  function done(){
+    btn.classList.add('copied');
+    var old = btn.lastChild.nodeValue;
+    btn.lastChild.nodeValue = 'Copied!';
+    setTimeout(function(){ btn.classList.remove('copied'); btn.lastChild.nodeValue = old; }, 1500);
+  }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); } finally { document.body.removeChild(ta); }
+  }
+}
+</script>
+
+</body>
+</html>

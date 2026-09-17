@@ -35,7 +35,7 @@
 <text x="240.0" y="206.0" font-size="10.5" text-anchor="end" fill="#94a3b8">measured: 3802, ±0.175 dex</text>
 <text x="692.0" y="74.0" font-size="10.5" text-anchor="end" fill="#facc15">median / predicted mean = 3802 / 3070 = 1.238</text>
 <text x="258.0" y="74.0" font-size="10.5" text-anchor="start" fill="#94a3b8">notch = geometric mean</text>
-<text x="475.0" y="288.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">REFUTED: cold gas below P_min, which a static medium forbids</text>
+<text x="475.0" y="288.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">REFUTED: cold gas below P<tspan baseline-shift="sub" font-size="75%">min</tspan>, which a static medium forbids</text>
 <rect x="250" y="306" width="450" height="180" fill="none" stroke="#334155" stroke-width="1"/>
 <line x1="250.0" y1="486" x2="250.0" y2="491" stroke="#334155" stroke-width="1"/>
 <text x="250.0" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0</text>
@@ -55,7 +55,7 @@
 <text x="643.8" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">35</text>
 <line x1="700.0" y1="486" x2="700.0" y2="491" stroke="#334155" stroke-width="1"/>
 <text x="700.0" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">40</text>
-<text x="475.0" y="522.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">per cent of CNM mass below P_min = 1960 K cm⁻³</text>
+<text x="475.0" y="522.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">per cent of CNM mass below P<tspan baseline-shift="sub" font-size="75%">min</tspan> = 1960 K cm⁻³</text>
 <line x1="250" y1="328" x2="250" y2="344" stroke="#94a3b8" stroke-width="3"/>
 <text x="240.0" y="337.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">static two-phase medium</text>
 <text x="240.0" y="351.0" font-size="10.5" text-anchor="end" fill="#94a3b8">prediction</text>
@@ -66,13 +66,13 @@
 <text x="314.3" y="382.0" font-size="10.5" text-anchor="start" fill="#fb923c">5.0%</text>
 <rect x="250" y="412" width="326.2" height="16" fill="#facc15" fill-opacity="0.8"/>
 <text x="240.0" y="421.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">measured, all sight lines</text>
-<text x="240.0" y="435.0" font-size="10.5" text-anchor="end" fill="#94a3b8">Jenkins &amp; Tripp §10.1.2</text>
+<text x="240.0" y="435.0" font-size="10.5" text-anchor="end" fill="#94a3b8">Jenkins &amp; Tripp, section 10.1.2</text>
 <text x="584.2" y="424.0" font-size="10.5" text-anchor="start" fill="#facc15">29%</text>
 <rect x="250" y="454" width="258.8" height="16" fill="#facc15" fill-opacity="0.8"/>
 <text x="240.0" y="463.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">measured, low starlight</text>
 <text x="240.0" y="477.0" font-size="10.5" text-anchor="end" fill="#94a3b8">their abstract</text>
 <text x="516.8" y="466.0" font-size="10.5" text-anchor="start" fill="#facc15">23%</text>
 <text x="620.2" y="424.0" font-size="10.5" text-anchor="start" fill="#cbd5e1">5.8 × the fit</text>
-<text x="20.0" y="562.0" font-size="10.5" text-anchor="start" fill="#94a3b8">What fails is the word static: Jenkins &amp; Tripp read the excess as turbulent rarefaction, Mach 1–4. Gas above P_max is allowed</text>
-<text x="20.0" y="578.0" font-size="10.5" text-anchor="start" fill="#94a3b8">for the cold phase and is not counted. Window: Wolfire et al. (2003) Table 3, R = 8.5 kpc, N_cl = 10¹⁹ cm⁻².</text>
+<text x="20.0" y="562.0" font-size="10.5" text-anchor="start" fill="#94a3b8">What fails is the word static: Jenkins &amp; Tripp read the excess as turbulent rarefaction, Mach 1–4. Gas above P<tspan baseline-shift="sub" font-size="75%">max</tspan> is allowed</text>
+<text x="20.0" y="578.0" font-size="10.5" text-anchor="start" fill="#94a3b8">for the cold phase and is not counted. Window: Wolfire et al. (2003) Table 3, R = 8.5 kpc, N<tspan baseline-shift="sub" font-size="75%">cl</tspan> = 10¹⁹ cm⁻².</text>
 </svg>

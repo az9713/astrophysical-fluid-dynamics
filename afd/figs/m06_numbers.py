@@ -431,6 +431,29 @@ def convection_zone_base(st, frac=0.99, r_lo=0.60, r_hi=0.95):
     return np.nan
 
 
+
+def ledoux_zone_base(st, frac=0.99, r_lo=0.60, r_hi=0.95):
+    """convection_zone_base with the Ledoux term added to the threshold.
+
+    The target is frac*plateau + grad_mu, which varies row to row, so the
+    linear interpolation carries the target's own slope.  Quoted in the
+    module as an UPPER bound on the shift, because beyond about 0.72 R the
+    table's grad_mu is partly an ionisation effect (see main()).
+    """
+    r, grad, plateau, gmu = (st['rfrac'], st['grad'], st['plateau'],
+                             st['grad_mu'])
+    target = frac*plateau + gmu
+    idx = np.where((r > r_lo) & (r < r_hi) & np.isfinite(grad)
+                   & np.isfinite(gmu))[0]
+    for j in range(1, len(idx)):
+        i0, i1 = idx[j-1], idx[j]
+        if grad[i0] < target[i0] and grad[i1] >= target[i1]:
+            num = target[i0] - grad[i0]
+            den = (grad[i1] - grad[i0]) - (target[i1] - target[i0])
+            return r[i0] + (num/den)*(r[i1] - r[i0])
+    return np.nan
+
+
 # =========================================================================
 # PART C.  Mixing-length theory
 # =========================================================================
@@ -812,13 +835,33 @@ def main():
     P('    inside 0.15 R it dominates the Schwarzschild term outright.  It')
     P('    then dies away: by 0.30 R it is 1.4% and by 0.40 R it is 0.7%,')
     P('    because outside the burning core mu is flat.')
-    P('    THIS DOES NOT CHANGE ANY BOUNDARY IN THE SUN, and the reason is')
-    P('    worth stating.  The Ledoux term only matters where the two')
-    P('    criteria could disagree, that is where grad is close to')
-    P('    grad_ad.  In the Sun that happens only at the base of the')
-    P(f'    convection zone, and there mu is uniform: over 0.75-0.93 R,')
-    P(f'    |grad_mu| <= {np.nanmax(np.abs(st["grad_mu"][cz])):.5f}, against a Schwarzschild term')
-    P('    of order 0.1 at the boundary.  Ledoux and Schwarzschild put the')
+    P('    THIS DOES NOT CHANGE ANY BOUNDARY IN THE SUN, and the size of')
+    P('    the "no" is MEASURED, not asserted.  The Ledoux term only')
+    P('    matters where the two criteria could disagree, that is where')
+    P('    grad is close to grad_ad.')
+    i05 = int(np.argmin(abs(r - 0.050)))
+    i20 = int(np.argmin(abs(r - 0.200)))
+    P(f'    (a) Where grad_mu is LARGE, inside 0.2 R, the Schwarzschild')
+    P(f'        margin grad_ad - grad runs from '
+      f'{plateau - st["grad"][i05]:.4f} at {r[i05]:.3f} R')
+    P(f'        to {plateau - st["grad"][i20]:.4f} at {r[i20]:.3f} R, so '
+      f'those layers are stable by a')
+    P('        wide margin under either criterion.')
+    rad = (r >= 0.30) & (r <= 0.60) & np.isfinite(st['grad_mu'])
+    P(f'    (b) Through the radiative zone outside the burning core, over')
+    P(f'        0.30-0.60 R, |grad_mu| <= '
+      f'{np.nanmax(np.abs(st["grad_mu"][rad])):.5f}.  Over 0.75-0.93 R, inside')
+    P(f'        the convection zone, '
+      f'|grad_mu| <= {np.nanmax(np.abs(st["grad_mu"][cz])):.5f}.')
+    base_s = convection_zone_base(st)
+    base_l = ledoux_zone_base(st)
+    P(f'    (c) Locating the base again with grad_ad + grad_mu in place of')
+    P(f'        grad_ad, same locator: {base_s:.4f} R -> {base_l:.4f} R, a')
+    P(f'        shift of {base_l - base_s:.4f} R = '
+      f'{100*(base_l - base_s):.2f} per cent of the radius.')
+    P('        That is an UPPER BOUND, because the grad_mu the table gives')
+    P('        near the base is partly the effective-mu artefact below.')
+    P('    Ledoux and Schwarzschild put the')
     P('    base of the solar convection zone in the same place.  They do')
     P('    not in a star with a receding convective core; PROBLEM 4 is')
     P('    that case.')
@@ -1353,7 +1396,7 @@ def main():
     u_th = 1.5*n_tot*kB*T_icm
     rate = n_e*n_H*lam_brems
     t_cool = u_th/rate
-    cs_icm = np.sqrt(5.0/3.0*kB*T_icm/(mu_icm*mp))
+    cs_icm = np.sqrt(5.0/3.0*kB*T_icm/(mu_icm*mu_u))
     R_cl = 1e3*kpc
     t_sound = R_cl/cs_icm
     kap = spitzer_kappa(T_icm)
@@ -1385,7 +1428,7 @@ def main():
         lam2 = 2.1e-27*np.sqrt(TT)
         ne2, nt2 = 1.2*nn, 2.3*nn
         tc2 = 1.5*nt2*kB*TT/(ne2*nn*lam2)
-        cs2 = np.sqrt(5.0/3.0*kB*TT/(mu_icm*mp))
+        cs2 = np.sqrt(5.0/3.0*kB*TT/(mu_icm*mu_u))
         lF2 = np.sqrt(spitzer_kappa(TT)*TT/(ne2*nn*lam2))
         P(f'      {lab:<18} n_H = {nn:.0e}, T = {TT:.0e} K:')
         P(f'        t_cool = {tc2/yr/1e9:7.2f} Gyr   '
@@ -1488,7 +1531,7 @@ def main():
         n_e_ism, _ = ki_equilibrium(TT)
         u = 1.5*n_e_ism*kB*TT
         tc = u/(n_e_ism*n_e_ism*ki_lambda(TT))
-        cs_ism = np.sqrt(5.0/3.0*kB*TT/(1.27*mp))
+        cs_ism = np.sqrt(5.0/3.0*kB*TT/(1.27*mu_u))
         lF = field_length(TT, n_e_ism)
         lam_cool[lab] = cs_ism*tc
         P(f'    {lab}: T = {TT:.0f} K, n_eq = {n_e_ism:.3f} cm^-3, '
