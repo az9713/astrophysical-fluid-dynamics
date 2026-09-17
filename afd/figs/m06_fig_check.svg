@@ -1,0 +1,78 @@
+<svg class="setupfig" viewBox="0 0 760 590" width="100%" role="img" aria-label="Upper panel: on a logarithmic pressure axis, the two-phase window predicted by Wolfire and collaborators from 1960 to 4810 with its geometric mean 3070, the window from the analytic cooling fit from 1597 to 5007, and the measured cold-gas pressure of Jenkins and Tripp at 3802 with a spread of 0.175 dex. The measurement lies inside both windows. Lower panel: the fraction of cold gas below the minimum pressure. A static two-phase medium allows none, the fitted lognormal gives 5 per cent, and the measurement gives 29 per cent for all sight lines and 23 per cent for the low-starlight subsample.">
+<text x="475.0" y="40.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">CONFIRMED: the measured centre lies inside the predicted window</text>
+<rect x="250" y="58" width="450" height="160" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="267.3" y1="218" x2="267.3" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="267.3" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1000</text>
+<line x1="371.5" y1="218" x2="371.5" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="371.5" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">2000</text>
+<line x1="432.5" y1="218" x2="432.5" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="432.5" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">3000</text>
+<line x1="509.3" y1="218" x2="509.3" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="509.3" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">5000</text>
+<line x1="613.5" y1="218" x2="613.5" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="613.5" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10000</text>
+<line x1="674.4" y1="218" x2="674.4" y2="223" stroke="#334155" stroke-width="1"/>
+<text x="674.4" y="236.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">15000</text>
+<text x="475.0" y="254.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">P / k  (K cm⁻³), logarithmic</text>
+<line x1="468.1" y1="58" x2="468.1" y2="218" stroke="#facc15" stroke-width="1.2" stroke-opacity="0.5"/>
+<line x1="368.5" y1="92" x2="503.4" y2="92" stroke="#2dd4bf" stroke-width="6" stroke-opacity="0.75"/>
+<line x1="368.5" y1="83" x2="368.5" y2="101" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="503.4" y1="83" x2="503.4" y2="101" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="436.0" y1="86" x2="436.0" y2="98" stroke="#0f172a" stroke-width="2"/>
+<text x="240.0" y="96.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">Wolfire et al. (2003)</text>
+<text x="240.0" y="110.0" font-size="10.5" text-anchor="end" fill="#94a3b8">predicted window: 1960–4810</text>
+<line x1="337.7" y1="138" x2="509.5" y2="138" stroke="#fb923c" stroke-width="6" stroke-opacity="0.75"/>
+<line x1="337.7" y1="129" x2="337.7" y2="147" stroke="#fb923c" stroke-width="2"/>
+<line x1="509.5" y1="129" x2="509.5" y2="147" stroke="#fb923c" stroke-width="2"/>
+<line x1="423.6" y1="132" x2="423.6" y2="144" stroke="#0f172a" stroke-width="2"/>
+<text x="240.0" y="142.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">Koyama–Inutsuka fit</text>
+<text x="240.0" y="156.0" font-size="10.5" text-anchor="end" fill="#94a3b8">window, this module: 1597–5007</text>
+<line x1="407.5" y1="188" x2="528.7" y2="188" stroke="#facc15" stroke-width="3"/>
+<line x1="407.5" y1="181" x2="407.5" y2="195" stroke="#facc15" stroke-width="2"/>
+<line x1="528.7" y1="181" x2="528.7" y2="195" stroke="#facc15" stroke-width="2"/>
+<circle cx="468.1" cy="188" r="5" fill="#facc15"/>
+<text x="240.0" y="192.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">Jenkins &amp; Tripp (2011)</text>
+<text x="240.0" y="206.0" font-size="10.5" text-anchor="end" fill="#94a3b8">measured: 3802, ±0.175 dex</text>
+<text x="692.0" y="74.0" font-size="10.5" text-anchor="end" fill="#facc15">median / predicted mean = 3802 / 3070 = 1.238</text>
+<text x="258.0" y="74.0" font-size="10.5" text-anchor="start" fill="#94a3b8">notch = geometric mean</text>
+<text x="475.0" y="288.0" font-size="12.5" text-anchor="middle" fill="#cbd5e1">REFUTED: cold gas below P_min, which a static medium forbids</text>
+<rect x="250" y="306" width="450" height="180" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="250.0" y1="486" x2="250.0" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="250.0" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0</text>
+<line x1="306.2" y1="486" x2="306.2" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="306.2" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">5</text>
+<line x1="362.5" y1="486" x2="362.5" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="362.5" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10</text>
+<line x1="418.8" y1="486" x2="418.8" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="418.8" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">15</text>
+<line x1="475.0" y1="486" x2="475.0" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="475.0" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">20</text>
+<line x1="531.2" y1="486" x2="531.2" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="531.2" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">25</text>
+<line x1="587.5" y1="486" x2="587.5" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="587.5" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">30</text>
+<line x1="643.8" y1="486" x2="643.8" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="643.8" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">35</text>
+<line x1="700.0" y1="486" x2="700.0" y2="491" stroke="#334155" stroke-width="1"/>
+<text x="700.0" y="504.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">40</text>
+<text x="475.0" y="522.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">per cent of CNM mass below P_min = 1960 K cm⁻³</text>
+<line x1="250" y1="328" x2="250" y2="344" stroke="#94a3b8" stroke-width="3"/>
+<text x="240.0" y="337.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">static two-phase medium</text>
+<text x="240.0" y="351.0" font-size="10.5" text-anchor="end" fill="#94a3b8">prediction</text>
+<text x="258.0" y="340.0" font-size="10.5" text-anchor="start" fill="#94a3b8">0.0%</text>
+<rect x="250" y="370" width="56.3" height="16" fill="#fb923c" fill-opacity="0.8"/>
+<text x="240.0" y="379.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">lognormal fit, their eq. 3</text>
+<text x="240.0" y="393.0" font-size="10.5" text-anchor="end" fill="#94a3b8">same survey, fitted</text>
+<text x="314.3" y="382.0" font-size="10.5" text-anchor="start" fill="#fb923c">5.0%</text>
+<rect x="250" y="412" width="326.2" height="16" fill="#facc15" fill-opacity="0.8"/>
+<text x="240.0" y="421.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">measured, all sight lines</text>
+<text x="240.0" y="435.0" font-size="10.5" text-anchor="end" fill="#94a3b8">Jenkins &amp; Tripp §10.1.2</text>
+<text x="584.2" y="424.0" font-size="10.5" text-anchor="start" fill="#facc15">29%</text>
+<rect x="250" y="454" width="258.8" height="16" fill="#facc15" fill-opacity="0.8"/>
+<text x="240.0" y="463.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">measured, low starlight</text>
+<text x="240.0" y="477.0" font-size="10.5" text-anchor="end" fill="#94a3b8">their abstract</text>
+<text x="516.8" y="466.0" font-size="10.5" text-anchor="start" fill="#facc15">23%</text>
+<text x="620.2" y="424.0" font-size="10.5" text-anchor="start" fill="#cbd5e1">5.8 × the fit</text>
+<text x="20.0" y="562.0" font-size="10.5" text-anchor="start" fill="#94a3b8">What fails is the word static: Jenkins &amp; Tripp read the excess as turbulent rarefaction, Mach 1–4. Gas above P_max is allowed</text>
+<text x="20.0" y="578.0" font-size="10.5" text-anchor="start" fill="#94a3b8">for the cold phase and is not counted. Window: Wolfire et al. (2003) Table 3, R = 8.5 kpc, N_cl = 10¹⁹ cm⁻².</text>
+</svg>
