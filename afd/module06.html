@@ -135,7 +135,7 @@ window.MathJax = {
 $$ \nabla \;\equiv\; \frac{d\ln T}{d\ln P}, \tag{2.1}$$
 which is Module 3, Definition 5. The <em>adiabatic gradient</em> is the corresponding derivative for a parcel of the gas at fixed specific entropy $s$,
 $$ \nabla_{\rm ad} \;\equiv\; \left(\frac{\partial\ln T}{\partial\ln P}\right)_{\!s}. \tag{2.2}$$
-The first is a property of the star; the second is a property of the gas. <b>Notation.</b> In this module the symbol $\nabla$ with no argument always means (2.1). The vector operator is written only with an argument attached, as in $\nabla\!\cdot\mathbf{u}$ or $\nabla\Phi$.</div>
+The first is a property of the star; the second is a property of the gas. Fig. 1 sets out the comparison the criterion will make. <b>Notation.</b> In this module the symbol $\nabla$ with no argument always means (2.1). The vector operator is written only with an argument attached, as in $\nabla\!\cdot\mathbf{u}$ or $\nabla\Phi$.</div>
 
 <figure><svg class="setupfig" viewBox="0 0 470 214" width="100%" role="img" aria-label="two columns of gas: a parcel displaced upward by delta r arrives at the ambient pressure with its own temperature, hotter or cooler than its new surroundings">
   <defs>
@@ -213,7 +213,7 @@ The layer is stable if and only if $N^2\gt 0$, and a displaced parcel then oscil
 
 <span class="prov">The table is an input, not a checked quantity. It is used here only as a stratification: a set of $(P,\rho,T,m)$ values to differentiate. Module 3 measured its adiabatic plateau, $\nabla = 0.3957$ over $0.80$–$0.92\,R$, and located the base of its convection zone at $0.7269\,R$; this module's script recovers both numbers with the same locator. That agreement demonstrates that the two scripts read the table identically. It is not a check, because both numbers come from the same file.</span>
 
-<p>Table 1 gives the result. $N$ is computed twice on the right: once with the ideal monatomic $\nabla_{\rm ad} = 0.4$, and once with the model's own measured plateau $0.3957$, which is what its equation of state — including Coulomb corrections and a little radiation pressure — actually delivers. The last column adds the composition term of <a class="secref" href="#ledoux">§4</a>.</p>
+<p>Table 1 gives the result and Fig. 2, upper panel, plots it. $N$ is computed twice on the right: once with the ideal monatomic $\nabla_{\rm ad} = 0.4$, and once with the model's own measured plateau $0.3957$, which is what its equation of state — including Coulomb corrections and a little radiation pressure — actually delivers. The last column adds the composition term of <a class="secref" href="#ledoux">§4</a>.</p>
 
 <table>
 <caption class="small" style="text-align:left;caption-side:bottom;padding-top:.4rem;">Table 1. The buoyancy frequency through BS2005-AGS,OP. "imaginary" means $N^2\lt 0$ at the quoted precision, which inside the convection zone is not a measurement; see the limit stated below.</caption>
@@ -238,7 +238,7 @@ The layer is stable if and only if $N^2\gt 0$, and a displaced parcel then oscil
 
 $$ N_{\max} = 2.7022\times10^{-3}\ \mathrm{rad\,s^{-1}} = 430.06\ \mu\mathrm{Hz} \quad\text{at}\quad r = 0.2670\,R, $$
 
-<p>and the corresponding buoyancy period $2\pi/N_{\max}$ is $38.8$ minutes. Since a gravity mode of the star is a standing pattern of the oscillation of Proposition 2, and no such oscillation can be faster than the local $N$, every solar g mode must have a period longer than $39$ minutes. The Sun's famous five-minute oscillations are therefore acoustic, as Module 4 treated them, and the two mode families cannot be confused by their periods. This is a prediction of the model read through Proposition 2, not a check: no measured g-mode period is compared against it here, and no claim is made in this module about whether solar g modes have been detected.</p>
+<p>and the corresponding buoyancy period $2\pi/N_{\max}$ is $38.8$ minutes. Since a gravity mode of the star is a standing pattern of the oscillation of Proposition 2, and no such oscillation can be faster than the local $N$, every solar g mode must have a period longer than $39$ minutes. The Sun's famous five-minute oscillations are therefore acoustic, as Module 4 treated them, and the two mode families cannot be confused by their periods. This is a prediction of the model read through Proposition 2, not a check: no measured g-mode period is compared against it here.</p>
 
 <h3 id="base">3.2 Why the convection zone reaches down to $0.727\,R$</h3>
 
@@ -349,16 +349,17 @@ $$ N_{\max} = 2.7022\times10^{-3}\ \mathrm{rad\,s^{-1}} = 430.06\ \mu\mathrm{Hz}
 
 <p>Premise (i) of Proposition 1 was uniform composition. The Sun has burned hydrogen in its core for $4.6$ Gyr, so its $\mu$ is not uniform, and the premise has to be paid for.</p>
 
-<div class="prop"><b>Proposition 3 (the Ledoux criterion).</b> Let the composition vary with depth, with $\nabla_\mu \equiv d\ln\mu/d\ln P$ the logarithmic gradient of the mean molecular weight of the <em>surroundings</em>, and let the displaced parcel carry its own composition unchanged. Write $\delta \equiv -(\partial\ln\rho/\partial\ln T)_{P,\mu}$ and $\varphi \equiv (\partial\ln\rho/\partial\ln\mu)_{P,T}$, both equal to $1$ for an ideal gas. Then (2.3) becomes
-$$ \frac{\Delta\rho}{\rho} \;=\; -\left[\nabla-\nabla_{\rm ad}-\frac{\varphi}{\delta}\nabla_\mu\right]\delta\,\frac{\delta r}{H}, $$
+<div class="prop"><b>Proposition 3 (the Ledoux criterion).</b> Keep every hypothesis of Proposition 1 except (i), and let the composition of the <em>surroundings</em> vary with depth, with $\nabla_\mu \equiv d\ln\mu/d\ln P$, while the displaced parcel carries its own composition unchanged. Then (2.3) becomes
+$$ \frac{\Delta\rho}{\rho} \;=\; -\left[\nabla-\nabla_{\rm ad}-\nabla_\mu\right]\frac{\Delta r}{H}, $$
 the buoyancy frequency becomes
-$$ N^2 \;=\; \frac{g\delta}{H}\left[\nabla_{\rm ad}-\nabla+\frac{\varphi}{\delta}\,\nabla_\mu\right], \tag{4.1}$$
-and the layer is stable if and only if $\nabla \lt \nabla_{\rm ad} + (\varphi/\delta)\,\nabla_\mu$.</div>
+$$ N^2 \;=\; \frac{g}{H}\left[\nabla_{\rm ad}-\nabla+\nabla_\mu\right], \tag{4.1}$$
+and the layer is stable if and only if $\nabla \lt \nabla_{\rm ad} + \nabla_\mu$. Here $\Delta r$ is the displacement written $\delta r$ in Proposition 1; it is renamed for this proof only, so that no symbol has to serve both as a variation and as a coefficient.</div>
 
 <div class="proof">
-<p>For a general equation of state $\rho = \rho(P,T,\mu)$, the first-order change in density along the displacement is $\delta\ln\rho = \alpha_P\,\delta\ln P - \delta\,\delta\ln T + \varphi\,\delta\ln\mu$ with $\alpha_P \equiv (\partial\ln\rho/\partial\ln P)_{T,\mu}$. The parcel and its surroundings share $\delta\ln P$ by premise (iii), so the $\alpha_P$ terms cancel in the difference, exactly as in Proposition 1. The parcel carries its composition with it, so $\delta\ln\mu_{\rm p}=0$, while the surroundings supply $\delta\ln\mu = \nabla_\mu\,\delta\ln P$. Subtracting parcel from surroundings,</p>
-$$ \frac{\Delta\rho}{\rho} = -\delta\,(\nabla_{\rm ad}-\nabla)\,\delta\ln P - \varphi\,\nabla_\mu\,\delta\ln P = \left[\delta(\nabla-\nabla_{\rm ad}) - \varphi\nabla_\mu\right]\delta\ln P,$$
-<p>and $\delta\ln P = -\delta r/H$ as before gives the displayed contrast. Newton's second law with the buoyancy force $-g\Delta\rho/\rho$ then gives (4.1). Stability is $N^2\gt 0$, which is the stated inequality after dividing by $\delta\gt 0$. For an ideal gas $\rho\propto \mu P/T$, so $\alpha_P=\delta=\varphi=1$ and (4.1) reduces to (3.1) when $\nabla_\mu=0$. <span class="qed">∎</span></p>
+<p>For an ideal gas $\rho = \mu m_uP/(k_BT)$, so along the displacement $\Delta\ln\rho = \Delta\ln P - \Delta\ln T + \Delta\ln\mu$ for the surroundings, and the same without the last term for the parcel, which carries its composition unchanged. The parcel and its surroundings share $\Delta\ln P$ by premise (iii), so those terms cancel in the difference exactly as in Proposition 1. The temperature terms give $-(\nabla_{\rm ad}-\nabla)\Delta\ln P$ as before, and the composition term gives $-\nabla_\mu\,\Delta\ln P$. Subtracting parcel from surroundings,</p>
+$$ \frac{\Delta\rho}{\rho} = \left[(\nabla-\nabla_{\rm ad}) - \nabla_\mu\right]\Delta\ln P,$$
+<p>and $\Delta\ln P = -\Delta r/H$ as before gives the displayed contrast. Newton's second law with the buoyancy force $-g\Delta\rho/\rho$ then gives (4.1), and stability is $N^2\gt 0$, which is the stated inequality. Setting $\nabla_\mu=0$ recovers (3.1). <span class="qed">∎</span></p>
+<p class="small">For a general equation of state the two composition coefficients $\delta \equiv -(\partial\ln\rho/\partial\ln T)_{P,\mu}$ and $\varphi \equiv (\partial\ln\rho/\partial\ln\mu)_{P,T}$ do not both equal $1$, and (4.1) carries a factor $\delta$ outside the bracket and $\varphi/\delta$ on $\nabla_\mu$ (Kippenhahn &amp; Weigert, section 6.1). Every gas this module treats is an ideal gas, so that generality is quoted and not used.</p>
 </div>
 
 <p>The sign is the physical content. A $\mu$ that increases inward means $\nabla_\mu \gt 0$, since $P$ also increases inward; a parcel carried up from such a layer keeps its heavy composition and arrives <em>denser</em> than its new surroundings, which stabilises the stratification even where $\nabla \gt \nabla_{\rm ad}$.</p>
@@ -384,9 +385,12 @@ with $\chi_{\rm H} = 13.5984340$ eV the ionisation energy of hydrogen.</div>
 
 $$ \frac{x^2}{1-x^2} \;=\; \frac{A(T)\,k_BT}{P} \;\equiv\; B(T,P), \qquad x \;=\; \sqrt{\frac{B}{1+B}}. \tag{5.2}$$
 
-<div class="prop"><b>Proposition 4 (the ionisation zone lowers $\nabla_{\rm ad}$).</b> For a pure-hydrogen ideal gas in Saha equilibrium, with $x$ from (5.2),
-$$ \nabla_{\rm ad} \;=\; \frac{2+x(1-x)\Phi}{5+x(1-x)\Phi^2}, \qquad \Phi \;\equiv\; \frac{5}{2}+\frac{\chi_{\rm H}}{k_BT}, \tag{5.3}$$
-(Kippenhahn &amp; Weigert, section 14.3). Then $\nabla_{\rm ad} \lt 2/5$ at every $0\lt x\lt 1$, with equality only at $x=0$ and $x=1$.</div>
+<p>For a partially ionised pure-hydrogen gas, the first law with the ionisation energy included in the internal energy gives
+$$ \nabla_{\rm ad} \;=\; \frac{2+x(1-x)\Phi}{5+x(1-x)\Phi^2}, \qquad \Phi \;\equiv\; \frac{5}{2}+\frac{\chi_{\rm H}}{k_BT}. \tag{5.3}$$</p>
+
+<span class="prov">(5.3) is quoted from Kippenhahn &amp; Weigert, section 14.3, and is <em>not</em> derived in this module. It is the only result in Module 6 taken on authority rather than proved. Its two limits are checkable without the derivation, and Proposition 4 checks them: at $x=0$ and $x=1$ it must return the monatomic $2/5$ of (2.5), and it does.</span>
+
+<div class="prop"><b>Proposition 4 (the ionisation zone lowers $\nabla_{\rm ad}$).</b> Assume (5.3), with $x$ from (5.2) and $\chi_{\rm H} \gt 0$. Then $\nabla_{\rm ad} \lt 2/5$ at every $0\lt x\lt 1$, and $\nabla_{\rm ad} = 2/5$ exactly at $x=0$ and $x=1$.</div>
 
 <div class="proof">
 <p>Write $q \equiv x(1-x)$, which is positive for $0\lt x\lt 1$ and zero at both ends. Comparing (5.3) with $2/5$ by cross-multiplication, and noting that both denominators are positive,</p>
@@ -483,7 +487,7 @@ since $\tfrac12\sqrt{1/8} = \sqrt{1/32}$. Holding $F$, $\rho$, $c_P$, $T$, $g$ a
 
 <p>The BS2005-AGS,OP table stops at $r = 0.98308\,R$, well below the photosphere, so the surface layer is computed from independent photospheric inputs: the IAU 2015 nominal effective temperature $T = 5772$ K, a gas pressure $P = 1.2\times10^{5}\ \mathrm{dyn\,cm^{-2}}$ at optical depth $\tau = 2/3$, and $\mu = 1.2250$ from the model's surface hydrogen and helium fractions, as Module 4 eq. (4.7) computes it. The gravity is the IAU nominal $g = GM_\odot/R_\odot^2 = 2.7420\times10^{4}\ \mathrm{cm\,s^{-2}}$, and $c_P = (5/2)k_B/(\mu m_u)$ is the monatomic ideal-gas value.</p>
 
-<span class="prov">All four photospheric inputs are inputs, not checked quantities, and two of them are model-dependent: $P$ at $\tau=2/3$ and $\mu$ both come from a solar atmosphere calculation. Module 3 used a round $\mu = 1.3$ for the same layer. One convention differs from Module 4: the gravity here uses the IAU nominal radius, as Module 3 does and as every other photospheric constant in this module does, while Module 4 used the model table's radius $6.9598\times10^{10}$ cm. The consequence is $H = 142.9$ km here against the $143.0$ km Module 4 prints. That $0.1$ km is the choice of radius and nothing else; the composition is the same in both.</span>
+<span class="prov">All four photospheric inputs are inputs, not checked quantities, and two of them are model-dependent: $P$ at $\tau = 2/3$ comes from a solar atmosphere calculation, and $\mu = 1.2250$ from the surface hydrogen and helium fractions of the BS2005-AGS,OP model, through Module 4 eq. (4.7). Module 3 used a round $\mu = 1.3$ for the same layer. One convention differs from Module 4: the gravity here uses the IAU nominal radius, as Module 3 does and as every other photospheric constant in this module does, while Module 4 used the model table's radius $6.9598\times10^{10}$ cm. The consequence is $H = 142.9$ km here against the $143.0$ km Module 4 prints. That $0.1$ km is the choice of radius and nothing else; the composition is the same in both.</span>
 
 <p>With those inputs, and requiring convection to carry the entire emergent flux $F = L_\odot/(4\pi R_\odot^2)$:</p>
 
@@ -501,7 +505,7 @@ since $\tfrac12\sqrt{1/8} = \sqrt{1/32}$. Holding $F$, $\rho$, $c_P$, $T$, $g$ a
 <tr><td>turnover $\ell/v_c$</td><td>$1.38$ min</td></tr>
 </table>
 
-<div class="keyresult"><b>The superadiabatic excess runs from $1.9\times10^{-6}$ at $0.90\,R$ to $0.61$ at the photosphere, a factor $3\times10^{5}$.</b> Convection is efficient in the deep envelope and inefficient at the surface, where a parcel is optically thin and radiates its heat excess away before it has travelled a mixing length.</div>
+<div class="keyresult"><b>The superadiabatic excess runs from $1.9\times10^{-6}$ at $0.90\,R$ to $0.61$ at the photosphere, a factor $3\times10^{5}$.</b> Fig. 2, lower panel, draws the whole range on one logarithmic axis. Convection is efficient in the deep envelope and inefficient at the surface, where a parcel is optically thin and radiates its heat excess away before it has travelled a mixing length.</div>
 
 <span class="warn"><b>Two premises are spent here, and the text says where.</b> (a) The photospheric excess and velocity above are <em>upper bounds</em> on what mixing-length theory predicts, because they were obtained by demanding that convection carry all of $L_\odot$ at $\tau = 2/3$. Radiation already carries most of that flux there. <a class="secref" href="#checka">§7</a> measures the split and finds convection carries $1.3$ per cent. (b) $v_c/c_s = 0.4271$, so premise (iii) of Proposition 1 — a slow parcel in instantaneous pressure balance — has failed at the photosphere by a wide margin. Both warnings are independent of any measurement, and both are consequences of the numbers in the table above.</span>
 
@@ -579,7 +583,7 @@ $$ v_c = 0.816\ \mathrm{km\,s^{-1}} \quad\text{against the measured } 0.65\ \mat
 <div class="def"><b>Definition 4 (Field's net loss function).</b> Let $\mathcal{L}(\rho,T)$ be the energy losses minus the energy gains of the gas, per gram per second, exclusive of thermal conduction (Field 1965, p. 532). Thermal equilibrium is $\mathcal{L} = 0$.
 <br><b>Notation.</b> The loss function is always written $\mathcal{L}$ in this module. The plain letter $L$ is the solar luminosity, as in <a class="secref" href="#mlt">§6</a>. The cooling coefficient below is always written $\Lambda(T)$ with its argument shown, to keep it distinct from Module 1's Coulomb logarithm $\ln\Lambda$, which reappears in Problem K3.</div>
 
-<div class="prop"><b>Proposition 6 (Field's criteria, 1965, eqs. 4a and 4b).</b> A parcel perturbed <em>at constant density</em> runs away if and only if
+<div class="prop"><b>Proposition 6 (Field's criteria, 1965, eqs. 4a and 4b).</b> Perturb a parcel in thermal equilibrium by $\delta T$, and assume that the perturbation evolves slowly compared with its own sound-crossing time, so that the parcel stays in mechanical equilibrium with its surroundings throughout. A parcel held instead <em>at constant density</em> runs away if and only if
 $$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!\rho} \lt 0 \qquad\text{(isochoric, Field 4a)}, \tag{8.1}$$
 and a parcel perturbed <em>at constant pressure</em> runs away if and only if
 $$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!P} \;=\; \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!\rho} - \frac{\rho_0}{T_0}\left(\frac{\partial\mathcal{L}}{\partial\rho}\right)_{\!T} \;\lt \;0 \qquad\text{(isobaric, Field 4b)}. \tag{8.2}$$
@@ -660,7 +664,7 @@ For $s\gt 1$, which is the stable cold branch of Table 4, this is positive and l
 
 $$ \frac{P_{\min}}{k_B} = 1597.5\ \mathrm{K\,cm^{-3}} \ \ (T = 184.0\ \mathrm{K},\ n = 8.682\ \mathrm{cm^{-3}}), \qquad \frac{P_{\max}}{k_B} = 5007.0\ \mathrm{K\,cm^{-3}}\ \ (T = 5039.4\ \mathrm{K},\ n = 0.994\ \mathrm{cm^{-3}}), $$
 
-<p>with geometric mean $2828.2\ \mathrm{K\,cm^{-3}}$ and width $P_{\max}/P_{\min} = 3.134$.</p>
+<p>with geometric mean $2828.2\ \mathrm{K\,cm^{-3}}$ and width $P_{\max}/P_{\min} = 3.134$. Fig. 3 draws the curve, with the unstable branch between those two points marked separately.</p>
 
 <figure>
 <!--FIG_PHASE-->
@@ -739,7 +743,7 @@ $$ \frac{P_{\min}}{k_B} = 1597.5\ \mathrm{K\,cm^{-3}} \ \ (T = 184.0\ \mathrm{K}
 
 <span class="warn"><b>A comparison that is refused.</b> Heiles &amp; Troland (2003) call $500$–$5000$ K the thermally unstable range for the warm neutral medium; the curve here gives $184$–$5039$ K. The <em>upper</em> edges match to $0.8$ per cent, and that is the edge that matters for their measurement, because a warm parcel becomes unstable by cooling down through it. The <em>lower</em> edges are not the same quantity: $500$ K is a round number they adopt to classify 21-cm absorption components, and $184$ K is where this particular cooling fit turns over. The two lower numbers are not reported here as a check.</span>
 
-<p>The window is narrow in pressure and wide in everything else: a factor $3.13$ in pressure, $8.7$ in density and $27.4$ in temperature (Problem C2). That asymmetry is what makes a pressure survey worth doing, and eight years after Wolfire et al. published the window, somebody measured the pressures.</p>
+<p>The window is narrow in pressure and wide in everything else: a factor $3.13$ in pressure, $8.7$ in density and $27.4$ in temperature (Problem C2). That asymmetry is what makes a pressure survey worth doing. Jenkins &amp; Tripp had already made one before Wolfire et al. published: their 2001 survey of C I fine-structure excitation gave a mean pressure of $2240\ \mathrm{K\,cm^{-3}}$, which Wolfire et al. compare their own window against in their section 8.1. In 2011 the same two authors measured again, on 89 sight lines and with revised C I atomic data, and that second measurement is what <a class="secref" href="#anchor">§10</a> puts against the window.</p>
 
 <h2 id="anchor">10. The anchor: Jenkins &amp; Tripp (2011) against the window</h2>
 
@@ -795,6 +799,8 @@ $$ \frac{P_{\min}}{k_B} = 1597.5\ \mathrm{K\,cm^{-3}} \ \ (T = 184.0\ \mathrm{K}
 </table>
 
 <div class="keyresult"><b>REFUTED.</b> A static two-phase medium allows $0$ per cent of the cold mass below $P_{\min}$. Jenkins &amp; Tripp's own fitted lognormal already gives $5.0$ per cent. The measurement gives $29$ per cent, an excess over the fit of $5.8$ times. The prediction fails twice over: the fit violates it, and the data violate the fit.</div>
+
+<p>Fig. 4 puts both halves of the anchor on one page: the windows and the measured distribution in its upper panel, and in its lower panel the quantity that carries the disagreement, the fraction of cold gas below $P_{\min}$.</p>
 
 <span class="prov">Both $29$ per cent and $23$ per cent are read off the observed histograms of their Fig. 9, not produced by a fit: integrating their eq. (3) lognormal below $P_{\min}$ gives $5.0$ per cent and their eq. (4) polynomial gives $17.4$ per cent, so no fit of theirs can produce $29$. The two numbers describe different populations — $29$ per cent is the complete sample and $23$ per cent the low-starlight subsample — and are not two estimates of one quantity.</span>
 
@@ -1027,7 +1033,8 @@ $\Lambda = 2.1\times10^{-27}\sqrt{10^{8}} = 2.1000\times10^{-23}\ \mathrm{erg\,c
 <tr><td>$\Delta\nabla$</td><td>the superadiabatic excess $\nabla-\nabla_{\rm ad}$</td><td>—</td><td>Proposition 5</td></tr>
 <tr><td>$H$</td><td>pressure scale height $P/(\rho g)$. Book-wide from this module</td><td>cm</td><td>Proposition 1</td></tr>
 <tr><td>$N$</td><td>Brunt–Väisälä (buoyancy) frequency. Module-local: Module 1's $N$ is a particle count and does not appear here</td><td>$\mathrm{rad\,s^{-1}}$</td><td>(3.1)</td></tr>
-<tr><td>$\delta$, $\varphi$</td><td>$-(\partial\ln\rho/\partial\ln T)_{P,\mu}$ and $(\partial\ln\rho/\partial\ln\mu)_{P,T}$; both $1$ for an ideal gas</td><td>—</td><td>Proposition 3</td></tr>
+<tr><td>$\Delta r$, $\Delta\rho$</td><td>the displacement and the density contrast it produces, written $\delta r$ in Proposition 1 and renamed in Proposition 3 so that no symbol is both a variation and a coefficient</td><td>cm, $\mathrm{g\,cm^{-3}}$</td><td>Propositions 1, 3</td></tr>
+<tr><td>$\delta$, $\varphi$</td><td>quoted, not used: $-(\partial\ln\rho/\partial\ln T)_{P,\mu}$ and $(\partial\ln\rho/\partial\ln\mu)_{P,T}$, both $1$ for an ideal gas. $\delta T$ in (6.2) is a temperature excess, not this $\delta$</td><td>—</td><td>Proposition 3</td></tr>
 <tr><td>$\gamma$</td><td>ratio of specific heats; $5/3$ monatomic, $7/5$ diatomic. Module 4's $\Gamma_1$ is the same quantity for a general gas</td><td>—</td><td>(2.5)</td></tr>
 <tr><td>$x$, $\chi_{\rm H}$, $\Phi$</td><td>hydrogen ionisation fraction; ionisation energy $13.5984340$ eV; the combination $5/2+\chi_{\rm H}/k_BT$</td><td>—, erg, —</td><td>Definition 2, (5.3)</td></tr>
 <tr><td>$\alpha$</td><td><b>module-local:</b> the mixing-length parameter $\ell/H$, here $2.0$. Module 5's $\alpha$, the length scale of the isothermal sphere, is not meant</td><td>—</td><td>Definition 3</td></tr>
