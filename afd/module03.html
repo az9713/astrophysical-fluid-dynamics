@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Module 3 — Hydrostatic Equilibrium | Astrophysical Fluid Dynamics</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags: 'ams' },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js" async></script>
+<style>
+  :root{
+    --bg:#0f172a; --box:#1e293b; --fg:#e2e8f0; --fg2:#cbd5e1;
+    --muted:#94a3b8; --accent:#fb923c; --accent2:#2dd4bf;
+    --rule:#334155; --rule2:#1e293b;
+  }
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{ max-width: 52rem; margin: 2.5rem auto; padding: 0 1.25rem 6rem;
+        font: 16px/1.7 Georgia, 'Times New Roman', serif; color:var(--fg);
+        background:var(--bg); counter-reset: fig; }
+  h1{ font-size: 1.9rem; line-height:1.2; margin:.2rem 0 .2rem; color:#f8fafc; }
+  h2{ font-size:1.35rem; margin:2.6rem 0 .6rem; border-bottom:2px solid var(--accent);
+      padding-bottom:.2rem; color:#f8fafc; }
+  h3{ font-size:1.08rem; margin:1.7rem 0 .4rem; color:var(--accent); }
+  h4{ font-size:1rem; margin:1.2rem 0 .3rem; color:var(--accent2); }
+  .sub{ color:var(--muted); font-style:italic; margin-top:0; }
+  a{ color:var(--accent2); }
+  code{ font-family: ui-monospace,'SFMono-Regular',Consolas,monospace; font-size:.92em;
+        background:#111c33; color:#e2e8f0; padding:.05rem .28rem; border-radius:3px;
+        border:1px solid var(--rule2); }
+  pre{ background:#0b1324; border:1px solid var(--rule); padding:.8rem 1rem; border-radius:5px;
+       overflow:auto; font-size:.84rem; line-height:1.45; color:#e2e8f0; }
+  pre code{ background:none; padding:0; border:none; }
+  .codewrap{ position:relative; }
+  .copybtn{ position:absolute; top:.5rem; right:.5rem; display:inline-flex; align-items:center; gap:.3rem;
+    font:600 .72rem/1 ui-monospace,Consolas,monospace; color:var(--muted);
+    background:var(--box); border:1px solid var(--rule); border-radius:5px; padding:.32rem .5rem; cursor:pointer; }
+  .copybtn:hover{ color:var(--accent); border-color:var(--accent); }
+  .copybtn.copied{ color:var(--accent2); border-color:var(--accent2); }
+  .copybtn svg{ width:13px; height:13px; }
+  .thm,.def,.lem,.prop{ background:var(--box); border-left:4px solid var(--accent);
+      padding:.6rem .9rem; margin:1rem 0; border-radius:0 4px 4px 0; }
+  .def{ border-left-color:var(--accent2); }
+  .thm b,.lem b,.prop b{ color:var(--accent); }
+  .def b{ color:var(--accent2); }
+  .proof{ border-left:2px solid var(--rule); padding-left:.9rem; margin:.8rem 0 1.2rem; color:var(--fg2); }
+  .proof::before{ content:"Proof."; font-style:italic; font-weight:bold; margin-right:.4rem; color:var(--muted); }
+  .qed{ float:right; color:var(--accent); }
+  table{ border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+  th,td{ border:1px solid var(--rule); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+  th{ background:var(--box); color:#f8fafc; }
+  figure{ margin:1.6rem 0; text-align:center; counter-increment: fig; }
+  figcaption{ color:var(--muted); font-size:.9rem; font-style:italic; margin-top:.4rem; text-align:left; }
+  figcaption::before{ content:"Fig. " counter(fig) ". "; font-weight:bold; font-style:normal; color:var(--accent); }
+  .proof figure,.thm figure,.lem figure,.prop figure{ margin:.2rem auto .7rem; max-width:480px;
+      background:var(--bg); border:1px solid var(--rule); border-radius:5px; padding:.4rem; }
+  .proof figcaption,.thm figcaption,.lem figcaption,.prop figcaption{ font-size:.8rem; line-height:1.45; }
+  .setupfig{ display:block; }
+  .setupfig text{ paint-order:stroke; stroke:#0f172a; stroke-width:3px; stroke-linejoin:round; }
+  .setupfig text.onfill{ stroke:none; }
+  figure svg text{ font-family:"STIX Two Math",STIXGeneral,"Times New Roman",Georgia,serif; fill:#cbd5e1; }
+  figure svg text.v{ font-style:italic; }
+  figure svg text.vb{ font-weight:bold; }
+  .secref{ color:var(--accent); text-decoration:none; border-bottom:1px dotted #9a6a3a; }
+  .secref:hover{ border-bottom:1px solid var(--accent); }
+  .toc{ background:var(--box); padding:.8rem 1.2rem; border-radius:6px; font-size:.95rem; border:1px solid var(--rule); }
+  .toc ul{ list-style:none; padding-left:.3rem; margin:.3rem 0; }
+  .toc a{ color:var(--accent2); text-decoration:none; }
+  .toc a:hover{ text-decoration:underline; }
+  .small{ font-size:.88rem; color:var(--muted); }
+  hr{ border:none; border-top:1px solid var(--rule); margin:2.5rem 0; }
+  .keyresult{ background:#2a2410; border:1px solid #6b5a1f; padding:.5rem .9rem; border-radius:4px; color:#fde68a; }
+  .prov{ display:block; border-left:3px solid #c08a00; padding:.15rem .7rem;
+         margin:.5rem 0; font-size:.94em; color:var(--muted); }
+  .prov::before{ content:"provenance — "; font-variant:small-caps; letter-spacing:.04em; color:#d4a017; }
+  .warn{ display:block; border-left:3px solid #f87171; background:#2a1414; padding:.4rem .8rem;
+         margin:.8rem 0; font-size:.95em; color:#fecaca; border-radius:0 4px 4px 0; }
+  .prob{ background:var(--box); border:1px solid var(--rule); border-radius:5px;
+         padding:.6rem .9rem; margin:.9rem 0; }
+  .prob b{ color:var(--accent); }
+  details.sol{ margin-top:.5rem; }
+  details.sol summary{ cursor:pointer; color:var(--accent2); font-size:.9rem; }
+  details.sol > div{ border-top:1px solid var(--rule); margin-top:.5rem; padding-top:.5rem; color:var(--fg2); }
+</style>
+</head>
+<body>
+
+<h1>Module 3 — Hydrostatic Equilibrium</h1>
+<p class="sub">Setting the velocity to zero in the Euler equation: the scale height, the polytropic atmosphere, the Lane–Emden equation, and a tabulated solar model in which one polytrope is confirmed, one is refuted, and the boundary between them disagrees with helioseismology.</p>
+
+<div class="toc">
+<b>Contents</b>
+<ul>
+<li><b>1.</b> <a href="#problem">The problem: a star that should fall in half an hour</a></li>
+<li><b>2.</b> <a href="#equation">The equation, and how well it must hold</a></li>
+<li><b>3.</b> <a href="#scaleheight">The plane-parallel atmosphere and the scale height</a></li>
+<li><b>4.</b> <a href="#troposphere">The polytropic atmosphere: the terrestrial half</a></li>
+<li><b>5.</b> <a href="#whypoly">Why a polytrope: two indices fixed in advance</a></li>
+<li><b>6.</b> <a href="#laneemden">The Lane–Emden equation</a></li>
+<li><b>7.</b> <a href="#properties">Properties of polytropes</a></li>
+<li><b>8.</b> <a href="#noclosure">What balance gives with no closure</a></li>
+<li><b>9.</b> <a href="#ssm">The tabulated solar model</a></li>
+<li><b>10.</b> <a href="#checks">The checks</a></li>
+<li><b>11.</b> <a href="#limits">What this model captures, and what it misses</a></li>
+<li><b>12.</b> <a href="#problems">Problems</a></li>
+<li><b>—</b> <a href="#notation">Notation</a> · <a href="#sources">Sources</a></li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="problem">1. The problem: a star that should fall in half an hour</h2>
+
+<p>Module 2 derived the Euler equation, its equation (7.3), and ended with a table which showed that viscosity may be dropped in the interiors of stars. This module applies that equation in the simplest case it has: a gas that does not move.</p>
+
+<p>The simplest case is also the most consequential one, and one number shows why. Take the Sun's mass $M_\odot$ and radius $R_\odot$, remove its pressure, and let it fall. A pressureless uniform sphere of mean density $\bar\rho$ collapses to its centre in the <em>free-fall time</em></p>
+
+$$ t_{\rm ff} \;=\; \sqrt{\frac{3\pi}{32\,G\bar\rho}}, \tag{1.1}$$
+
+<p>derived in Problem D3. Here $G$ is the gravitational constant and $\bar\rho = 3M/(4\pi R^3)$. For the Sun $\bar\rho = 1.4081\ \mathrm{g\,cm^{-3}}$, so $t_{\rm ff} = 1770.3\ \mathrm{s} = 29.5$ minutes.</p>
+
+<p>The Sun does not collapse in 29.5 minutes. Its age of $4.6$ Gyr is $8.2\times10^{13}$ free-fall times. Something holds it up, and that something is the pressure gradient. The question this module answers is how precisely the pressure gradient must balance gravity, and what structure that balance forces on a star.</p>
+
+<p>A second timescale sharpens the question. The <em>Kelvin–Helmholtz time</em></p>
+
+$$ t_{\rm KH} \;=\; \frac{GM^2}{RL} \tag{1.2}$$
+
+<p>is the time in which a star of luminosity $L$ would radiate its gravitational binding energy, to order of magnitude. For the Sun it is $9.9089\times10^{14}$ s, or $31.4$ Myr. If the Sun had no nuclear source it would contract on this timescale. It is $5.5973\times10^{11}$ times longer than the free-fall time. A star can change, but it changes on a timescale so much longer than the dynamical one that at each instant it is in balance.</p>
+
+<p>The module follows the three-part shape of this book. <a class="secref" href="#scaleheight">§3</a> and <a class="secref" href="#troposphere">§4</a> derive the terrestrial result: the scale height of the Earth's atmosphere and its lapse rate as a polytrope. <a class="secref" href="#whypoly">§5</a> to <a class="secref" href="#noclosure">§8</a> change the regime to a self-gravitating sphere and derive the Lane–Emden equation. <a class="secref" href="#ssm">§9</a> and <a class="secref" href="#checks">§10</a> check three predictions against a tabulated standard solar model and against a helioseismic measurement. One prediction is confirmed, one is refuted, and the third finds a 29.4σ disagreement between the model and the measured Sun.</p>
+
+<h2 id="equation">2. The equation, and how well it must hold</h2>
+
+<p>The Euler equation (7.3) of Module 2 is</p>
+
+$$ \rho\left[\frac{\partial\mathbf{u}}{\partial t} + (\mathbf{u}\cdot\nabla)\mathbf{u}\right] \;=\; -\nabla P + \rho\,\mathbf{g}, \tag{2.1}$$
+
+<p>in which $\rho$ is the mass density in $\mathrm{g\,cm^{-3}}$, $\mathbf{u}$ is the bulk velocity, $P$ is the scalar pressure in $\mathrm{dyn\,cm^{-2}}$ (Module 2 wrote it $p$), and $\mathbf{g}$ is the gravitational acceleration. This module writes the pressure as a capital $P$ because lower-case $p$ is not needed and $P$ is the stellar-structure convention.</p>
+
+<div class="def"><b>Definition 1 (hydrostatic equilibrium).</b> A fluid is in hydrostatic equilibrium when $\mathbf{u}=\mathbf{0}$ everywhere and at all times considered. Then (2.1) reduces to
+$$ \nabla P \;=\; \rho\,\mathbf{g}. \tag{2.2}$$</div>
+
+<p>Equation (2.2) says that the net force on each fluid element is zero: the pressure pushes up with the same force per unit volume with which gravity pulls down. For a spherically symmetric body, the gravitational acceleration at radius $r$ depends only on the mass inside that radius.</p>
+
+<div class="prop"><b>Proposition 1 (spherical hydrostatic equilibrium).</b> In a spherically symmetric, static, self-gravitating fluid with density $\rho(r)$, let
+$$ m(r) \;\equiv\; \int_0^r 4\pi r'^2\rho(r')\,dr' \tag{2.3}$$
+be the mass inside radius $r$. Then
+$$ \frac{dP}{dr} \;=\; -\,\frac{G\,m(r)\,\rho(r)}{r^2}, \qquad \frac{dm}{dr} \;=\; 4\pi r^2\rho. \tag{2.4}$$</div>
+
+<div class="proof">
+The second equation of (2.4) is the derivative of the definition (2.3). For the first, apply Gauss's law for gravity, $\nabla\cdot\mathbf{g} = -4\pi G\rho$, to a sphere of radius $r$. Spherical symmetry makes $\mathbf{g} = g_r(r)\,\hat{\mathbf{r}}$, so the divergence theorem gives $4\pi r^2 g_r = -4\pi G\,m(r)$, that is $g_r = -Gm(r)/r^2$. The mass outside $r$ contributes nothing, by the same theorem. Spherical symmetry also makes $\nabla P = (dP/dr)\,\hat{\mathbf{r}}$. Substituting both into (2.2) and taking the radial component gives the first equation of (2.4). <span class="qed">∎</span>
+</div>
+
+<p>Equation (2.4) is two equations in three unknown functions, $P$, $\rho$ and $m$. It is not closed. Some relation between $P$ and $\rho$ must be supplied, and the choice of that relation is the whole subject of <a class="secref" href="#whypoly">§5</a>. First we ask whether setting $\mathbf{u}=\mathbf{0}$ is justified at all.</p>
+
+<h3 id="howwell">2.1 How precisely the balance holds</h3>
+
+<p>A star that contracts is not static. The question is how large an imbalance between the two terms on the right of (2.1) a contraction requires. The answer is a ratio of timescales, and it is small enough to justify (2.2) by a very wide margin.</p>
+
+<div class="prop"><b>Proposition 2 (the imbalance required by a slow contraction).</b> Let a star of mass $M$ and radius $R$ contract so that its surface accelerates at $|\ddot R| = R/t^2$, which defines the contraction timescale $t$. Then the net force per unit mass at the surface, as a fraction of the surface gravity $GM/R^2$, is
+$$ \frac{|\ddot R|}{GM/R^2} \;=\; \frac{8}{\pi^2}\left(\frac{t_{\rm ff}}{t}\right)^{2}, \tag{2.5}$$
+with $t_{\rm ff}$ given by (1.1).</div>
+
+<div class="proof">
+The radial component of (2.1) for the surface element, which moves with the surface, is $\ddot R = -(1/\rho)\,dP/dr - GM/R^2$. The sum of the two force terms on the right is therefore $\ddot R$, and its size relative to the gravity term is $|\ddot R|/(GM/R^2) = (R/t^2)(R^2/GM) = R^3/(GMt^2)$. Now express $R^3/(GM)$ through the free-fall time. With $\bar\rho = 3M/(4\pi R^3)$, equation (1.1) gives
+$$ t_{\rm ff}^2 \;=\; \frac{3\pi}{32\,G}\cdot\frac{4\pi R^3}{3M} \;=\; \frac{\pi^2}{8}\,\frac{R^3}{GM}, $$
+so $R^3/(GM) = (8/\pi^2)\,t_{\rm ff}^2$. Substituting gives (2.5). <span class="qed">∎</span>
+</div>
+
+<p>Apply (2.5) to the fastest contraction the Sun could sustain from its own luminosity, $t = t_{\rm KH}$. The coefficient-free factor is $(t_{\rm ff}/t_{\rm KH})^2 = 3.192\times10^{-24}$; the exact coefficient $8/\pi^2 = 0.8106$ multiplies it.</p>
+
+<div class="keyresult"><b>Result.</b> If the Sun contracted on its Kelvin–Helmholtz time of $31.4$ Myr, gravity and the pressure gradient would still have to balance to $2.587\times10^{-24}$ of the surface gravity, by (2.5). On the nuclear timescale of $1.036\times10^{10}$ yr, on which the Sun actually evolves, the fraction is $2.379\times10^{-29}$.</div>
+
+<p>Note the direction of this argument. The small imbalance is not assumed in order to simplify the equations. It is forced by the observed luminosity: a star that departed from balance by more than about $10^{-24}$ would change on a timescale shorter than $t_{\rm KH}$, and it would have to radiate more power than the Sun does to do so. Setting $\mathbf{u}=\mathbf{0}$ in (2.1) discards a term of that relative size.</p>
+
+<span class="prov">The nuclear timescale uses $0.007\times0.1\,Mc^2/L$: $0.7$ per cent of rest mass released by hydrogen burning, applied to the inner $10$ per cent of the mass. Both factors are conventional order-of-magnitude inputs, not results of this book. The solar $GM$, $R$ and $L$ are the IAU 2015 nominal values. The mean density uses the radius printed in the tabulated solar model of <a class="secref" href="#ssm">§9</a>, $6.9598\times10^{10}$ cm, which differs from the IAU nominal $6.957\times10^{10}$ cm by $0.04$ per cent; the Kelvin–Helmholtz time uses the IAU value.</span>
+
+<p>A sound wave carries the information that restores balance. The isothermal sound speed at the Sun's centre, $\sqrt{P_c/\rho_c}$, is $394.1\ \mathrm{km\,s^{-1}}$, and the sound crossing time $R/c_s$ is $1765.1$ s, or $29.4$ minutes. It is the same as $t_{\rm ff}$ to within $0.3$ per cent. This is not a coincidence: in a star in balance, $c_s^2 \sim P/\rho \sim GM/R$, so the time for pressure to respond and the time for gravity to act are of the same order. Any departure from balance is corrected in about half an hour. Module 4 studies those sound waves directly.</p>
+
+<h2 id="scaleheight">3. The plane-parallel atmosphere and the scale height</h2>
+
+<p>Before the whole star, take a thin layer at its surface, or the atmosphere of a planet. If the layer is thin compared with the radius, the curvature of the surface and the change of $g$ with height can both be ignored.</p>
+
+<div class="def"><b>Definition 2 (plane-parallel layer).</b> A plane-parallel layer is a region in which all quantities depend only on a height coordinate $z$, measured upward, and the gravitational acceleration is uniform, $\mathbf{g} = -g\,\hat{\mathbf{z}}$ with $g\gt 0$ constant. Equation (2.2) then becomes
+$$ \frac{dP}{dz} \;=\; -\rho\, g. \tag{3.1}$$</div>
+
+<p>Equation (3.1) needs a second relation between $P$ and $\rho$. The ideal gas law supplies one when the temperature is known:</p>
+
+$$ P \;=\; \frac{\rho\, k_B T}{\mu\, m_u}, \tag{3.2}$$
+
+<p>in which $k_B$ is Boltzmann's constant, $T$ the temperature, $m_u$ the atomic mass unit, and $\mu$ the mean molecular weight, the mean mass per free particle in units of $m_u$. For dry air $\mu = 28.9647$; for a fully ionised gas of hydrogen mass fraction $X$, helium mass fraction $Y$ and heavy-element fraction $Z$, $\mu = 1/(2X + \tfrac{3}{4}Y + \tfrac{1}{2}Z)$.</p>
+
+<div class="prop"><b>Proposition 3 (isothermal scale height).</b> In a plane-parallel layer of ideal gas at uniform temperature $T$ and uniform $\mu$,
+$$ P(z) \;=\; P(0)\,e^{-z/H}, \qquad H \;\equiv\; \frac{k_B T}{\mu\, m_u\, g}. \tag{3.3}$$
+The density falls with the same exponential, $\rho(z) = \rho(0)\,e^{-z/H}$. The length $H$ is the <em>pressure scale height</em>.</div>
+
+<div class="proof">
+Solve (3.2) for the density, $\rho = \mu m_u P/(k_BT)$, and substitute into (3.1):
+$$ \frac{dP}{dz} \;=\; -\frac{\mu\, m_u\, g}{k_B T}\,P \;=\; -\frac{P}{H}. $$
+Because $T$, $\mu$ and $g$ are constant, $H$ is constant, and this linear equation has the solution $P(0)e^{-z/H}$. The density is $\mu m_u P/(k_BT)$ with a constant prefactor, so it has the same dependence on $z$. <span class="qed">∎</span>
+</div>
+
+<p>The scale height is the height over which the pressure falls by a factor $e$. It is the ratio of the thermal energy per particle, $k_BT$, to the work done lifting one particle of mass $\mu m_u$ through unit height. A hot gas or a light gas or a weak gravity gives a thick atmosphere.</p>
+
+<p>Proposition 3 was proved under the assumption that $g$ is uniform. For a layer on a body of radius $r$ and mass $M$, $g = GM/r^2$, and it changes by a fractional amount of about $2H/r$ across one scale height. The layer's area also changes by the same fraction. So the plane-parallel form is valid when</p>
+
+$$ H \;\ll\; r. \tag{3.4}$$
+
+<p>The table evaluates $H$ in four regimes, with $g = GM/r^2$ in the last two.</p>
+
+<table>
+<tr><th>System</th><th>Inputs</th><th>$H$</th><th>$H/r$</th></tr>
+<tr><td>Earth's atmosphere</td><td>$T=288.15$ K, $\mu=28.9647$, $g=980.665\ \mathrm{cm\,s^{-2}}$</td><td>$8.435$ km</td><td>$1.32\times10^{-3}$</td></tr>
+<tr><td>Solar photosphere</td><td>$T=5772$ K, $\mu=1.3$, $g=2.742\times10^{4}\ \mathrm{cm\,s^{-2}}$</td><td>$134.6$ km</td><td>$1.94\times10^{-4}$</td></tr>
+<tr><td>Molecular cloud</td><td>$T=10$ K, $\mu=2.33$, $M=10^{3}M_\odot$, $r=2$ pc, $g=3.48\times10^{-9}\ \mathrm{cm\,s^{-2}}$</td><td>$0.033$ pc</td><td>$0.017$</td></tr>
+<tr><td>Intracluster medium</td><td>$T=10^{8}$ K, $\mu=0.6$, $M=5\times10^{14}M_\odot$, $r=1$ Mpc, $g=6.97\times10^{-9}\ \mathrm{cm\,s^{-2}}$</td><td>$644$ kpc</td><td>$0.64$</td></tr>
+</table>
+
+<p>Read the last column. On the Earth, $H$ is $1/755$ of the planetary radius. At the solar photosphere it is $1/5167$ of the solar radius, so the solar atmosphere is thinner, relative to its star, than the Earth's atmosphere is relative to the Earth, and plane-parallel models of it are safe. The intracluster medium is the opposite case. Its scale height is $0.64$ of the radius at which it is evaluated, so $g$ changes by a large factor within one scale height and (3.3) does not describe it. Such a gas must be treated with the spherical equation (2.4), in which the scale height is not a constant.</p>
+
+<span class="prov">The photospheric temperature is the IAU 2015 nominal solar effective temperature, $5772$ K. The mean molecular weight $\mu=1.3$ is that of a neutral hydrogen–helium mixture and is an input of moderate trust: the photosphere is weakly ionised, and a different $\mu$ changes $H$ in inverse proportion. The molecular-cloud and cluster masses and radii are representative round values chosen to show the regime, not measurements of any named object; $\mu = 2.33$ is the usual value for molecular hydrogen with helium. The Earth values are the sea-level constants of the International Standard Atmosphere, applied here as if the whole atmosphere were at $288.15$ K, which <a class="secref" href="#troposphere">§4</a> corrects.</span>
+
+<h2 id="troposphere">4. The polytropic atmosphere: the terrestrial half</h2>
+
+<p>The Earth's lower atmosphere is not isothermal. Its temperature falls with height at a nearly constant rate, the <em>lapse rate</em>. This section shows that a constant lapse rate is exactly what a power-law relation between pressure and density produces, and so it introduces the closure that the rest of the module applies to stars.</p>
+
+<div class="def"><b>Definition 3 (polytrope).</b> A fluid is <em>polytropic</em> with polytropic index $n$ and polytropic constant $K$ if, throughout the region considered,
+$$ P \;=\; K\,\rho^{1+1/n}, \tag{4.1}$$
+with $K$ and $n$ constant, $0\le n\le\infty$. The case $n\to\infty$ is the isothermal gas; $n=0$ is a gas of uniform density.</div>
+
+<p>Definition 3 is a statement about the <em>structure</em> of a body, a relation between $P$ and $\rho$ at different places. It need not be a statement about how one parcel responds when it is compressed, although in <a class="secref" href="#whypoly">§5</a> it will be one.</p>
+
+<div class="prop"><b>Proposition 4 (lapse rate of a polytropic atmosphere).</b> In a plane-parallel layer of ideal gas (3.2) with uniform $\mu$ and $g$, obeying the polytropic relation (4.1), the temperature falls linearly with height at the rate
+$$ \left|\frac{dT}{dz}\right| \;=\; \frac{\mu\, m_u\, g}{k_B\,(n+1)}, \tag{4.2}$$
+and the pressure and temperature are related by
+$$ \frac{P}{P(0)} \;=\; \left(\frac{T}{T(0)}\right)^{n+1}. \tag{4.3}$$</div>
+
+<div class="proof">
+From (4.1), $\rho = (P/K)^{n/(n+1)}$. Substituting into the ideal gas law (3.2) and solving for $T$,
+$$ T \;=\; \frac{\mu m_u}{k_B}\,\frac{P}{\rho} \;=\; \frac{\mu m_u}{k_B}\,K^{n/(n+1)}\,P^{1/(n+1)}. $$
+The prefactor is constant, so $T\propto P^{1/(n+1)}$, which is (4.3). Differentiate the logarithm of this relation with respect to $z$:
+$$ \frac{1}{T}\frac{dT}{dz} \;=\; \frac{1}{n+1}\,\frac{1}{P}\frac{dP}{dz} \;=\; -\frac{1}{n+1}\,\frac{\rho\, g}{P}, $$
+using (3.1) in the second step. By (3.2), $\rho/P = \mu m_u/(k_BT)$, so the right-hand side is $-\mu m_u g/(k_B T(n+1))$. Multiplying by $T$ gives $dT/dz = -\mu m_u g/(k_B(n+1))$, a constant, which is (4.2). <span class="qed">∎</span>
+</div>
+
+<p>Inverting (4.2) turns a measured lapse rate $\Gamma \equiv |dT/dz|$ into a polytropic index, $n = \mu m_u g/(k_B\Gamma) - 1$. Two lapse rates of the Earth's atmosphere are worth converting.</p>
+
+<p>The first is the lapse rate of the International Standard Atmosphere (ISA), $6.5\ \mathrm{K\,km^{-1}}$ up to the tropopause at $11$ km. It gives $n = 4.2558$.</p>
+
+<p>The second is the <em>dry adiabatic</em> lapse rate, the rate at which a parcel of dry air cools when it rises without exchanging heat. An adiabatic ideal gas obeys $P\propto\rho^{\gamma}$, with $\gamma$ the ratio of specific heats, so comparison with (4.1) gives $1+1/n = \gamma$, or</p>
+
+$$ n \;=\; \frac{1}{\gamma-1}. \tag{4.4}$$
+
+<p>For the diatomic molecules of dry air, $\gamma = 7/5$ and $n = 2.5$. Substituting into (4.2) gives $\Gamma = g(\gamma-1)\mu m_u/(\gamma k_B) = g/c_p$, where $c_p = \gamma k_B/((\gamma-1)\mu m_u) = 1004.7\ \mathrm{J\,kg^{-1}\,K^{-1}}$ is the specific heat at constant pressure. Numerically $g/c_p = 9.761\ \mathrm{K\,km^{-1}}$, and inverting (4.2) returns $n = 2.5000$.</p>
+
+<figure>
+<!--FIG_ATMOS-->
+<svg class="setupfig" viewBox="0 0 760 400" width="100%" role="img" aria-label="Left panel: temperature against altitude from sea level to 11 kilometres for three hydrostatic atmospheres, an isothermal one, the International Standard Atmosphere, and a dry adiabat. Right panel: the pressure of the same three atmospheres divided by its sea-level value. The standard atmosphere lies between the other two, and the gap between it and the dry adiabat is the effect of latent heat.">
+<text x="219" y="28" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Temperature</text>
+<rect x="78" y="52" width="282" height="248" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="90.0" y1="300" x2="90.0" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="90.0" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">180</text>
+<line x1="138.2" y1="300" x2="138.2" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="138.2" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">200</text>
+<line x1="186.3" y1="300" x2="186.3" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="186.3" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">220</text>
+<line x1="234.5" y1="300" x2="234.5" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="234.5" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">240</text>
+<line x1="282.6" y1="300" x2="282.6" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="282.6" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">260</text>
+<line x1="330.8" y1="300" x2="330.8" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="330.8" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">280</text>
+<line x1="73" y1="300.0" x2="78" y2="300.0" stroke="#334155" stroke-width="1"/>
+<text x="69" y="304.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="73" y1="254.9" x2="78" y2="254.9" stroke="#334155" stroke-width="1"/>
+<text x="69" y="258.9" font-size="10.5" text-anchor="end" fill="#94a3b8">2</text>
+<line x1="73" y1="209.8" x2="78" y2="209.8" stroke="#334155" stroke-width="1"/>
+<text x="69" y="213.8" font-size="10.5" text-anchor="end" fill="#94a3b8">4</text>
+<line x1="73" y1="164.7" x2="78" y2="164.7" stroke="#334155" stroke-width="1"/>
+<text x="69" y="168.7" font-size="10.5" text-anchor="end" fill="#94a3b8">6</text>
+<line x1="73" y1="119.6" x2="78" y2="119.6" stroke="#334155" stroke-width="1"/>
+<text x="69" y="123.6" font-size="10.5" text-anchor="end" fill="#94a3b8">8</text>
+<line x1="73" y1="74.5" x2="78" y2="74.5" stroke="#334155" stroke-width="1"/>
+<text x="69" y="78.5" font-size="10.5" text-anchor="end" fill="#94a3b8">10</text>
+<text x="219" y="336" font-size="11.5" text-anchor="middle" fill="#cbd5e1">T / K</text>
+<text x="32" y="176" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 32 176)">altitude z / km</text>
+<path d="M 350.4,300.0 L 350.4,298.8 L 350.4,297.5 L 350.4,296.3 L 350.4,295.0 L 350.4,293.8 L 350.4,292.5 L 350.4,291.3 L 350.4,290.0 L 350.4,288.8 L 350.4,287.5 L 350.4,286.3 L 350.4,285.0 L 350.4,283.8 L 350.4,282.6 L 350.4,281.3 L 350.4,280.1 L 350.4,278.8 L 350.4,277.6 L 350.4,276.3 L 350.4,275.1 L 350.4,273.8 L 350.4,272.6 L 350.4,271.3 L 350.4,270.1 L 350.4,268.8 L 350.4,267.6 L 350.4,266.4 L 350.4,265.1 L 350.4,263.9 L 350.4,262.6 L 350.4,261.4 L 350.4,260.1 L 350.4,258.9 L 350.4,257.6 L 350.4,256.4 L 350.4,255.1 L 350.4,253.9 L 350.4,252.6 L 350.4,251.4 L 350.4,250.2 L 350.4,248.9 L 350.4,247.7 L 350.4,246.4 L 350.4,245.2 L 350.4,243.9 L 350.4,242.7 L 350.4,241.4 L 350.4,240.2 L 350.4,238.9 L 350.4,237.7 L 350.4,236.4 L 350.4,235.2 L 350.4,233.9 L 350.4,232.7 L 350.4,231.5 L 350.4,230.2 L 350.4,229.0 L 350.4,227.7 L 350.4,226.5 L 350.4,225.2 L 350.4,224.0 L 350.4,222.7 L 350.4,221.5 L 350.4,220.2 L 350.4,219.0 L 350.4,217.7 L 350.4,216.5 L 350.4,215.3 L 350.4,214.0 L 350.4,212.8 L 350.4,211.5 L 350.4,210.3 L 350.4,209.0 L 350.4,207.8 L 350.4,206.5 L 350.4,205.3 L 350.4,204.0 L 350.4,202.8 L 350.4,201.5 L 350.4,200.3 L 350.4,199.1 L 350.4,197.8 L 350.4,196.6 L 350.4,195.3 L 350.4,194.1 L 350.4,192.8 L 350.4,191.6 L 350.4,190.3 L 350.4,189.1 L 350.4,187.8 L 350.4,186.6 L 350.4,185.3 L 350.4,184.1 L 350.4,182.9 L 350.4,181.6 L 350.4,180.4 L 350.4,179.1 L 350.4,177.9 L 350.4,176.6 L 350.4,175.4 L 350.4,174.1 L 350.4,172.9 L 350.4,171.6 L 350.4,170.4 L 350.4,169.1 L 350.4,167.9 L 350.4,166.7 L 350.4,165.4 L 350.4,164.2 L 350.4,162.9 L 350.4,161.7 L 350.4,160.4 L 350.4,159.2 L 350.4,157.9 L 350.4,156.7 L 350.4,155.4 L 350.4,154.2 L 350.4,152.9 L 350.4,151.7 L 350.4,150.5 L 350.4,149.2 L 350.4,148.0 L 350.4,146.7 L 350.4,145.5 L 350.4,144.2 L 350.4,143.0 L 350.4,141.7 L 350.4,140.5 L 350.4,139.2 L 350.4,138.0 L 350.4,136.7 L 350.4,135.5 L 350.4,134.3 L 350.4,133.0 L 350.4,131.8 L 350.4,130.5 L 350.4,129.3 L 350.4,128.0 L 350.4,126.8 L 350.4,125.5 L 350.4,124.3 L 350.4,123.0 L 350.4,121.8 L 350.4,120.5 L 350.4,119.3 L 350.4,118.1 L 350.4,116.8 L 350.4,115.6 L 350.4,114.3 L 350.4,113.1 L 350.4,111.8 L 350.4,110.6 L 350.4,109.3 L 350.4,108.1 L 350.4,106.8 L 350.4,105.6 L 350.4,104.3 L 350.4,103.1 L 350.4,101.8 L 350.4,100.6 L 350.4,99.4 L 350.4,98.1 L 350.4,96.9 L 350.4,95.6 L 350.4,94.4 L 350.4,93.1 L 350.4,91.9 L 350.4,90.6 L 350.4,89.4 L 350.4,88.1 L 350.4,86.9 L 350.4,85.6 L 350.4,84.4 L 350.4,83.2 L 350.4,81.9 L 350.4,80.7 L 350.4,79.4 L 350.4,78.2 L 350.4,76.9 L 350.4,75.7 L 350.4,74.4 L 350.4,73.2 L 350.4,71.9 L 350.4,70.7 L 350.4,69.4 L 350.4,68.2 L 350.4,67.0 L 350.4,65.7 L 350.4,64.5 L 350.4,63.2 L 350.4,62.0 L 350.4,60.7 L 350.4,59.5 L 350.4,58.2 L 350.4,57.0 L 350.4,55.7 L 350.4,54.5 L 350.4,53.2 L 350.4,52.0" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="4 3"/>
+<path d="M 350.4,300.0 L 349.1,298.8 L 347.8,297.5 L 346.5,296.3 L 345.2,295.0 L 343.9,293.8 L 342.6,292.5 L 341.3,291.3 L 340.0,290.0 L 338.7,288.8 L 337.4,287.5 L 336.1,286.3 L 334.8,285.0 L 333.5,283.8 L 332.2,282.6 L 330.9,281.3 L 329.6,280.1 L 328.3,278.8 L 327.0,277.6 L 325.7,276.3 L 324.4,275.1 L 323.1,273.8 L 321.8,272.6 L 320.5,271.3 L 319.2,270.1 L 317.9,268.8 L 316.6,267.6 L 315.3,266.4 L 314.0,265.1 L 312.7,263.9 L 311.4,262.6 L 310.1,261.4 L 308.8,260.1 L 307.5,258.9 L 306.2,257.6 L 304.9,256.4 L 303.6,255.1 L 302.3,253.9 L 301.0,252.6 L 299.7,251.4 L 298.4,250.2 L 297.1,248.9 L 295.8,247.7 L 294.5,246.4 L 293.2,245.2 L 291.9,243.9 L 290.6,242.7 L 289.3,241.4 L 288.0,240.2 L 286.7,238.9 L 285.4,237.7 L 284.1,236.4 L 282.8,235.2 L 281.5,233.9 L 280.2,232.7 L 278.9,231.5 L 277.6,230.2 L 276.3,229.0 L 275.0,227.7 L 273.7,226.5 L 272.4,225.2 L 271.1,224.0 L 269.8,222.7 L 268.5,221.5 L 267.2,220.2 L 266.0,219.0 L 264.7,217.7 L 263.4,216.5 L 262.1,215.3 L 260.8,214.0 L 259.5,212.8 L 258.2,211.5 L 256.9,210.3 L 255.6,209.0 L 254.3,207.8 L 253.0,206.5 L 251.7,205.3 L 250.4,204.0 L 249.1,202.8 L 247.8,201.5 L 246.5,200.3 L 245.2,199.1 L 243.9,197.8 L 242.6,196.6 L 241.3,195.3 L 240.0,194.1 L 238.7,192.8 L 237.4,191.6 L 236.1,190.3 L 234.8,189.1 L 233.5,187.8 L 232.2,186.6 L 230.9,185.3 L 229.6,184.1 L 228.3,182.9 L 227.0,181.6 L 225.7,180.4 L 224.4,179.1 L 223.1,177.9 L 221.8,176.6 L 220.5,175.4 L 219.2,174.1 L 217.9,172.9 L 216.6,171.6 L 215.3,170.4 L 214.0,169.1 L 212.7,167.9 L 211.4,166.7 L 210.1,165.4 L 208.8,164.2 L 207.5,162.9 L 206.2,161.7 L 204.9,160.4 L 203.6,159.2 L 202.3,157.9 L 201.0,156.7 L 199.7,155.4 L 198.4,154.2 L 197.1,152.9 L 195.8,151.7 L 194.5,150.5 L 193.2,149.2 L 191.9,148.0 L 190.6,146.7 L 189.3,145.5 L 188.0,144.2 L 186.7,143.0 L 185.4,141.7 L 184.1,140.5 L 182.8,139.2 L 181.5,138.0 L 180.2,136.7 L 178.9,135.5 L 177.6,134.3 L 176.3,133.0 L 175.0,131.8 L 173.7,130.5 L 172.4,129.3 L 171.1,128.0 L 169.8,126.8 L 168.5,125.5 L 167.2,124.3 L 165.9,123.0 L 164.6,121.8 L 163.3,120.5 L 162.0,119.3 L 160.8,118.1 L 159.5,116.8 L 158.2,115.6 L 156.9,114.3 L 155.6,113.1 L 154.3,111.8 L 153.0,110.6 L 151.7,109.3 L 150.4,108.1 L 149.1,106.8 L 147.8,105.6 L 146.5,104.3 L 145.2,103.1 L 143.9,101.8 L 142.6,100.6 L 141.3,99.4 L 140.0,98.1 L 138.7,96.9 L 137.4,95.6 L 136.1,94.4 L 134.8,93.1 L 133.5,91.9 L 132.2,90.6 L 130.9,89.4 L 129.6,88.1 L 128.3,86.9 L 127.0,85.6 L 125.7,84.4 L 124.4,83.2 L 123.1,81.9 L 121.8,80.7 L 120.5,79.4 L 119.2,78.2 L 117.9,76.9 L 116.6,75.7 L 115.3,74.4 L 114.0,73.2 L 112.7,71.9 L 111.4,70.7 L 110.1,69.4 L 108.8,68.2 L 107.5,67.0 L 106.2,65.7 L 104.9,64.5 L 103.6,63.2 L 102.3,62.0 L 101.0,60.7 L 99.7,59.5 L 98.4,58.2 L 97.1,57.0 L 95.8,55.7 L 94.5,54.5 L 93.2,53.2 L 91.9,52.0" fill="none" stroke="#2dd4bf" stroke-width="2.2"/>
+<path d="M 350.4,300.0 L 349.5,298.8 L 348.6,297.5 L 347.8,296.3 L 346.9,295.0 L 346.0,293.8 L 345.2,292.5 L 344.3,291.3 L 343.5,290.0 L 342.6,288.8 L 341.7,287.5 L 340.9,286.3 L 340.0,285.0 L 339.1,283.8 L 338.3,282.6 L 337.4,281.3 L 336.5,280.1 L 335.7,278.8 L 334.8,277.6 L 333.9,276.3 L 333.1,275.1 L 332.2,273.8 L 331.3,272.6 L 330.5,271.3 L 329.6,270.1 L 328.7,268.8 L 327.9,267.6 L 327.0,266.4 L 326.2,265.1 L 325.3,263.9 L 324.4,262.6 L 323.6,261.4 L 322.7,260.1 L 321.8,258.9 L 321.0,257.6 L 320.1,256.4 L 319.2,255.1 L 318.4,253.9 L 317.5,252.6 L 316.6,251.4 L 315.8,250.2 L 314.9,248.9 L 314.0,247.7 L 313.2,246.4 L 312.3,245.2 L 311.5,243.9 L 310.6,242.7 L 309.7,241.4 L 308.9,240.2 L 308.0,238.9 L 307.1,237.7 L 306.3,236.4 L 305.4,235.2 L 304.5,233.9 L 303.7,232.7 L 302.8,231.5 L 301.9,230.2 L 301.1,229.0 L 300.2,227.7 L 299.3,226.5 L 298.5,225.2 L 297.6,224.0 L 296.7,222.7 L 295.9,221.5 L 295.0,220.2 L 294.2,219.0 L 293.3,217.7 L 292.4,216.5 L 291.6,215.3 L 290.7,214.0 L 289.8,212.8 L 289.0,211.5 L 288.1,210.3 L 287.2,209.0 L 286.4,207.8 L 285.5,206.5 L 284.6,205.3 L 283.8,204.0 L 282.9,202.8 L 282.0,201.5 L 281.2,200.3 L 280.3,199.1 L 279.5,197.8 L 278.6,196.6 L 277.7,195.3 L 276.9,194.1 L 276.0,192.8 L 275.1,191.6 L 274.3,190.3 L 273.4,189.1 L 272.5,187.8 L 271.7,186.6 L 270.8,185.3 L 269.9,184.1 L 269.1,182.9 L 268.2,181.6 L 267.3,180.4 L 266.5,179.1 L 265.6,177.9 L 264.7,176.6 L 263.9,175.4 L 263.0,174.1 L 262.2,172.9 L 261.3,171.6 L 260.4,170.4 L 259.6,169.1 L 258.7,167.9 L 257.8,166.7 L 257.0,165.4 L 256.1,164.2 L 255.2,162.9 L 254.4,161.7 L 253.5,160.4 L 252.6,159.2 L 251.8,157.9 L 250.9,156.7 L 250.0,155.4 L 249.2,154.2 L 248.3,152.9 L 247.4,151.7 L 246.6,150.5 L 245.7,149.2 L 244.9,148.0 L 244.0,146.7 L 243.1,145.5 L 242.3,144.2 L 241.4,143.0 L 240.5,141.7 L 239.7,140.5 L 238.8,139.2 L 237.9,138.0 L 237.1,136.7 L 236.2,135.5 L 235.3,134.3 L 234.5,133.0 L 233.6,131.8 L 232.7,130.5 L 231.9,129.3 L 231.0,128.0 L 230.2,126.8 L 229.3,125.5 L 228.4,124.3 L 227.6,123.0 L 226.7,121.8 L 225.8,120.5 L 225.0,119.3 L 224.1,118.1 L 223.2,116.8 L 222.4,115.6 L 221.5,114.3 L 220.6,113.1 L 219.8,111.8 L 218.9,110.6 L 218.0,109.3 L 217.2,108.1 L 216.3,106.8 L 215.4,105.6 L 214.6,104.3 L 213.7,103.1 L 212.9,101.8 L 212.0,100.6 L 211.1,99.4 L 210.3,98.1 L 209.4,96.9 L 208.5,95.6 L 207.7,94.4 L 206.8,93.1 L 205.9,91.9 L 205.1,90.6 L 204.2,89.4 L 203.3,88.1 L 202.5,86.9 L 201.6,85.6 L 200.7,84.4 L 199.9,83.2 L 199.0,81.9 L 198.2,80.7 L 197.3,79.4 L 196.4,78.2 L 195.6,76.9 L 194.7,75.7 L 193.8,74.4 L 193.0,73.2 L 192.1,71.9 L 191.2,70.7 L 190.4,69.4 L 189.5,68.2 L 188.6,67.0 L 187.8,65.7 L 186.9,64.5 L 186.0,63.2 L 185.2,62.0 L 184.3,60.7 L 183.4,59.5 L 182.6,58.2 L 181.7,57.0 L 180.9,55.7 L 180.0,54.5 L 179.1,53.2 L 178.3,52.0" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<line x1="91.9" y1="53.0" x2="178.3" y2="53.0" stroke="#facc15" stroke-width="2.5"/>
+<text x="135.1" y="70.0" font-size="10.5" text-anchor="middle" fill="#facc15">36 K</text>
+<line x1="88" y1="254" x2="114" y2="254" stroke="#94a3b8" stroke-width="2.4" stroke-dasharray="4 3"/>
+<text x="122" y="258" font-size="10.5" fill="#94a3b8">isothermal, n → ∞</text>
+<line x1="88" y1="270" x2="114" y2="270" stroke="#fb923c" stroke-width="2.4"/>
+<text x="122" y="274" font-size="10.5" fill="#fb923c">standard atmosphere, n = 4.26</text>
+<line x1="88" y1="286" x2="114" y2="286" stroke="#2dd4bf" stroke-width="2.4"/>
+<text x="122" y="290" font-size="10.5" fill="#2dd4bf">dry adiabat, n = 2.50</text>
+<text x="593" y="28" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Pressure</text>
+<rect x="452" y="52" width="282" height="248" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="468.6" y1="300" x2="468.6" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="468.6" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.2</text>
+<line x1="534.9" y1="300" x2="534.9" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="534.9" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.4</text>
+<line x1="601.3" y1="300" x2="601.3" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="601.3" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.6</text>
+<line x1="667.6" y1="300" x2="667.6" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="667.6" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.8</text>
+<line x1="734.0" y1="300" x2="734.0" y2="305" stroke="#334155" stroke-width="1"/>
+<text x="734.0" y="318" font-size="10.5" text-anchor="middle" fill="#94a3b8">1.0</text>
+<line x1="447" y1="300.0" x2="452" y2="300.0" stroke="#334155" stroke-width="1"/>
+<text x="443" y="304.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="447" y1="254.9" x2="452" y2="254.9" stroke="#334155" stroke-width="1"/>
+<text x="443" y="258.9" font-size="10.5" text-anchor="end" fill="#94a3b8">2</text>
+<line x1="447" y1="209.8" x2="452" y2="209.8" stroke="#334155" stroke-width="1"/>
+<text x="443" y="213.8" font-size="10.5" text-anchor="end" fill="#94a3b8">4</text>
+<line x1="447" y1="164.7" x2="452" y2="164.7" stroke="#334155" stroke-width="1"/>
+<text x="443" y="168.7" font-size="10.5" text-anchor="end" fill="#94a3b8">6</text>
+<line x1="447" y1="119.6" x2="452" y2="119.6" stroke="#334155" stroke-width="1"/>
+<text x="443" y="123.6" font-size="10.5" text-anchor="end" fill="#94a3b8">8</text>
+<line x1="447" y1="74.5" x2="452" y2="74.5" stroke="#334155" stroke-width="1"/>
+<text x="443" y="78.5" font-size="10.5" text-anchor="end" fill="#94a3b8">10</text>
+<text x="593" y="336" font-size="11.5" text-anchor="middle" fill="#cbd5e1">P / P(0)</text>
+<path d="M 734.0,300.0 L 731.8,298.8 L 729.7,297.5 L 727.5,296.3 L 725.4,295.0 L 723.3,293.8 L 721.2,292.5 L 719.1,291.3 L 717.1,290.0 L 715.0,288.8 L 713.0,287.5 L 710.9,286.3 L 708.9,285.0 L 706.9,283.8 L 704.9,282.6 L 702.9,281.3 L 701.0,280.1 L 699.0,278.8 L 697.1,277.6 L 695.2,276.3 L 693.2,275.1 L 691.3,273.8 L 689.5,272.6 L 687.6,271.3 L 685.7,270.1 L 683.9,268.8 L 682.0,267.6 L 680.2,266.4 L 678.4,265.1 L 676.6,263.9 L 674.8,262.6 L 673.0,261.4 L 671.2,260.1 L 669.5,258.9 L 667.7,257.6 L 666.0,256.4 L 664.3,255.1 L 662.6,253.9 L 660.9,252.6 L 659.2,251.4 L 657.5,250.2 L 655.8,248.9 L 654.2,247.7 L 652.5,246.4 L 650.9,245.2 L 649.3,243.9 L 647.7,242.7 L 646.1,241.4 L 644.5,240.2 L 642.9,238.9 L 641.3,237.7 L 639.7,236.4 L 638.2,235.2 L 636.6,233.9 L 635.1,232.7 L 633.6,231.5 L 632.1,230.2 L 630.6,229.0 L 629.1,227.7 L 627.6,226.5 L 626.1,225.2 L 624.7,224.0 L 623.2,222.7 L 621.8,221.5 L 620.3,220.2 L 618.9,219.0 L 617.5,217.7 L 616.1,216.5 L 614.7,215.3 L 613.3,214.0 L 611.9,212.8 L 610.6,211.5 L 609.2,210.3 L 607.9,209.0 L 606.5,207.8 L 605.2,206.5 L 603.8,205.3 L 602.5,204.0 L 601.2,202.8 L 599.9,201.5 L 598.6,200.3 L 597.4,199.1 L 596.1,197.8 L 594.8,196.6 L 593.6,195.3 L 592.3,194.1 L 591.1,192.8 L 589.8,191.6 L 588.6,190.3 L 587.4,189.1 L 586.2,187.8 L 585.0,186.6 L 583.8,185.3 L 582.6,184.1 L 581.4,182.9 L 580.2,181.6 L 579.1,180.4 L 577.9,179.1 L 576.8,177.9 L 575.6,176.6 L 574.5,175.4 L 573.4,174.1 L 572.3,172.9 L 571.2,171.6 L 570.0,170.4 L 569.0,169.1 L 567.9,167.9 L 566.8,166.7 L 565.7,165.4 L 564.6,164.2 L 563.6,162.9 L 562.5,161.7 L 561.5,160.4 L 560.4,159.2 L 559.4,157.9 L 558.4,156.7 L 557.4,155.4 L 556.3,154.2 L 555.3,152.9 L 554.3,151.7 L 553.3,150.5 L 552.4,149.2 L 551.4,148.0 L 550.4,146.7 L 549.4,145.5 L 548.5,144.2 L 547.5,143.0 L 546.6,141.7 L 545.6,140.5 L 544.7,139.2 L 543.8,138.0 L 542.8,136.7 L 541.9,135.5 L 541.0,134.3 L 540.1,133.0 L 539.2,131.8 L 538.3,130.5 L 537.4,129.3 L 536.5,128.0 L 535.7,126.8 L 534.8,125.5 L 533.9,124.3 L 533.1,123.0 L 532.2,121.8 L 531.4,120.5 L 530.5,119.3 L 529.7,118.1 L 528.8,116.8 L 528.0,115.6 L 527.2,114.3 L 526.4,113.1 L 525.6,111.8 L 524.8,110.6 L 524.0,109.3 L 523.2,108.1 L 522.4,106.8 L 521.6,105.6 L 520.8,104.3 L 520.0,103.1 L 519.3,101.8 L 518.5,100.6 L 517.7,99.4 L 517.0,98.1 L 516.2,96.9 L 515.5,95.6 L 514.8,94.4 L 514.0,93.1 L 513.3,91.9 L 512.6,90.6 L 511.8,89.4 L 511.1,88.1 L 510.4,86.9 L 509.7,85.6 L 509.0,84.4 L 508.3,83.2 L 507.6,81.9 L 506.9,80.7 L 506.2,79.4 L 505.6,78.2 L 504.9,76.9 L 504.2,75.7 L 503.6,74.4 L 502.9,73.2 L 502.2,71.9 L 501.6,70.7 L 500.9,69.4 L 500.3,68.2 L 499.6,67.0 L 499.0,65.7 L 498.4,64.5 L 497.7,63.2 L 497.1,62.0 L 496.5,60.7 L 495.9,59.5 L 495.3,58.2 L 494.7,57.0 L 494.1,55.7 L 493.5,54.5 L 492.9,53.2 L 492.3,52.0" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="4 3"/>
+<path d="M 734.0,300.0 L 731.8,298.8 L 729.7,297.5 L 727.5,296.3 L 725.4,295.0 L 723.3,293.8 L 721.1,292.5 L 719.0,291.3 L 716.9,290.0 L 714.8,288.8 L 712.8,287.5 L 710.7,286.3 L 708.6,285.0 L 706.6,283.8 L 704.5,282.6 L 702.5,281.3 L 700.5,280.1 L 698.5,278.8 L 696.5,277.6 L 694.5,276.3 L 692.5,275.1 L 690.5,273.8 L 688.6,272.6 L 686.6,271.3 L 684.7,270.1 L 682.8,268.8 L 680.8,267.6 L 678.9,266.4 L 677.0,265.1 L 675.1,263.9 L 673.2,262.6 L 671.3,261.4 L 669.5,260.1 L 667.6,258.9 L 665.8,257.6 L 663.9,256.4 L 662.1,255.1 L 660.3,253.9 L 658.5,252.6 L 656.7,251.4 L 654.9,250.2 L 653.1,248.9 L 651.3,247.7 L 649.5,246.4 L 647.8,245.2 L 646.0,243.9 L 644.3,242.7 L 642.6,241.4 L 640.8,240.2 L 639.1,238.9 L 637.4,237.7 L 635.7,236.4 L 634.0,235.2 L 632.4,233.9 L 630.7,232.7 L 629.0,231.5 L 627.4,230.2 L 625.7,229.0 L 624.1,227.7 L 622.5,226.5 L 620.9,225.2 L 619.2,224.0 L 617.6,222.7 L 616.0,221.5 L 614.5,220.2 L 612.9,219.0 L 611.3,217.7 L 609.8,216.5 L 608.2,215.3 L 606.7,214.0 L 605.1,212.8 L 603.6,211.5 L 602.1,210.3 L 600.6,209.0 L 599.1,207.8 L 597.6,206.5 L 596.1,205.3 L 594.6,204.0 L 593.2,202.8 L 591.7,201.5 L 590.2,200.3 L 588.8,199.1 L 587.4,197.8 L 585.9,196.6 L 584.5,195.3 L 583.1,194.1 L 581.7,192.8 L 580.3,191.6 L 578.9,190.3 L 577.5,189.1 L 576.1,187.8 L 574.8,186.6 L 573.4,185.3 L 572.1,184.1 L 570.7,182.9 L 569.4,181.6 L 568.1,180.4 L 566.7,179.1 L 565.4,177.9 L 564.1,176.6 L 562.8,175.4 L 561.5,174.1 L 560.2,172.9 L 559.0,171.6 L 557.7,170.4 L 556.4,169.1 L 555.2,167.9 L 553.9,166.7 L 552.7,165.4 L 551.5,164.2 L 550.2,162.9 L 549.0,161.7 L 547.8,160.4 L 546.6,159.2 L 545.4,157.9 L 544.2,156.7 L 543.0,155.4 L 541.9,154.2 L 540.7,152.9 L 539.5,151.7 L 538.4,150.5 L 537.2,149.2 L 536.1,148.0 L 535.0,146.7 L 533.8,145.5 L 532.7,144.2 L 531.6,143.0 L 530.5,141.7 L 529.4,140.5 L 528.3,139.2 L 527.2,138.0 L 526.1,136.7 L 525.1,135.5 L 524.0,134.3 L 522.9,133.0 L 521.9,131.8 L 520.8,130.5 L 519.8,129.3 L 518.8,128.0 L 517.7,126.8 L 516.7,125.5 L 515.7,124.3 L 514.7,123.0 L 513.7,121.8 L 512.7,120.5 L 511.7,119.3 L 510.7,118.1 L 509.8,116.8 L 508.8,115.6 L 507.8,114.3 L 506.9,113.1 L 505.9,111.8 L 505.0,110.6 L 504.0,109.3 L 503.1,108.1 L 502.2,106.8 L 501.3,105.6 L 500.3,104.3 L 499.4,103.1 L 498.5,101.8 L 497.6,100.6 L 496.7,99.4 L 495.9,98.1 L 495.0,96.9 L 494.1,95.6 L 493.2,94.4 L 492.4,93.1 L 491.5,91.9 L 490.7,90.6 L 489.8,89.4 L 489.0,88.1 L 488.2,86.9 L 487.3,85.6 L 486.5,84.4 L 485.7,83.2 L 484.9,81.9 L 484.1,80.7 L 483.3,79.4 L 482.5,78.2 L 481.7,76.9 L 480.9,75.7 L 480.2,74.4 L 479.4,73.2 L 478.6,71.9 L 477.9,70.7 L 477.1,69.4 L 476.4,68.2 L 475.6,67.0 L 474.9,65.7 L 474.2,64.5 L 473.4,63.2 L 472.7,62.0 L 472.0,60.7 L 471.3,59.5 L 470.6,58.2 L 469.9,57.0 L 469.2,55.7 L 468.5,54.5 L 467.8,53.2 L 467.1,52.0" fill="none" stroke="#2dd4bf" stroke-width="2.2"/>
+<path d="M 734.0,300.0 L 731.8,298.8 L 729.7,297.5 L 727.5,296.3 L 725.4,295.0 L 723.3,293.8 L 721.2,292.5 L 719.1,291.3 L 717.0,290.0 L 714.9,288.8 L 712.8,287.5 L 710.8,286.3 L 708.7,285.0 L 706.7,283.8 L 704.7,282.6 L 702.7,281.3 L 700.7,280.1 L 698.7,278.8 L 696.7,277.6 L 694.7,276.3 L 692.8,275.1 L 690.8,273.8 L 688.9,272.6 L 687.0,271.3 L 685.0,270.1 L 683.1,268.8 L 681.2,267.6 L 679.4,266.4 L 677.5,265.1 L 675.6,263.9 L 673.8,262.6 L 671.9,261.4 L 670.1,260.1 L 668.3,258.9 L 666.4,257.6 L 664.6,256.4 L 662.8,255.1 L 661.1,253.9 L 659.3,252.6 L 657.5,251.4 L 655.8,250.2 L 654.0,248.9 L 652.3,247.7 L 650.6,246.4 L 648.9,245.2 L 647.2,243.9 L 645.5,242.7 L 643.8,241.4 L 642.1,240.2 L 640.4,238.9 L 638.8,237.7 L 637.1,236.4 L 635.5,235.2 L 633.9,233.9 L 632.2,232.7 L 630.6,231.5 L 629.0,230.2 L 627.4,229.0 L 625.8,227.7 L 624.3,226.5 L 622.7,225.2 L 621.1,224.0 L 619.6,222.7 L 618.1,221.5 L 616.5,220.2 L 615.0,219.0 L 613.5,217.7 L 612.0,216.5 L 610.5,215.3 L 609.0,214.0 L 607.5,212.8 L 606.1,211.5 L 604.6,210.3 L 603.1,209.0 L 601.7,207.8 L 600.3,206.5 L 598.8,205.3 L 597.4,204.0 L 596.0,202.8 L 594.6,201.5 L 593.2,200.3 L 591.8,199.1 L 590.4,197.8 L 589.1,196.6 L 587.7,195.3 L 586.4,194.1 L 585.0,192.8 L 583.7,191.6 L 582.3,190.3 L 581.0,189.1 L 579.7,187.8 L 578.4,186.6 L 577.1,185.3 L 575.8,184.1 L 574.5,182.9 L 573.3,181.6 L 572.0,180.4 L 570.7,179.1 L 569.5,177.9 L 568.2,176.6 L 567.0,175.4 L 565.8,174.1 L 564.5,172.9 L 563.3,171.6 L 562.1,170.4 L 560.9,169.1 L 559.7,167.9 L 558.5,166.7 L 557.4,165.4 L 556.2,164.2 L 555.0,162.9 L 553.9,161.7 L 552.7,160.4 L 551.6,159.2 L 550.4,157.9 L 549.3,156.7 L 548.2,155.4 L 547.1,154.2 L 546.0,152.9 L 544.9,151.7 L 543.8,150.5 L 542.7,149.2 L 541.6,148.0 L 540.5,146.7 L 539.5,145.5 L 538.4,144.2 L 537.3,143.0 L 536.3,141.7 L 535.3,140.5 L 534.2,139.2 L 533.2,138.0 L 532.2,136.7 L 531.2,135.5 L 530.2,134.3 L 529.2,133.0 L 528.2,131.8 L 527.2,130.5 L 526.2,129.3 L 525.2,128.0 L 524.2,126.8 L 523.3,125.5 L 522.3,124.3 L 521.4,123.0 L 520.4,121.8 L 519.5,120.5 L 518.5,119.3 L 517.6,118.1 L 516.7,116.8 L 515.8,115.6 L 514.9,114.3 L 514.0,113.1 L 513.1,111.8 L 512.2,110.6 L 511.3,109.3 L 510.4,108.1 L 509.5,106.8 L 508.7,105.6 L 507.8,104.3 L 506.9,103.1 L 506.1,101.8 L 505.2,100.6 L 504.4,99.4 L 503.6,98.1 L 502.7,96.9 L 501.9,95.6 L 501.1,94.4 L 500.3,93.1 L 499.5,91.9 L 498.7,90.6 L 497.9,89.4 L 497.1,88.1 L 496.3,86.9 L 495.5,85.6 L 494.7,84.4 L 494.0,83.2 L 493.2,81.9 L 492.5,80.7 L 491.7,79.4 L 490.9,78.2 L 490.2,76.9 L 489.5,75.7 L 488.7,74.4 L 488.0,73.2 L 487.3,71.9 L 486.6,70.7 L 485.8,69.4 L 485.1,68.2 L 484.4,67.0 L 483.7,65.7 L 483.0,64.5 L 482.3,63.2 L 481.7,62.0 L 481.0,60.7 L 480.3,59.5 L 479.6,58.2 L 479.0,57.0 L 478.3,55.7 L 477.6,54.5 L 477.0,53.2 L 476.3,52.0" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<circle cx="476.3" cy="52.0" r="4.5" fill="none" stroke="#facc15" stroke-width="2"/>
+<path d="M 476.3,59.0 L 476.3,84 L 622.0,84" fill="none" stroke="#facc15" stroke-width="1"/>
+<text x="724" y="88" font-size="10.5" text-anchor="end" fill="#facc15">tabulated: 226 hPa</text>
+<text x="724" y="70" font-size="10.5" text-anchor="end" fill="#94a3b8">polytropic curves: P = P(0) (T/T(0))ⁿ⁺¹</text>
+<text x="32" y="388" font-size="10.5" fill="#94a3b8">Standard atmosphere: ISO 2533 / US Standard Atmosphere 1976, defined by T(0) = 288.15 K, P(0) = 1.01325 bar and a lapse rate of 6.5 K/km.</text>
+</svg>
+<!--/FIG_ATMOS-->
+<figcaption>Three hydrostatic atmospheres with the same sea-level state, $T(0)=288.15$ K and $P(0)=1013.25$ hPa. Left: temperature against altitude. Right: pressure, from (3.3) for the isothermal case and (4.3) for the two polytropes. The standard atmosphere, $n=4.26$, lies between the isothermal limit and the dry adiabat, $n=2.50$; at $11$ km the dry adiabat is $36$ K colder. The circle marks the tabulated tropopause pressure of $226$ hPa, which the $n=4.26$ curve reaches by construction.</figcaption>
+</figure>
+
+<p>Fig. 1 compares the three. The real troposphere cools more slowly than the dry adiabat, by $35.9$ K over $11$ km. The difference is the latent heat released when water vapour condenses in rising air, which warms the parcel as it rises. The index $4.26$ is therefore not an adiabatic index of any gas. It is an effective index that summarises the combined effect of adiabatic cooling and condensation heating on the structure.</p>
+
+<p>Equation (4.3) also gives the pressure at the tropopause. With $n = 4.2558$, $T(0) = 288.15$ K and a tropopause temperature of $288.15 - 6.5\times11 = 216.65$ K, it gives $226.32$ hPa, in ratio $1.00001$ to the tabulated $226.32$ hPa.</p>
+
+<div class="warn"><b>This agreement is a check of the algebra, not a test of nature.</b> The ISA is <em>defined</em> by its sea-level temperature and pressure, its lapse rate and the hydrostatic equation, and its tabulated tropopause values are computed from those constants. Agreement to $1.00001$ confirms that (4.2) and (4.3) are derived and evaluated correctly. It says nothing about whether the real atmosphere is polytropic. The tests against nature in this module are in <a class="secref" href="#checks">§10</a>.</div>
+
+<span class="prov">The ISA constants are from ISO 2533:1975, identical to the US Standard Atmosphere 1976 below 11 km: $T(0)=288.15$ K, $P(0)=101325$ Pa, lapse rate $6.5\ \mathrm{K\,km^{-1}}$, tropopause at $11$ km geopotential altitude with $216.65$ K and $22632$ Pa. They are definitional and are trusted exactly. The attribution of the gap between $6.5$ and $9.761\ \mathrm{K\,km^{-1}}$ to latent heat is standard meteorology and is not computed here.</span>
+
+<h2 id="whypoly">5. Why a polytrope: two indices fixed in advance</h2>
+
+<p>The spherical equations (2.4) need a closure, and Definition 3 is the simplest one. A closure is only useful if its index can be fixed before the star is examined. If $n$ were chosen to fit a model, agreement with that model would prove nothing. This section derives two indices from physics alone.</p>
+
+<div class="prop"><b>Proposition 5 (adiabatic convection gives $n = 3/2$).</b> Suppose a region of an ideal monatomic gas has uniform specific entropy, so that every part of it lies on one adiabat $P = K\rho^{\gamma}$ with $\gamma = 5/3$. Then the region is a polytrope of index $n = 3/2$.</div>
+
+<div class="proof">
+For an ideal gas whose particles have only the three translational degrees of freedom, the internal energy per particle is $\tfrac{3}{2}k_BT$ (Module 2, Proposition 1), so the specific heats per particle are $c_V = \tfrac{3}{2}k_B$ and $c_P = c_V + k_B = \tfrac{5}{2}k_B$, and $\gamma = c_P/c_V = 5/3$. Along an adiabat, $P\rho^{-\gamma}$ is constant; uniform specific entropy means the same constant $K$ applies everywhere in the region. So $P = K\rho^{5/3}$ throughout, and matching the exponent to (4.1), $1 + 1/n = 5/3$, gives $n = 3/2$. <span class="qed">∎</span>
+</div>
+
+<p>The physical input is the hypothesis of uniform entropy. Convection supplies it: rising and sinking parcels mix the gas, and where convection is efficient it carries the stratification to the adiabatic state. That is asserted here and derived in Module 6 through the Schwarzschild criterion. The index follows from the hypothesis with no free parameter. The monatomic assumption requires the gas to be fully ionised or neutral atomic; in a zone where hydrogen or helium is partly ionised, ionisation absorbs energy and $\gamma$ falls below $5/3$.</p>
+
+<p>The second index comes from radiation pressure. A hot star contains a photon gas as well as a particle gas, and both push.</p>
+
+<div class="def"><b>Definition 4 (gas-pressure fraction).</b> In a gas of ideal particles and blackbody radiation at temperature $T$, the total pressure is $P = P_{\rm gas} + P_{\rm rad}$ with
+$$ P_{\rm gas} \;=\; \frac{k_B}{\mu m_u}\,\rho T, \qquad P_{\rm rad} \;=\; \frac{a_{\rm rad} T^4}{3}, \tag{5.1}$$
+where $a_{\rm rad} = 7.5657\times10^{-15}\ \mathrm{erg\,cm^{-3}\,K^{-4}}$ is the radiation constant. The gas-pressure fraction is $\beta \equiv P_{\rm gas}/P$, so $1-\beta = P_{\rm rad}/P$.</div>
+
+<div class="prop"><b>Proposition 6 (Eddington's standard model gives $n = 3$).</b> If $\beta$ and $\mu$ are the same everywhere in a star, with $0\lt\beta\lt 1$, then
+$$ P \;=\; K\rho^{4/3}, \qquad K \;=\; \left[\frac{3}{a_{\rm rad}}\,\frac{1-\beta}{\beta^4}\right]^{1/3}\left(\frac{k_B}{\mu m_u}\right)^{4/3}, \tag{5.2}$$
+so the star is a polytrope of index $n = 3$.</div>
+
+<div class="proof">
+Eliminate $T$ between the two parts of (5.1). From $P_{\rm rad} = (1-\beta)P$, the temperature is $T = [3(1-\beta)P/a_{\rm rad}]^{1/4}$. From $P_{\rm gas} = \beta P$,
+$$ \beta P \;=\; \frac{k_B}{\mu m_u}\,\rho\,\left[\frac{3(1-\beta)P}{a_{\rm rad}}\right]^{1/4}. $$
+Divide both sides by $\beta P^{1/4}$:
+$$ P^{3/4} \;=\; \frac{k_B}{\mu m_u}\,\frac{1}{\beta}\left[\frac{3(1-\beta)}{a_{\rm rad}}\right]^{1/4}\rho. $$
+Raise both sides to the power $4/3$:
+$$ P \;=\; \left(\frac{k_B}{\mu m_u}\right)^{4/3}\beta^{-4/3}\left[\frac{3(1-\beta)}{a_{\rm rad}}\right]^{1/3}\rho^{4/3}, $$
+which is (5.2) after collecting $\beta^{-4/3} = (\beta^{-4})^{1/3}$ inside the bracket. If $\beta$ and $\mu$ are constant, $K$ is constant and $P\propto\rho^{4/3}$; by (4.1), $1+1/n = 4/3$, so $n=3$. <span class="qed">∎</span>
+</div>
+
+<p>Note what the proof needs. It needs $\beta$ to be constant, and it needs $1-\beta$ to be non-zero, since otherwise $K$ vanishes and the relation says nothing. The hypothesis is the premise of Eddington's model, and it is a strong one: it asserts that radiation carries a fixed share of the pressure at every depth. <a class="secref" href="#checks">§10</a> measures that share at the centre of the Sun.</p>
+
+<p>Both indices are now fixed. The number $3/2$ follows from uniform entropy in a monatomic gas, and the number $3$ follows from a uniform radiation share. Neither was read from a solar model, and so each can be tested against one.</p>
+
+<h2 id="laneemden">6. The Lane–Emden equation</h2>
+
+<p>Substituting the polytropic closure (4.1) into the spherical equations (2.4) produces one second-order equation for the density. Scaling out the dimensional constants leaves an equation that depends on $n$ alone.</p>
+
+<div class="prop"><b>Proposition 7 (the Lane–Emden equation).</b> Let a spherical star in hydrostatic equilibrium (2.4) obey the polytropic relation (4.1) with index $n\gt 0$, and let $\rho_c$ be its central density. Define the dimensionless density variable $\theta$ and radius $\xi$ by
+$$ \rho \;=\; \rho_c\,\theta^{n}, \qquad r \;=\; a\,\xi, \qquad a^2 \;\equiv\; \frac{(n+1)\,K\,\rho_c^{1/n-1}}{4\pi G}. \tag{6.1}$$
+Then $\theta(\xi)$ satisfies
+$$ \frac{1}{\xi^2}\,\frac{d}{d\xi}\left(\xi^2\,\frac{d\theta}{d\xi}\right) \;=\; -\,\theta^{n}, \tag{6.2}$$
+with the boundary conditions
+$$ \theta(0) \;=\; 1, \qquad \theta'(0) \;=\; 0. \tag{6.3}$$
+The surface of the star is the first zero of $\theta$, at $\xi = \xi_1$, where $R = a\,\xi_1$.</div>
+
+<div class="proof">
+First combine the two equations of (2.4) into one. Multiply the first by $r^2/\rho$, so that $r^2\rho^{-1}\,dP/dr = -Gm$, and differentiate with respect to $r$. The second equation replaces $dm/dr$:
+$$ \frac{1}{r^2}\,\frac{d}{dr}\left(\frac{r^2}{\rho}\,\frac{dP}{dr}\right) \;=\; -4\pi G\rho. $$
+Next write the pressure in terms of $\theta$. With $\rho = \rho_c\theta^n$, the closure (4.1) gives $P = K\rho_c^{1+1/n}\theta^{n+1}$, so
+$$ \frac{dP}{dr} \;=\; (n+1)\,K\rho_c^{1+1/n}\,\theta^{n}\,\frac{d\theta}{dr}, \qquad \frac{1}{\rho}\frac{dP}{dr} \;=\; (n+1)\,K\rho_c^{1/n}\,\frac{d\theta}{dr}. $$
+Substituting and dividing by $4\pi G\rho_c$,
+$$ \frac{(n+1)\,K\rho_c^{1/n-1}}{4\pi G}\;\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{d\theta}{dr}\right) \;=\; -\theta^n. $$
+The prefactor is $a^2$ by (6.1), and it has dimensions of length squared. Changing variable to $\xi = r/a$ multiplies each derivative by $a$, so the left-hand side becomes $\xi^{-2}\,d(\xi^2\,d\theta/d\xi)/d\xi$, which gives (6.2).
+
+For the boundary conditions: $\theta(0)=1$ because $\rho(0)=\rho_c$ by definition. For the second, note that $m(r)\approx\tfrac{4}{3}\pi r^3\rho_c$ near the centre, so $dP/dr = -Gm\rho/r^2\approx -\tfrac{4}{3}\pi G\rho_c^2\, r \to 0$ as $r\to 0$. Since $dP/dr$ is proportional to $\theta^n\,d\theta/dr$ and $\theta(0)=1$, this requires $\theta'(0)=0$. The pressure, and therefore the density, first vanish where $\theta$ first vanishes, which is the surface. <span class="qed">∎</span>
+</div>
+
+<p>The scaling has removed $K$, $\rho_c$ and $G$. Every polytrope of index $n$, whatever its mass and radius, is the same function $\theta_n(\xi)$, stretched in radius by $a$ and in density by $\rho_c$. So one integration for each $n$ describes all stars of that index.</p>
+
+<p>The point $\xi=0$ is a singular point of (6.2), because the term $2\theta'/\xi$ has a zero denominator. A numerical integration cannot start there, and it starts instead from a short series.</p>
+
+<div class="prop"><b>Proposition 8 (series near the centre).</b> The solution of (6.2) with (6.3) has the expansion
+$$ \theta(\xi) \;=\; 1 \;-\; \frac{\xi^2}{6} \;+\; \frac{n\,\xi^4}{120} \;-\; \cdots. \tag{6.4}$$</div>
+
+<div class="proof">
+Expanding (6.2) gives $\theta'' + 2\theta'/\xi = -\theta^n$. The equation is unchanged under $\xi\to-\xi$, and the conditions (6.3) are even, so the regular solution is an even function. Write $\theta = 1 + b_2\xi^2 + b_4\xi^4 + O(\xi^6)$. Then $\theta' = 2b_2\xi + 4b_4\xi^3$ and $\theta'' = 2b_2 + 12b_4\xi^2$, so
+$$ \theta'' + \frac{2\theta'}{\xi} \;=\; 6b_2 + 20b_4\,\xi^2 + O(\xi^4). $$
+On the right, by the binomial expansion, $\theta^n = 1 + n\,b_2\,\xi^2 + O(\xi^4)$. Matching the constant terms gives $6b_2 = -1$, so $b_2 = -1/6$. Matching the $\xi^2$ terms gives $20b_4 = -n b_2 = n/6$, so $b_4 = n/120$. <span class="qed">∎</span>
+</div>
+
+<p>Three values of $n$ have solutions in closed form. They are the test cases for the numerical integrator, and each shows a different kind of star.</p>
+
+<div class="prop"><b>Proposition 9 (exact solutions for $n=0$, $1$, $5$).</b> The solutions of (6.2) and (6.3) for these three indices are
+$$ \theta_0 \;=\; 1 - \frac{\xi^2}{6}, \qquad \theta_1 \;=\; \frac{\sin\xi}{\xi}, \qquad \theta_5 \;=\; \left(1+\frac{\xi^2}{3}\right)^{-1/2}. \tag{6.5}$$
+Their surfaces are at $\xi_1 = \sqrt6$ with $\theta_0'(\xi_1) = -\sqrt6/3$, and at $\xi_1 = \pi$ with $\theta_1'(\xi_1) = -1/\pi$. The $n=5$ solution has no zero, so its radius is infinite, but $-\xi^2\theta_5'\to\sqrt3$ as $\xi\to\infty$, so its mass is finite.</div>
+
+<div class="proof">
+<em>Case $n=0$.</em> Then $\theta^0=1$ and (6.2) is $(\xi^2\theta')' = -\xi^2$. Integrate once: $\xi^2\theta' = -\xi^3/3 + C$. At $\xi=0$ the left side is zero, so $C=0$ and $\theta' = -\xi/3$. Integrate again with $\theta(0)=1$ to get $\theta_0 = 1-\xi^2/6$. It vanishes at $\xi_1=\sqrt6$, where $\theta' = -\sqrt6/3$. The density $\rho_c\theta^0$ is uniform, but the pressure $\propto\theta^{n+1} = \theta$ is not.
+
+<em>Case $n=1$.</em> Substitute $\theta = \chi/\xi$. Then $\xi^2\theta' = \xi\chi' - \chi$, and its derivative is $\xi\chi''$, so (6.2) becomes $\chi''/\xi = -\chi/\xi$, that is $\chi'' = -\chi$. The general solution is $\chi = A\sin\xi + B\cos\xi$. The term $B\cos\xi/\xi$ diverges at the origin, so $B=0$; and $\sin\xi/\xi\to1$ as $\xi\to0$, so $A=1$. The first zero of $\sin\xi$ after the origin is $\xi_1=\pi$. There $\theta_1' = (\xi\cos\xi - \sin\xi)/\xi^2 = -\pi/\pi^2 = -1/\pi$.
+
+<em>Case $n=5$.</em> Let $s = 1+\xi^2/3$. Differentiating $\theta_5 = s^{-1/2}$ gives $\theta_5' = -(\xi/3)\,s^{-3/2}$, so $\xi^2\theta_5' = -(\xi^3/3)\,s^{-3/2}$. Differentiating again,
+$$ (\xi^2\theta_5')' \;=\; -\xi^2 s^{-3/2} + \frac{\xi^3}{3}\cdot\frac{3}{2}\cdot\frac{2\xi}{3}\,s^{-5/2} \;=\; -\xi^2 s^{-5/2}\left(s - \frac{\xi^2}{3}\right) \;=\; -\xi^2 s^{-5/2}. $$
+Dividing by $\xi^2$ gives $-s^{-5/2} = -\theta_5^5$, which is (6.2). The conditions (6.3) hold by inspection. $\theta_5\gt0$ for every $\xi$, so there is no surface. For large $\xi$, $s^{-3/2}\to(\xi^2/3)^{-3/2} = 3^{3/2}\xi^{-3}$, so $-\xi^2\theta_5' \to (\xi^3/3)\cdot3^{3/2}\xi^{-3} = \sqrt3$. <span class="qed">∎</span>
+</div>
+
+<p>The integrator in <code>figs/m03_numbers.py</code> is a fourth-order Runge–Kutta scheme started from (6.4) at $\xi=10^{-5}$. On the three exact cases it returns $\xi_1 = 2.449490$ for $n=0$ and $3.141593$ for $n=1$, both in ratio $1.000000$ to the exact values. It returns $\theta_1'(\xi_1) = -0.318310$ for $n=1$, in ratio $1.000000$. For $n=5$ it returns $\theta(200) = 8.659914\times10^{-3}$, in ratio $1.000000$ to (6.5), and $-\xi^2\theta' = 1.731856$ at $\xi=200$, in ratio $0.999888$ to $\sqrt3$. The largest departure is on $\theta_0'(\xi_1) = -0.816392$, in ratio $0.999871$ to the exact $-\sqrt6/3$: the $n=0$ solution meets the surface at a finite slope, and the last step lands just past it. The integrator is therefore trusted to about $1.3\times10^{-4}$ on the cases $n=3/2$ and $n=3$, which have no closed form.</p>
+
+<figure>
+<!--FIG_LANE-->
+<svg class="setupfig" viewBox="0 0 760 660" width="100%" role="img" aria-label="Upper panel: the Lane-Emden function theta against the dimensionless radius xi for polytropic indices 0, 1, one and a half, 3, 4 and 5. The first zero moves outward as the index rises and runs to infinity at index 5. Lower panel: density divided by central density against fractional radius, on a logarithmic scale, for the index three-halves and index three polytropes and for the tabulated standard solar model. The solar profile falls faster than either polytrope.">
+<text x="389" y="28" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Solutions of the Lane–Emden equation θ″ + (2/ξ)θ′ + θⁿ = 0</text>
+<rect x="78" y="54" width="622" height="216" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="78" y1="270.0" x2="700" y2="270.0" stroke="#334155" stroke-width="1"/>
+<line x1="78.0" y1="270" x2="78.0" y2="275" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="288" font-size="10.5" text-anchor="middle" fill="#94a3b8">0</text>
+<line x1="158.3" y1="270" x2="158.3" y2="275" stroke="#334155" stroke-width="1"/>
+<text x="158.3" y="288" font-size="10.5" text-anchor="middle" fill="#94a3b8">2</text>
+<line x1="238.5" y1="270" x2="238.5" y2="275" stroke="#334155" stroke-width="1"/>
+<text x="238.5" y="288" font-size="10.5" text-anchor="middle" fill="#94a3b8">4</text>
+<line x1="318.8" y1="270" x2="318.8" y2="275" stroke="#334155" stroke-width="1"/>
+<text x="318.8" y="288" font-size="10.5" text-anchor="middle" fill="#94a3b8">6</text>
+<line x1="399.0" y1="270" x2="399.0" y2="275" stroke="#334155" stroke-width="1"/>
+<text x="399.0" y="288" font-size="10.5" text-anchor="middle" fill="#94a3b8">8</text>
+<line x1="479.3" y1="270" x2="479.3" y2="275" stroke="#334155" stroke-width="1"/>
+<text x="479.3" y="288" font-size="10.5" text-anchor="middle" fill="#94a3b8">10</text>
+<line x1="559.5" y1="270" x2="559.5" y2="275" stroke="#334155" stroke-width="1"/>
+<text x="559.5" y="288" font-size="10.5" text-anchor="middle" fill="#94a3b8">12</text>
+<line x1="639.8" y1="270" x2="639.8" y2="275" stroke="#334155" stroke-width="1"/>
+<text x="639.8" y="288" font-size="10.5" text-anchor="middle" fill="#94a3b8">14</text>
+<line x1="73" y1="270.0" x2="78" y2="270.0" stroke="#334155" stroke-width="1"/>
+<text x="69" y="274.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.00</text>
+<line x1="73" y1="216.0" x2="78" y2="216.0" stroke="#334155" stroke-width="1"/>
+<text x="69" y="220.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.25</text>
+<line x1="73" y1="162.0" x2="78" y2="162.0" stroke="#334155" stroke-width="1"/>
+<text x="69" y="166.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.50</text>
+<line x1="73" y1="108.0" x2="78" y2="108.0" stroke="#334155" stroke-width="1"/>
+<text x="69" y="112.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.75</text>
+<line x1="73" y1="54.0" x2="78" y2="54.0" stroke="#334155" stroke-width="1"/>
+<text x="69" y="58.0" font-size="10.5" text-anchor="end" fill="#94a3b8">1.00</text>
+<text x="389" y="306" font-size="11.5" text-anchor="middle" fill="#cbd5e1">ξ</text>
+<text x="34" y="162" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 34 162)">θ(ξ)</text>
+<path d="M 78.0,54.0 L 78.0,54.0 L 78.1,54.0 L 78.1,54.0 L 78.1,54.0 L 78.2,54.0 L 78.2,54.0 L 78.3,54.0 L 78.3,54.0 L 78.3,54.0 L 78.4,54.0 L 78.4,54.0 L 78.5,54.0 L 78.5,54.0 L 78.5,54.0 L 78.6,54.0 L 78.6,54.0 L 78.7,54.0 L 78.7,54.0 L 78.7,54.0 L 78.8,54.0 L 78.8,54.0 L 78.9,54.0 L 78.9,54.0 L 79.0,54.0 L 79.0,54.0 L 79.1,54.0 L 79.1,54.0 L 79.1,54.0 L 79.2,54.0 L 79.2,54.0 L 79.3,54.0 L 79.3,54.0 L 79.4,54.0 L 79.4,54.0 L 79.5,54.0 L 79.5,54.1 L 79.6,54.1 L 79.6,54.1 L 79.7,54.1 L 79.7,54.1 L 79.8,54.1 L 79.8,54.1 L 79.9,54.1 L 79.9,54.1 L 80.0,54.1 L 80.1,54.1 L 80.1,54.1 L 80.2,54.1 L 80.2,54.1 L 80.3,54.1 L 80.3,54.1 L 80.4,54.1 L 80.5,54.1 L 80.5,54.1 L 80.6,54.1 L 80.6,54.2 L 80.7,54.2 L 80.7,54.2 L 80.8,54.2 L 80.9,54.2 L 80.9,54.2 L 81.0,54.2 L 81.1,54.2 L 81.1,54.2 L 81.2,54.2 L 81.3,54.2 L 81.3,54.2 L 81.4,54.3 L 81.5,54.3 L 81.5,54.3 L 81.6,54.3 L 81.7,54.3 L 81.7,54.3 L 81.8,54.3 L 81.9,54.3 L 81.9,54.3 L 82.0,54.4 L 82.1,54.4 L 82.2,54.4 L 82.2,54.4 L 82.3,54.4 L 82.4,54.4 L 82.5,54.4 L 82.5,54.5 L 82.6,54.5 L 82.7,54.5 L 82.8,54.5 L 82.8,54.5 L 82.9,54.5 L 83.0,54.6 L 83.1,54.6 L 83.2,54.6 L 83.3,54.6 L 83.3,54.6 L 83.4,54.7 L 83.5,54.7 L 83.6,54.7 L 83.7,54.7 L 83.8,54.7 L 83.9,54.8 L 83.9,54.8 L 84.0,54.8 L 84.1,54.8 L 84.2,54.9 L 84.3,54.9 L 84.4,54.9 L 84.5,54.9 L 84.6,55.0 L 84.7,55.0 L 84.8,55.0 L 84.9,55.1 L 85.0,55.1 L 85.1,55.1 L 85.2,55.2 L 85.3,55.2 L 85.4,55.2 L 85.5,55.3 L 85.6,55.3 L 85.7,55.3 L 85.8,55.4 L 85.9,55.4 L 86.0,55.4 L 86.1,55.5 L 86.2,55.5 L 86.3,55.6 L 86.5,55.6 L 86.6,55.6 L 86.7,55.7 L 86.8,55.7 L 86.9,55.8 L 87.0,55.8 L 87.1,55.9 L 87.3,55.9 L 87.4,56.0 L 87.5,56.0 L 87.6,56.1 L 87.8,56.1 L 87.9,56.2 L 88.0,56.2 L 88.1,56.3 L 88.3,56.4 L 88.4,56.4 L 88.5,56.5 L 88.6,56.5 L 88.8,56.6 L 88.9,56.7 L 89.0,56.7 L 89.2,56.8 L 89.3,56.9 L 89.5,56.9 L 89.6,57.0 L 89.7,57.1 L 89.9,57.2 L 90.0,57.2 L 90.2,57.3 L 90.3,57.4 L 90.5,57.5 L 90.6,57.6 L 90.8,57.6 L 90.9,57.7 L 91.1,57.8 L 91.2,57.9 L 91.4,58.0 L 91.5,58.1 L 91.7,58.2 L 91.9,58.3 L 92.0,58.4 L 92.2,58.5 L 92.3,58.6 L 92.5,58.7 L 92.7,58.8 L 92.8,58.9 L 93.0,59.0 L 93.2,59.2 L 93.4,59.3 L 93.5,59.4 L 93.7,59.5 L 93.9,59.6 L 94.1,59.8 L 94.3,59.9 L 94.4,60.0 L 94.6,60.2 L 94.8,60.3 L 95.0,60.5 L 95.2,60.6 L 95.4,60.7 L 95.6,60.9 L 95.8,61.1 L 96.0,61.2 L 96.2,61.4 L 96.4,61.5 L 96.6,61.7 L 96.8,61.9 L 97.0,62.0 L 97.2,62.2 L 97.4,62.4 L 97.6,62.6 L 97.8,62.8 L 98.0,63.0 L 98.2,63.2 L 98.5,63.4 L 98.7,63.6 L 98.9,63.8 L 99.1,64.0 L 99.4,64.2 L 99.6,64.4 L 99.8,64.6 L 100.1,64.9 L 100.3,65.1 L 100.5,65.3 L 100.8,65.6 L 101.0,65.8 L 101.3,66.1 L 101.5,66.3 L 101.7,66.6 L 102.0,66.9 L 102.3,67.1 L 102.5,67.4 L 102.8,67.7 L 103.0,68.0 L 103.3,68.3 L 103.6,68.6 L 103.8,68.9 L 104.1,69.2 L 104.4,69.5 L 104.6,69.9 L 104.9,70.2 L 105.2,70.5 L 105.5,70.9 L 105.8,71.2 L 106.0,71.6 L 106.3,71.9 L 106.6,72.3 L 106.9,72.7 L 107.2,73.1 L 107.5,73.5 L 107.8,73.9 L 108.1,74.3 L 108.4,74.7 L 108.7,75.1 L 109.1,75.6 L 109.4,76.0 L 109.7,76.5 L 110.0,76.9 L 110.3,77.4 L 110.7,77.9 L 111.0,78.4 L 111.3,78.9 L 111.7,79.4 L 112.0,79.9 L 112.4,80.4 L 112.7,80.9 L 113.1,81.5 L 113.4,82.0 L 113.8,82.6 L 114.1,83.2 L 114.5,83.8 L 114.9,84.4 L 115.2,85.0 L 115.6,85.6 L 115.9,86.2 L 116.3,86.8 L 116.7,87.4 L 117.0,88.0 L 117.4,88.7 L 117.7,89.3 L 118.1,90.0 L 118.5,90.6 L 118.8,91.3 L 119.2,91.9 L 119.5,92.6 L 119.9,93.3 L 120.3,93.9 L 120.6,94.6 L 121.0,95.3 L 121.4,96.0 L 121.7,96.7 L 122.1,97.4 L 122.4,98.1 L 122.8,98.9 L 123.2,99.6 L 123.5,100.3 L 123.9,101.1 L 124.2,101.8 L 124.6,102.6 L 125.0,103.3 L 125.3,104.1 L 125.7,104.8 L 126.0,105.6 L 126.4,106.4 L 126.8,107.2 L 127.1,108.0 L 127.5,108.8 L 127.9,109.6 L 128.2,110.4 L 128.6,111.2 L 128.9,112.0 L 129.3,112.8 L 129.7,113.7 L 130.0,114.5 L 130.4,115.3 L 130.7,116.2 L 131.1,117.0 L 131.5,117.9 L 131.8,118.8 L 132.2,119.6 L 132.5,120.5 L 132.9,121.4 L 133.3,122.3 L 133.6,123.2 L 134.0,124.1 L 134.4,125.0 L 134.7,125.9 L 135.1,126.8 L 135.4,127.8 L 135.8,128.7 L 136.2,129.6 L 136.5,130.6 L 136.9,131.5 L 137.2,132.5 L 137.6,133.4 L 138.0,134.4 L 138.3,135.4 L 138.7,136.3 L 139.1,137.3 L 139.4,138.3 L 139.8,139.3 L 140.1,140.3 L 140.5,141.3 L 140.9,142.3 L 141.2,143.3 L 141.6,144.4 L 141.9,145.4 L 142.3,146.4 L 142.7,147.5 L 143.0,148.5 L 143.4,149.6 L 143.7,150.6 L 144.1,151.7 L 144.5,152.8 L 144.8,153.8 L 145.2,154.9 L 145.6,156.0 L 145.9,157.1 L 146.3,158.2 L 146.6,159.3 L 147.0,160.4 L 147.4,161.5 L 147.7,162.7 L 148.1,163.8 L 148.4,164.9 L 148.8,166.1 L 149.2,167.2 L 149.5,168.4 L 149.9,169.5 L 150.2,170.7 L 150.6,171.9 L 151.0,173.0 L 151.3,174.2 L 151.7,175.4 L 152.1,176.6 L 152.4,177.8 L 152.8,179.0 L 153.1,180.2 L 153.5,181.4 L 153.9,182.6 L 154.2,183.9 L 154.6,185.1 L 154.9,186.3 L 155.3,187.6 L 155.7,188.8 L 156.0,190.1 L 156.4,191.4 L 156.7,192.6 L 157.1,193.9 L 157.5,195.2 L 157.8,196.5 L 158.2,197.8 L 158.6,199.1 L 158.9,200.4 L 159.3,201.7 L 159.6,203.0 L 160.0,204.3 L 160.4,205.6 L 160.7,207.0 L 161.1,208.3 L 161.4,209.7 L 161.8,211.0 L 162.2,212.4 L 162.5,213.7 L 162.9,215.1 L 163.2,216.5 L 163.6,217.8 L 164.0,219.2 L 164.3,220.6 L 164.7,222.0 L 165.1,223.4 L 165.4,224.8 L 165.8,226.2 L 166.1,227.7 L 166.5,229.1 L 166.9,230.5 L 167.2,232.0 L 167.6,233.4 L 167.9,234.9 L 168.3,236.3 L 168.7,237.8 L 169.0,239.2 L 169.4,240.7 L 169.7,242.2 L 170.1,243.7 L 170.5,245.2 L 170.8,246.7 L 171.2,248.2 L 171.6,249.7 L 171.9,251.2 L 172.3,252.7 L 172.6,254.2 L 173.0,255.8 L 173.4,257.3 L 173.7,258.8 L 174.1,260.4 L 174.4,261.9 L 174.8,263.5 L 175.2,265.1 L 175.5,266.6 L 175.9,268.2 L 176.3,269.8" fill="none" stroke="#60a5fa" stroke-width="1.8"/>
+<circle cx="176.3" cy="270.0" r="3.4" fill="#60a5fa"/>
+<path d="M 78.0,54.0 L 78.0,54.0 L 78.1,54.0 L 78.1,54.0 L 78.2,54.0 L 78.2,54.0 L 78.3,54.0 L 78.3,54.0 L 78.4,54.0 L 78.4,54.0 L 78.5,54.0 L 78.5,54.0 L 78.6,54.0 L 78.6,54.0 L 78.7,54.0 L 78.7,54.0 L 78.8,54.0 L 78.8,54.0 L 78.9,54.0 L 78.9,54.0 L 79.0,54.0 L 79.0,54.0 L 79.1,54.0 L 79.2,54.0 L 79.2,54.0 L 79.3,54.0 L 79.3,54.0 L 79.4,54.0 L 79.4,54.0 L 79.5,54.1 L 79.6,54.1 L 79.6,54.1 L 79.7,54.1 L 79.8,54.1 L 79.8,54.1 L 79.9,54.1 L 79.9,54.1 L 80.0,54.1 L 80.1,54.1 L 80.1,54.1 L 80.2,54.1 L 80.3,54.1 L 80.4,54.1 L 80.4,54.1 L 80.5,54.1 L 80.6,54.1 L 80.6,54.2 L 80.7,54.2 L 80.8,54.2 L 80.9,54.2 L 80.9,54.2 L 81.0,54.2 L 81.1,54.2 L 81.2,54.2 L 81.3,54.2 L 81.3,54.2 L 81.4,54.3 L 81.5,54.3 L 81.6,54.3 L 81.7,54.3 L 81.7,54.3 L 81.8,54.3 L 81.9,54.3 L 82.0,54.4 L 82.1,54.4 L 82.2,54.4 L 82.3,54.4 L 82.4,54.4 L 82.5,54.4 L 82.6,54.5 L 82.7,54.5 L 82.7,54.5 L 82.8,54.5 L 82.9,54.5 L 83.0,54.6 L 83.1,54.6 L 83.2,54.6 L 83.3,54.6 L 83.4,54.7 L 83.6,54.7 L 83.7,54.7 L 83.8,54.7 L 83.9,54.8 L 84.0,54.8 L 84.1,54.8 L 84.2,54.9 L 84.3,54.9 L 84.4,54.9 L 84.5,55.0 L 84.7,55.0 L 84.8,55.0 L 84.9,55.1 L 85.0,55.1 L 85.1,55.1 L 85.3,55.2 L 85.4,55.2 L 85.5,55.3 L 85.6,55.3 L 85.8,55.3 L 85.9,55.4 L 86.0,55.4 L 86.2,55.5 L 86.3,55.5 L 86.4,55.6 L 86.6,55.6 L 86.7,55.7 L 86.9,55.8 L 87.0,55.8 L 87.1,55.9 L 87.3,55.9 L 87.4,56.0 L 87.6,56.0 L 87.7,56.1 L 87.9,56.2 L 88.0,56.2 L 88.2,56.3 L 88.4,56.4 L 88.5,56.5 L 88.7,56.5 L 88.8,56.6 L 89.0,56.7 L 89.2,56.8 L 89.3,56.9 L 89.5,56.9 L 89.7,57.0 L 89.8,57.1 L 90.0,57.2 L 90.2,57.3 L 90.4,57.4 L 90.6,57.5 L 90.7,57.6 L 90.9,57.7 L 91.1,57.8 L 91.3,57.9 L 91.5,58.1 L 91.7,58.2 L 91.9,58.3 L 92.1,58.4 L 92.3,58.5 L 92.5,58.7 L 92.7,58.8 L 92.9,58.9 L 93.1,59.1 L 93.3,59.2 L 93.5,59.4 L 93.8,59.5 L 94.0,59.7 L 94.2,59.8 L 94.4,60.0 L 94.6,60.1 L 94.9,60.3 L 95.1,60.5 L 95.3,60.7 L 95.6,60.8 L 95.8,61.0 L 96.0,61.2 L 96.3,61.4 L 96.5,61.6 L 96.8,61.8 L 97.0,62.0 L 97.3,62.2 L 97.6,62.4 L 97.8,62.7 L 98.1,62.9 L 98.3,63.1 L 98.6,63.4 L 98.9,63.6 L 99.2,63.9 L 99.4,64.1 L 99.7,64.4 L 100.0,64.7 L 100.3,64.9 L 100.6,65.2 L 100.9,65.5 L 101.2,65.8 L 101.5,66.1 L 101.8,66.4 L 102.1,66.7 L 102.4,67.1 L 102.7,67.4 L 103.0,67.7 L 103.3,68.1 L 103.7,68.4 L 104.0,68.8 L 104.3,69.2 L 104.7,69.5 L 105.0,69.9 L 105.3,70.3 L 105.7,70.7 L 106.0,71.2 L 106.4,71.6 L 106.8,72.0 L 107.1,72.5 L 107.5,72.9 L 107.9,73.4 L 108.2,73.9 L 108.6,74.3 L 109.0,74.8 L 109.4,75.4 L 109.8,75.9 L 110.2,76.4 L 110.6,76.9 L 111.0,77.5 L 111.4,78.1 L 111.8,78.6 L 112.2,79.2 L 112.6,79.8 L 113.1,80.5 L 113.5,81.1 L 113.9,81.7 L 114.4,82.4 L 114.8,83.0 L 115.3,83.7 L 115.7,84.4 L 116.1,85.1 L 116.6,85.8 L 117.0,86.5 L 117.5,87.2 L 117.9,87.9 L 118.3,88.6 L 118.8,89.3 L 119.2,90.0 L 119.7,90.8 L 120.1,91.5 L 120.6,92.3 L 121.0,93.0 L 121.4,93.8 L 121.9,94.5 L 122.3,95.3 L 122.8,96.1 L 123.2,96.9 L 123.6,97.6 L 124.1,98.4 L 124.5,99.2 L 125.0,100.0 L 125.4,100.9 L 125.8,101.7 L 126.3,102.5 L 126.7,103.3 L 127.2,104.1 L 127.6,105.0 L 128.1,105.8 L 128.5,106.7 L 128.9,107.5 L 129.4,108.4 L 129.8,109.2 L 130.3,110.1 L 130.7,111.0 L 131.1,111.8 L 131.6,112.7 L 132.0,113.6 L 132.5,114.5 L 132.9,115.4 L 133.4,116.3 L 133.8,117.2 L 134.2,118.1 L 134.7,119.0 L 135.1,119.9 L 135.6,120.8 L 136.0,121.7 L 136.4,122.7 L 136.9,123.6 L 137.3,124.5 L 137.8,125.5 L 138.2,126.4 L 138.6,127.3 L 139.1,128.3 L 139.5,129.2 L 140.0,130.2 L 140.4,131.1 L 140.9,132.1 L 141.3,133.1 L 141.7,134.0 L 142.2,135.0 L 142.6,136.0 L 143.1,136.9 L 143.5,137.9 L 143.9,138.9 L 144.4,139.9 L 144.8,140.9 L 145.3,141.9 L 145.7,142.9 L 146.2,143.9 L 146.6,144.8 L 147.0,145.8 L 147.5,146.8 L 147.9,147.9 L 148.4,148.9 L 148.8,149.9 L 149.2,150.9 L 149.7,151.9 L 150.1,152.9 L 150.6,153.9 L 151.0,154.9 L 151.5,155.9 L 151.9,157.0 L 152.3,158.0 L 152.8,159.0 L 153.2,160.0 L 153.7,161.1 L 154.1,162.1 L 154.5,163.1 L 155.0,164.1 L 155.4,165.2 L 155.9,166.2 L 156.3,167.2 L 156.7,168.3 L 157.2,169.3 L 157.6,170.3 L 158.1,171.4 L 158.5,172.4 L 159.0,173.4 L 159.4,174.5 L 159.8,175.5 L 160.3,176.5 L 160.7,177.6 L 161.2,178.6 L 161.6,179.6 L 162.0,180.7 L 162.5,181.7 L 162.9,182.8 L 163.4,183.8 L 163.8,184.8 L 164.3,185.9 L 164.7,186.9 L 165.1,187.9 L 165.6,189.0 L 166.0,190.0 L 166.5,191.0 L 166.9,192.1 L 167.3,193.1 L 167.8,194.1 L 168.2,195.2 L 168.7,196.2 L 169.1,197.2 L 169.5,198.2 L 170.0,199.3 L 170.4,200.3 L 170.9,201.3 L 171.3,202.3 L 171.8,203.3 L 172.2,204.4 L 172.6,205.4 L 173.1,206.4 L 173.5,207.4 L 174.0,208.4 L 174.4,209.4 L 174.8,210.4 L 175.3,211.4 L 175.7,212.4 L 176.2,213.4 L 176.6,214.4 L 177.1,215.4 L 177.5,216.4 L 177.9,217.4 L 178.4,218.4 L 178.8,219.4 L 179.3,220.4 L 179.7,221.4 L 180.1,222.3 L 180.6,223.3 L 181.0,224.3 L 181.5,225.3 L 181.9,226.2 L 182.4,227.2 L 182.8,228.2 L 183.2,229.1 L 183.7,230.1 L 184.1,231.0 L 184.6,232.0 L 185.0,232.9 L 185.4,233.9 L 185.9,234.8 L 186.3,235.8 L 186.8,236.7 L 187.2,237.6 L 187.6,238.5 L 188.1,239.5 L 188.5,240.4 L 189.0,241.3 L 189.4,242.2 L 189.9,243.1 L 190.3,244.0 L 190.7,244.9 L 191.2,245.8 L 191.6,246.7 L 192.1,247.6 L 192.5,248.5 L 192.9,249.4 L 193.4,250.2 L 193.8,251.1 L 194.3,252.0 L 194.7,252.8 L 195.2,253.7 L 195.6,254.5 L 196.0,255.4 L 196.5,256.2 L 196.9,257.1 L 197.4,257.9 L 197.8,258.7 L 198.2,259.6 L 198.7,260.4 L 199.1,261.2 L 199.6,262.0 L 200.0,262.8 L 200.4,263.6 L 200.9,264.4 L 201.3,265.2 L 201.8,266.0 L 202.2,266.8 L 202.7,267.6 L 203.1,268.3 L 203.5,269.1 L 204.0,269.8" fill="none" stroke="#f472b6" stroke-width="1.8"/>
+<circle cx="204.1" cy="270.0" r="3.4" fill="#f472b6"/>
+<path d="M 78.0,54.0 L 78.0,54.0 L 78.1,54.0 L 78.1,54.0 L 78.2,54.0 L 78.2,54.0 L 78.3,54.0 L 78.4,54.0 L 78.4,54.0 L 78.5,54.0 L 78.5,54.0 L 78.6,54.0 L 78.6,54.0 L 78.7,54.0 L 78.7,54.0 L 78.8,54.0 L 78.8,54.0 L 78.9,54.0 L 79.0,54.0 L 79.0,54.0 L 79.1,54.0 L 79.1,54.0 L 79.2,54.0 L 79.3,54.0 L 79.3,54.0 L 79.4,54.0 L 79.5,54.0 L 79.5,54.1 L 79.6,54.1 L 79.7,54.1 L 79.7,54.1 L 79.8,54.1 L 79.9,54.1 L 79.9,54.1 L 80.0,54.1 L 80.1,54.1 L 80.2,54.1 L 80.2,54.1 L 80.3,54.1 L 80.4,54.1 L 80.5,54.1 L 80.5,54.1 L 80.6,54.2 L 80.7,54.2 L 80.8,54.2 L 80.9,54.2 L 81.0,54.2 L 81.0,54.2 L 81.1,54.2 L 81.2,54.2 L 81.3,54.2 L 81.4,54.3 L 81.5,54.3 L 81.6,54.3 L 81.7,54.3 L 81.7,54.3 L 81.8,54.3 L 81.9,54.3 L 82.0,54.4 L 82.1,54.4 L 82.2,54.4 L 82.3,54.4 L 82.4,54.4 L 82.5,54.5 L 82.6,54.5 L 82.7,54.5 L 82.8,54.5 L 83.0,54.5 L 83.1,54.6 L 83.2,54.6 L 83.3,54.6 L 83.4,54.6 L 83.5,54.7 L 83.6,54.7 L 83.7,54.7 L 83.9,54.8 L 84.0,54.8 L 84.1,54.8 L 84.2,54.9 L 84.3,54.9 L 84.5,54.9 L 84.6,55.0 L 84.7,55.0 L 84.8,55.0 L 85.0,55.1 L 85.1,55.1 L 85.2,55.2 L 85.4,55.2 L 85.5,55.3 L 85.7,55.3 L 85.8,55.4 L 85.9,55.4 L 86.1,55.5 L 86.2,55.5 L 86.4,55.6 L 86.5,55.6 L 86.7,55.7 L 86.8,55.7 L 87.0,55.8 L 87.1,55.9 L 87.3,55.9 L 87.5,56.0 L 87.6,56.1 L 87.8,56.1 L 88.0,56.2 L 88.1,56.3 L 88.3,56.4 L 88.5,56.4 L 88.6,56.5 L 88.8,56.6 L 89.0,56.7 L 89.2,56.8 L 89.4,56.9 L 89.6,57.0 L 89.7,57.1 L 89.9,57.2 L 90.1,57.3 L 90.3,57.4 L 90.5,57.5 L 90.7,57.6 L 90.9,57.7 L 91.1,57.8 L 91.3,57.9 L 91.5,58.1 L 91.7,58.2 L 92.0,58.3 L 92.2,58.5 L 92.4,58.6 L 92.6,58.7 L 92.8,58.9 L 93.1,59.0 L 93.3,59.2 L 93.5,59.3 L 93.8,59.5 L 94.0,59.7 L 94.3,59.8 L 94.5,60.0 L 94.7,60.2 L 95.0,60.4 L 95.2,60.6 L 95.5,60.8 L 95.8,61.0 L 96.0,61.2 L 96.3,61.4 L 96.6,61.6 L 96.8,61.8 L 97.1,62.0 L 97.4,62.3 L 97.7,62.5 L 98.0,62.7 L 98.2,63.0 L 98.5,63.2 L 98.8,63.5 L 99.1,63.8 L 99.4,64.1 L 99.7,64.3 L 100.1,64.6 L 100.4,64.9 L 100.7,65.2 L 101.0,65.5 L 101.3,65.9 L 101.7,66.2 L 102.0,66.5 L 102.3,66.9 L 102.7,67.2 L 103.0,67.6 L 103.4,68.0 L 103.7,68.4 L 104.1,68.7 L 104.5,69.1 L 104.8,69.6 L 105.2,70.0 L 105.6,70.4 L 106.0,70.8 L 106.3,71.3 L 106.7,71.8 L 107.1,72.2 L 107.5,72.7 L 107.9,73.2 L 108.3,73.7 L 108.7,74.2 L 109.2,74.8 L 109.6,75.3 L 110.0,75.9 L 110.5,76.4 L 110.9,77.0 L 111.3,77.6 L 111.8,78.2 L 112.3,78.8 L 112.7,79.5 L 113.2,80.1 L 113.7,80.8 L 114.1,81.5 L 114.6,82.2 L 115.1,82.9 L 115.6,83.6 L 116.1,84.3 L 116.5,85.0 L 117.0,85.7 L 117.5,86.5 L 118.0,87.2 L 118.5,88.0 L 118.9,88.7 L 119.4,89.5 L 119.9,90.2 L 120.4,91.0 L 120.9,91.8 L 121.4,92.6 L 121.8,93.4 L 122.3,94.1 L 122.8,94.9 L 123.3,95.8 L 123.8,96.6 L 124.2,97.4 L 124.7,98.2 L 125.2,99.0 L 125.7,99.9 L 126.2,100.7 L 126.7,101.5 L 127.1,102.4 L 127.6,103.2 L 128.1,104.1 L 128.6,104.9 L 129.1,105.8 L 129.5,106.7 L 130.0,107.5 L 130.5,108.4 L 131.0,109.3 L 131.5,110.2 L 131.9,111.1 L 132.4,112.0 L 132.9,112.8 L 133.4,113.7 L 133.9,114.6 L 134.4,115.6 L 134.8,116.5 L 135.3,117.4 L 135.8,118.3 L 136.3,119.2 L 136.8,120.1 L 137.2,121.0 L 137.7,122.0 L 138.2,122.9 L 138.7,123.8 L 139.2,124.8 L 139.7,125.7 L 140.1,126.6 L 140.6,127.6 L 141.1,128.5 L 141.6,129.5 L 142.1,130.4 L 142.5,131.4 L 143.0,132.3 L 143.5,133.3 L 144.0,134.2 L 144.5,135.2 L 144.9,136.1 L 145.4,137.1 L 145.9,138.1 L 146.4,139.0 L 146.9,140.0 L 147.4,141.0 L 147.8,141.9 L 148.3,142.9 L 148.8,143.9 L 149.3,144.8 L 149.8,145.8 L 150.2,146.8 L 150.7,147.7 L 151.2,148.7 L 151.7,149.7 L 152.2,150.6 L 152.7,151.6 L 153.1,152.6 L 153.6,153.5 L 154.1,154.5 L 154.6,155.5 L 155.1,156.5 L 155.5,157.4 L 156.0,158.4 L 156.5,159.4 L 157.0,160.3 L 157.5,161.3 L 158.0,162.3 L 158.4,163.2 L 158.9,164.2 L 159.4,165.2 L 159.9,166.1 L 160.4,167.1 L 160.8,168.0 L 161.3,169.0 L 161.8,170.0 L 162.3,170.9 L 162.8,171.9 L 163.2,172.8 L 163.7,173.8 L 164.2,174.7 L 164.7,175.7 L 165.2,176.7 L 165.7,177.6 L 166.1,178.5 L 166.6,179.5 L 167.1,180.4 L 167.6,181.4 L 168.1,182.3 L 168.5,183.3 L 169.0,184.2 L 169.5,185.1 L 170.0,186.0 L 170.5,187.0 L 171.0,187.9 L 171.4,188.8 L 171.9,189.8 L 172.4,190.7 L 172.9,191.6 L 173.4,192.5 L 173.8,193.4 L 174.3,194.3 L 174.8,195.2 L 175.3,196.1 L 175.8,197.0 L 176.3,197.9 L 176.7,198.8 L 177.2,199.7 L 177.7,200.6 L 178.2,201.5 L 178.7,202.4 L 179.1,203.3 L 179.6,204.1 L 180.1,205.0 L 180.6,205.9 L 181.1,206.8 L 181.5,207.6 L 182.0,208.5 L 182.5,209.3 L 183.0,210.2 L 183.5,211.1 L 184.0,211.9 L 184.4,212.7 L 184.9,213.6 L 185.4,214.4 L 185.9,215.3 L 186.4,216.1 L 186.8,216.9 L 187.3,217.8 L 187.8,218.6 L 188.3,219.4 L 188.8,220.2 L 189.3,221.0 L 189.7,221.8 L 190.2,222.6 L 190.7,223.4 L 191.2,224.2 L 191.7,225.0 L 192.1,225.8 L 192.6,226.6 L 193.1,227.4 L 193.6,228.1 L 194.1,228.9 L 194.5,229.7 L 195.0,230.5 L 195.5,231.2 L 196.0,232.0 L 196.5,232.7 L 197.0,233.5 L 197.4,234.2 L 197.9,235.0 L 198.4,235.7 L 198.9,236.4 L 199.4,237.2 L 199.8,237.9 L 200.3,238.6 L 200.8,239.3 L 201.3,240.1 L 201.8,240.8 L 202.3,241.5 L 202.7,242.2 L 203.2,242.9 L 203.7,243.6 L 204.2,244.3 L 204.7,245.0 L 205.1,245.6 L 205.6,246.3 L 206.1,247.0 L 206.6,247.7 L 207.1,248.3 L 207.6,249.0 L 208.0,249.7 L 208.5,250.3 L 209.0,251.0 L 209.5,251.6 L 210.0,252.2 L 210.4,252.9 L 210.9,253.5 L 211.4,254.2 L 211.9,254.8 L 212.4,255.4 L 212.8,256.0 L 213.3,256.6 L 213.8,257.3 L 214.3,257.9 L 214.8,258.5 L 215.3,259.1 L 215.7,259.7 L 216.2,260.3 L 216.7,260.8 L 217.2,261.4 L 217.7,262.0 L 218.1,262.6 L 218.6,263.2 L 219.1,263.7 L 219.6,264.3 L 220.1,264.9 L 220.6,265.4 L 221.0,266.0 L 221.5,266.5 L 222.0,267.1 L 222.5,267.6 L 223.0,268.2 L 223.4,268.7 L 223.9,269.2 L 224.4,269.8" fill="none" stroke="#2dd4bf" stroke-width="2.6"/>
+<circle cx="224.6" cy="270.0" r="3.4" fill="#2dd4bf"/>
+<path d="M 78.0,54.0 L 78.1,54.0 L 78.2,54.0 L 78.2,54.0 L 78.3,54.0 L 78.4,54.0 L 78.5,54.0 L 78.6,54.0 L 78.7,54.0 L 78.8,54.0 L 78.9,54.0 L 79.0,54.0 L 79.1,54.0 L 79.2,54.0 L 79.3,54.0 L 79.4,54.0 L 79.5,54.1 L 79.6,54.1 L 79.7,54.1 L 79.9,54.1 L 80.0,54.1 L 80.1,54.1 L 80.2,54.1 L 80.3,54.1 L 80.5,54.1 L 80.6,54.2 L 80.7,54.2 L 80.9,54.2 L 81.0,54.2 L 81.2,54.2 L 81.3,54.2 L 81.4,54.3 L 81.6,54.3 L 81.7,54.3 L 81.9,54.3 L 82.1,54.4 L 82.2,54.4 L 82.4,54.4 L 82.6,54.5 L 82.7,54.5 L 82.9,54.5 L 83.1,54.6 L 83.3,54.6 L 83.5,54.7 L 83.7,54.7 L 83.9,54.8 L 84.1,54.8 L 84.3,54.9 L 84.5,54.9 L 84.7,55.0 L 84.9,55.1 L 85.1,55.1 L 85.3,55.2 L 85.6,55.3 L 85.8,55.4 L 86.0,55.4 L 86.3,55.5 L 86.5,55.6 L 86.8,55.7 L 87.0,55.8 L 87.3,55.9 L 87.6,56.0 L 87.8,56.1 L 88.1,56.3 L 88.4,56.4 L 88.7,56.5 L 89.0,56.7 L 89.3,56.8 L 89.6,57.0 L 89.9,57.1 L 90.3,57.3 L 90.6,57.5 L 90.9,57.7 L 91.3,57.9 L 91.6,58.1 L 92.0,58.3 L 92.3,58.5 L 92.7,58.7 L 93.1,59.0 L 93.5,59.2 L 93.8,59.5 L 94.3,59.8 L 94.7,60.0 L 95.1,60.3 L 95.5,60.7 L 95.9,61.0 L 96.4,61.3 L 96.8,61.7 L 97.3,62.0 L 97.8,62.4 L 98.2,62.8 L 98.7,63.2 L 99.2,63.7 L 99.7,64.1 L 100.3,64.6 L 100.8,65.1 L 101.3,65.6 L 101.9,66.1 L 102.5,66.7 L 103.0,67.2 L 103.6,67.8 L 104.2,68.4 L 104.8,69.1 L 105.4,69.7 L 106.1,70.4 L 106.7,71.1 L 107.4,71.9 L 108.1,72.6 L 108.7,73.4 L 109.5,74.2 L 110.2,75.1 L 110.9,76.0 L 111.6,76.9 L 112.4,77.8 L 113.2,78.8 L 114.0,79.8 L 114.8,80.9 L 115.6,81.9 L 116.4,83.0 L 117.2,84.0 L 118.0,85.1 L 118.8,86.2 L 119.6,87.3 L 120.4,88.4 L 121.2,89.5 L 122.0,90.7 L 122.8,91.8 L 123.6,93.0 L 124.4,94.1 L 125.2,95.3 L 126.0,96.4 L 126.8,97.6 L 127.6,98.8 L 128.4,100.0 L 129.2,101.1 L 130.0,102.3 L 130.8,103.5 L 131.6,104.7 L 132.4,105.9 L 133.2,107.1 L 134.0,108.3 L 134.8,109.5 L 135.6,110.7 L 136.4,111.9 L 137.2,113.2 L 138.0,114.4 L 138.9,115.6 L 139.7,116.8 L 140.5,118.0 L 141.3,119.2 L 142.1,120.4 L 142.9,121.6 L 143.7,122.8 L 144.5,124.0 L 145.3,125.2 L 146.1,126.4 L 146.9,127.6 L 147.7,128.8 L 148.5,130.0 L 149.3,131.2 L 150.1,132.3 L 150.9,133.5 L 151.7,134.7 L 152.5,135.9 L 153.3,137.0 L 154.1,138.2 L 154.9,139.3 L 155.7,140.5 L 156.5,141.6 L 157.3,142.8 L 158.1,143.9 L 158.9,145.0 L 159.7,146.1 L 160.5,147.3 L 161.3,148.4 L 162.1,149.5 L 162.9,150.6 L 163.7,151.7 L 164.5,152.8 L 165.3,153.8 L 166.1,154.9 L 166.9,156.0 L 167.7,157.0 L 168.5,158.1 L 169.3,159.1 L 170.2,160.2 L 171.0,161.2 L 171.8,162.2 L 172.6,163.3 L 173.4,164.3 L 174.2,165.3 L 175.0,166.3 L 175.8,167.3 L 176.6,168.3 L 177.4,169.2 L 178.2,170.2 L 179.0,171.2 L 179.8,172.1 L 180.6,173.1 L 181.4,174.0 L 182.2,175.0 L 183.0,175.9 L 183.8,176.8 L 184.6,177.7 L 185.4,178.7 L 186.2,179.6 L 187.0,180.5 L 187.8,181.3 L 188.6,182.2 L 189.4,183.1 L 190.2,184.0 L 191.0,184.8 L 191.8,185.7 L 192.6,186.5 L 193.4,187.4 L 194.2,188.2 L 195.0,189.0 L 195.8,189.8 L 196.6,190.7 L 197.4,191.5 L 198.2,192.3 L 199.0,193.1 L 199.8,193.8 L 200.6,194.6 L 201.5,195.4 L 202.3,196.2 L 203.1,196.9 L 203.9,197.7 L 204.7,198.4 L 205.5,199.2 L 206.3,199.9 L 207.1,200.6 L 207.9,201.4 L 208.7,202.1 L 209.5,202.8 L 210.3,203.5 L 211.1,204.2 L 211.9,204.9 L 212.7,205.6 L 213.5,206.2 L 214.3,206.9 L 215.1,207.6 L 215.9,208.3 L 216.7,208.9 L 217.5,209.6 L 218.3,210.2 L 219.1,210.9 L 219.9,211.5 L 220.7,212.1 L 221.5,212.7 L 222.3,213.4 L 223.1,214.0 L 223.9,214.6 L 224.7,215.2 L 225.5,215.8 L 226.3,216.4 L 227.1,217.0 L 227.9,217.6 L 228.7,218.1 L 229.5,218.7 L 230.3,219.3 L 231.1,219.8 L 231.9,220.4 L 232.8,221.0 L 233.6,221.5 L 234.4,222.0 L 235.2,222.6 L 236.0,223.1 L 236.8,223.7 L 237.6,224.2 L 238.4,224.7 L 239.2,225.2 L 240.0,225.7 L 240.8,226.2 L 241.6,226.7 L 242.4,227.2 L 243.2,227.7 L 244.0,228.2 L 244.8,228.7 L 245.6,229.2 L 246.4,229.7 L 247.2,230.2 L 248.0,230.6 L 248.8,231.1 L 249.6,231.6 L 250.4,232.0 L 251.2,232.5 L 252.0,232.9 L 252.8,233.4 L 253.6,233.8 L 254.4,234.3 L 255.2,234.7 L 256.0,235.1 L 256.8,235.6 L 257.6,236.0 L 258.4,236.4 L 259.2,236.8 L 260.0,237.3 L 260.8,237.7 L 261.6,238.1 L 262.4,238.5 L 263.3,238.9 L 264.1,239.3 L 264.9,239.7 L 265.7,240.1 L 266.5,240.5 L 267.3,240.9 L 268.1,241.3 L 268.9,241.6 L 269.7,242.0 L 270.5,242.4 L 271.3,242.8 L 272.1,243.1 L 272.9,243.5 L 273.7,243.9 L 274.5,244.2 L 275.3,244.6 L 276.1,244.9 L 276.9,245.3 L 277.7,245.7 L 278.5,246.0 L 279.3,246.3 L 280.1,246.7 L 280.9,247.0 L 281.7,247.4 L 282.5,247.7 L 283.3,248.0 L 284.1,248.4 L 284.9,248.7 L 285.7,249.0 L 286.5,249.3 L 287.3,249.7 L 288.1,250.0 L 288.9,250.3 L 289.7,250.6 L 290.5,250.9 L 291.3,251.2 L 292.1,251.5 L 292.9,251.8 L 293.7,252.1 L 294.6,252.4 L 295.4,252.7 L 296.2,253.0 L 297.0,253.3 L 297.8,253.6 L 298.6,253.9 L 299.4,254.2 L 300.2,254.5 L 301.0,254.8 L 301.8,255.0 L 302.6,255.3 L 303.4,255.6 L 304.2,255.9 L 305.0,256.1 L 305.8,256.4 L 306.6,256.7 L 307.4,256.9 L 308.2,257.2 L 309.0,257.5 L 309.8,257.7 L 310.6,258.0 L 311.4,258.3 L 312.2,258.5 L 313.0,258.8 L 313.8,259.0 L 314.6,259.3 L 315.4,259.5 L 316.2,259.8 L 317.0,260.0 L 317.8,260.3 L 318.6,260.5 L 319.4,260.8 L 320.2,261.0 L 321.0,261.2 L 321.8,261.5 L 322.6,261.7 L 323.4,261.9 L 324.2,262.2 L 325.0,262.4 L 325.9,262.6 L 326.7,262.9 L 327.5,263.1 L 328.3,263.3 L 329.1,263.5 L 329.9,263.8 L 330.7,264.0 L 331.5,264.2 L 332.3,264.4 L 333.1,264.6 L 333.9,264.8 L 334.7,265.1 L 335.5,265.3 L 336.3,265.5 L 337.1,265.7 L 337.9,265.9 L 338.7,266.1 L 339.5,266.3 L 340.3,266.5 L 341.1,266.7 L 341.9,266.9 L 342.7,267.1 L 343.5,267.3 L 344.3,267.5 L 345.1,267.7 L 345.9,267.9 L 346.7,268.1 L 347.5,268.3 L 348.3,268.5 L 349.1,268.7 L 349.9,268.9 L 350.7,269.1 L 351.5,269.3 L 352.3,269.4 L 353.1,269.6 L 353.9,269.8 L 354.7,270.0" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<circle cx="354.7" cy="270.0" r="3.4" fill="#fb923c"/>
+<path d="M 78.0,54.0 L 78.2,54.0 L 78.3,54.0 L 78.5,54.0 L 78.7,54.0 L 78.9,54.0 L 79.1,54.0 L 79.3,54.0 L 79.5,54.1 L 79.7,54.1 L 80.0,54.1 L 80.2,54.1 L 80.5,54.1 L 80.7,54.2 L 81.0,54.2 L 81.3,54.2 L 81.6,54.3 L 81.9,54.3 L 82.2,54.4 L 82.6,54.5 L 82.9,54.5 L 83.3,54.6 L 83.7,54.7 L 84.1,54.8 L 84.5,54.9 L 84.9,55.1 L 85.3,55.2 L 85.8,55.3 L 86.3,55.5 L 86.8,55.7 L 87.3,55.9 L 87.8,56.1 L 88.4,56.4 L 89.0,56.7 L 89.6,57.0 L 90.3,57.3 L 90.9,57.7 L 91.6,58.0 L 92.3,58.5 L 93.1,58.9 L 93.8,59.4 L 94.7,60.0 L 95.5,60.6 L 96.4,61.2 L 97.3,62.0 L 98.2,62.7 L 99.2,63.5 L 100.3,64.4 L 101.3,65.4 L 102.5,66.4 L 103.6,67.6 L 104.8,68.8 L 106.1,70.1 L 107.4,71.4 L 108.7,72.9 L 110.2,74.5 L 111.6,76.2 L 113.2,78.0 L 114.8,79.9 L 116.4,81.9 L 118.0,83.9 L 119.6,85.9 L 121.2,88.0 L 122.8,90.0 L 124.4,92.1 L 126.0,94.2 L 127.6,96.3 L 129.2,98.4 L 130.8,100.6 L 132.4,102.7 L 134.0,104.8 L 135.6,106.9 L 137.2,109.1 L 138.9,111.2 L 140.5,113.3 L 142.1,115.4 L 143.7,117.4 L 145.3,119.5 L 146.9,121.5 L 148.5,123.6 L 150.1,125.6 L 151.7,127.5 L 153.3,129.5 L 154.9,131.5 L 156.5,133.4 L 158.1,135.3 L 159.7,137.1 L 161.3,139.0 L 162.9,140.8 L 164.5,142.6 L 166.1,144.4 L 167.7,146.2 L 169.3,147.9 L 171.0,149.6 L 172.6,151.3 L 174.2,152.9 L 175.8,154.6 L 177.4,156.2 L 179.0,157.7 L 180.6,159.3 L 182.2,160.8 L 183.8,162.3 L 185.4,163.8 L 187.0,165.3 L 188.6,166.7 L 190.2,168.1 L 191.8,169.5 L 193.4,170.9 L 195.0,172.2 L 196.6,173.5 L 198.2,174.8 L 199.8,176.1 L 201.5,177.4 L 203.1,178.6 L 204.7,179.8 L 206.3,181.0 L 207.9,182.2 L 209.5,183.3 L 211.1,184.5 L 212.7,185.6 L 214.3,186.7 L 215.9,187.8 L 217.5,188.9 L 219.1,189.9 L 220.7,190.9 L 222.3,191.9 L 223.9,192.9 L 225.5,193.9 L 227.1,194.9 L 228.7,195.8 L 230.3,196.8 L 231.9,197.7 L 233.6,198.6 L 235.2,199.5 L 236.8,200.4 L 238.4,201.2 L 240.0,202.1 L 241.6,202.9 L 243.2,203.7 L 244.8,204.5 L 246.4,205.3 L 248.0,206.1 L 249.6,206.9 L 251.2,207.7 L 252.8,208.4 L 254.4,209.1 L 256.0,209.9 L 257.6,210.6 L 259.2,211.3 L 260.8,212.0 L 262.4,212.7 L 264.1,213.3 L 265.7,214.0 L 267.3,214.7 L 268.9,215.3 L 270.5,215.9 L 272.1,216.6 L 273.7,217.2 L 275.3,217.8 L 276.9,218.4 L 278.5,219.0 L 280.1,219.6 L 281.7,220.1 L 283.3,220.7 L 284.9,221.3 L 286.5,221.8 L 288.1,222.4 L 289.7,222.9 L 291.3,223.4 L 292.9,224.0 L 294.6,224.5 L 296.2,225.0 L 297.8,225.5 L 299.4,226.0 L 301.0,226.5 L 302.6,226.9 L 304.2,227.4 L 305.8,227.9 L 307.4,228.4 L 309.0,228.8 L 310.6,229.3 L 312.2,229.7 L 313.8,230.1 L 315.4,230.6 L 317.0,231.0 L 318.6,231.4 L 320.2,231.8 L 321.8,232.3 L 323.4,232.7 L 325.0,233.1 L 326.7,233.5 L 328.3,233.9 L 329.9,234.3 L 331.5,234.6 L 333.1,235.0 L 334.7,235.4 L 336.3,235.8 L 337.9,236.1 L 339.5,236.5 L 341.1,236.8 L 342.7,237.2 L 344.3,237.5 L 345.9,237.9 L 347.5,238.2 L 349.1,238.6 L 350.7,238.9 L 352.3,239.2 L 353.9,239.6 L 355.5,239.9 L 357.2,240.2 L 358.8,240.5 L 360.4,240.8 L 362.0,241.1 L 363.6,241.4 L 365.2,241.7 L 366.8,242.0 L 368.4,242.3 L 370.0,242.6 L 371.6,242.9 L 373.2,243.2 L 374.8,243.5 L 376.4,243.8 L 378.0,244.0 L 379.6,244.3 L 381.2,244.6 L 382.8,244.9 L 384.4,245.1 L 386.0,245.4 L 387.7,245.7 L 389.3,245.9 L 390.9,246.2 L 392.5,246.4 L 394.1,246.7 L 395.7,246.9 L 397.3,247.2 L 398.9,247.4 L 400.5,247.6 L 402.1,247.9 L 403.7,248.1 L 405.3,248.4 L 406.9,248.6 L 408.5,248.8 L 410.1,249.0 L 411.7,249.3 L 413.3,249.5 L 414.9,249.7 L 416.5,249.9 L 418.1,250.1 L 419.8,250.4 L 421.4,250.6 L 423.0,250.8 L 424.6,251.0 L 426.2,251.2 L 427.8,251.4 L 429.4,251.6 L 431.0,251.8 L 432.6,252.0 L 434.2,252.2 L 435.8,252.4 L 437.4,252.6 L 439.0,252.8 L 440.6,253.0 L 442.2,253.2 L 443.8,253.4 L 445.4,253.5 L 447.0,253.7 L 448.6,253.9 L 450.3,254.1 L 451.9,254.3 L 453.5,254.4 L 455.1,254.6 L 456.7,254.8 L 458.3,255.0 L 459.9,255.1 L 461.5,255.3 L 463.1,255.5 L 464.7,255.6 L 466.3,255.8 L 467.9,256.0 L 469.5,256.1 L 471.1,256.3 L 472.7,256.5 L 474.3,256.6 L 475.9,256.8 L 477.5,256.9 L 479.1,257.1 L 480.7,257.3 L 482.4,257.4 L 484.0,257.6 L 485.6,257.7 L 487.2,257.9 L 488.8,258.0 L 490.4,258.2 L 492.0,258.3 L 493.6,258.4 L 495.2,258.6 L 496.8,258.7 L 498.4,258.9 L 500.0,259.0 L 501.6,259.2 L 503.2,259.3 L 504.8,259.4 L 506.4,259.6 L 508.0,259.7 L 509.6,259.8 L 511.2,260.0 L 512.9,260.1 L 514.5,260.2 L 516.1,260.4 L 517.7,260.5 L 519.3,260.6 L 520.9,260.8 L 522.5,260.9 L 524.1,261.0 L 525.7,261.1 L 527.3,261.3 L 528.9,261.4 L 530.5,261.5 L 532.1,261.6 L 533.7,261.7 L 535.3,261.9 L 536.9,262.0 L 538.5,262.1 L 540.1,262.2 L 541.7,262.3 L 543.4,262.5 L 545.0,262.6 L 546.6,262.7 L 548.2,262.8 L 549.8,262.9 L 551.4,263.0 L 553.0,263.1 L 554.6,263.2 L 556.2,263.4 L 557.8,263.5 L 559.4,263.6 L 561.0,263.7 L 562.6,263.8 L 564.2,263.9 L 565.8,264.0 L 567.4,264.1 L 569.0,264.2 L 570.6,264.3 L 572.2,264.4 L 573.8,264.5 L 575.5,264.6 L 577.1,264.7 L 578.7,264.8 L 580.3,264.9 L 581.9,265.0 L 583.5,265.1 L 585.1,265.2 L 586.7,265.3 L 588.3,265.4 L 589.9,265.5 L 591.5,265.6 L 593.1,265.7 L 594.7,265.8 L 596.3,265.9 L 597.9,266.0 L 599.5,266.1 L 601.1,266.2 L 602.7,266.2 L 604.3,266.3 L 606.0,266.4 L 607.6,266.5 L 609.2,266.6 L 610.8,266.7 L 612.4,266.8 L 614.0,266.9 L 615.6,267.0 L 617.2,267.0 L 618.8,267.1 L 620.4,267.2 L 622.0,267.3 L 623.6,267.4 L 625.2,267.5 L 626.8,267.5 L 628.4,267.6 L 630.0,267.7 L 631.6,267.8 L 633.2,267.9 L 634.8,268.0 L 636.5,268.0 L 638.1,268.1 L 639.7,268.2 L 641.3,268.3 L 642.9,268.4 L 644.5,268.4 L 646.1,268.5 L 647.7,268.6 L 649.3,268.7 L 650.9,268.7 L 652.5,268.8 L 654.1,268.9 L 655.7,269.0 L 657.3,269.0 L 658.9,269.1 L 660.5,269.2 L 662.1,269.3 L 663.7,269.3 L 665.3,269.4 L 666.9,269.5 L 668.6,269.6 L 670.2,269.6 L 671.8,269.7 L 673.4,269.8 L 675.0,269.8 L 676.6,269.9 L 678.2,270.0" fill="none" stroke="#a78bfa" stroke-width="1.8"/>
+<circle cx="678.8" cy="270.0" r="3.4" fill="#a78bfa"/>
+<path d="M 78.0,54.0 L 78.2,54.0 L 78.4,54.0 L 78.5,54.0 L 78.7,54.0 L 78.9,54.0 L 79.1,54.0 L 79.4,54.0 L 79.6,54.1 L 79.8,54.1 L 80.1,54.1 L 80.4,54.1 L 80.6,54.2 L 80.9,54.2 L 81.2,54.2 L 81.5,54.3 L 81.8,54.3 L 82.2,54.4 L 82.5,54.5 L 82.9,54.5 L 83.3,54.6 L 83.7,54.7 L 84.1,54.8 L 84.5,54.9 L 85.0,55.1 L 85.4,55.2 L 85.9,55.4 L 86.5,55.6 L 87.0,55.8 L 87.5,56.0 L 88.1,56.3 L 88.7,56.5 L 89.4,56.8 L 90.0,57.2 L 90.7,57.5 L 91.4,57.9 L 92.2,58.4 L 93.0,58.8 L 93.8,59.4 L 94.6,59.9 L 95.5,60.5 L 96.4,61.2 L 97.4,61.9 L 98.4,62.7 L 99.4,63.6 L 100.5,64.5 L 101.7,65.5 L 102.9,66.6 L 104.1,67.8 L 105.4,69.0 L 106.7,70.4 L 108.1,71.8 L 109.6,73.4 L 111.1,75.0 L 112.7,76.8 L 114.4,78.6 L 116.1,80.5 L 117.7,82.5 L 119.4,84.5 L 121.1,86.4 L 122.8,88.4 L 124.5,90.5 L 126.2,92.5 L 127.9,94.5 L 129.5,96.5 L 131.2,98.5 L 132.9,100.5 L 134.6,102.5 L 136.3,104.5 L 138.0,106.5 L 139.7,108.4 L 141.3,110.3 L 143.0,112.3 L 144.7,114.2 L 146.4,116.0 L 148.1,117.9 L 149.8,119.7 L 151.5,121.5 L 153.1,123.3 L 154.8,125.1 L 156.5,126.8 L 158.2,128.5 L 159.9,130.2 L 161.6,131.9 L 163.2,133.5 L 164.9,135.1 L 166.6,136.7 L 168.3,138.3 L 170.0,139.8 L 171.7,141.3 L 173.4,142.8 L 175.0,144.2 L 176.7,145.7 L 178.4,147.1 L 180.1,148.5 L 181.8,149.8 L 183.5,151.1 L 185.2,152.5 L 186.8,153.7 L 188.5,155.0 L 190.2,156.3 L 191.9,157.5 L 193.6,158.7 L 195.3,159.9 L 197.0,161.0 L 198.6,162.2 L 200.3,163.3 L 202.0,164.4 L 203.7,165.5 L 205.4,166.5 L 207.1,167.6 L 208.8,168.6 L 210.4,169.6 L 212.1,170.6 L 213.8,171.6 L 215.5,172.6 L 217.2,173.5 L 218.9,174.4 L 220.6,175.3 L 222.2,176.2 L 223.9,177.1 L 225.6,178.0 L 227.3,178.8 L 229.0,179.7 L 230.7,180.5 L 232.4,181.3 L 234.0,182.1 L 235.7,182.9 L 237.4,183.7 L 239.1,184.4 L 240.8,185.2 L 242.5,185.9 L 244.1,186.6 L 245.8,187.4 L 247.5,188.1 L 249.2,188.7 L 250.9,189.4 L 252.6,190.1 L 254.3,190.8 L 255.9,191.4 L 257.6,192.1 L 259.3,192.7 L 261.0,193.3 L 262.7,193.9 L 264.4,194.5 L 266.1,195.1 L 267.7,195.7 L 269.4,196.3 L 271.1,196.9 L 272.8,197.4 L 274.5,198.0 L 276.2,198.5 L 277.9,199.0 L 279.5,199.6 L 281.2,200.1 L 282.9,200.6 L 284.6,201.1 L 286.3,201.6 L 288.0,202.1 L 289.7,202.6 L 291.3,203.1 L 293.0,203.6 L 294.7,204.0 L 296.4,204.5 L 298.1,205.0 L 299.8,205.4 L 301.5,205.8 L 303.1,206.3 L 304.8,206.7 L 306.5,207.1 L 308.2,207.6 L 309.9,208.0 L 311.6,208.4 L 313.3,208.8 L 314.9,209.2 L 316.6,209.6 L 318.3,210.0 L 320.0,210.4 L 321.7,210.8 L 323.4,211.1 L 325.0,211.5 L 326.7,211.9 L 328.4,212.2 L 330.1,212.6 L 331.8,212.9 L 333.5,213.3 L 335.2,213.6 L 336.8,214.0 L 338.5,214.3 L 340.2,214.7 L 341.9,215.0 L 343.6,215.3 L 345.3,215.6 L 347.0,216.0 L 348.6,216.3 L 350.3,216.6 L 352.0,216.9 L 353.7,217.2 L 355.4,217.5 L 357.1,217.8 L 358.8,218.1 L 360.4,218.4 L 362.1,218.7 L 363.8,219.0 L 365.5,219.2 L 367.2,219.5 L 368.9,219.8 L 370.6,220.1 L 372.2,220.3 L 373.9,220.6 L 375.6,220.9 L 377.3,221.1 L 379.0,221.4 L 380.7,221.7 L 382.4,221.9 L 384.0,222.2 L 385.7,222.4 L 387.4,222.7 L 389.1,222.9 L 390.8,223.1 L 392.5,223.4 L 394.2,223.6 L 395.8,223.9 L 397.5,224.1 L 399.2,224.3 L 400.9,224.5 L 402.6,224.8 L 404.3,225.0 L 405.9,225.2 L 407.6,225.4 L 409.3,225.7 L 411.0,225.9 L 412.7,226.1 L 414.4,226.3 L 416.1,226.5 L 417.7,226.7 L 419.4,226.9 L 421.1,227.1 L 422.8,227.3 L 424.5,227.5 L 426.2,227.7 L 427.9,227.9 L 429.5,228.1 L 431.2,228.3 L 432.9,228.5 L 434.6,228.7 L 436.3,228.9 L 438.0,229.0 L 439.7,229.2 L 441.3,229.4 L 443.0,229.6 L 444.7,229.8 L 446.4,230.0 L 448.1,230.1 L 449.8,230.3 L 451.5,230.5 L 453.1,230.6 L 454.8,230.8 L 456.5,231.0 L 458.2,231.2 L 459.9,231.3 L 461.6,231.5 L 463.3,231.6 L 464.9,231.8 L 466.6,232.0 L 468.3,232.1 L 470.0,232.3 L 471.7,232.4 L 473.4,232.6 L 475.1,232.8 L 476.7,232.9 L 478.4,233.1 L 480.1,233.2 L 481.8,233.4 L 483.5,233.5 L 485.2,233.7 L 486.8,233.8 L 488.5,233.9 L 490.2,234.1 L 491.9,234.2 L 493.6,234.4 L 495.3,234.5 L 497.0,234.6 L 498.6,234.8 L 500.3,234.9 L 502.0,235.1 L 503.7,235.2 L 505.4,235.3 L 507.1,235.5 L 508.8,235.6 L 510.4,235.7 L 512.1,235.9 L 513.8,236.0 L 515.5,236.1 L 517.2,236.2 L 518.9,236.4 L 520.6,236.5 L 522.2,236.6 L 523.9,236.7 L 525.6,236.9 L 527.3,237.0 L 529.0,237.1 L 530.7,237.2 L 532.4,237.3 L 534.0,237.5 L 535.7,237.6 L 537.4,237.7 L 539.1,237.8 L 540.8,237.9 L 542.5,238.0 L 544.2,238.1 L 545.8,238.3 L 547.5,238.4 L 549.2,238.5 L 550.9,238.6 L 552.6,238.7 L 554.3,238.8 L 556.0,238.9 L 557.6,239.0 L 559.3,239.1 L 561.0,239.2 L 562.7,239.3 L 564.4,239.4 L 566.1,239.5 L 567.7,239.6 L 569.4,239.8 L 571.1,239.9 L 572.8,240.0 L 574.5,240.1 L 576.2,240.2 L 577.9,240.3 L 579.5,240.3 L 581.2,240.4 L 582.9,240.5 L 584.6,240.6 L 586.3,240.7 L 588.0,240.8 L 589.7,240.9 L 591.3,241.0 L 593.0,241.1 L 594.7,241.2 L 596.4,241.3 L 598.1,241.4 L 599.8,241.5 L 601.5,241.6 L 603.1,241.7 L 604.8,241.7 L 606.5,241.8 L 608.2,241.9 L 609.9,242.0 L 611.6,242.1 L 613.3,242.2 L 614.9,242.3 L 616.6,242.4 L 618.3,242.4 L 620.0,242.5 L 621.7,242.6 L 623.4,242.7 L 625.1,242.8 L 626.7,242.9 L 628.4,242.9 L 630.1,243.0 L 631.8,243.1 L 633.5,243.2 L 635.2,243.3 L 636.9,243.3 L 638.5,243.4 L 640.2,243.5 L 641.9,243.6 L 643.6,243.7 L 645.3,243.7 L 647.0,243.8 L 648.6,243.9 L 650.3,244.0 L 652.0,244.0 L 653.7,244.1 L 655.4,244.2 L 657.1,244.3 L 658.8,244.3 L 660.4,244.4 L 662.1,244.5 L 663.8,244.6 L 665.5,244.6 L 667.2,244.7 L 668.9,244.8 L 670.6,244.8 L 672.2,244.9 L 673.9,245.0 L 675.6,245.0 L 677.3,245.1 L 679.0,245.2 L 680.7,245.3 L 682.4,245.3 L 684.0,245.4 L 685.7,245.5 L 687.4,245.5 L 689.1,245.6 L 690.8,245.7 L 692.5,245.7 L 694.2,245.8 L 695.8,245.9 L 697.5,245.9 L 699.2,246.0" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5 3"/>
+<line x1="452" y1="66" x2="478" y2="66" stroke="#60a5fa" stroke-width="2.4"/>
+<text x="486" y="70" font-size="10.5" fill="#60a5fa">n = 0, ξ₁ = 2.449</text>
+<line x1="452" y1="82" x2="478" y2="82" stroke="#f472b6" stroke-width="2.4"/>
+<text x="486" y="86" font-size="10.5" fill="#f472b6">n = 1, ξ₁ = 3.142</text>
+<line x1="452" y1="98" x2="478" y2="98" stroke="#2dd4bf" stroke-width="2.4"/>
+<text x="486" y="102" font-size="10.5" fill="#2dd4bf">n = 3/2, ξ₁ = 3.654</text>
+<line x1="452" y1="114" x2="478" y2="114" stroke="#fb923c" stroke-width="2.4"/>
+<text x="486" y="118" font-size="10.5" fill="#fb923c">n = 3, ξ₁ = 6.897</text>
+<line x1="452" y1="130" x2="478" y2="130" stroke="#a78bfa" stroke-width="2.4"/>
+<text x="486" y="134" font-size="10.5" fill="#a78bfa">n = 4, ξ₁ = 14.972</text>
+<line x1="452" y1="146" x2="478" y2="146" stroke="#94a3b8" stroke-width="2.4" stroke-dasharray="5 3"/>
+<text x="486" y="150" font-size="10.5" fill="#94a3b8">n = 5, no surface</text>
+<text x="690" y="180" font-size="10.5" text-anchor="end" fill="#94a3b8">filled dot: the surface ξ₁, the first zero of θ</text>
+<text x="690" y="196" font-size="10.5" text-anchor="end" fill="#94a3b8">n = 5 has none: finite mass, infinite radius</text>
+<text x="389" y="348" font-size="12.5" text-anchor="middle" fill="#cbd5e1">The same solutions as density profiles, against the Sun</text>
+<rect x="78" y="374" width="622" height="196" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="78.0" y1="570" x2="78.0" y2="575" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="588" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.0</text>
+<line x1="202.4" y1="570" x2="202.4" y2="575" stroke="#334155" stroke-width="1"/>
+<text x="202.4" y="588" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.2</text>
+<line x1="326.8" y1="570" x2="326.8" y2="575" stroke="#334155" stroke-width="1"/>
+<text x="326.8" y="588" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.4</text>
+<line x1="451.2" y1="570" x2="451.2" y2="575" stroke="#334155" stroke-width="1"/>
+<text x="451.2" y="588" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.6</text>
+<line x1="575.6" y1="570" x2="575.6" y2="575" stroke="#334155" stroke-width="1"/>
+<text x="575.6" y="588" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.8</text>
+<line x1="700.0" y1="570" x2="700.0" y2="575" stroke="#334155" stroke-width="1"/>
+<text x="700.0" y="588" font-size="10.5" text-anchor="middle" fill="#94a3b8">1.0</text>
+<line x1="73" y1="374.0" x2="78" y2="374.0" stroke="#334155" stroke-width="1"/>
+<text x="69" y="378.0" font-size="10.5" text-anchor="end" fill="#94a3b8">1</text>
+<line x1="73" y1="413.2" x2="78" y2="413.2" stroke="#334155" stroke-width="1"/>
+<text x="69" y="417.2" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻¹</text>
+<line x1="73" y1="452.4" x2="78" y2="452.4" stroke="#334155" stroke-width="1"/>
+<text x="69" y="456.4" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻²</text>
+<line x1="73" y1="491.6" x2="78" y2="491.6" stroke="#334155" stroke-width="1"/>
+<text x="69" y="495.6" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻³</text>
+<line x1="73" y1="530.8" x2="78" y2="530.8" stroke="#334155" stroke-width="1"/>
+<text x="69" y="534.8" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻⁴</text>
+<line x1="73" y1="570.0" x2="78" y2="570.0" stroke="#334155" stroke-width="1"/>
+<text x="69" y="574.0" font-size="10.5" text-anchor="end" fill="#94a3b8">10⁻⁵</text>
+<text x="389" y="606" font-size="11.5" text-anchor="middle" fill="#cbd5e1">r / R</text>
+<text x="34" y="472" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 34 472)">ρ / ρ<tspan baseline-shift="sub" font-size="8">c</tspan></text>
+<path d="M 78.0,374.0 L 78.2,374.0 L 78.4,374.0 L 78.6,374.0 L 78.8,374.0 L 79.1,374.0 L 79.3,374.0 L 79.5,374.0 L 79.7,374.0 L 79.9,374.0 L 80.2,374.0 L 80.4,374.0 L 80.6,374.0 L 80.9,374.0 L 81.1,374.0 L 81.4,374.0 L 81.6,374.0 L 81.9,374.0 L 82.1,374.0 L 82.4,374.0 L 82.6,374.0 L 82.9,374.0 L 83.1,374.0 L 83.4,374.0 L 83.7,374.0 L 84.0,374.0 L 84.2,374.0 L 84.5,374.0 L 84.8,374.0 L 85.1,374.0 L 85.4,374.0 L 85.7,374.0 L 86.0,374.0 L 86.3,374.0 L 86.6,374.0 L 86.9,374.0 L 87.2,374.0 L 87.5,374.0 L 87.8,374.0 L 88.2,374.0 L 88.5,374.0 L 88.8,374.0 L 89.2,374.0 L 89.5,374.0 L 89.8,374.0 L 90.2,374.0 L 90.5,374.0 L 90.9,374.0 L 91.3,374.0 L 91.6,374.0 L 92.0,374.0 L 92.4,374.0 L 92.7,374.0 L 93.1,374.0 L 93.5,374.0 L 93.9,374.0 L 94.3,374.0 L 94.7,374.0 L 95.1,374.0 L 95.5,374.0 L 95.9,374.0 L 96.4,374.0 L 96.8,374.1 L 97.2,374.1 L 97.7,374.1 L 98.1,374.1 L 98.6,374.1 L 99.0,374.1 L 99.5,374.1 L 99.9,374.1 L 100.4,374.1 L 100.9,374.1 L 101.4,374.1 L 101.8,374.1 L 102.3,374.1 L 102.8,374.1 L 103.3,374.1 L 103.8,374.1 L 104.4,374.1 L 104.9,374.1 L 105.4,374.1 L 106.0,374.1 L 106.5,374.1 L 107.0,374.1 L 107.6,374.1 L 108.2,374.1 L 108.7,374.1 L 109.3,374.1 L 109.9,374.1 L 110.5,374.2 L 111.1,374.2 L 111.7,374.2 L 112.3,374.2 L 112.9,374.2 L 113.5,374.2 L 114.2,374.2 L 114.8,374.2 L 115.5,374.2 L 116.1,374.2 L 116.8,374.2 L 117.5,374.2 L 118.2,374.2 L 118.8,374.2 L 119.5,374.3 L 120.2,374.3 L 121.0,374.3 L 121.7,374.3 L 122.4,374.3 L 123.2,374.3 L 123.9,374.3 L 124.7,374.3 L 125.4,374.3 L 126.2,374.3 L 127.0,374.4 L 127.8,374.4 L 128.6,374.4 L 129.4,374.4 L 130.2,374.4 L 131.1,374.4 L 131.9,374.4 L 132.8,374.4 L 133.6,374.5 L 134.5,374.5 L 135.4,374.5 L 136.3,374.5 L 137.2,374.5 L 138.1,374.5 L 139.1,374.5 L 140.0,374.6 L 141.0,374.6 L 141.9,374.6 L 142.9,374.6 L 143.9,374.6 L 144.9,374.7 L 145.9,374.7 L 146.9,374.7 L 148.0,374.7 L 149.0,374.7 L 150.1,374.8 L 151.2,374.8 L 152.2,374.8 L 153.4,374.8 L 154.5,374.9 L 155.6,374.9 L 156.7,374.9 L 157.9,374.9 L 159.1,375.0 L 160.2,375.0 L 161.4,375.0 L 162.7,375.1 L 163.9,375.1 L 165.1,375.1 L 166.4,375.1 L 167.7,375.2 L 168.9,375.2 L 170.2,375.3 L 171.6,375.3 L 172.9,375.3 L 174.2,375.4 L 175.6,375.4 L 177.0,375.4 L 178.4,375.5 L 179.8,375.5 L 181.2,375.6 L 182.7,375.6 L 184.2,375.7 L 185.7,375.7 L 187.2,375.8 L 188.7,375.8 L 190.2,375.9 L 191.8,375.9 L 193.4,376.0 L 195.0,376.0 L 196.6,376.1 L 198.2,376.1 L 199.9,376.2 L 201.5,376.3 L 203.2,376.3 L 205.0,376.4 L 206.7,376.4 L 208.4,376.5 L 210.2,376.6 L 212.0,376.7 L 213.8,376.7 L 215.7,376.8 L 217.6,376.9 L 219.4,377.0 L 221.4,377.0 L 223.3,377.1 L 225.3,377.2 L 227.2,377.3 L 229.2,377.4 L 231.3,377.5 L 233.3,377.6 L 235.4,377.7 L 237.4,377.8 L 239.4,377.9 L 241.5,378.0 L 243.5,378.1 L 245.6,378.2 L 247.6,378.3 L 249.7,378.4 L 251.7,378.5 L 253.7,378.6 L 255.8,378.7 L 257.8,378.8 L 259.9,378.9 L 261.9,379.0 L 264.0,379.1 L 266.0,379.3 L 268.0,379.4 L 270.1,379.5 L 272.1,379.6 L 274.2,379.7 L 276.2,379.8 L 278.3,380.0 L 280.3,380.1 L 282.3,380.2 L 284.4,380.3 L 286.4,380.5 L 288.5,380.6 L 290.5,380.7 L 292.6,380.9 L 294.6,381.0 L 296.6,381.1 L 298.7,381.3 L 300.7,381.4 L 302.8,381.6 L 304.8,381.7 L 306.9,381.8 L 308.9,382.0 L 310.9,382.1 L 313.0,382.3 L 315.0,382.4 L 317.1,382.6 L 319.1,382.7 L 321.2,382.9 L 323.2,383.0 L 325.2,383.2 L 327.3,383.3 L 329.3,383.5 L 331.4,383.7 L 333.4,383.8 L 335.5,384.0 L 337.5,384.1 L 339.5,384.3 L 341.6,384.5 L 343.6,384.6 L 345.7,384.8 L 347.7,385.0 L 349.8,385.2 L 351.8,385.3 L 353.8,385.5 L 355.9,385.7 L 357.9,385.9 L 360.0,386.0 L 362.0,386.2 L 364.1,386.4 L 366.1,386.6 L 368.1,386.8 L 370.2,387.0 L 372.2,387.2 L 374.3,387.3 L 376.3,387.5 L 378.4,387.7 L 380.4,387.9 L 382.4,388.1 L 384.5,388.3 L 386.5,388.5 L 388.6,388.7 L 390.6,388.9 L 392.7,389.1 L 394.7,389.4 L 396.7,389.6 L 398.8,389.8 L 400.8,390.0 L 402.9,390.2 L 404.9,390.4 L 407.0,390.6 L 409.0,390.9 L 411.0,391.1 L 413.1,391.3 L 415.1,391.5 L 417.2,391.8 L 419.2,392.0 L 421.3,392.2 L 423.3,392.5 L 425.3,392.7 L 427.4,392.9 L 429.4,393.2 L 431.5,393.4 L 433.5,393.7 L 435.6,393.9 L 437.6,394.2 L 439.6,394.4 L 441.7,394.7 L 443.7,394.9 L 445.8,395.2 L 447.8,395.4 L 449.9,395.7 L 451.9,395.9 L 453.9,396.2 L 456.0,396.5 L 458.0,396.7 L 460.1,397.0 L 462.1,397.3 L 464.2,397.6 L 466.2,397.9 L 468.2,398.1 L 470.3,398.4 L 472.3,398.7 L 474.4,399.0 L 476.4,399.3 L 478.5,399.6 L 480.5,399.9 L 482.5,400.2 L 484.6,400.5 L 486.6,400.8 L 488.7,401.1 L 490.7,401.4 L 492.8,401.7 L 494.8,402.0 L 496.8,402.4 L 498.9,402.7 L 500.9,403.0 L 503.0,403.3 L 505.0,403.7 L 507.1,404.0 L 509.1,404.3 L 511.1,404.7 L 513.2,405.0 L 515.2,405.4 L 517.3,405.7 L 519.3,406.1 L 521.4,406.4 L 523.4,406.8 L 525.4,407.2 L 527.5,407.5 L 529.5,407.9 L 531.6,408.3 L 533.6,408.7 L 535.7,409.1 L 537.7,409.4 L 539.7,409.8 L 541.8,410.2 L 543.8,410.6 L 545.9,411.1 L 547.9,411.5 L 550.0,411.9 L 552.0,412.3 L 554.0,412.7 L 556.1,413.2 L 558.1,413.6 L 560.2,414.1 L 562.2,414.5 L 564.3,415.0 L 566.3,415.4 L 568.3,415.9 L 570.4,416.4 L 572.4,416.9 L 574.5,417.4 L 576.5,417.9 L 578.6,418.4 L 580.6,418.9 L 582.6,419.4 L 584.7,419.9 L 586.7,420.5 L 588.8,421.0 L 590.8,421.6 L 592.9,422.1 L 594.9,422.7 L 596.9,423.3 L 599.0,423.9 L 601.0,424.5 L 603.1,425.1 L 605.1,425.7 L 607.2,426.3 L 609.2,427.0 L 611.2,427.6 L 613.3,428.3 L 615.3,429.0 L 617.4,429.7 L 619.4,430.4 L 621.5,431.2 L 623.5,431.9 L 625.5,432.7 L 627.6,433.5 L 629.6,434.3 L 631.7,435.2 L 633.7,436.0 L 635.8,436.9 L 637.8,437.8 L 639.8,438.7 L 641.9,439.7 L 643.9,440.7 L 646.0,441.7 L 648.0,442.8 L 650.1,443.9 L 652.1,445.1 L 654.1,446.3 L 656.2,447.5 L 658.2,448.8 L 660.3,450.2 L 662.3,451.6 L 664.4,453.1 L 666.4,454.7 L 668.4,456.4 L 670.5,458.2 L 672.5,460.1 L 674.6,462.2 L 676.6,464.4 L 678.7,466.8 L 680.7,469.5 L 682.7,472.4 L 684.8,475.7 L 686.8,479.5 L 688.9,483.9 L 690.9,489.1 L 693.0,495.7 L 695.0,504.5 L 697.0,518.0 L 699.1,548.0 L 699.6,568.8" fill="none" stroke="#2dd4bf" stroke-width="2.4"/>
+<path d="M 78.0,374.0 L 78.2,374.0 L 78.4,374.0 L 78.5,374.0 L 78.7,374.0 L 78.9,374.0 L 79.1,374.0 L 79.3,374.0 L 79.5,374.0 L 79.7,374.0 L 79.9,374.0 L 80.1,374.0 L 80.3,374.0 L 80.5,374.0 L 80.7,374.0 L 81.0,374.0 L 81.2,374.0 L 81.4,374.0 L 81.7,374.0 L 81.9,374.0 L 82.2,374.0 L 82.4,374.0 L 82.7,374.0 L 82.9,374.0 L 83.2,374.0 L 83.5,374.0 L 83.8,374.0 L 84.0,374.0 L 84.3,374.0 L 84.6,374.0 L 84.9,374.1 L 85.2,374.1 L 85.5,374.1 L 85.9,374.1 L 86.2,374.1 L 86.5,374.1 L 86.9,374.1 L 87.2,374.1 L 87.5,374.1 L 87.9,374.1 L 88.3,374.1 L 88.6,374.1 L 89.0,374.1 L 89.4,374.1 L 89.8,374.1 L 90.2,374.2 L 90.6,374.2 L 91.0,374.2 L 91.4,374.2 L 91.9,374.2 L 92.3,374.2 L 92.7,374.2 L 93.2,374.2 L 93.7,374.3 L 94.1,374.3 L 94.6,374.3 L 95.1,374.3 L 95.6,374.3 L 96.1,374.3 L 96.6,374.4 L 97.2,374.4 L 97.7,374.4 L 98.3,374.4 L 98.8,374.5 L 99.4,374.5 L 100.0,374.5 L 100.6,374.5 L 101.2,374.6 L 101.8,374.6 L 102.4,374.6 L 103.1,374.7 L 103.7,374.7 L 104.4,374.7 L 105.1,374.8 L 105.8,374.8 L 106.5,374.8 L 107.2,374.9 L 107.9,374.9 L 108.7,375.0 L 109.4,375.0 L 110.2,375.1 L 111.0,375.1 L 111.8,375.2 L 112.6,375.2 L 113.4,375.3 L 114.3,375.4 L 115.2,375.4 L 116.0,375.5 L 117.0,375.6 L 117.9,375.6 L 118.8,375.7 L 119.8,375.8 L 120.7,375.9 L 121.7,376.0 L 122.7,376.1 L 123.8,376.2 L 124.8,376.3 L 125.9,376.4 L 127.0,376.5 L 128.1,376.6 L 129.2,376.7 L 130.4,376.8 L 131.6,376.9 L 132.8,377.1 L 134.0,377.2 L 135.2,377.3 L 136.5,377.5 L 137.8,377.6 L 139.1,377.8 L 140.5,378.0 L 141.8,378.1 L 143.2,378.3 L 144.6,378.5 L 146.1,378.7 L 147.6,378.9 L 149.1,379.1 L 150.6,379.3 L 152.2,379.5 L 153.8,379.7 L 155.4,380.0 L 157.1,380.2 L 158.8,380.5 L 160.5,380.8 L 162.2,381.0 L 163.9,381.3 L 165.6,381.6 L 167.3,381.9 L 169.0,382.1 L 170.7,382.4 L 172.5,382.7 L 174.2,383.0 L 175.9,383.3 L 177.6,383.6 L 179.3,383.9 L 181.0,384.3 L 182.7,384.6 L 184.5,384.9 L 186.2,385.2 L 187.9,385.5 L 189.6,385.9 L 191.3,386.2 L 193.0,386.6 L 194.7,386.9 L 196.4,387.2 L 198.2,387.6 L 199.9,387.9 L 201.6,388.3 L 203.3,388.7 L 205.0,389.0 L 206.7,389.4 L 208.4,389.8 L 210.2,390.1 L 211.9,390.5 L 213.6,390.9 L 215.3,391.3 L 217.0,391.6 L 218.7,392.0 L 220.4,392.4 L 222.2,392.8 L 223.9,393.2 L 225.6,393.6 L 227.3,394.0 L 229.0,394.4 L 230.7,394.8 L 232.4,395.2 L 234.1,395.6 L 235.9,396.0 L 237.6,396.4 L 239.3,396.8 L 241.0,397.2 L 242.7,397.7 L 244.4,398.1 L 246.1,398.5 L 247.9,398.9 L 249.6,399.4 L 251.3,399.8 L 253.0,400.2 L 254.7,400.6 L 256.4,401.1 L 258.1,401.5 L 259.8,401.9 L 261.6,402.4 L 263.3,402.8 L 265.0,403.3 L 266.7,403.7 L 268.4,404.2 L 270.1,404.6 L 271.8,405.0 L 273.6,405.5 L 275.3,405.9 L 277.0,406.4 L 278.7,406.8 L 280.4,407.3 L 282.1,407.8 L 283.8,408.2 L 285.6,408.7 L 287.3,409.1 L 289.0,409.6 L 290.7,410.1 L 292.4,410.5 L 294.1,411.0 L 295.8,411.4 L 297.5,411.9 L 299.3,412.4 L 301.0,412.9 L 302.7,413.3 L 304.4,413.8 L 306.1,414.3 L 307.8,414.7 L 309.5,415.2 L 311.3,415.7 L 313.0,416.2 L 314.7,416.6 L 316.4,417.1 L 318.1,417.6 L 319.8,418.1 L 321.5,418.6 L 323.2,419.0 L 325.0,419.5 L 326.7,420.0 L 328.4,420.5 L 330.1,421.0 L 331.8,421.5 L 333.5,422.0 L 335.2,422.5 L 337.0,422.9 L 338.7,423.4 L 340.4,423.9 L 342.1,424.4 L 343.8,424.9 L 345.5,425.4 L 347.2,425.9 L 349.0,426.4 L 350.7,426.9 L 352.4,427.4 L 354.1,427.9 L 355.8,428.4 L 357.5,428.9 L 359.2,429.4 L 360.9,429.9 L 362.7,430.4 L 364.4,430.9 L 366.1,431.4 L 367.8,431.9 L 369.5,432.4 L 371.2,432.9 L 372.9,433.5 L 374.7,434.0 L 376.4,434.5 L 378.1,435.0 L 379.8,435.5 L 381.5,436.0 L 383.2,436.5 L 384.9,437.1 L 386.6,437.6 L 388.4,438.1 L 390.1,438.6 L 391.8,439.1 L 393.5,439.7 L 395.2,440.2 L 396.9,440.7 L 398.6,441.2 L 400.4,441.8 L 402.1,442.3 L 403.8,442.8 L 405.5,443.3 L 407.2,443.9 L 408.9,444.4 L 410.6,444.9 L 412.4,445.5 L 414.1,446.0 L 415.8,446.5 L 417.5,447.1 L 419.2,447.6 L 420.9,448.2 L 422.6,448.7 L 424.3,449.3 L 426.1,449.8 L 427.8,450.3 L 429.5,450.9 L 431.2,451.4 L 432.9,452.0 L 434.6,452.5 L 436.3,453.1 L 438.1,453.7 L 439.8,454.2 L 441.5,454.8 L 443.2,455.3 L 444.9,455.9 L 446.6,456.5 L 448.3,457.0 L 450.1,457.6 L 451.8,458.2 L 453.5,458.7 L 455.2,459.3 L 456.9,459.9 L 458.6,460.5 L 460.3,461.0 L 462.0,461.6 L 463.8,462.2 L 465.5,462.8 L 467.2,463.4 L 468.9,464.0 L 470.6,464.6 L 472.3,465.1 L 474.0,465.7 L 475.8,466.3 L 477.5,466.9 L 479.2,467.5 L 480.9,468.1 L 482.6,468.8 L 484.3,469.4 L 486.0,470.0 L 487.7,470.6 L 489.5,471.2 L 491.2,471.8 L 492.9,472.5 L 494.6,473.1 L 496.3,473.7 L 498.0,474.3 L 499.7,475.0 L 501.5,475.6 L 503.2,476.3 L 504.9,476.9 L 506.6,477.6 L 508.3,478.2 L 510.0,478.9 L 511.7,479.5 L 513.5,480.2 L 515.2,480.9 L 516.9,481.5 L 518.6,482.2 L 520.3,482.9 L 522.0,483.6 L 523.7,484.2 L 525.4,484.9 L 527.2,485.6 L 528.9,486.3 L 530.6,487.0 L 532.3,487.7 L 534.0,488.5 L 535.7,489.2 L 537.4,489.9 L 539.2,490.6 L 540.9,491.4 L 542.6,492.1 L 544.3,492.8 L 546.0,493.6 L 547.7,494.3 L 549.4,495.1 L 551.1,495.9 L 552.9,496.6 L 554.6,497.4 L 556.3,498.2 L 558.0,499.0 L 559.7,499.8 L 561.4,500.6 L 563.1,501.4 L 564.9,502.2 L 566.6,503.1 L 568.3,503.9 L 570.0,504.8 L 571.7,505.6 L 573.4,506.5 L 575.1,507.3 L 576.9,508.2 L 578.6,509.1 L 580.3,510.0 L 582.0,510.9 L 583.7,511.8 L 585.4,512.8 L 587.1,513.7 L 588.8,514.7 L 590.6,515.6 L 592.3,516.6 L 594.0,517.6 L 595.7,518.6 L 597.4,519.6 L 599.1,520.6 L 600.8,521.7 L 602.6,522.7 L 604.3,523.8 L 606.0,524.9 L 607.7,526.0 L 609.4,527.1 L 611.1,528.3 L 612.8,529.4 L 614.6,530.6 L 616.3,531.8 L 618.0,533.0 L 619.7,534.3 L 621.4,535.5 L 623.1,536.8 L 624.8,538.1 L 626.5,539.5 L 628.3,540.8 L 630.0,542.2 L 631.7,543.6 L 633.4,545.1 L 635.1,546.6 L 636.8,548.1 L 638.5,549.7 L 640.3,551.3 L 642.0,552.9 L 643.7,554.6 L 645.4,556.3 L 647.1,558.1 L 648.8,559.9 L 650.5,561.8 L 652.2,563.8 L 654.0,565.8 L 655.7,567.9 L 657.3,569.9" fill="none" stroke="#fb923c" stroke-width="2.4"/>
+<path d="M 79.0,374.0 L 79.1,374.0 L 79.2,374.0 L 79.3,374.0 L 79.4,374.0 L 79.5,374.0 L 79.6,374.0 L 79.6,374.0 L 79.7,374.0 L 79.7,374.0 L 79.8,374.0 L 79.8,374.0 L 79.9,374.0 L 79.9,374.0 L 80.0,374.0 L 80.0,374.0 L 80.1,374.0 L 80.1,374.0 L 80.2,374.0 L 80.2,374.0 L 80.2,374.0 L 80.3,374.0 L 80.3,374.0 L 80.4,374.0 L 80.4,374.0 L 80.4,374.0 L 80.4,374.0 L 80.5,374.0 L 80.5,374.0 L 80.5,374.0 L 80.6,374.0 L 80.6,374.0 L 80.6,374.0 L 80.7,374.0 L 80.7,374.0 L 80.7,374.0 L 80.8,374.0 L 80.8,374.0 L 80.8,374.0 L 80.9,374.0 L 80.9,374.0 L 80.9,374.0 L 80.9,374.0 L 81.0,374.0 L 81.0,374.0 L 81.0,374.0 L 81.0,374.0 L 81.0,374.0 L 81.1,374.0 L 81.1,374.0 L 81.1,374.0 L 81.1,374.0 L 81.1,374.0 L 81.2,374.0 L 81.2,374.0 L 81.2,374.0 L 81.2,374.0 L 81.2,374.0 L 81.2,374.0 L 81.3,374.0 L 81.3,374.0 L 81.3,374.0 L 81.3,374.0 L 81.4,374.0 L 81.4,374.0 L 81.4,374.0 L 81.4,374.0 L 81.4,374.0 L 81.5,374.0 L 81.5,374.0 L 81.5,374.0 L 81.5,374.0 L 81.5,374.0 L 81.6,374.0 L 81.6,374.0 L 81.6,374.0 L 81.6,374.0 L 81.7,374.0 L 81.7,374.0 L 81.7,374.0 L 81.7,374.0 L 81.7,374.0 L 81.8,374.0 L 81.8,374.0 L 81.8,374.0 L 81.8,374.0 L 81.9,374.0 L 81.9,374.0 L 81.9,374.0 L 81.9,374.0 L 82.0,374.0 L 82.0,374.1 L 82.0,374.1 L 82.0,374.1 L 82.1,374.1 L 82.1,374.1 L 82.1,374.1 L 82.1,374.1 L 82.1,374.1 L 82.2,374.1 L 82.2,374.1 L 82.3,374.1 L 82.3,374.1 L 82.3,374.1 L 82.4,374.1 L 82.4,374.1 L 82.4,374.1 L 82.5,374.1 L 82.5,374.1 L 82.5,374.1 L 82.6,374.1 L 82.6,374.1 L 82.6,374.1 L 82.7,374.1 L 82.7,374.1 L 82.7,374.1 L 82.8,374.1 L 82.8,374.1 L 82.9,374.1 L 82.9,374.1 L 82.9,374.1 L 83.0,374.1 L 83.1,374.1 L 83.1,374.1 L 83.2,374.1 L 83.2,374.1 L 83.2,374.1 L 83.3,374.1 L 83.4,374.1 L 83.4,374.1 L 83.5,374.1 L 83.5,374.1 L 83.6,374.1 L 83.6,374.1 L 83.7,374.1 L 83.7,374.1 L 83.8,374.1 L 83.9,374.1 L 83.9,374.1 L 84.0,374.1 L 84.0,374.1 L 84.1,374.1 L 84.2,374.1 L 84.2,374.1 L 84.3,374.1 L 84.4,374.1 L 84.4,374.1 L 84.5,374.1 L 84.5,374.1 L 84.6,374.1 L 84.7,374.1 L 84.7,374.1 L 84.8,374.1 L 84.9,374.2 L 85.0,374.2 L 85.0,374.2 L 85.1,374.2 L 85.2,374.2 L 85.2,374.2 L 85.3,374.2 L 85.4,374.2 L 85.4,374.2 L 85.5,374.2 L 85.6,374.2 L 85.7,374.2 L 85.8,374.2 L 85.8,374.2 L 85.9,374.2 L 86.0,374.2 L 86.1,374.2 L 86.1,374.2 L 86.2,374.2 L 86.3,374.2 L 86.4,374.2 L 86.5,374.2 L 86.6,374.2 L 86.7,374.2 L 86.8,374.3 L 86.9,374.3 L 87.1,374.3 L 87.2,374.3 L 87.3,374.3 L 87.4,374.3 L 87.6,374.3 L 87.7,374.3 L 87.8,374.3 L 88.0,374.3 L 88.1,374.3 L 88.3,374.3 L 88.4,374.4 L 88.6,374.4 L 88.7,374.4 L 88.9,374.4 L 89.1,374.4 L 89.2,374.4 L 89.4,374.4 L 89.5,374.4 L 89.7,374.4 L 89.9,374.5 L 90.0,374.5 L 90.2,374.5 L 90.4,374.5 L 90.6,374.5 L 90.8,374.5 L 91.0,374.5 L 91.1,374.6 L 91.3,374.6 L 91.5,374.6 L 91.7,374.6 L 91.8,374.6 L 92.1,374.6 L 92.4,374.7 L 92.7,374.7 L 92.9,374.7 L 93.2,374.7 L 93.5,374.8 L 93.8,374.8 L 94.1,374.8 L 94.4,374.8 L 94.7,374.9 L 95.0,374.9 L 95.3,375.0 L 95.6,375.0 L 95.9,375.0 L 96.3,375.0 L 96.6,375.1 L 96.9,375.1 L 97.2,375.2 L 97.6,375.2 L 98.0,375.3 L 98.4,375.3 L 98.7,375.3 L 99.1,375.4 L 99.5,375.4 L 99.8,375.5 L 100.4,375.6 L 100.9,375.6 L 101.3,375.7 L 101.8,375.7 L 102.4,375.8 L 103.1,375.9 L 103.7,376.0 L 104.6,376.2 L 105.2,376.2 L 105.9,376.4 L 106.6,376.5 L 107.4,376.6 L 108.2,376.7 L 109.1,376.9 L 109.9,377.0 L 110.7,377.1 L 111.6,377.3 L 112.3,377.4 L 113.2,377.6 L 114.2,377.8 L 115.0,377.9 L 115.6,378.0 L 116.6,378.2 L 117.7,378.4 L 118.6,378.6 L 119.4,378.8 L 120.4,379.0 L 121.4,379.2 L 122.3,379.4 L 123.2,379.5 L 124.0,379.7 L 124.7,379.9 L 125.4,380.0 L 126.4,380.2 L 127.3,380.4 L 128.1,380.6 L 129.0,380.8 L 129.8,380.9 L 130.7,381.1 L 131.5,381.3 L 132.2,381.5 L 133.0,381.6 L 133.7,381.8 L 134.4,382.0 L 135.1,382.1 L 136.0,382.3 L 136.9,382.5 L 137.5,382.7 L 138.2,382.8 L 138.8,382.9 L 139.6,383.1 L 140.1,383.3 L 140.9,383.4 L 141.6,383.6 L 142.5,383.8 L 143.1,383.9 L 143.9,384.1 L 144.6,384.3 L 145.4,384.5 L 146.2,384.7 L 147.3,384.9 L 147.9,385.0 L 148.8,385.2 L 149.3,385.4 L 150.0,385.5 L 151.0,385.8 L 151.8,386.0 L 152.9,386.2 L 153.7,386.4 L 154.6,386.6 L 155.3,386.8 L 156.3,387.0 L 157.2,387.2 L 157.9,387.4 L 158.6,387.6 L 159.3,387.7 L 160.0,387.9 L 160.8,388.1 L 161.4,388.3 L 162.3,388.5 L 163.2,388.7 L 164.1,388.9 L 165.2,389.2 L 166.0,389.4 L 167.0,389.6 L 167.7,389.8 L 168.6,390.0 L 169.3,390.2 L 170.0,390.3 L 170.7,390.5 L 171.6,390.7 L 172.3,390.9 L 173.2,391.1 L 174.1,391.3 L 174.8,391.5 L 175.5,391.7 L 176.2,391.9 L 176.9,392.0 L 177.9,392.3 L 178.9,392.6 L 179.8,392.8 L 180.9,393.1 L 181.8,393.3 L 182.7,393.5 L 183.8,393.8 L 184.6,394.0 L 185.4,394.2 L 186.5,394.5 L 187.3,394.7 L 188.2,394.9 L 189.0,395.1 L 190.3,395.5 L 191.8,395.8 L 192.9,396.1 L 194.1,396.4 L 195.2,396.7 L 196.8,397.2 L 198.0,397.5 L 199.2,397.8 L 200.4,398.1 L 202.1,398.6 L 203.8,399.0 L 205.6,399.5 L 207.3,400.0 L 208.7,400.4 L 210.8,401.0 L 212.7,401.5 L 214.6,402.0 L 217.1,402.7 L 220.0,403.5 L 222.2,404.2 L 224.3,404.8 L 226.9,405.5 L 229.5,406.3 L 231.7,406.9 L 233.8,407.5 L 237.1,408.5 L 241.7,409.9 L 246.5,411.3 L 251.6,412.8 L 256.9,414.5 L 262.6,416.2 L 268.7,418.1 L 274.4,419.9 L 278.8,421.2 L 282.4,422.4 L 287.5,423.9 L 294.7,426.2 L 302.7,428.7 L 311.3,431.4 L 318.8,433.6 L 323.4,435.1 L 326.9,436.1 L 331.6,437.6 L 336.8,439.1 L 340.7,440.3 L 345.8,441.9 L 352.9,444.0 L 359.8,446.1 L 364.6,447.4 L 369.5,448.9 L 376.7,451.0 L 381.7,452.4 L 385.7,453.6 L 394.3,456.0 L 402.2,458.2 L 409.8,460.3 L 417.1,462.4 L 424.2,464.3 L 431.1,466.2 L 437.7,467.9 L 444.0,469.6 L 449.9,471.1 L 454.9,472.5 L 460.2,473.8 L 464.8,475.0 L 470.3,476.4 L 475.5,477.7 L 479.3,478.7 L 481.7,479.3 L 484.1,479.9 L 486.3,480.4 L 489.0,481.1 L 491.6,481.7 L 493.7,482.2 L 495.5,482.7 L 497.2,483.1 L 498.5,483.4 L 499.8,483.7 L 501.2,484.1 L 502.5,484.4 L 503.6,484.7 L 504.9,485.0 L 506.0,485.2 L 506.8,485.4 L 507.6,485.6 L 508.6,485.9 L 509.5,486.1 L 510.0,486.2 L 510.5,486.3 L 511.2,486.5 L 511.7,486.6 L 512.2,486.8 L 512.8,486.9 L 513.3,487.0 L 513.6,487.1 L 514.0,487.2 L 514.3,487.3 L 514.7,487.3 L 515.0,487.4 L 515.4,487.5 L 515.7,487.6 L 516.1,487.7 L 516.4,487.8 L 516.8,487.8 L 517.2,487.9 L 517.7,488.0 L 518.0,488.1 L 518.3,488.2 L 518.6,488.3 L 518.9,488.4 L 519.2,488.4 L 519.6,488.5 L 519.9,488.6 L 520.2,488.6 L 520.5,488.7 L 520.8,488.8 L 521.1,488.9 L 521.4,488.9 L 521.7,489.0 L 522.0,489.1 L 522.3,489.1 L 522.6,489.2 L 522.9,489.3 L 523.2,489.4 L 523.5,489.4 L 523.8,489.5 L 524.1,489.6 L 524.4,489.6 L 524.7,489.7 L 525.0,489.8 L 525.3,489.8 L 525.6,489.9 L 525.9,490.0 L 526.2,490.0 L 526.5,490.1 L 526.8,490.2 L 527.1,490.2 L 527.4,490.3 L 527.6,490.4 L 527.9,490.4 L 528.2,490.5 L 528.5,490.5 L 528.8,490.6 L 529.0,490.7 L 529.3,490.7 L 529.6,490.8 L 529.9,490.9 L 530.3,491.0 L 530.7,491.1 L 531.2,491.1 L 531.6,491.2 L 532.3,491.4 L 533.0,491.5 L 533.7,491.7 L 534.2,491.8 L 534.9,491.9 L 535.7,492.1 L 536.4,492.2 L 537.1,492.4 L 537.7,492.5 L 538.6,492.7 L 539.4,492.9 L 540.1,493.0 L 540.8,493.2 L 541.9,493.4 L 542.8,493.6 L 544.0,493.9 L 544.9,494.1 L 545.8,494.3 L 546.8,494.5 L 548.0,494.8 L 549.0,495.0 L 550.5,495.3 L 551.7,495.6 L 552.6,495.8 L 553.8,496.1 L 555.0,496.4 L 556.1,496.6 L 557.0,496.8 L 557.9,497.0 L 558.8,497.3 L 560.6,497.7 L 561.9,498.0 L 563.7,498.4 L 565.4,498.8 L 567.0,499.2 L 568.7,499.7 L 570.3,500.1 L 571.9,500.5 L 573.4,500.9 L 574.9,501.2 L 576.5,501.6 L 577.9,502.0 L 579.4,502.4 L 580.8,502.8 L 583.0,503.4 L 585.7,504.1 L 588.4,504.9 L 591.0,505.6 L 593.5,506.4 L 596.0,507.1 L 598.4,507.8 L 600.7,508.6 L 603.0,509.3 L 605.2,510.0 L 607.3,510.7 L 609.3,511.4 L 611.4,512.1 L 613.3,512.7 L 615.2,513.4 L 617.1,514.1 L 618.9,514.8 L 620.7,515.4 L 622.4,516.1 L 624.1,516.8 L 625.8,517.4 L 627.3,518.1 L 628.9,518.7 L 630.4,519.4 L 631.9,520.0 L 633.3,520.6 L 634.7,521.3 L 636.1,521.9 L 637.4,522.5 L 638.8,523.2 L 640.0,523.8 L 641.3,524.4 L 642.5,525.0 L 643.9,525.8 L 645.4,526.6 L 646.6,527.2 L 647.7,527.8 L 648.8,528.5 L 649.9,529.1 L 650.9,529.7 L 652.0,530.3 L 653.0,530.9 L 653.9,531.6 L 654.9,532.2 L 655.8,532.8 L 656.7,533.4 L 657.6,534.0 L 658.4,534.6 L 659.3,535.2 L 660.1,535.8 L 660.9,536.4 L 661.7,537.0 L 662.4,537.6 L 663.2,538.2 L 663.9,538.7 L 664.6,539.3 L 665.3,539.9 L 666.0,540.5 L 666.7,541.1 L 667.3,541.7 L 667.9,542.2 L 668.6,542.8 L 669.2,543.4 L 669.8,544.0 L 670.3,544.5 L 670.9,545.1 L 671.5,545.7 L 672.0,546.3 L 672.5,546.8 L 673.0,547.4 L 673.5,548.0 L 674.0,548.5 L 674.5,549.1 L 675.2,549.9 L 676.1,551.1 L 676.6,551.6 L 677.0,552.3 L 677.5,552.8 L 677.9,553.4 L 678.3,554.0 L 679.1,555.2 L 679.8,556.3 L 680.6,557.4 L 681.2,558.6 L 681.9,559.7 L 682.5,560.9 L 683.2,562.0 L 683.7,563.2 L 684.3,564.3 L 684.8,565.4 L 685.3,566.6 L 685.8,567.7 L 686.3,568.8 L 686.7,570.0" fill="none" stroke="#facc15" stroke-width="2.8"/>
+<line x1="88" y1="466" x2="114" y2="466" stroke="#2dd4bf" stroke-width="2.4"/>
+<text x="122" y="470" font-size="10.5" fill="#2dd4bf">n = 3/2 polytrope</text>
+<line x1="88" y1="482" x2="114" y2="482" stroke="#fb923c" stroke-width="2.4"/>
+<text x="122" y="486" font-size="10.5" fill="#fb923c">n = 3 polytrope</text>
+<line x1="88" y1="498" x2="114" y2="498" stroke="#facc15" stroke-width="2.4"/>
+<text x="122" y="502" font-size="10.5" fill="#facc15">tabulated solar model</text>
+<text x="88" y="540" font-size="10.5" fill="#cbd5e1">ρ<tspan baseline-shift="sub" font-size="8">c</tspan>/ρ̄ : 106.9 tabulated, 54.2 for n = 3, 6.0 for n = 3/2</text>
+<text x="88" y="556" font-size="10.5" fill="#94a3b8">the Sun is more centrally condensed than either polytrope, by a factor 1.97 on n = 3</text>
+<text x="34" y="632" font-size="10.5" fill="#94a3b8">Solar profile: BS2005-AGS,OP, Bahcall, Serenelli &amp; Basu (2005), ApJ 621, L85.</text>
+<text x="34" y="648" font-size="10.5" fill="#94a3b8">Polytropes integrated numerically and checked against the exact n = 0, 1 and 5 solutions.</text>
+</svg>
+<!--/FIG_LANE-->
+<figcaption>Upper panel: solutions of the Lane–Emden equation (6.2) for $n = 0$, $1$, $3/2$, $3$, $4$ and $5$. The dot on each curve is its surface $\xi_1$; the $n=5$ solution has none. A higher index gives a more extended profile with a larger $\xi_1$. Lower panel: the density profiles $\rho/\rho_c = \theta^n$ for $n=3/2$ and $n=3$, each scaled to its own radius, against the tabulated solar model of <a class="secref" href="#ssm">§9</a> on a logarithmic axis. Neither polytrope follows the Sun over the whole radius; the Sun's central condensation $\rho_c/\bar\rho$ is $106.9$, against $54.2$ for $n=3$.</figcaption>
+</figure>
+
+<h2 id="properties">7. Properties of polytropes</h2>
+
+<p>The dimensionless solution fixes every structural ratio of a polytrope. This section extracts the ones that can be compared with a star of known mass and radius.</p>
+
+<div class="prop"><b>Proposition 10 (mass, radius, central condensation and central pressure).</b> A polytrope of index $n\lt 5$ with first zero $\xi_1$ and surface slope $\theta_1' \equiv \theta'(\xi_1)$ has
+$$ R \;=\; a\,\xi_1, \qquad M \;=\; 4\pi a^3\rho_c\left(-\xi_1^2\theta_1'\right), \tag{7.1}$$
+$$ D_n \;\equiv\; \frac{\rho_c}{\bar\rho} \;=\; \frac{\xi_1}{3\,|\theta_1'|}, \qquad W_n \;\equiv\; \frac{P_c\,R^4}{G M^2} \;=\; \frac{1}{4\pi(n+1)\,\theta_1'^{\,2}}, \tag{7.2}$$
+and, for $n\neq3$, the mass–radius relation
+$$ R \;\propto\; K^{\,n/(3-n)}\,M^{(1-n)/(3-n)}. \tag{7.3}$$</div>
+
+<div class="proof">
+The radius follows from $r=a\xi$ at the surface. For the mass, integrate (2.3) with $\rho=\rho_c\theta^n$ and $r=a\xi$:
+$$ M \;=\; 4\pi a^3\rho_c\int_0^{\xi_1}\xi^2\theta^n\,d\xi \;=\; 4\pi a^3\rho_c\int_0^{\xi_1}\left(-\frac{d}{d\xi}\big(\xi^2\theta'\big)\right)d\xi \;=\; 4\pi a^3\rho_c\left(-\xi_1^2\theta_1'\right), $$
+using (6.2) in the middle step and $\xi^2\theta'=0$ at $\xi=0$.
+
+For $D_n$: $\bar\rho = 3M/(4\pi R^3) = 3\rho_c(-\xi_1^2\theta_1')/\xi_1^3 = 3\rho_c|\theta_1'|/\xi_1$, and dividing $\rho_c$ by this gives the first of (7.2).
+
+For $W_n$: the central pressure is $P_c = K\rho_c^{1+1/n}$. By (6.1), $K\rho_c^{1/n} = 4\pi G a^2\rho_c/(n+1)$, so $P_c = 4\pi G a^2\rho_c^2/(n+1)$. From (7.1), $\rho_c = M/(4\pi a^3\mu_1)$ with $\mu_1\equiv-\xi_1^2\theta_1'$. Substituting,
+$$ P_c \;=\; \frac{4\pi G a^2}{n+1}\cdot\frac{M^2}{16\pi^2a^6\mu_1^2} \;=\; \frac{GM^2}{4\pi(n+1)\,a^4\mu_1^2}. $$
+With $a = R/\xi_1$, $a^4\mu_1^2 = R^4\xi_1^{-4}\cdot\xi_1^4\theta_1'^2 = R^4\theta_1'^2$, which gives the second of (7.2).
+
+For (7.3): from (6.1), $a^2\propto K\rho_c^{(1-n)/n}$, and from (7.1), $\rho_c\propto M/a^3$. Substituting, $a^2\propto K M^{(1-n)/n}a^{-3(1-n)/n}$, so $a^{(3-n)/n}\propto K M^{(1-n)/n}$. Raising to the power $n/(3-n)$ and using $R\propto a$ gives (7.3). <span class="qed">∎</span>
+</div>
+
+<p>The two ratios $D_n$ and $W_n$ are the useful ones. Given only the mass and radius of a star, and an index $n$, they predict its central density and central pressure with no further input. <a class="secref" href="#checks">§10</a> uses them in exactly that way. The integrator gives the following values.</p>
+
+<table>
+<tr><th>$n$</th><th>$\xi_1$</th><th>$-\xi_1^2\theta_1'$</th><th>$D_n=\rho_c/\bar\rho$</th><th>$W_n=P_cR^4/GM^2$</th></tr>
+<tr><td>$0$</td><td>$2.44949$</td><td>$4.89835$</td><td>$1.0001$</td><td>$0.11940$</td></tr>
+<tr><td>$1$</td><td>$3.14159$</td><td>$3.14159$</td><td>$3.2899$</td><td>$0.39270$</td></tr>
+<tr><td>$3/2$</td><td>$3.65375$</td><td>$2.71406$</td><td>$5.9907$</td><td>$0.77014$</td></tr>
+<tr><td>$3$</td><td>$6.89685$</td><td>$2.01824$</td><td>$54.1825$</td><td>$11.05068$</td></tr>
+<tr><td>$4$</td><td>$14.97155$</td><td>$1.79723$</td><td>$622.4079$</td><td>$247.55944$</td></tr>
+</table>
+
+<p>The central condensation $D_n$ rises steeply with $n$, from $1$ for the uniform sphere to $54$ for $n=3$ and $622$ for $n=4$. A high index describes a star with a dense core and an extended, tenuous envelope. The $n=0$ entry $1.0001$ departs from the exact value $1$ by the $1.3\times10^{-4}$ error in $\theta_0'(\xi_1)$ noted in <a class="secref" href="#laneemden">§6</a>.</p>
+
+<div class="keyresult"><b>Check against a published value.</b> Chandrasekhar (1939), <em>An Introduction to the Study of Stellar Structure</em>, chapter IV, Table 4, gives for $n=3$: $\xi_1 = 6.89685$, $-\xi_1^2\theta_1' = 2.01824$ and $\rho_c/\bar\rho = 54.1825$. The integrator gives the same six significant figures for each; the ratios of the unrounded values are $1.000000$, $0.999998$ and $1.000000$.</div>
+
+<p>The mass–radius relation (7.3) has two special cases. For $n=1$ the exponent of $M$ is zero, so all $n=1$ polytropes with the same $K$ have the same radius. For $n=3$ the exponent is undefined, and (7.1) shows instead that $M\propto K^{3/2}$ with no dependence on $\rho_c$: the mass is fixed by $K$ alone. Problems D1 and K3 use both facts.</p>
+
+<h2 id="noclosure">8. What balance gives with no closure</h2>
+
+<p>Everything in <a class="secref" href="#laneemden">§6</a> and <a class="secref" href="#properties">§7</a> depends on the closure (4.1). Before testing a closure, it is worth asking what hydrostatic equilibrium implies with no closure at all. The answer is two exact results. One is an inequality, and one is an identity.</p>
+
+<div class="prop"><b>Proposition 11 (Chandrasekhar's lower bound on the central pressure).</b> In a spherical star of mass $M$ and radius $R$ in hydrostatic equilibrium (2.4), with finite central density and non-negative surface pressure,
+$$ P_c \;\ge\; \frac{G M^2}{8\pi R^4}. \tag{8.1}$$</div>
+
+<div class="proof">
+Define $F(r) \equiv P(r) + Gm(r)^2/(8\pi r^4)$. Differentiate, using both equations of (2.4):
+$$ \frac{dF}{dr} \;=\; -\frac{Gm\rho}{r^2} \;+\; \frac{2Gm}{8\pi r^4}\cdot4\pi r^2\rho \;-\; \frac{4Gm^2}{8\pi r^5} \;=\; -\frac{Gm^2}{2\pi r^5} \;\le\; 0. $$
+The first two terms cancel exactly. So $F$ does not increase outward, and $F(0)\ge F(R)$. At the centre, $m\approx\tfrac{4}{3}\pi r^3\rho_c$ makes $m^2/r^4\propto r^2\to0$, so $F(0)=P_c$. At the surface, $F(R) = P(R) + GM^2/(8\pi R^4) \ge GM^2/(8\pi R^4)$. Combining gives (8.1). <span class="qed">∎</span>
+</div>
+
+<p>For the Sun, with the tabulated radius of <a class="secref" href="#ssm">§9</a>, the bound is $4.4750\times10^{14}\ \mathrm{dyn\,cm^{-2}}$. The tabulated central pressure is $2.3380\times10^{17}\ \mathrm{dyn\,cm^{-2}}$, which exceeds the bound by a factor $522.5$. The bound is true and it excludes almost nothing. The factor of $522$ is the information that a closure must supply. In the notation of (7.2), the bound is $W\ge1/(8\pi) = 0.03979$; the tabulated Sun has $W = 20.7881$, and $n=3$ gives $W_3 = 11.0507$.</p>
+
+<div class="prop"><b>Proposition 12 (the virial theorem for a static star).</b> Under the hypotheses of Proposition 11, with zero surface pressure $P(R)=0$,
+$$ 3\int_0^R P\,dV \;=\; -\,\Omega, \qquad \Omega \;\equiv\; -\int_0^M \frac{G\,m}{r}\,dm, \tag{8.2}$$
+where $dV = 4\pi r^2 dr$ and $\Omega$ is the gravitational potential energy of the star.</div>
+
+<div class="proof">
+Multiply the first equation of (2.4) by $4\pi r^3$ and integrate from $0$ to $R$. On the left, integrate by parts:
+$$ \int_0^R 4\pi r^3\frac{dP}{dr}\,dr \;=\; \Big[4\pi r^3 P\Big]_0^R - \int_0^R 12\pi r^2 P\,dr \;=\; -3\int_0^R P\,dV, $$
+since the boundary term vanishes at $r=0$ and, because $P(R)=0$, at $r=R$. On the right,
+$$ -\int_0^R 4\pi r^3\,\frac{Gm\rho}{r^2}\,dr \;=\; -\int_0^R \frac{Gm}{r}\,4\pi r^2\rho\,dr \;=\; -\int_0^M\frac{Gm}{r}\,dm \;=\; \Omega, $$
+using $dm = 4\pi r^2\rho\,dr$. Equating the two sides gives $-3\int P\,dV = \Omega$, which is (8.2). <span class="qed">∎</span>
+</div>
+
+<p>For an ideal monatomic gas, $\tfrac{3}{2}P$ is the internal energy per unit volume (Module 2, Proposition 1), so (8.2) says that the thermal energy $U$ is $-\Omega/2$. A star that loses energy by radiation therefore contracts and gets hotter. That is why $t_{\rm KH}$ in (1.2) is the timescale of contraction.</p>
+
+<p>Integrating the tabulated solar model of <a class="secref" href="#ssm">§9</a> gives $3\int P\,dV = 6.1594\times10^{48}$ erg and $-\Omega = 6.1564\times10^{48}$ erg, in ratio $1.00049$.</p>
+
+<div class="warn"><b>This agreement does not confirm hydrostatic equilibrium.</b> The solar model was <em>built</em> by solving (2.4) numerically. Any correct reading of its table must satisfy (8.2), so a ratio of $1.00049$ confirms that the table was read and integrated correctly, and nothing more. The residual $4.9\times10^{-4}$ has not been decomposed; two candidate sources are the trapezoid rule and the table ending at $0.983\,R$ rather than at $P=0$. Module 2's solar-wind check did not have this circularity, because Venzmer &amp; Bothmer fitted the density and speed exponents with no continuity constraint imposed. Here the tests must be of a <em>closure</em>, given the equation, and <a class="secref" href="#checks">§10</a> is built that way.</div>
+
+<h2 id="ssm">9. The tabulated solar model</h2>
+
+<p>The comparison object for the checks is a standard solar model: a numerical solution of the equations of stellar structure, evolved from a uniform initial composition to the present solar age and adjusted to reproduce the present solar radius and luminosity. The one used here is BS2005-AGS,OP of Bahcall, Serenelli &amp; Basu (2005), <em>ApJ</em> <b>621</b>, L85–L88. Its table is stored as <code>data/bs05_agsop.dat</code>.</p>
+
+<p>The table has $1284$ rows, from $r/R = 0.00161$ to $0.98308$. Each row gives the enclosed mass fraction, the radius fraction, $T$, $\rho$, $P$, the enclosed luminosity fraction, and six mass fractions. Its first row gives the central values used below: $T_c = 1.5480\times10^{7}$ K, $\rho_c = 150.50\ \mathrm{g\,cm^{-3}}$ and $P_c = 2.3380\times10^{17}\ \mathrm{dyn\,cm^{-2}}$. The surface helium mass fraction in the last row is $0.22905$, against $0.229$ printed in Table 1 of the paper, which confirms that the file is the model the paper describes.</p>
+
+<p>Two quantities computed from the table are needed in <a class="secref" href="#checks">§10</a>. The first is an effective mean molecular weight. Inverting the ideal gas law (3.2) at the centre, $\mu = \rho k_B T/(P m_u)$, gives $\mu = 0.82851$. The composition in the same row, $X = 0.36462$, $Y=0.62029$, $Z = 0.01509$, gives $\mu = 0.83195$ for a fully ionised gas. The ratio is $0.99587$. The tabulated $\mu$ is an effective value which absorbs every contribution to $P$ beyond the ideal particle gas; radiation, the next quantity, accounts for $6\times10^{-4}$ of the $4.1\times10^{-3}$ difference, and the rest is not attributed here.</p>
+
+<p>The second quantity is the radiation share. At the centre, $P_{\rm rad} = a_{\rm rad}T_c^4/3 = 1.4482\times10^{14}\ \mathrm{dyn\,cm^{-2}}$, so</p>
+
+$$ 1-\beta_c \;=\; \frac{P_{\rm rad}}{P_c} \;=\; 6.1940\times10^{-4}. \tag{9.1}$$
+
+<p>Radiation supplies $6.19\times10^{-4}$ of the pressure at the centre of the Sun. Hold that number. It is the premise of Proposition 6 evaluated in the Sun.</p>
+
+<span class="prov">The model table is trusted as a faithful copy of the published BS2005-AGS,OP model: its surface helium matches the paper, and the virial identity (8.2) holds to $4.9\times10^{-4}$. It is not trusted as a description of the real Sun; <a class="secref" href="#checks">§10</a> shows where it fails. Its radii and masses are fractions, converted here with the table's own constants $R_\odot = 6.9598\times10^{10}$ cm and $L_\odot = 3.8418\times10^{33}\ \mathrm{erg\,s^{-1}}$, and with $M_\odot = GM_\odot/G$ from the IAU 2015 nominal $GM_\odot$. Its "central" values are those of the first row, at $r = 0.00161\,R$.</span>
+
+<h2 id="checks">10. The checks</h2>
+
+<p>The circularity noted in <a class="secref" href="#noclosure">§8</a> decides what can be tested. The solar model satisfies (2.4) by construction, so the table cannot test hydrostatic equilibrium. It can test a closure: given (2.4), is the relation between $P$ and $\rho$ in the model the one that <a class="secref" href="#whypoly">§5</a> derived? Each of the two indices of <a class="secref" href="#whypoly">§5</a> was fixed before the table was read. This section tests each, then takes the boundary between them to a helioseismic measurement.</p>
+
+<h3 id="check1">10.1 Check 1: Eddington's $n=3$ for the whole Sun</h3>
+
+<p>Proposition 10 predicts the central density and pressure of an $n=3$ star from its mass and radius alone: $\rho_c = D_3\,\bar\rho$ and $P_c = W_3\,GM^2/R^4$. With the tabulated radius, $\bar\rho = 1.4081\ \mathrm{g\,cm^{-3}}$.</p>
+
+<table>
+<tr><th>Quantity</th><th>$n=3$ prediction</th><th>Tabulated model</th><th>Ratio</th></tr>
+<tr><td>$\rho_c$</td><td>$76.293\ \mathrm{g\,cm^{-3}}$</td><td>$150.500\ \mathrm{g\,cm^{-3}}$</td><td>$0.5069$</td></tr>
+<tr><td>$P_c$</td><td>$1.2429\times10^{17}\ \mathrm{dyn\,cm^{-2}}$</td><td>$2.3380\times10^{17}\ \mathrm{dyn\,cm^{-2}}$</td><td>$0.5316$</td></tr>
+<tr><td>$T_c$, from (3.2) with $\mu=0.82851$</td><td>$1.6233\times10^{7}$ K</td><td>$1.5480\times10^{7}$ K</td><td>$1.0486$</td></tr>
+</table>
+
+<div class="warn"><b>Check 1: refuted.</b> Eddington's $n=3$ predicts a central condensation $\rho_c/\bar\rho = 54.18$. The tabulated model has $106.88$. The ratio is $0.5069$, and the central pressure ratio is $0.5316$. Both are wrong by about a factor of two. The central temperature is wrong by only $4.9$ per cent, in ratio $1.0486$.</div>
+
+<p>The temperature survives because, by (3.2) at fixed $\mu$, $T\propto P/\rho$. The temperature ratio is therefore the pressure ratio divided by the density ratio, $0.5316/0.5069 = 1.0486$. Both errors have the same sign and nearly the same size, so their quotient is close to one. A central temperature from $n=3$ is close to the model's value even though the structure that produced it is not.</p>
+
+<p>The reason for the failure is the premise of Proposition 6. That proposition requires a constant and non-zero radiation share $1-\beta$. By (9.1) the share at the Sun's centre is $6.19\times10^{-4}$. With a share that small, the constant $K$ of (5.2) does not describe the physics that sets the structure; the premise is not met, and the prediction fails by the factor measured above. Problem K3 solves Eddington's own relation for $\beta$ and shows that $1-\beta$ reaches $9.6$ per cent only at $10\,M_\odot$ and $42$ per cent at $50\,M_\odot$. The $n=3$ model describes a radiation-dominated massive star better than it describes the Sun.</p>
+
+<h3 id="check2">10.2 Check 2: the convection zone as $n=3/2$</h3>
+
+<p>To test a polytropic index locally, define it locally. For a polytrope, (4.3) gives $T\propto P^{1/(n+1)}$. The logarithmic slope of $T$ against $P$ is therefore constant and fixes $n$.</p>
+
+<div class="def"><b>Definition 5 (temperature gradient and effective index).</b> The dimensionless temperature gradient of a stratified star is
+$$ \nabla \;\equiv\; \frac{d\ln T}{d\ln P}, \tag{10.1}$$
+evaluated along the radius. The effective polytropic index at each radius is
+$$ n_{\rm eff} \;\equiv\; \frac{1}{\nabla} - 1. \tag{10.2}$$
+For a polytrope of index $n$, $\nabla = 1/(n+1)$ and $n_{\rm eff}=n$ everywhere. For the adiabat of a monatomic ideal gas, $\nabla = \nabla_{\rm ad} = (\gamma-1)/\gamma = 0.4$ and $n_{\rm eff} = 3/2$.</div>
+
+<p>The table quotes $P$, $\rho$ and $T$ to four significant figures, so a two-point difference of $\ln T$ against $\ln P$ is dominated by rounding. The script computes $\nabla$ as a least-squares slope over $\pm25$ rows. In the band $0.80$ to $0.92\,R$ the slope is flat, and its median is the plateau value.</p>
+
+<div class="keyresult"><b>Check 2: confirmed.</b> Proposition 5 predicts $n = 3/2$ for an adiabatically stratified monatomic gas. On the plateau from $0.80$ to $0.92\,R$ of BS2005-AGS,OP, $\nabla = 0.3957$, so $n_{\rm eff} = 1.5273$. The ratio to the prediction is $1.0182$: agreement to $1.8$ per cent.</div>
+
+<p>The index was fixed by Proposition 5 before the table was read. The only choice made on the table side is the averaging band. Changing the fitting window from $\pm10$ to $\pm50$ rows moves the plateau $\nabla$ from $0.3957$ to $0.3954$. The band stops at $0.92\,R$ to exclude the outermost layers, where $n_{\rm eff}$ turns upward in Fig. 3. The $1.8$ per cent residual is not attributed to a mechanism here.</p>
+
+<p>The same diagnostic applied through the whole star shows why Check 1 failed. Fig. 3 plots $n_{\rm eff}(r)$ from the centre to $0.97\,R$.</p>
+
+<table>
+<tr><th>$r/R$</th><th>$\nabla$</th><th>$n_{\rm eff}$</th><th>$L(r)/L$</th></tr>
+<tr><td>$0.0500$</td><td>$0.3251$</td><td>$2.076$</td><td>$0.0919$</td></tr>
+<tr><td>$0.0999$</td><td>$0.3220$</td><td>$2.105$</td><td>$0.4430$</td></tr>
+<tr><td>$0.1496$</td><td>$0.3032$</td><td>$2.299$</td><td>$0.7759$</td></tr>
+<tr><td>$0.1996$</td><td>$0.2629$</td><td>$2.804$</td><td>$0.9366$</td></tr>
+<tr><td>$0.3016$</td><td>$0.2116$</td><td>$3.726$</td><td>$0.9977$</td></tr>
+<tr><td>$0.4494$</td><td>$0.1937$</td><td>$4.162$</td><td>$0.9990$</td></tr>
+<tr><td>$0.6491$</td><td>$0.2244$</td><td>$3.457$</td><td>$0.9989$</td></tr>
+<tr><td>$0.7001$</td><td>$0.2997$</td><td>$2.336$</td><td>$0.9989$</td></tr>
+<tr><td>$0.7500$</td><td>$0.3963$</td><td>$1.523$</td><td>$0.9989$</td></tr>
+<tr><td>$0.8493$</td><td>$0.3960$</td><td>$1.525$</td><td>$0.9989$</td></tr>
+<tr><td>$0.9203$</td><td>$0.3933$</td><td>$1.543$</td><td>$0.9989$</td></tr>
+</table>
+
+<p>Inside $0.15\,R$, where the enclosed luminosity is still growing and reaches $0.78$ of the total only at $0.15\,R$, $n_{\rm eff}$ is about $2.1$. Outward it rises through $3$ at $0.217\,R$ to a maximum of $4.16$ at $0.453\,R$. It falls through $3$ again at $0.674\,R$, and then drops to the plateau near $1.52$. The radiative interior passes through Eddington's value twice and remains at it nowhere. No single polytrope describes the Sun: a central density predicted from one index averages over a structure whose index ranges from $2.05$ to $4.16$.</p>
+
+<h3 id="check3">10.3 Check 3: the base of the convection zone, against a measurement</h3>
+
+<p>Checks 1 and 2 compare a closure with a model. Neither compares anything with the Sun. The profile of Fig. 3 supplies a quantity that can be measured: the radius at which the stratification changes from radiative to adiabatic, the base of the convection zone.</p>
+
+<p>The script locates it as the innermost radius, between $0.60$ and $0.95\,R$, at which $\nabla$ reaches $0.99$ of its plateau value $0.3957$. Applied to BS2005-AGS,OP, this gives $r_b = 0.7269\,R$. Table 1 of Bahcall, Serenelli &amp; Basu (2005) gives $0.7280\,R$ for the same model, a ratio of $0.99851$. The locator therefore reproduces the model's published boundary to $0.15$ per cent.</p>
+
+<p>Helioseismology measures the same boundary in the real Sun. The frequencies of the Sun's acoustic oscillations depend on the sound-speed profile, and the sound speed changes slope where $\nabla$ changes from its radiative to its adiabatic value. Basu &amp; Antia (2004) obtain $r_b = (0.7133\pm0.0005)\,R$ from GONG p-mode frequencies, and $(0.7132\pm0.0005)\,R$ from MDI frequencies.</p>
+
+<figure>
+<!--FIG_INDEX-->
+<svg class="setupfig" viewBox="0 0 760 660" width="100%" role="img" aria-label="Upper panel: the effective polytropic index read off a standard solar model, against fractional radius. It sits near two in the burning core, rises to a maximum above four near the middle of the radiative interior, then drops to a flat plateau at one and a half through the convection zone. Horizontal lines mark the predicted values three-halves and three. Lower panel: a zoom on the convection-zone base in the logarithmic temperature gradient, showing the model boundary at 0.728 of the solar radius and the helioseismic measurement at 0.7133 with an error bar far smaller than the gap between them.">
+<text x="392" y="28" font-size="12.5" text-anchor="middle" fill="#cbd5e1">The polytropic index the Sun actually has</text>
+<rect x="84" y="56" width="616" height="232" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="531.8" y="56" width="168.2" height="232" fill="#2dd4bf" fill-opacity="0.08"/>
+<line x1="84.0" y1="288" x2="84.0" y2="293" stroke="#334155" stroke-width="1"/>
+<text x="84.0" y="306" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.0</text>
+<line x1="207.2" y1="288" x2="207.2" y2="293" stroke="#334155" stroke-width="1"/>
+<text x="207.2" y="306" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.2</text>
+<line x1="330.4" y1="288" x2="330.4" y2="293" stroke="#334155" stroke-width="1"/>
+<text x="330.4" y="306" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.4</text>
+<line x1="453.6" y1="288" x2="453.6" y2="293" stroke="#334155" stroke-width="1"/>
+<text x="453.6" y="306" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.6</text>
+<line x1="576.8" y1="288" x2="576.8" y2="293" stroke="#334155" stroke-width="1"/>
+<text x="576.8" y="306" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.8</text>
+<line x1="700.0" y1="288" x2="700.0" y2="293" stroke="#334155" stroke-width="1"/>
+<text x="700.0" y="306" font-size="10.5" text-anchor="middle" fill="#94a3b8">1.0</text>
+<line x1="79" y1="288.0" x2="84" y2="288.0" stroke="#334155" stroke-width="1"/>
+<text x="75" y="292.0" font-size="10.5" text-anchor="end" fill="#94a3b8">1</text>
+<line x1="79" y1="223.6" x2="84" y2="223.6" stroke="#334155" stroke-width="1"/>
+<text x="75" y="227.6" font-size="10.5" text-anchor="end" fill="#94a3b8">2</text>
+<line x1="79" y1="159.1" x2="84" y2="159.1" stroke="#334155" stroke-width="1"/>
+<text x="75" y="163.1" font-size="10.5" text-anchor="end" fill="#94a3b8">3</text>
+<line x1="79" y1="94.7" x2="84" y2="94.7" stroke="#334155" stroke-width="1"/>
+<text x="75" y="98.7" font-size="10.5" text-anchor="end" fill="#94a3b8">4</text>
+<text x="392" y="324" font-size="11.5" text-anchor="middle" fill="#cbd5e1">r / R</text>
+<text x="38" y="172" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 38 172)">effective index n</text>
+<line x1="84" y1="255.8" x2="700" y2="255.8" stroke="#2dd4bf" stroke-width="1.6" stroke-dasharray="6 4"/>
+<line x1="84" y1="159.1" x2="700" y2="159.1" stroke="#fb923c" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="465.9" y="151.1" font-size="10.5" text-anchor="end" fill="#fb923c">n = 3, Eddington's standard model</text>
+<text x="465.9" y="247.8" font-size="10.5" text-anchor="end" fill="#2dd4bf">n = 3/2, adiabatic convection</text>
+<path d="M 93.3,221.0 L 93.4,221.2 L 93.4,220.3 L 93.5,219.7 L 93.5,221.8 L 93.6,222.8 L 93.7,222.8 L 93.7,222.1 L 93.8,220.4 L 93.9,217.8 L 94.0,214.2 L 94.0,214.4 L 94.1,213.6 L 94.2,215.0 L 94.3,214.9 L 94.3,214.0 L 94.4,217.1 L 94.5,217.7 L 94.6,217.5 L 94.6,215.8 L 94.7,214.3 L 94.8,215.0 L 94.9,214.8 L 95.0,216.0 L 95.0,216.4 L 95.1,216.2 L 95.2,215.5 L 95.3,217.4 L 95.3,217.9 L 95.4,217.8 L 95.5,216.4 L 95.6,217.4 L 95.7,216.5 L 95.8,214.9 L 95.8,217.0 L 95.9,218.3 L 96.0,217.7 L 96.1,216.5 L 96.2,216.7 L 96.3,215.6 L 96.4,216.3 L 96.4,217.8 L 96.6,218.1 L 96.7,220.0 L 96.8,219.6 L 96.8,218.8 L 96.9,219.0 L 97.0,218.3 L 97.1,218.9 L 97.2,219.6 L 97.3,219.0 L 97.3,220.1 L 97.4,219.4 L 97.5,219.7 L 97.6,218.9 L 97.7,220.0 L 97.8,220.2 L 98.0,219.4 L 98.1,219.6 L 98.2,218.8 L 98.3,218.7 L 98.5,217.6 L 98.6,218.6 L 98.8,218.6 L 98.9,218.9 L 99.1,218.2 L 99.2,218.2 L 99.4,218.6 L 99.5,218.9 L 99.6,218.4 L 99.7,217.8 L 99.9,217.8 L 100.0,217.8 L 100.2,218.1 L 100.3,217.6 L 100.5,217.4 L 100.6,217.6 L 100.8,216.7 L 101.0,217.2 L 101.1,217.9 L 101.3,217.5 L 101.5,217.3 L 101.6,217.9 L 101.7,218.5 L 101.9,218.5 L 102.1,219.2 L 102.2,218.7 L 102.4,218.1 L 102.5,217.7 L 102.8,218.0 L 102.9,217.6 L 103.0,217.9 L 103.2,218.1 L 103.4,217.7 L 103.6,217.9 L 103.8,217.8 L 104.0,217.7 L 104.2,217.4 L 104.4,217.3 L 104.5,217.5 L 104.7,217.5 L 104.9,217.3 L 105.1,217.5 L 105.3,217.6 L 105.5,218.1 L 105.6,218.1 L 105.9,218.1 L 106.1,218.1 L 106.3,218.0 L 106.7,217.9 L 106.9,218.0 L 107.1,218.2 L 107.4,218.1 L 107.6,218.3 L 108.0,218.2 L 108.2,218.2 L 108.6,218.3 L 108.8,218.6 L 109.2,218.6 L 109.5,218.8 L 109.9,218.7 L 110.4,218.7 L 110.8,218.8 L 110.9,218.7 L 111.4,218.6 L 111.7,218.5 L 112.1,218.4 L 112.3,218.5 L 112.8,218.5 L 113.1,218.6 L 113.7,218.8 L 114.0,218.6 L 114.4,218.6 L 114.8,218.7 L 115.1,218.7 L 115.6,218.6 L 115.8,218.8 L 116.4,218.6 L 116.7,218.6 L 117.2,218.6 L 117.7,218.7 L 117.9,218.8 L 118.4,218.8 L 118.8,218.9 L 119.4,218.9 L 119.9,219.0 L 120.3,219.1 L 120.6,219.1 L 120.9,219.0 L 121.3,218.9 L 121.9,218.9 L 122.2,219.0 L 122.8,219.0 L 123.3,218.9 L 123.8,218.9 L 124.2,219.0 L 124.5,218.9 L 125.0,218.8 L 125.6,218.9 L 126.0,219.0 L 126.6,218.9 L 126.9,218.9 L 127.5,219.1 L 127.9,219.1 L 128.4,219.0 L 128.8,219.0 L 129.3,219.1 L 129.5,219.0 L 129.9,219.1 L 130.3,219.0 L 130.7,219.0 L 131.0,219.1 L 131.5,219.1 L 131.9,219.2 L 132.4,219.1 L 132.8,219.1 L 133.2,219.0 L 133.6,218.9 L 134.0,218.8 L 134.5,218.8 L 134.9,218.9 L 135.3,218.9 L 135.9,218.8 L 136.2,218.7 L 136.7,218.6 L 137.0,218.5 L 137.4,218.3 L 137.7,218.4 L 138.1,218.2 L 138.4,218.1 L 138.9,218.0 L 139.2,217.9 L 139.6,218.0 L 139.9,218.0 L 140.3,218.0 L 140.6,217.9 L 141.0,217.8 L 141.4,217.9 L 142.0,217.7 L 142.3,217.8 L 142.7,217.7 L 143.0,217.6 L 143.3,217.6 L 143.6,217.5 L 143.9,217.3 L 144.2,217.1 L 144.5,217.2 L 145.0,216.9 L 145.3,216.7 L 145.5,216.8 L 146.0,216.7 L 146.3,216.6 L 146.7,216.5 L 147.0,216.6 L 147.5,216.6 L 147.9,216.4 L 148.2,216.4 L 148.5,216.4 L 148.9,216.2 L 149.2,216.0 L 149.5,215.9 L 150.0,215.7 L 150.2,215.6 L 150.8,215.6 L 151.1,215.5 L 151.6,215.4 L 152.1,215.3 L 152.6,215.1 L 152.9,214.9 L 153.2,214.6 L 153.7,214.5 L 154.1,214.4 L 154.3,214.2 L 154.7,214.1 L 155.0,213.9 L 155.3,213.6 L 155.8,213.4 L 156.3,213.4 L 156.6,213.4 L 157.1,213.3 L 157.6,213.1 L 158.2,212.8 L 158.7,212.7 L 159.0,212.5 L 159.4,212.4 L 159.9,212.3 L 160.3,212.1 L 160.6,211.9 L 161.0,211.7 L 161.5,211.5 L 162.1,211.3 L 162.5,211.3 L 162.7,211.0 L 163.1,210.9 L 163.4,210.7 L 163.9,210.4 L 164.2,210.3 L 164.5,210.2 L 164.9,210.1 L 165.2,209.8 L 165.6,209.7 L 166.0,209.4 L 166.3,209.3 L 166.6,209.1 L 167.1,209.0 L 167.5,208.9 L 168.0,208.6 L 168.4,208.6 L 168.9,208.5 L 169.3,208.4 L 169.8,208.1 L 170.3,208.1 L 170.6,207.8 L 171.2,207.7 L 171.6,207.5 L 172.1,207.3 L 172.5,207.2 L 172.8,207.0 L 173.4,206.8 L 173.7,206.5 L 174.0,206.2 L 174.4,206.0 L 174.8,205.8 L 175.1,205.5 L 175.5,205.0 L 175.8,204.6 L 176.1,204.3 L 176.7,204.0 L 177.0,203.7 L 177.4,203.3 L 177.8,202.9 L 178.3,202.6 L 178.6,202.2 L 179.1,201.9 L 179.4,201.4 L 179.9,201.0 L 180.1,200.6 L 180.5,200.3 L 180.8,199.9 L 181.2,199.5 L 181.6,199.1 L 182.0,198.6 L 182.3,198.3 L 183.0,197.9 L 183.3,197.5 L 184.0,197.0 L 184.5,196.5 L 184.8,196.2 L 185.3,195.7 L 185.9,195.3 L 186.2,194.8 L 186.8,194.3 L 187.3,193.8 L 187.7,193.4 L 188.3,192.9 L 188.8,192.4 L 189.1,191.9 L 189.6,191.4 L 190.1,190.9 L 190.4,190.5 L 190.9,190.1 L 191.5,189.5 L 191.7,189.0 L 192.3,188.5 L 192.5,187.9 L 193.1,187.3 L 193.4,186.7 L 193.9,186.2 L 194.5,185.5 L 195.2,184.9 L 195.9,184.3 L 196.7,183.7 L 197.4,183.1 L 197.8,182.5 L 198.6,181.8 L 198.9,181.1 L 199.7,180.4 L 200.1,179.8 L 200.9,179.1 L 201.7,178.4 L 202.0,177.5 L 202.8,176.7 L 203.2,175.9 L 204.0,175.1 L 204.7,174.3 L 205.3,173.4 L 206.1,172.6 L 206.9,171.8 L 207.8,170.9 L 208.6,170.0 L 209.5,169.1 L 210.3,168.3 L 211.2,167.4 L 212.1,166.5 L 212.7,165.5 L 213.4,164.4 L 214.5,163.3 L 215.5,162.1 L 216.5,160.8 L 217.4,159.5 L 218.4,158.1 L 219.3,156.6 L 220.2,155.1 L 221.7,153.5 L 223.3,151.9 L 224.6,150.2 L 225.7,148.5 L 226.8,146.9 L 227.9,145.2 L 228.9,143.5 L 230.0,142.0 L 231.5,140.5 L 233.0,139.1 L 234.1,137.6 L 235.1,136.2 L 236.2,134.8 L 237.2,133.3 L 238.3,131.7 L 239.4,130.1 L 241.6,128.4 L 243.8,126.7 L 246.1,124.9 L 248.5,123.2 L 250.9,121.6 L 253.4,120.1 L 255.9,118.7 L 258.5,117.3 L 261.2,116.0 L 264.0,114.7 L 266.9,113.5 L 269.8,112.3 L 272.9,111.2 L 275.8,110.1 L 278.5,109.0 L 280.9,107.9 L 282.9,106.8 L 284.6,105.6 L 286.5,104.5 L 289.4,103.3 L 291.4,102.2 L 294.8,101.1 L 298.6,100.0 L 302.5,98.9 L 306.5,97.7 L 310.7,96.5 L 315.1,95.4 L 319.1,94.2 L 322.5,93.2 L 325.1,92.2 L 327.0,91.2 L 329.0,90.3 L 330.5,89.4 L 332.6,88.5 L 335.1,87.8 L 337.7,87.0 L 340.3,86.4 L 342.2,85.9 L 344.2,85.4 L 346.9,85.0 L 349.3,84.7 L 351.7,84.5 L 356.2,84.3 L 360.8,84.2 L 363.1,84.2 L 365.5,84.2 L 367.8,84.3 L 370.2,84.5 L 372.7,84.8 L 375.3,85.1 L 379.8,85.5 L 383.0,86.0 L 384.8,86.5 L 386.9,87.1 L 388.8,87.8 L 393.1,88.5 L 397.2,89.3 L 401.2,90.1 L 405.0,91.0 L 408.8,91.9 L 412.6,92.8 L 416.2,93.8 L 419.8,94.7 L 423.4,95.7 L 426.9,96.8 L 430.3,97.8 L 433.7,98.9 L 437.0,100.1 L 440.2,101.3 L 443.4,102.4 L 446.5,103.6 L 449.5,104.9 L 452.3,106.2 L 455.0,107.5 L 457.3,108.9 L 459.4,110.4 L 462.5,111.8 L 464.4,113.2 L 467.1,114.8 L 469.8,116.5 L 472.5,118.3 L 475.1,120.1 L 477.7,122.0 L 480.2,123.9 L 481.4,125.8 L 482.6,127.7 L 483.8,129.6 L 485.0,131.6 L 486.2,133.6 L 487.3,135.7 L 488.4,137.7 L 489.5,139.7 L 491.0,141.8 L 492.6,143.8 L 493.6,145.9 L 495.0,148.0 L 495.7,150.0 L 496.6,152.1 L 497.5,154.1 L 498.6,156.1 L 499.2,158.2 L 499.7,160.3 L 500.4,162.4 L 501.1,164.5 L 501.7,166.6 L 502.4,168.6 L 503.1,170.5 L 503.7,172.2 L 504.4,173.7 L 505.0,175.0 L 505.5,176.3 L 506.1,177.7 L 506.7,178.9 L 507.2,180.2 L 507.8,181.4 L 508.3,182.8 L 508.7,184.0 L 509.1,185.4 L 509.5,186.6 L 510.0,187.6 L 510.5,188.7 L 510.8,189.6 L 511.3,190.4 L 511.7,191.4 L 511.8,192.2 L 512.2,192.9 L 512.3,193.7 L 512.7,194.5 L 513.0,195.2 L 513.2,196.0 L 513.5,196.7 L 513.9,197.5 L 514.0,198.3 L 514.4,199.0 L 514.6,199.8 L 514.9,200.4 L 515.1,201.2 L 515.3,201.9 L 515.4,202.6 L 515.6,203.2 L 515.8,203.9 L 516.0,204.6 L 516.1,205.2 L 516.3,205.8 L 516.5,206.4 L 516.6,207.0 L 516.8,207.6 L 517.0,208.1 L 517.2,208.6 L 517.3,208.9 L 517.5,209.6 L 517.7,210.1 L 517.8,210.6 L 518.0,211.1 L 518.2,211.4 L 518.4,211.9 L 518.5,212.4 L 518.7,212.9 L 518.9,213.3 L 519.2,213.7 L 519.4,214.0 L 519.6,214.5 L 519.8,214.8 L 519.9,215.3 L 520.1,215.6 L 520.2,216.0 L 520.4,216.5 L 520.5,216.9 L 520.7,217.3 L 520.8,217.7 L 521.0,218.0 L 521.1,218.6 L 521.3,219.2 L 521.4,219.6 L 521.6,220.2 L 521.7,220.6 L 521.9,221.0 L 522.0,221.4 L 522.2,221.8 L 522.3,222.2 L 522.5,222.8 L 522.7,223.2 L 522.8,223.7 L 523.0,224.1 L 523.1,224.4 L 523.3,225.0 L 523.4,225.5 L 523.6,225.9 L 523.7,226.2 L 523.9,226.5 L 524.0,226.9 L 524.2,227.3 L 524.3,227.8 L 524.5,228.2 L 524.6,228.8 L 524.8,229.2 L 524.9,229.7 L 525.1,230.0 L 525.2,230.5 L 525.4,230.9 L 525.5,231.2 L 525.6,231.8 L 525.8,232.4 L 525.9,232.9 L 526.1,233.4 L 526.2,233.7 L 526.4,234.1 L 526.5,234.5 L 526.7,235.1 L 526.8,235.5 L 527.0,235.9 L 527.1,236.3 L 527.2,236.7 L 527.4,237.2 L 527.5,237.7 L 527.7,238.1 L 527.8,238.5 L 528.0,239.1 L 528.1,239.6 L 528.3,240.0 L 528.4,240.5 L 528.6,240.9 L 528.7,241.5 L 528.9,242.1 L 529.0,242.8 L 529.2,243.4 L 529.3,244.0 L 529.4,244.7 L 529.6,245.4 L 529.7,245.9 L 529.9,246.7 L 530.0,247.3 L 530.1,248.0 L 530.3,248.6 L 530.4,249.1 L 530.6,249.5 L 530.7,250.0 L 530.8,250.6 L 531.0,251.0 L 531.1,251.2 L 531.3,251.5 L 531.4,251.8 L 531.5,252.1 L 531.7,252.3 L 532.0,252.5 L 532.1,252.7 L 532.4,252.9 L 532.6,253.1 L 532.8,253.3 L 533.0,253.4 L 533.2,253.5 L 533.5,253.6 L 533.9,253.7 L 534.3,253.8 L 534.6,253.9 L 535.0,254.0 L 535.3,254.0 L 535.7,254.0 L 535.8,254.1 L 536.2,254.1 L 536.5,254.1 L 536.9,254.1 L 537.3,254.2 L 537.6,254.1 L 538.0,254.2 L 538.2,254.2 L 538.6,254.2 L 538.9,254.2 L 539.3,254.2 L 539.9,254.2 L 540.1,254.2 L 540.5,254.3 L 540.9,254.3 L 541.2,254.3 L 541.6,254.3 L 541.9,254.3 L 542.3,254.3 L 542.9,254.3 L 543.4,254.3 L 543.9,254.3 L 544.3,254.3 L 544.9,254.3 L 545.5,254.3 L 546.0,254.3 L 546.4,254.3 L 546.8,254.3 L 547.2,254.3 L 547.8,254.3 L 548.3,254.4 L 548.9,254.4 L 549.5,254.4 L 550.0,254.4 L 550.5,254.4 L 551.2,254.4 L 551.9,254.4 L 552.4,254.4 L 553.1,254.4 L 553.6,254.4 L 554.0,254.4 L 554.7,254.4 L 555.2,254.3 L 555.9,254.3 L 556.4,254.3 L 557.1,254.3 L 557.5,254.3 L 558.0,254.3 L 558.4,254.3 L 558.9,254.3 L 559.3,254.3 L 559.8,254.4 L 560.2,254.4 L 561.1,254.3 L 562.0,254.3 L 562.8,254.3 L 563.3,254.3 L 564.1,254.2 L 565.0,254.2 L 565.8,254.2 L 566.7,254.2 L 567.5,254.2 L 568.3,254.2 L 569.1,254.2 L 569.9,254.2 L 570.8,254.2 L 571.5,254.2 L 572.3,254.2 L 573.1,254.2 L 573.9,254.2 L 574.6,254.2 L 575.4,254.2 L 576.2,254.1 L 576.9,254.2 L 577.7,254.1 L 578.4,254.2 L 579.1,254.1 L 579.9,254.1 L 580.6,254.1 L 581.3,254.2 L 582.0,254.2 L 582.7,254.2 L 584.1,254.2 L 585.5,254.2 L 586.8,254.2 L 588.2,254.2 L 589.5,254.2 L 590.8,254.2 L 592.1,254.2 L 593.3,254.2 L 594.6,254.2 L 595.8,254.2 L 597.0,254.2 L 598.2,254.2 L 599.4,254.1 L 600.5,254.1 L 601.7,254.1 L 602.8,254.1 L 603.9,254.1 L 605.0,254.1 L 606.1,254.1 L 607.1,254.1 L 608.2,254.2 L 609.2,254.2 L 610.2,254.1 L 611.2,254.1 L 612.2,254.1 L 613.2,254.1 L 614.2,254.1 L 615.1,254.1 L 616.1,254.1 L 617.0,254.1 L 617.9,254.1 L 618.8,254.0 L 619.7,254.0 L 620.6,254.0 L 621.5,254.0 L 622.3,254.0 L 623.2,254.0 L 624.0,254.0 L 624.9,253.9 L 625.7,253.9 L 626.5,253.9 L 627.3,253.9 L 628.0,253.9 L 628.8,253.8 L 629.6,253.8 L 630.3,253.8 L 631.1,253.8 L 631.8,253.8 L 632.5,253.8 L 633.3,253.7 L 634.0,253.7 L 634.7,253.7 L 635.4,253.7 L 636.1,253.7 L 636.7,253.6 L 637.4,253.6 L 638.0,253.6 L 638.7,253.6 L 639.3,253.6 L 640.0,253.5 L 640.6,253.5 L 641.2,253.5 L 641.8,253.5 L 642.5,253.4 L 643.1,253.4 L 643.7,253.4 L 644.5,253.3 L 645.4,253.3 L 646.0,253.3 L 646.5,253.3 L 647.1,253.2 L 647.7,253.2 L 648.2,253.2 L 648.8,253.2 L 649.3,253.1 L 649.9,253.1 L 650.4,253.1 L 650.9,253.0 L 651.4,253.0 L 651.9,253.0 L 652.4,252.9 L 652.9,252.9 L 653.4,252.9 L 653.9,252.8 L 654.4,252.8 L 654.8,252.8 L 655.3,252.7 L 655.8,252.7 L 656.2,252.6 L 656.7,252.6 L 657.1,252.5 L 657.6,252.5 L 658.0,252.4 L 658.4,252.4 L 658.8,252.4 L 659.3,252.3 L 659.7,252.2 L 660.1,252.2 L 660.5,252.2 L 660.9,252.1 L 661.3,252.0 L 661.7,252.0 L 662.1,251.9 L 662.4,251.9 L 662.8,251.8 L 663.2,251.8 L 663.5,251.7 L 663.9,251.6 L 664.3,251.6 L 664.6,251.5 L 665.0,251.5 L 665.3,251.4 L 665.7,251.3 L 666.0,251.2 L 666.3,251.2 L 666.7,251.1 L 667.0,251.0 L 667.3,250.9 L 667.6,250.9 L 667.9,250.8 L 668.3,250.7 L 668.6,250.6 L 668.9,250.5 L 669.2,250.4 L 669.5,250.2 L 669.8,250.1 L 670.1,250.0 L 670.3,249.9 L 670.6,249.8 L 670.9,249.6 L 671.2,249.5 L 671.5,249.4 L 671.7,249.3 L 672.0,249.1 L 672.3,249.0 L 672.5,248.8 L 672.8,248.7 L 673.0,248.5 L 673.3,248.3 L 673.5,248.1 L 673.8,247.8 L 674.0,247.6 L 674.3,247.4 L 674.5,247.1 L 674.7,246.8 L 675.0,246.5 L 675.4,246.2 L 675.9,245.9 L 676.3,245.6 L 676.6,245.2 L 676.8,244.9 L 677.1,244.5 L 677.3,244.1 L 677.5,243.8 L 677.7,243.4 L 677.9,243.0 L 678.1,242.6 L 678.3,242.2" fill="none" stroke="#facc15" stroke-width="2.6"/>
+<text x="363.1" y="74.2" font-size="10.5" text-anchor="middle" fill="#facc15">max 4.16 at r = 0.45 R</text>
+<text x="121.0" y="236.4" font-size="10.5" fill="#94a3b8">burning core</text>
+<text x="613.8" y="275.8" font-size="10.5" text-anchor="middle" fill="#cbd5e1">measured plateau 1.527</text>
+<text x="392" y="364" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Zoom on the base of the convection zone, where that index changes</text>
+<rect x="84" y="392" width="616" height="174" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="145.6" y1="566" x2="145.6" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="145.6" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.70</text>
+<line x1="268.8" y1="566" x2="268.8" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="268.8" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.71</text>
+<line x1="392.0" y1="566" x2="392.0" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="392.0" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.72</text>
+<line x1="515.2" y1="566" x2="515.2" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="515.2" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.73</text>
+<line x1="638.4" y1="566" x2="638.4" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="638.4" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.74</text>
+<line x1="79" y1="544.2" x2="84" y2="544.2" stroke="#334155" stroke-width="1"/>
+<text x="75" y="548.2" font-size="10.5" text-anchor="end" fill="#94a3b8">0.28</text>
+<line x1="79" y1="500.8" x2="84" y2="500.8" stroke="#334155" stroke-width="1"/>
+<text x="75" y="504.8" font-size="10.5" text-anchor="end" fill="#94a3b8">0.32</text>
+<line x1="79" y1="457.2" x2="84" y2="457.2" stroke="#334155" stroke-width="1"/>
+<text x="75" y="461.2" font-size="10.5" text-anchor="end" fill="#94a3b8">0.36</text>
+<line x1="79" y1="413.8" x2="84" y2="413.8" stroke="#334155" stroke-width="1"/>
+<text x="75" y="417.8" font-size="10.5" text-anchor="end" fill="#94a3b8">0.40</text>
+<text x="392" y="602" font-size="11.5" text-anchor="middle" fill="#cbd5e1">r / R</text>
+<text x="36" y="479" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 36 479)">∇ = d ln T / d ln P</text>
+<line x1="84" y1="418.5" x2="700" y2="418.5" stroke="#2dd4bf" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="690" y="410.5" font-size="10.5" text-anchor="end" fill="#2dd4bf">adiabatic plateau, ∇ = 0.3957</text>
+<path d="M 84.9,535.8 L 88.2,534.7 L 95.1,533.6 L 101.9,532.6 L 105.3,531.5 L 112.1,530.5 L 119.0,529.3 L 122.4,528.2 L 129.3,527.2 L 132.8,526.0 L 139.8,525.0 L 143.3,523.8 L 146.7,522.8 L 150.3,521.7 L 153.7,520.7 L 157.3,519.7 L 160.8,518.6 L 164.2,517.7 L 167.5,516.7 L 171.0,515.8 L 174.4,514.9 L 177.9,513.9 L 181.2,513.1 L 184.7,512.4 L 188.1,511.8 L 191.6,510.6 L 195.0,509.8 L 198.5,509.0 L 201.9,508.2 L 205.5,507.6 L 208.9,506.8 L 212.4,506.0 L 215.8,505.1 L 220.5,504.5 L 225.2,503.8 L 229.9,503.4 L 234.6,502.5 L 237.5,501.9 L 240.5,501.1 L 243.4,500.5 L 246.5,499.8 L 249.5,499.0 L 252.4,498.4 L 255.4,497.5 L 258.5,496.9 L 261.4,496.3 L 264.4,495.2 L 267.4,494.3 L 270.4,493.5 L 273.5,492.5 L 276.4,491.7 L 279.5,491.0 L 282.5,490.2 L 285.6,489.5 L 288.5,488.7 L 291.6,487.7 L 294.7,486.9 L 297.8,486.0 L 300.7,485.2 L 303.8,484.7 L 306.9,483.5 L 309.9,482.5 L 313.0,481.8 L 316.1,481.2 L 319.2,480.6 L 322.3,479.8 L 325.3,479.1 L 328.4,478.2 L 331.5,477.4 L 334.3,476.2 L 337.3,475.3 L 340.1,474.5 L 343.0,473.7 L 345.9,472.8 L 348.8,472.0 L 351.6,471.4 L 354.5,470.1 L 357.4,468.9 L 360.3,467.8 L 363.2,466.9 L 366.1,466.1 L 369.0,465.4 L 371.9,464.5 L 374.9,463.3 L 377.7,462.3 L 380.7,461.4 L 383.6,460.7 L 386.5,459.8 L 389.4,458.6 L 392.4,457.6 L 395.3,456.8 L 398.3,455.8 L 401.2,454.5 L 404.2,453.4 L 407.2,452.6 L 410.1,451.5 L 413.1,450.6 L 416.0,449.1 L 419.0,447.8 L 421.9,446.2 L 424.9,444.9 L 427.7,443.4 L 430.4,441.7 L 433.3,440.2 L 436.0,438.9 L 438.8,437.0 L 441.5,435.5 L 444.4,433.8 L 447.1,432.3 L 449.9,431.2 L 452.6,429.9 L 455.4,428.7 L 458.3,427.4 L 461.1,426.4 L 463.8,425.8 L 466.7,424.9 L 469.5,424.2 L 472.3,423.6 L 475.2,422.9 L 480.7,422.5 L 483.5,421.8 L 489.2,421.3 L 493.5,420.8 L 497.8,420.4 L 502.0,420.2 L 506.3,419.8 L 512.0,419.7 L 520.3,419.2 L 528.1,419.0 L 533.4,418.6 L 541.4,418.6 L 546.9,418.4 L 554.9,418.4 L 557.6,418.3 L 565.6,418.2 L 571.0,418.1 L 579.1,418.2 L 587.3,418.1 L 592.8,418.1 L 600.9,418.0 L 606.4,417.9 L 614.4,417.9 L 619.8,417.9 L 627.8,417.9 L 638.6,417.9 L 644.1,417.9 L 652.3,417.8 L 660.5,417.8 L 666.0,417.7 L 674.1,417.8 L 679.7,417.7 L 688.0,417.8 L 698.8,417.8" fill="none" stroke="#facc15" stroke-width="2.6"/>
+<line x1="490.6" y1="392" x2="490.6" y2="566" stroke="#fb923c" stroke-width="2"/>
+<text x="498.6" y="442" font-size="10.5" fill="#fb923c">model: 0.7280</text>
+<text x="498.6" y="457" font-size="10.5" fill="#fb923c">this script recovers 0.7269</text>
+<line x1="309.5" y1="392" x2="309.5" y2="566" stroke="#a78bfa" stroke-width="2"/>
+<rect x="303.3" y="392" width="12.3" height="174" fill="#a78bfa" fill-opacity="0.22"/>
+<text x="301.5" y="442" font-size="10.5" text-anchor="end" fill="#a78bfa">measured: 0.7133 ± 0.0005</text>
+<text x="301.5" y="457" font-size="10.5" text-anchor="end" fill="#a78bfa">Basu &amp; Antia (2004)</text>
+<line x1="309.5" y1="514.0" x2="490.6" y2="514.0" stroke="#cbd5e1" stroke-width="1.6"/>
+<text x="400.0" y="505.0" font-size="11" text-anchor="middle" fill="#cbd5e1">0.0147 R, or 29σ</text>
+<text x="36" y="632" font-size="10.5" fill="#94a3b8">Model: BS2005-AGS,OP. Measurement: Basu &amp; Antia (2004), ApJ 606, L85, r<tspan baseline-shift="sub" font-size="8">b</tspan> = (0.7133 ± 0.0005) R from GONG p-mode frequencies.</text>
+<text x="36" y="648" font-size="10.5" fill="#94a3b8">What the gap indicts is the model's composition and opacity, not hydrostatic equilibrium.</text>
+</svg>
+<!--/FIG_INDEX-->
+<figcaption>Upper panel: the effective polytropic index $n_{\rm eff} = 1/\nabla - 1$ of the tabulated solar model, against the two indices derived in <a class="secref" href="#whypoly">§5</a>. The shaded region is the convection zone, where $n_{\rm eff}$ lies on the $n=3/2$ line to $1.8$ per cent (Check 2). The radiative interior crosses $n=3$ twice and remains on it nowhere (Check 1). Lower panel: $\nabla$ near the base of the convection zone. The orange line is the model's published base, $0.7280\,R$; the violet line and band are the helioseismic measurement, $(0.7133\pm0.0005)\,R$. The gap is $0.0147\,R$, $29$ standard deviations of the measurement (Check 3).</figcaption>
+</figure>
+
+<div class="warn"><b>Check 3: the model is refuted by a measurement.</b> The model's published base, $0.7280\,R$, lies $0.0147\,R$ above the measured $0.7133\pm0.0005\,R$. That is a fractional error of $2.06$ per cent and a departure of $29.4\sigma$. The base recovered by this module's locator, $0.7269\,R$, is $27.2\sigma$ from the measurement. Bahcall, Serenelli &amp; Basu quote the measurement rounded to $0.713\pm0.001$; against that uncertainty the published base departs by $15.0\sigma$.</div>
+
+<p>The number of standard deviations would mean little if the locator could move the base by a comparable amount. Across a grid of fitting windows of $\pm10$, $\pm25$ and $\pm50$ rows and thresholds of $0.98$, $0.99$ and $0.995$ of the plateau, the recovered base ranges from $0.7255$ to $0.7308\,R$. The spread, $0.0054\,R$, is $0.37$ of the model–measurement gap. The grid value nearest the measurement, $0.7255\,R$, is still $24.3\sigma$ from it.</p>
+
+<p>State exactly what this check refutes. It does not refute hydrostatic equilibrium, and it does not refute the $n=3/2$ closure of the convection zone. Both are the instrument: they define the plateau and locate the boundary, and Check 2 confirms the closure in the region where it is claimed. What fails is an input of this particular model, the physics that sets where $\nabla$ first reaches $\nabla_{\rm ad}$. In a radiative region, that radius is set by the opacity and by the heavy-element abundance on which the opacity depends. BS2005-AGS,OP was built with the lower heavy-element abundances denoted "AGS" in its name, and Table 1 of Bahcall, Serenelli &amp; Basu (2005) lists its base, $0.7280$, beside the measured $0.713\pm0.001$ that the paper quotes in its equation (1). This disagreement between low-abundance solar models and helioseismology is known as the <em>solar abundance problem</em>.</p>
+
+<span class="prov">The measured base is from Basu &amp; Antia (2004), <em>ApJ</em> <b>606</b>, L85, with the GONG value adopted. The model's published base and surface helium are from Table 1 of Bahcall, Serenelli &amp; Basu (2005). The sentence that the base is set by opacity and heavy-element abundance is standard stellar-structure physics; this module does not compute it, and Module 6 derives the criterion that sets the boundary. The inference of $r_b$ from oscillation frequencies is itself a model-dependent inversion, described in the source and not reproduced here.</span>
+
+<h2 id="limits">11. What this model captures, and what it misses</h2>
+
+<p>The equations of this module are (2.4) with the closure (4.1). The table names each idealisation and the module that repays it.</p>
+
+<table>
+<tr><th>Idealisation made here</th><th>What it costs</th><th>Where it is repaid</th></tr>
+<tr><td>Static: $\mathbf{u}=\mathbf{0}$</td><td>Excludes oscillations, convective motions and flows. <a class="secref" href="#howwell">§2.1</a> showed the error in the mean structure is below $10^{-23}$ of gravity, but the small perturbations about the equilibrium are where helioseismology gets its data</td><td>Module 4 linearises Euler and continuity about this equilibrium. The acoustic cutoff frequency $\nu_{\rm ac} = c_s/(4\pi H)$ contains the scale height $H$ of Proposition 3</td></tr>
+<tr><td>A closure $P=K\rho^{1+1/n}$ asserted, not derived</td><td>Check 2 shows it holds with $n=3/2$ in the convection zone. Check 1 and Fig. 3 show that no single index holds through the Sun</td><td>Module 6 derives the Schwarzschild criterion, which decides where $\nabla=\nabla_{\rm ad}$ and therefore where $n=3/2$ applies</td></tr>
+<tr><td>Uniform entropy in the convection zone (Proposition 5)</td><td>Correct where convection is efficient; wrong in the thin superadiabatic layer below the photosphere, and $\gamma\ne5/3$ in ionisation zones</td><td>Module 6</td></tr>
+<tr><td>No rotation</td><td>Excludes centrifugal flattening and the rotational support of discs</td><td>Module 11 (accretion discs)</td></tr>
+<tr><td>No magnetic field</td><td>Omits magnetic pressure and tension, which can support gas against gravity</td><td>Module 12</td></tr>
+<tr><td>Spherical symmetry</td><td>Excludes binaries, tidal distortion and any non-spherical structure</td><td>Not repaid in this module</td></tr>
+<tr><td>Ideal gas (3.2), with radiation only in Proposition 6</td><td>Wrong where electrons are degenerate, as in white dwarfs, where the closure becomes the degenerate equation of state; the tabulated $\mu$ already differs from the ideal-gas value by $0.41$ per cent at the Sun's centre</td><td>Module 13 (radiation); degeneracy is used only in Problem D1</td></tr>
+</table>
+
+<p>One limitation belongs to the checks rather than to the equations. Every comparison in <a class="secref" href="#checks">§10</a> is with a model built from (2.4). Only Check 3 reaches the real Sun, and it reaches it through a helioseismic inversion that itself uses a solar model as a reference. The agreement of Check 2 is a statement about BS2005-AGS,OP; it becomes a statement about the Sun only to the extent that the model's convection zone matches the Sun's, which helioseismology tests separately.</p>
+
+<h3 id="lab">11.1 Reproducing the numbers</h3>
+
+<p>Every number quoted in this module is produced by <code>figs/m03_numbers.py</code>, every problem answer by <code>figs/m03_problems_check.py</code>, and every figure by <code>figs/m03_build_figs.py</code>. Checks 2 and 3 need only the following, run from <code>afd/figs</code>.</p>
+
+<div class="codewrap">
+<button class="copybtn" onclick="copyCode(this)" aria-label="Copy code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+<pre><code>"""Check 2 and Check 3 from the tabulated model BS2005-AGS,OP.
+
+grad = d ln T / d ln P, a least-squares slope over +/- 25 rows;
+n_eff = 1/grad - 1.  Run from afd/figs.
+"""
+import m03_numbers as M
+ssm = M.load_ssm()
+grad, neff = M.effective_polytropic_index(ssm, half=25)
+rb, plateau, n_plat = M.convection_zone_base(ssm, grad)
+print(f"plateau grad = {plateau:.4f}   n_eff = {n_plat:.4f}"
+      f"   ratio to 3/2 = {n_plat/1.5:.4f}")
+sigma = (rb - M.RCZ_MEAS)/M.RCZ_MEAS_ERR
+print(f"recovered base = {rb:.4f} R   departure = {sigma:.1f} sigma")
+assert abs(n_plat/1.5 - 1.0) &lt; 0.02
+</code></pre>
+</div>
+
+<p>Running it prints a plateau $\nabla = 0.3957$, $n_{\rm eff} = 1.5273$, a ratio of $1.0182$ to $3/2$, a recovered base of $0.7269\,R$, and a departure of $27.2\sigma$ from the measurement. The assertion fails if the convection zone departs from $n=3/2$ by more than two per cent.</p>
+
+<h2 id="problems">12. Problems</h2>
+
+<p class="small">Solutions are given for every problem. Each numerical answer is verified by <code>figs/m03_problems_check.py</code>.</p>
+
+<h3 id="conceptual">Conceptual <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>C1.</b> The tabulated solar model satisfies the virial theorem (8.2) to a ratio of $1.00049$. A student claims this confirms that the Sun is in hydrostatic equilibrium to five parts in ten thousand. Explain what the ratio does and does not show, and why Module 2's solar-wind check was not open to the same objection.
+<details class="sol"><summary>Solution</summary><div>
+Proposition 12 derives (8.2) from (2.4) alone. Any structure that satisfies (2.4) with $P(R)=0$ satisfies (8.2). The solar model was computed by solving (2.4), so it satisfies (8.2) whether or not the real Sun does. The ratio $3\int P\,dV/(-\Omega) = 6.1594\times10^{48}/6.1564\times10^{48} = 1.00049$ shows that the table was read and integrated correctly. It is a test of the pipeline, not of nature. It would test hydrostatic equilibrium only if $P$, $\rho$ and $m$ had been measured independently of (2.4). In Module 2 the density exponent $\alpha$ and the speed exponent $\beta$ were fitted separately to Helios data, with no continuity constraint imposed in the fit, so $\alpha-\beta = 2$ was not built into the numbers compared.
+</div></details></div>
+
+<div class="prob"><b>C2.</b> Check 1 found that $n=3$ predicts $\rho_c$ and $P_c$ in ratios $0.5069$ and $0.5316$ to the tabulated model, but $T_c$ in ratio $1.0486$. Explain why the temperature is so much better, and state what this implies about using a central temperature to validate a stellar model.
+<details class="sol"><summary>Solution</summary><div>
+At fixed $\mu$, the ideal gas law (3.2) gives $T = \mu m_u P/(k_B\rho)$. So the predicted-to-tabulated temperature ratio is the pressure ratio divided by the density ratio: $0.5316/0.5069 = 1.0486$. The two structural errors have the same sign and nearly the same size, so their quotient is close to one. The implication is that $T_c$ is a weak test of a structure. A model can be wrong by a factor of two in both $\rho_c$ and $P_c$ and still give $T_c$ to five per cent, so agreement in $T_c$ alone does not show that the density and pressure are right.
+</div></details></div>
+
+<div class="prob"><b>C3.</b> The intracluster medium of <a class="secref" href="#scaleheight">§3</a> has $H = 644$ kpc at $r = 1$ Mpc. Explain why the exponential atmosphere (3.3) does not describe it, with a number, and compare the solar photosphere.
+<details class="sol"><summary>Solution</summary><div>
+Proposition 3 assumed $g$ uniform. For gravity dominated by a mass $M$ inside $r$, $g\propto r^{-2}$, so across one scale height $g$ falls by the factor $(r/(r+H))^2$. For the cluster, $H = 0.64\,r$, and the factor is $0.370$: gravity falls to $37$ per cent of its value within one e-folding of the pressure, so the constant $H$ used to define that e-folding has no single value. The spherical equation (2.4) must be used instead. At the solar photosphere, $H/R = 1.94\times10^{-4}$ and the factor is $0.999613$, so $g$ changes by $3.9\times10^{-4}$ across one scale height and (3.3) holds to that precision.
+</div></details></div>
+
+<h3 id="derivational">Derivational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>D1.</b> Use the mass–radius relation (7.3) to give the exponent of $M$ in $R\propto M^{x}$ for $n = 0$, $1$, $3/2$, $2$, $5/2$ and $4$ at fixed $K$. Interpret $n=0$, $n=1$ and $n=3/2$, and explain what happens at $n=3$.
+<details class="sol"><summary>Solution</summary><div>
+By (7.3), $x = (1-n)/(3-n)$. This gives $x = +1/3$ for $n=0$, $0$ for $n=1$, $-1/3$ for $n=3/2$, $-1$ for $n=2$, $-3$ for $n=5/2$, and $+3$ for $n=4$. For $n=0$ the density is uniform, so $M\propto R^3$ and $R\propto M^{1/3}$, as for a solid. For $n=1$ the radius does not depend on the mass. For $n=3/2$, $R\propto M^{-1/3}$: a more massive star is smaller. That is the mass–radius relation of a white dwarf supported by non-relativistic degenerate electrons, whose equation of state has the form $P\propto\rho^{5/3}$ with $K$ fixed by fundamental constants; the form of that equation of state is quoted here, not derived. At $n=3$ the exponent is undefined. From (6.1) with $n=3$, $a^2\propto K\rho_c^{-2/3}$, so $a^3\rho_c\propto K^{3/2}$, and (7.1) gives $M\propto K^{3/2}$ with no dependence on $\rho_c$ or $R$. At fixed $K$ an $n=3$ polytrope has one mass only.
+</div></details></div>
+
+<div class="prob"><b>D2.</b> A white dwarf has $M = 0.6\,M_\odot$ and $R = 0.013\,R_\odot$. Use Proposition 11 to bound its central pressure from below, and give the ratio of this bound to the Sun's.
+<details class="sol"><summary>Solution</summary><div>
+$M = 1.1930\times10^{33}$ g. With $R_\odot = 6.9598\times10^{10}$ cm, $R = 9.0477\times10^{8}$ cm $= 9048$ km. Then
+$$ P_c \;\ge\; \frac{GM^2}{8\pi R^4} \;=\; 5.6405\times10^{21}\ \mathrm{dyn\,cm^{-2}}. $$
+The Sun's bound is $4.4750\times10^{14}\ \mathrm{dyn\,cm^{-2}}$. Since the bound scales as $M^2/R^4$, the ratio is $(0.6)^2/(0.013)^4 = 1.2605\times10^{7}$, which the direct division reproduces. The bound needs no equation of state. For the Sun the tabulated $P_c$ exceeds its bound by $522.5$, so the bound gives an order of magnitude at best and cannot fix the structure.
+</div></details></div>
+
+<div class="prob"><b>D3.</b> Derive the free-fall time (1.1). A uniform sphere of mass $M$ and radius $R$ has no pressure and starts at rest. Show that its outer shell reaches the centre in $t_{\rm ff} = \sqrt{3\pi/(32G\bar\rho)}$, and evaluate it for the Sun. By what factor does it exceed the estimate $\sqrt{R^3/GM}$?
+<details class="sol"><summary>Solution</summary><div>
+With no pressure, each shell feels only the mass inside it, and shells do not cross, so the outer shell at radius $r(t)$ obeys $\ddot r = -GM/r^2$ with $r(0) = R$ and $\dot r(0)=0$. Energy conservation gives $\dot r^2 = 2GM(1/r - 1/R)$. Substitute $r = R\cos^2\eta$, so $dr = -2R\cos\eta\sin\eta\,d\eta$ and $1/r - 1/R = \tan^2\eta/R$. Then
+$$ dt \;=\; -\frac{dr}{|\dot r|} \;=\; \frac{2R\cos\eta\sin\eta\,d\eta}{\sqrt{2GM/R}\,\tan\eta} \;=\; \sqrt{\frac{2R^3}{GM}}\,\cos^2\eta\,d\eta. $$
+The shell reaches the centre at $\eta = \pi/2$, and $\int_0^{\pi/2}\cos^2\eta\,d\eta = \pi/4$. So $t_{\rm ff} = (\pi/4)\sqrt{2R^3/(GM)} = \sqrt{\pi^2R^3/(8GM)}$. With $M = \tfrac{4}{3}\pi R^3\bar\rho$ this is $\sqrt{3\pi/(32G\bar\rho)}$. For the Sun, $\bar\rho = 1.4081\ \mathrm{g\,cm^{-3}}$, so $t_{\rm ff} = 1770.3$ s $= 29.5$ min. The estimate $\sqrt{R^3/GM}$ is $1593.8$ s, and the ratio is $1.1107$, which is $\pi/(2\sqrt2)$ exactly.
+</div></details></div>
+
+<h3 id="computational">Computational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>K1.</b> Compute the isothermal scale height (3.3) at the surfaces of Mars and Venus from $T = 210$ K, $\mu = 43.34$, $g = 371\ \mathrm{cm\,s^{-2}}$ for Mars, and $T = 737$ K, $\mu = 43.45$, $g = 887\ \mathrm{cm\,s^{-2}}$ for Venus. Compare them with the Earth's $8.435$ km, and say which inputs set the Venus-to-Mars ratio.
+<details class="sol"><summary>Solution</summary><div>
+From $H = k_BT/(\mu m_u g)$: for Mars, $H = 1.380649\times10^{-16}\times210/(43.34\times1.6605\times10^{-24}\times371) = 10.859$ km. For Venus, $H = 15.900$ km. The ratios to the Earth are $1.2874$ for Mars and $1.8851$ for Venus, and Venus to Mars is $1.4642$. The two atmospheres are both mostly carbon dioxide and have $\mu$ within $0.25$ per cent of each other, so the ratio is set by $T/g$: the temperature ratio $3.5095$ divided by the gravity ratio $2.3908$ is $1.4679$, and the ratio of $\mu$ accounts for the remaining difference from $1.4642$.
+<span class="prov">The planetary temperatures, molecular weights and surface gravities are representative round values supplied as inputs. They are not checked against a source here, and the problem tests the formula, not the planets.</span>
+</div></details></div>
+
+<div class="prob"><b>K2.</b> Model a neutron star of $M = 1.4\,M_\odot$ and $R = 12$ km as an $n=1$ polytrope. Find $K$, $\rho_c$, $\rho_c/\bar\rho$ and $P_c$, compare $\rho_c$ with nuclear saturation density, and check $P_c$ against Proposition 11.
+<details class="sol"><summary>Solution</summary><div>
+For $n=1$, (6.1) gives $a^2 = 2K/(4\pi G) = K/(2\pi G)$, independent of $\rho_c$, and $R = a\xi_1 = \pi a$. So $K = 2\pi G R^2/\pi^2 = 2GR^2/\pi = 6.1185\times10^{4}$ in CGS units. From (7.2) with $\xi_1 = \pi$ and $|\theta_1'| = 1/\pi$, $D_1 = \pi^2/3 = 3.2899$, so $\rho_c = (\pi^2/3)\cdot3M/(4\pi R^3) = \pi M/(4R^3)$. With $M = 2.7838\times10^{33}$ g and $R = 1.2\times10^{6}$ cm, $\rho_c = 1.2653\times10^{15}\ \mathrm{g\,cm^{-3}}$ and $\bar\rho = 3.8459\times10^{14}\ \mathrm{g\,cm^{-3}}$. Nuclear saturation density, $0.16$ nucleons per $\mathrm{fm^3}$ times $m_u$, is $2.657\times10^{14}\ \mathrm{g\,cm^{-3}}$, so $\rho_c$ is $4.76$ times it. The central pressure is $P_c = K\rho_c^2 = 9.7951\times10^{34}\ \mathrm{dyn\,cm^{-2}}$. The bound of Proposition 11 is $9.9245\times10^{33}\ \mathrm{dyn\,cm^{-2}}$, and $P_c$ exceeds it by $9.87$. This must equal $8\pi W_1 = 8\pi\times0.39270 = \pi^2 = 9.87$, and it does.
+<span class="prov">The saturation density $0.16\ \mathrm{fm^{-3}}$ is a standard nuclear-physics value quoted as an input, not checked against a source here. The $n=1$ polytrope is a toy: it ignores general relativity, which is not small in a neutron star.</span>
+</div></details></div>
+
+<div class="prob"><b>K3.</b> For an $n=3$ star, (7.1) fixes $K$ from $M$, and (5.2) then fixes $\beta$. Taking $\mu = 0.832$, solve for $1-\beta$ at $1$, $10$ and $50\,M_\odot$, and compare the $1\,M_\odot$ value with the Sun's central $1-\beta$ of (9.1).
+<details class="sol"><summary>Solution</summary><div>
+For $n=3$, $a^2 = K\rho_c^{-2/3}/(\pi G)$, so $a^3\rho_c = (K/\pi G)^{3/2}$ and (7.1) gives $M = 4\pi(K/\pi G)^{3/2}\mu_1$ with $\mu_1 = 2.01824$. Inverting, $K = \pi G\,[M/(4\pi\mu_1)]^{2/3}$. Rearranging (5.2),
+$$ \frac{1-\beta}{\beta^4} \;=\; \frac{a_{\rm rad}}{3}\,K^3\left(\frac{\mu m_u}{k_B}\right)^{4}, $$
+which is Eddington's quartic. Its left side decreases monotonically from $+\infty$ to $0$ as $\beta$ rises from $0$ to $1$, so it has one root, found by bisection. At $1\,M_\odot$, $K = 3.8409\times10^{14}$, the right side is $1.4329\times10^{-3}$, and $1-\beta = 1.4247\times10^{-3}$. At $10\,M_\odot$, $K = 1.7828\times10^{15}$, the right side is $1.4329\times10^{-1}$, and $1-\beta = 9.5784\times10^{-2}$. At $50\,M_\odot$, $K = 5.2130\times10^{15}$, the right side is $3.5821$, and $1-\beta = 4.1617\times10^{-1}$. So radiation carries $0.14$ per cent of the pressure at $1\,M_\odot$, $9.6$ per cent at $10\,M_\odot$ and $42$ per cent at $50\,M_\odot$; the share rises by a factor $67.2$ from $1$ to $10\,M_\odot$. Eddington's $1\,M_\odot$ value is $2.30$ times the tabulated central value $6.194\times10^{-4}$. Both are below one per cent, which is the quantitative content of Check 1: in a star of one solar mass the premise of $n=3$, a significant radiation share, is not met.
+</div></details></div>
+
+<h2 id="notation">Notation</h2>
+
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Units (CGS)</th><th>First used</th></tr>
+<tr><td>$P$, $\rho$, $T$</td><td>pressure, mass density, temperature</td><td>$\mathrm{dyn\,cm^{-2}}$, $\mathrm{g\,cm^{-3}}$, K</td><td>(2.1)</td></tr>
+<tr><td>$\mathbf{u}$, $\mathbf{g}$</td><td>bulk velocity, gravitational acceleration</td><td>$\mathrm{cm\,s^{-1}}$, $\mathrm{cm\,s^{-2}}$</td><td>(2.1)</td></tr>
+<tr><td>$m(r)$</td><td>mass inside radius $r$</td><td>g</td><td>(2.3)</td></tr>
+<tr><td>$M$, $R$, $L$</td><td>stellar mass, radius, luminosity</td><td>g, cm, $\mathrm{erg\,s^{-1}}$</td><td>(1.2)</td></tr>
+<tr><td>$\bar\rho$</td><td>mean density $3M/(4\pi R^3)$</td><td>$\mathrm{g\,cm^{-3}}$</td><td>(1.1)</td></tr>
+<tr><td>$t_{\rm ff}$, $t_{\rm KH}$</td><td>free-fall time, Kelvin–Helmholtz time</td><td>s</td><td>(1.1), (1.2)</td></tr>
+<tr><td>$\mu$, $m_u$</td><td>mean molecular weight, atomic mass unit</td><td>—, g</td><td>(3.2)</td></tr>
+<tr><td>$X$, $Y$, $Z$</td><td>mass fractions of hydrogen, helium, heavier elements</td><td>—</td><td><a class="secref" href="#scaleheight">§3</a></td></tr>
+<tr><td>$H$</td><td>pressure scale height $k_BT/(\mu m_u g)$</td><td>cm</td><td>Proposition 3</td></tr>
+<tr><td>$K$, $n$</td><td>polytropic constant and index, $P=K\rho^{1+1/n}$</td><td>CGS, depends on $n$; —</td><td>Definition 3</td></tr>
+<tr><td>$\Gamma$</td><td>lapse rate $|dT/dz|$</td><td>$\mathrm{K\,cm^{-1}}$</td><td><a class="secref" href="#troposphere">§4</a></td></tr>
+<tr><td>$\gamma$, $c_p$</td><td>ratio of specific heats; specific heat at constant pressure</td><td>—; $\mathrm{erg\,g^{-1}\,K^{-1}}$</td><td>(4.4)</td></tr>
+<tr><td>$a_{\rm rad}$, $\beta$</td><td>radiation constant; gas-pressure fraction $P_{\rm gas}/P$</td><td>$\mathrm{erg\,cm^{-3}\,K^{-4}}$; —</td><td>Definition 4</td></tr>
+<tr><td>$\theta$, $\xi$, $a$ (length)</td><td>Lane–Emden density variable, radius variable, length scale</td><td>—, —, cm</td><td>(6.1)</td></tr>
+<tr><td>$\xi_1$, $\theta_1'$</td><td>first zero of $\theta$; slope there</td><td>—</td><td>Proposition 7</td></tr>
+<tr><td>$D_n$, $W_n$</td><td>central condensation $\rho_c/\bar\rho$; $P_cR^4/(GM^2)$</td><td>—</td><td>(7.2)</td></tr>
+<tr><td>$\Omega$</td><td>gravitational potential energy</td><td>erg</td><td>(8.2)</td></tr>
+<tr><td>$\nabla$, $\nabla_{\rm ad}$</td><td>$d\ln T/d\ln P$; its adiabatic value</td><td>—</td><td>(10.1)</td></tr>
+<tr><td>$n_{\rm eff}$</td><td>effective polytropic index $1/\nabla-1$</td><td>—</td><td>(10.2)</td></tr>
+<tr><td>$r_b$</td><td>radius of the base of the convection zone</td><td>cm, or units of $R$</td><td><a class="secref" href="#check3">§10.3</a></td></tr>
+<tr><td>$\nu_{\rm ac}$</td><td>acoustic cutoff frequency $c_s/(4\pi H)$</td><td>Hz</td><td><a class="secref" href="#limits">§11</a></td></tr>
+</table>
+
+<h2 id="sources">Sources</h2>
+
+<p class="small">Every published value this module compares against, with what was taken from it.</p>
+
+<ol>
+<li><b>The tabulated standard solar model.</b> J. N. Bahcall, A. M. Serenelli and S. Basu, <em>New solar opacities, abundances, helioseismology, and neutrino fluxes</em>, <em>The Astrophysical Journal</em> <b>621</b>, L85–L88 (2005), <a href="https://arxiv.org/abs/astro-ph/0412440">arXiv:astro-ph/0412440</a>. Quoted: Table 1 for BS05(AGS,OP), convection-zone base $R_{\rm CZ}/R_\odot = 0.7280$ and surface helium $Y = 0.229$, and the helioseismic value quoted in the paper, $0.713\pm0.001$. The table <code>data/bs05_agsop.dat</code> was downloaded from <code>http://www.sns.ias.edu/~jnb/SNdata/Export/BS2005/bs05_agsop.dat</code>.</li>
+<li><b>The measured base of the convection zone.</b> S. Basu and H. M. Antia, <em>Constraining solar abundances using helioseismology</em>, <em>The Astrophysical Journal</em> <b>606</b>, L85 (2004), <a href="https://arxiv.org/abs/astro-ph/0403485">arXiv:astro-ph/0403485</a>. Quoted: $r_b = (0.7133\pm0.0005)\,R_\odot$ from GONG and $(0.7132\pm0.0005)\,R_\odot$ from MDI p-mode frequencies.</li>
+<li><b>Polytrope constants.</b> S. Chandrasekhar, <em>An Introduction to the Study of Stellar Structure</em> (University of Chicago Press, 1939), chapter IV, Table 4. Quoted for $n=3$: $\xi_1 = 6.89685$, $-\xi_1^2\theta_1' = 2.01824$, $\rho_c/\bar\rho = 54.1825$.</li>
+<li><b>The standard atmosphere.</b> ISO 2533:1975, <em>Standard Atmosphere</em>, identical below 11 km to the <em>U.S. Standard Atmosphere, 1976</em>. Quoted: $T(0) = 288.15$ K, $P(0) = 101325$ Pa, lapse rate $6.5\ \mathrm{K\,km^{-1}}$, tropopause at 11 km with $216.65$ K and $22632$ Pa.</li>
+<li><b>Solar constants.</b> IAU 2015 Resolution B3, nominal conversion constants: $GM_\odot = 1.3271244\times10^{26}\ \mathrm{cm^3\,s^{-2}}$, $R_\odot = 6.957\times10^{10}$ cm, $L_\odot = 3.828\times10^{33}\ \mathrm{erg\,s^{-1}}$, $T_{\rm eff} = 5772$ K.</li>
+<li><b>Earlier modules.</b> The Euler equation (7.3) and the equipartition identity (Proposition 1) of Module 2; Module 2's solar-wind check, quoted in <a class="secref" href="#noclosure">§8</a> and Problem C1.</li>
+</ol>
+
+<hr>
+<p class="small">Module 3 of <a href="index.html">Astrophysical Fluid Dynamics</a>. Previous: <a href="module02.html">Module 2 — Continuity, Euler, Navier–Stokes, Energy</a></p>
+
+<script>
+function copyCode(btn){
+  var code = btn.parentElement.querySelector('code');
+  var text = code.textContent;
+  function done(){
+    btn.classList.add('copied');
+    var old = btn.lastChild.nodeValue;
+    btn.lastChild.nodeValue = 'Copied!';
+    setTimeout(function(){ btn.classList.remove('copied'); btn.lastChild.nodeValue = old; }, 1500);
+  }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); } finally { document.body.removeChild(ta); }
+  }
+}
+</script>
+
+</body>
+</html>

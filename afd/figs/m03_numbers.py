@@ -427,6 +427,15 @@ def main():
     P(f'  on the Kelvin-Helmholtz time requires = {(tff/tKH)**2:.3e}')
     P(f'  (t_ff/t_nuc)^2, the same on the nuclear time '
       f'= {(tff/tnuc)**2:.3e}')
+    # Proposition 2 of the module carries an exact coefficient.  With
+    # t_ff = sqrt(3 pi/(32 G rhobar)) one gets t_ff^2 = pi^2 R^3/(8 G M),
+    # so |Rddot|/(GM/R^2) = R^3/(G M t^2) = (8/pi^2) (t_ff/t)^2.
+    coef = 8.0/np.pi**2
+    P(f'  exact coefficient 8/pi^2 in Proposition 2 = {coef:.4f}')
+    P(f'  so the imbalance on the Kelvin-Helmholtz time is '
+      f'{coef*(tff/tKH)**2:.3e}')
+    P(f'  and on the nuclear time                    '
+      f'{coef*(tff/tnuc)**2:.3e}')
     P('  READ: if the Sun contracted as fast as it can radiate its binding')
     P('  energy, gravity and the pressure gradient would still have to')
     P(f'  balance to {(tff/tKH)**2:.0e} of themselves.  On the nuclear timescale it')
@@ -470,6 +479,17 @@ def main():
       f'= {H_mc/r_mc:.3f} r')
 
     # ---------------------------------------------------------------- C
+    # Supplementary numbers quoted in the prose of Sections 1 and 3.
+    R_earth = 6.371e8
+    age_sun = 4.6e9*yr
+    P('  Supplementary, for the census table and Section 1:')
+    P(f'    g in the molecular cloud          = {G*M_mc/r_mc**2:.2e} cm/s^2')
+    P(f'    g in the intracluster medium      = '
+      f'{G*M_cluster/r_cluster**2:.2e} cm/s^2')
+    P(f'    Earth H/R_earth (R = 6371 km)     = {H_air/R_earth:.2e}, '
+      f'factor {R_earth/H_air:.0f}')
+    P(f'    molecular cloud r/H               = {r_mc/H_mc:.0f}')
+    P(f'    solar age 4.6 Gyr in free-fall times = {age_sun/tff:.1e}')
     P('')
     P('PART C.  The terrestrial troposphere is a polytrope')
     P('-'*74)
@@ -481,6 +501,8 @@ def main():
     P(f'  dry adiabatic lapse rate g/c_p     = {lapse_dry*1e5:.3f} K/km')
     P(f'    implied polytropic index n       = {n_dry:.4f}  '
       f'(exactly 1/(gamma-1) = 2.5 for gamma = 7/5)')
+    P(f'  dry adiabat colder than ISA at 11 km by '
+      f'{(lapse_dry-ISA_LAPSE)*ISA_H_TROP:.1f} K')
     P(f'  c_p of dry air                     = '
       f'{1.4*kB/(0.4*mu_air*mu_u)/1e4:.1f} J/(kg K)')
     # Self-consistency: the ISA tropopause values should follow from the
@@ -524,7 +546,10 @@ def main():
     P(f'         -xi^2 theta\' = {-xi5[-1]**2*dth5[-1]:.6f}  '
       f'exact limit sqrt(3) = {np.sqrt(3):.6f}  '
       f'(finite mass, infinite radius)')
-    P('  READ: three exact solutions reproduced to better than 1e-4.  The')
+    P(f'         ratio to the limit = {-xi5[-1]**2*dth5[-1]/np.sqrt(3):.6f}')
+    P('  READ: three exact solutions reproduced.  The largest departure is')
+    P('  1.3e-4, on theta\'(xi_1) for n = 0, where the solution meets the')
+    P('  surface at a finite slope and the step lands just past it.  The')
     P('  integrator may now be trusted on n = 3/2 and n = 3, which have none.')
 
     P('')
@@ -566,7 +591,7 @@ def main():
     P(f'  central radiation pressure aT^4/3  = {Prad_c:.4e} dyn/cm^2')
     P(f'  1 - beta = P_rad/P at the centre   = {Prad_c/Pc:.4e}')
     P('  READ: radiation carries 6.2e-4 of the central pressure.  Hold that')
-    P('  number; it is the reason PART F\'s n = 3 model misses by a factor 2.')
+    P('  number; it is why CHECK 1 of PART G, n = 3, misses by a factor 2.')
     lhs, rhs, vr = virial_check(ssm, Mtot)
     P(f'  virial check 3 int P dV            = {lhs:.4e} erg')
     P(f'               -Omega = int Gm/r dm  = {rhs:.4e} erg')
@@ -578,7 +603,11 @@ def main():
     P('')
     P('PART F.  What hydrostatic equilibrium gives with NO closure')
     P('-'*74)
-    P_chandra = G*Msun**2/(8.0*np.pi*Rsun**4)
+    # Use the TABLE's own radius, not the IAU nominal one.  Both the bound
+    # and W are comparisons against this table, and mixing the two radii
+    # made P_c/bound (521.6) disagree with W/(1/8 pi) (522.4), which are
+    # the same number written two ways.
+    P_chandra = G*Msun**2/(8.0*np.pi*RSUN_TAB**4)
     W_true = Pc*RSUN_TAB**4/(G*Msun**2)
     P(f'  Chandrasekhar bound P_c >= GM^2/(8 pi R^4)')
     P(f'    bound                            = {P_chandra:.4e} dyn/cm^2')
@@ -586,6 +615,8 @@ def main():
     P(f'    P_c / bound                      = {Pc/P_chandra:.1f}')
     P(f'  W = P_c R^4/(G M^2) for the table  = {W_true:.4f}')
     P(f'    the bound is W >= 1/(8 pi)       = {1.0/(8.0*np.pi):.5f}')
+    P(f'    W divided by 1/(8 pi), the same ratio again = '
+      f'{W_true*8.0*np.pi:.1f}')
     P(f'    n = 3 polytrope gives W          = {c3["W"]:.4f}')
     P('  READ: the closure-free statement is a true INEQUALITY, satisfied by')
     P(f'  a factor {Pc/P_chandra:.0f}.  It rules out almost nothing.  That gap is')
@@ -663,7 +694,7 @@ def main():
     P(f'    luminosity (L(r)/L reaches 0.78 only at r = 0.15 R); it then rises')
     P(f'    to {neff[imax]:.2f} near {ssm["rfrac"][imax]:.2f} R and falls again.  It passes through')
     P('    Eddington\'s value of 3, but it does not sit there, so no single')
-    P('    polytrope describes the whole Sun.  Section 11 draws the')
+    P('    polytrope describes the whole Sun.  Section 10.2 draws the')
     P('    consequence.')
 
     # --- CHECK 3: the base of the convection zone against helioseismology.
@@ -690,15 +721,23 @@ def main():
     # --- sensitivity of the locator, so the 29 sigma is not an artefact.
     P('')
     P('  Robustness of the CHECK 3 locator:')
+    grid = []
     for half in (10, 25, 50):
         g2, _ = effective_polytropic_index(ssm, half=half)
         for frac in (0.98, 0.99, 0.995):
             rb2, pl2, _ = convection_zone_base(ssm, g2, frac=frac)
             P(f'    half = {half:>2}  frac = {frac:.3f}  '
               f'r_base = {rb2:.4f}  plateau grad = {pl2:.4f}')
-    P('    The recovered base moves by less than 0.005 R_sun across the')
-    P('    whole grid, an order of magnitude smaller than the 0.015 R_sun')
-    P('    discrepancy with the measurement.')
+            grid.append(rb2)
+    lo, hi = min(grid), max(grid)
+    P(f'    grid range of r_base              = {lo:.4f} to {hi:.4f}, '
+      f'spread {hi-lo:.4f} R_sun')
+    P(f'    recovered base 0.99/25 vs measurement = '
+      f'{(rb - RCZ_MEAS)/RCZ_MEAS_ERR:.1f} sigma')
+    P(f'    grid value nearest the measurement    = '
+      f'{(lo - RCZ_MEAS)/RCZ_MEAS_ERR:.1f} sigma')
+    P(f'    spread / model-measurement gap        = '
+      f'{(hi-lo)/(RCZ_MODEL_PUBLISHED-RCZ_MEAS):.2f}')
 
     P('')
     P('=' * 74)
