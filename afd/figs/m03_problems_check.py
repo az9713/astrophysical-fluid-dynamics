@@ -201,12 +201,10 @@ P(f'  (1-beta) at 10 Msun / at 1 Msun    = '
 P(f'  the table\'s central 1 - beta for the Sun = 6.194e-04')
 P(f'  Eddington\'s 1 - beta at 1 Msun     = {1.0-b1:.4e}')
 P(f'  ratio                              = {(1.0-b1)/6.194e-4:.2f}')
-P('  READ: the premise of n = 3 is that radiation carries a significant')
-P('  and constant share of the pressure.  At 1 Msun Eddington\'s own')
+P('  READ: n = 3 needs beta constant, not large.  At 1 Msun the')
 P(f'  quartic gives {100*(1.0-b1):.2f} per cent, at 10 Msun '
   f'{100*(1.0-b10):.1f} per cent, at 50 Msun '
   f'{100*(1.0-b50):.0f} per cent.')
-P('  That is the quantitative content of CHECK 1.')
 
 P('')
 P('=' * 74)

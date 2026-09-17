@@ -21,7 +21,7 @@ the same equations and the same source table is REFUTED.  Here:
              It predicts rho_c/rhobar = 54.18; the table gives 106.9, a
              factor 1.97.  The reason is computable and is reported below:
              n = 3 follows from a constant ratio of gas to total pressure,
-             which requires radiation pressure to be a fixed and significant
+             which requires radiation pressure to be a fixed
              share of the total.  In the Sun it is 6.2e-4 of the total, so
              the premise of the model is not met.
 
@@ -649,10 +649,11 @@ def main():
     P(f'    of two, but T_c is wrong by only {abs(Tc_n3/Tc-1)*100:.1f}%, because T ~ P/rho')
     P('    and the two errors are in the same direction and nearly cancel.')
     P('    That cancellation is why the 1926 estimate was still useful.')
-    P('    WHY it fails: n = 3 follows from a constant ratio of gas to total')
-    P(f'    pressure with radiation significant.  Here 1-beta = {Prad_c/Pc:.2e},')
-    P('    so the premise does not hold.  n = 3 is the right model for a')
-    P('    radiation-dominated massive star; the Sun is not one.')
+    P('    WHY it fails: n = 3 needs beta constant, which is the same as')
+    P('    grad = d ln T/d ln P = 1/4 at every depth.  CHECK 2 below shows')
+    P('    grad running from 0.19 to 0.40, so beta is not constant.  The')
+    P(f'    central share 1-beta = {Prad_c/Pc:.2e} shows radiation pressure')
+    P('    cannot be what holds beta fixed in the Sun.')
 
     # --- CHECK 2: n_eff(r), the convection zone as an n = 3/2 polytrope.
     P('')

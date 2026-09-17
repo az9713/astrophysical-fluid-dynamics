@@ -175,11 +175,11 @@ so $R^3/(GM) = (8/\pi^2)\,t_{\rm ff}^2$. Substituting gives (2.5). <span class="
 
 <div class="keyresult"><b>Result.</b> If the Sun contracted on its Kelvin–Helmholtz time of $31.4$ Myr, gravity and the pressure gradient would still have to balance to $2.587\times10^{-24}$ of the surface gravity, by (2.5). On the nuclear timescale of $1.036\times10^{10}$ yr, on which the Sun actually evolves, the fraction is $2.379\times10^{-29}$.</div>
 
-<p>Note the direction of this argument. The small imbalance is not assumed in order to simplify the equations. It is forced by the observed luminosity: a star that departed from balance by more than about $10^{-24}$ would change on a timescale shorter than $t_{\rm KH}$, and it would have to radiate more power than the Sun does to do so. Setting $\mathbf{u}=\mathbf{0}$ in (2.1) discards a term of that relative size.</p>
+<p>Note the direction of this argument. The small imbalance is not assumed in order to simplify the equations. It is forced by the observed luminosity. By (2.5), an imbalance larger than about $10^{-24}$ means contraction on a timescale $t$ shorter than $t_{\rm KH}$. Such a contraction releases gravitational energy of order $GM^2/R$ in time $t$, a power $GM^2/(Rt)$ larger than $L$ by the factor $t_{\rm KH}/t$ from (1.2). By the virial argument of <a class="secref" href="#noclosure">§8</a>, half of that energy must leave the star, and the observed luminosity does not carry it. Setting $\mathbf{u}=\mathbf{0}$ in (2.1) discards a term of that relative size.</p>
 
 <span class="prov">The nuclear timescale uses $0.007\times0.1\,Mc^2/L$: $0.7$ per cent of rest mass released by hydrogen burning, applied to the inner $10$ per cent of the mass. Both factors are conventional order-of-magnitude inputs, not results of this book. The solar $GM$, $R$ and $L$ are the IAU 2015 nominal values. The mean density uses the radius printed in the tabulated solar model of <a class="secref" href="#ssm">§9</a>, $6.9598\times10^{10}$ cm, which differs from the IAU nominal $6.957\times10^{10}$ cm by $0.04$ per cent; the Kelvin–Helmholtz time uses the IAU value.</span>
 
-<p>A sound wave carries the information that restores balance. The isothermal sound speed at the Sun's centre, $\sqrt{P_c/\rho_c}$, is $394.1\ \mathrm{km\,s^{-1}}$, and the sound crossing time $R/c_s$ is $1765.1$ s, or $29.4$ minutes. It is the same as $t_{\rm ff}$ to within $0.3$ per cent. This is not a coincidence: in a star in balance, $c_s^2 \sim P/\rho \sim GM/R$, so the time for pressure to respond and the time for gravity to act are of the same order. Any departure from balance is corrected in about half an hour. Module 4 studies those sound waves directly.</p>
+<p>A sound wave carries the information that restores balance. The isothermal sound speed at the Sun's centre, $\sqrt{P_c/\rho_c}$, is $394.1\ \mathrm{km\,s^{-1}}$, and the sound crossing time $R/c_s$ is $1765.1$ s, or $29.4$ minutes. It differs from $t_{\rm ff}$ by $0.3$ per cent. Both are order-of-magnitude estimates, so the closeness to $0.3$ per cent is partly accidental. That the two are of the same order is not: the virial theorem, Proposition 12 of <a class="secref" href="#noclosure">§8</a>, gives $3\int P\,dV = -\Omega$, and with $\Omega\sim -GM^2/R$ and $\int P\,dV\sim (P/\rho)M$ this makes $P/\rho\sim GM/R$, so $R/c_s\sim\sqrt{R^3/GM}\sim t_{\rm ff}$. Any departure from balance is corrected in about half an hour. Module 4 studies those sound waves directly.</p>
 
 <h2 id="scaleheight">3. The plane-parallel atmosphere and the scale height</h2>
 
@@ -204,7 +204,7 @@ $$ \frac{dP}{dz} \;=\; -\frac{\mu\, m_u\, g}{k_B T}\,P \;=\; -\frac{P}{H}. $$
 Because $T$, $\mu$ and $g$ are constant, $H$ is constant, and this linear equation has the solution $P(0)e^{-z/H}$. The density is $\mu m_u P/(k_BT)$ with a constant prefactor, so it has the same dependence on $z$. <span class="qed">∎</span>
 </div>
 
-<p>The scale height is the height over which the pressure falls by a factor $e$. It is the ratio of the thermal energy per particle, $k_BT$, to the work done lifting one particle of mass $\mu m_u$ through unit height. A hot gas or a light gas or a weak gravity gives a thick atmosphere.</p>
+<p>The scale height is the height over which the pressure falls by a factor $e$. It is the height through which an energy $k_BT$, the thermal energy per particle to within a factor of order one, would lift one particle against its weight $\mu m_u g$. A hot gas or a light gas or a weak gravity gives a thick atmosphere.</p>
 
 <p>Proposition 3 was proved under the assumption that $g$ is uniform. For a layer on a body of radius $r$ and mass $M$, $g = GM/r^2$, and it changes by a fractional amount of about $2H/r$ across one scale height. The layer's area also changes by the same fraction. So the plane-parallel form is valid when</p>
 
@@ -251,7 +251,7 @@ using (3.1) in the second step. By (3.2), $\rho/P = \mu m_u/(k_BT)$, so the righ
 
 <p>The first is the lapse rate of the International Standard Atmosphere (ISA), $6.5\ \mathrm{K\,km^{-1}}$ up to the tropopause at $11$ km. It gives $n = 4.2558$.</p>
 
-<p>The second is the <em>dry adiabatic</em> lapse rate, the rate at which a parcel of dry air cools when it rises without exchanging heat. An adiabatic ideal gas obeys $P\propto\rho^{\gamma}$, with $\gamma$ the ratio of specific heats, so comparison with (4.1) gives $1+1/n = \gamma$, or</p>
+<p>The second is the <em>dry adiabatic</em> lapse rate, the rate at which a parcel of dry air cools when it rises without exchanging heat. A parcel of ideal gas compressed or expanded adiabatically obeys $P\propto\rho^{\gamma}$, with $\gamma$ the ratio of specific heats. If the atmosphere is well mixed, so that every level lies on the same adiabat, the structure obeys $P=K\rho^{\gamma}$ with one $K$, and comparison with (4.1) gives $1+1/n = \gamma$, or</p>
 
 $$ n \;=\; \frac{1}{\gamma-1}. \tag{4.4}$$
 
@@ -377,7 +377,7 @@ $$ P \;=\; \left(\frac{k_B}{\mu m_u}\right)^{4/3}\beta^{-4/3}\left[\frac{3(1-\be
 which is (5.2) after collecting $\beta^{-4/3} = (\beta^{-4})^{1/3}$ inside the bracket. If $\beta$ and $\mu$ are constant, $K$ is constant and $P\propto\rho^{4/3}$; by (4.1), $1+1/n = 4/3$, so $n=3$. <span class="qed">∎</span>
 </div>
 
-<p>Note what the proof needs. It needs $\beta$ to be constant, and it needs $1-\beta$ to be non-zero, since otherwise $K$ vanishes and the relation says nothing. The hypothesis is the premise of Eddington's model, and it is a strong one: it asserts that radiation carries a fixed share of the pressure at every depth. <a class="secref" href="#checks">§10</a> measures that share at the centre of the Sun.</p>
+<p>Note what the proof needs. It needs $\beta$ to be constant, and it needs $1-\beta$ to be non-zero, since otherwise $K$ vanishes and the relation says nothing. It does not need $1-\beta$ to be large. The hypothesis of constant $\beta$ has a direct test. Since $1-\beta = a_{\rm rad}T^4/(3P)$, constant $\beta$ means $T^4\propto P$, that is $d\ln T/d\ln P = 1/4$ at every depth. <a class="secref" href="#checks">§10</a> measures that slope through the Sun, and measures the size of $1-\beta$ at its centre.</p>
 
 <p>Both indices are now fixed. The number $3/2$ follows from uniform entropy in a monatomic gas, and the number $3$ follows from a uniform radiation share. Neither was read from a solar model, and so each can be tested against one.</p>
 
@@ -400,7 +400,7 @@ Next write the pressure in terms of $\theta$. With $\rho = \rho_c\theta^n$, the 
 $$ \frac{dP}{dr} \;=\; (n+1)\,K\rho_c^{1+1/n}\,\theta^{n}\,\frac{d\theta}{dr}, \qquad \frac{1}{\rho}\frac{dP}{dr} \;=\; (n+1)\,K\rho_c^{1/n}\,\frac{d\theta}{dr}. $$
 Substituting and dividing by $4\pi G\rho_c$,
 $$ \frac{(n+1)\,K\rho_c^{1/n-1}}{4\pi G}\;\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{d\theta}{dr}\right) \;=\; -\theta^n. $$
-The prefactor is $a^2$ by (6.1), and it has dimensions of length squared. Changing variable to $\xi = r/a$ multiplies each derivative by $a$, so the left-hand side becomes $\xi^{-2}\,d(\xi^2\,d\theta/d\xi)/d\xi$, which gives (6.2).
+The prefactor is $a^2$ by (6.1), and it has dimensions of length squared. Change variable to $\xi = r/a$. Then $d/dr = a^{-1}\,d/d\xi$ and $r^2 = a^2\xi^2$, so $r^{-2}\,d(r^2\,d\theta/dr)/dr = a^{-2}\,\xi^{-2}\,d(\xi^2\,d\theta/d\xi)/d\xi$. The factor $a^{-2}$ cancels the prefactor $a^2$, which gives (6.2).
 
 For the boundary conditions: $\theta(0)=1$ because $\rho(0)=\rho_c$ by definition. For the second, note that $m(r)\approx\tfrac{4}{3}\pi r^3\rho_c$ near the centre, so $dP/dr = -Gm\rho/r^2\approx -\tfrac{4}{3}\pi G\rho_c^2\, r \to 0$ as $r\to 0$. Since $dP/dr$ is proportional to $\theta^n\,d\theta/dr$ and $\theta(0)=1$, this requires $\theta'(0)=0$. The pressure, and therefore the density, first vanish where $\theta$ first vanishes, which is the surface. <span class="qed">∎</span>
 </div>
@@ -418,7 +418,7 @@ $$ \theta'' + \frac{2\theta'}{\xi} \;=\; 6b_2 + 20b_4\,\xi^2 + O(\xi^4). $$
 On the right, by the binomial expansion, $\theta^n = 1 + n\,b_2\,\xi^2 + O(\xi^4)$. Matching the constant terms gives $6b_2 = -1$, so $b_2 = -1/6$. Matching the $\xi^2$ terms gives $20b_4 = -n b_2 = n/6$, so $b_4 = n/120$. <span class="qed">∎</span>
 </div>
 
-<p>Three values of $n$ have solutions in closed form. They are the test cases for the numerical integrator, and each shows a different kind of star.</p>
+<p>The case $n=0$ needs one remark before it can be used. With $n=0$, the substitution $\rho=\rho_c\theta^n$ makes $\rho$ uniform and says nothing about $\theta$, and $\rho_c^{1/n}$ in (6.1) is undefined. Since $P_c = K\rho_c^{1+1/n}$, the length in (6.1) can be written $a^2 = (n+1)P_c/(4\pi G\rho_c^2)$, and the closure gives $P = P_c\,\theta^{n+1}$. Both forms remain meaningful at $n=0$, and we take them as the definitions of $a$ and $\theta$ there. For uniform density, (2.4) gives $dP/dr = -\tfrac{4}{3}\pi G\rho_c^2 r$, so $P = P_c - \tfrac{2}{3}\pi G\rho_c^2 r^2$; with $\theta = P/P_c$ and $r = a\xi$, $a^2 = P_c/(4\pi G\rho_c^2)$, this is $\theta = 1-\xi^2/6$, which is the solution of (6.2) with $\theta^0 = 1$. So (6.2) and (6.3) hold at $n=0$ with this reading, and (7.2) below applies to it.</p>\n\n<p>Three values of $n$ have solutions in closed form. They are the test cases for the numerical integrator, and each shows a different kind of star.</p>
 
 <div class="prop"><b>Proposition 9 (exact solutions for $n=0$, $1$, $5$).</b> The solutions of (6.2) and (6.3) for these three indices are
 $$ \theta_0 \;=\; 1 - \frac{\xi^2}{6}, \qquad \theta_1 \;=\; \frac{\sin\xi}{\xi}, \qquad \theta_5 \;=\; \left(1+\frac{\xi^2}{3}\right)^{-1/2}. \tag{6.5}$$
@@ -580,7 +580,7 @@ For (7.3): from (6.1), $a^2\propto K\rho_c^{(1-n)/n}$, and from (7.1), $\rho_c\p
 
 <div class="keyresult"><b>Check against a published value.</b> Chandrasekhar (1939), <em>An Introduction to the Study of Stellar Structure</em>, chapter IV, Table 4, gives for $n=3$: $\xi_1 = 6.89685$, $-\xi_1^2\theta_1' = 2.01824$ and $\rho_c/\bar\rho = 54.1825$. The integrator gives the same six significant figures for each; the ratios of the unrounded values are $1.000000$, $0.999998$ and $1.000000$.</div>
 
-<p>The mass–radius relation (7.3) has two special cases. For $n=1$ the exponent of $M$ is zero, so all $n=1$ polytropes with the same $K$ have the same radius. For $n=3$ the exponent is undefined, and (7.1) shows instead that $M\propto K^{3/2}$ with no dependence on $\rho_c$: the mass is fixed by $K$ alone. Problems D1 and K3 use both facts.</p>
+<p>The mass–radius relation (7.3) has two special cases. For $n=1$ the exponent of $M$ is zero, so all $n=1$ polytropes with the same $K$ have the same radius. For $n=3$ the exponent is undefined, and (7.1) shows instead that $M\propto K^{3/2}$ with no dependence on $\rho_c$: the mass is fixed by $K$ alone. Problem D1 uses both facts, and Problem K3 uses the second.</p>
 
 <h2 id="noclosure">8. What balance gives with no closure</h2>
 
@@ -609,7 +609,7 @@ $$ -\int_0^R 4\pi r^3\,\frac{Gm\rho}{r^2}\,dr \;=\; -\int_0^R \frac{Gm}{r}\,4\pi
 using $dm = 4\pi r^2\rho\,dr$. Equating the two sides gives $-3\int P\,dV = \Omega$, which is (8.2). <span class="qed">∎</span>
 </div>
 
-<p>For an ideal monatomic gas, $\tfrac{3}{2}P$ is the internal energy per unit volume (Module 2, Proposition 1), so (8.2) says that the thermal energy $U$ is $-\Omega/2$. A star that loses energy by radiation therefore contracts and gets hotter. That is why $t_{\rm KH}$ in (1.2) is the timescale of contraction.</p>
+<p>For an ideal monatomic gas, $\tfrac{3}{2}P$ is the internal energy per unit volume (Module 2, Proposition 1), so (8.2) says that the thermal energy $U = \int\tfrac{3}{2}P\,dV$ is $-\Omega/2$. The total energy is then $E = U + \Omega = \Omega/2$. A star that radiates loses energy, so $E$ and $\Omega$ decrease; a more negative $\Omega$ means a more compact star, and $U = -\Omega/2$ increases. The star contracts and its thermal energy rises, and half the released gravitational energy is radiated. That is why $t_{\rm KH}$ in (1.2), the binding energy divided by the luminosity, is the timescale of contraction.</p>
 
 <p>Integrating the tabulated solar model of <a class="secref" href="#ssm">§9</a> gives $3\int P\,dV = 6.1594\times10^{48}$ erg and $-\Omega = 6.1564\times10^{48}$ erg, in ratio $1.00049$.</p>
 
@@ -650,17 +650,17 @@ $$ 1-\beta_c \;=\; \frac{P_{\rm rad}}{P_c} \;=\; 6.1940\times10^{-4}. \tag{9.1}$
 
 <p>The temperature survives because, by (3.2) at fixed $\mu$, $T\propto P/\rho$. The temperature ratio is therefore the pressure ratio divided by the density ratio, $0.5316/0.5069 = 1.0486$. Both errors have the same sign and nearly the same size, so their quotient is close to one. A central temperature from $n=3$ is close to the model's value even though the structure that produced it is not.</p>
 
-<p>The reason for the failure is the premise of Proposition 6. That proposition requires a constant and non-zero radiation share $1-\beta$. By (9.1) the share at the Sun's centre is $6.19\times10^{-4}$. With a share that small, the constant $K$ of (5.2) does not describe the physics that sets the structure; the premise is not met, and the prediction fails by the factor measured above. Problem K3 solves Eddington's own relation for $\beta$ and shows that $1-\beta$ reaches $9.6$ per cent only at $10\,M_\odot$ and $42$ per cent at $50\,M_\odot$. The $n=3$ model describes a radiation-dominated massive star better than it describes the Sun.</p>
+<p>The reason for the failure is the premise of Proposition 6. That proposition requires a constant radiation share $1-\beta$, which <a class="secref" href="#whypoly">§5</a> showed is the same as $d\ln T/d\ln P = 1/4$ at every depth. In the rows tabulated in <a class="secref" href="#check2">§10.2</a> this slope runs from $0.1937$ at $0.4494\,R$ to $0.3963$ at $0.7500\,R$, so $\beta$ is not constant and the premise fails. The size of the radiation share explains why nothing holds $\beta$ fixed in the Sun. By (9.1) radiation carries $6.19\times10^{-4}$ of the central pressure, so removing radiation pressure would change the central pressure by that fraction, and the structure is set by the gas pressure together with the transport of energy. Problem K3 solves Eddington's own relation for $\beta$ and finds $1-\beta$ of $0.14$ per cent at $1\,M_\odot$, $9.6$ per cent at $10\,M_\odot$ and $42$ per cent at $50\,M_\odot$. Whether $\beta$ is constant in those stars is not tested in this module.</p>
 
 <h3 id="check2">10.2 Check 2: the convection zone as $n=3/2$</h3>
 
-<p>To test a polytropic index locally, define it locally. For a polytrope, (4.3) gives $T\propto P^{1/(n+1)}$. The logarithmic slope of $T$ against $P$ is therefore constant and fixes $n$.</p>
+<p>To test a polytropic index locally, define it locally. The first step of the proof of Proposition 4 used only the ideal gas law (3.2) and the closure (4.1), and gave $T\propto P^{1/(n+1)}$ when $\mu$ is constant. The logarithmic slope of $T$ against $P$ is therefore constant and fixes $n$.</p>
 
 <div class="def"><b>Definition 5 (temperature gradient and effective index).</b> The dimensionless temperature gradient of a stratified star is
 $$ \nabla \;\equiv\; \frac{d\ln T}{d\ln P}, \tag{10.1}$$
 evaluated along the radius. The effective polytropic index at each radius is
 $$ n_{\rm eff} \;\equiv\; \frac{1}{\nabla} - 1. \tag{10.2}$$
-For a polytrope of index $n$, $\nabla = 1/(n+1)$ and $n_{\rm eff}=n$ everywhere. For the adiabat of a monatomic ideal gas, $\nabla = \nabla_{\rm ad} = (\gamma-1)/\gamma = 0.4$ and $n_{\rm eff} = 3/2$.</div>
+For a polytrope of index $n$ with uniform $\mu$, $\nabla = 1/(n+1)$ and $n_{\rm eff}=n$ everywhere. For the adiabat of a monatomic ideal gas, $\nabla = \nabla_{\rm ad} = (\gamma-1)/\gamma = 0.4$ and $n_{\rm eff} = 3/2$. Where $\mu$ varies with radius, $T\propto\mu P/\rho$ adds a term $d\ln\mu/d\ln P$ to $\nabla$, and $n_{\rm eff}$ is then not the exponent in $P\propto\rho^{1+1/n}$.</div>
 
 <p>The table quotes $P$, $\rho$ and $T$ to four significant figures, so a two-point difference of $\ln T$ against $\ln P$ is dominated by rounding. The script computes $\nabla$ as a least-squares slope over $\pm25$ rows. In the band $0.80$ to $0.92\,R$ the slope is flat, and its median is the plateau value.</p>
 
@@ -685,7 +685,7 @@ For a polytrope of index $n$, $\nabla = 1/(n+1)$ and $n_{\rm eff}=n$ everywhere.
 <tr><td>$0.9203$</td><td>$0.3933$</td><td>$1.543$</td><td>$0.9989$</td></tr>
 </table>
 
-<p>Inside $0.15\,R$, where the enclosed luminosity is still growing and reaches $0.78$ of the total only at $0.15\,R$, $n_{\rm eff}$ is about $2.1$. Outward it rises through $3$ at $0.217\,R$ to a maximum of $4.16$ at $0.453\,R$. It falls through $3$ again at $0.674\,R$, and then drops to the plateau near $1.52$. The radiative interior passes through Eddington's value twice and remains at it nowhere. No single polytrope describes the Sun: a central density predicted from one index averages over a structure whose index ranges from $2.05$ to $4.16$.</p>
+<p>Inside $0.15\,R$, where the enclosed luminosity is still growing and reaches $0.78$ of the total only at $0.15\,R$, $n_{\rm eff}$ is about $2.1$. Outward it rises through $3$ at $0.217\,R$ to a maximum of $4.16$ at $0.453\,R$. It falls through $3$ again at $0.674\,R$, and then drops to the plateau near $1.52$. The radiative interior passes through Eddington's value twice and remains at it nowhere. No single polytrope describes the Sun: inside $0.70\,R$ the index ranges from $2.05$ to $4.16$. One caveat applies to the innermost values. Hydrogen burning has changed the composition of the core, so $\mu$ varies there (the central $\mu$ from composition is $0.83195$), and by Definition 5 $n_{\rm eff}$ in the core is a statement about $\nabla$, not about the exponent relating $P$ to $\rho$. The convection zone is chemically mixed, and Check 2 is not affected.</p>
 
 <h3 id="check3">10.3 Check 3: the base of the convection zone, against a measurement</h3>
 
@@ -882,7 +882,7 @@ For $n=1$, (6.1) gives $a^2 = 2K/(4\pi G) = K/(2\pi G)$, independent of $\rho_c$
 <details class="sol"><summary>Solution</summary><div>
 For $n=3$, $a^2 = K\rho_c^{-2/3}/(\pi G)$, so $a^3\rho_c = (K/\pi G)^{3/2}$ and (7.1) gives $M = 4\pi(K/\pi G)^{3/2}\mu_1$ with $\mu_1 = 2.01824$. Inverting, $K = \pi G\,[M/(4\pi\mu_1)]^{2/3}$. Rearranging (5.2),
 $$ \frac{1-\beta}{\beta^4} \;=\; \frac{a_{\rm rad}}{3}\,K^3\left(\frac{\mu m_u}{k_B}\right)^{4}, $$
-which is Eddington's quartic. Its left side decreases monotonically from $+\infty$ to $0$ as $\beta$ rises from $0$ to $1$, so it has one root, found by bisection. At $1\,M_\odot$, $K = 3.8409\times10^{14}$, the right side is $1.4329\times10^{-3}$, and $1-\beta = 1.4247\times10^{-3}$. At $10\,M_\odot$, $K = 1.7828\times10^{15}$, the right side is $1.4329\times10^{-1}$, and $1-\beta = 9.5784\times10^{-2}$. At $50\,M_\odot$, $K = 5.2130\times10^{15}$, the right side is $3.5821$, and $1-\beta = 4.1617\times10^{-1}$. So radiation carries $0.14$ per cent of the pressure at $1\,M_\odot$, $9.6$ per cent at $10\,M_\odot$ and $42$ per cent at $50\,M_\odot$; the share rises by a factor $67.2$ from $1$ to $10\,M_\odot$. Eddington's $1\,M_\odot$ value is $2.30$ times the tabulated central value $6.194\times10^{-4}$. Both are below one per cent, which is the quantitative content of Check 1: in a star of one solar mass the premise of $n=3$, a significant radiation share, is not met.
+which is Eddington's quartic. Its left side decreases monotonically from $+\infty$ to $0$ as $\beta$ rises from $0$ to $1$, so it has one root, found by bisection. At $1\,M_\odot$, $K = 3.8409\times10^{14}$, the right side is $1.4329\times10^{-3}$, and $1-\beta = 1.4247\times10^{-3}$. At $10\,M_\odot$, $K = 1.7828\times10^{15}$, the right side is $1.4329\times10^{-1}$, and $1-\beta = 9.5784\times10^{-2}$. At $50\,M_\odot$, $K = 5.2130\times10^{15}$, the right side is $3.5821$, and $1-\beta = 4.1617\times10^{-1}$. So radiation carries $0.14$ per cent of the pressure at $1\,M_\odot$, $9.6$ per cent at $10\,M_\odot$ and $42$ per cent at $50\,M_\odot$; the share rises by a factor $67.2$ from $1$ to $10\,M_\odot$. Eddington's $1\,M_\odot$ value is $2.30$ times the tabulated central value $6.194\times10^{-4}$. Both are below one per cent. Proposition 6 does not require a large share, so this does not by itself refute $n=3$; Check 1 refutes it through the measured variation of $\nabla$. What K3 shows is that at one solar mass radiation pressure cannot be the agent that fixes the structure, while at $10$ and $50\,M_\odot$ it carries a share large enough to matter in (2.4).
 </div></details></div>
 
 <h2 id="notation">Notation</h2>

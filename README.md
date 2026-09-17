@@ -24,7 +24,7 @@ names the source and gives the ratio.
 |---|---|---|
 | 1 | **Why a Fluid at All?** — mean free path, the Coulomb logarithm, the Knudsen number, and the systems where the continuum picture fails | ready |
 | 2 | **Continuity, Euler, Navier–Stokes, energy** — moments of the Boltzmann equation, the closure gap, the Lagrangian against the Eulerian derivative | ready |
-| 3 | Hydrostatic equilibrium — scale height, polytropes, the Lane–Emden equation | planned |
+| 3 | **Hydrostatic equilibrium** — scale height, polytropes, the Lane–Emden equation; the solar convection zone confirmed as an n = 3/2 polytrope to 1.8%, a standard solar model's convection-zone base refuted at 29σ by helioseismology | ready |
 | 4 | Sound waves and linear perturbation theory — the method every later instability reuses | planned |
 
 ### Instability
@@ -59,7 +59,7 @@ Modules 1–10 form a closed arc. Modules 11–14 are the advanced tier.
 ```
 index.html            redirect to the contents page
 afd/index.html        contents
-afd/module01.html     module 1
+afd/module01.html     module 1 (module02.html, module03.html likewise)
 afd/_template_dark.html   the page scaffold
 afd/figs/             one numbers script, one figure script, one problem
                       check per module, plus the generated SVGs
@@ -108,6 +108,15 @@ adiabatic energy equation, whose predicted temperature exponent of −1.340 sits
 19.6 standard deviations from the measured −0.792 — the wind is heated as it
 expands.
 
+Module 3 tests closures, not the hydrostatic equation itself, because the
+standard solar model it reads (BS2005-AGS,OP) was built by solving that
+equation. The convection zone gives an effective polytropic index of 1.527
+against the 3/2 fixed in advance by adiabatic convection, a ratio of 1.018.
+Eddington's n = 3 predicts a central condensation of 54.18 against the
+tabulated 106.88. The model's convection-zone base, 0.7280 R, lies 29.4
+standard deviations from the helioseismic (0.7133 ± 0.0005) R of Basu & Antia
+(2004): the solar abundance problem.
+
 ## Sources checked against so far
 
 - Sarazin (1988), §5.4 — intracluster Coulomb mean free path, the Coulomb
@@ -120,6 +129,11 @@ expands.
 - Venzmer & Bothmer (2018), A&A 611, A36 — radial power-law fits to Helios 1 and
   2 solar wind data over 0.29–0.98 AU: density, speed and temperature exponents.
 - Verscharen, Bale & Velli (2021), MNRAS 506, 4993 — solar wind mass flux at 1 AU.
+- Bahcall, Serenelli & Basu (2005), ApJ 621, L85 — the tabulated standard solar
+  model BS2005-AGS,OP and its convection-zone base.
+- Basu & Antia (2004), ApJ 606, L85 — the helioseismic convection-zone base.
+- Chandrasekhar (1939), ch. IV, Table 4 — polytrope constants for n = 3.
+- ISO 2533:1975 / US Standard Atmosphere 1976 — the standard atmosphere.
 
 ## Licence
 
