@@ -350,7 +350,7 @@ def sheet_omega2(k, cs, Sigma, kappa=0.0):
     |k|, not constant, because a sheet of finite extent in z has no gravity
     at wavelengths much shorter than its own thickness.  kappa is the
     epicyclic frequency, zero for a non-rotating sheet; with kappa included
-    this is the Toomre dispersion relation, and Module 12 uses it.
+    this is the Toomre dispersion relation, and not used in module05.html.
     """
     return cs*cs*k*k - 2.0*np.pi*G*Sigma*np.abs(k) + kappa*kappa
 
@@ -380,7 +380,7 @@ def toomre_Q(cs, kappa, Sigma):
     """Toomre Q = c_s kappa/(pi G Sigma) for a gaseous disc.
 
     The minimum of sheet_omega2 over k is non-negative exactly when
-    kappa^2 c_s^2 >= (pi G Sigma)^2, i.e. Q >= 1.  Module 12 proves it; it
+    kappa^2 c_s^2 >= (pi G Sigma)^2, i.e. Q >= 1.  Not proved in module05.html; it
     is previewed here because it is the same dispersion relation with one
     extra term, and because it shows what stabilises a galactic disc that
     the Jeans analysis says must collapse.
@@ -787,9 +787,8 @@ def main():
     P('    Same sign structure, one new term.  The Hubble drag converts')
     P('    exponential growth into the power law delta ~ a in matter')
     P('    domination, so the amplification from z_* to z = 0 is a factor')
-    P(f'    of about {1.0+PLANCK_ZSTAR:.0f}, not e to some large power.  That is why')
-    P('    structure formation needs dark matter perturbations that started')
-    P('    growing before recombination.  Module 14 takes this up.')
+    P(f'    of about {1.0+PLANCK_ZSTAR:.0f}, not e to some large power (in this')
+    P('    Einstein-de Sitter model background only).')
 
     # ---------------------------------------------------------------- D
     P('')
@@ -1062,6 +1061,21 @@ def main():
       f'{MJ3/(B68_M*Msun):.4f};')
     P('    that pair is not a solution of the fit, so it is not a verdict.')
     P('')
+    # Proposition 9 of module05.html: M = c_s^2 R S/G with S = xi psi', so
+    # M_J/M at the mean density is a function of xi_max alone.
+    C9 = np.pi**2.5/6.0*np.sqrt(4.0*np.pi/3.0)
+    xs9, S9 = be_max_slope()
+    P('  PROPOSITION 9: M_J/M = (pi^2.5/6)(4 pi/3)^0.5 (xi psi\')^-1.5')
+    P(f'    at xi = 6.9: {C9*be_slope(B68_T4_XI)**-1.5:.4f};  at xi_crit: '
+      f'{C9*be_slope(xi_crit)**-1.5:.4f};  minimum {C9*S9**-1.5:.4f} at '
+      f'xi = {xs9:.3f}')
+    P(f'    published row 1.4149 x (2.10/route-2 mass)^1.5 = '
+      f'{MJ_b68/(B68_M*Msun)*(B68_M*Msun/mass_be_at_xi_from_R(cs_b68, R_b68, B68_T4_XI))**1.5:.4f}')
+    P(f'    M/M_J published {B68_M*Msun/MJ_b68:.4f}; consistent sphere '
+      f'{1.0/(C9*be_slope(B68_T4_XI)**-1.5):.4f}')
+    P(f'    xi_max/xi_crit = {B68_T4_XI/xi_crit:.4f} +/- '
+      f'{B68_T4_SIG/xi_crit:.4f}')
+    P('')
     P('  The Bonnor-Ebert criterion, on the same cloud, same numbers:')
     P(f'    xi_max measured                   = {B68_T4_XI} '
       f'+/- {B68_T4_SIG}')
@@ -1173,6 +1187,15 @@ def main():
 
     # ---------------------------------------------------------------- J
     P('')
+    P(f'  Measured slope at 100 arcsec over the ceiling: '
+      f'{nielbock_slope(100.0)/sl_max_i:.4f}')
+    P(f'  1/t_ff in units of sqrt(4 pi G rho): {1.0/tff_over_tgrow():.4f}')
+    P('  EdS growing-mode share for a start with d(delta)/dt = 0: 3/5 '
+      '(delta = A t^(2/3) + B/t)')
+    P(f'  mass ratio of the two Table 5 rows: {B68_M/B68_M_RESCALED:.4f}')
+
+    # ---------------------------------------------------------------- J
+    P('')
     P('PART J.  Numbers for the problem set')
     P('-'*74)
 
@@ -1220,7 +1243,7 @@ def main():
     P('  P7.  Toomre preview.  Take Sigma = 50 Msun/pc^2, c_s = 7 km/s,')
     P('       kappa = 36 km/s/kpc.  THESE ARE ROUND NUMBERS GIVEN IN THE')
     P('       PROBLEM, not measured values; the module claims nothing from')
-    P('       them and Module 12 sources them properly.')
+    P('       them; P7 is not used in module05.html.')
     Sig7 = 50.0*Msun/pc**2
     cs7 = 7.0e5
     kap7 = 36.0*1e5/kpc
@@ -1240,8 +1263,7 @@ def main():
       f'{sheet_fastest(cs7, Sig7)[0]/kpc:.4f} kpc')
     P(f'       the c_s that would give Q = 1 is '
       f'{np.pi*G*Sig7/kap7/1e5:.2f} km/s; rotation alone cannot')
-    P('       stabilise this disc at 7 km/s, which is the point Module 12')
-    P('       develops.')
+    P('       stabilise this disc at 7 km/s (not developed in module05.html).')
 
     P('  P8.  Size of the swindle at the Jeans length, warm neutral ISM.')
     g8, t8 = swindle_residual(rho2, lambda_jeans(cs2, rho2))

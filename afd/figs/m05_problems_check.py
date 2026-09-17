@@ -24,7 +24,8 @@ print(f'    10 K core: M_J = {M.mass_jeans(cs1, rho1)/Msun:.4f}, adiabatic '
 print('C2  two spheres of nearly equal mass')
 for x in (6.0, 7.0):
     print(f'    xi = {x}: m = {M.be_m(x):.5f}, contrast = {M.be_contrast(x):.3f}')
-print(f'    mass difference {(M.be_m(6.0)/M.be_m(7.0)-1)*100:.3f} per cent')
+print(f'    mass difference {(M.be_m(6.0)/M.be_m(7.0)-1)*100:.3f} per cent, '
+      f'contrast ratio {M.be_contrast(7.0)/M.be_contrast(6.0):.4f}')
 xc, mc, cc = M.be_critical()
 print(f'    xi_crit {xc:.4f}, contrast {cc:.4f}')
 
@@ -72,7 +73,8 @@ Rc = G*Mb/(M.be_slope(xc)*csb**2)
 print(f'    max xi psi\' = {sl:.4f} at xi = {xR:.3f}')
 print(f'    B68 (2.10 Msun, 16 K): R_min = {Rmin/AU:.0f} AU, R at xi_crit = '
       f'{Rc/AU:.0f} AU, R at xi = 6.9 = '
-      f'{G*Mb/(M.be_slope(6.9)*csb**2)/AU:.0f} AU; published 12500 AU')
+      f'{G*Mb/(M.be_slope(6.9)*csb**2)/AU:.0f} AU; published 12500 AU, '
+      f'{(1-12500*AU/Rmin)*100:.2f} per cent below R_min')
 
 print('K1  three regimes')
 for label, cs, r_ in (('core', cs1, rho1),
@@ -111,3 +113,4 @@ for T_, R_au, M_ in ((16.0, 1.25e4, 2.10), (10.0, 0.85e4, 0.90)):
     mj = M.mass_jeans(M.sound_speed(T_, M.MU_MOL), rb)
     print(f'    {T_} K, {R_au:.2e} AU, {M_} Msun: rhobar {rb:.4e}, '
           f'M_J {mj/Msun:.4f}, M_J/M {mj/(M_*Msun):.4f}')
+print(f'    mass ratio {2.10/0.90:.4f}; M_J/M ratio {1.3972/1.4149:.4f}')

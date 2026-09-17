@@ -31,7 +31,7 @@ names the source and gives the ratio.
 
 | # | Module | Status |
 |---|---|---|
-| 5 | Jeans instability — gravity against pressure; the Jeans mass; the Jeans swindle stated openly, then repaired | planned |
+| 5 | **Jeans instability** — gravity against pressure, the Jeans mass, the Jeans swindle repaired by an expanding background and by the Bonnor–Ebert sphere; the Jeans criterion at mean density calls every isothermal sphere stable while Barnard 68 sits 2.25σ on the unstable Bonnor–Ebert branch, its outer density slope 3.24 against the 2.5176 ceiling of every isothermal sphere | ready |
 | 6 | Convection and thermal instability — Schwarzschild and Field criteria; the multiphase interstellar medium | planned |
 | 7 | Rayleigh–Taylor and Kelvin–Helmholtz — supernova ejecta fingers; shredded clouds | planned |
 
@@ -59,7 +59,7 @@ Modules 1–10 form a closed arc. Modules 11–14 are the advanced tier.
 ```
 index.html            redirect to the contents page
 afd/index.html        contents
-afd/module01.html     module 1 (module02.html to module04.html likewise)
+afd/module01.html     module 1 (module02.html to module05.html likewise)
 afd/_template_dark.html   the page scaffold
 afd/figs/             one numbers script, one figure script, one problem
                       check per module, plus the generated SVGs
