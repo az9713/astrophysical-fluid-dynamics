@@ -1,0 +1,47 @@
+<svg class="setupfig" viewBox="0 0 760 420" width="100%" role="img" aria-label="Frequency against vertical wavenumber for sound in an isothermal atmosphere at the solar effective temperature. To the right of zero the propagating branch lies above the straight line of a uniform gas and meets zero wavenumber at the cutoff frequency. To the left of zero the evanescent branch falls from the cutoff to zero frequency. The solar frequency of maximum power lies on the evanescent branch.">
+<rect x="90" y="40" width="640" height="300" fill="none" stroke="#334155"/>
+<rect x="90" y="190.1" width="640" height="149.9" fill="#a78bfa" fill-opacity="0.08"/>
+<line x1="90.0" y1="340" x2="90.0" y2="345" stroke="#334155"/>
+<text x="90.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">4</text>
+<line x1="218.0" y1="340" x2="218.0" y2="345" stroke="#334155"/>
+<text x="218.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">2</text>
+<line x1="346.0" y1="340" x2="346.0" y2="345" stroke="#334155"/>
+<text x="346.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">0</text>
+<line x1="474.0" y1="340" x2="474.0" y2="345" stroke="#334155"/>
+<text x="474.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">2</text>
+<line x1="602.0" y1="340" x2="602.0" y2="345" stroke="#334155"/>
+<text x="602.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">4</text>
+<line x1="730.0" y1="340" x2="730.0" y2="345" stroke="#334155"/>
+<text x="730.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">6</text>
+<line x1="85" y1="340.0" x2="90" y2="340.0" stroke="#334155"/>
+<text x="81" y="344.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="85" y1="290.0" x2="90" y2="290.0" stroke="#334155"/>
+<text x="81" y="294.0" font-size="10.5" text-anchor="end" fill="#94a3b8">1500</text>
+<line x1="85" y1="240.0" x2="90" y2="240.0" stroke="#334155"/>
+<text x="81" y="244.0" font-size="10.5" text-anchor="end" fill="#94a3b8">3000</text>
+<line x1="85" y1="190.0" x2="90" y2="190.0" stroke="#334155"/>
+<text x="81" y="194.0" font-size="10.5" text-anchor="end" fill="#94a3b8">4500</text>
+<line x1="85" y1="140.0" x2="90" y2="140.0" stroke="#334155"/>
+<text x="81" y="144.0" font-size="10.5" text-anchor="end" fill="#94a3b8">6000</text>
+<line x1="85" y1="90.0" x2="90" y2="90.0" stroke="#334155"/>
+<text x="81" y="94.0" font-size="10.5" text-anchor="end" fill="#94a3b8">7500</text>
+<line x1="85" y1="40.0" x2="90" y2="40.0" stroke="#334155"/>
+<text x="81" y="44.0" font-size="10.5" text-anchor="end" fill="#94a3b8">9000</text>
+<line x1="346.0" y1="40" x2="346.0" y2="340" stroke="#334155" stroke-width="1.2"/>
+<text x="218" y="378" font-size="11.5" text-anchor="middle" fill="#cbd5e1">decay rate κ / Mm⁻¹ (evanescent)</text>
+<text x="538" y="378" font-size="11.5" text-anchor="middle" fill="#cbd5e1">vertical wavenumber k / Mm⁻¹ (propagating)</text>
+<text x="32" y="190" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 32 190)">frequency ν / μHz</text>
+<path d="M 346.0,340.0 L 349.9,337.4 L 353.8,334.8 L 357.6,332.2 L 361.5,329.6 L 365.4,327.0 L 369.3,324.4 L 373.2,321.8 L 377.0,319.2 L 380.9,316.6 L 384.8,314.0 L 388.7,311.4 L 392.5,308.8 L 396.4,306.2 L 400.3,303.6 L 404.2,301.0 L 408.1,298.4 L 411.9,295.8 L 415.8,293.2 L 419.7,290.6 L 423.6,288.0 L 427.5,285.4 L 431.3,282.8 L 435.2,280.2 L 439.1,277.6 L 443.0,275.0 L 446.8,272.4 L 450.7,269.9 L 454.6,267.3 L 458.5,264.7 L 462.4,262.1 L 466.2,259.5 L 470.1,256.9 L 474.0,254.3 L 477.9,251.7 L 481.8,249.1 L 485.6,246.5 L 489.5,243.9 L 493.4,241.3 L 497.3,238.7 L 501.2,236.1 L 505.0,233.5 L 508.9,230.9 L 512.8,228.3 L 516.7,225.7 L 520.5,223.1 L 524.4,220.5 L 528.3,217.9 L 532.2,215.3 L 536.1,212.7 L 539.9,210.1 L 543.8,207.5 L 547.7,204.9 L 551.6,202.3 L 555.5,199.7 L 559.3,197.1 L 563.2,194.5 L 567.1,191.9 L 571.0,189.3 L 574.8,186.7 L 578.7,184.1 L 582.6,181.5 L 586.5,178.9 L 590.4,176.3 L 594.2,173.7 L 598.1,171.1 L 602.0,168.5 L 605.9,165.9 L 609.8,163.3 L 613.6,160.7 L 617.5,158.1 L 621.4,155.5 L 625.3,152.9 L 629.2,150.3 L 633.0,147.7 L 636.9,145.1 L 640.8,142.5 L 644.7,139.9 L 648.5,137.3 L 652.4,134.7 L 656.3,132.2 L 660.2,129.6 L 664.1,127.0 L 667.9,124.4 L 671.8,121.8 L 675.7,119.2 L 679.6,116.6 L 683.5,114.0 L 687.3,111.4 L 691.2,108.8 L 695.1,106.2 L 699.0,103.6 L 702.8,101.0 L 706.7,98.4 L 710.6,95.8 L 714.5,93.2 L 718.4,90.6 L 722.2,88.0 L 726.1,85.4 L 730.0,82.8" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5 4"/>
+<path d="M 346.0,190.1 L 349.9,190.1 L 353.8,190.0 L 357.6,189.9 L 361.5,189.7 L 365.4,189.5 L 369.3,189.3 L 373.2,189.0 L 377.0,188.7 L 380.9,188.3 L 384.8,187.9 L 388.7,187.4 L 392.5,186.9 L 396.4,186.3 L 400.3,185.8 L 404.2,185.1 L 408.1,184.4 L 411.9,183.7 L 415.8,183.0 L 419.7,182.2 L 423.6,181.4 L 427.5,180.5 L 431.3,179.6 L 435.2,178.6 L 439.1,177.7 L 443.0,176.6 L 446.8,175.6 L 450.7,174.5 L 454.6,173.4 L 458.5,172.2 L 462.4,171.0 L 466.2,169.8 L 470.1,168.6 L 474.0,167.3 L 477.9,166.0 L 481.8,164.7 L 485.6,163.3 L 489.5,161.9 L 493.4,160.5 L 497.3,159.1 L 501.2,157.6 L 505.0,156.1 L 508.9,154.6 L 512.8,153.1 L 516.7,151.5 L 520.5,149.9 L 524.4,148.3 L 528.3,146.7 L 532.2,145.0 L 536.1,143.3 L 539.9,141.6 L 543.8,139.9 L 547.7,138.2 L 551.6,136.5 L 555.5,134.7 L 559.3,132.9 L 563.2,131.1 L 567.1,129.3 L 571.0,127.5 L 574.8,125.6 L 578.7,123.7 L 582.6,121.9 L 586.5,120.0 L 590.4,118.1 L 594.2,116.1 L 598.1,114.2 L 602.0,112.2 L 605.9,110.3 L 609.8,108.3 L 613.6,106.3 L 617.5,104.3 L 621.4,102.3 L 625.3,100.3 L 629.2,98.3 L 633.0,96.2 L 636.9,94.2 L 640.8,92.1 L 644.7,90.0 L 648.5,87.9 L 652.4,85.8 L 656.3,83.7 L 660.2,81.6 L 664.1,79.5 L 667.9,77.4 L 671.8,75.2 L 675.7,73.1 L 679.6,70.9 L 683.5,68.8 L 687.3,66.6 L 691.2,64.4 L 695.1,62.2 L 699.0,60.1 L 702.8,57.9 L 706.7,55.7 L 710.6,53.4 L 714.5,51.2 L 718.4,49.0 L 722.2,46.8 L 726.1,44.5 L 730.0,42.3" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<path d="M 346.0,190.1 L 344.1,190.1 L 342.2,190.1 L 340.4,190.2 L 338.5,190.2 L 336.6,190.2 L 334.7,190.3 L 332.8,190.4 L 331.0,190.4 L 329.1,190.5 L 327.2,190.6 L 325.3,190.7 L 323.4,190.9 L 321.6,191.0 L 319.7,191.1 L 317.8,191.3 L 315.9,191.5 L 314.0,191.6 L 312.2,191.8 L 310.3,192.0 L 308.4,192.2 L 306.5,192.5 L 304.6,192.7 L 302.7,192.9 L 300.9,193.2 L 299.0,193.4 L 297.1,193.7 L 295.2,194.0 L 293.3,194.3 L 291.5,194.6 L 289.6,194.9 L 287.7,195.3 L 285.8,195.6 L 283.9,196.0 L 282.1,196.4 L 280.2,196.7 L 278.3,197.1 L 276.4,197.5 L 274.5,198.0 L 272.7,198.4 L 270.8,198.8 L 268.9,199.3 L 267.0,199.7 L 265.1,200.2 L 263.3,200.7 L 261.4,201.2 L 259.5,201.8 L 257.6,202.3 L 255.7,202.8 L 253.9,203.4 L 252.0,204.0 L 250.1,204.6 L 248.2,205.2 L 246.3,205.8 L 244.5,206.4 L 242.6,207.1 L 240.7,207.7 L 238.8,208.4 L 236.9,209.1 L 235.0,209.8 L 233.2,210.6 L 231.3,211.3 L 229.4,212.1 L 227.5,212.8 L 225.6,213.6 L 223.8,214.4 L 221.9,215.3 L 220.0,216.1 L 218.1,217.0 L 216.2,217.9 L 214.4,218.8 L 212.5,219.7 L 210.6,220.7 L 208.7,221.6 L 206.8,222.6 L 205.0,223.6 L 203.1,224.7 L 201.2,225.7 L 199.3,226.8 L 197.4,227.9 L 195.6,229.0 L 193.7,230.2 L 191.8,231.4 L 189.9,232.6 L 188.0,233.8 L 186.2,235.1 L 184.3,236.4 L 182.4,237.7 L 180.5,239.1 L 178.6,240.5 L 176.8,241.9 L 174.9,243.4 L 173.0,244.9 L 171.1,246.5 L 169.2,248.1 L 167.3,249.7 L 165.5,251.4 L 163.6,253.2 L 161.7,255.0 L 159.8,256.8 L 157.9,258.7 L 156.1,260.7 L 154.2,262.8 L 152.3,264.9 L 150.4,267.1 L 148.5,269.5 L 146.7,271.9 L 144.8,274.4 L 142.9,277.1 L 141.0,279.9 L 139.1,282.8 L 137.3,286.0 L 135.4,289.3 L 133.5,293.0 L 131.6,297.0 L 129.7,301.5 L 127.9,306.6 L 126.0,312.6 L 124.1,320.6 L 122.2,340.0" fill="none" stroke="#2dd4bf" stroke-width="2.6"/>
+<line x1="90" y1="190.1" x2="730" y2="190.1" stroke="#a78bfa" stroke-width="1.4" stroke-dasharray="3 3"/>
+<text x="722" y="206.1" font-size="10.5" text-anchor="end" fill="#a78bfa">ν<tspan baseline-shift="sub" font-size="8">ac</tspan> = c/(4πH) = 4497 μHz at T<tspan baseline-shift="sub" font-size="8">eff</tspan></text>
+<circle cx="183.4" cy="237.0" r="5" fill="#facc15"/>
+<line x1="90" y1="237.0" x2="176.4" y2="237.0" stroke="#facc15" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="98" y="255.0" font-size="10.5" fill="#facc15">ν<tspan baseline-shift="sub" font-size="8">max</tspan> = 3090 μHz, κ = 2.54 Mm⁻¹</text>
+<text x="98" y="270.0" font-size="10.5" fill="#facc15">(the 5-minute modes)</text>
+<text x="550.8" y="66.7" font-size="10.5" text-anchor="end" fill="#fb923c">stratified gas</text>
+<text x="723.6" y="153.3" font-size="10.5" text-anchor="end" fill="#94a3b8">uniform gas, ν = ck/2π</text>
+<text x="198.8" y="140.0" font-size="10.5" text-anchor="middle" fill="#2dd4bf">evanescent branch</text>
+<text x="98" y="404" font-size="10.5" fill="#94a3b8">c = 8.081 km/s, H = 143.0 km, Γ<tspan baseline-shift="sub" font-size="8">1</tspan> = 5/3, μ = 1.225 (neutral surface mixture)</text>
+</svg>

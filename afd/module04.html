@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Module 4 — Sound Waves and Linear Perturbation Theory | Astrophysical Fluid Dynamics</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags: 'ams' },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js" async></script>
+<style>
+  :root{
+    --bg:#0f172a; --box:#1e293b; --fg:#e2e8f0; --fg2:#cbd5e1;
+    --muted:#94a3b8; --accent:#fb923c; --accent2:#2dd4bf;
+    --rule:#334155; --rule2:#1e293b;
+  }
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{ max-width: 52rem; margin: 2.5rem auto; padding: 0 1.25rem 6rem;
+        font: 16px/1.7 Georgia, 'Times New Roman', serif; color:var(--fg);
+        background:var(--bg); counter-reset: fig; }
+  h1{ font-size: 1.9rem; line-height:1.2; margin:.2rem 0 .2rem; color:#f8fafc; }
+  h2{ font-size:1.35rem; margin:2.6rem 0 .6rem; border-bottom:2px solid var(--accent);
+      padding-bottom:.2rem; color:#f8fafc; }
+  h3{ font-size:1.08rem; margin:1.7rem 0 .4rem; color:var(--accent); }
+  h4{ font-size:1rem; margin:1.2rem 0 .3rem; color:var(--accent2); }
+  .sub{ color:var(--muted); font-style:italic; margin-top:0; }
+  a{ color:var(--accent2); }
+  code{ font-family: ui-monospace,'SFMono-Regular',Consolas,monospace; font-size:.92em;
+        background:#111c33; color:#e2e8f0; padding:.05rem .28rem; border-radius:3px;
+        border:1px solid var(--rule2); }
+  pre{ background:#0b1324; border:1px solid var(--rule); padding:.8rem 1rem; border-radius:5px;
+       overflow:auto; font-size:.84rem; line-height:1.45; color:#e2e8f0; }
+  pre code{ background:none; padding:0; border:none; }
+  .codewrap{ position:relative; }
+  .copybtn{ position:absolute; top:.5rem; right:.5rem; display:inline-flex; align-items:center; gap:.3rem;
+    font:600 .72rem/1 ui-monospace,Consolas,monospace; color:var(--muted);
+    background:var(--box); border:1px solid var(--rule); border-radius:5px; padding:.32rem .5rem; cursor:pointer; }
+  .copybtn:hover{ color:var(--accent); border-color:var(--accent); }
+  .copybtn.copied{ color:var(--accent2); border-color:var(--accent2); }
+  .copybtn svg{ width:13px; height:13px; }
+  .thm,.def,.lem,.prop{ background:var(--box); border-left:4px solid var(--accent);
+      padding:.6rem .9rem; margin:1rem 0; border-radius:0 4px 4px 0; }
+  .def{ border-left-color:var(--accent2); }
+  .thm b,.lem b,.prop b{ color:var(--accent); }
+  .def b{ color:var(--accent2); }
+  .proof{ border-left:2px solid var(--rule); padding-left:.9rem; margin:.8rem 0 1.2rem; color:var(--fg2); }
+  .proof::before{ content:"Proof."; font-style:italic; font-weight:bold; margin-right:.4rem; color:var(--muted); }
+  .qed{ float:right; color:var(--accent); }
+  table{ border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+  th,td{ border:1px solid var(--rule); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+  th{ background:var(--box); color:#f8fafc; }
+  figure{ margin:1.6rem 0; text-align:center; counter-increment: fig; }
+  figcaption{ color:var(--muted); font-size:.9rem; font-style:italic; margin-top:.4rem; text-align:left; }
+  figcaption::before{ content:"Fig. " counter(fig) ". "; font-weight:bold; font-style:normal; color:var(--accent); }
+  .proof figure,.thm figure,.lem figure,.prop figure{ margin:.2rem auto .7rem; max-width:480px;
+      background:var(--bg); border:1px solid var(--rule); border-radius:5px; padding:.4rem; }
+  .proof figcaption,.thm figcaption,.lem figcaption,.prop figcaption{ font-size:.8rem; line-height:1.45; }
+  .setupfig{ display:block; }
+  .setupfig text{ paint-order:stroke; stroke:#0f172a; stroke-width:3px; stroke-linejoin:round; }
+  .setupfig text.onfill{ stroke:none; }
+  figure svg text{ font-family:"STIX Two Math",STIXGeneral,"Times New Roman",Georgia,serif; fill:#cbd5e1; }
+  figure svg text.v{ font-style:italic; }
+  figure svg text.vb{ font-weight:bold; }
+  .secref{ color:var(--accent); text-decoration:none; border-bottom:1px dotted #9a6a3a; }
+  .secref:hover{ border-bottom:1px solid var(--accent); }
+  .toc{ background:var(--box); padding:.8rem 1.2rem; border-radius:6px; font-size:.95rem; border:1px solid var(--rule); }
+  .toc ul{ list-style:none; padding-left:.3rem; margin:.3rem 0; }
+  .toc a{ color:var(--accent2); text-decoration:none; }
+  .toc a:hover{ text-decoration:underline; }
+  .small{ font-size:.88rem; color:var(--muted); }
+  hr{ border:none; border-top:1px solid var(--rule); margin:2.5rem 0; }
+  .keyresult{ background:#2a2410; border:1px solid #6b5a1f; padding:.5rem .9rem; border-radius:4px; color:#fde68a; }
+  .prov{ display:block; border-left:3px solid #c08a00; padding:.15rem .7rem;
+         margin:.5rem 0; font-size:.94em; color:var(--muted); }
+  .prov::before{ content:"provenance — "; font-variant:small-caps; letter-spacing:.04em; color:#d4a017; }
+  .warn{ display:block; border-left:3px solid #f87171; background:#2a1414; padding:.4rem .8rem;
+         margin:.8rem 0; font-size:.95em; color:#fecaca; border-radius:0 4px 4px 0; }
+  .prob{ background:var(--box); border:1px solid var(--rule); border-radius:5px;
+         padding:.6rem .9rem; margin:.9rem 0; }
+  .prob b{ color:var(--accent); }
+  details.sol{ margin-top:.5rem; }
+  details.sol summary{ cursor:pointer; color:var(--accent2); font-size:.9rem; }
+  details.sol > div{ border-top:1px solid var(--rule); margin-top:.5rem; padding-top:.5rem; color:var(--fg2); }
+</style>
+</head>
+<body>
+
+<h1>Module 4 — Sound Waves and Linear Perturbation Theory</h1>
+<p class="sub">Perturbing the equilibrium of Module 3: the wave equation, Newton's isothermal sound speed against Laplace's adiabatic one, the acoustic cutoff of a stratified atmosphere, and the solar large frequency separation, which rules out an isothermal Sun with the tabulated model alone and shows that a perfect gas cannot account for the outer two per cent of the radius.</p>
+
+<div class="toc">
+<b>Contents</b>
+<ul>
+<li><b>1.</b> <a href="#problem">The problem: a speed of sound wrong by sixteen per cent, and a star that rings</a></li>
+<li><b>2.</b> <a href="#linear">Linear perturbation theory</a></li>
+<li><b>3.</b> <a href="#uniform">Sound in a uniform gas</a></li>
+<li><b>4.</b> <a href="#cutoff">Sound in a stratified atmosphere: the acoustic cutoff</a></li>
+<li><b>5.</b> <a href="#modes">Standing waves and the large separation</a></li>
+<li><b>6.</b> <a href="#tau">The acoustic radius of the tabulated solar model</a></li>
+<li><b>7.</b> <a href="#checks">The solar checks</a></li>
+<li><b>8.</b> <a href="#limits">What this model captures, and what it misses</a></li>
+<li><b>9.</b> <a href="#problems">Problems</a></li>
+<li><b>—</b> <a href="#notation">Notation</a> · <a href="#sources">Sources</a></li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="problem">1. The problem: a speed of sound wrong by sixteen per cent, and a star that rings</h2>
+
+<p>Module 3 set the velocity to zero and found the structure that the pressure gradient must have to hold a gas up against gravity. This module asks what happens when that equilibrium is disturbed a little. The answer is sound, and the method that finds it, linear perturbation theory, is the method that every instability in Modules 5 to 7 reuses.</p>
+
+<p>The first calculation of the speed of sound from mechanics was Newton's. He treated the air as a gas whose pressure is proportional to its density at fixed temperature, and his result, in modern notation, is</p>
+
+$$ c_{\rm N} \;=\; \sqrt{\frac{P}{\rho}} \;=\; \sqrt{\frac{k_BT}{\mu\,m_u}}, \tag{1.1}$$
+
+<p>with $P$ the pressure, $\rho$ the mass density, $k_B$ Boltzmann's constant, $T$ the temperature, $\mu$ the mean molecular weight and $m_u$ the atomic mass unit, as in Module 3, equation (3.2). For dry air at $0\ ^\circ$C, (1.1) gives $280.02\ \mathrm{m\,s^{-1}}$. The measured speed is $331.45\ \mathrm{m\,s^{-1}}$. Newton's value is $0.8448$ of it, low by $15.5$ per cent. The error is not in the measurement and not in the arithmetic. It is in the relation assumed between pressure and density, the closure, and <a class="secref" href="#newton">§3.1</a> finds it.</p>
+
+<p>The Sun supplies the astrophysical half of the question. Its surface moves up and down with a period near five minutes. The motion is the superposition of many standing sound waves trapped inside the star, and their frequencies are measured precisely enough that the spacing below carries an uncertainty of $0.1\ \mu$Hz. Near the frequency of maximum power, $\nu_{\max} = 3090\ \mu$Hz, modes of the same angular degree and consecutive radial order are spaced by the <em>large separation</em></p>
+
+$$ \Delta\nu_{\odot} \;=\; 135.1\pm0.1\ \mu\mathrm{Hz}. \tag{1.2}$$
+
+<p><a class="secref" href="#modes">§5</a> shows that this spacing is set by the time sound takes to cross the star. That time depends on the sound speed at every depth, and the sound speed depends on the closure. So (1.2) tests the closure inside the Sun, as the $331.45\ \mathrm{m\,s^{-1}}$ tests it in air.</p>
+
+<p>The module follows the three-part shape of this book. <a class="secref" href="#linear">§2</a> and <a class="secref" href="#uniform">§3</a> derive the terrestrial result and check Newton and Laplace against the measured speed of sound in air. <a class="secref" href="#cutoff">§4</a> and <a class="secref" href="#modes">§5</a> change the regime: gravity stratifies the gas, which introduces a cutoff frequency tied to the scale height of Module 3, and a star is a closed cavity, which quantises the frequencies. <a class="secref" href="#tau">§6</a> and <a class="secref" href="#checks">§7</a> take the result to the Sun. The isothermal closure is refuted by a bound computed from the tabulated model alone. The adiabatic closure is consistent with the measurement in the interior. In the outer $1.7$ per cent of the radius, where the model table stops, a perfect gas with $\Gamma_1 = 5/3$ falls short of what the measurement requires.</p>
+
+<h2 id="linear">2. Linear perturbation theory</h2>
+
+<p>The equations to be perturbed are those of an inviscid, adiabatic fluid. Module 2 derived them: continuity (6.3), the Euler equation (7.3), and the adiabatic energy equation in (8.4). With the Lagrangian derivative $D/Dt \equiv \partial/\partial t + \mathbf{u}\cdot\nabla$ of Module 2, (6.1), they read</p>
+
+$$ \frac{D\rho}{Dt} \;=\; -\rho\,\nabla\cdot\mathbf{u}, \tag{2.1}$$
+
+$$ \rho\,\frac{D\mathbf{u}}{Dt} \;=\; -\nabla P + \rho\,\mathbf{g}, \tag{2.2}$$
+
+<p>in which $\mathbf{u}$ is the bulk velocity and $\mathbf{g}$ the gravitational acceleration. Module 2 wrote the adiabatic condition for a gas with a fixed ratio of specific heats. A gas whose ionisation changes as it is compressed needs a more general coefficient.</p>
+
+<div class="def"><b>Definition 1 (first adiabatic exponent).</b> The first adiabatic exponent is
+$$ \Gamma_1 \;\equiv\; \left(\frac{\partial\ln P}{\partial\ln\rho}\right)_{s}, \tag{2.3}$$
+the logarithmic response of the pressure to a compression at fixed specific entropy $s$. An adiabatic flow is one in which each parcel keeps its entropy, $Ds/Dt=0$, and then
+$$ \frac{DP}{Dt} \;=\; \frac{\Gamma_1P}{\rho}\,\frac{D\rho}{Dt}. \tag{2.4}$$
+For an ideal gas of fixed composition and fixed ionisation, $\Gamma_1 = \gamma$, the ratio of specific heats: $5/3$ for a monatomic gas and $7/5$ for the diatomic molecules of air. Where a compression changes the ionisation, part of the work done goes into ionising atoms rather than into raising the pressure, and $\Gamma_1\lt\gamma$.</div>
+
+<p>Equation (2.4) follows from (2.3) by the chain rule along a parcel's path, since $s$ is constant along that path. Module 2's condition $D(P/\rho^\gamma)/Dt = 0$ is (2.4) with $\Gamma_1=\gamma$ constant. The last sentence of Definition 1 is quoted, not derived; the thermodynamics of an ionising gas is not developed in this book, and the statement is used in <a class="secref" href="#check4">§7.3</a> only as the candidate explanation of a measured shortfall.</p>
+
+<p>Equations (2.1), (2.2) and (2.4) are nonlinear, because products such as $\rho\,(\mathbf{u}\cdot\nabla)\mathbf{u}$ appear. Close to an equilibrium the products of small quantities are smaller still, and dropping them gives linear equations.</p>
+
+<div class="def"><b>Definition 2 (linear perturbation).</b> Let $\rho_0(\mathbf{x})$, $P_0(\mathbf{x})$ and $\mathbf{u}_0 = \mathbf{0}$ be a static solution of (2.1), (2.2) and (2.4), so that $\nabla P_0 = \rho_0\mathbf{g}$ (Module 3, (2.2)). A <em>perturbation</em> writes each field as its equilibrium value plus a small departure,
+$$ \rho = \rho_0 + \rho_1, \qquad P = P_0 + P_1, \qquad \mathbf{u} = \mathbf{u}_1, \tag{2.5}$$
+with $|\rho_1|\ll\rho_0$, $|P_1|\ll P_0$, and $|\mathbf{u}_1|$ small compared with the sound speed. The <em>linearised</em> equations are obtained by substituting (2.5) and keeping only terms of first order in the subscript-1 quantities. The gravitational field $\mathbf{g}$ is held fixed; the perturbation of gravity by $\rho_1$ is neglected.</div>
+
+<div class="prop"><b>Proposition 1 (the linearised equations).</b> About a static equilibrium, and with $\mathbf{g}$ fixed, the linearised forms of (2.1), (2.2) and (2.4) are
+$$ \frac{\partial\rho_1}{\partial t} + \nabla\cdot(\rho_0\mathbf{u}_1) \;=\; 0, \tag{2.6}$$
+$$ \rho_0\,\frac{\partial\mathbf{u}_1}{\partial t} \;=\; -\nabla P_1 + \rho_1\,\mathbf{g}, \tag{2.7}$$
+$$ \frac{\partial P_1}{\partial t} + \mathbf{u}_1\cdot\nabla P_0 \;=\; c^2\left(\frac{\partial\rho_1}{\partial t} + \mathbf{u}_1\cdot\nabla\rho_0\right), \qquad c^2 \;\equiv\; \frac{\Gamma_1P_0}{\rho_0}. \tag{2.8}$$</div>
+
+<div class="proof">
+Continuity (2.1) is equivalent to $\partial\rho/\partial t + \nabla\cdot(\rho\mathbf{u}) = 0$ (Module 2, Proposition 5). Substituting (2.5) gives $\partial\rho_1/\partial t + \nabla\cdot(\rho_0\mathbf{u}_1) + \nabla\cdot(\rho_1\mathbf{u}_1) = 0$, using $\partial\rho_0/\partial t = 0$. The last term is a product of two first-order quantities and is dropped, which leaves (2.6). In (2.2), the left side is $(\rho_0+\rho_1)[\partial\mathbf{u}_1/\partial t + (\mathbf{u}_1\cdot\nabla)\mathbf{u}_1]$, whose only first-order term is $\rho_0\,\partial\mathbf{u}_1/\partial t$. The right side is $-\nabla P_0 - \nabla P_1 + \rho_0\mathbf{g} + \rho_1\mathbf{g}$, and the zeroth-order terms cancel by hydrostatic equilibrium, which leaves (2.7). In (2.4), $DP/Dt = \partial P_1/\partial t + \mathbf{u}_1\cdot\nabla P_0 + \mathbf{u}_1\cdot\nabla P_1$, whose last term is second order; $D\rho/Dt$ is treated the same way. The coefficient $\Gamma_1P/\rho$ multiplies a first-order quantity, so only its zeroth-order value $\Gamma_1P_0/\rho_0 = c^2$ is kept. That gives (2.8). <span class="qed">∎</span>
+</div>
+
+<p>The dropped term $(\mathbf{u}_1\cdot\nabla)\mathbf{u}_1$ is the one that matters most. For a wave of speed $c$ and wavelength $\lambda$, $\partial\mathbf{u}_1/\partial t$ is of order $|\mathbf{u}_1|c/\lambda$ and $(\mathbf{u}_1\cdot\nabla)\mathbf{u}_1$ is of order $|\mathbf{u}_1|^2/\lambda$. Their ratio is $|\mathbf{u}_1|/c$, the Mach number of the fluid motion. Linear theory is therefore the theory of motions whose speed is small compared with the sound speed. When the ratio approaches one, the wave steepens into a shock, which is the subject of Module 8.</p>
+
+<p>The quantity $c$ defined in (2.8) has the dimensions of a speed. <a class="secref" href="#uniform">§3</a> shows that it is the speed of sound.</p>
+
+<h2 id="uniform">3. Sound in a uniform gas</h2>
+
+<p>Take the simplest equilibrium: no gravity, so that hydrostatic balance gives $\nabla P_0 = \mathbf{0}$, and a uniform density $\rho_0$. Then $P_0$, $\rho_0$ and $c$ are constants.</p>
+
+<div class="prop"><b>Proposition 2 (the wave equation).</b> In a uniform static gas with $\mathbf{g}=\mathbf{0}$, the linearised equations (2.6)–(2.8) imply
+$$ \frac{\partial^2\rho_1}{\partial t^2} \;=\; c^2\,\nabla^2\rho_1, \tag{3.1}$$
+and the same equation for $P_1$. A plane wave $\rho_1 \propto \exp[i(\mathbf{k}\cdot\mathbf{x} - \omega t)]$ with wavevector $\mathbf{k}$ and angular frequency $\omega$ solves (3.1) if and only if
+$$ \omega^2 \;=\; c^2\,|\mathbf{k}|^2. \tag{3.2}$$
+The phase speed $\omega/|\mathbf{k}|$ and the group speed $d\omega/d|\mathbf{k}|$ both equal $c$, for every wavelength.</div>
+
+<div class="proof">
+With $\nabla P_0 = \nabla\rho_0 = \mathbf{0}$, (2.8) reduces to $\partial P_1/\partial t = c^2\,\partial\rho_1/\partial t$. Integrating in time, and choosing $P_1=\rho_1=0$ before the disturbance arrives, gives $P_1 = c^2\rho_1$. Take the time derivative of (2.6), which is $\partial^2\rho_1/\partial t^2 = -\rho_0\nabla\cdot(\partial\mathbf{u}_1/\partial t)$, and substitute the divergence of (2.7) with $\mathbf{g}=\mathbf{0}$, which is $\rho_0\nabla\cdot(\partial\mathbf{u}_1/\partial t) = -\nabla^2P_1$. The result is $\partial^2\rho_1/\partial t^2 = \nabla^2P_1 = c^2\nabla^2\rho_1$, which is (3.1). Because $P_1 = c^2\rho_1$ with $c$ constant, $P_1$ obeys the same equation. For the plane wave, $\partial^2/\partial t^2 \to -\omega^2$ and $\nabla^2\to -|\mathbf{k}|^2$, so (3.1) holds if and only if $\omega^2 = c^2|\mathbf{k}|^2$. Then $\omega/|\mathbf{k}| = c$, and $d\omega/d|\mathbf{k}| = c$. <span class="qed">∎</span>
+</div>
+
+<p>This book writes a perturbation as proportional to $\exp[i(\mathbf{k}\cdot\mathbf{x}-\omega t)]$ and every dispersion relation in the form $\omega^2 = \ldots$. With that convention a real $\omega$ is an oscillation and $\omega^2\lt 0$ is exponential growth. Module 5 writes the Jeans relation in the same form, and the sign of its right-hand side decides stability.</p>
+
+<p>The proof used only one property of $c^2$: that it is the constant ratio $P_1/\rho_1$ in the wave. Which ratio that is depends on whether the gas exchanges heat during an oscillation. That is the whole of the disagreement between Newton and Laplace.</p>
+
+<h3 id="newton">3.1 Newton against Laplace: the terrestrial check</h3>
+
+<p>If heat flows fast enough to keep each parcel at the equilibrium temperature, the compression is isothermal. Then $P = \rho k_BT/(\mu m_u)$ at fixed $T$ gives $P_1/\rho_1 = P_0/\rho_0$, and $c$ is Newton's $c_{\rm N}$ of (1.1). If no heat flows during a period, the compression is adiabatic, (2.4) holds, and $c^2 = \Gamma_1P_0/\rho_0$. For an ideal gas this is Laplace's speed of sound,</p>
+
+$$ c_{\rm L} \;=\; \sqrt{\frac{\gamma P}{\rho}} \;=\; \sqrt{\frac{\gamma\,k_BT}{\mu\,m_u}} \;=\; \sqrt{\gamma}\;c_{\rm N}. \tag{3.3}$$
+
+<p>Which limit applies is decided by comparing two times. Heat diffuses with a thermal diffusivity $\chi$, in $\mathrm{cm^2\,s^{-1}}$, and crosses a distance $\ell$ in a time of order $\ell^2/\chi$. The temperature contrast in a wave is between a compression and the neighbouring rarefaction, whose separation is set by the wavelength; take $\ell = 1/|\mathbf{k}|$. The oscillation lasts a time of order $1/\omega$. The compression is adiabatic when heat cannot cross $\ell$ within that time:</p>
+
+$$ \frac{1/\omega}{\ell^2/\chi} \;=\; \frac{\omega\chi\,|\mathbf{k}|^2}{\omega^2} \;=\; \frac{\omega\,\chi}{c^2} \;\ll\; 1, \tag{3.4}$$
+
+<p>where the middle step used (3.2). Criterion (3.4) is an order-of-magnitude estimate. It is not proved here, because the linearised energy equation with conduction is not solved in this module.</p>
+
+<p>For dry air at $0\ ^\circ$C, with $\chi = 0.187\ \mathrm{cm^2\,s^{-1}}$ and $c = 331.32\ \mathrm{m\,s^{-1}}$, the ratio in (3.4) is $1.07\times10^{-6}$ at $1$ kHz and $2.14\times10^{-5}$ at $20$ kHz, the upper limit of hearing. It reaches one only at $9.3\times10^{8}$ Hz, where the wavelength is $355$ nm, $5.2$ mean free paths of air. At that wavelength the continuum description of Module 1 is itself failing (Problem C1). Across the whole range in which air behaves as a fluid, sound in air is adiabatic.</p>
+
+<span class="prov">The thermal diffusivity is computed from handbook values for dry air at $0\ ^\circ$C: thermal conductivity $0.0243\ \mathrm{W\,m^{-1}\,K^{-1}}$, density $1.293\ \mathrm{kg\,m^{-3}}$, specific heat $1005\ \mathrm{J\,kg^{-1}\,K^{-1}}$. They are inputs, not checked against a source here. The conclusion depends only on the order of magnitude of $\chi$, and would survive an error of a factor of $10^4$ at audible frequencies. The mean free path of $68$ nm is the room-air value used in Module 1.</span>
+
+<p>The two predictions can now be compared with a measurement. For dry air, $\mu = 28.9647$ as in Module 3 and $\gamma = 7/5$.</p>
+
+<table>
+<tr><th>Closure</th><th>Sound speed at $273.15$ K</th><th>Ratio to measured $331.45\ \mathrm{m\,s^{-1}}$</th></tr>
+<tr><td>Isothermal, Newton (1.1)</td><td>$280.02\ \mathrm{m\,s^{-1}}$</td><td>$0.8448$</td></tr>
+<tr><td>Adiabatic, Laplace (3.3), $\gamma=7/5$</td><td>$331.32\ \mathrm{m\,s^{-1}}$</td><td>$0.9996$</td></tr>
+</table>
+
+<div class="keyresult"><b>Check 1: Laplace confirmed, Newton refuted.</b> The adiabatic sound speed of an ideal diatomic gas is $331.32\ \mathrm{m\,s^{-1}}$ against the measured $331.45\pm0.01\ \mathrm{m\,s^{-1}}$ (Smith &amp; Harlow 1963), a ratio of $0.9996$. The isothermal speed is $280.02\ \mathrm{m\,s^{-1}}$, a ratio of $0.8448$. The ratio of the two predictions is $\sqrt{7/5} = 1.1832$, fixed by the closure alone.</div>
+
+<p>The residual of Laplace's value is $0.13\ \mathrm{m\,s^{-1}}$, or $4\times10^{-4}$. It is thirteen times the quoted measurement uncertainty, so it is real. This module does not attribute it. Two inputs that could contribute are the ideal-gas law, which real air departs from slightly at one atmosphere, and the composition; the measurement was made at $300$ ppm of carbon dioxide, while $\mu = 28.9647$ is the standard dry-air value. Neither is computed here. Newton's residual, $51.43\ \mathrm{m\,s^{-1}}$, is $396$ times Laplace's.</p>
+
+<span class="prov">The measured value, $(331.45\pm0.01)\ \mathrm{m\,s^{-1}}$ for dry air at $273.15$ K, one atmosphere, zero frequency and $300$ ppm of carbon dioxide, is from Smith &amp; Harlow (1963). It was read as quoted in section 2.3 of Gavioso et al. (2025); the 1963 paper was not read directly. The value is trusted as a measurement: Gavioso et al. list it among experimental determinations, not among calculations.</span>
+
+<h2 id="cutoff">4. Sound in a stratified atmosphere: the acoustic cutoff</h2>
+
+<p>A star is not uniform. Gravity stratifies it, and Module 3 derived the simplest stratified state: the isothermal plane-parallel layer, whose pressure and density both fall as $e^{-z/H}$ with height $z$, where $H = k_BT/(\mu m_u g)$ is the pressure scale height of Module 3, Proposition 3. This section perturbs that state. The result is a new frequency, below which sound cannot propagate upward.</p>
+
+<p>Restrict attention to vertical motion, $\mathbf{u}_1 = u(z,t)\,\hat{\mathbf{z}}$, with all perturbations depending on $z$ and $t$ only. Waves with a horizontal wavenumber add a second restoring force, buoyancy, and are treated in Module 6.</p>
+
+<div class="prop"><b>Proposition 3 (vertical sound waves in an isothermal atmosphere).</b> Let the equilibrium be a plane-parallel isothermal layer of ideal gas with uniform $\mu$, $g$ and $\Gamma_1$, so that
+$$ \rho_0(z) = \rho_0(0)\,e^{-z/H}, \qquad P_0 = g H\rho_0, \qquad c^2 = \Gamma_1 gH, \tag{4.1}$$
+with $c$ uniform. For vertical perturbations, the velocity obeys
+$$ \frac{\partial^2u}{\partial t^2} \;=\; c^2\left(\frac{\partial^2u}{\partial z^2} - \frac{1}{H}\frac{\partial u}{\partial z}\right). \tag{4.2}$$
+The substitution $u = e^{z/2H}\,\psi$ turns (4.2) into
+$$ \frac{\partial^2\psi}{\partial t^2} \;=\; c^2\,\frac{\partial^2\psi}{\partial z^2} \;-\; \omega_{\rm ac}^2\,\psi, \qquad \omega_{\rm ac} \;\equiv\; \frac{c}{2H}, \tag{4.3}$$
+and a wave $\psi\propto\exp[i(kz-\omega t)]$ solves (4.3) if and only if
+$$ \omega^2 \;=\; c^2k^2 + \omega_{\rm ac}^2. \tag{4.4}$$</div>
+
+<div class="proof">
+The equilibrium (4.1) is Module 3's Proposition 3 with $P_0 = \rho_0k_BT/(\mu m_u) = gH\rho_0$ by the definition of $H$; then $c^2 = \Gamma_1P_0/\rho_0 = \Gamma_1gH$ is uniform. Two derivatives of the equilibrium are needed: $d\rho_0/dz = -\rho_0/H$ and $dP_0/dz = -\rho_0 g$. In one dimension, with $\mathbf{g} = -g\hat{\mathbf{z}}$, the linearised equations (2.6)–(2.8) are
+$$ \frac{\partial\rho_1}{\partial t} = -\frac{\partial(\rho_0u)}{\partial z}, \qquad \rho_0\frac{\partial u}{\partial t} = -\frac{\partial P_1}{\partial z} - g\rho_1, \qquad \frac{\partial P_1}{\partial t} - \rho_0gu = c^2\left(\frac{\partial\rho_1}{\partial t} - \frac{\rho_0u}{H}\right). $$
+<em>Step 1: eliminate $\rho_1$ from the energy equation.</em> Expanding continuity, $\partial\rho_1/\partial t = -\rho_0\,\partial u/\partial z + \rho_0u/H$. Substituting into the energy equation,
+$$ \frac{\partial P_1}{\partial t} \;=\; \rho_0gu - c^2\rho_0\frac{\partial u}{\partial z} + \frac{c^2\rho_0u}{H} - \frac{c^2\rho_0u}{H} \;=\; -\rho_0\left(c^2\frac{\partial u}{\partial z} - gu\right). $$
+The two terms in $c^2\rho_0u/H$ cancel. They would cancel for any $\rho_0(z)$, since both come from $u\,d\rho_0/dz$.<br>
+<em>Step 2: differentiate the momentum equation in time</em> and substitute both results:
+$$ \rho_0\frac{\partial^2u}{\partial t^2} \;=\; \frac{\partial}{\partial z}\left[\rho_0\left(c^2\frac{\partial u}{\partial z} - gu\right)\right] - g\left(-\rho_0\frac{\partial u}{\partial z} + \frac{\rho_0u}{H}\right). $$
+Expand the first term with $d\rho_0/dz = -\rho_0/H$:
+$$ \frac{\partial}{\partial z}\left[\rho_0\left(c^2u_z - gu\right)\right] \;=\; \rho_0\left[c^2u_{zz} - gu_z - \frac{c^2u_z}{H} + \frac{gu}{H}\right], $$
+where subscripts denote partial derivatives. Adding the second term, $\rho_0[gu_z - gu/H]$, the terms in $g$ cancel in pairs and leave $\rho_0[c^2u_{zz} - c^2u_z/H]$. Dividing by $\rho_0$ gives (4.2). The isothermal equilibrium entered in this step: the expansion used $d\rho_0/dz = -\rho_0/H$ with the same $H$ that sets $dP_0/dz = -\rho_0g$ through $P_0 = gH\rho_0$, and it treated $c$ as uniform. Without those, the terms in $g$ would not cancel.<br>
+<em>Step 3: remove the first-derivative term.</em> With $u = e^{z/2H}\psi$,
+$$ u_z = e^{z/2H}\left(\psi_z + \frac{\psi}{2H}\right), \qquad u_{zz} = e^{z/2H}\left(\psi_{zz} + \frac{\psi_z}{H} + \frac{\psi}{4H^2}\right). $$
+So $u_{zz} - u_z/H = e^{z/2H}\,(\psi_{zz} - \psi/4H^2)$: the terms in $\psi_z$ cancel, and $\psi/4H^2 - \psi/2H^2 = -\psi/4H^2$. The left side of (4.2) is $e^{z/2H}\psi_{tt}$. Dividing through by $e^{z/2H}$ gives $\psi_{tt} = c^2\psi_{zz} - (c^2/4H^2)\psi$, which is (4.3) with $\omega_{\rm ac}^2 = c^2/4H^2$.<br>
+<em>Step 4.</em> For $\psi\propto\exp[i(kz-\omega t)]$, $\psi_{tt} = -\omega^2\psi$ and $\psi_{zz} = -k^2\psi$, so (4.3) holds if and only if $-\omega^2 = -c^2k^2 - \omega_{\rm ac}^2$, which is (4.4). <span class="qed">∎</span>
+</div>
+
+<p>Three consequences follow, and each is read directly from (4.4) or from the substitution.</p>
+
+<p><b>A cutoff.</b> For real $k$, (4.4) gives $\omega^2\ge\omega_{\rm ac}^2$. A wave with $\omega\lt\omega_{\rm ac}$ must have $k^2 = (\omega^2-\omega_{\rm ac}^2)/c^2 \lt 0$, so $k = \pm i\kappa$ with</p>
+
+$$ \kappa \;=\; \frac{\sqrt{\omega_{\rm ac}^2 - \omega^2}}{c}. \tag{4.5}$$
+
+<p>Such a wave does not propagate; $\psi$ varies as $e^{\pm\kappa z}$, and the physical solution in a semi-infinite atmosphere is the one that decays upward. The wave is <em>evanescent</em>. In cyclic frequency the cutoff is</p>
+
+$$ \nu_{\rm ac} \;=\; \frac{\omega_{\rm ac}}{2\pi} \;=\; \frac{c}{4\pi H} \;=\; \frac{\Gamma_1\,g}{4\pi c}, \tag{4.6}$$
+
+<p>where the last form uses $H = c^2/(\Gamma_1g)$ from (4.1). This is the relation that Module 3's closing table promised: the cutoff frequency contains that module's scale height.</p>
+
+<p><b>Growth of the amplitude with height.</b> Since $\rho_0\propto e^{-z/H}$, the factor $e^{z/2H}$ in $u = e^{z/2H}\psi$ equals $[\rho_0(0)/\rho_0(z)]^{1/2}$. A propagating wave, with $|\psi|$ constant, has a velocity amplitude that grows as $\rho_0^{-1/2}$. The kinetic energy density $\tfrac12\rho_0u^2$ is proportional to $|\psi|^2$ and stays constant. Over $1000$ km of the solar atmosphere, with $H = 143.0$ km, the velocity grows by a factor of $33.0$ (Problem D1). Linear theory holds only while $|u|\ll c$, so a wave that propagates far enough upward must steepen into a shock, the subject of Module 8.</p>
+
+<p><b>Energy in an evanescent wave.</b> For $\omega\lt\omega_{\rm ac}$ the energy density $\tfrac12\rho_0u^2\propto|\psi|^2\propto e^{-2\kappa z}$ decays upward. The velocity amplitude varies as $e^{(1/2H-\kappa)z}$, and by (4.5) $\kappa\lt\omega_{\rm ac}/c = 1/2H$, so the velocity of an evanescent wave still grows with height, more slowly than that of a propagating one. "Evanescent" describes the energy, not the velocity (Problem C2).</p>
+
+<p>Fig. 1 draws (4.4) and (4.5) for the solar photosphere. The dashed line is the uniform gas of Proposition 2. Stratification lifts the propagating branch above it and ends it at $\nu_{\rm ac}$ when $k=0$. Below $\nu_{\rm ac}$ the evanescent branch runs from $\kappa=0$ to $\kappa = 1/2H$ at zero frequency.</p>
+
+<figure>
+<!--FIG_DISP-->
+<svg class="setupfig" viewBox="0 0 760 420" width="100%" role="img" aria-label="Frequency against vertical wavenumber for sound in an isothermal atmosphere at the solar effective temperature. To the right of zero the propagating branch lies above the straight line of a uniform gas and meets zero wavenumber at the cutoff frequency. To the left of zero the evanescent branch falls from the cutoff to zero frequency. The solar frequency of maximum power lies on the evanescent branch.">
+<rect x="90" y="40" width="640" height="300" fill="none" stroke="#334155"/>
+<rect x="90" y="190.1" width="640" height="149.9" fill="#a78bfa" fill-opacity="0.08"/>
+<line x1="90.0" y1="340" x2="90.0" y2="345" stroke="#334155"/>
+<text x="90.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">4</text>
+<line x1="218.0" y1="340" x2="218.0" y2="345" stroke="#334155"/>
+<text x="218.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">2</text>
+<line x1="346.0" y1="340" x2="346.0" y2="345" stroke="#334155"/>
+<text x="346.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">0</text>
+<line x1="474.0" y1="340" x2="474.0" y2="345" stroke="#334155"/>
+<text x="474.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">2</text>
+<line x1="602.0" y1="340" x2="602.0" y2="345" stroke="#334155"/>
+<text x="602.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">4</text>
+<line x1="730.0" y1="340" x2="730.0" y2="345" stroke="#334155"/>
+<text x="730.0" y="358" font-size="10.5" text-anchor="middle" fill="#94a3b8">6</text>
+<line x1="85" y1="340.0" x2="90" y2="340.0" stroke="#334155"/>
+<text x="81" y="344.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="85" y1="290.0" x2="90" y2="290.0" stroke="#334155"/>
+<text x="81" y="294.0" font-size="10.5" text-anchor="end" fill="#94a3b8">1500</text>
+<line x1="85" y1="240.0" x2="90" y2="240.0" stroke="#334155"/>
+<text x="81" y="244.0" font-size="10.5" text-anchor="end" fill="#94a3b8">3000</text>
+<line x1="85" y1="190.0" x2="90" y2="190.0" stroke="#334155"/>
+<text x="81" y="194.0" font-size="10.5" text-anchor="end" fill="#94a3b8">4500</text>
+<line x1="85" y1="140.0" x2="90" y2="140.0" stroke="#334155"/>
+<text x="81" y="144.0" font-size="10.5" text-anchor="end" fill="#94a3b8">6000</text>
+<line x1="85" y1="90.0" x2="90" y2="90.0" stroke="#334155"/>
+<text x="81" y="94.0" font-size="10.5" text-anchor="end" fill="#94a3b8">7500</text>
+<line x1="85" y1="40.0" x2="90" y2="40.0" stroke="#334155"/>
+<text x="81" y="44.0" font-size="10.5" text-anchor="end" fill="#94a3b8">9000</text>
+<line x1="346.0" y1="40" x2="346.0" y2="340" stroke="#334155" stroke-width="1.2"/>
+<text x="218" y="378" font-size="11.5" text-anchor="middle" fill="#cbd5e1">decay rate κ / Mm⁻¹ (evanescent)</text>
+<text x="538" y="378" font-size="11.5" text-anchor="middle" fill="#cbd5e1">vertical wavenumber k / Mm⁻¹ (propagating)</text>
+<text x="32" y="190" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 32 190)">frequency ν / μHz</text>
+<path d="M 346.0,340.0 L 349.9,337.4 L 353.8,334.8 L 357.6,332.2 L 361.5,329.6 L 365.4,327.0 L 369.3,324.4 L 373.2,321.8 L 377.0,319.2 L 380.9,316.6 L 384.8,314.0 L 388.7,311.4 L 392.5,308.8 L 396.4,306.2 L 400.3,303.6 L 404.2,301.0 L 408.1,298.4 L 411.9,295.8 L 415.8,293.2 L 419.7,290.6 L 423.6,288.0 L 427.5,285.4 L 431.3,282.8 L 435.2,280.2 L 439.1,277.6 L 443.0,275.0 L 446.8,272.4 L 450.7,269.9 L 454.6,267.3 L 458.5,264.7 L 462.4,262.1 L 466.2,259.5 L 470.1,256.9 L 474.0,254.3 L 477.9,251.7 L 481.8,249.1 L 485.6,246.5 L 489.5,243.9 L 493.4,241.3 L 497.3,238.7 L 501.2,236.1 L 505.0,233.5 L 508.9,230.9 L 512.8,228.3 L 516.7,225.7 L 520.5,223.1 L 524.4,220.5 L 528.3,217.9 L 532.2,215.3 L 536.1,212.7 L 539.9,210.1 L 543.8,207.5 L 547.7,204.9 L 551.6,202.3 L 555.5,199.7 L 559.3,197.1 L 563.2,194.5 L 567.1,191.9 L 571.0,189.3 L 574.8,186.7 L 578.7,184.1 L 582.6,181.5 L 586.5,178.9 L 590.4,176.3 L 594.2,173.7 L 598.1,171.1 L 602.0,168.5 L 605.9,165.9 L 609.8,163.3 L 613.6,160.7 L 617.5,158.1 L 621.4,155.5 L 625.3,152.9 L 629.2,150.3 L 633.0,147.7 L 636.9,145.1 L 640.8,142.5 L 644.7,139.9 L 648.5,137.3 L 652.4,134.7 L 656.3,132.2 L 660.2,129.6 L 664.1,127.0 L 667.9,124.4 L 671.8,121.8 L 675.7,119.2 L 679.6,116.6 L 683.5,114.0 L 687.3,111.4 L 691.2,108.8 L 695.1,106.2 L 699.0,103.6 L 702.8,101.0 L 706.7,98.4 L 710.6,95.8 L 714.5,93.2 L 718.4,90.6 L 722.2,88.0 L 726.1,85.4 L 730.0,82.8" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5 4"/>
+<path d="M 346.0,190.1 L 349.9,190.1 L 353.8,190.0 L 357.6,189.9 L 361.5,189.7 L 365.4,189.5 L 369.3,189.3 L 373.2,189.0 L 377.0,188.7 L 380.9,188.3 L 384.8,187.9 L 388.7,187.4 L 392.5,186.9 L 396.4,186.3 L 400.3,185.8 L 404.2,185.1 L 408.1,184.4 L 411.9,183.7 L 415.8,183.0 L 419.7,182.2 L 423.6,181.4 L 427.5,180.5 L 431.3,179.6 L 435.2,178.6 L 439.1,177.7 L 443.0,176.6 L 446.8,175.6 L 450.7,174.5 L 454.6,173.4 L 458.5,172.2 L 462.4,171.0 L 466.2,169.8 L 470.1,168.6 L 474.0,167.3 L 477.9,166.0 L 481.8,164.7 L 485.6,163.3 L 489.5,161.9 L 493.4,160.5 L 497.3,159.1 L 501.2,157.6 L 505.0,156.1 L 508.9,154.6 L 512.8,153.1 L 516.7,151.5 L 520.5,149.9 L 524.4,148.3 L 528.3,146.7 L 532.2,145.0 L 536.1,143.3 L 539.9,141.6 L 543.8,139.9 L 547.7,138.2 L 551.6,136.5 L 555.5,134.7 L 559.3,132.9 L 563.2,131.1 L 567.1,129.3 L 571.0,127.5 L 574.8,125.6 L 578.7,123.7 L 582.6,121.9 L 586.5,120.0 L 590.4,118.1 L 594.2,116.1 L 598.1,114.2 L 602.0,112.2 L 605.9,110.3 L 609.8,108.3 L 613.6,106.3 L 617.5,104.3 L 621.4,102.3 L 625.3,100.3 L 629.2,98.3 L 633.0,96.2 L 636.9,94.2 L 640.8,92.1 L 644.7,90.0 L 648.5,87.9 L 652.4,85.8 L 656.3,83.7 L 660.2,81.6 L 664.1,79.5 L 667.9,77.4 L 671.8,75.2 L 675.7,73.1 L 679.6,70.9 L 683.5,68.8 L 687.3,66.6 L 691.2,64.4 L 695.1,62.2 L 699.0,60.1 L 702.8,57.9 L 706.7,55.7 L 710.6,53.4 L 714.5,51.2 L 718.4,49.0 L 722.2,46.8 L 726.1,44.5 L 730.0,42.3" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<path d="M 346.0,190.1 L 344.1,190.1 L 342.2,190.1 L 340.4,190.2 L 338.5,190.2 L 336.6,190.2 L 334.7,190.3 L 332.8,190.4 L 331.0,190.4 L 329.1,190.5 L 327.2,190.6 L 325.3,190.7 L 323.4,190.9 L 321.6,191.0 L 319.7,191.1 L 317.8,191.3 L 315.9,191.5 L 314.0,191.6 L 312.2,191.8 L 310.3,192.0 L 308.4,192.2 L 306.5,192.5 L 304.6,192.7 L 302.7,192.9 L 300.9,193.2 L 299.0,193.4 L 297.1,193.7 L 295.2,194.0 L 293.3,194.3 L 291.5,194.6 L 289.6,194.9 L 287.7,195.3 L 285.8,195.6 L 283.9,196.0 L 282.1,196.4 L 280.2,196.7 L 278.3,197.1 L 276.4,197.5 L 274.5,198.0 L 272.7,198.4 L 270.8,198.8 L 268.9,199.3 L 267.0,199.7 L 265.1,200.2 L 263.3,200.7 L 261.4,201.2 L 259.5,201.8 L 257.6,202.3 L 255.7,202.8 L 253.9,203.4 L 252.0,204.0 L 250.1,204.6 L 248.2,205.2 L 246.3,205.8 L 244.5,206.4 L 242.6,207.1 L 240.7,207.7 L 238.8,208.4 L 236.9,209.1 L 235.0,209.8 L 233.2,210.6 L 231.3,211.3 L 229.4,212.1 L 227.5,212.8 L 225.6,213.6 L 223.8,214.4 L 221.9,215.3 L 220.0,216.1 L 218.1,217.0 L 216.2,217.9 L 214.4,218.8 L 212.5,219.7 L 210.6,220.7 L 208.7,221.6 L 206.8,222.6 L 205.0,223.6 L 203.1,224.7 L 201.2,225.7 L 199.3,226.8 L 197.4,227.9 L 195.6,229.0 L 193.7,230.2 L 191.8,231.4 L 189.9,232.6 L 188.0,233.8 L 186.2,235.1 L 184.3,236.4 L 182.4,237.7 L 180.5,239.1 L 178.6,240.5 L 176.8,241.9 L 174.9,243.4 L 173.0,244.9 L 171.1,246.5 L 169.2,248.1 L 167.3,249.7 L 165.5,251.4 L 163.6,253.2 L 161.7,255.0 L 159.8,256.8 L 157.9,258.7 L 156.1,260.7 L 154.2,262.8 L 152.3,264.9 L 150.4,267.1 L 148.5,269.5 L 146.7,271.9 L 144.8,274.4 L 142.9,277.1 L 141.0,279.9 L 139.1,282.8 L 137.3,286.0 L 135.4,289.3 L 133.5,293.0 L 131.6,297.0 L 129.7,301.5 L 127.9,306.6 L 126.0,312.6 L 124.1,320.6 L 122.2,340.0" fill="none" stroke="#2dd4bf" stroke-width="2.6"/>
+<line x1="90" y1="190.1" x2="730" y2="190.1" stroke="#a78bfa" stroke-width="1.4" stroke-dasharray="3 3"/>
+<text x="722" y="206.1" font-size="10.5" text-anchor="end" fill="#a78bfa">ν<tspan baseline-shift="sub" font-size="8">ac</tspan> = c/(4πH) = 4497 μHz at T<tspan baseline-shift="sub" font-size="8">eff</tspan></text>
+<circle cx="183.4" cy="237.0" r="5" fill="#facc15"/>
+<line x1="90" y1="237.0" x2="176.4" y2="237.0" stroke="#facc15" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="98" y="255.0" font-size="10.5" fill="#facc15">ν<tspan baseline-shift="sub" font-size="8">max</tspan> = 3090 μHz, κ = 2.54 Mm⁻¹</text>
+<text x="98" y="270.0" font-size="10.5" fill="#facc15">(the 5-minute modes)</text>
+<text x="550.8" y="66.7" font-size="10.5" text-anchor="end" fill="#fb923c">stratified gas</text>
+<text x="723.6" y="153.3" font-size="10.5" text-anchor="end" fill="#94a3b8">uniform gas, ν = ck/2π</text>
+<text x="198.8" y="140.0" font-size="10.5" text-anchor="middle" fill="#2dd4bf">evanescent branch</text>
+<text x="98" y="404" font-size="10.5" fill="#94a3b8">c = 8.081 km/s, H = 143.0 km, Γ<tspan baseline-shift="sub" font-size="8">1</tspan> = 5/3, μ = 1.225 (neutral surface mixture)</text>
+</svg>
+<!--/FIG_DISP-->
+<figcaption>The dispersion relation (4.4) of vertical sound waves in an isothermal atmosphere at the solar effective temperature, $5772$ K, with $\Gamma_1 = 5/3$, $\mu = 1.225$ and $g = 2.7398\times10^{4}\ \mathrm{cm\,s^{-2}}$. Right of zero: the propagating branch (orange) lies above the uniform-gas line $\nu = ck/2\pi$ (dashed) and meets $k=0$ at the cutoff $\nu_{\rm ac} = 4497\ \mu$Hz. Left of zero: the evanescent branch (teal), plotted against the decay rate $\kappa$ of (4.5). The yellow point is the solar frequency of maximum oscillation power, $3090\ \mu$Hz, which lies below the cutoff: the five-minute oscillations cannot propagate upward through a gas at this temperature.</figcaption>
+</figure>
+
+<h3 id="solarcutoff">4.1 The solar cutoff</h3>
+
+<p>Evaluate (4.6) at the photosphere. The surface gravity from the IAU nominal $GM_\odot$ and the radius of the tabulated solar model of <a class="secref" href="#tau">§6</a> is $g_\odot = 2.7398\times10^{4}\ \mathrm{cm\,s^{-2}}$. The surface composition of that model, $X = 0.7583$ and $Y = 0.22905$ in its last row, with $Z = 1 - X - Y = 0.01265$,, gives for a neutral gas</p>
+
+$$ \mu \;=\; \frac{1}{X + Y/4 + Z/16} \;=\; 1.2250. \tag{4.7}$$
+
+<p>At $T = T_{\rm eff} = 5772$ K with $\Gamma_1 = 5/3$, the sound speed is $c = 8.081\ \mathrm{km\,s^{-1}}$, the scale height is $H = 143.0$ km, and</p>
+
+$$ \nu_{\rm ac} \;=\; \frac{c}{4\pi H} \;=\; 4497\ \mu\mathrm{Hz}. \tag{4.8}$$
+
+<p>Module 3 evaluated the photospheric scale height with a round input $\mu = 1.3$ and found $134.6$ km. The value $1.2250$ used here is computed from the model's composition. With $\mu = 1.3$ the cutoff would be $4633\ \mu$Hz; by (4.6) at fixed $T$ and $g$, $\nu_{\rm ac}\propto\mu^{1/2}$.</p>
+
+<p>The measured cutoff of the Sun is "around $5000\ \mu$Hz" (Jiménez, García &amp; Pallé 2011), varying by $100$ to $150\ \mu$Hz over the activity cycle. The prediction (4.8) is $0.8994$ of it. By (4.6), $\nu_{\rm ac}\propto T^{-1/2}$ at fixed $g$, $\mu$ and $\Gamma_1$, so matching $5000\ \mu$Hz requires $T = 4669$ K, which is $0.809\,T_{\rm eff}$. Across the activity swing the required temperature runs from $4401$ K at $5150\ \mu$Hz to $4962$ K at $4850\ \mu$Hz.</p>
+
+<span class="prov">This comparison is a consistency tie, not a check. The solar atmosphere is not isothermal, so no single temperature is the right one to put into (4.6); $T_{\rm eff}$ is a convenient reference, not a prediction of where the cutoff is set. The measured value carries no formal uncertainty in the source. What the comparison shows is that an isothermal atmosphere at a temperature within $20$ per cent of $T_{\rm eff}$ reproduces the measured cutoff, and that the gas which sets it must be cooler than $T_{\rm eff}$. It does not locate that gas. The source's own derivation of $5000\ \mu$Hz is described there and not reproduced here.</span>
+
+<p>The ratio of the measured cutoff to $\nu_{\max}$ is $5000/3090 = 1.618$. The five-minute modes, whose period at $\nu_{\max}$ is $5.39$ minutes, lie below the cutoff. Upward they are evanescent. The atmosphere reflects them, and they are trapped inside the star. That trapping is what makes the Sun a resonant cavity, and <a class="secref" href="#modes">§5</a> finds the frequencies of the cavity.</p>
+
+<h2 id="modes">5. Standing waves and the large separation</h2>
+
+<p>A wave trapped between two reflecting boundaries interferes with its own reflection, and only frequencies at which the reflections reinforce survive. The spacing of those frequencies is set by the time sound takes to cross the cavity.</p>
+
+<div class="def"><b>Definition 3 (acoustic radius).</b> The acoustic radius of a star of radius $R$ is the sound-crossing time from centre to surface,
+$$ \tau \;\equiv\; \int_0^R\frac{dr}{c(r)}. \tag{5.1}$$
+For a one-dimensional cavity $0\le x\le L$ the same integral over $x$ is its acoustic length.</div>
+
+<div class="prop"><b>Proposition 4 (radial modes of a uniform sphere).</b> Let a sphere of radius $R$ contain a uniform gas with sound speed $c$ and no gravity, and let the pressure perturbation vanish at the surface, $P_1(R)=0$. The spherically symmetric solutions of (3.1) that are finite at the centre have frequencies
+$$ \nu_n \;=\; \frac{n\,c}{2R}, \qquad n = 1, 2, 3, \ldots, \tag{5.2}$$
+so consecutive modes are separated by exactly $c/(2R) = 1/(2\tau)$.</div>
+
+<div class="proof">
+By Proposition 2, $P_1 = c^2\rho_1$ obeys (3.1). For a spherically symmetric standing wave $P_1 = f(r)\cos\omega t$, and the radial Laplacian is $\nabla^2P_1 = r^{-1}\,\partial^2(rP_1)/\partial r^2$. Writing $f = F(r)/r$, (3.1) becomes $F'' + k^2F = 0$ with $k = \omega/c$, whose general solution is $F = A\sin kr + B\cos kr$. Finiteness of $f = F/r$ at $r=0$ requires $F(0)=0$, so $B=0$ and $f = A\sin(kr)/r$. The surface condition $f(R)=0$ requires $\sin kR = 0$ with $A\ne0$, so $kR = n\pi$ for a positive integer $n$. Then $\omega = n\pi c/R$ and $\nu = \omega/2\pi = nc/(2R)$. The spacing is $c/(2R)$, and for uniform $c$ (5.1) gives $\tau = R/c$, so $c/(2R) = 1/(2\tau)$. <span class="qed">∎</span>
+</div>
+
+<p>The surface condition $P_1 = 0$ is an idealisation of a free surface. A different reflecting condition changes the phase at which reflection occurs, and so shifts every frequency by the same amount, but it does not change the spacing. In a real star $c$ varies with radius. The next proposition shows, in one dimension, that the spacing is still $1/(2\tau)$ at high frequency, with $\tau$ the integral (5.1).</p>
+
+<div class="prop"><b>Proposition 5 (spacing in a cavity of varying sound speed).</b> Let a one-dimensional column $0\le x\le L$ with no gravity have uniform $P_0$ and $\Gamma_1$ and a density $\rho_0(x)$, so that $c(x)^2 = \Gamma_1P_0/\rho_0(x)$. Let $P_1 = 0$ at both ends. Define the acoustic coordinate $s(x) = \int_0^x dx'/c$, with total $\tau = s(L)$, and the impedance $Z = \rho_0c$. Then the pressure amplitude $p(s)$ of a mode of angular frequency $\omega$ satisfies, with $p = Z^{1/2}q$,
+$$ \frac{d^2q}{ds^2} + \left[\omega^2 - V(s)\right]q \;=\; 0, \qquad V \;=\; a^2 - \frac{da}{ds}, \quad a \;=\; \frac{1}{2}\frac{d\ln Z}{ds}, \tag{5.3}$$
+with $q(0) = q(\tau) = 0$. If $Z$ is uniform, $V=0$ and $\nu_n = n/(2\tau)$ exactly. If $V$ is bounded, then as $\omega^2\gg\max|V|$ the frequencies approach $\nu_n = n/(2\tau)$, and consecutive modes are separated by $1/(2\tau)$.</div>
+
+<div class="proof">
+With $\mathbf{g} = \mathbf{0}$ and $\nabla P_0 = \mathbf{0}$, (2.7) gives $\rho_0\,\partial u/\partial t = -\partial P_1/\partial x$. Equation (2.8) has a term $c^2u\,d\rho_0/dx$ on the right. Substituting $\partial\rho_1/\partial t = -\rho_0\,\partial u/\partial x - u\,d\rho_0/dx$ from (2.6) cancels it and leaves $\partial P_1/\partial t = -\rho_0c^2\,\partial u/\partial x = -\Gamma_1P_0\,\partial u/\partial x$. For $P_1 = p(x)\cos\omega t$ and $u = v(x)\sin\omega t$, the two equations are $\rho_0\omega v = -p'$ and $\omega p = \Gamma_1P_0 v'$, where primes denote $d/dx$. Eliminating $v$ gives $(p'/\rho_0)' + \omega^2 p/(\Gamma_1P_0) = 0$.<br>
+Change variable to $s$, with $d/dx = c^{-1}d/ds$. Then $p'/\rho_0 = (\rho_0c)^{-1}dp/ds = Z^{-1}p_s$, and the equation becomes $c^{-1}\,d(Z^{-1}p_s)/ds + \omega^2p/(\rho_0c^2) = 0$. Multiplying by $c$ and using $\rho_0c = Z$ gives $d(Z^{-1}p_s)/ds + \omega^2Z^{-1}p = 0$, that is,
+$$ p_{ss} - 2a\,p_s + \omega^2p \;=\; 0. $$
+Substitute $p = Z^{1/2}q$, so $p_s = Z^{1/2}(q_s + aq)$ and $p_{ss} = Z^{1/2}[q_{ss} + 2aq_s + (a^2 + a_s)q]$. Then $p_{ss} - 2ap_s = Z^{1/2}[q_{ss} + (a_s - a^2)q]$, and the equation is (5.3). Since $Z\gt0$, $p=0$ at an end if and only if $q=0$ there.<br>
+If $Z$ is uniform, $a = 0$ and $V = 0$, so $q = \sin\omega s$, and $q(\tau) = 0$ requires $\omega\tau = n\pi$, that is $\nu_n = n/(2\tau)$. If $V$ is bounded, write (5.3) as $q_{ss} + \omega^2q = Vq$. The term $Vq$ is smaller than $\omega^2q$ by at most $\max|V|/\omega^2$, so the solution and its zeros approach those of $q_{ss} + \omega^2q = 0$ as $\omega$ grows. The phase accumulated between the ends is $\omega\tau$ to leading order, and the condition that it be a multiple of $\pi$ gives $\nu_n\to n/(2\tau)$. <span class="qed">∎</span>
+</div>
+
+<p>The last paragraph of the proof is a leading-order argument, not a bound with an explicit remainder. It is the content of the WKB approximation. A sphere adds two things that the column lacks: the centre, where the radial equation is singular, and gravity, which makes the upper reflection occur at the cutoff of <a class="secref" href="#cutoff">§4</a> rather than at a rigid end. Tassoul (1980) carried out the asymptotic analysis for a star. For modes of radial order $n$ and angular degree $\ell$ it gives</p>
+
+$$ \nu_{n,\ell} \;\simeq\; \left(n + \frac{\ell}{2} + \varepsilon\right)\Delta\nu_{\rm as}, \qquad \Delta\nu_{\rm as} \;=\; \left(2\int_0^R\frac{dr}{c}\right)^{-1} \;=\; \frac{1}{2\tau}, \tag{5.4}$$
+
+<p>with a phase constant $\varepsilon$, plus a second-order term in $1/\nu$. The boundaries change $\varepsilon$ and the second-order term, as the free-surface condition did in Proposition 4. The spacing stays $1/(2\tau)$, the result that Propositions 4 and 5 prove in the smaller settings.</p>
+
+<span class="prov">Relation (5.4) is quoted, not derived for a sphere. It is stated in this form, with $\Delta\nu_{\rm as} = (2\int_0^R dr/c)^{-1}$, as equations (1) and (7) of Mosser et al. (2013), who attribute it to equations 65–74 of Tassoul (1980). It is trusted as standard asymptotic theory of stellar oscillations, valid for high radial order. The Sun's modes near $\nu_{\max}$ have radial orders near $n = \nu_{\max}/\Delta\nu \approx 23$.</span>
+
+<p>A measured spacing is not exactly $\Delta\nu_{\rm as}$. The value (1.2) is an average of $\nu_{n+1}-\nu_n$ over the modes near $\nu_{\max}$, where the second-order term of Tassoul's expansion still bends the spacing. Mosser et al. (2013) fit that bending across many stars and give</p>
+
+$$ \Delta\nu_{\rm as} \;=\; (1+\zeta)\,\Delta\nu_{\rm obs}, \tag{5.5}$$
+
+<p>with a solar value $\zeta_\odot\simeq 2.6$ per cent. The asymptotic spacing of the Sun is therefore larger than the measured one, $1.026\times135.1 = 138.61\ \mu$Hz. Both values are carried through <a class="secref" href="#checks">§7</a>, and each conclusion there is stated for both.</p>
+
+<span class="prov">The correction $\zeta_\odot\simeq2.6$ per cent is from section 4.2 of Mosser et al. (2013), inferred from their main-sequence fit $\zeta = 0.57/n_{\max}$ (their equation 20) with its coefficient $0.57\pm0.02$. They give no separate uncertainty for the solar value; its trust is that of an empirical fit, and the checks below are built so that their conclusions do not depend on whether $\zeta$ is applied.</span>
+
+<h2 id="tau">6. The acoustic radius of the tabulated solar model</h2>
+
+<p>The comparison object is the standard solar model BS2005-AGS,OP of Bahcall, Serenelli &amp; Basu (2005), used in Module 3 and stored as <code>data/bs05_agsop.dat</code>. Its $1284$ rows give $P$ and $\rho$ from $r = 0.00161\,R$ to $r = 0.98308\,R$, with $R = 6.9598\times10^{10}$ cm. They do not give $\Gamma_1$, so the sound speed must be computed from an assumed closure, and that is what makes the table a test of closures.</p>
+
+<p>Integrating (5.1) over the table, from its first to its last row, with the trapezoid rule and adding $r_0/c_0 = 2.2$ s for the innermost $0.00161\,R$, gives</p>
+
+$$ \tau_{\rm tab} \;=\; \int_0^{0.98308R}\frac{dr}{c} \;=\; \begin{cases} 2963.2\ \mathrm{s}, & c^2 = \tfrac{5}{3}P/\rho,\\[2pt] 3825.4\ \mathrm{s}, & c^2 = P/\rho. \end{cases} \tag{6.1}$$
+
+<p>Simpson's rule on the same rows gives $2963.15$ s against the trapezoid's $2963.16$ s for $\Gamma_1 = 5/3$, so the quadrature error is below $0.1$ s. The ratio of the two values is $3825.4/2963.2 = 1.2910 = \sqrt{5/3}$, as it must be, since the two sound speeds differ by that constant factor at every row.</p>
+
+<p>The table stops $11{,}776$ km below the surface, $1.69$ per cent of the radius. The outer layer is omitted, and the sound speed there is lowest, so it contributes a crossing time out of proportion to its thickness. Fig. 2 shows this on a logarithmic depth axis. What is known about the layer without a model is only its sign: every part of it adds a positive time $dr/c$ to $\tau$. The whole of <a class="secref" href="#checks">§7</a> rests on that sign.</p>
+
+<span class="prov">The model table is trusted as in Module 3: as a faithful copy of BS2005-AGS,OP, whose surface helium matches the paper, and not as a description of the Sun. Its $P$ and $\rho$ are the model's; the sound speed computed here is not the model's own sound speed, because the model's $\Gamma_1$ is not tabulated. The radius used is the table's own constant.</span>
+
+<h2 id="checks">7. The solar checks</h2>
+
+<p>The measured spacing (1.2) implies an acoustic radius $\tau = 1/(2\Delta\nu)$. With $\Delta\nu_{\rm obs} = 135.1\pm0.1\ \mu$Hz it is $3701.0\pm2.7$ s. With the asymptotic value $138.61\ \mu$Hz of (5.5) it is $3607.2$ s. Each check compares a closure with these two totals.</p>
+
+<h3 id="check2">7.1 Check 2: the isothermal Sun, refuted by a bound</h3>
+
+<p>An isothermal closure makes $c^2 = P/\rho$ at every depth. By (6.1), the tabulated interior alone then takes $3825.4$ s to cross. The untabulated layer adds a positive time, so the whole star takes longer, and</p>
+
+$$ \Delta\nu_{\rm iso} \;\le\; \frac{1}{2\times3825.4\ \mathrm{s}} \;=\; 130.70\ \mu\mathrm{Hz}. \tag{7.1}$$
+
+<div class="warn"><b>Check 2: the isothermal closure is refuted.</b> Whatever the outer layer contains, an isothermal Sun with the tabulated $P$ and $\rho$ has $\Delta\nu\le130.70\ \mu$Hz. The measured spacing is $135.1\ \mu$Hz, $4.40\ \mu$Hz or $3.25$ per cent above the bound. The asymptotic spacing is $138.61\ \mu$Hz, $7.91\ \mu$Hz or $5.71$ per cent above it.</div>
+
+<p>The conclusion does not depend on the second-order correction. Mosser et al.'s correction moves the comparison value away from the bound. A correction of the opposite sign would have to exceed $3.25$ per cent to save the isothermal closure, and the measured statistical uncertainty is $0.07$ per cent. The strength of the check comes from its being a bound. A best estimate for the layer would need a model of the layer; an upper limit needs only the fact that crossing times add.</p>
+
+<p>The check refutes the isothermal closure <em>given the model's $P$ and $\rho$</em>. It does not show that a different structure could not have an isothermal sound speed and the measured $\Delta\nu$. What it shows is that the Sun's measured spacing and the standard model's stratification together exclude Newton's closure, as the $331.45\ \mathrm{m\,s^{-1}}$ excluded it in air.</p>
+
+<h3 id="check3">7.2 Check 3: the adiabatic interior, consistent</h3>
+
+<p>With $c^2 = \tfrac{5}{3}P/\rho$ the table takes $2963.2$ s, and the corresponding bound $\Delta\nu\le168.74\ \mu$Hz lies above both measured and asymptotic values, so the bound does not refute the adiabatic closure. The outer layer must then supply the remainder:</p>
+
+$$ \tau_{\rm layer} \;=\; \tau - \tau_{\rm tab} \;=\; \begin{cases} 3607.2 - 2963.2 \;=\; 644.0\ \mathrm{s}, & \Delta\nu_{\rm as},\\[2pt] 3701.0 - 2963.2 \;=\; 737.8\ \mathrm{s}, & \Delta\nu_{\rm obs}. \end{cases} \tag{7.2}$$
+
+<div class="keyresult"><b>Check 3: consistent, not confirmed.</b> With $\Gamma_1 = 5/3$ in the tabulated interior, the outer $1.69$ per cent of the radius must supply $644.0$ s of the $3607.2$ s acoustic radius (the asymptotic value), $17.9$ per cent of it, or $737.8$ s of $3701.0$ s ($19.9$ per cent) with the measured value. The remainder is positive, as the closure requires. A negative remainder would have refuted it.</div>
+
+<p>A positive remainder is a weak test. It would be satisfied by any closure whose interior crossing time is shorter than the total, and it says nothing about whether $644$ s is the right amount. <a class="secref" href="#check4">§7.3</a> asks whether a simple gas can supply that amount.</p>
+
+<p>The adiabatic assumption is also an assumption about heat. By (3.4) it requires $\omega\chi/c^2\ll1$, with $\chi$ now the radiative diffusivity of the stellar gas. That criterion is not evaluated for the Sun in this module. It holds deep in the star, where photons diffuse slowly, and fails near the photosphere, where they escape; the size of the failure is a subject of Module 13.</p>
+
+<h3 id="check4">7.3 Check 4: a perfect gas in the outer layer falls short</h3>
+
+<p>To ask whether a simple gas supplies $644$ s, the layer needs a structure. Take the layer between the table's last row, at depth $D = 11{,}776$ km and $T_{\rm top} = 81{,}200$ K, and the photosphere at $T_{\rm eff} = 5772$ K, and assume $T$ linear in the depth $z$ below the surface. The choice is motivated by Module 3: a polytropic layer with uniform $\mu$ and $g$ has $T$ linear in depth, by Proposition 4 of that module. With a uniform $\Gamma_1$ and $\mu$, $c^2 = \Gamma_1k_BT/(\mu m_u)$, and the crossing time of the layer is</p>
+
+$$ \tau_{\rm layer} \;=\; \int_0^{D}\frac{dz}{c} \;=\; \frac{2\left(\sqrt{T_{\rm top}} - \sqrt{T_{\rm eff}}\right)}{\sigma\,\sqrt{\Gamma_1k_B/(\mu m_u)}}, \qquad \sigma \;=\; \frac{T_{\rm top}-T_{\rm eff}}{D}, \tag{7.3}$$
+
+<p>which follows from $dz = dT/\sigma$ and $\int T^{-1/2}dT = 2T^{1/2}$.</p>
+
+<p>The slope of the linear profile is $\sigma = 6.41\ \mathrm{K\,km^{-1}}$. An $n = 3/2$ layer of fully ionised gas, from Module 3's (4.2), would have $7.78\ \mathrm{K\,km^{-1}}$ and reach $97{,}361$ K at depth $D$; a neutral one would have $16.15\ \mathrm{K\,km^{-1}}$ and reach $195{,}907$ K. The tabulated $81{,}200$ K is closer to the fully ionised adiabat, and the linear profile is not far from what a polytrope of that composition would give. It remains an assumption. The real layer includes a thin superadiabatic region under the photosphere where the gradient is steeper, and nothing here shows that the linear profile over- or under-estimates the crossing time.</p>
+
+<table>
+<tr><th>Gas in the layer, $\Gamma_1 = 5/3$</th><th>$\mu$</th><th>$\tau_{\rm layer}$</th><th>Fraction of $644.0$ s</th><th>Fraction of $737.8$ s</th><th>$\Delta\nu$ of the whole star</th></tr>
+<tr><td>fully ionised, surface composition</td><td>$0.5901$</td><td>$425.8$ s</td><td>$0.661$</td><td>$0.577$</td><td>$147.54\ \mu$Hz</td></tr>
+<tr><td>$\mu_{\rm eff}$ of the table's last row</td><td>$0.6585$</td><td>$449.8$ s</td><td>$0.698$</td><td>$0.610$</td><td>$146.50\ \mu$Hz</td></tr>
+<tr><td>neutral, (4.7)</td><td>$1.2250$</td><td>$613.5$ s</td><td>$0.953$</td><td>$0.832$</td><td>$139.79\ \mu$Hz</td></tr>
+</table>
+
+<p>Here $\mu_{\rm eff} = \rho k_BT/(P_{\rm gas}m_u)$ is computed from the table's own $P$, $\rho$ and $T$, with the radiation pressure $a_{\rm rad}T^4/3$ subtracted from $P$. The crossing time scales as $\mu^{1/2}$, so the neutral value $\mu = 1.2250$ is the most favourable of the three. It is also not a possible value for the whole layer: hydrogen is not neutral at $81{,}200$ K, and the table's own last row gives $\mu_{\rm eff} = 0.6585$.</p>
+
+<div class="warn"><b>Check 4: a perfect gas with $\Gamma_1 = 5/3$ falls short.</b> Under the linear-$T$ assumption, a fully ionised layer supplies $425.8$ s, $66.1$ per cent of the $644.0$ s required by the asymptotic spacing and $57.7$ per cent of the $737.8$ s required by the measured one. Even the most favourable case, a neutral $\mu$ throughout, supplies $613.5$ s, short by $30.5$ s and $124.3$ s respectively. Holding $\mu$ at its fully ionised value, the layer would need $\Gamma_1 = 0.729$ (asymptotic) or $0.555$ (measured); holding $\mu$ neutral, $\Gamma_1 = 1.513$ or $1.152$.</div>
+
+<p>State what this check does and does not show. It does not measure $\Gamma_1$: the required values come from the linear-$T$ assumption, and a cooler profile would lower the requirement. It shows that a gas of fixed composition, fixed ionisation and $\Gamma_1 = 5/3$, with this profile, cannot fill the gap for any $\mu$ between fully ionised and neutral. Closing it needs a lower sound speed in the layer: a $\Gamma_1$ below $5/3$, a $\mu$ that changes with depth, a cooler profile, or a combination. The first two are what Definition 1 says a partly ionised gas does, and the table itself shows the second beginning below the layer.</p>
+
+<table>
+<tr><th>$r/R$</th><th>$T$ (K)</th><th>$\mu_{\rm eff}$ from the table</th><th>$\mu$, fully ionised</th><th>Excess</th></tr>
+<tr><td>$0.8493$</td><td>$9.504\times10^{5}$</td><td>$0.6012$</td><td>$0.5901$</td><td>$+1.9\%$</td></tr>
+<tr><td>$0.9499$</td><td>$2.690\times10^{5}$</td><td>$0.6145$</td><td>$0.5901$</td><td>$+4.1\%$</td></tr>
+<tr><td>$0.9698$</td><td>$1.524\times10^{5}$</td><td>$0.6290$</td><td>$0.5901$</td><td>$+6.6\%$</td></tr>
+<tr><td>$0.9800$</td><td>$9.740\times10^{4}$</td><td>$0.6491$</td><td>$0.5901$</td><td>$+10.0\%$</td></tr>
+<tr><td>$0.9831$</td><td>$8.120\times10^{4}$</td><td>$0.6585$</td><td>$0.5901$</td><td>$+11.6\%$</td></tr>
+</table>
+
+<p>The model's effective molecular weight rises above the fully ionised value outward, by $11.6$ per cent at the last row. A rising $\mu$ means fewer free particles per unit mass, which is what recombination of helium and hydrogen produces. The table does not state the mechanism, and this module attributes the rise to ionisation as the standard interpretation, not as a computed result. The hydrogen and helium ionisation zones lie in the untabulated layer and below it, and they lower both $\Gamma_1$ and the sound speed there.</p>
+
+<figure>
+<!--FIG_TAU-->
+<svg class="setupfig" viewBox="0 0 760 408" width="100%" role="img" aria-label="Left panel: acoustic radius accumulated from the centre of the tabulated solar model against depth below the surface on a logarithmic axis, for the adiabatic and the isothermal sound speed, with the extension through the untabulated outer layer for two gas models and the totals the measurement requires. Right panel: the large separation implied by each case against the measured and the asymptotic values.">
+<text x="226" y="24" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Acoustic radius from the centre</text>
+<rect x="72" y="40" width="308" height="290" fill="none" stroke="#334155"/>
+<rect x="208.4" y="40" width="171.6" height="290" fill="#a78bfa" fill-opacity="0.10"/>
+<line x1="72.0" y1="330" x2="72.0" y2="335" stroke="#334155"/>
+<text x="72.0" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">1</text>
+<line x1="149.0" y1="330" x2="149.0" y2="335" stroke="#334155"/>
+<text x="149.0" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.1</text>
+<line x1="226.0" y1="330" x2="226.0" y2="335" stroke="#334155"/>
+<text x="226.0" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.01</text>
+<line x1="303.0" y1="330" x2="303.0" y2="335" stroke="#334155"/>
+<text x="303.0" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻³</text>
+<line x1="380.0" y1="330" x2="380.0" y2="335" stroke="#334155"/>
+<text x="380.0" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">10⁻⁴</text>
+<line x1="67" y1="330.0" x2="72" y2="330.0" stroke="#334155"/>
+<text x="63" y="334.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="67" y1="257.5" x2="72" y2="257.5" stroke="#334155"/>
+<text x="63" y="261.5" font-size="10.5" text-anchor="end" fill="#94a3b8">1000</text>
+<line x1="67" y1="185.0" x2="72" y2="185.0" stroke="#334155"/>
+<text x="63" y="189.0" font-size="10.5" text-anchor="end" fill="#94a3b8">2000</text>
+<line x1="67" y1="112.5" x2="72" y2="112.5" stroke="#334155"/>
+<text x="63" y="116.5" font-size="10.5" text-anchor="end" fill="#94a3b8">3000</text>
+<line x1="67" y1="40.0" x2="72" y2="40.0" stroke="#334155"/>
+<text x="63" y="44.0" font-size="10.5" text-anchor="end" fill="#94a3b8">4000</text>
+<text x="226" y="366" font-size="11.5" text-anchor="middle" fill="#cbd5e1">depth below surface, 1 − r/R</text>
+<text x="26" y="185" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 26 185)">τ(r) / s</text>
+<line x1="72" y1="61.7" x2="380" y2="61.7" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="80" y="55.7" font-size="10.5" fill="#cbd5e1">measured Δν: 3701 s</text>
+<line x1="72" y1="68.5" x2="380" y2="68.5" stroke="#facc15" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="80" y="83.5" font-size="10.5" fill="#facc15">asymptotic Δν: 3607 s</text>
+<path d="M 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.5 L 72.1,329.4 L 72.1,329.4 L 72.1,329.4 L 72.1,329.4 L 72.1,329.4 L 72.1,329.4 L 72.1,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.2 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.1 L 72.2,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.9 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.8 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.3,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.6 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.5 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.4 L 72.4,328.3 L 72.4,328.3 L 72.4,328.3 L 72.4,328.3 L 72.4,328.3 L 72.4,328.3 L 72.5,328.3 L 72.5,328.3 L 72.5,328.3 L 72.5,328.3 L 72.5,328.3 L 72.5,328.2 L 72.5,328.2 L 72.5,328.2 L 72.5,328.2 L 72.5,328.2 L 72.5,328.2 L 72.5,328.2 L 72.5,328.2 L 72.5,328.1 L 72.5,328.1 L 72.5,328.1 L 72.5,328.1 L 72.5,328.1 L 72.5,328.1 L 72.5,328.1 L 72.5,328.1 L 72.5,328.0 L 72.5,328.0 L 72.5,328.0 L 72.5,328.0 L 72.5,328.0 L 72.5,328.0 L 72.5,328.0 L 72.5,327.9 L 72.5,327.9 L 72.5,327.9 L 72.6,327.9 L 72.6,327.9 L 72.6,327.9 L 72.6,327.9 L 72.6,327.8 L 72.6,327.8 L 72.6,327.8 L 72.6,327.8 L 72.6,327.8 L 72.6,327.8 L 72.6,327.7 L 72.6,327.7 L 72.6,327.7 L 72.6,327.7 L 72.6,327.7 L 72.6,327.7 L 72.6,327.6 L 72.6,327.6 L 72.6,327.6 L 72.6,327.6 L 72.6,327.6 L 72.6,327.6 L 72.6,327.5 L 72.7,327.5 L 72.7,327.5 L 72.7,327.5 L 72.7,327.5 L 72.7,327.4 L 72.7,327.4 L 72.7,327.4 L 72.7,327.4 L 72.7,327.4 L 72.7,327.4 L 72.7,327.3 L 72.7,327.3 L 72.7,327.3 L 72.7,327.3 L 72.7,327.3 L 72.7,327.2 L 72.7,327.2 L 72.7,327.2 L 72.7,327.2 L 72.7,327.2 L 72.8,327.2 L 72.8,327.1 L 72.8,327.1 L 72.8,327.1 L 72.8,327.0 L 72.8,327.0 L 72.8,327.0 L 72.8,327.0 L 72.8,326.9 L 72.8,326.9 L 72.8,326.9 L 72.8,326.8 L 72.8,326.8 L 72.8,326.8 L 72.9,326.8 L 72.9,326.7 L 72.9,326.7 L 72.9,326.7 L 72.9,326.6 L 72.9,326.6 L 72.9,326.6 L 72.9,326.5 L 72.9,326.5 L 72.9,326.5 L 72.9,326.4 L 73.0,326.4 L 73.0,326.4 L 73.0,326.3 L 73.0,326.3 L 73.0,326.3 L 73.0,326.2 L 73.0,326.2 L 73.0,326.2 L 73.0,326.2 L 73.0,326.1 L 73.0,326.1 L 73.1,326.0 L 73.1,326.0 L 73.1,326.0 L 73.1,325.9 L 73.1,325.9 L 73.1,325.8 L 73.1,325.8 L 73.1,325.8 L 73.1,325.7 L 73.1,325.7 L 73.2,325.7 L 73.2,325.6 L 73.2,325.6 L 73.2,325.5 L 73.2,325.5 L 73.2,325.5 L 73.2,325.4 L 73.2,325.4 L 73.3,325.3 L 73.3,325.2 L 73.3,325.2 L 73.3,325.1 L 73.3,325.1 L 73.3,325.0 L 73.3,325.0 L 73.4,324.9 L 73.4,324.9 L 73.4,324.8 L 73.4,324.7 L 73.4,324.6 L 73.5,324.5 L 73.5,324.5 L 73.5,324.4 L 73.5,324.3 L 73.5,324.3 L 73.6,324.2 L 73.6,324.1 L 73.6,324.0 L 73.6,324.0 L 73.7,323.9 L 73.7,323.8 L 73.7,323.7 L 73.7,323.6 L 73.7,323.6 L 73.8,323.4 L 73.8,323.4 L 73.8,323.3 L 73.8,323.2 L 73.9,323.1 L 73.9,323.0 L 73.9,323.0 L 73.9,322.9 L 73.9,322.8 L 74.0,322.7 L 74.0,322.6 L 74.0,322.5 L 74.0,322.4 L 74.1,322.4 L 74.1,322.3 L 74.1,322.2 L 74.1,322.1 L 74.2,322.0 L 74.2,321.9 L 74.2,321.8 L 74.3,321.7 L 74.3,321.6 L 74.3,321.5 L 74.3,321.4 L 74.4,321.3 L 74.4,321.2 L 74.4,321.1 L 74.4,321.0 L 74.5,320.9 L 74.5,320.8 L 74.5,320.7 L 74.6,320.6 L 74.6,320.6 L 74.6,320.5 L 74.6,320.4 L 74.6,320.3 L 74.7,320.3 L 74.7,320.2 L 74.7,320.1 L 74.7,320.0 L 74.8,319.9 L 74.8,319.8 L 74.8,319.7 L 74.8,319.7 L 74.9,319.6 L 74.9,319.5 L 74.9,319.4 L 74.9,319.3 L 75.0,319.2 L 75.0,319.1 L 75.0,319.0 L 75.0,319.0 L 75.0,318.9 L 75.1,318.8 L 75.1,318.7 L 75.1,318.6 L 75.1,318.6 L 75.2,318.5 L 75.2,318.5 L 75.2,318.4 L 75.2,318.3 L 75.2,318.2 L 75.3,318.1 L 75.3,318.0 L 75.3,317.9 L 75.4,317.9 L 75.4,317.8 L 75.4,317.7 L 75.4,317.7 L 75.4,317.6 L 75.4,317.6 L 75.5,317.5 L 75.5,317.4 L 75.5,317.3 L 75.5,317.3 L 75.5,317.2 L 75.6,317.1 L 75.6,317.0 L 75.6,317.0 L 75.6,316.9 L 75.7,316.8 L 75.7,316.7 L 75.7,316.7 L 75.7,316.6 L 75.7,316.5 L 75.8,316.4 L 75.8,316.4 L 75.8,316.3 L 75.8,316.2 L 75.9,316.1 L 75.9,316.0 L 75.9,315.9 L 75.9,315.8 L 76.0,315.7 L 76.0,315.7 L 76.0,315.6 L 76.0,315.5 L 76.1,315.4 L 76.1,315.4 L 76.1,315.3 L 76.1,315.2 L 76.1,315.1 L 76.2,315.0 L 76.2,315.0 L 76.2,314.9 L 76.3,314.8 L 76.3,314.6 L 76.3,314.5 L 76.3,314.5 L 76.4,314.4 L 76.4,314.3 L 76.4,314.2 L 76.4,314.1 L 76.5,314.0 L 76.5,313.9 L 76.5,313.8 L 76.6,313.7 L 76.6,313.7 L 76.6,313.6 L 76.6,313.5 L 76.6,313.4 L 76.7,313.4 L 76.7,313.3 L 76.7,313.2 L 76.7,313.2 L 76.8,313.1 L 76.8,313.0 L 76.8,312.9 L 76.8,312.9 L 76.8,312.7 L 76.9,312.7 L 76.9,312.6 L 76.9,312.5 L 77.0,312.4 L 77.0,312.3 L 77.0,312.2 L 77.0,312.1 L 77.1,312.0 L 77.1,311.9 L 77.1,311.8 L 77.2,311.7 L 77.2,311.6 L 77.2,311.5 L 77.2,311.4 L 77.3,311.3 L 77.3,311.3 L 77.3,311.2 L 77.3,311.1 L 77.4,311.0 L 77.4,311.0 L 77.4,310.9 L 77.4,310.8 L 77.5,310.7 L 77.5,310.6 L 77.5,310.5 L 77.5,310.5 L 77.6,310.4 L 77.6,310.3 L 77.6,310.2 L 77.6,310.1 L 77.7,310.0 L 77.7,309.9 L 77.7,309.9 L 77.7,309.8 L 77.7,309.7 L 77.8,309.6 L 77.8,309.5 L 77.8,309.5 L 77.9,309.3 L 77.9,309.2 L 77.9,309.1 L 78.0,309.0 L 78.0,308.9 L 78.0,308.8 L 78.0,308.7 L 78.1,308.6 L 78.1,308.5 L 78.1,308.4 L 78.2,308.3 L 78.2,308.1 L 78.2,308.0 L 78.3,308.0 L 78.3,307.9 L 78.3,307.7 L 78.3,307.7 L 78.4,307.6 L 78.4,307.4 L 78.4,307.4 L 78.5,307.3 L 78.5,307.2 L 78.5,307.1 L 78.5,307.0 L 78.6,306.9 L 78.6,306.8 L 78.7,306.6 L 78.7,306.4 L 78.8,306.3 L 78.8,306.1 L 78.8,306.0 L 78.9,305.8 L 78.9,305.8 L 79.0,305.6 L 79.0,305.5 L 79.0,305.3 L 79.1,305.1 L 79.1,305.1 L 79.2,304.9 L 79.2,304.8 L 79.2,304.6 L 79.3,304.5 L 79.3,304.3 L 79.4,304.1 L 79.4,303.9 L 79.5,303.7 L 79.6,303.5 L 79.6,303.3 L 79.7,303.1 L 79.7,302.9 L 79.8,302.7 L 79.8,302.6 L 79.9,302.4 L 80.0,302.2 L 80.0,301.9 L 80.1,301.7 L 80.2,301.5 L 80.2,301.2 L 80.3,301.0 L 80.4,300.8 L 80.5,300.4 L 80.6,300.1 L 80.7,299.7 L 80.7,299.5 L 80.8,299.2 L 80.9,298.9 L 81.0,298.7 L 81.0,298.4 L 81.2,298.0 L 81.3,297.7 L 81.3,297.4 L 81.4,297.1 L 81.5,296.9 L 81.6,296.6 L 81.6,296.3 L 81.7,296.1 L 81.9,295.5 L 82.0,294.9 L 82.2,294.4 L 82.4,293.8 L 82.6,293.1 L 82.8,292.5 L 82.9,291.8 L 83.1,291.1 L 83.3,290.4 L 83.6,289.7 L 83.8,288.9 L 84.0,288.1 L 84.2,287.3 L 84.5,286.5 L 84.7,285.7 L 84.9,285.0 L 85.0,284.5 L 85.2,284.0 L 85.3,283.5 L 85.6,282.6 L 85.7,282.1 L 86.0,281.1 L 86.3,280.0 L 86.6,278.9 L 87.0,277.7 L 87.3,276.4 L 87.7,275.1 L 88.1,273.9 L 88.4,272.8 L 88.6,272.0 L 88.8,271.4 L 89.0,270.8 L 89.1,270.3 L 89.3,269.7 L 89.5,268.9 L 89.7,268.1 L 90.0,267.2 L 90.2,266.6 L 90.4,266.0 L 90.6,265.1 L 90.8,264.3 L 91.1,263.6 L 91.5,262.1 L 92.0,260.5 L 92.2,259.8 L 92.4,259.0 L 92.6,258.2 L 92.9,257.4 L 93.1,256.5 L 93.4,255.6 L 93.9,254.1 L 94.2,253.0 L 94.4,252.3 L 94.6,251.6 L 94.8,250.9 L 95.3,249.4 L 95.8,247.9 L 96.2,246.5 L 96.6,245.1 L 97.1,243.7 L 97.5,242.3 L 97.9,241.0 L 98.3,239.6 L 98.8,238.3 L 99.2,236.9 L 99.6,235.6 L 100.0,234.3 L 100.5,233.1 L 100.9,231.8 L 101.3,230.6 L 101.7,229.3 L 102.1,228.1 L 102.5,227.0 L 102.8,225.9 L 103.1,225.0 L 103.4,224.2 L 103.9,222.9 L 104.1,222.1 L 104.5,221.0 L 104.9,219.9 L 105.3,218.7 L 105.7,217.6 L 106.1,216.6 L 106.5,215.5 L 106.6,215.0 L 106.8,214.5 L 107.0,213.9 L 107.2,213.4 L 107.4,212.9 L 107.6,212.4 L 107.7,212.0 L 107.9,211.5 L 108.1,210.8 L 108.4,210.2 L 108.6,209.7 L 108.8,209.1 L 108.9,208.8 L 109.1,208.4 L 109.2,208.0 L 109.4,207.5 L 109.5,207.2 L 109.6,207.0 L 109.7,206.7 L 109.8,206.4 L 109.9,206.1 L 110.0,205.8 L 110.1,205.5 L 110.2,205.2 L 110.4,204.9 L 110.5,204.6 L 110.5,204.4 L 110.7,204.1 L 110.8,203.8 L 110.8,203.6 L 111.0,203.3 L 111.0,203.1 L 111.1,203.0 L 111.2,202.7 L 111.2,202.6 L 111.3,202.4 L 111.4,202.1 L 111.5,202.0 L 111.6,201.7 L 111.6,201.6 L 111.7,201.5 L 111.7,201.4 L 111.7,201.3 L 111.8,201.1 L 111.9,201.0 L 111.9,200.9 L 112.0,200.7 L 112.0,200.6 L 112.1,200.5 L 112.1,200.3 L 112.1,200.3 L 112.2,200.1 L 112.2,200.0 L 112.3,199.9 L 112.3,199.8 L 112.3,199.8 L 112.4,199.7 L 112.4,199.6 L 112.4,199.5 L 112.5,199.4 L 112.5,199.4 L 112.5,199.3 L 112.6,199.2 L 112.6,199.1 L 112.6,199.0 L 112.6,199.0 L 112.7,198.9 L 112.7,198.8 L 112.7,198.7 L 112.8,198.6 L 112.8,198.6 L 112.8,198.5 L 112.9,198.4 L 112.9,198.3 L 112.9,198.2 L 113.0,198.1 L 113.0,198.0 L 113.1,197.9 L 113.1,197.8 L 113.1,197.7 L 113.2,197.7 L 113.2,197.6 L 113.2,197.5 L 113.2,197.5 L 113.3,197.4 L 113.3,197.3 L 113.3,197.2 L 113.4,197.2 L 113.4,197.1 L 113.4,197.0 L 113.4,197.0 L 113.5,196.9 L 113.5,196.8 L 113.5,196.7 L 113.6,196.7 L 113.6,196.6 L 113.6,196.5 L 113.6,196.5 L 113.7,196.4 L 113.7,196.3 L 113.7,196.2 L 113.8,196.2 L 113.8,196.1 L 113.8,196.0 L 113.8,196.0 L 113.9,195.9 L 113.9,195.8 L 113.9,195.7 L 114.0,195.7 L 114.0,195.6 L 114.0,195.5 L 114.0,195.4 L 114.1,195.4 L 114.1,195.3 L 114.1,195.2 L 114.2,195.2 L 114.2,195.1 L 114.2,195.0 L 114.2,195.0 L 114.3,194.9 L 114.3,194.8 L 114.3,194.8 L 114.3,194.7 L 114.4,194.6 L 114.4,194.5 L 114.4,194.5 L 114.5,194.4 L 114.5,194.3 L 114.5,194.3 L 114.5,194.2 L 114.6,194.1 L 114.6,194.1 L 114.6,194.0 L 114.7,193.9 L 114.7,193.8 L 114.7,193.8 L 114.7,193.7 L 114.8,193.6 L 114.8,193.6 L 114.8,193.5 L 114.9,193.4 L 114.9,193.3 L 114.9,193.3 L 114.9,193.2 L 115.0,193.1 L 115.0,193.1 L 115.0,193.0 L 115.1,192.9 L 115.1,192.9 L 115.1,192.8 L 115.1,192.7 L 115.2,192.7 L 115.2,192.6 L 115.2,192.5 L 115.2,192.5 L 115.3,192.4 L 115.3,192.3 L 115.3,192.3 L 115.4,192.2 L 115.4,192.1 L 115.4,192.0 L 115.5,191.9 L 115.5,191.8 L 115.6,191.7 L 115.6,191.6 L 115.7,191.5 L 115.7,191.4 L 115.8,191.2 L 115.8,191.0 L 115.9,190.8 L 116.0,190.7 L 116.0,190.5 L 116.1,190.4 L 116.2,190.2 L 116.2,190.1 L 116.3,189.9 L 116.4,189.8 L 116.4,189.5 L 116.5,189.3 L 116.6,189.2 L 116.7,189.0 L 116.7,188.9 L 116.8,188.7 L 116.9,188.5 L 116.9,188.3 L 117.0,188.1 L 117.1,187.9 L 117.2,187.7 L 117.3,187.5 L 117.3,187.4 L 117.4,187.2 L 117.5,187.0 L 117.6,186.8 L 117.7,186.5 L 117.8,186.2 L 117.9,186.0 L 118.0,185.8 L 118.1,185.5 L 118.2,185.2 L 118.4,184.9 L 118.5,184.7 L 118.5,184.5 L 118.6,184.3 L 118.8,183.9 L 118.9,183.7 L 119.0,183.4 L 119.1,183.1 L 119.2,182.8 L 119.3,182.6 L 119.5,182.2 L 119.7,181.8 L 119.8,181.5 L 119.9,181.2 L 120.0,180.9 L 120.2,180.7 L 120.3,180.3 L 120.4,180.0 L 120.6,179.7 L 120.7,179.4 L 120.9,179.0 L 121.0,178.8 L 121.1,178.5 L 121.2,178.3 L 121.3,178.0 L 121.4,177.8 L 121.5,177.5 L 121.6,177.3 L 121.8,176.8 L 122.0,176.3 L 122.2,175.8 L 122.3,175.6 L 122.6,175.1 L 122.8,174.6 L 123.0,174.1 L 123.2,173.7 L 123.4,173.2 L 123.6,172.7 L 123.8,172.3 L 124.0,171.8 L 124.2,171.3 L 124.4,170.8 L 124.6,170.4 L 124.8,169.9 L 125.0,169.5 L 125.2,169.0 L 125.4,168.6 L 125.6,168.1 L 125.9,167.7 L 126.1,167.2 L 126.3,166.8 L 126.5,166.3 L 126.7,165.9 L 126.9,165.5 L 127.1,165.0 L 127.3,164.6 L 127.5,164.1 L 127.9,163.3 L 128.3,162.4 L 128.7,161.6 L 129.1,160.7 L 129.5,159.9 L 129.9,159.0 L 130.2,158.2 L 130.6,157.4 L 131.0,156.6 L 131.4,155.7 L 131.8,154.9 L 132.2,154.1 L 132.6,153.3 L 133.0,152.5 L 133.4,151.8 L 133.8,151.0 L 134.1,150.2 L 134.5,149.4 L 134.9,148.7 L 135.3,147.9 L 135.6,147.2 L 136.0,146.4 L 136.4,145.7 L 136.8,144.9 L 137.2,144.2 L 137.5,143.5 L 137.9,142.8 L 138.3,142.0 L 138.7,141.3 L 139.0,140.6 L 139.4,139.9 L 139.8,139.2 L 140.1,138.5 L 140.5,137.8 L 140.9,137.2 L 141.3,136.5 L 141.6,135.8 L 142.0,135.1 L 142.4,134.4 L 142.7,133.8 L 143.1,133.1 L 143.4,132.5 L 143.8,131.8 L 144.2,131.2 L 144.5,130.5 L 144.9,129.9 L 145.2,129.3 L 145.6,128.6 L 146.0,128.0 L 146.3,127.4 L 146.7,126.8 L 147.0,126.2 L 147.4,125.6 L 147.7,124.9 L 148.1,124.3 L 148.5,123.7 L 148.8,123.2 L 149.2,122.5 L 149.5,122.0 L 149.9,121.4 L 150.2,120.8 L 150.6,120.2 L 150.9,119.6 L 151.3,119.1 L 151.6,118.5 L 152.0,117.9 L 152.5,117.1 L 153.0,116.2 L 153.4,115.7 L 153.7,115.1 L 154.1,114.5 L 154.5,114.0 L 154.8,113.4 L 155.2,112.9 L 155.5,112.3 L 155.9,111.8 L 156.2,111.2 L 156.6,110.7 L 156.9,110.2 L 157.3,109.6 L 157.6,109.1 L 158.0,108.6 L 158.3,108.1 L 158.7,107.5 L 159.0,107.0 L 159.4,106.5 L 159.7,106.0 L 160.1,105.5 L 160.4,105.0 L 160.8,104.5 L 161.1,104.0 L 161.5,103.5 L 161.8,103.0 L 162.1,102.5 L 162.5,102.0 L 162.8,101.5 L 163.2,101.1 L 163.5,100.6 L 163.8,100.1 L 164.2,99.6 L 164.5,99.2 L 164.9,98.7 L 165.2,98.3 L 165.5,97.8 L 165.9,97.3 L 166.2,96.9 L 166.5,96.4 L 166.9,96.0 L 167.2,95.5 L 167.5,95.1 L 167.9,94.7 L 168.2,94.2 L 168.5,93.8 L 168.9,93.4 L 169.2,92.9 L 169.5,92.5 L 169.9,92.1 L 170.2,91.7 L 170.5,91.2 L 170.8,90.8 L 171.2,90.4 L 171.5,90.0 L 171.8,89.6 L 172.1,89.2 L 172.5,88.8 L 172.8,88.4 L 173.1,88.0 L 173.4,87.6 L 173.8,87.2 L 174.1,86.8 L 174.4,86.4 L 174.7,86.0 L 175.0,85.6 L 175.4,85.2 L 175.7,84.9 L 176.0,84.5 L 176.3,84.1 L 176.6,83.7 L 176.9,83.3 L 177.3,83.0 L 177.6,82.6 L 177.9,82.2 L 178.2,81.9 L 178.5,81.5 L 178.8,81.2 L 179.1,80.8 L 179.8,80.1 L 180.4,79.4 L 181.0,78.7 L 181.3,78.3 L 181.6,78.0 L 182.1,77.5 L 182.3,77.2 L 182.6,76.9 L 182.9,76.5 L 183.2,76.2 L 183.6,75.8 L 183.9,75.5 L 184.2,75.2 L 184.8,74.5 L 185.4,73.8 L 186.1,73.2 L 186.7,72.5 L 187.3,71.9 L 187.9,71.3 L 188.5,70.7 L 189.1,70.0 L 189.7,69.4 L 190.3,68.8 L 190.9,68.2 L 191.5,67.7 L 192.1,67.1 L 192.7,66.5 L 193.3,65.9 L 193.9,65.4 L 194.4,64.8 L 195.0,64.3 L 195.6,63.7 L 196.1,63.2 L 196.7,62.7 L 197.3,62.2 L 197.9,61.6 L 198.4,61.1 L 199.0,60.6 L 199.6,60.1 L 200.1,59.6 L 200.7,59.1 L 201.2,58.6 L 201.8,58.1 L 202.4,57.7 L 202.9,57.2 L 203.5,56.7 L 204.0,56.3 L 204.6,55.8 L 205.1,55.3 L 205.6,54.9 L 206.2,54.5 L 206.7,54.0 L 207.3,53.6 L 207.5,53.4 L 207.9,53.1 L 208.4,52.7" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 4"/>
+<path d="M 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.8 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.7 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.1,329.6 L 72.2,329.6 L 72.2,329.6 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.5 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.4 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.2,329.3 L 72.3,329.3 L 72.3,329.3 L 72.3,329.3 L 72.3,329.3 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.2 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.1 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.3,329.0 L 72.4,329.0 L 72.4,329.0 L 72.4,329.0 L 72.4,329.0 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.9 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.8 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.4,328.7 L 72.5,328.7 L 72.5,328.7 L 72.5,328.7 L 72.5,328.7 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.6 L 72.5,328.5 L 72.5,328.5 L 72.5,328.5 L 72.5,328.5 L 72.5,328.5 L 72.5,328.5 L 72.5,328.5 L 72.5,328.5 L 72.5,328.5 L 72.5,328.5 L 72.5,328.4 L 72.5,328.4 L 72.5,328.4 L 72.5,328.4 L 72.5,328.4 L 72.5,328.4 L 72.6,328.4 L 72.6,328.4 L 72.6,328.3 L 72.6,328.3 L 72.6,328.3 L 72.6,328.3 L 72.6,328.3 L 72.6,328.3 L 72.6,328.3 L 72.6,328.3 L 72.6,328.3 L 72.6,328.2 L 72.6,328.2 L 72.6,328.2 L 72.6,328.2 L 72.6,328.2 L 72.6,328.2 L 72.6,328.2 L 72.6,328.1 L 72.6,328.1 L 72.6,328.1 L 72.6,328.1 L 72.6,328.1 L 72.7,328.1 L 72.7,328.1 L 72.7,328.1 L 72.7,328.0 L 72.7,328.0 L 72.7,328.0 L 72.7,328.0 L 72.7,328.0 L 72.7,328.0 L 72.7,327.9 L 72.7,327.9 L 72.7,327.9 L 72.7,327.9 L 72.7,327.9 L 72.7,327.9 L 72.7,327.9 L 72.7,327.9 L 72.7,327.8 L 72.7,327.8 L 72.7,327.8 L 72.8,327.8 L 72.8,327.8 L 72.8,327.8 L 72.8,327.7 L 72.8,327.7 L 72.8,327.7 L 72.8,327.7 L 72.8,327.6 L 72.8,327.6 L 72.8,327.6 L 72.8,327.6 L 72.8,327.6 L 72.8,327.5 L 72.8,327.5 L 72.9,327.5 L 72.9,327.5 L 72.9,327.4 L 72.9,327.4 L 72.9,327.4 L 72.9,327.4 L 72.9,327.3 L 72.9,327.3 L 72.9,327.3 L 72.9,327.3 L 72.9,327.2 L 73.0,327.2 L 73.0,327.2 L 73.0,327.2 L 73.0,327.1 L 73.0,327.1 L 73.0,327.1 L 73.0,327.1 L 73.0,327.0 L 73.0,327.0 L 73.0,327.0 L 73.0,327.0 L 73.1,326.9 L 73.1,326.9 L 73.1,326.9 L 73.1,326.9 L 73.1,326.8 L 73.1,326.8 L 73.1,326.8 L 73.1,326.7 L 73.1,326.7 L 73.1,326.7 L 73.2,326.6 L 73.2,326.6 L 73.2,326.6 L 73.2,326.5 L 73.2,326.5 L 73.2,326.5 L 73.2,326.4 L 73.2,326.4 L 73.3,326.4 L 73.3,326.3 L 73.3,326.3 L 73.3,326.2 L 73.3,326.2 L 73.3,326.1 L 73.3,326.1 L 73.4,326.0 L 73.4,326.0 L 73.4,326.0 L 73.4,325.9 L 73.4,325.8 L 73.5,325.8 L 73.5,325.7 L 73.5,325.7 L 73.5,325.6 L 73.5,325.6 L 73.6,325.5 L 73.6,325.5 L 73.6,325.4 L 73.6,325.3 L 73.7,325.2 L 73.7,325.2 L 73.7,325.1 L 73.7,325.1 L 73.7,325.0 L 73.8,324.9 L 73.8,324.9 L 73.8,324.8 L 73.8,324.7 L 73.9,324.7 L 73.9,324.6 L 73.9,324.6 L 73.9,324.5 L 73.9,324.4 L 74.0,324.3 L 74.0,324.2 L 74.0,324.2 L 74.0,324.1 L 74.1,324.1 L 74.1,324.0 L 74.1,323.9 L 74.1,323.9 L 74.2,323.8 L 74.2,323.7 L 74.2,323.6 L 74.3,323.5 L 74.3,323.5 L 74.3,323.4 L 74.3,323.3 L 74.4,323.3 L 74.4,323.2 L 74.4,323.1 L 74.4,323.0 L 74.5,323.0 L 74.5,322.9 L 74.5,322.8 L 74.6,322.7 L 74.6,322.7 L 74.6,322.7 L 74.6,322.6 L 74.6,322.5 L 74.7,322.5 L 74.7,322.4 L 74.7,322.3 L 74.7,322.2 L 74.8,322.2 L 74.8,322.1 L 74.8,322.1 L 74.8,322.0 L 74.9,321.9 L 74.9,321.8 L 74.9,321.8 L 74.9,321.7 L 75.0,321.6 L 75.0,321.6 L 75.0,321.5 L 75.0,321.4 L 75.0,321.4 L 75.1,321.3 L 75.1,321.3 L 75.1,321.2 L 75.1,321.2 L 75.2,321.1 L 75.2,321.1 L 75.2,321.0 L 75.2,320.9 L 75.2,320.9 L 75.3,320.8 L 75.3,320.7 L 75.3,320.7 L 75.4,320.6 L 75.4,320.6 L 75.4,320.5 L 75.4,320.5 L 75.4,320.4 L 75.4,320.4 L 75.5,320.3 L 75.5,320.2 L 75.5,320.2 L 75.5,320.1 L 75.5,320.1 L 75.6,320.0 L 75.6,320.0 L 75.6,319.9 L 75.6,319.8 L 75.7,319.8 L 75.7,319.7 L 75.7,319.7 L 75.7,319.6 L 75.7,319.6 L 75.8,319.5 L 75.8,319.4 L 75.8,319.4 L 75.8,319.3 L 75.9,319.2 L 75.9,319.2 L 75.9,319.1 L 75.9,319.0 L 76.0,319.0 L 76.0,318.9 L 76.0,318.8 L 76.0,318.8 L 76.1,318.7 L 76.1,318.7 L 76.1,318.6 L 76.1,318.6 L 76.1,318.5 L 76.2,318.4 L 76.2,318.4 L 76.2,318.3 L 76.3,318.2 L 76.3,318.1 L 76.3,318.0 L 76.3,318.0 L 76.4,317.9 L 76.4,317.8 L 76.4,317.8 L 76.4,317.7 L 76.5,317.6 L 76.5,317.6 L 76.5,317.5 L 76.6,317.4 L 76.6,317.4 L 76.6,317.3 L 76.6,317.2 L 76.6,317.2 L 76.7,317.1 L 76.7,317.1 L 76.7,317.0 L 76.7,317.0 L 76.8,316.9 L 76.8,316.8 L 76.8,316.8 L 76.8,316.7 L 76.8,316.6 L 76.9,316.6 L 76.9,316.5 L 76.9,316.4 L 77.0,316.3 L 77.0,316.3 L 77.0,316.2 L 77.0,316.1 L 77.1,316.1 L 77.1,316.0 L 77.1,315.9 L 77.2,315.8 L 77.2,315.7 L 77.2,315.7 L 77.2,315.6 L 77.3,315.5 L 77.3,315.5 L 77.3,315.4 L 77.3,315.4 L 77.4,315.3 L 77.4,315.2 L 77.4,315.2 L 77.4,315.1 L 77.5,315.0 L 77.5,315.0 L 77.5,314.9 L 77.5,314.9 L 77.6,314.8 L 77.6,314.7 L 77.6,314.6 L 77.6,314.6 L 77.7,314.5 L 77.7,314.5 L 77.7,314.4 L 77.7,314.4 L 77.7,314.3 L 77.8,314.2 L 77.8,314.2 L 77.8,314.1 L 77.9,314.0 L 77.9,313.9 L 77.9,313.8 L 78.0,313.7 L 78.0,313.7 L 78.0,313.6 L 78.0,313.5 L 78.1,313.4 L 78.1,313.3 L 78.1,313.2 L 78.2,313.2 L 78.2,313.1 L 78.2,313.0 L 78.3,312.9 L 78.3,312.8 L 78.3,312.8 L 78.3,312.7 L 78.4,312.6 L 78.4,312.5 L 78.4,312.5 L 78.5,312.4 L 78.5,312.3 L 78.5,312.2 L 78.5,312.2 L 78.6,312.1 L 78.6,312.0 L 78.7,311.9 L 78.7,311.8 L 78.8,311.6 L 78.8,311.5 L 78.8,311.4 L 78.9,311.3 L 78.9,311.2 L 79.0,311.1 L 79.0,311.0 L 79.0,310.9 L 79.1,310.7 L 79.1,310.7 L 79.2,310.5 L 79.2,310.5 L 79.2,310.3 L 79.3,310.2 L 79.3,310.1 L 79.4,310.0 L 79.4,309.8 L 79.5,309.7 L 79.6,309.5 L 79.6,309.3 L 79.7,309.2 L 79.7,309.0 L 79.8,308.9 L 79.8,308.7 L 79.9,308.6 L 80.0,308.4 L 80.0,308.2 L 80.1,308.1 L 80.2,307.9 L 80.2,307.7 L 80.3,307.5 L 80.4,307.4 L 80.5,307.1 L 80.6,306.8 L 80.7,306.5 L 80.7,306.3 L 80.8,306.1 L 80.9,305.9 L 81.0,305.7 L 81.0,305.5 L 81.2,305.2 L 81.3,305.0 L 81.3,304.8 L 81.4,304.6 L 81.5,304.3 L 81.6,304.1 L 81.6,303.9 L 81.7,303.7 L 81.9,303.3 L 82.0,302.8 L 82.2,302.4 L 82.4,301.9 L 82.6,301.4 L 82.8,300.9 L 82.9,300.4 L 83.1,299.9 L 83.3,299.3 L 83.6,298.8 L 83.8,298.2 L 84.0,297.5 L 84.2,296.9 L 84.5,296.3 L 84.7,295.7 L 84.9,295.2 L 85.0,294.7 L 85.2,294.4 L 85.3,294.0 L 85.6,293.3 L 85.7,292.9 L 86.0,292.1 L 86.3,291.3 L 86.6,290.4 L 87.0,289.5 L 87.3,288.5 L 87.7,287.5 L 88.1,286.5 L 88.4,285.7 L 88.6,285.1 L 88.8,284.6 L 89.0,284.1 L 89.1,283.8 L 89.3,283.3 L 89.5,282.7 L 89.7,282.0 L 90.0,281.4 L 90.2,280.9 L 90.4,280.4 L 90.6,279.7 L 90.8,279.1 L 91.1,278.5 L 91.5,277.4 L 92.0,276.2 L 92.2,275.6 L 92.4,275.0 L 92.6,274.4 L 92.9,273.7 L 93.1,273.1 L 93.4,272.4 L 93.9,271.2 L 94.2,270.3 L 94.4,269.8 L 94.6,269.3 L 94.8,268.8 L 95.3,267.6 L 95.8,266.4 L 96.2,265.3 L 96.6,264.2 L 97.1,263.2 L 97.5,262.1 L 97.9,261.0 L 98.3,260.0 L 98.8,258.9 L 99.2,257.9 L 99.6,256.9 L 100.0,255.9 L 100.5,254.9 L 100.9,253.9 L 101.3,253.0 L 101.7,252.0 L 102.1,251.1 L 102.5,250.2 L 102.8,249.4 L 103.1,248.7 L 103.4,248.0 L 103.9,247.0 L 104.1,246.4 L 104.5,245.6 L 104.9,244.7 L 105.3,243.8 L 105.7,243.0 L 106.1,242.1 L 106.5,241.3 L 106.6,240.9 L 106.8,240.5 L 107.0,240.1 L 107.2,239.7 L 107.4,239.3 L 107.6,238.9 L 107.7,238.6 L 107.9,238.2 L 108.1,237.7 L 108.4,237.2 L 108.6,236.8 L 108.8,236.3 L 108.9,236.1 L 109.1,235.8 L 109.2,235.5 L 109.4,235.1 L 109.5,234.9 L 109.6,234.7 L 109.7,234.5 L 109.8,234.3 L 109.9,234.0 L 110.0,233.8 L 110.1,233.5 L 110.2,233.4 L 110.4,233.1 L 110.5,232.9 L 110.5,232.7 L 110.7,232.5 L 110.8,232.3 L 110.8,232.1 L 111.0,231.9 L 111.0,231.7 L 111.1,231.6 L 111.2,231.4 L 111.2,231.3 L 111.3,231.1 L 111.4,231.0 L 111.5,230.8 L 111.6,230.7 L 111.6,230.5 L 111.7,230.5 L 111.7,230.4 L 111.7,230.3 L 111.8,230.2 L 111.9,230.1 L 111.9,230.0 L 112.0,229.9 L 112.0,229.7 L 112.1,229.7 L 112.1,229.6 L 112.1,229.5 L 112.2,229.4 L 112.2,229.3 L 112.3,229.2 L 112.3,229.2 L 112.3,229.1 L 112.4,229.1 L 112.4,229.0 L 112.4,228.9 L 112.5,228.9 L 112.5,228.8 L 112.5,228.7 L 112.6,228.7 L 112.6,228.6 L 112.6,228.6 L 112.6,228.5 L 112.7,228.4 L 112.7,228.4 L 112.7,228.3 L 112.8,228.3 L 112.8,228.2 L 112.8,228.1 L 112.9,228.1 L 112.9,228.0 L 112.9,227.9 L 113.0,227.8 L 113.0,227.7 L 113.1,227.7 L 113.1,227.6 L 113.1,227.6 L 113.2,227.5 L 113.2,227.4 L 113.2,227.4 L 113.2,227.3 L 113.3,227.3 L 113.3,227.2 L 113.3,227.2 L 113.4,227.1 L 113.4,227.1 L 113.4,227.0 L 113.4,226.9 L 113.5,226.9 L 113.5,226.8 L 113.5,226.8 L 113.6,226.7 L 113.6,226.7 L 113.6,226.6 L 113.6,226.6 L 113.7,226.5 L 113.7,226.4 L 113.7,226.4 L 113.8,226.3 L 113.8,226.3 L 113.8,226.2 L 113.8,226.2 L 113.9,226.1 L 113.9,226.1 L 113.9,226.0 L 114.0,225.9 L 114.0,225.9 L 114.0,225.8 L 114.0,225.8 L 114.1,225.7 L 114.1,225.7 L 114.1,225.6 L 114.2,225.6 L 114.2,225.5 L 114.2,225.5 L 114.2,225.4 L 114.3,225.3 L 114.3,225.3 L 114.3,225.2 L 114.3,225.2 L 114.4,225.1 L 114.4,225.1 L 114.4,225.0 L 114.5,225.0 L 114.5,224.9 L 114.5,224.9 L 114.5,224.8 L 114.6,224.8 L 114.6,224.7 L 114.6,224.6 L 114.7,224.6 L 114.7,224.5 L 114.7,224.5 L 114.7,224.4 L 114.8,224.4 L 114.8,224.3 L 114.8,224.3 L 114.9,224.2 L 114.9,224.1 L 114.9,224.1 L 114.9,224.0 L 115.0,224.0 L 115.0,223.9 L 115.0,223.9 L 115.1,223.8 L 115.1,223.8 L 115.1,223.7 L 115.1,223.7 L 115.2,223.6 L 115.2,223.6 L 115.2,223.5 L 115.2,223.5 L 115.3,223.4 L 115.3,223.4 L 115.3,223.3 L 115.4,223.2 L 115.4,223.2 L 115.4,223.1 L 115.5,223.0 L 115.5,222.9 L 115.6,222.8 L 115.6,222.8 L 115.7,222.7 L 115.7,222.6 L 115.8,222.5 L 115.8,222.3 L 115.9,222.2 L 116.0,222.1 L 116.0,221.9 L 116.1,221.8 L 116.2,221.7 L 116.2,221.6 L 116.3,221.5 L 116.4,221.4 L 116.4,221.2 L 116.5,221.0 L 116.6,220.9 L 116.7,220.8 L 116.7,220.7 L 116.8,220.5 L 116.9,220.4 L 116.9,220.3 L 117.0,220.0 L 117.1,219.9 L 117.2,219.8 L 117.3,219.6 L 117.3,219.5 L 117.4,219.4 L 117.5,219.2 L 117.6,219.1 L 117.7,218.9 L 117.8,218.6 L 117.9,218.4 L 118.0,218.3 L 118.1,218.1 L 118.2,217.8 L 118.4,217.6 L 118.5,217.4 L 118.5,217.3 L 118.6,217.1 L 118.8,216.9 L 118.9,216.7 L 119.0,216.4 L 119.1,216.2 L 119.2,216.0 L 119.3,215.8 L 119.5,215.5 L 119.7,215.2 L 119.8,215.0 L 119.9,214.7 L 120.0,214.5 L 120.2,214.3 L 120.3,214.0 L 120.4,213.8 L 120.6,213.5 L 120.7,213.3 L 120.9,213.0 L 121.0,212.9 L 121.1,212.7 L 121.2,212.5 L 121.3,212.3 L 121.4,212.1 L 121.5,211.9 L 121.6,211.7 L 121.8,211.3 L 122.0,211.0 L 122.2,210.6 L 122.3,210.4 L 122.6,210.0 L 122.8,209.6 L 123.0,209.3 L 123.2,208.9 L 123.4,208.5 L 123.6,208.2 L 123.8,207.8 L 124.0,207.4 L 124.2,207.1 L 124.4,206.7 L 124.6,206.4 L 124.8,206.0 L 125.0,205.6 L 125.2,205.3 L 125.4,205.0 L 125.6,204.6 L 125.9,204.3 L 126.1,203.9 L 126.3,203.6 L 126.5,203.2 L 126.7,202.9 L 126.9,202.5 L 127.1,202.2 L 127.3,201.9 L 127.5,201.5 L 127.9,200.9 L 128.3,200.2 L 128.7,199.5 L 129.1,198.9 L 129.5,198.2 L 129.9,197.6 L 130.2,196.9 L 130.6,196.3 L 131.0,195.7 L 131.4,195.0 L 131.8,194.4 L 132.2,193.8 L 132.6,193.2 L 133.0,192.5 L 133.4,191.9 L 133.8,191.3 L 134.1,190.7 L 134.5,190.1 L 134.9,189.5 L 135.3,189.0 L 135.6,188.4 L 136.0,187.8 L 136.4,187.2 L 136.8,186.7 L 137.2,186.1 L 137.5,185.5 L 137.9,185.0 L 138.3,184.4 L 138.7,183.9 L 139.0,183.3 L 139.4,182.8 L 139.8,182.2 L 140.1,181.7 L 140.5,181.1 L 140.9,180.6 L 141.3,180.1 L 141.6,179.6 L 142.0,179.0 L 142.4,178.5 L 142.7,178.0 L 143.1,177.5 L 143.4,177.0 L 143.8,176.5 L 144.2,176.0 L 144.5,175.5 L 144.9,175.0 L 145.2,174.5 L 145.6,174.0 L 146.0,173.5 L 146.3,173.1 L 146.7,172.6 L 147.0,172.1 L 147.4,171.6 L 147.7,171.2 L 148.1,170.7 L 148.5,170.2 L 148.8,169.8 L 149.2,169.3 L 149.5,168.9 L 149.9,168.4 L 150.2,168.0 L 150.6,167.5 L 150.9,167.1 L 151.3,166.6 L 151.6,166.2 L 152.0,165.7 L 152.5,165.1 L 153.0,164.4 L 153.4,164.0 L 153.7,163.5 L 154.1,163.1 L 154.5,162.7 L 154.8,162.2 L 155.2,161.8 L 155.5,161.4 L 155.9,161.0 L 156.2,160.5 L 156.6,160.1 L 156.9,159.7 L 157.3,159.3 L 157.6,158.9 L 158.0,158.5 L 158.3,158.1 L 158.7,157.7 L 159.0,157.3 L 159.4,156.9 L 159.7,156.5 L 160.1,156.1 L 160.4,155.7 L 160.8,155.3 L 161.1,154.9 L 161.5,154.5 L 161.8,154.2 L 162.1,153.8 L 162.5,153.4 L 162.8,153.0 L 163.2,152.7 L 163.5,152.3 L 163.8,151.9 L 164.2,151.6 L 164.5,151.2 L 164.9,150.8 L 165.2,150.5 L 165.5,150.1 L 165.9,149.8 L 166.2,149.4 L 166.5,149.1 L 166.9,148.7 L 167.2,148.4 L 167.5,148.0 L 167.9,147.7 L 168.2,147.4 L 168.5,147.0 L 168.9,146.7 L 169.2,146.4 L 169.5,146.0 L 169.9,145.7 L 170.2,145.4 L 170.5,145.1 L 170.8,144.7 L 171.2,144.4 L 171.5,144.1 L 171.8,143.8 L 172.1,143.5 L 172.5,143.1 L 172.8,142.8 L 173.1,142.5 L 173.4,142.2 L 173.8,141.9 L 174.1,141.6 L 174.4,141.3 L 174.7,141.0 L 175.0,140.7 L 175.4,140.4 L 175.7,140.1 L 176.0,139.8 L 176.3,139.5 L 176.6,139.2 L 176.9,138.9 L 177.3,138.7 L 177.6,138.4 L 177.9,138.1 L 178.2,137.8 L 178.5,137.5 L 178.8,137.2 L 179.1,137.0 L 179.8,136.4 L 180.4,135.9 L 181.0,135.3 L 181.3,135.1 L 181.6,134.8 L 182.1,134.4 L 182.3,134.2 L 182.6,133.9 L 182.9,133.7 L 183.2,133.4 L 183.6,133.1 L 183.9,132.9 L 184.2,132.6 L 184.8,132.1 L 185.4,131.6 L 186.1,131.1 L 186.7,130.6 L 187.3,130.1 L 187.9,129.6 L 188.5,129.1 L 189.1,128.6 L 189.7,128.2 L 190.3,127.7 L 190.9,127.2 L 191.5,126.8 L 192.1,126.3 L 192.7,125.9 L 193.3,125.4 L 193.9,125.0 L 194.4,124.6 L 195.0,124.2 L 195.6,123.8 L 196.1,123.3 L 196.7,122.9 L 197.3,122.5 L 197.9,122.1 L 198.4,121.7 L 199.0,121.3 L 199.6,120.9 L 200.1,120.6 L 200.7,120.2 L 201.2,119.8 L 201.8,119.4 L 202.4,119.1 L 202.9,118.7 L 203.5,118.3 L 204.0,118.0 L 204.6,117.6 L 205.1,117.3 L 205.6,116.9 L 206.2,116.6 L 206.7,116.2 L 207.3,115.9 L 207.5,115.7 L 207.9,115.5 L 208.4,115.2" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<path d="M 208.4,115.2 L 211.3,113.5 L 214.2,111.9 L 217.1,110.4 L 220.0,109.0 L 223.0,107.6 L 225.9,106.3 L 228.8,105.0 L 231.7,103.8 L 234.6,102.7 L 237.5,101.6 L 240.4,100.6 L 243.3,99.6 L 246.2,98.7 L 249.1,97.8 L 252.0,97.0 L 254.9,96.2 L 257.9,95.5 L 260.8,94.8 L 263.7,94.1 L 266.6,93.4 L 269.5,92.8 L 272.4,92.3 L 275.3,91.7 L 278.2,91.2 L 281.1,90.8 L 284.0,90.3 L 286.9,89.9 L 289.8,89.5 L 292.8,89.1 L 295.7,88.8 L 298.6,88.5 L 301.5,88.2 L 304.4,87.9 L 307.3,87.6 L 310.2,87.4 L 313.1,87.1 L 316.0,86.9 L 318.9,86.7 L 321.8,86.5 L 324.7,86.4 L 327.7,86.2 L 330.6,86.1 L 333.5,85.9 L 336.4,85.8 L 339.3,85.7 L 342.2,85.6 L 345.1,85.5 L 348.0,85.4 L 350.9,85.3 L 353.8,85.2 L 356.7,85.1 L 359.6,85.1 L 362.6,85.0 L 365.5,85.0 L 368.4,84.9 L 371.3,84.8 L 374.2,84.8 L 377.1,84.8 L 380.0,84.7" fill="none" stroke="#2dd4bf" stroke-width="2.2"/>
+<path d="M 208.4,115.2 L 211.3,112.8 L 214.2,110.5 L 217.1,108.3 L 220.0,106.2 L 223.0,104.3 L 225.9,102.4 L 228.8,100.6 L 231.7,98.9 L 234.6,97.2 L 237.5,95.7 L 240.4,94.2 L 243.3,92.8 L 246.2,91.5 L 249.1,90.2 L 252.0,89.0 L 254.9,87.9 L 257.9,86.8 L 260.8,85.8 L 263.7,84.8 L 266.6,83.9 L 269.5,83.0 L 272.4,82.2 L 275.3,81.4 L 278.2,80.7 L 281.1,80.0 L 284.0,79.4 L 286.9,78.8 L 289.8,78.2 L 292.8,77.7 L 295.7,77.2 L 298.6,76.7 L 301.5,76.3 L 304.4,75.9 L 307.3,75.5 L 310.2,75.1 L 313.1,74.8 L 316.0,74.5 L 318.9,74.2 L 321.8,73.9 L 324.7,73.7 L 327.7,73.4 L 330.6,73.2 L 333.5,73.0 L 336.4,72.8 L 339.3,72.7 L 342.2,72.5 L 345.1,72.4 L 348.0,72.2 L 350.9,72.1 L 353.8,72.0 L 356.7,71.9 L 359.6,71.8 L 362.6,71.7 L 365.5,71.6 L 368.4,71.6 L 371.3,71.5 L 374.2,71.4 L 377.1,71.4 L 380.0,71.3" fill="none" stroke="#f472b6" stroke-width="2.2"/>
+<line x1="82" y1="256" x2="106" y2="256" stroke="#94a3b8" stroke-width="2.4" stroke-dasharray="5 4"/>
+<text x="112" y="260" font-size="10.5" fill="#cbd5e1">table, isothermal c² = P/ρ</text>
+<line x1="82" y1="272" x2="106" y2="272" stroke="#fb923c" stroke-width="2.4"/>
+<text x="112" y="276" font-size="10.5" fill="#cbd5e1">table, Γ₁ = 5/3</text>
+<line x1="82" y1="288" x2="106" y2="288" stroke="#2dd4bf" stroke-width="2.4"/>
+<text x="112" y="292" font-size="10.5" fill="#cbd5e1">layer: Γ₁ = 5/3, fully ionised μ</text>
+<line x1="82" y1="304" x2="106" y2="304" stroke="#f472b6" stroke-width="2.4"/>
+<text x="112" y="308" font-size="10.5" fill="#cbd5e1">layer: Γ₁ = 5/3, neutral μ</text>
+<text x="374" y="304" font-size="10.5" text-anchor="end" fill="#a78bfa">untabulated</text>
+<text x="374" y="318" font-size="10.5" text-anchor="end" fill="#a78bfa">outer layer</text>
+<text x="587" y="24" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Large separation</text>
+<rect x="440" y="40" width="294" height="290" fill="none" stroke="#334155"/>
+<line x1="465.6" y1="330" x2="465.6" y2="335" stroke="#334155"/>
+<text x="465.6" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">130</text>
+<line x1="529.5" y1="330" x2="529.5" y2="335" stroke="#334155"/>
+<text x="529.5" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">140</text>
+<line x1="593.4" y1="330" x2="593.4" y2="335" stroke="#334155"/>
+<text x="593.4" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">150</text>
+<line x1="657.3" y1="330" x2="657.3" y2="335" stroke="#334155"/>
+<text x="657.3" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">160</text>
+<line x1="721.2" y1="330" x2="721.2" y2="335" stroke="#334155"/>
+<text x="721.2" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">170</text>
+<text x="587" y="366" font-size="11.5" text-anchor="middle" fill="#cbd5e1">Δν = 1/(2τ) / μHz</text>
+<rect x="498.2" y="40" width="22.5" height="290" fill="#facc15" fill-opacity="0.16"/>
+<line x1="498.2" y1="40" x2="498.2" y2="330" stroke="#cbd5e1" stroke-width="1.4"/>
+<line x1="520.6" y1="40" x2="520.6" y2="330" stroke="#facc15" stroke-width="1.4"/>
+<text x="494.2" y="320" font-size="10.5" text-anchor="end" fill="#cbd5e1">measured 135.1</text>
+<text x="524.6" y="320" font-size="10.5" fill="#facc15">asymptotic 138.6</text>
+<line x1="470.1" y1="74.0" x2="444.1" y2="74.0" stroke="#94a3b8" stroke-width="2"/>
+<path d="M 444.1,74.0 l 7,-4 l 0,8 z" fill="#94a3b8"/>
+<circle cx="470.1" cy="74.0" r="5" fill="#94a3b8"/>
+<text x="530.6" y="64.0" font-size="10.5" text-anchor="start" fill="#cbd5e1">table, isothermal: bound</text>
+<text x="530.6" y="90.0" font-size="10.5" text-anchor="start" fill="#94a3b8">130.70</text>
+<line x1="713.2" y1="120.0" x2="687.2" y2="120.0" stroke="#fb923c" stroke-width="2"/>
+<path d="M 687.2,120.0 l 7,-4 l 0,8 z" fill="#fb923c"/>
+<circle cx="713.2" cy="120.0" r="5" fill="#fb923c"/>
+<text x="679.2" y="110.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">table, Γ₁ = 5/3: bound</text>
+<text x="679.2" y="136.0" font-size="10.5" text-anchor="end" fill="#fb923c">168.74</text>
+<circle cx="577.7" cy="166.0" r="5" fill="#2dd4bf"/>
+<text x="587.7" y="156.0" font-size="10.5" text-anchor="start" fill="#cbd5e1">+ layer, fully ionised</text>
+<text x="587.7" y="182.0" font-size="10.5" text-anchor="start" fill="#2dd4bf">147.54</text>
+<circle cx="571.0" cy="212.0" r="5" fill="#60a5fa"/>
+<text x="581.0" y="202.0" font-size="10.5" text-anchor="start" fill="#cbd5e1">+ layer, top-row μ</text>
+<text x="581.0" y="228.0" font-size="10.5" text-anchor="start" fill="#60a5fa">146.50</text>
+<circle cx="528.2" cy="258.0" r="5" fill="#f472b6"/>
+<text x="538.2" y="248.0" font-size="10.5" text-anchor="start" fill="#cbd5e1">+ layer, neutral</text>
+<text x="538.2" y="274.0" font-size="10.5" text-anchor="start" fill="#f472b6">139.79</text>
+<text x="22" y="396" font-size="10.5" fill="#94a3b8">Model: BS2005-AGS,OP. Measured: Huber et al. (2011). Asymptotic: × (1 + 0.026), Mosser et al. (2013). Layer: T linear from 81200 K to 5772 K.</text>
+</svg>
+<!--/FIG_TAU-->
+<figcaption>Left: the acoustic radius $\tau(r)$ accumulated from the centre of BS2005-AGS,OP, against depth below the surface on a logarithmic axis. The orange curve uses $\Gamma_1 = 5/3$ and reaches $2963$ s at the last tabulated row; the dashed grey curve uses the isothermal $c^2 = P/\rho$ and exceeds even the larger required total, $3701$ s, before the table ends (Check 2). In the shaded untabulated layer, the teal and pink curves continue the adiabatic curve with a perfect gas of $\Gamma_1 = 5/3$ and $T$ linear in depth, for fully ionised and neutral $\mu$. Both stay below the $3607$ s that the asymptotic spacing requires (Check 4). Right: the same cases as large separations. The two arrows are upper bounds from the table alone. The shaded band runs from the measured $135.1\ \mu$Hz to the asymptotic $138.6\ \mu$Hz. The isothermal bound lies below the band; every perfect-gas layer lies above it.</figcaption>
+</figure>
+
+<p>Fig. 2 summarises the four comparisons of this section. Only the isothermal closure is excluded outright, by a bound. The adiabatic interior is consistent, and a perfect gas in the outer layer is not enough to reach the measurement: in the right panel all three perfect-gas points sit to the right of the band.</p>
+
+<h2 id="limits">8. What this model captures, and what it misses</h2>
+
+<p>The equations of this module are the linearised equations (2.6)–(2.8), applied to a uniform gas, to an isothermal atmosphere, and through the asymptotic relation (5.4) to a star. The table names each idealisation and where it is repaid.</p>
+
+<table>
+<tr><th>Idealisation made here</th><th>What it costs</th><th>Where it is repaid</th></tr>
+<tr><td>Linear: $|\mathbf{u}_1|\ll c$</td><td>Excludes steepening. A wave propagating upward above the cutoff grows as $\rho_0^{-1/2}$, by a factor of $33.0$ over $1000$ km of the solar atmosphere, and leaves the linear regime</td><td>Module 8 (shocks)</td></tr>
+<tr><td>Adiabatic perturbations</td><td>Confirmed in air by Check 1. In the Sun, fails near the photosphere where radiation carries heat out of a compression within a period; this damps the modes and shifts their frequencies</td><td>Module 13 (radiation hydrodynamics)</td></tr>
+<tr><td>Vertical waves only in <a class="secref" href="#cutoff">§4</a></td><td>Omits buoyancy, which acts on waves with a horizontal wavenumber and supports a second family of oscillations, gravity waves</td><td>Module 6 (convection), through the buoyancy frequency</td></tr>
+<tr><td>Gravity held fixed</td><td>Omits the perturbation of gravity by $\rho_1$. Negligible for the high-order modes near $\nu_{\max}$; decisive for long wavelengths, where it drives collapse</td><td>Module 5 (Jeans instability)</td></tr>
+<tr><td>Isothermal atmosphere in <a class="secref" href="#solarcutoff">§4.1</a></td><td>The cutoff depends on $T^{-1/2}$, and the real atmosphere has no single temperature. The measured $5000\ \mu$Hz needs $4669$ K</td><td>Not repaid in this module</td></tr>
+<tr><td>Asymptotic relation (5.4), quoted for a sphere</td><td>Proved here only for a uniform sphere and a one-dimensional column. The second-order term moves the measured spacing by $\zeta_\odot\simeq2.6$ per cent</td><td>Not repaid; Tassoul (1980) and Mosser et al. (2013)</td></tr>
+<tr><td>$\Gamma_1$ assumed, not computed</td><td>Check 4 shows $5/3$ is not enough in the outer layer but cannot measure the $\Gamma_1$ there. A solar model tabulated to the surface with its own $\Gamma_1$ would turn Check 3 into a direct test of $\Delta\nu$; Model S of Christensen-Dalsgaard et al. (1996) is one candidate, not examined here</td><td>Not repaid in this module</td></tr>
+<tr><td>No magnetic field, no rotation</td><td>Omits magnetic tension and pressure as restoring forces, and the rotational splitting of mode frequencies</td><td>Module 12 (magnetohydrodynamics, Alfvén waves)</td></tr>
+</table>
+
+<p>One limitation belongs to the checks. Checks 2 to 4 combine a measured spacing with a model's $P$ and $\rho$. They test closures given that structure. Module 3's Check 3 showed that the same model misplaces the base of the convection zone by $0.0147\,R$, so its stratification is not exact. The isothermal refutation is $3.25$ per cent in $\Delta\nu$ against a bound, and a structural error in the model would have to shift the tabulated crossing time by at least that much in the right direction to reverse it. That has not been computed here.</p>
+
+<h3 id="lab">8.1 Reproducing the numbers</h3>
+
+<p>Every number quoted in this module is produced by <code>figs/m04_numbers.py</code>, every problem answer by <code>figs/m04_problems_check.py</code>, and every figure by <code>figs/m04_build_figs.py</code>. Checks 2 and 3 need only the following, run from <code>afd/figs</code>.</p>
+
+<div class="codewrap">
+<button class="copybtn" onclick="copyCode(this)" aria-label="Copy code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+<pre><code>"""Checks 2 and 3 from the tabulated model BS2005-AGS,OP.
+
+tau = int dr/c over the table; Delta nu = 1/(2 tau).  Run from afd/figs.
+"""
+import m04_numbers as M
+ssm = M.load_ssm()
+tau_iso = M.acoustic_radius_table(ssm, 1.0)
+tau_ad = M.acoustic_radius_table(ssm, 5/3)
+dnu_as = (1 + M.ZETA_SUN)*M.DNU_MEAS
+print(f"isothermal bound = {1e6/(2*tau_iso):.2f} microHz")
+print(f"layer needs {1/(2*dnu_as) - tau_ad:.1f} s (asymptotic), "
+      f"{1/(2*M.DNU_MEAS) - tau_ad:.1f} s (measured)")
+assert 1/(2*tau_iso) &lt; M.DNU_MEAS &lt; dnu_as
+</code></pre>
+</div>
+
+<p>Running it prints an isothermal bound of $130.70\ \mu$Hz and a layer requirement of $644.0$ s (asymptotic) and $737.8$ s (measured). The assertion fails if the isothermal bound ever reaches the measured spacing.</p>
+
+<h2 id="problems">9. Problems</h2>
+
+<p class="small">Solutions are given for every problem. Each numerical answer is verified by <code>figs/m04_problems_check.py</code>.</p>
+
+<h3 id="conceptual">Conceptual <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>C1.</b> Criterion (3.4) says that sound in air becomes isothermal when $\omega\chi/c^2$ approaches one. Find the frequency and wavelength at which that happens, compare the wavelength with the mean free path of air, and explain why an isothermal sound wave in air is never observed in the continuum regime.
+<details class="sol"><summary>Solution</summary><div>
+Setting $\omega\chi/c^2 = 1$ gives $\nu = c^2/(2\pi\chi)$. With $c = 3.3132\times10^{4}\ \mathrm{cm\,s^{-1}}$ and $\chi = 0.1870\ \mathrm{cm^2\,s^{-1}}$, $\nu = 9.34\times10^{8}$ Hz and the wavelength is $c/\nu = 355$ nm, $5.22$ times the mean free path of $68$ nm. The length that enters (3.4) is $\ell = 1/|\mathbf{k}| = \lambda/2\pi = 56$ nm, and the Knudsen number $\lambda_{\rm mfp}/\ell$ is $1.20$. Module 1 requires this number to be small for a continuum description. The coincidence is not accidental. Kinetic theory gives a diffusivity of order $\chi\sim\lambda_{\rm mfp}\bar v/3$, with $\bar v$ the mean molecular speed, which is of the order of $c$. Then $\omega\chi/c^2\sim\omega\lambda_{\rm mfp}/(3c) = |\mathbf{k}|\lambda_{\rm mfp}/3$, a Knudsen number. Heat can cross a wavelength within a period only when the wavelength is comparable with the mean free path, and there the continuum equations from which both closures were derived no longer hold. This estimate is order-of-magnitude only; the factors of order one are not computed.
+</div></details></div>
+
+<div class="prob"><b>C2.</b> The solar five-minute modes near $\nu_{\max} = 3090\ \mu$Hz are called evanescent above the photosphere, yet (4.2) shows their velocity amplitude increasing with height in an isothermal atmosphere at $T_{\rm eff}$. Reconcile the two statements with numbers, and say which quantity decides whether the atmosphere traps the mode.
+<details class="sol"><summary>Solution</summary><div>
+With $\nu_{\rm ac} = 4497\ \mu$Hz and $c = 8.081\ \mathrm{km\,s^{-1}}$, (4.5) gives $\kappa = 2.540\ \mathrm{Mm^{-1}}$ at $3090\ \mu$Hz. The velocity is $u = e^{z/2H}\psi$ with $\psi\propto e^{-\kappa z}$, so $u\propto e^{(1/2H-\kappa)z}$. With $H = 143.0$ km, $1/2H = 3.497\ \mathrm{Mm^{-1}}$, and the exponent is $+0.956\ \mathrm{Mm^{-1}}$: the velocity grows. The energy density is $\tfrac12\rho_0u^2\propto e^{-z/H}e^{z/H}e^{-2\kappa z} = e^{-2\kappa z}$, which decays with an e-folding length $1/2\kappa = 196.8$ km, or $1.376\,H$. Trapping is decided by the energy. A standing mode carries no net energy flux upward, and the energy it stores above the photosphere falls off in about $200$ km. The velocity grows only because the density it multiplies falls faster.
+</div></details></div>
+
+<div class="prob"><b>C3.</b> Check 2 refutes the isothermal closure with an upper bound on $\Delta\nu$, while Check 4 uses a best estimate of the outer layer and reaches a weaker conclusion. Explain why the bound needs no model of the layer, and state one change to the inputs that would weaken Check 2 but leave Check 4 unaffected.
+<details class="sol"><summary>Solution</summary><div>
+The bound needs only that $dr/c\gt0$ for every $r$ in the layer, which holds for any real sound speed. So the tabulated $3825.4$ s is a lower limit on $\tau$ and $130.70\ \mu$Hz an upper limit on $\Delta\nu$, whatever the layer contains. Check 4 needs a temperature profile, a $\mu$ and a $\Gamma_1$ in the layer, and its conclusion is conditional on them. A change that weakens Check 2 but not Check 4 is a second-order correction of the opposite sign to Mosser et al.'s, with $\Delta\nu_{\rm as}$ below $\Delta\nu_{\rm obs}$ by more than $3.25$ per cent. Then the required $\tau$ would exceed $3825.4$ s and the isothermal bound would no longer exclude it. The same change would raise the time the outer layer must supply above $862$ s, which a perfect gas with $\Gamma_1 = 5/3$ falls even further short of, so Check 4 would be strengthened, not weakened.
+</div></details></div>
+
+<h3 id="derivational">Derivational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>D1.</b> For a uniform gas, show from (2.6)–(2.8) that the acoustic energy density $E = \tfrac12\rho_0|\mathbf{u}_1|^2 + P_1^2/(2\rho_0c^2)$ and the flux $\mathbf{F} = P_1\mathbf{u}_1$ satisfy $\partial E/\partial t + \nabla\cdot\mathbf{F} = 0$. Then use the substitution of Proposition 3 to find how the velocity and density amplitudes of a propagating wave change over $500$ and $1000$ km of the solar atmosphere.
+<details class="sol"><summary>Solution</summary><div>
+With $\mathbf{g} = \mathbf{0}$ and uniform equilibrium, (2.7) is $\rho_0\partial\mathbf{u}_1/\partial t = -\nabla P_1$, and (2.6) with (2.8) gives $\partial P_1/\partial t = c^2\partial\rho_1/\partial t = -\rho_0c^2\nabla\cdot\mathbf{u}_1$. Then
+$$ \frac{\partial E}{\partial t} = \rho_0\mathbf{u}_1\cdot\frac{\partial\mathbf{u}_1}{\partial t} + \frac{P_1}{\rho_0c^2}\frac{\partial P_1}{\partial t} = -\mathbf{u}_1\cdot\nabla P_1 - P_1\nabla\cdot\mathbf{u}_1 = -\nabla\cdot(P_1\mathbf{u}_1). $$
+In the stratified atmosphere, a propagating wave has $|\psi|$ constant, so $|u|\propto e^{z/2H}$. With $H = 143.0$ km, the velocity grows by $e^{500/286} = 5.7$ over $500$ km and by $33.0$ over $1000$ km. The equilibrium density falls by $e^{-z/H}$: $3.03\times10^{-2}$ and $9.18\times10^{-4}$. The product $\rho_0u^2$ is unchanged, which is the stratified form of energy conservation for a wave whose flux is constant with height.
+</div></details></div>
+
+<div class="prob"><b>D2.</b> Show that (4.6) can be written $\nu_{\rm ac} = \Gamma_1g/(4\pi c)$ and hence that, at fixed $\Gamma_1$ and $\mu$, $\nu_{\rm ac}\propto g\,T^{-1/2}$. Evaluate both forms for the Sun and confirm that they agree.
+<details class="sol"><summary>Solution</summary><div>
+From (4.1), $c^2 = \Gamma_1gH$, so $H = c^2/(\Gamma_1g)$ and $c/(4\pi H) = c\,\Gamma_1g/(4\pi c^2) = \Gamma_1g/(4\pi c)$. With $c = (\Gamma_1k_BT/\mu m_u)^{1/2}$, $\nu_{\rm ac} = (\Gamma_1\mu m_u/k_B)^{1/2}\,g\,T^{-1/2}/(4\pi)$, which at fixed $\Gamma_1$ and $\mu$ is proportional to $gT^{-1/2}$. For the Sun, $\Gamma_1 = 5/3$, $g = 2.7398\times10^{4}\ \mathrm{cm\,s^{-2}}$ and $c = 8.081\times10^{5}\ \mathrm{cm\,s^{-1}}$ give $\Gamma_1g/(4\pi c) = 4496.9\ \mu$Hz, and $c/(4\pi H)$ with $H = 143.0$ km gives $4496.9\ \mu$Hz. The two agree to rounding, as they must, since they are the same expression.
+</div></details></div>
+
+<div class="prob"><b>D3.</b> Two stars are <em>homologous</em> if one is the other with every length scaled by $R$ and every mass by $M$. Using hydrostatic equilibrium, show that for homologous stars with the same $\Gamma_1$ profile, $\Delta\nu_{\rm as}\propto(G\bar\rho)^{1/2}$ with $\bar\rho = 3M/(4\pi R^3)$. Evaluate $\Delta\nu/\sqrt{G\bar\rho}$ for the Sun with both the measured and the asymptotic spacing, and use the measured ratio to estimate $\Delta\nu$ for a star of $1.2\,M_\odot$ and $10\,R_\odot$, stating the assumption.
+<details class="sol"><summary>Solution</summary><div>
+Module 3's (2.4) gives $dP/dr = -Gm\rho/r^2$. Under homology write $r = Rx$, $m = M\hat m(x)$, $\rho = (M/R^3)\hat\rho(x)$ with $\hat m$ and $\hat\rho$ the same functions for both stars. Then $P = (GM^2/R^4)\hat P(x)$, and $P/\rho = (GM/R)\hat P/\hat\rho$. So $c^2 = \Gamma_1P/\rho = (GM/R)\,\hat c(x)^2$, and
+$$ \tau = \int_0^R\frac{dr}{c} = \left(\frac{R^3}{GM}\right)^{1/2}\int_0^1\frac{dx}{\hat c(x)} \;\propto\; (G\bar\rho)^{-1/2}, $$
+so $\Delta\nu_{\rm as} = 1/(2\tau)\propto(G\bar\rho)^{1/2}$. For the Sun with the table's radius, $\bar\rho = 1.4081\ \mathrm{g\,cm^{-3}}$ and $\sqrt{G\bar\rho} = 3.0656\times10^{-4}\ \mathrm{s^{-1}}$. The ratio is $0.4407$ with $135.1\ \mu$Hz and $0.4522$ with $138.61\ \mu$Hz. A star of $1.2\,M_\odot$ and $10\,R_\odot$ has $\bar\rho = 1.6897\times10^{-3}\ \mathrm{g\,cm^{-3}}$, and scaling the measured solar value gives $\Delta\nu = 135.1\times(1.6897\times10^{-3}/1.4081)^{1/2} = 4.68\ \mu$Hz. The assumption is homology with the Sun, which a red giant, with its dense core and extended envelope, does not satisfy; the estimate shows the scaling, not a prediction for a real giant.
+</div></details></div>
+
+<h3 id="computational">Computational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>K1.</b> Compute Newton's and Laplace's speeds of sound in helium at $273.15$ K, taking $\mu = 4.002602$ and $\gamma = 5/3$. Give their ratio and the ratio of Laplace's speed in helium to that in dry air, and check the second ratio against a closed form.
+<details class="sol"><summary>Solution</summary><div>
+From (1.1), $c_{\rm N} = (k_BT/\mu m_u)^{1/2} = 753.26\ \mathrm{m\,s^{-1}}$. From (3.3), $c_{\rm L} = \sqrt{5/3}\,c_{\rm N} = 972.46\ \mathrm{m\,s^{-1}}$. Their ratio is $1.2910 = \sqrt{5/3}$, larger than air's $\sqrt{7/5} = 1.1832$ because a monatomic gas stores no energy in rotation, so more of the work of compression raises the pressure. The ratio to dry air's $331.32\ \mathrm{m\,s^{-1}}$ is $2.9351$. At equal temperature, $c_{\rm L}\propto(\gamma/\mu)^{1/2}$, so the ratio is $[(5/3)/(7/5)\times28.9647/4.002602]^{1/2} = 2.9351$, which agrees.
+<span class="prov">The molecular weight of helium is the standard atomic weight, an input not checked against a source here. No measured speed in helium is compared.</span>
+</div></details></div>
+
+<div class="prob"><b>K2.</b> A red giant has $M = 1.2\,M_\odot$, $R = 10\,R_\odot$ and $T_{\rm eff} = 4800$ K. Taking $\Gamma_1 = 5/3$ and the neutral $\mu = 1.2250$, compute $g$, $c$, $H$ and $\nu_{\rm ac}$ at $T_{\rm eff}$. Check the ratio to the solar value against the scaling of Problem D2, and estimate $\nu_{\max}$ by assuming it is the same fraction of $\nu_{\rm ac}$ as in the Sun.
+<details class="sol"><summary>Solution</summary><div>
+With the table's $R_\odot = 6.9598\times10^{10}$ cm, $g = 1.2\,GM_\odot/(10R_\odot)^2 = 328.8\ \mathrm{cm\,s^{-2}}$. At $4800$ K, $c = 7.369\ \mathrm{km\,s^{-1}}$, $H = 9910$ km, and $\nu_{\rm ac} = c/(4\pi H) = 59.2\ \mu$Hz. The solar value from (4.8) is $4497\ \mu$Hz, so the ratio is $0.01316$. The scaling $\nu_{\rm ac}\propto gT^{-1/2}$ gives $(328.8/27398)\times(5772/4800)^{1/2} = 0.01316$, which agrees. Taking $\nu_{\max}$ as the same fraction of the computed cutoff as in the Sun, $\nu_{\max} = 3090\times0.01316 = 40.7\ \mu$Hz, a period of $6.83$ hours.
+<span class="prov">The stellar parameters are representative round values, not those of a named star. The assumption that $\nu_{\max}$ is a fixed fraction of $\nu_{\rm ac}$ is the empirical scaling that Mosser et al. (2013) attribute to Belkacem et al. (2011); it is used here as an input.</span>
+</div></details></div>
+
+<div class="prob"><b>K3.</b> For the isothermal atmosphere of Fig. 1, compute the decay rate $\kappa$ and the energy e-folding length $1/2\kappa$ for modes at $3090$ and $2000\ \mu$Hz, and express each length in units of $H$. Which mode is trapped more tightly, and why does the answer approach a limit as $\nu\to0$?
+<details class="sol"><summary>Solution</summary><div>
+From (4.5) with $\omega_{\rm ac} = 2\pi\times4497\ \mu$Hz and $c = 8.081\ \mathrm{km\,s^{-1}}$: at $3090\ \mu$Hz, $\kappa = 2.540\ \mathrm{Mm^{-1}}$ and $1/2\kappa = 196.8$ km $= 1.376\,H$; at $2000\ \mu$Hz, $\kappa = 3.132\ \mathrm{Mm^{-1}}$ and $1/2\kappa = 159.7$ km $= 1.117\,H$. The lower-frequency mode is trapped more tightly, because it lies further below the cutoff. As $\nu\to0$, $\kappa\to\omega_{\rm ac}/c = 1/2H = 3.497\ \mathrm{Mm^{-1}}$, so $1/2\kappa\to H$. The energy of the most deeply evanescent wave falls off over one scale height, the same length over which the equilibrium pressure falls.
+</div></details></div>
+
+<h2 id="notation">Notation</h2>
+
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Units (CGS)</th><th>First used</th></tr>
+<tr><td>$P$, $\rho$, $T$</td><td>pressure, mass density, temperature</td><td>$\mathrm{dyn\,cm^{-2}}$, $\mathrm{g\,cm^{-3}}$, K</td><td>(1.1)</td></tr>
+<tr><td>$\mu$, $m_u$, $k_B$</td><td>mean molecular weight, atomic mass unit, Boltzmann's constant</td><td>—, g, $\mathrm{erg\,K^{-1}}$</td><td>(1.1)</td></tr>
+<tr><td>$c_{\rm N}$, $c_{\rm L}$</td><td>Newton's isothermal and Laplace's adiabatic sound speeds</td><td>$\mathrm{cm\,s^{-1}}$</td><td>(1.1), (3.3)</td></tr>
+<tr><td>$\nu_{\max}$</td><td>frequency of maximum oscillation power</td><td>Hz</td><td><a class="secref" href="#problem">§1</a></td></tr>
+<tr><td>$\Delta\nu$, $\Delta\nu_{\rm obs}$, $\Delta\nu_{\rm as}$</td><td>large separation; measured near $\nu_{\max}$; asymptotic</td><td>Hz</td><td>(1.2), (5.4)</td></tr>
+<tr><td>$\mathbf{u}$, $\mathbf{g}$</td><td>bulk velocity, gravitational acceleration</td><td>$\mathrm{cm\,s^{-1}}$, $\mathrm{cm\,s^{-2}}$</td><td>(2.1), (2.2)</td></tr>
+<tr><td>$\Gamma_1$, $\gamma$</td><td>first adiabatic exponent; ratio of specific heats</td><td>—</td><td>Definition 1</td></tr>
+<tr><td>subscripts $0$, $1$</td><td>equilibrium value; first-order perturbation</td><td>—</td><td>Definition 2</td></tr>
+<tr><td>$c$</td><td>adiabatic sound speed $(\Gamma_1P_0/\rho_0)^{1/2}$</td><td>$\mathrm{cm\,s^{-1}}$</td><td>(2.8)</td></tr>
+<tr><td>$\mathbf{k}$, $k$, $\omega$, $\nu$</td><td>wavevector, vertical wavenumber, angular and cyclic frequency</td><td>$\mathrm{cm^{-1}}$, $\mathrm{s^{-1}}$, Hz</td><td>(3.2)</td></tr>
+<tr><td>$\chi$</td><td>thermal diffusivity</td><td>$\mathrm{cm^2\,s^{-1}}$</td><td>(3.4)</td></tr>
+<tr><td>$H$</td><td>pressure scale height $k_BT/(\mu m_ug)$</td><td>cm</td><td>(4.1)</td></tr>
+<tr><td>$\psi$</td><td>scaled vertical velocity $e^{-z/2H}u$</td><td>$\mathrm{cm\,s^{-1}}$</td><td>(4.3)</td></tr>
+<tr><td>$\omega_{\rm ac}$, $\nu_{\rm ac}$</td><td>acoustic cutoff $c/2H$, and $c/(4\pi H)$</td><td>$\mathrm{s^{-1}}$, Hz</td><td>(4.3), (4.6)</td></tr>
+<tr><td>$\kappa$</td><td>decay rate of an evanescent wave</td><td>$\mathrm{cm^{-1}}$</td><td>(4.5)</td></tr>
+<tr><td>$X$, $Y$, $Z$</td><td>mass fractions of hydrogen, helium, heavier elements</td><td>—</td><td>(4.7)</td></tr>
+<tr><td>$\tau$, $s$</td><td>acoustic radius; acoustic coordinate</td><td>s</td><td>(5.1), Proposition 5</td></tr>
+<tr><td>$Z$ (impedance), $V$, $a$</td><td>acoustic impedance $\rho_0c$; potential and coefficient of (5.3)</td><td>$\mathrm{g\,cm^{-2}\,s^{-1}}$; $\mathrm{s^{-2}}$; $\mathrm{s^{-1}}$</td><td>(5.3)</td></tr>
+<tr><td>$n$, $\ell$, $\varepsilon$</td><td>radial order, angular degree, phase constant</td><td>—</td><td>(5.2), (5.4)</td></tr>
+<tr><td>$\zeta$</td><td>fractional correction from measured to asymptotic $\Delta\nu$</td><td>—</td><td>(5.5)</td></tr>
+<tr><td>$D$, $\sigma$</td><td>depth of the untabulated layer; its assumed temperature gradient</td><td>cm; $\mathrm{K\,cm^{-1}}$</td><td>(7.3)</td></tr>
+<tr><td>$\mu_{\rm eff}$</td><td>molecular weight inferred from the table's $P$, $\rho$, $T$</td><td>—</td><td><a class="secref" href="#check4">§7.3</a></td></tr>
+</table>
+
+<p class="small">The symbol $Z$ is used both for the heavy-element mass fraction in (4.7) and for the impedance in Proposition 5; the two never appear in the same equation.</p>
+
+<h2 id="sources">Sources</h2>
+
+<p class="small">Every published value this module compares against, with what was taken from it.</p>
+
+<ol>
+<li><b>The measured speed of sound in air.</b> D. H. Smith and R. G. Harlow, <em>British Journal of Applied Physics</em> <b>14</b>, 102 (1963). Quoted: $(331.45\pm0.01)\ \mathrm{m\,s^{-1}}$ for dry air at $273.15$ K, one atmosphere, zero frequency, $300$ ppm $\mathrm{CO_2}$. Read second-hand, as quoted in section 2.3 of R. M. Gavioso, M. Astrua, M. Zucco and M. Pisani, <em>Journal of Physical and Chemical Reference Data</em> <b>54</b>, 043101 (2025), doi:10.1063/5.0294663. The 1963 paper was not read.</li>
+<li><b>The solar large separation and $\nu_{\max}$.</b> D. Huber, T. R. Bedding, D. Stello et al., <em>The Astrophysical Journal</em> <b>743</b>, 143 (2011), <a href="https://arxiv.org/abs/1109.3460">arXiv:1109.3460</a>. Quoted from section 2: solar reference values $\nu_{\max} = 3090\pm30\ \mu$Hz and $\Delta\nu = 135.1\pm0.1\ \mu$Hz, from VIRGO photometry.</li>
+<li><b>The solar acoustic cutoff.</b> A. Jiménez, R. A. García and P. L. Pallé, <em>The Astrophysical Journal</em> <b>743</b>, 99 (2011), <a href="https://arxiv.org/abs/1109.3326">arXiv:1109.3326</a>. Quoted from the conclusions: a mean value "around $5000\ \mu$Hz", varying by $100$–$150\ \mu$Hz with the activity cycle.</li>
+<li><b>The asymptotic relation and the measured-to-asymptotic correction.</b> B. Mosser, E. Michel, K. Belkacem, M. J. Goupil, A. Baglin, C. Barban, J. Provost, R. Samadi, M. Auvergne and C. Catala, <em>Asymptotic and measured large frequency separations</em>, <em>Astronomy &amp; Astrophysics</em> <b>550</b>, A126 (2013), <a href="https://arxiv.org/abs/1212.1687">arXiv:1212.1687</a>. Quoted: equation (7), $\Delta\nu_{\rm as} = (2\int_0^R dr/c)^{-1}$; equation (19), $\Delta\nu_{\rm as} = (1+\zeta)\Delta\nu_{\rm obs}$; equation (20), $\zeta = 0.57/n_{\max}$; section 4.2, $\zeta_\odot\simeq2.6$ per cent.</li>
+<li><b>The asymptotic theory.</b> M. Tassoul, <em>Asymptotic approximations for stellar nonradial pulsations</em>, <em>The Astrophysical Journal Supplement Series</em> <b>43</b>, 469 (1980), doi:10.1086/190678. Cited through Mosser et al. (2013); not read directly.</li>
+<li><b>The tabulated standard solar model.</b> J. N. Bahcall, A. M. Serenelli and S. Basu, <em>The Astrophysical Journal</em> <b>621</b>, L85–L88 (2005), <a href="https://arxiv.org/abs/astro-ph/0412440">arXiv:astro-ph/0412440</a>. The table <code>data/bs05_agsop.dat</code>, as in Module 3.</li>
+<li><b>Solar constants.</b> IAU 2015 Resolutions B2 and B3: $GM_\odot = 1.3271244\times10^{26}\ \mathrm{cm^3\,s^{-2}}$, $T_{\rm eff,\odot} = 5772$ K.</li>
+<li><b>Mentioned, not used for any number.</b> J. Christensen-Dalsgaard, W. Däppen, S. V. Ajukov, E. R. Anderson et al., <em>The current state of solar modeling</em>, <em>Science</em> <b>272</b>, 1286–1292 (1996), doi:10.1126/science.272.5266.1286 (Model S), named in <a class="secref" href="#limits">§8</a> and not examined.</li>
+<li><b>Earlier modules.</b> Continuity (6.3), the Euler equation (7.3) and the adiabatic system (8.4) of Module 2; the scale height (Proposition 3), the polytropic lapse rate (Proposition 4) and the solar model table of Module 3; the mean free path of air in Module 1.</li>
+</ol>
+
+<hr>
+<p class="small">Module 4 of <a href="index.html">Astrophysical Fluid Dynamics</a>. Previous: <a href="module03.html">Module 3 — Hydrostatic Equilibrium</a></p>
+
+<script>
+function copyCode(btn){
+  var code = btn.parentElement.querySelector('code');
+  var text = code.textContent;
+  function done(){
+    btn.classList.add('copied');
+    var old = btn.lastChild.nodeValue;
+    btn.lastChild.nodeValue = 'Copied!';
+    setTimeout(function(){ btn.classList.remove('copied'); btn.lastChild.nodeValue = old; }, 1500);
+  }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); } finally { document.body.removeChild(ta); }
+  }
+}
+</script>
+
+</body>
+</html>
