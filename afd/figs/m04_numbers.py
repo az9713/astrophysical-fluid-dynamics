@@ -81,7 +81,7 @@ NUMAX_MEAS = 3090e-6    # Hz  (+/- 30 microHz)
 # being around 5000 microHz", with a 100-150 microHz activity-cycle swing.
 # No formal uncertainty is given.
 NUAC_MEAS = 5000e-6     # Hz
-NUAC_SWING = 150e-6     # Hz
+NUAC_SWING = 150e-6     # Hz, maximum minus minimum (a full range)
 # Mosser et al. (2013), A&A 550, A126, eqs. (7), (19), (20) and sec. 4.2:
 # the asymptotic large separation (2 int dr/c)^-1 exceeds the one measured
 # near nu_max, Delta nu_as = (1 + zeta) Delta nu_obs, with the solar
@@ -219,6 +219,8 @@ def main():
         P(f'    PUNCHLINE Laplace/measured    = {cL/C_AIR_MEAS:.4f}')
     else:
         P('  measured value: NOT YET VERIFIED, comparison not printed')
+    P(f'  residuals: Newton {(C_AIR_MEAS-cN)/100:.3f} m/s, Laplace '
+      f'{(C_AIR_MEAS-cL)/100:.4f} m/s, ratio {(C_AIR_MEAS-cN)/(C_AIR_MEAS-cL):.1f}')
     P(f'  thermal diffusivity chi_air = {CHI_AIR:.4f} cm^2/s')
     for nu in (1e3, 2e4):
         w = 2*np.pi*nu
@@ -227,6 +229,8 @@ def main():
     nu_eq = cL**2/(2*np.pi*CHI_AIR)
     P(f'  omega chi/c^2 = 1 at nu = {nu_eq:.3e} Hz, wavelength '
       f'{cL/nu_eq*1e7:.0f} nm = {cL/nu_eq/LAM_AIR:.2f} mean free paths')
+    P(f'  ell = wavelength/2pi = {cL/nu_eq/(2*np.pi)*1e7:.1f} nm; '
+      f'10^3 x ratio at 20 kHz = {2*np.pi*2e4*CHI_AIR/cL**2*1e3:.4f}')
 
     P('')
     P('=' * 74)
@@ -248,9 +252,10 @@ def main():
     P(f'    PUNCHLINE nu_ac(T_eff)/measured = {nu_eff/NUAC_MEAS:.4f}')
     P(f'    temperature that reproduces it  = {T_match:.0f} K '
       f'({T_match/TEFF_SUN:.3f} T_eff)')
-    for dnu in (-NUAC_SWING, NUAC_SWING):
+    for dnu in (-NUAC_SWING/2, NUAC_SWING/2):
+        Tq = T_for_cutoff(NUAC_MEAS+dnu, mu_n, 5/3, g_sun)
         P(f'    at {(NUAC_MEAS+dnu)*1e6:.0f} microHz: T = '
-          f'{T_for_cutoff(NUAC_MEAS+dnu, mu_n, 5/3, g_sun):.0f} K')
+          f'{Tq:.0f} K = {Tq/TEFF_SUN:.3f} T_eff')
     nu13, c13, H13 = nu_cutoff(TEFF_SUN, MU_M03, 5/3, g_sun)
     P(f'  with Module 3 mu = {MU_M03}: H = {H13/1e5:.1f} km, '
       f'nu_ac = {nu13*1e6:.0f} microHz')
@@ -284,12 +289,18 @@ def main():
     R = ssm['r']*RSUN_TAB
     ic = 1/np.sqrt(5/3*ssm['P']/ssm['rho'])
     from scipy.integrate import simpson
-    t2 = np.trapezoid(ic[::2], R[::2]) + R[0]*ic[0]
+    keep = np.r_[0:len(R):2, len(R)-1] if (len(R) - 1) % 2 else \
+        np.r_[0:len(R):2]
+    t2 = np.trapezoid(ic[keep], R[keep]) + R[0]*ic[0]
     ts = simpson(ic, x=R) + R[0]*ic[0]
-    P(f'  quadrature: trapezoid all rows {tau_ad:.2f} s, every 2nd row '
+    P(f'  quadrature: trapezoid all rows {tau_ad:.2f} s, every 2nd row, last kept '
       f'{t2:.2f} s, Simpson {ts:.2f} s')
     dnu_as = (1 + ZETA_SUN)*DNU_MEAS
     tau_as = 1/(2*dnu_as)
+    P(f'  radial order near nu_max = {NUMAX_MEAS/DNU_MEAS:.1f}; '
+      f'zeta from eq. 20 = 0.57 n_max/... : '
+      f'{0.57/(NUMAX_MEAS/DNU_MEAS):.4f}; statistical error of Delta nu '
+      f'= {DNU_MEAS_ERR/DNU_MEAS:.3%}')
     P(f'  asymptotic Delta nu = (1 + {ZETA_SUN}) x measured = '
       f'{dnu_as*1e6:.2f} microHz -> tau = {tau_as:.1f} s')
     gap = DNU_MEAS - 1/(2*tau_iso)
@@ -300,6 +311,7 @@ def main():
     P(f'      it would survive a correction of the other sign up to '
       f'{gap/DNU_MEAS:.2%}')
     need = tau_meas - tau_ad
+    P(f'  tau_iso - tau_table = {tau_iso - tau_ad:.1f} s')
     need_as = tau_as - tau_ad
     P(f'    PUNCHLINE adiabatic: layer must supply {need:.1f} s (measured) '
       f'or {need_as:.1f} s (asymptotic) = {need_as/tau_as:.3f} of tau, '
@@ -335,6 +347,9 @@ def main():
         P(f'    {lab}: Gamma_1/mu required = {ratio_need:.4f}; '
           f'Gamma_1 at fully ionised mu = {ratio_need*mu_i_top:.3f}, '
           f'at neutral mu = {ratio_need*mu_n:.3f}')
+    P(f'    fully ionised mu = 1/(2X + 3Y/4 + Z/2) = {mu_i_top:.4f}; '
+      f'Z = {1-X_s-Y_s:.5f}; neutral mu with Z/2 instead of Z/16 = '
+      f'{1/(X_s + Y_s/4 + (1-X_s-Y_s)/2):.4f}')
     P(f'      fully ionised 5/3/mu = {5/3/mu_i_top:.4f}, '
       f'neutral 5/3/mu = {5/3/mu_n:.4f}')
     # is a linear T(z) plausible?  An n = 3/2 layer of fixed mu has

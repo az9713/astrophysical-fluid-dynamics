@@ -37,6 +37,13 @@ for dz in (500e5, 1000e5):
           f'{np.exp(dz/(2*H)):.1f}, density factor exp(-dz/H) = '
           f'{np.exp(-dz/H):.3e}')
 
+for dz in (500e5, 1000e5):
+    print(f'    over {dz/1e5:.0f} km: |rho_1| factor exp(-dz/2H) = '
+          f'{np.exp(-dz/(2*H)):.3e}')
+print('C3  opposite-sign zeta beyond 3.25 per cent')
+tau_ad = M.acoustic_radius_table(ssm, 5/3)
+tau_iso = M.acoustic_radius_table(ssm, 1.0)
+print(f'    layer would need more than {tau_iso - tau_ad:.1f} s')
 print('D2  cutoff scaling nu_ac = Gamma_1 g / (4 pi c)')
 nu_alt = 5/3*g_sun/(4*np.pi*c)
 print(f'    Gamma_1 g/(4 pi c) = {nu_alt*1e6:.1f} microHz, '
@@ -73,5 +80,7 @@ print(f'    g = {g_rg:.1f} cm/s^2, c = {c_rg/1e5:.3f} km/s, H = '
 print(f'    ratio to solar {nu_rg/nu_ac:.5f}; check g ratio * sqrt(T ratio) = '
       f'{(g_rg/g_sun)*np.sqrt(M.TEFF_SUN/4800):.5f}')
 numax_rg = M.NUMAX_MEAS*nu_rg/nu_ac
+print(f'    with the measured fraction 3090/5000: '
+      f'{3090e-6/5000e-6*nu_rg*1e6:.1f} microHz')
 print(f'    nu_max by proportion = {numax_rg*1e6:.1f} microHz, period '
       f'{1/numax_rg/3600:.2f} h')

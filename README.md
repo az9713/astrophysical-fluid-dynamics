@@ -25,7 +25,7 @@ names the source and gives the ratio.
 | 1 | **Why a Fluid at All?** — mean free path, the Coulomb logarithm, the Knudsen number, and the systems where the continuum picture fails | ready |
 | 2 | **Continuity, Euler, Navier–Stokes, energy** — moments of the Boltzmann equation, the closure gap, the Lagrangian against the Eulerian derivative | ready |
 | 3 | **Hydrostatic equilibrium** — scale height, polytropes, the Lane–Emden equation; the solar convection zone confirmed as an n = 3/2 polytrope to 1.8%, a standard solar model's convection-zone base refuted at 29σ by helioseismology | ready |
-| 4 | Sound waves and linear perturbation theory — the method every later instability reuses | planned |
+| 4 | **Sound waves and linear perturbation theory** — the wave equation, Newton against Laplace, the acoustic cutoff, the large separation; Laplace agrees with the measured speed of sound in air to 0.04%, an isothermal Sun refuted by a bound 3.25% below the measured solar large separation | ready |
 
 ### Instability
 
@@ -59,7 +59,7 @@ Modules 1–10 form a closed arc. Modules 11–14 are the advanced tier.
 ```
 index.html            redirect to the contents page
 afd/index.html        contents
-afd/module01.html     module 1 (module02.html, module03.html likewise)
+afd/module01.html     module 1 (module02.html to module04.html likewise)
 afd/_template_dark.html   the page scaffold
 afd/figs/             one numbers script, one figure script, one problem
                       check per module, plus the generated SVGs
