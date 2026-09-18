@@ -274,6 +274,8 @@ def section_9():
     checkr("model below quoted [per cent]", (1.0 - brack)*100.0, 8.3, 1)
     check("compounded", f_dens/0.5*brack, 0.84702, 1e-4)
     check("total per cent below", (1.0 - f_dens/0.5*brack)*100.0, 15.3, 5e-3)
+    check("published/corrected, the other way", 1.0/(f_dens/0.5*brack),
+          1.181, 3e-3)
     for r, want_f, want_pc in ((2.0, 0.47140, 5.7), (3.0, 0.43301, 13.4)):
         f = np.sqrt(r)/(1.0 + r)
         check(f"prefactor at density ratio {r:.0f}", f, want_f, 1e-4)
@@ -375,8 +377,8 @@ def problems():
     A_gly = (RHO_GLY - RHO_A)/(RHO_GLY + RHO_A)
     check("K1 glycerol Atwood", A_gly, 0.998092, 1e-4)
     lc_gly = lam_c(TS_GLY, RHO_GLY - RHO_A)
-    check("K1 glycerol lambda_c [cm]", lc_gly, 1.4191, 3e-3)
-    check("K1 glycerol lambda_max [cm]", np.sqrt(3.0)*lc_gly, 2.458, 3e-3)
+    check("K1 glycerol lambda_c [cm]", lc_gly, 1.4189, 5e-4)
+    check("K1 glycerol lambda_max [cm]", np.sqrt(3.0)*lc_gly, 2.4575, 5e-4)
     ln_gly = lam_nu(NU_GLY, A_gly)
     check("K1 glycerol lambda_nu [cm]", ln_gly, 5.207, 3e-3)
     check("K1 glycerol lambda_nu/lambda_max",
@@ -394,6 +396,7 @@ def problems():
         check(f"K2 h at t={t_yr:.0f} yr [cm]", h, want_cm)
         checkr(f"K2 h at t={t_yr:.0f} yr [AU]", h/AU, want_au, 1)
     check("K2 h at 1000 yr [pc]", 0.038*A*g*(1000.0*yr)**2/pc, 0.01104, 3e-3)
+    check("K2 alpha_B A g", 0.038*A*g, 3.42e-5, 3e-3)
 
     # K3 is verified in section_7
 
