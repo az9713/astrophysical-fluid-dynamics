@@ -1096,10 +1096,12 @@ def main():
           f'{n_e:>10.4f} {p_e:>10.1f} '
           f'{"UNSTABLE" if iso_p else "stable":>10} '
           f'{"UNSTABLE" if iso_v else "stable":>10}')
-    P('  Note what the two columns say.  The isochoric criterion (Field 4a,')
-    P('  dLambda/dT < 0) is satisfied almost nowhere; the isobaric one')
+    P('  Note what the two columns say, and that 4a and 4b are conditions')
+    P('  for RUNAWAY, not for stability.  The isochoric runaway (Field 4a,')
+    P('  dLambda/dT < 0) fires almost nowhere; the isobaric one')
     P('  (Field 4b, which reduces to dlnLambda/dlnT < 1 for this heating')
-    P('  law) is satisfied over a wide band.  Field\'s point in 1965 was')
+    P('  law, so that STABILITY is dlnLambda/dlnT > 1) fires over a wide')
+    P('  band.  Field\'s point in 1965 was')
     P('  exactly this: Parker had used the isochoric criterion, which is')
     P('  incompatible with the force equation, because a parcel at fixed')
     P('  density but changed temperature is at the wrong pressure and')

@@ -389,6 +389,7 @@ def problem_K1():
     check("depth factor at P = 1e7", 0.4/np.min(ga7), 3.09, tol=0.01)
     # section 5 attaches chi_H/kT to the MINIMUM, not to half ionisation
     check("chi_H/kT at the minimum", chi_H/(kB*T[i]), 12.86, tol=2e-3)
+    check("Phi at the minimum", 2.5 + chi_H/(kB*T[i]), 15.36, tol=2e-3)
     xh = saha_x(T, 1.2e5)
     ih = int(np.argmin(abs(xh - 0.5)))
     check("T at half ionisation [K]", T[ih], 13136.0, tol=1e-3)
