@@ -56,6 +56,24 @@ BG, FG, MUT, RULE = "#0f172a", "#cbd5e1", "#94a3b8", "#334155"
 ACC, ACC2, VIO, YEL = "#fb923c", "#2dd4bf", "#a78bfa", "#facc15"
 RED = "#f87171"
 
+# check_svg rejects a literal "_" or "^" in a <text> label, so subscripts and
+# superscripts are written as tspans, exactly as m08_build_figs.py does.
+SUB_C = '<tspan baseline-shift="sub" font-size="8">c</tspan>'
+SUB_T = '<tspan baseline-shift="sub" font-size="8">T</tspan>'
+SUB_S = '<tspan baseline-shift="sub" font-size="8">S</tspan>'
+SUB_IN = '<tspan baseline-shift="sub" font-size="8">in</tspan>'
+SUP_PLUS = '<tspan baseline-shift="super" font-size="8">+{0}</tspan>'
+
+
+def marks(t):
+    """Restore subscript tspans AFTER esc(), which would escape them.
+
+    A label that goes through esc() cannot carry raw markup, so it carries
+    ~S~, ~IN~, ~C~ or ~T~ instead and this puts the tspan back.
+    """
+    return (t.replace("~IN~", SUB_IN).replace("~S~", SUB_S)
+             .replace("~C~", SUB_C).replace("~T~", SUB_T))
+
 
 def path(xs, ys):
     return "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in zip(xs, ys))
@@ -148,7 +166,7 @@ def place_label(cands, occupied, box, w, h, ink=None, pad=4.0):
 # =========================================================================
 
 def build_topology():
-    W, H = 760, 486
+    W, H = 760, 420
     X0, X1, Y0, Y1 = 78.0, 700.0, 46.0, 372.0
     XMIN, XMAX = 0.12, 6.0          # r/r_c
     UMIN, UMAX = 0.0, 3.4           # v/c_T
@@ -199,11 +217,11 @@ def build_topology():
         s.append(f'<text x="{X0-9:.0f}" y="{y+4:.1f}" font-size="10.5" '
                  f'text-anchor="end" fill="{MUT}">{ut}</text>')
     s.append(f'<text x="{(X0+X1)/2:.0f}" y="{Y1+36:.0f}" font-size="11.5" '
-             f'text-anchor="middle" fill="{FG}">r / r_c</text>')
+             f'text-anchor="middle" fill="{FG}">r / r{SUB_C}</text>')
     s.append(f'<text x="{X0-42:.0f}" y="{(Y0+Y1)/2:.0f}" font-size="11.5" '
              f'text-anchor="middle" fill="{FG}" '
              f'transform="rotate(-90 {X0-42:.0f} {(Y0+Y1)/2:.0f})">'
-             f'v / c_T</text>')
+             f'v / c{SUB_T}</text>')
 
     # the sonic line u = 1 and the sonic radius x = 1, drawn first so the
     # solution curves sit on top of them
@@ -288,6 +306,12 @@ def build_topology():
     # The search runs over a grid of candidates and rejects any that lands
     # on a drawn curve.  Nothing here is positioned by eye; where the search
     # has to move a label off its own curve, a leader line is drawn.
+    # The two dashed reference lines (u = 1 and x = 1) are ink too: a label
+    # that sits on one of them is flagged by check_overlap, and the search
+    # below can only avoid what it is told about.
+    for t in np.linspace(0.0, 1.0, 160):
+        ink.append((X0 + t*(X1 - X0), py(1.0)))
+        ink.append((px(1.0), Y0 + t*(Y1 - Y0)))
     ink = np.array(ink) if ink else np.zeros((0, 2))
 
     def grid(x_pref, y_pref, wide):
@@ -329,22 +353,9 @@ def build_topology():
         s.append(leader_svg(lx, ly, tx, ty, tw, 13.0))
 
     s.append(f'<text x="{SONIC_X:.1f}" y="{SONIC_Y:.0f}" font-size="10.5" '
-             f'fill="{MUT}">sonic radius r_c = GM/(2a²)</text>')
+             f'fill="{MUT}">critical radius r{SUB_C} = GM/(2c{SUB_T}²)'
+             f'</text>')
 
-    # --- caption ---------------------------------------------------------
-    cap = [
-        "Level sets of u² − 2 ln u − 4 ln x − 4/x = C, with u = v/c_T and "
-        "x = r/r_c. Both sides of the equation have a single minimum, at",
-        "u = 1 and at x = 1, so a curve reaches u = 1 only when C = −3, and "
-        "then only at x = 1. C = −3 therefore gives exactly two",
-        "solutions that connect a subsonic base to a supersonic infinity "
-        "(II) or the reverse (I); C > −3 gives curves that never cross the",
-        "sonic line; C < −3 gives curves that stop before reaching it. Only "
-        "II leaves the Sun with v > 0 at infinity.",
-    ]
-    for i, line in enumerate(cap):
-        s.append(f'<text x="{X0-48:.0f}" y="{Y1+56+i*15:.0f}" '
-                 f'font-size="10.5" fill="{MUT}">{esc(line)}</text>')
     s.append('</svg>')
     return "\n".join(s)
 
@@ -354,7 +365,7 @@ def build_topology():
 # =========================================================================
 
 def build_parker():
-    W, H = 760, 672
+    W, H = 760, 602
     # Panel A: v(r).  Panel B: the slope residual.  The 96 px between
     # AY1 and BY0 has to carry panel A's tick labels and axis title AND
     # panel B's two-line heading; at 60 px they collided.
@@ -453,7 +464,8 @@ def build_parker():
     x, y, fell = place_label([(fx + 6, fy + 34), (fx + 6, fy + 52)],
                              occupied, boxA, 190, 13)
     s.append(f'<text x="{x:.1f}" y="{y:.1f}" font-size="11" fill="{ACC}">'
-             f'{esc(f"measured: {d_v:.1f} r^+{e_v:.3f} km/s")}</text>')
+             f'{esc(f"measured: {d_v:.1f} r")}{SUP_PLUS.format(f"{e_v:.3f}")}'
+             f'{esc(" km/s")}</text>')
     leaders.append((fx + 40, ay(d_v*0.4**e_v), x, y, 190.0))
     s.append(f'<text x="{x:.1f}" y="{y+14:.1f}" font-size="10" '
              f'fill="{MUT}">Venzmer &amp; Bothmer (2018), Table 3, mean fit'
@@ -517,7 +529,7 @@ def build_parker():
     for i, (lab, val, err, col) in enumerate(rows):
         yc = BY0 + (i + 0.5)*dy
         s.append(f'<text x="{BX0-10:.0f}" y="{yc+4:.1f}" font-size="10.5" '
-                 f'text-anchor="end" fill="{FG}">{esc(lab)}</text>')
+                 f'text-anchor="end" fill="{FG}">{marks(esc(lab))}</text>')
         s.append(f'<rect x="{bx(0.0):.1f}" y="{yc-6:.1f}" '
                  f'width="{max(bx(val)-bx(0.0), 1.0):.1f}" height="12" '
                  f'fill="{col}" fill-opacity="0.55"/>')
@@ -534,22 +546,6 @@ def build_parker():
         s.append(f'<text x="{tx:.1f}" y="{yc+4:.1f}" font-size="10.5" '
                  f'fill="{col}">{val:.3f}</text>')
 
-    # --- caption ---------------------------------------------------------
-    cap = [
-        "Upper: the transonic isothermal solution v(r) for three coronal "
-        "temperatures, each with its own sonic radius r_c = GM/(2a²). Raising",
-        "T₀ moves r_c inward and the whole curve up. Lower: the same three "
-        "models reduced to the one number Helios measured, the logarithmic",
-        "slope over 0.29–0.98 au. No isothermal temperature between 0.5 and "
-        "5 MK gets below "
-        f"{chords[imin]:.3f}. Steady Euler fed the MEASURED pressure",
-        "gradient goes the other way and predicts "
-        f"{s_pred:.4f}. Thermal proton pressure accounts for about one third "
-        "of the measured acceleration.",
-    ]
-    for i, line in enumerate(cap):
-        s.append(f'<text x="{AX0-48:.0f}" y="{BY1+54+i*15:.0f}" '
-                 f'font-size="10.5" fill="{MUT}">{esc(line)}</text>')
     s.append('</svg>')
     return "\n".join(s)
 
@@ -559,7 +555,7 @@ def build_parker():
 # =========================================================================
 
 def build_sgra():
-    W, H = 760, 400
+    W, H = 760, 316
     X0, X1, Y0, Y1 = 250.0, 700.0, 56.0, 268.0
     LMIN, LMAX = -9.6, -4.6         # log10 Mdot / (M_sun/yr)
 
@@ -579,13 +575,13 @@ def build_sgra():
          ACC, 'this module, GRAVITY (2022) mass'),
         (f'Bondi rate, M = {M_implied/1e6:.1f}×10⁶ M☉', M.BAG_MDOT_PAPER,
          'point', YEL, 'Baganoff et al. (2003), their Sect. 11.1.2, their own mass'),
-        ('upper limit, r_in ≈ 30 r_S', M.MAR_UPPER_HEAD, 'upper', ACC2,
+        ('upper limit, r~IN~ ≈ 30 r~S~', M.MAR_UPPER_HEAD, 'upper', ACC2,
          'Marrone et al. (2007), Faraday rotation'),
-        ('upper limit, r_in ≈ 100 r_S', M.MAR_UPPER_TIGHT, 'upper', ACC2,
+        ('upper limit, r~IN~ ≈ 100 r~S~', M.MAR_UPPER_TIGHT, 'upper', ACC2,
          'Marrone et al. (2007), their Sect. 4'),
-        ('lower limit, r_in ≈ 10 r_S', M.MAR_LOWER_10RS, 'lower', VIO,
+        ('lower limit, r~IN~ ≈ 10 r~S~', M.MAR_LOWER_10RS, 'lower', VIO,
          'Marrone et al. (2007), their Sect. 4, 1–2×10⁻⁸'),
-        ('lower limit, r_in ≈ 3 r_S', M.MAR_LOWER_3RS, 'lower', VIO,
+        ('lower limit, r~IN~ ≈ 3 r~S~', M.MAR_LOWER_3RS, 'lower', VIO,
          'Marrone et al. (2007), their Sect. 4, 2–4×10⁻⁹'),
     ]
 
@@ -612,11 +608,11 @@ def build_sgra():
     s.append(f'<rect x="{X0:.0f}" y="{Y0:.0f}" width="{X1-X0:.0f}" '
              f'height="{Y1-Y0:.0f}" fill="none" stroke="{RULE}" '
              f'stroke-width="1"/>')
+    # No full-height decade gridlines: every one of them runs behind a bar
+    # value label, which check_overlap flags.  The axis ticks below carry
+    # the same information.
     for e in range(-9, -4):
         x = lx(10.0**e)
-        s.append(f'<line x1="{x:.1f}" y1="{Y0:.0f}" x2="{x:.1f}" '
-                 f'y2="{Y1:.0f}" stroke="{RULE}" stroke-width="0.7" '
-                 f'stroke-dasharray="2 4"/>')
         s.append(f'<line x1="{x:.1f}" y1="{Y1:.0f}" x2="{x:.1f}" '
                  f'y2="{Y1+5:.0f}" stroke="{RULE}" stroke-width="1"/>')
         s.append(f'<text x="{x:.1f}" y="{Y1+18:.0f}" font-size="10.5" '
@@ -629,9 +625,9 @@ def build_sgra():
     for i, (lab, val, kind, col, note) in enumerate(rows):
         yc = Y0 + (i + 0.5)*dy
         s.append(f'<text x="{X0-10:.0f}" y="{yc+1:.1f}" font-size="10.5" '
-                 f'text-anchor="end" fill="{FG}">{esc(lab)}</text>')
+                 f'text-anchor="end" fill="{FG}">{marks(esc(lab))}</text>')
         s.append(f'<text x="{X0-10:.0f}" y="{yc+13:.1f}" font-size="9" '
-                 f'text-anchor="end" fill="{MUT}">{esc(note)}</text>')
+                 f'text-anchor="end" fill="{MUT}">{marks(esc(note))}</text>')
         x = lx(val)
         if kind == 'point':
             s.append(f'<circle cx="{x:.1f}" cy="{yc:.1f}" r="5.5" '
@@ -669,9 +665,9 @@ def build_sgra():
     s.append(f'<line x1="{xb:.1f}" y1="{ygap:.1f}" x2="{xa:.1f}" '
              f'y2="{ygap:.1f}" stroke="{FG}" stroke-width="1.6"/>')
     s.append(f'<line x1="{xa:.1f}" y1="{y_bondi+8:.1f}" x2="{xa:.1f}" '
-             f'y2="{ygap:.1f}" stroke="{FG}" stroke-width="1.2" '
+             f'y2="{ygap-23:.1f}" stroke="{FG}" stroke-width="1.2" '
              f'stroke-dasharray="3 3"/>')
-    s.append(f'<line x1="{xb:.1f}" y1="{ygap:.1f}" x2="{xb:.1f}" '
+    s.append(f'<line x1="{xb:.1f}" y1="{ygap+26:.1f}" x2="{xb:.1f}" '
              f'y2="{y_bound-8:.1f}" stroke="{FG}" stroke-width="1.2" '
              f'stroke-dasharray="3 3"/>')
     for xx in (xa, xb):
@@ -690,21 +686,6 @@ def build_sgra():
              f'{mdot/(M.MAR_UPPER_HEAD*0.03**(-2.0/3.0)):.0f} at 3% of it'
              f'</text>')
 
-    cap = [
-        "The Bondi arithmetic is not in doubt: m09_numbers.py rebuilds "
-        "λ(γ) from the sonic point to eight figures, and the top two rungs",
-        "agree once Baganoff et al.'s 2.6×10⁶ M☉ is rescaled to the GRAVITY "
-        "mass by M². Bondi himself, though, proves only that λ ≤ λ_c; the",
-        "transonic choice is his physical argument. What the gap indicts is "
-        "the three premises — no angular momentum, no outflow, adiabatic and",
-        "radiatively unimportant — every one of which Sgr A* violates. The "
-        "lower limits are a measurement too, and unlike the upper ones they",
-        "carry no assumption about the field: the flow is not switched off, "
-        "it is throttled somewhere between the Bondi radius and the horizon.",
-    ]
-    for i, line in enumerate(cap):
-        s.append(f'<text x="{X0-220:.0f}" y="{Y1+56+i*15:.0f}" '
-                 f'font-size="10.5" fill="{MUT}">{esc(line)}</text>')
     s.append('</svg>')
     return "\n".join(s)
 

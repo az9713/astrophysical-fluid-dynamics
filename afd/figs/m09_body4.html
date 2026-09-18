@@ -1,0 +1,122 @@
+<h2 id="helios">7. The anchor: the wind against Helios</h2>
+
+<p>Helios 1 and Helios 2 flew inside Mercury's orbit between 1974 and 1986 and measured the solar wind's density, speed, temperature and magnetic field <em>in situ</em> over $0.29$ to $0.98$ au. Venzmer &amp; Bothmer (2018) fitted a power law $x(r) = d\,r^{e}$ to each of the four quantities over the combined data set, with $r$ in au and $d$ the value at 1 au, and published both mean and median fits with errors on every coefficient and exponent. Their Table 3, in full:</p>
+
+<table>
+<tr><th>quantity</th><th>median $d$, $e$</th><th>mean $d$, $e$</th><th>yearly scatter in $e$</th></tr>
+<tr><td>density [cm⁻³]</td><td>$5.61(27)$, $-2.093(46)$</td><td>$7.57(30)$, $-2.010(38)$</td><td>$0.072$</td></tr>
+<tr><td>velocity [10² km s⁻¹]</td><td>$4.107(28)$, $+0.058(13)$</td><td>$4.356(24)$, $+0.049(10)$</td><td>$0.012$</td></tr>
+<tr><td>temperature [10⁴ K]</td><td>$7.14(23)$, $-0.913(39)$</td><td>$9.67(21)$, $-0.792(28)$</td><td>$0.050$</td></tr>
+<tr><td>magnetic field [nT]</td><td>$5.377(92)$, $-1.655(17)$</td><td>$6.05(10)$, $-1.546(18)$</td><td>$0.11$</td></tr>
+</table>
+
+<p><b>Each exponent was fitted independently of the others, and no fluid equation was imposed on any of them.</b> That is what makes the table usable as a test rather than as an illustration: nothing this module predicts was put into the fit. The yearly scatter, from their Fig. 9, is the weighted standard deviation of exponents fitted year by year across the solar cycle, and it is quoted alongside the formal error throughout because it is the larger and more honest measure of how repeatable an exponent is.</p>
+
+<h3 id="anchor-independence">7.1 What is new here, and what <a href="module02.html">Module 2</a> already did</h3>
+
+<p>A reader who has come this far will notice that <a href="module02.html">Module 2</a> <a href="module02.html#solarwind">§10</a> anchored on this same table, and is entitled to ask whether the book is checking one measurement twice and counting it as two results. It is not, and the distinction is worth setting out before any number is computed.</p>
+
+<p>Module 2 used the density and velocity exponents to test <b>continuity</b>, which forces $\alpha-\beta = 2$ exactly for a steady spherical flow; the mean fits give $1.961$ and the median fits $2.035$, bracketing the prediction. It then used the density and temperature exponents to test the <b>adiabatic closure</b>, which predicts a temperature exponent of $-\alpha(\gamma-1) = -1.340$ against a measured $-0.792\pm0.028$, a $19.6\sigma$ refutation recorded in its <a href="module02.html#broken">§10.5</a>.</p>
+
+<p>This module uses the same four numbers to test three different things: the <b>critical-point bound</b> $\gamma \lt 3/2$ of Proposition 4, which is a statement about a singular point and not about a closure; the <b>sign</b> of the velocity exponent, which distinguishes the solution families of Proposition 3; and the <b>momentum equation</b> itself, fed the measured pressure gradient, which neither earlier test touched. <a class="secref" href="#floor">§7.4(i)</a> does re-use Module 2's refutation of a closure, and it cites that result rather than re-deriving it.</p>
+
+<p>One further caveat, inherited from Module 2 and not repaired here. The fits describe the mean or median of a <em>distribution</em> of streams at each radius — slow dense wind and fast tenuous wind mixed — not any single stream. Module 2's <a href="module02.html#solarwind">§10</a> set out the condition under which power-law exponents carry across such a mixture, namely radial self-similarity of the mixing weights, and the same condition is assumed here. It is an assumption, and <a class="secref" href="#euler">§7.6</a> names it again where it bites hardest.</p>
+
+<h3 id="window">7.2 Check 3 — the effective index lands inside the transonic window</h3>
+
+<p>For a polytropic flow, $P \propto \rho^\gamma$ with an ideal gas $P \propto \rho T$ gives $T \propto \rho^{\gamma-1}$, so with $\rho \propto r^{-\alpha}$ and $T \propto r^{e_T}$,</p>
+
+$$ \gamma_{\rm eff} \;=\; 1 + \frac{-e_T}{\alpha}. \tag{7.1}$$
+
+<p>The mean fits give $\alpha = 2.010\pm0.038$ and $e_T = -0.792\pm0.028$, hence $\gamma_{\rm eff} = 1.3940\pm0.0158$. The median fits give $\alpha = 2.093\pm0.046$ and $e_T = -0.913\pm0.039$, hence $1.4362\pm0.0210$.</p>
+
+<div class="keyresult"><b>Check 3 — CONFIRMED.</b> Proposition 4 requires $\gamma \lt 3/2$ for an accelerating transonic wind to exist. The measured $\gamma_{\rm eff}$ is $1.3940\pm0.0158$, which is $\mathbf{6.7\sigma}$ below $3/2$ (median fits: $1.4362\pm0.0210$, $3.0\sigma$ below). The ratio $\gamma_{\rm eff}/(3/2)$ is $0.9294$ for the mean fits and $0.9575$ for the median. At those indices the critical slopes of (4.1) are $+0.2051$ and $-0.8634$ (mean), $+0.1246$ and $-0.8408$ (median): an accelerating branch exists in both cases.</div>
+
+<p>The same number separates the wind from both idealised closures: $\gamma_{\rm eff}$ is $24.9\sigma$ above the isothermal $1$ and $17.3\sigma$ below the adiabatic $5/3$ for the mean fits ($20.8\sigma$ and $11.0\sigma$ for the median). The solar wind is neither, which is the physical content of <a href="module02.html#broken">Module 2 §10.5</a> restated as an index.</p>
+
+<div class="warn"><b>This is an inequality satisfied, not an equality met, and it is weaker than Module 2's anchor.</b> Module 2 predicted $\alpha-\beta = 2$ <em>exactly</em> and the measurement landed on it. Here the prediction is a one-sided bound and the measurement falls inside it with room to spare, which a wide range of unrelated physics would also do. Two further limitations belong with the result. The derivation of (7.1) assumes a <b>single</b> polytropic index from the critical point to 1 au, and <a class="secref" href="#repair">§7.5</a> shows that assumption is false. And a bound cannot be violated by a positive result, only by a negative one, so the check could have failed and did not — which is its entire force, and all of it.</div>
+
+<h3 id="sign">7.3 Check 4 — the sign of the velocity exponent</h3>
+
+<p>Proposition 3 gives three qualitatively different objects and <a class="secref" href="#asymptotics">§3.1</a> gives their signatures: a transonic wind accelerates, so $\beta \gt 0$; a breeze decays as $r^{-2}$, so $\beta \lt 0$; a static corona has $v = 0$ and no exponent at all. The measurement is $\beta = +0.049\pm0.010$ (mean) and $+0.058\pm0.013$ (median).</p>
+
+<div class="keyresult"><b>Check 4 — CONFIRMED.</b> $\beta \gt 0$ at $\mathbf{4.9\sigma}$ against the formal error and $4.1\sigma$ against the year-to-year scatter (median fits: $4.5\sigma$ and $4.8\sigma$). The solar wind accelerates through the Helios range. It is a transonic wind and not a breeze, and Proposition 1 has already excluded the static case on independent grounds.</div>
+
+<p>The strength of this check is that it requires no model to interpret and no parameter to be chosen: one measures a sign. Its weakness is the same thing — a sign carries one bit. What it establishes is which of Proposition 3's families the wind belongs to, and nothing about whether the family's quantitative predictions hold. The next three subsections show that they do not.</p>
+
+<h3 id="floor">7.4 Check 6 — the isothermal wind, refuted three ways</h3>
+
+<p><b>(i) The temperature exponent.</b> An isothermal wind has $T$ constant, so $e_T = 0$. The measurement is $-0.792\pm0.028$, a departure of $\mathbf{28.3\sigma}$ against the formal error and $15.8\sigma$ against the yearly scatter. <a href="module02.html#broken">Module 2 §10.5</a> reported the <em>adiabatic</em> closure failing at $19.6\sigma$ against the same exponent; that result is cited here and not re-derived. Both idealisations fail, in opposite directions, which is why <a class="secref" href="#window">§7.2</a>'s intermediate index exists at all.</p>
+
+<p><b>(ii) No coronal temperature reproduces the acceleration.</b> The last column of <a class="secref" href="#sun">§6</a>'s table is the logarithmic slope of the predicted $v(r)$ over the Helios chord $0.29$–$0.98$ au, which is the quantity $\beta$ measures. Scanning $T_0$ from $0.5$ MK to the ceiling $T_{\rm ceiling} = 6.26$ MK of Proposition 8:</p>
+
+<table>
+<tr><th>$T_0$ [MK]</th><td>$0.50$</td><td>$1.00$</td><td>$1.50$</td><td>$2.00$</td><td>$3.00$</td><td>$4.00$</td><td>$5.00$</td><td>$\mathbf{6.26}$</td></tr>
+<tr><th>chord slope</th><td>$0.2477$</td><td>$0.1885$</td><td>$0.1645$</td><td>$0.1505$</td><td>$0.1343$</td><td>$0.1246$</td><td>$0.1179$</td><td>$\mathbf{0.1119}$</td></tr>
+</table>
+
+<div class="keyresult"><b>Check 6(ii) — REFUTED, and the bound is derived rather than scanned.</b> The minimum over the whole range is $0.1119$, at the ceiling itself, against a measured $0.049\pm0.010$: a departure of $\mathbf{6.3\sigma}$. The claim is therefore not "no temperature I tried worked" but <b>no isothermal temperature that leaves the corona subsonic at its base can work</b>, and Proposition 8 is what makes the difference.</div>
+
+<p>Raising $T_0$ beyond the ceiling does keep lowering the slope, because of (3.6), and the price is worth printing. A decade in $T_0$ costs $52$ per cent of the slope from $0.5$ to $5$ MK, $46$ per cent from $1$ to $10$, $41$ per cent from $2$ to $20$ and $36$ per cent from $5$ to $50$ — the fall slows as $T_0$ rises, exactly as a $1/(2\ln x)$ dependence requires. The temperature that would actually reach $0.049$ is <b>$1644$ MK</b>: a factor $548$ to $822$ above the 2–3 MK corona, and $263$ times the temperature at which the model destroys its own premise. The isothermal wind is not slightly too fast to accelerate correctly; it is wrong by an amount no temperature can absorb.</p>
+
+<p><b>(iii) Fit the temperature to the 1-au speed and look at what it implies.</b> Choosing $T_0$ so that $v(1\ \mathrm{au}) = 435.6\ \mathrm{km\,s^{-1}}$ gives $T_0 = 0.947$ MK; matching the median $410.7$ instead gives $0.866$ MK. Venzmer &amp; Bothmer's own paper cites a near-Sun coronal temperature of 2–3 MK (their Sect. 6, p. 11, quoting Billings 1959 and Liebenberg et al. 1975).</p>
+
+<div class="keyresult"><b>Check 6(iii) — REFUTED.</b> The temperature the isothermal model needs is a factor $\mathbf{2.11}$ to $\mathbf{3.17}$ <em>below</em> the temperature the corona is measured to have. Run the model at the measured temperature instead and the wind overshoots: $T_0 = 2$ MK gives $v(1\,\mathrm{au}) = 702\ \mathrm{km\,s^{-1}}$, a ratio of $1.61$ to the measurement, and $3$ MK gives $903\ \mathrm{km\,s^{-1}}$, a ratio of $2.07$.</div>
+
+<span class="prov">The 2–3 MK coronal temperature is a <b>secondary</b> citation. Venzmer &amp; Bothmer state it and attribute it to Billings (1959) and Liebenberg et al. (1975); neither of those papers was fetched for this module, so what is verified here is that VB18 say it, not the measurement itself. Fitting one parameter to one number confirms nothing in any case — the content of this check is entirely in the <em>disagreement</em> that follows the fit, and that disagreement would survive a factor of $1.5$ revision in the coronal temperature.</span>
+
+<h3 id="repair">7.5 Check 7 — the single-polytrope repair does not work either</h3>
+
+<p>The obvious repair is to abandon $\gamma = 1$ and use the measured $\gamma_{\rm eff} = 1.3940$ throughout. It fails, in three independent ways, and each one is computed rather than argued.</p>
+
+<p>First, a polytropic wind with $\gamma \gt 1$ has a <em>minimum</em> launch temperature: below it the gas runs out of enthalpy before reaching the critical point. At $r_0 = 1.03\,R_\odot$ that minimum is $T_0 \gt 3.540$ MK for $\gamma = 1.3940$, and $3.804$ MK for the median $1.4362$. Both <b>exceed the top of the measured 2–3 MK range</b>, by factors of $1.18$ and $1.27$, and exceed its bottom by $1.77$ and $1.90$.</p>
+
+<p>Second, force the solution to reproduce the observed 1-au speed. With $\gamma = 1.3940$ that requires $T_0 = 5.39$ MK, and the resulting solution has a critical radius of $r_c = 1.020\,R_\odot$.</p>
+
+<div class="warn"><b>That critical radius lies below its own base.</b> The model was launched from $r_0 = 1.03\,R_\odot$ and places its critical point at $1.020\,R_\odot$, inside it. The flow would be supersonic from the base upward, contradicting the premise — a subsonic base — on which the solution was constructed. <b>No observation is needed to reject it.</b> And no observed sonic radius is quoted here, because none has been sourced: Verscharen et al. (2021) give $r_S = 0.309\pm0.004\,R_\odot$ and say plainly it is a <em>lower limit</em>. Nor should the Alfvén radius be substituted for it — their $12.080\pm0.236\,R_\odot$ (first fast-latitude scan) and $9.504\pm0.221\,R_\odot$ (third) describe a different surface.</div>
+
+<p>Third, that same forced solution gets the wrong temperature and the wrong acceleration. It predicts $T = 5.817\times10^{4}$ K at 1 au against the measured $9.670\times10^{4}$ K, a ratio of $0.602$; and $\mathrm{d}\ln v/\mathrm{d}\ln r = +0.00802$ at 1 au against the measured $+0.049\pm0.010$, too small by a factor of $6.1$.</p>
+
+<div class="keyresult"><b>Check 7 — REFUTED, and the diagnosis is specific.</b> What fails is the <em>single</em> index, not the polytropic idea. $\gamma$ is near $1$ low in the corona, where the heat is deposited and the gas is nearly isothermal, and near $1.4$ beyond $0.3$ au, where <a class="secref" href="#window">§7.2</a> measures it. No one index describes both regions, and the fitted $\gamma_{\rm eff}$ is an average over a range in which the true index varies.</div>
+
+<figure id="fig-parker">
+<!--FIG_PARKER-->
+<!--/FIG_PARKER-->
+<figcaption>Upper: the transonic isothermal solution $v(r)$ for three coronal temperatures, each with its own critical radius $r_c = GM/(2c_T^2)$; raising $T_0$ moves $r_c$ inward and lifts the whole curve. The Helios range is shaded and the measured fit drawn over it, and on this axis the models look approximately right — which is the trap. Lower: the same models reduced to the one number Helios measured, the logarithmic slope over $0.29$–$0.98$ au, predicted five ways against the measured value drawn both as a sixth bar and as a vertical band. No isothermal temperature from $0.5$ MK to the $6.26$ MK ceiling of Proposition 8 gets below $0.112$. Steady Euler fed the <em>measured</em> pressure gradient goes the other way and predicts $0.0164$: thermal proton pressure accounts for about one third of the observed acceleration.</figcaption>
+</figure>
+
+<p><a class="secref" href="#fig-parker">Fig. 3</a> puts the preceding three subsections on one page. The upper panel plots $v(r)$ for three coronal temperatures with the Helios range shaded and the measured fit drawn over it, and on that axis the models look approximately right — which is the trap. The lower panel plots the <b>residual</b>: the logarithmic slope over $0.29$–$0.98$ au, predicted five different ways, against the measured value drawn both as a sixth bar and as a vertical band. On an axis running from 0 to 900 km s⁻¹ a slope of $0.049$ against $0.19$ is a difference of a few pixels; on the residual axis it is the whole panel. This is <a href="module02.html">Module 2</a>'s lesson applied: where the disagreement is the result, plot the disagreement.</p>
+
+<h3 id="euler">7.6 Check 5 — the sharpest measurement in the module</h3>
+
+<p>Every comparison so far has tested a <em>wind model</em>. The momentum equation can be tested without one. Rearranging (3.5) for the logarithmic slope and keeping the pressure gradient general,</p>
+
+$$ \frac{\mathrm{d}\ln v}{\mathrm{d}\ln r} \;=\; \frac{1}{v^2}\left[-\frac{r}{\rho}\frac{\mathrm{d}P}{\mathrm{d}r}-\frac{GM}{r}\right] \;=\; \frac{(\alpha-e_T)\,c_T^2 - GM/r}{v^2}, \tag{7.2}$$
+
+<p>where the second form uses $P \propto \rho T \propto r^{-(\alpha-e_T)}$, so that $-\mathrm{d}\ln P/\mathrm{d}\ln r = \alpha-e_T$ is read directly off the fitted exponents. <b>No closure is assumed</b> — not isothermal, not polytropic, not barotropic. The pressure gradient is measured; the gravity is known; the speed is measured. Everything on the right of (7.2) comes from the data, and the left side is also measured, independently, as $\beta$.</p>
+
+<p>At 1 au with the mean fits, $v = 435.6\ \mathrm{km\,s^{-1}}$, $T = 9.670\times10^{4}$ K and $n_p = 7.57\ \mathrm{cm^{-3}}$: $\alpha-e_T = 2.802$, $c_T^2 = 1.4301\times10^{13}\ \mathrm{cm^2\,s^{-2}}$ — that is $(37.8\ \mathrm{km\,s^{-1}})^2$ — giving a pressure term $+0.02112$ and a gravity term $-GM/(rv^2) = -0.00468$. Hence</p>
+
+$$ \left(\frac{\mathrm{d}\ln v}{\mathrm{d}\ln r}\right)_{\rm predicted} = 0.01644 \pm 0.00061 \qquad\text{against}\qquad \beta_{\rm measured} = 0.049 \pm 0.010. \tag{7.3}$$
+
+<div class="keyresult"><b>Check 5 — a SHORTFALL, and it is a measurement rather than a verdict.</b> Ratio measured/predicted $= \mathbf{2.98}$: proton thermal pressure supplies about <b>one third</b> of the observed acceleration at 1 au. The gap is $3.2\sigma$ against the formal error and $2.7\sigma$ against the year-to-year scatter. The median fits give $0.01356\pm0.00074$ against $0.058\pm0.013$, a ratio of $4.28$ at $3.4\sigma$ and $3.7\sigma$.</div>
+
+<p>The prediction's own error, $\pm0.00061$, is small enough that it barely moves the significance, which is why it is printed: the uncertainty in this comparison lives almost entirely in the measured $\beta$.</p>
+
+<div class="warn"><b>What this does not establish.</b> It does not name the missing force. Two assumptions stand between (7.3) and any such conclusion. <b>First</b>, $c_T^2$ uses a single temperature for protons, electrons and helium, and that is false at 1 au; relaxing it <em>raises</em> the predicted pressure term, so the true shortfall in proton pressure alone is if anything larger, but the arithmetic of a multi-species pressure gradient is not done here. <b>Second</b>, (7.2) is nonlinear in $v$ and the quantities substituted into it are ensemble medians of a mixed flow, not properties of one stream. The honest statement is a measured shortfall. What supplies the rest — wave pressure, a turbulent cascade, or something else — is the question <a href="module02.html#broken">Module 2 §10.5</a> deferred to Module 10 on this same data set, and it is deferred again here.</div>
+
+<p><b>And the composition does not rescue it.</b> Venzmer &amp; Bothmer treat the wind as a pure proton plasma — their Sect. 1, p. 2: "In the analyses, we treat the solar wind as a proton plasma — the average helium abundance is about 4.5 % and in slow wind at solar cycle minimum is even less than 2 %." Their density is therefore a proton density on a proton-plasma assumption, and the 5 per cent helium of (2.1) is <em>this module's own choice</em> and not theirs. Redoing (7.3) at $\mu = 1/2$ raises $c_T^2$ by a factor $1.1163$ to $1.5964\times10^{13}\ \mathrm{cm^2\,s^{-2}}$ and the prediction to $0.01890\pm0.00068$, moving the ratio from $2.98$ to $\mathbf{2.59}$ and the shortfall from $3.2\sigma$ to $3.0\sigma$. The composition is worth about 12 per cent in $c_T^2$ and less than half a unit in the ratio. It is not the missing force either.</p>
+
+<p class="small">A careful reader will object that the predictor and the predicted are not fully independent: the pressure exponent uses the fitted $\alpha = 2.010$, and steady continuity ties $\alpha$ to $\beta$ by $\alpha = 2+\beta$, which <a href="module02.html">Module 2</a> <a href="module02.html#solarwind">§10</a> verified. Imposing that tie exactly, $\alpha = 2.049$, moves the prediction from $0.01644$ to $0.01674$ — <b>1.8 per cent</b>, against a measured-to-predicted ratio of $2.98$. The conclusion is unmoved.</p>
+
+<h3 id="massflux">7.7 Check 8 — the mass flux, and why it is a weak test</h3>
+
+<p>Verscharen, Bale &amp; Velli (2021) measured the radial mass flux per steradian, $F_m = r^2NMU_r$, from Ulysses: about $3.5\times10^{-16}$ au² g cm⁻² s⁻¹ sr⁻¹ over the poles during the first fast-latitude scan, $2.2\times10^{-16}$ during the third, and $1\times10^{-16}$ to $15\times10^{-16}$ in the equatorial region (their Sect. 3.1). Multiplying by $4\pi\,\mathrm{au}^2$ — a conversion computed here, not quoted from them, since they never state a total — gives $9.843\times10^{11}$, $6.187\times10^{11}$ and $2.812\times10^{11}$ to $4.218\times10^{12}\ \mathrm{g\,s^{-1}}$ respectively. Helios flew in the ecliptic, so the <em>equatorial</em> range is the one to compare against; the polar rung is quoted because $4\pi\,\mathrm{au}^2$ times it is the familiar $10^{12}\ \mathrm{g\,s^{-1}}$.</p>
+
+<p>The Helios fits supply an independent cross-check: $n_p = 7.57\ \mathrm{cm^{-3}}$ and $v = 435.6\ \mathrm{km\,s^{-1}}$ at 1 au give $\dot M = 1.861\times10^{12}\ \mathrm{g\,s^{-1}}$, that is $F_m = 6.62\times10^{-16}$, comfortably inside the equatorial range and derived without Ulysses.</p>
+
+<p>The Parker prediction with the Baumbach–Allen base density gives $2.897\times10^{11}\ \mathrm{g\,s^{-1}}$ at 1 MK — a ratio of $0.294$ to the polar rung — and $1.566\times10^{11}$ at the fitted $0.947$ MK, a ratio of $0.159$. At 2 MK it gives $5.385\times10^{13}$, a ratio of $54.7$.</p>
+
+<div class="keyresult"><b>Check 8 — a weak test, and it must not be reported as a confirmation.</b> By (6.1), $\mathrm{d}\ln\dot M/\mathrm{d}\ln T_0 \approx 13.2$. <b>A factor of 3 in $\dot M$ is therefore an 8.3 per cent test of $T_0$.</b> Agreement to a factor of a few here is not evidence that the model is right; it is evidence that an exponential was evaluated at roughly the right temperature.</div>
+
+<p>The inverse is the more informative direction, because it exposes the base density rather than hiding behind it. To deliver the observed mass flux, an isothermal model needs a base electron density of $1.074\times10^{9}\ \mathrm{cm^{-3}}$ at 1 MK, $3.036\times10^{7}$ at 1.5 MK, or $5.778\times10^{6}$ at 2 MK — against the $3.161\times10^{8}\ \mathrm{cm^{-3}}$ that Baumbach–Allen supplies. Three temperatures within the plausible range demand base densities spanning a factor of $186$. Given that the base density is itself an extrapolation below its source's fitted range (<a class="secref" href="#prov-allen">§2.1</a>), this comparison constrains very little, and saying so is more useful than quoting the one temperature at which the two happen to agree.</p>

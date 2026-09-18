@@ -1,0 +1,128 @@
+<h2 id="polytropic">4. The polytropic critical point, and the bound $\gamma \lt 3/2$</h2>
+
+<p>The isothermal assumption of <a class="secref" href="#topology">§3</a> is a strong one and <a class="secref" href="#helios">§7</a> refutes it. Before that, it is worth asking what survives without it, because the answer is a bound that the data can be held against — and a bound derived before any data is looked at is worth more than a fit made after.</p>
+
+<div class="def"><b>Definition 3 (the polytropic flow).</b> The configuration of Definition 1 with $P = K\rho^{\gamma}$ for constant $K$ and $\gamma$, so that the local sound speed is $c(r) = \sqrt{\gamma P/\rho}$, with $c_c$ its value at the critical point and $c_\infty$ its value at infinity. The isothermal case of <a class="secref" href="#topology">§3</a> is $\gamma \to 1$, in which $c \to c_T$ is constant. The index $\gamma$ here is an <b>effective</b> one describing the run of $P$ against $\rho$ along the flow; it is not the ratio of specific heats of the gas, which is $5/3$ for the fully ionised hydrogen–helium mixture of (2.1) throughout.</div>
+
+<p>Repeating the derivation of Proposition 2 with $P = K\rho^\gamma$ replaces $c_T^2$ by $c^2(r)$ in (3.5) and leaves the structure intact: the bracket still vanishes at $v = c$, the right side still vanishes where $2c^2/r = GM/r^2$, and the two must still coincide. What changes is that $c$ is now a function of position, so the critical radius is determined implicitly. The new content is in the <em>slope</em> there.</p>
+
+<div class="prop"><b>Proposition 4 (the critical slope, and the condition for a wind).</b> Let $s \equiv \mathrm{d}\ln v/\mathrm{d}\ln r$ evaluated at the critical point of a polytropic flow. Then $s$ satisfies
+$$ (\gamma+1)\,s^2 + 4(\gamma-1)\,s + (4\gamma-6) \;=\; 0, \tag{4.1}$$
+whose two roots have product $(4\gamma-6)/(\gamma+1)$ and discriminant $4(10-6\gamma)$. Consequently:
+<ul>
+<li>the product of the roots is <b>negative if and only if $\gamma \lt 3/2$</b>, so one root is positive and an <b>accelerating</b> transonic solution — a wind — exists exactly on that range;</li>
+<li>for $3/2 \lt \gamma \le 5/3$ both roots are negative: a transonic solution exists but decelerates outward, which is an accretion flow and not a wind;</li>
+<li>the discriminant <b>vanishes at $\gamma = 5/3$</b>, where the two roots coincide at $-1/2$, and the roots become complex only <b>above</b> $5/3$, where no transonic solution exists at all.</li>
+</ul>
+</div>
+
+<div class="proof">
+Write the polytropic form of (3.5) as $N(r,v)\,\mathrm{d}\ln v/\mathrm{d}\ln r = D(r,v)$ with $N = v^2-c^2$ and $D = 2c^2-GM/r$, both vanishing at the critical point. Near it the slope is $0/0$, so apply L'Hôpital along the solution: $s = (\mathrm{d}D/\mathrm{d}\ln r)/(\mathrm{d}N/\mathrm{d}\ln r)$, where both derivatives are taken following the flow and therefore involve $s$ itself. Continuity and $P = K\rho^\gamma$ give $\mathrm{d}\ln c^2/\mathrm{d}\ln r = (\gamma-1)\,\mathrm{d}\ln\rho/\mathrm{d}\ln r = -(\gamma-1)(2+s)$. With $c^2 = GM/2r$ at the critical point, substituting and clearing denominators yields (4.1); the algebra is a quadratic in $s$ and no branch is discarded. The product of the roots of $as^2+bs+c$ is $c/a$, here $(4\gamma-6)/(\gamma+1)$, which is negative precisely when $4\gamma \lt 6$. The discriminant is $b^2-4ac = 16(\gamma-1)^2-4(\gamma+1)(4\gamma-6) = 4(10-6\gamma)$ after expansion, vanishing at $\gamma = 5/3$. At that value $s = -b/2a = -4(\gamma-1)/[2(\gamma+1)] = -1/2$, twice. <span class="qed">∎</span>
+</div>
+
+<table>
+<tr><th>$\gamma$</th><th>$s_+$</th><th>$s_-$</th><th>product</th><th>accelerating transonic solution?</th></tr>
+<tr><td>$1.0000$</td><td>$+1.0000$</td><td>$-1.0000$</td><td>$-1.0000$</td><td>yes — the isothermal case of <a class="secref" href="#topology">§3</a></td></tr>
+<tr><td>$1.1000$</td><td>$+0.7828$</td><td>$-0.9733$</td><td>$-0.7619$</td><td>yes</td></tr>
+<tr><td>$1.2000$</td><td>$+0.5788$</td><td>$-0.9424$</td><td>$-0.5455$</td><td>yes</td></tr>
+<tr><td>$1.3000$</td><td>$+0.3840$</td><td>$-0.9058$</td><td>$-0.3478$</td><td>yes</td></tr>
+<tr><td>$\mathbf{1.3940}$</td><td>$+0.2051$</td><td>$-0.8634$</td><td>$-0.1771$</td><td><b>yes</b> — the measured value of <a class="secref" href="#window">§7.2</a></td></tr>
+<tr><td>$1.4000$</td><td>$+0.1937$</td><td>$-0.8604$</td><td>$-0.1667$</td><td>yes</td></tr>
+<tr><td>$\mathbf{1.4360}$</td><td>$+0.1250$</td><td>$-0.8409$</td><td>$-0.1051$</td><td><b>yes</b> — the median-fit value of <a class="secref" href="#window">§7.2</a></td></tr>
+<tr><td>$1.4900$</td><td>$+0.0199$</td><td>$-0.8071$</td><td>$-0.0161$</td><td>yes, barely</td></tr>
+<tr><td>$\mathbf{1.5000}$</td><td>$0.0000$</td><td>$-0.8000$</td><td>$0.0000$</td><td><b>no</b> — the positive root has just closed</td></tr>
+<tr><td>$1.5500$</td><td>$-0.1033$</td><td>$-0.7595$</td><td>$+0.0784$</td><td>no</td></tr>
+<tr><td>$1.6000$</td><td>$-0.2183$</td><td>$-0.7048$</td><td>$+0.1538$</td><td>no</td></tr>
+<tr><td>$1.6667$</td><td>$-0.5000$</td><td>$-0.5000$</td><td>$+0.2500$</td><td>no — the two roots have merged</td></tr>
+<tr><td>$1.7000$</td><td>complex</td><td>complex</td><td>$+0.2963$</td><td>no — no real transonic slope exists</td></tr>
+</table>
+
+<p><b>The bound is fixed before any measurement is consulted, and that is what gives <a class="secref" href="#window">§7.2</a> its force.</b> Nothing about the Sun entered (4.1); it is a statement about the local structure of a differential equation at a singular point. A gas whose effective index happened to exceed $3/2$ would have no accelerating transonic solution, and the exponents that Venzmer &amp; Bothmer fitted had no reason whatever to respect that.</p>
+
+<p>The solution can also be integrated numerically from the critical point outward, which tests the integrator rather than the physics. Taking $\gamma = 1.394$, $T_0 = 6.0$ MK at $r_0 = 1.03\,R_\odot$ — which places $r_c$ at $0.769\,R_\odot$ — and integrating to $3.00$ au gives $v$ rising from $352.2$ to $505.3\ \mathrm{km\,s^{-1}}$. At $\gamma = 1.6$, with critical slopes $-0.2183$ and $-0.7048$, the integrator finds no accelerating branch and refuses, exactly as (4.1) predicts.</p>
+
+<div class="warn"><b>That integration is not a model of the Sun and must not be read as one.</b> Its critical radius, $0.769\,R_\odot$, lies <em>below</em> the coronal base at $1.03\,R_\odot$. A real corona with those parameters would be supersonic from its base upward and could not launch this solution at all. The numbers are printed because they demonstrate that the integrator reproduces Proposition 4, and for no other reason. <a class="secref" href="#repair">§7.5</a> takes the same $\gamma$ seriously as a solar model and shows what goes wrong.</div>
+
+<h2 id="bondi">5. Bondi accretion: the same solution, run inward</h2>
+
+<p>Reverse the arrow in <a class="secref" href="#fig-mirror">Fig. 1</a>. The gas is now at rest far away, at density $\rho_\infty$ and sound speed $c_\infty$, and falls in. Equations (3.5) and (4.1) are unchanged, and by Proposition 4 the relevant branch for $\gamma \gt 3/2$ — including the adiabatic $5/3$ — is a decelerating-outward, that is accelerating-inward, transonic solution. This is Bondi's 1952 problem.</p>
+
+<div class="prop"><b>Proposition 5 (the accretion rate, and what fixes its coefficient).</b> For a polytropic flow with $1 \lt \gamma \lt 5/3$ falling from rest at infinity, Bernoulli evaluated at the critical point gives
+$$ c_c^2 \;=\; \frac{2c_\infty^2}{5-3\gamma}, \qquad r_c \;=\; \frac{GM(5-3\gamma)}{4c_\infty^2}, \tag{5.1}$$
+and with the Bondi radius defined as $R_B \equiv 2GM/c_\infty^2$,
+$$ \frac{r_c}{R_B} \;=\; \frac{5-3\gamma}{8}. \tag{5.2}$$
+Substituting (5.1) into $\dot M = 4\pi r_c^2\rho_c c_c$ gives
+$$ \dot M \;=\; 4\pi\lambda\,\rho_\infty\,\frac{(GM)^2}{c_\infty^3}, \qquad \lambda_c(\gamma) \;=\; \left[\frac{5-3\gamma}{4}\right]^{2}\left[\frac{2}{5-3\gamma}\right]^{\frac{\gamma+1}{2(\gamma-1)}}. \tag{5.3}$$
+<b>The steady equations do not fix $\lambda$. They bound it: $\lambda \le \lambda_c$.</b></div>
+
+<div class="proof">
+Bernoulli for a steady polytropic flow is $v^2/2 + c^2/(\gamma-1) - GM/r = c_\infty^2/(\gamma-1)$, the constant evaluated at infinity where $v = 0$. At the critical point $v = c_c$ and $c_c^2 = GM/2r_c$, so $GM/r_c = 2c_c^2$ and the relation becomes $c_c^2/2 + c_c^2/(\gamma-1) - 2c_c^2 = c_\infty^2/(\gamma-1)$, which rearranges to $c_c^2(5-3\gamma) = 2c_\infty^2$, the first of (5.1); the second follows from $r_c = GM/2c_c^2$. Then (5.2) is immediate from the definition of $R_B$. For the rate, $\rho_c/\rho_\infty = (c_c^2/c_\infty^2)^{1/(\gamma-1)}$ from $P = K\rho^\gamma$, and substituting $r_c$, $\rho_c$ and $c_c$ into $\dot M = 4\pi r_c^2\rho_c c_c$ collects into (5.3). The inequality is Bondi's: his eq. (18) derives $\lambda_c$ as the largest value for which a solution exists, and his (19) states the rate "cannot exceed" the corresponding flux. <span class="qed">∎</span>
+</div>
+
+<p>Two checks on (5.2), one of them requiring no algebra. At $\gamma = 1$ the sound speed is constant, so the critical radius is $GM/2c_\infty^2$ while $R_B = 2GM/c_\infty^2$, a ratio of exactly $1/4$ — and $(5-3)/8 = 1/4$. At $\gamma = 5/3$ the ratio is zero: <b>the adiabatic flow has no interior critical point at all</b>, which is precisely why $\lambda$ is a limit there rather than a solution property, and why <a class="secref" href="#sgra">§8</a>'s Sgr A* calculation quotes $\lambda = 1/4$ without a sonic radius.</p>
+
+<span class="prov">$R_B \equiv 2GM/c_\infty^2$, <b>with the factor of 2</b>. Some authors write $R_B = GM/c_\infty^2$ and every derived ratio then shifts by a factor of 2. The definition with the 2 is used here because it is the one Baganoff et al. (2003) use in the sentence <a class="secref" href="#sgra">§8</a> quotes, and mixing the two conventions across a comparison would be a silent factor-of-two error.</span>
+
+<div class="warn"><b>What Bondi proved, in his own words, because this is easy to overstate.</b> His Summary reads: "The factor of proportionality is <b>not determined</b> by the steady-state equations, though it is confined within certain limits. Arguments are given suggesting that the case physically most likely to occur is that with the <b>maximum</b> rate of accretion." His Sect. 4 derives $\lambda \le \lambda_c$ and his eq. (19) says the rate "cannot exceed" $4\pi\lambda_c(GM)^2c_\infty^{-3}\rho_\infty$. So (5.3) is an <em>upper bound</em> that the steady equations enforce, together with a physical argument — his, not a theorem — that the bound is attained. <a class="secref" href="#sgra">§8</a> is written so that its conclusion does not depend on that argument.</div>
+
+<h3 id="lambda-check">5.1 The coefficient, verified two ways and against the source</h3>
+
+<table>
+<tr><th>$\gamma$</th><th>$\lambda_c$</th><th>$r_c/R_B$</th><th>note</th></tr>
+<tr><td>$1.000000$</td><td>$1.120422$</td><td>$0.2500$</td><td>isothermal; $\mathrm{e}^{3/2}/4 = 1.120422$ exactly</td></tr>
+<tr><td>$1.000001$</td><td>$1.120421$</td><td>$0.2500$</td><td>the numerical limit $\gamma\to1$, ratio $0.999999$ to the exact value</td></tr>
+<tr><td>$1.100000$</td><td>$0.995128$</td><td>$0.2125$</td><td></td></tr>
+<tr><td>$1.200000$</td><td>$0.871158$</td><td>$0.1750$</td><td><b>not checked against the source</b> — see below</td></tr>
+<tr><td>$1.300000$</td><td>$0.748069$</td><td>$0.1375$</td><td></td></tr>
+<tr><td>$1.400000$</td><td>$0.625000$</td><td>$0.1000$</td><td>exactly $5/8$</td></tr>
+<tr><td>$1.500000$</td><td>$0.500000$</td><td>$0.0625$</td><td></td></tr>
+<tr><td>$1.600000$</td><td>$0.366950$</td><td>$0.0250$</td><td></td></tr>
+<tr><td>$1.666667$</td><td>$0.250000$</td><td>$0.0000$</td><td>adiabatic monatomic; exactly $1/4$, and no interior critical point</td></tr>
+</table>
+
+<p>The first verification is internal. Assembling $\dot M = 4\pi r_c^2\rho_c c_c$ directly from the critical-point quantities, for a test case, gives $1.383290\times10^{11}\ \mathrm{g\,s^{-1}}$; evaluating the closed form (5.3) gives $1.383290\times10^{11}\ \mathrm{g\,s^{-1}}$. The ratio is $1.00000000$, eight figures. <b>That verifies the algebra and says nothing whatever about nature</b>, and <a class="secref" href="#sgra">§8</a> depends on the distinction.</p>
+
+<div class="keyresult"><b>Check 2 — against the primary source.</b> Bondi's Table I, read from the scanned original, lists $\lambda_c = \mathrm{e}^{3/2}/4 = 1.12$ at $\gamma = 1$, $0.625$ at $1.4$, $0.500$ at $1.5$ and $0.250$ at $5/3$. Four of its five entries are legible in the scan and <b>all four match the table above to every digit printed</b>. The $\gamma = 1.2$ entry is not legible, so the value $0.871158$ above is computed here and is <b>unchecked against any source</b>. It is stated rather than quietly passed over because an unverified number among verified ones is the kind of thing a reader should be told about.</div>
+
+<div class="prop"><b>Proposition 6 (the mirror).</b> The transonic accretion solution and the transonic wind are the same solution of the same equation with $v \to -v$. In the isothermal case both are the $C = -3$ level set of (3.3); they differ only in which branch is followed through the crossing at $x = 1$.</div>
+
+<div class="proof">
+Equation (3.5) contains $v$ only through $v\,\mathrm{d}v/\mathrm{d}r = \tfrac12\,\mathrm{d}(v^2)/\mathrm{d}r$ and through $c_T^2 v^{-1}\mathrm{d}v/\mathrm{d}r = c_T^2\,\mathrm{d}\ln|v|/\mathrm{d}r$, both even under $v\to-v$; and continuity fixes $\rho \propto 1/(r^2|v|)$, also even. The transformation therefore maps solutions to solutions. In dimensionless form (3.3) involves only $u^2$ and $\ln u$ with $u = |v|/c_T$, so the level sets are identical and the classification of Proposition 3 carries over unchanged. At the crossing point the two branches of the saddle intersect; following the subsonic branch inward and the supersonic branch further inward is accretion, and the outward pairing is the wind. <span class="qed">∎</span>
+</div>
+
+<h2 id="sun">6. The wind for the Sun, and the ceiling the model puts on itself</h2>
+
+<p>Everything so far is structural. Put the Sun's numbers in.</p>
+
+<p>With $M = M_\odot$ and the base at $r_0 = 1.03\,R_\odot$, where the escape speed is $608.6\ \mathrm{km\,s^{-1}}$, the transonic solution of (3.3) gives:</p>
+
+<table>
+<tr><th>$T_0$ [MK]</th><th>$c_T$ [km s⁻¹]</th><th>$r_c$ [$R_\odot$]</th><th>$r_c$ [au]</th><th>$v(0.29\,\mathrm{au})$</th><th>$v(1\,\mathrm{au})$</th><th>chord $\mathrm{d}\ln v/\mathrm{d}\ln r$</th></tr>
+<tr><td>$0.50$</td><td>$86.0$</td><td>$12.899$</td><td>$0.05999$</td><td>$209.0$</td><td>$283.7$</td><td>$0.2477$</td></tr>
+<tr><td>$1.00$</td><td>$121.6$</td><td>$6.449$</td><td>$0.02999$</td><td>$357.6$</td><td>$451.3$</td><td>$0.1885$</td></tr>
+<tr><td>$1.50$</td><td>$148.9$</td><td>$4.300$</td><td>$0.02000$</td><td>$478.2$</td><td>$585.8$</td><td>$0.1645$</td></tr>
+<tr><td>$2.00$</td><td>$172.0$</td><td>$3.225$</td><td>$0.01500$</td><td>$583.2$</td><td>$702.3$</td><td>$0.1505$</td></tr>
+<tr><td>$3.00$</td><td>$210.6$</td><td>$2.150$</td><td>$0.01000$</td><td>$764.9$</td><td>$902.9$</td><td>$0.1343$</td></tr>
+</table>
+
+<p>Speeds of a few hundred kilometres per second at 1 au, from a calculation containing no free parameter but the temperature. That is the result which made the paper famous, and it is qualitatively right. <a class="secref" href="#helios">§7</a> asks whether it is quantitatively right, and the last column is where the answer lives.</p>
+
+<div class="prop"><b>Proposition 7 (the mass-loss rate, and its sensitivity to $T_0$).</b> For the transonic isothermal solution launched from $(r_0,\rho_0)$, $\dot M = 4\pi r_0^2\rho_0 v(r_0)$ with $v(r_0)$ obtained from (3.3). To leading order in $r_c/r_0 \gg 1$,
+$$ \ln\!\left(\frac{v(r_0)}{c_T}\right) \;\simeq\; -\frac{2r_c}{r_0}, \qquad\text{hence}\qquad \frac{\mathrm{d}\ln\dot M}{\mathrm{d}\ln T_0} \;\simeq\; \frac{2r_c}{r_0} \;=\; 13.2 \tag{6.1}$$
+at $T_0 = 1$ MK and $r_0 = 1.03\,R_\odot$.</div>
+
+<div class="proof">
+On the subsonic branch near the base, $u \ll 1$, so $h(u) = u^2-2\ln u \approx -2\ln u$ and (3.3) gives $-2\ln u \approx 4\ln x + 4/x - 3$ with $x = r_0/r_c \ll 1$, dominated by the $4/x$ term: $\ln u \approx -2/x = -2r_c/r_0$. Since $r_c \propto 1/T_0$ and $\dot M \propto v(r_0) \propto c_T\mathrm{e}^{-2r_c/r_0}$, differentiating gives $\mathrm{d}\ln\dot M/\mathrm{d}\ln T_0 = \tfrac12 + 2r_c/r_0 \simeq 2r_c/r_0$ for $r_c \gg r_0$. At 1 MK, $r_c = 6.449\,R_\odot$ and $r_0 = 1.03\,R_\odot$, giving $13.2$. <span class="qed">∎</span>
+</div>
+
+<p>With the Baumbach–Allen base density $\rho_0 = 5.7685\times10^{-16}\ \mathrm{g\,cm^{-3}}$, the base speeds and rates are $77.82\ \mathrm{m\,s^{-1}}$ and $2.897\times10^{11}\ \mathrm{g\,s^{-1}}$ at 1 MK; $2753.71\ \mathrm{m\,s^{-1}}$ and $1.025\times10^{13}$ at 1.5 MK; $14\,468\ \mathrm{m\,s^{-1}}$ and $5.385\times10^{13}$ at 2 MK. <b>A factor of two in temperature moves the rate by 186.</b> (6.1) is the reason, and <a class="secref" href="#massflux">§7.6</a> is where it matters: any agreement between a predicted and an observed mass-loss rate, to within a factor of a few, is a very weak statement about the temperature.</p>
+
+<div class="prop"><b>Proposition 8 (the model's own temperature ceiling).</b> The critical radius $r_c = GM/2c_T^2$ falls <em>on</em> the base $r_0$ when
+$$ T_{\rm ceiling} \;=\; \frac{GM\mu m_{\rm u}}{2k_{\rm B}r_0} \;=\; 6.26\ \mathrm{MK} \tag{6.2}$$
+for $r_0 = 1.03\,R_\odot$. Above that temperature the corona is supersonic from the base upward, and the isothermal Parker model — which requires a subsonic base from which to launch — has no solution of the assumed kind.</div>
+
+<div class="proof">
+Set $r_c = r_0$ in (3.1) and solve for $T$: $GM/(2k_{\rm B}T/\mu m_{\rm u}) = r_0$ gives (6.2) directly. For $T \gt T_{\rm ceiling}$, $r_c \lt r_0$, so the entire domain $r \ge r_0$ lies outside the critical radius, where the transonic solution is supersonic. <span class="qed">∎</span>
+</div>
+
+<p>This is a bound the model places on itself, derived from its own premise, and it is what turns <a class="secref" href="#floor">§7.4</a>'s statement from "no temperature I tried worked" into "no temperature can work". The measured corona at 2–3 MK is a factor $2.1$ to $3.1$ below (6.2), so a real corona is comfortably subsonic at its base and the model is not in trouble <em>there</em>. It is in trouble elsewhere.</p>
