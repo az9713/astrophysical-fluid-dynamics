@@ -12,9 +12,12 @@ THE ANCHOR IS CHECK 1 (PART G).  It has the book's shape: Venzmer &
 Bothmer (2018) Table 3 fitted four exponents to Helios 1+2 data over
 0.29-0.98 au independently of one another, with no wind model imposed, so
 nothing this module tests was put into the fit.  CHECK 2 (PART H, Sgr A*)
-produces the LARGER ratio -- the Bondi rate exceeds the measured bound by a
-factor of 40 to 160 -- but it compares two different papers against a
-one-sided upper limit, so it carries no sigma.  CHECK 1 is the anchor
+produces the LARGER ratio -- the Bondi rate exceeds Marrone et al.'s upper
+limits by a factor of 40 to 160, but ONLY for a near-equipartition field; at
+3 per cent of equipartition their own scaling turns the 40 into 4.  It also
+compares two different papers against a one-sided limit, so it carries no
+sigma.  The two legs of PART H that do NOT depend on the field are Marrone's
+lower limits (factors 535 to 2674) and the X-ray radiative efficiency.  CHECK 1 is the anchor
 because it confirms and refutes from the same table and both sides carry a
 sigma; CHECK 2 is the sharpest refutation by magnitude.
 
@@ -614,7 +617,12 @@ def poly_v_at(gamma, cc2, r, GM=GMsun):
 # =========================================================================
 
 def bondi_lambda(gamma):
-    """The Bondi eigenvalue lambda(gamma), derived in Proposition 7.
+    """The Bondi coefficient lambda(gamma), derived in Proposition 7.
+
+    NOT an eigenvalue.  Bondi (1952) proves lambda <= lambda_c, his (18) and
+    (19); the value below is lambda_c, the coefficient of the solution that
+    passes through its own sonic point, and selecting that branch is his
+    physical argument, not a consequence of the algebra.  See PART D.
 
     Accretion from rest at infinity: Bernoulli gives, at the sonic point,
         c_s^2 = 2 c_inf^2/(5 - 3 gamma),   r_s = GM(5 - 3 gamma)/(4 c_inf^2),
@@ -1648,11 +1656,22 @@ def main():
     P(f'  rotation, and below {MAR_UPPER_TIGHT:.0e} for the steeper inner '
       f'radius.  The Bondi rate')
     P(f'  is too large by a factor of {Mdot_msun_yr/MAR_UPPER_HEAD:.0f} '
-      f'to {Mdot_msun_yr/MAR_UPPER_TIGHT:.0f}.  Since the algebra checks to '
-      f'eight')
-    P(f'  figures, what fails is the physics assumed: no angular momentum, '
-      f'no')
-    P(f'  outflow, and an adiabatic radiatively unimportant flow.')
+      f'to {Mdot_msun_yr/MAR_UPPER_TIGHT:.0f} -- but those limits assume a')
+    P(f'  near-equipartition field, and at 3 per cent of equipartition '
+      f'Marrone\'s own')
+    P(f'  scaling turns the {Mdot_msun_yr/MAR_UPPER_HEAD:.0f} into 4.  Two '
+      f'legs do not depend on the field: their')
+    P(f'  LOWER limits, which they say carry no such caveat (factors '
+      f'535 to 2674), and')
+    P(f'  the implied X-ray radiative efficiency of 4e-09 against ~0.1 for a '
+      f'thin disc.')
+    P(f'  What fails is not the algebra -- and note that Bondi proves only '
+      f'lambda <= lambda_c,')
+    P(f'  so the algebra does not fix the coefficient either.  What fails '
+      f'are the three')
+    P(f'  physical premises: no angular momentum, no outflow, and an '
+      f'adiabatic')
+    P(f'  radiatively unimportant flow.')
 
     P('')
     P('=' * 74)
