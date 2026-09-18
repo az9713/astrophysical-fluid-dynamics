@@ -1215,6 +1215,17 @@ def main():
       f'{10**JT11_LOGP_MEAN:.1f} is')
     P(f'      {(JT11_LOGP_MEAN - np.log10(jt01)):.2f} dex above the same 2001 value.')
     P('')
+    P('    ONE PROPERTY OF THE SOURCE, SAID RATHER THAN HIDDEN.  Wolfire\'s')
+    P('    P_th,ave is the GEOMETRIC MEAN of his own two edges to four')
+    P('    figures, in every variant:')
+    for nm, _phi, pmn, pmx, pav, _w in W03_TABLE4:
+        P(f'      {nm:<14} sqrt(P_min P_max) = {np.sqrt(pmn*pmx):8.1f} '
+          f'against the quoted {pav:.0f}')
+    P('    So a "geometric mean" row restates the two rows above it rather')
+    P('    than testing anything new, and the two readings of the anchor --')
+    P('    the ratio to P_ave and the position in dex -- are one statement')
+    P('    written twice.')
+    P('')
     P('    HOW FAR THE CONFIRMATION SURVIVES ITS OWN PARAMETERS.')
     P('    Wolfire et al. Table 4 gives five model variants.  Ask each one')
     P('    whether it still contains the measured median:')

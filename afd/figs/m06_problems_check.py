@@ -468,6 +468,27 @@ def problem_K3():
 
 
 # ============================================== the body numbers C3/K2 lean on
+def source_identities():
+    """Facts about the sources that section 9.1 and section 10.1 assert."""
+    print("\nSOURCES.  Identities the module states about Wolfire Table 4.")
+    rows = (("Standard", 1960, 4810, 3070), ("Low phi_PAH", 1560, 3150, 2220),
+            ("High phi_PAH", 2270, 5970, 3680),
+            ("Low n_PAH/n", 1580, 3920, 2490), ("Low G0", 1460, 3980, 2410))
+    for nm, lo, hi, ave in rows:
+        check(f"{nm}: sqrt(P_min P_max) vs P_ave", np.sqrt(lo*hi), ave,
+              tol=2e-3)
+    # the two readings of the anchor are one statement, because P_ave is the
+    # geometric mean: med/P_ave = (P_max/P_min)^(f - 1/2)
+    med, lo, hi, ave = 3801.9, 1960.0, 4810.0, 3070.0
+    f = np.log10(med/lo)/np.log10(hi/lo)
+    check("position in the window, in dex", f, 0.738, tol=2e-3)
+    check("median/P_ave", med/ave, 1.238, tol=2e-3)
+    # exact only if P_ave were the exact geometric mean; Wolfire quotes it
+    # rounded to 3070 against sqrt(1960*4810) = 3070.44, hence 1.4e-4
+    check("the same number from the position", (hi/lo)**(f - 0.5), med/ave,
+          tol=1e-3)
+
+
 def body_numbers():
     print("\nBODY.  The photospheric inputs and the section 7.3 worked example.")
     p = photosphere(2.0)
@@ -527,6 +548,7 @@ if __name__ == "__main__":
     problem_K1()
     problem_K2()
     problem_K3()
+    source_identities()
     body_numbers()
     print()
     if FAILURES:
