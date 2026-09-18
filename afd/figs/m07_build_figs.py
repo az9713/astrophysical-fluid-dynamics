@@ -196,7 +196,7 @@ def build_growth():
     # both curves everywhere it is drawn.
     for row, (col, txt) in enumerate((
             (MUT, 'σ = √(Agk), no tension'),
-            (ACC, 'σ = √(Agk − T_s k³/(ρ₁+ρ₂))'),
+            (ACC, 'σ = √(Agk − T_s k³/(ρ_t+ρ_b))'),
             (YEL, f'λ_max = {lam_m:.2f} cm, σ = {sig_m:.1f} s⁻¹ '
                   f'({1e3/sig_m:.0f} ms)'),
             (FG, f'A = {Aw:.4f}, T_s = {M.SIGMA_WATER:g} dyn/cm, 20 °C'))):

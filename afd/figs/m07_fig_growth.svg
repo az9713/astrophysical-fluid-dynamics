@@ -29,7 +29,7 @@
 <text x="297.5" y="230.8" font-size="10.5" text-anchor="end" fill="#2dd4bf">λ<tspan baseline-shift="sub" font-size="75%">c</tspan> = 1.71 cm</text>
 <text x="297.5" y="253.2" font-size="10.5" text-anchor="end" fill="#2dd4bf">nothing shorter grows</text>
 <text x="696" y="70.8" font-size="10.5" text-anchor="end" fill="#94a3b8">σ = √(Agk), no tension</text>
-<text x="696" y="93.2" font-size="10.5" text-anchor="end" fill="#fb923c">σ = √(Agk − T<tspan baseline-shift="sub" font-size="75%">s</tspan> k³/(ρ₁+ρ₂))</text>
+<text x="696" y="93.2" font-size="10.5" text-anchor="end" fill="#fb923c">σ = √(Agk − T<tspan baseline-shift="sub" font-size="75%">s</tspan> k³/(ρ<tspan baseline-shift="sub" font-size="75%">t</tspan>+ρ<tspan baseline-shift="sub" font-size="75%">b</tspan>))</text>
 <text x="696" y="115.6" font-size="10.5" text-anchor="end" fill="#facc15">λ<tspan baseline-shift="sub" font-size="75%">max</tspan> = 2.97 cm, σ = 37.2 s⁻¹ (27 ms)</text>
 <text x="696" y="138.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">A = 0.9976, T<tspan baseline-shift="sub" font-size="75%">s</tspan> = 72.75 dyn/cm, 20 °C</text>
 <text x="395" y="366" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Kelvin–Helmholtz on the CME flank: what gravity would do if it acted across the interface</text>
