@@ -352,7 +352,7 @@ def dlnv_dlnr(r, v, cs2, GM=GMsun):
 
 
 def sonic_radius(cs2, GM=GMsun):
-    """r_s = GM/(2 c_s^2), where the right side of the critical-point
+    """r_c = GM/(2 c_s^2), where the right side of the critical-point
     equation vanishes.  A solution that passes through v = c_s must do so
     here, or dv/dr is infinite."""
     return GM/(2.0*cs2)
@@ -625,9 +625,9 @@ def bondi_lambda(gamma):
     physical argument, not a consequence of the algebra.  See PART D.
 
     Accretion from rest at infinity: Bernoulli gives, at the sonic point,
-        c_s^2 = 2 c_inf^2/(5 - 3 gamma),   r_s = GM(5 - 3 gamma)/(4 c_inf^2),
+        c_s^2 = 2 c_inf^2/(5 - 3 gamma),   r_c = GM(5 - 3 gamma)/(4 c_inf^2),
     and rho_s/rho_inf = (c_s^2/c_inf^2)^(1/(gamma-1)).  Substituting into
-    Mdot = 4 pi r_s^2 rho_s c_s gives
+    Mdot = 4 pi r_c^2 rho_s c_s gives
 
         lambda = [(5-3 gamma)/4]^2 [2/(5-3 gamma)]^((gamma+1)/(2(gamma-1))).
 
@@ -654,9 +654,9 @@ def bondi_radius(M, cs_inf):
     It is a LENGTH SCALE, not the location of the sonic point, and it is not
     the sonic radius of any flow: even for gamma = 1, where the sound speed
     is constant, the sonic point sits at GM/(2 c^2), which is R_B/4.  In
-    general, from c_s^2(r_s) = 2 c_inf^2/(5-3 gamma) and r_s = GM/(2c_s^2),
+    general, from c_s^2(r_c) = 2 c_inf^2/(5-3 gamma) and r_c = GM/(2c_s^2),
 
-        r_s = GM(5 - 3 gamma)/(4 c_inf^2) = R_B (5 - 3 gamma)/8,
+        r_c = GM(5 - 3 gamma)/(4 c_inf^2) = R_B (5 - 3 gamma)/8,
 
     which is R_B/4 at gamma = 1 and zero at gamma = 5/3.
     """
@@ -666,9 +666,17 @@ def bondi_radius(M, cs_inf):
 def bondi_hoyle_rate(M, rho_inf, cs_inf, v_rel, gamma=1.0):
     """Bondi-Hoyle-Lyttleton rate for an accretor moving at v_rel.
 
-    Mdot = 4 pi lambda rho (GM)^2 (c_s^2 + v_rel^2)^(-3/2).  The
-    interpolation in the denominator is the standard one and it is
-    heuristic, not derived; module09.html must say so.
+    Mdot = 4 pi lambda rho (GM)^2 (c_s^2 + v_rel^2)^(-3/2).
+
+    The interpolation in the denominator is BONDI'S OWN, his section 8,
+    fetched 2026-09-18: "A = 2 pi (GM)^2 (V^2 + c^2)^-3/2 rho_inf ... it
+    seems likely that it represents the ORDER OF MAGNITUDE of the accretion
+    rate in the intermediate case."  It is a conjecture bridging the
+    velocity-limited and temperature-limited cases, not a derivation, and he
+    says so.  His prefactor 2 pi is 4 pi lambda_c(3/2); this function keeps
+    4 pi lambda_c(gamma) so that v_rel = 0 reproduces PART D for any gamma.
+    module09.html must state the source, his own "order of magnitude"
+    hedge, and that the generalised prefactor is not his.
     """
     return 4.0*np.pi*bondi_lambda(gamma)*rho_inf*(G*M)**2 / \
         (cs_inf*cs_inf + v_rel*v_rel)**1.5
@@ -919,7 +927,7 @@ def main():
     P('')
     P('PART D.  Bondi accretion: verifying lambda(gamma)')
     P('-'*74)
-    P(f'  {"gamma":>8} {"lambda":>12} {"r_s/R_B":>10}  note')
+    P(f'  {"gamma":>8} {"lambda":>12} {"r_c/R_B":>10}  note')
     for g, note in ((1.0, 'isothermal, e^(3/2)/4 = %.6f' % (np.exp(1.5)/4)),
                     (1.000001, 'numerical limit gamma -> 1'),
                     (1.1, ''), (1.2, ''), (1.3, ''), (1.4, 'exactly 5/8'),
@@ -1341,7 +1349,7 @@ def main():
     P('    which is the 2.6e6 M_sun standard in 2001.  Their Mdot must be')
     P('    rescaled by (M_new/M_old)^2 before it can be compared with ours.')
     rs_sgra = R_B*(5.0 - 3.0*BAG_GAMMA)/8.0
-    P(f'  actual sonic radius r_s = R_B(5-3g)/8 = {rs_sgra/pc:.2e} pc  '
+    P(f'  actual critical radius r_c = R_B(5-3g)/8 = {rs_sgra/pc:.2e} pc  '
       f'(zero for gamma = 5/3 exactly: the adiabatic flow has no')
     P('    interior sonic point, which is why lambda is a limit)')
     Mdot_sgra = bondi_rate(M_sgra, rho_sgra, cs_sgra, BAG_GAMMA)
@@ -1768,6 +1776,18 @@ def main():
     P('    four of five entries legible: e^(3/2)/4 = 1.12 at gamma = 1,')
     P('    0.625 at 1.4, 0.500 at 1.5, 0.250 at 5/3 -- all four match PART')
     P('    D.  The gamma = 1.2 entry is illegible in the scan.')
+    P('    HIS SECTION 8 IS THE SOURCE OF THE MOVING-ACCRETOR FORMULA used')
+    P('    in P1 and P7, so it is not unsourced.  He writes')
+    P('    A = 2 pi (GM)^2 (V^2 + c^2)^-3/2 rho_inf and says of it: "it')
+    P('    seems likely that it represents the ORDER OF MAGNITUDE of the')
+    P('    accretion rate in the intermediate case".  It is his conjecture')
+    P('    bridging his (21), the velocity-limited Hoyle-Lyttleton rate, and')
+    P('    his (22), the temperature-limited rate at gamma = 3/2; his 2 pi is')
+    P('    4 pi lambda_c(3/2) = 2 pi.  THIS MODULE GENERALISES THE')
+    P('    PREFACTOR to 4 pi lambda_c(gamma) so the formula reduces to PART')
+    P('    D at V = 0 for any gamma.  module09.html must say both: whose')
+    P('    conjecture it is, that its author claimed only an order of')
+    P('    magnitude for it, and that the prefactor here is not his.')
     P('  Allen, C. W. (1947), MNRAS 107, 426, "Interpretation of Electron')
     P('    Densities from Corona Brightness".  FETCHED 2026-09-18 from the')
     P('    ADS scan.  His section 4: "the electron density resulting from')
