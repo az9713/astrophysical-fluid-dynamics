@@ -764,8 +764,13 @@ def main():
     P(f'  {st["rfrac"][iB]:.4f} R, a factor {st["grad"][iB]/st["grad"][iA]:.3f}, across the flat plateau')
     P(f'  {plateau:.4f}.')
     P('  The parcel spends its compression energy ionising hydrogen instead')
-    P(f'  of heating itself; at x = 1/2, chi_H/kT = {chi_H/(kB*Tg[j]):.1f}, so the')
-    P('  ionisation reservoir is far larger than the thermal one.')
+    jhalf = int(np.argmin(abs(xg - 0.5)))
+    P(f'  of heating itself.  At the MINIMUM, T = {Tg[j]:.0f} K, '
+      f'chi_H/kT = {chi_H/(kB*Tg[j]):.2f};')
+    P(f'  at HALF IONISATION, T = {Tg[jhalf]:.0f} K, '
+      f'chi_H/kT = {chi_H/(kB*Tg[jhalf]):.2f}.  The two are')
+    P('  different temperatures and the 12.9 belongs to the first: the')
+    P('  ionisation reservoir is about twelve times the thermal one.')
 
     # ---------------------------------------------------------------- B
     P('')
@@ -1190,6 +1195,15 @@ def main():
     P('    (ms.tex:2608-2611) takes from Welty & Hobbs (2001).  The')
     P('    prediction that a factor-2.5 window exists AT ALL, and sits')
     P('    where it does, is the content of the confirmation.')
+    jt01 = 2240.0      # Jenkins & Tripp (2001) mean pressure, K cm^-3
+    P('    Wolfire et al. also compared their predicted average against')
+    P('    Jenkins & Tripp (2001), AFTER THE FACT and without adjusting')
+    P('    any parameter:')
+    P(f'      W03 P_ave/k = {W03_PAVE:.0f} against JT01 {jt01:.0f} K cm^-3, '
+      f'a factor {W03_PAVE/jt01:.2f}')
+    P(f'      that is {np.log10(W03_PAVE/jt01):.2f} dex, and the 2011 median '
+      f'{10**JT11_LOGP_MEAN:.1f} is')
+    P(f'      {(JT11_LOGP_MEAN - np.log10(jt01)):.2f} dex above the same 2001 value.')
     P('')
     P('    HOW FAR THE CONFIRMATION SURVIVES ITS OWN PARAMETERS.')
     P('    Wolfire et al. Table 4 gives five model variants.  Ask each one')

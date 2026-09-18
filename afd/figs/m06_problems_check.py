@@ -313,6 +313,29 @@ def problem_D2():
     check("shift in the base [R]", base_l - base_s, 0.0037, tol=0.03)
     check("shift, per cent of R", 100*(base_l - base_s), 0.37,
           tol=0.03)
+    check("margin at 0.050 R, in units of 0.050",
+          (plateau - gr[i05])/0.050, 1.41, tol=0.01)
+    check("margin at 0.200 R, in units of 0.050",
+          (plateau - gr[i20])/0.050, 2.66, tol=0.01)
+
+
+def section_3_2():
+    """The grad column of Table 1, read outward, and the 2.014 rise."""
+    print("\nSECTION 3.2.  The grad column read outward.")
+    tab = load_table()
+    gr = slope(np.log(tab['P']), np.log(tab['T']))
+    want = ((0.3016, 0.2116), (0.4002, 0.1968), (0.5018, 0.1962),
+            (0.5979, 0.2074), (0.6804, 0.2616), (0.7099, 0.3259),
+            (0.7500, 0.3963))
+    vals = []
+    for rt, wv in want:
+        i = int(np.argmin(abs(tab['rfrac'] - rt)))
+        check(f"grad at {rt} R", gr[i], wv, tol=0.01)
+        vals.append(gr[i])
+    assert vals[2] == min(vals), "0.5018 R must be the minimum of these rows"
+    assert all(vals[k] < vals[k+1] for k in range(2, len(vals)-1)), \
+        "grad must rise monotonically outward from 0.5018 R"
+    check("rise from 0.4002 R to 0.7500 R", vals[-1]/vals[1], 2.014, tol=0.01)
 
 
 # ==================================================================== D3
@@ -364,6 +387,12 @@ def problem_K1():
     ga7 = grad_ad_ionising(T, 1.0e7)
     check("depth factor at P = 1e4", 0.4/np.min(ga4), 4.94, tol=0.01)
     check("depth factor at P = 1e7", 0.4/np.min(ga7), 3.09, tol=0.01)
+    # section 5 attaches chi_H/kT to the MINIMUM, not to half ionisation
+    check("chi_H/kT at the minimum", chi_H/(kB*T[i]), 12.86, tol=2e-3)
+    xh = saha_x(T, 1.2e5)
+    ih = int(np.argmin(abs(xh - 0.5)))
+    check("T at half ionisation [K]", T[ih], 13136.0, tol=1e-3)
+    check("chi_H/kT at half ionisation", chi_H/(kB*T[ih]), 12.01, tol=2e-3)
 
 
 # ==================================================================== K2
@@ -480,6 +509,7 @@ if __name__ == "__main__":
     problem_C3()
     problem_D1()
     problem_D2()
+    section_3_2()
     problem_D3()
     problem_K1()
     problem_K2()
