@@ -152,9 +152,13 @@ def build_jumps():
         r = M.rh_jumps(m, g)[0]
         s.append(f'<path d="{path(ax(m), ay(r))}" fill="none" '
                  f'stroke="{col}" stroke-width="2.4"/>')
-    # isothermal M^2, truncated at the top of the box in the generator
-    mi = np.logspace(0.0, np.log10(np.sqrt(RY1)), 120)
-    s.append(f'<path d="{path(ax(mi), ay(mi*mi))}" fill="none" '
+    # The isothermal law is rho2/rho1 = M_iso^2, and M_iso = sqrt(gamma) M1
+    # because the two Mach numbers are ratios to different sound speeds.
+    # The abscissa here is M1 throughout, so the curve drawn is gamma M1^2
+    # and NOT M1^2: plotting M1^2 would compare the two closures at
+    # different speeds.  Truncated at the top of the box in the generator.
+    mi = np.logspace(0.0, np.log10(np.sqrt(RY1/M.GAM_MONO)), 120)
+    s.append(f'<path d="{path(ax(mi), ay(M.GAM_MONO*mi*mi))}" fill="none" '
              f'stroke="{MUT}" stroke-width="1.8" stroke-dasharray="5 3"/>')
 
     # Labels.  The ceilings are labelled at the right end, above their
@@ -162,10 +166,10 @@ def build_jumps():
     # ceiling and sits within 6 px of it: the label goes ABOVE both.
     text(s, AX1-8, ay(6.0)-7, 'γ = 7/5: ceiling 6', ACC2, 10.5, 'end')
     text(s, AX1-8, ay(4.0)-7, 'γ = 5/3: ceiling 4', ACC, 10.5, 'end')
-    # The isothermal curve leaves the top edge at M = sqrt(7) = 2.65,
-    # x = ax(2.65) = 193; its label sits left of it, under the top edge.
-    text(s, AX0+10, AY0+16, 'isothermal: M₁²,', MUT, 10.5)
-    text(s, AX0+10, AY0+30, 'no ceiling', MUT, 10.5)
+    # The isothermal curve leaves the top edge at M1 = sqrt(7/gamma) = 2.05,
+    # x = ax(2.05) = 162; its label sits left of it, under the top edge.
+    text(s, AX0+10, AY0+16, 'isothermal at the same speed:', MUT, 10.5)
+    text(s, AX0+10, AY0+30, 'ρ₂/ρ₁ = 𝓜² = γM₁², no ceiling', MUT, 10.5)
 
     # ---------------- panel B ----------------
     text(s, (BX0+BX1)/2, BY0-18, 'The second law picks the sign', FG, 12.5,
@@ -415,7 +419,8 @@ def build_sedov():
          MUT, 10.5)
     text(s, CX0-44, H-12,
          'the step between the outer bands is 7.3 times their combined '
-         'standard error. Bands coincide with photographic sources.',
+         "standard error. The three later bands follow Taylor's authority "
+         'column, C and D pooled.',
          MUT, 10.5)
     s.append('</svg>')
     return "\n".join(s)

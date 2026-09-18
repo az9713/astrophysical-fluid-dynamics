@@ -155,5 +155,5 @@
 <circle cx="520.0" cy="436.0" r="3.4" fill="#facc15"/>
 <text x="530.0" y="440.0" font-size="10.5" text-anchor="start" fill="#94a3b8">D: MDDC-221 large photographs</text>
 <text x="26.0" y="632.0" font-size="10.5" text-anchor="start" fill="#94a3b8">Residuals are from the fixed-slope line through rows 2–25. The band means fall from +0.015 to -0.004 to -0.034;</text>
-<text x="26.0" y="648.0" font-size="10.5" text-anchor="start" fill="#94a3b8">the step between the outer bands is 7.3 times their combined standard error. Bands coincide with photographic sources.</text>
+<text x="26.0" y="648.0" font-size="10.5" text-anchor="start" fill="#94a3b8">the step between the outer bands is 7.3 times their combined standard error. The three later bands follow Taylor's authority column, C and D pooled.</text>
 </svg>

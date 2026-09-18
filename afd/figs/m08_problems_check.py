@@ -531,8 +531,10 @@ print("\nPROSE  values read from module08.html")
 for M, pct in [(3.0, 75.00), (5.0, 89.29), (10.0, 97.09), (30.0, 99.67)]:
     checkr("g=5/3 M=%-4g per cent of the ceiling" % M,
            100*rh(M, G53)[0]/4.0, pct, 2)
-chk("adiabatic rho2/rho1 at 10 km/s, mu=2.33 gas", rh(10.0/cT, G53)[0],
-    3.996, 5e-4)
+chk("adiabatic rho2/rho1 at 10 km/s, from the ADIABATIC Mach number",
+    rh(10.0/(cT*np.sqrt(G53)), G53)[0], 3.993, 5e-4)
+chk("adiabatic sound speed of that gas (km/s)", cT*np.sqrt(G53), 0.244, 3e-3)
+checkr("M_ad for the same 10 km/s flow", 10.0/(cT*np.sqrt(G53)), 41.0, 1)
 
 # --- section 4, the Sedov interior
 i53 = int(np.argmin(abs(lam53 - 0.5)))
@@ -563,12 +565,13 @@ b2m = resid[(t_s >= 0.24e-3) & (t_s <= 1.93e-3)]
 checkr("row 1 below the block-2 mean", resid[0] - b2m.mean(), -0.32, 2)
 checkr("that in units of the block-2 scatter",
        abs(resid[0] - b2m.mean())/b2m.std(ddof=1), 16, 0)
-for tt, dwant, pct in [(1.08e-3, 5.984, 100), (4.61e-3, 5.902, 98),
+for tt, dwant, pct in [(1.08e-3, 5.984, 99.7), (4.61e-3, 5.902, 98),
                        (62.0e-3, 4.291, 72)]:
     i = int(np.argmin(abs(t_s - tt)))
     r_ = rh(0.4*R_cm[i]/t_s[i]/1e5/c0, G75)[0]
     chk("rho2/rho1 at t=%.2f ms" % (tt*1e3), r_, dwant, 5e-4)
-    checkr("that as a per cent of the ceiling 6", 100*r_/6.0, pct, 0)
+    checkr("that as a per cent of the ceiling 6", 100*r_/6.0, pct,
+           1 if pct > 99 else 0)
 checkr("M1 at 62 ms, as the prose prints it",
        0.4*R_cm[-1]/t_s[-1]/1e5/c0, 3.5, 1)
 
@@ -583,9 +586,19 @@ checkr("Taylor's internal inconsistency, per cent",
        100*(10.0**(2*11.915)/6.67e23 - 1.0), 1.36, 2)
 
 # --- section 6, Voyager
+# S1: (7.1) reproduces the 1e6 K Richardson et al. quote, from the
+# 300 km/s they print, and the shock-frame alternative is also checked
+checkr("T2 from (7.1) at 300 km/s, mu=0.5 (units of 1e6)",
+       T2_strong(3.0e7, 0.5)/1e6, 1.01, 2)
+chk("T2 from (7.1) at 206 km/s, mu=0.5", T2_strong(2.06e7, 0.5),
+    4.8e5, 5e-3)
+checkr("observed over the shock-frame prediction",
+       4.8e5/1.0e5, 4.8, 1)
 checkr("Mach implied by the Neptune T jump", Mnep, 17.8, 1)
-chk("density jump that Mach predicts", rh(Mnep, G53)[0], 3.963, 5e-4)
-checkr("consistency ratio", rh(Mnep, G53)[0]/4.0, 0.991, 3)
+checkr("density jump that Mach predicts, as the prose prints it",
+       rh(Mnep, G53)[0], 3.96, 2)
+checkr("consistency ratio, as the prose prints it",
+       rh(Mnep, G53)[0]/4.0, 0.99, 2)
 chk("gas-dynamic prediction at M = 4.9", rh(4.9, G53)[0], 3.556, 5e-4)
 checkr("measured over predicted at TS-2", 2.38/rh(4.9, G53)[0], 0.669, 3)
 checkr("that in formal sigma", (rh(4.9, G53)[0] - 2.38)/0.14, 8.4, 1)

@@ -689,15 +689,28 @@ def main():
     P('  solution.')
     P('')
     P('  The isothermal shock: no ceiling at all.')
+    P('    The adiabatic column below is taken at the SAME SPEED, not at')
+    P('    the same Mach number: the two Mach numbers are ratios to')
+    P('    different sound speeds, and M_ad = M_iso/sqrt(gamma).')
     for m in (2.0, 5.0, 10.0, 20.0):
-        P(f'    M = v1/c_T = {m:>4.1f}  ->  rho2/rho1 = '
+        P(f'    M_iso = v1/c_T = {m:>4.1f}  ->  rho2/rho1 = '
           f'{isothermal_shock_compression(m):>7.1f}  '
-          f'(adiabatic gamma = 5/3 would give '
-          f'{rh_jumps(m, GAM_MONO)[0]:.3f})')
+          f'(adiabatic at the same speed, M_ad = '
+          f'{m/np.sqrt(GAM_MONO):.2f}, gives '
+          f'{rh_jumps(m/np.sqrt(GAM_MONO), GAM_MONO)[0]:.3f})')
+    _cT10 = np.sqrt(kB*10.0/(2.33*mu_u))
     P('  A 10 km/s shock into 10 K molecular gas, c_T = '
-      f'{np.sqrt(kB*10.0/(2.33*mu_u))/1e5:.3f} km/s, has M = '
-      f'{1e6/np.sqrt(kB*10.0/(2.33*mu_u)):.1f}')
+      f'{_cT10/1e5:.3f} km/s, has M_iso = '
+      f'{1e6/_cT10:.1f}')
     P(f'  and compresses by {1e6**2/(kB*10.0/(2.33*mu_u)):.0f}, not by 4.')
+    P('  The same 10 km/s flow is at M_ad = '
+      f'{1e6/(_cT10*np.sqrt(GAM_MONO)):.1f} against the adiabatic sound')
+    P(f'  speed {_cT10*np.sqrt(GAM_MONO)/1e5:.3f} km/s, and an adiabatic')
+    P('  shock at that speed compresses by '
+      f'{rh_jumps(1e6/(_cT10*np.sqrt(GAM_MONO)), GAM_MONO)[0]:.3f}.')
+    P('  gamma = 5/3 and not 7/5 is right for H2 at 10 K: the rotational')
+    P('  levels have a characteristic temperature near 85 K and are frozen')
+    P('  out, leaving only the three translational degrees of freedom.')
 
     # ---------------------------------------------------------------- C
     P('')
@@ -1332,8 +1345,10 @@ def main():
     cT = np.sqrt(kB*10.0/(2.33*mu_u))
     for v_ in (1e5, 5e5, 1e6, 2e6):
         P(f'       v1 = {v_/1e5:>4.0f} km/s, c_T = {cT/1e5:.3f} km/s: '
-          f'M = {v_/cT:>6.1f}, rho2/rho1 = {(v_/cT)**2:>9.1f}, '
-          f'against {rh_jumps(v_/cT, GAM_MONO)[0]:.3f} adiabatic')
+          f'M_iso = {v_/cT:>6.1f}, rho2/rho1 = {(v_/cT)**2:>9.1f}, '
+          f'against {rh_jumps(v_/(cT*np.sqrt(GAM_MONO)), GAM_MONO)[0]:.3f} '
+          f'adiabatic at the same speed, M_ad = '
+          f'{v_/(cT*np.sqrt(GAM_MONO)):.1f}')
 
     P('')
     P('  P8.  Trinity, worked as a student exercise from two rows only.')
