@@ -54,6 +54,10 @@ import m08_numbers as M
 BG, FG, MUT, RULE = "#0f172a", "#cbd5e1", "#94a3b8", "#334155"
 ACC, ACC2, VIO, YEL = "#fb923c", "#2dd4bf", "#a78bfa", "#facc15"
 
+# check_svg rejects a literal underscore in a label, so subscripts are
+# written as tspans.  SUB_B is the subscript B of alpha_B.
+SUB_B = '<tspan baseline-shift="sub" font-size="8">B</tspan>'
+
 
 def path(xs, ys):
     return "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in zip(xs, ys))
@@ -494,7 +498,7 @@ def build_check():
 
     text(s, 20, H-28,
          'Richardson et al. (2008), Nature 454, 63–66. Neptune values read '
-         'from their Fig. 5 caption, which gives no uncertainty; '
+         'from their Figure 5 caption, which gives no uncertainty; '
          'T values from p. 65.', MUT, 10.5)
     text(s, 20, H-12,
          'Grey row: compression ratio and Mach number come from one '
@@ -517,7 +521,7 @@ def build_tycho():
     is the only honest way to show a factor of eleven: it comes out a
     hairline beside them, and no caption has to assert it.
     """
-    W, H = 760, 330
+    W, H = 760, 366
     X0, X1, Y0, Y1 = 250.0, 720.0, 52.0, 236.0
     R0, R1 = 0.74, 1.04
 
@@ -529,13 +533,14 @@ def build_tycho():
     h_hi = M.rt_width_fraction(M.SHIMONY_ALPHA_B + M.SHIMONY_ALPHA_B_ERR,
                                1.0, M.K10_M_MEAN, base)
     rows = [
-        ("predicted by Module 7's mixing law", 'h = α_B A m(1−m) R, A = 1',
+        ("predicted by Module 7's mixing law",
+         f'h = α{SUB_B} A m(1−m) R, A = 1',
          h_pred, h_hi, ACC2, True),
         ('2-D simulation, pure hydro', 'Wang &amp; Chevalier (2001)',
          M.WC01_FINGER_TIPS - base, None, ACC, False),
         ('Tycho, mean CD, deprojected', 'Warren et al. (2005)',
          M.W05_CD_OVER_BW - base, None, ACC, False),
-        ('Tycho, farthest ejecta clumps', 'Warren et al. (2005) §3',
+        ('Tycho, farthest ejecta clumps', 'Warren et al. (2005), sect. 3',
          1.0 - base, None, ACC, False),
     ]
     dy = (Y1 - Y0)/len(rows)
@@ -584,21 +589,26 @@ def build_tycho():
                      f'x2="{x(base + 0.055):.1f}" y2="{yc-h/2-13:.1f}" '
                      f'stroke="{col}" stroke-width="1"/>')
             text(s, x(base + 0.058), yc-h/2-11,
-                 f'{100*wid:.2f}% of R (≤{100*wid_hi:.2f}% at α_B+1σ)',
+                 f'{100*wid:.2f}% of R (≤{100*wid_hi:.2f}% at α{SUB_B}+1σ)',
                  col, 10.5)
         else:
             text(s, x(base + wid)+9, yc+4, f'{100*wid:.0f}%', col)
 
-    text(s, 20, H-30,
-         f'Predicted ÷ simulated = {h_pred/(M.WC01_FINGER_TIPS-base):.3f}. '
-         f'α_B = {M.SHIMONY_ALPHA_B} ± {M.SHIMONY_ALPHA_B_ERR} is the BUBBLE '
-         'coefficient; the observed quantity is a spike penetration, so the '
-         'prediction is a lower bound.', MUT, 10.5)
-    text(s, 20, H-14,
-         'A ≤ 1 and m(1−m) ≤ ¼ are hard bounds, so no choice of Atwood '
-         'number or expansion index closes the gap. Warren et al. read the '
-         '0.93 as evidence of cosmic-ray compression, not of mixing.',
-         MUT, 10.5)
+    # Caption lines are kept under about 110 characters each: at 10.5 px the
+    # glyphs run about 5.2 px wide, so a longer line spills past the viewBox
+    # and check_frame reports it as clipped.
+    for k, line in enumerate([
+            f'Predicted ÷ simulated = '
+            f'{h_pred/(M.WC01_FINGER_TIPS-base):.3f}. '
+            f'α{SUB_B} = {M.SHIMONY_ALPHA_B} ± {M.SHIMONY_ALPHA_B_ERR} is '
+            'the BUBBLE coefficient; the observed',
+            'quantity is a spike penetration, so the prediction is a lower '
+            'bound. A ≤ 1 and m(1−m) ≤ ¼ are hard bounds, so no',
+            'choice of Atwood number or expansion index closes the gap. '
+            'Warren et al. read the 0.93 as evidence of',
+            'cosmic-ray compression at the blast wave, not of mixing at the '
+            'contact discontinuity.']):
+        text(s, 20, H - 62 + 16*k, line, MUT, 10.5)
     s.append('</svg>')
     return "\n".join(s)
 
