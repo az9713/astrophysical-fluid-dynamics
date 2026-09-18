@@ -2,7 +2,7 @@
 
 Writes three files:
 
-  m09_fig_topology.svg  The (r/r_c, v/a) plane of the isothermal steady
+  m09_fig_topology.svg  The (r/r_c, v/c_T) plane of the isothermal steady
                         spherical flow.  Every curve is a level set of
                         u^2 - 2 ln u - 4 ln x - 4/x = C.  The two transonic
                         solutions (C = -3) cross at the critical point; the
@@ -151,7 +151,7 @@ def build_topology():
     W, H = 760, 486
     X0, X1, Y0, Y1 = 78.0, 700.0, 46.0, 372.0
     XMIN, XMAX = 0.12, 6.0          # r/r_c
-    UMIN, UMAX = 0.0, 3.4           # v/a
+    UMIN, UMAX = 0.0, 3.4           # v/c_T
 
     def px(x):
         return X0 + (np.log(x) - np.log(XMIN))/(np.log(XMAX) - np.log(XMIN)) \
@@ -203,7 +203,7 @@ def build_topology():
     s.append(f'<text x="{X0-42:.0f}" y="{(Y0+Y1)/2:.0f}" font-size="11.5" '
              f'text-anchor="middle" fill="{FG}" '
              f'transform="rotate(-90 {X0-42:.0f} {(Y0+Y1)/2:.0f})">'
-             f'v / a</text>')
+             f'v / c_T</text>')
 
     # the sonic line u = 1 and the sonic radius x = 1, drawn first so the
     # solution curves sit on top of them
@@ -333,7 +333,7 @@ def build_topology():
 
     # --- caption ---------------------------------------------------------
     cap = [
-        "Level sets of u² − 2 ln u − 4 ln x − 4/x = C, with u = v/a and "
+        "Level sets of u² − 2 ln u − 4 ln x − 4/x = C, with u = v/c_T and "
         "x = r/r_c. Both sides of the equation have a single minimum, at",
         "u = 1 and at x = 1, so a curve reaches u = 1 only when C = −3, and "
         "then only at x = 1. C = −3 therefore gives exactly two",

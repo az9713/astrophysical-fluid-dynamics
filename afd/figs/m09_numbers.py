@@ -138,13 +138,25 @@ Msun = GMsun/G          # g
 #     n_e   = n_p (1 + 2 y)          = 1.10 n_p
 #     n_tot = n_p (1 + y + 1 + 2 y)  = 2.15 n_p
 #     rho   = n_p m_p (1 + 4 y)      = 1.20 n_p m_p
-#     mu    = rho/(n_tot m_p)        = 0.5581
-# The isothermal sound speed squared is then kT/(mu m_p) = P/rho with
+#     mu    = rho/(n_tot m_u)        = 0.5622   (0.5581 against m_p)
+# The isothermal sound speed squared is then c_T^2 = kT/(mu m_u) = P/rho with
 # P = n_tot k T, which is the identity every formula below relies on.
 # =========================================================================
 HE_FRAC = 0.05                 # helium/hydrogen by number, THIS MODULE'S
 #                                choice; see the block above
-MU_WIND = (1.0 + 4.0*HE_FRAC)/(2.0 + 3.0*HE_FRAC)     # = 0.55814
+# MU IS MEASURED AGAINST m_u, NOT THE PROTON MASS.  That is the book-wide
+# convention from Module 6 (Simon's notation decision, 2026-09-17), and
+# `.ignore/plan/notation.md` row "mu base" records it.  Every mu this module
+# quotes from the literature is quoted against m_H or m_p, so each carries
+# the conversion factor MU_H explicitly and visibly.
+#   mu m_u = (mass per particle),  so  mu_[m_u] = mu_[m_p] * (m_p/m_u).
+# EVERY PRODUCT mu*m BELOW IS THEREFORE UNCHANGED by the convention; only the
+# PRINTED value of mu differs, by m_p/m_u = 1.00728, that is 0.73 per cent.
+# The one exception is Baganoff et al.'s mu ~ 0.70, which stays quoted
+# against their own m_H inside their own formula and is labelled as theirs.
+MU_H = mp/mu_u                 # = 1.007276, m_p (or m_H) per m_u
+MU_WIND = MU_H*(1.0 + 4.0*HE_FRAC)/(2.0 + 3.0*HE_FRAC)   # = 0.56220
+MU_PROTON = MU_H*0.5           # = 0.50364, VB18's pure-proton plasma
 
 
 # --- Venzmer & Bothmer (2018) A&A 611 A36, Table 3 ------------------------
@@ -288,7 +300,7 @@ MAR_LOWER_3RS = 3.0e-9      # M_sun/yr, midpoint of their 2-4e-9
 # a temperature ceiling stated in four places is a temperature ceiling that
 # will disagree with itself.
 R0_BASE = 1.03*Rsun
-T_BASE_SONIC = GMsun*MU_WIND*mp/(2.0*kB*R0_BASE)      # = 6.26e6 K
+T_BASE_SONIC = GMsun*MU_WIND*mu_u/(2.0*kB*R0_BASE)    # = 6.26e6 K
 T_SCAN_LO = 0.5e6       # K, the bottom of the isothermal scan in PART F
 
 # --- problem-set inputs, all ASSUMED, none checked against anything -------
@@ -296,9 +308,11 @@ T_SCAN_LO = 0.5e6       # K, the bottom of the isothermal scan in PART F
 # representative value and not a measurement this module verified.
 LIC_N = 0.2             # cm^-3, local interstellar cloud hydrogen density
 LIC_T = 7.0e3           # K
-LIC_MU = 0.6            # mass per particle: the cloud taken as FULLY IONISED.
+LIC_MU = MU_H*0.6       # mass per particle, 0.6 against m_H: the cloud
+#                         taken as FULLY IONISED.
 #                         The local cloud is only partly ionised; neutral
-#                         would give mu = 1.27 and c_s = 6.75 km/s instead of
+#                         would give mu = 1.27 (against m_H) and
+#                         c_s = 6.75 km/s instead of
 #                         9.81.  Because v_rel^2 >> c_s^2 the rate moves by
 #                         11 per cent, so the conclusion is unaffected -- but
 #                         module09.html must state the assumption.
@@ -307,7 +321,8 @@ MC_N = 1.0e4            # cm^-3, dense molecular cloud TOTAL particle density
 #                         (not the H2 density: reading it as H2 would raise
 #                         rho by 20 per cent)
 MC_T = 20.0             # K
-MC_MU = 2.33            # mean molecular weight, H2 + He
+MC_MU = MU_H*2.33       # mean molecular weight, 2.33 against m_H, H2 + He
+LIC_MU_NEUTRAL = MU_H*1.27   # the neutral-cloud alternative, 1.27 vs m_H
 BH_M_MSUN = 10.0        # M_sun, stellar-mass black hole
 ETA_ACC = 0.1           # radiative efficiency assumed for the Eddington rate
 
@@ -322,13 +337,13 @@ def mass_flux(r, rho, v):
 
 
 def sound_speed_iso(T, mu=MU_WIND):
-    """Isothermal sound speed a = sqrt(kT/(mu m_p)) = sqrt(P/rho)."""
-    return np.sqrt(kB*T/(mu*mp))
+    """Isothermal sound speed c_T = sqrt(kT/(mu m_u)) = sqrt(P/rho)."""
+    return np.sqrt(kB*T/(mu*mu_u))
 
 
 def sound_speed_adi(T, gamma, mu=MU_WIND):
-    """Adiabatic sound speed c_s = sqrt(gamma k T/(mu m_p))."""
-    return np.sqrt(gamma*kB*T/(mu*mp))
+    """Adiabatic sound speed c = sqrt(gamma k T/(mu m_u))."""
+    return np.sqrt(gamma*kB*T/(mu*mu_u))
 
 
 def dlnv_dlnr(r, v, cs2, GM=GMsun):
@@ -352,7 +367,7 @@ def dlnv_dlnr(r, v, cs2, GM=GMsun):
 
 
 def sonic_radius(cs2, GM=GMsun):
-    """r_c = GM/(2 c_s^2), where the right side of the critical-point
+    """r_c = GM/(2 c_T^2), where the right side of the critical-point
     equation vanishes.  A solution that passes through v = c_s must do so
     here, or dv/dr is infinite."""
     return GM/(2.0*cs2)
@@ -396,9 +411,9 @@ def critical_slope_roots(gamma):
 # =========================================================================
 # Integrating the critical-point equation for constant a gives
 #
-#     u^2 - 2 ln u = 4 ln x + 4/x + C,     u = v/a,  x = r/r_c,
+#     u^2 - 2 ln u = 4 ln x + 4/x + C,     u = v/c_T,  x = r/r_c,
 #
-# with r_c = GM/(2a^2).  Write h(u) = u^2 - 2 ln u; h has a single minimum
+# with r_c = GM/(2c_T^2).  Write h(u) = u^2 - 2 ln u; h has a single minimum
 # h(1) = 1, so for a given right-hand side R there are two roots, one below
 # u = 1 and one above, and they exist only where R >= 1.  The right-hand
 # side R(x) = 4 ln x + 4/x + C has its own minimum at x = 1, of value
@@ -442,7 +457,7 @@ def solve_h(rhs, branch):
 
 
 def parker_u(x, branch='sup', C=-3.0):
-    """u = v/a on the isothermal solution with constant C, at x = r/r_c.
+    """u = v/c_T on the isothermal solution with constant C, at x = r/r_c.
 
     C = -3 is the transonic family: branch 'sup' with x > 1 is the WIND,
     branch 'sub' with x > 1 is the ACCRETION solution's mirror -- see
@@ -520,12 +535,12 @@ def poly_launch_Tmin(gamma, r0, mu=MU_WIND, GM=GMsun):
     Below it the base enthalpy cannot pay the gravitational binding energy
     and the Bernoulli constant is negative, so no solution reaches infinity.
     """
-    return (gamma - 1.0)/gamma * GM*mu*mp/(kB*r0)
+    return (gamma - 1.0)/gamma * GM*mu*mu_u/(kB*r0)
 
 
 def poly_cc2(gamma, T0, r0, mu=MU_WIND, GM=GMsun):
     """Sound speed squared at the sonic point, from the base conditions."""
-    c02 = gamma*kB*T0/(mu*mp)
+    c02 = gamma*kB*T0/(mu*mu_u)
     return 2.0*(c02 - (gamma - 1.0)*GM/r0)/(5.0 - 3.0*gamma)
 
 
@@ -724,7 +739,7 @@ def euler_slope_from_fits(which='avg', mu=MU_WIND, r=AU, GM=GMsun):
     laws, not from any closure:
         P = n_tot k T ~ r^(e_T - alpha),  so  -dln P/dln r = alpha - e_T,
         -(1/rho) dP/dr = (alpha - e_T) P/(rho r) = (alpha - e_T) c_T^2/r,
-    with c_T^2 = P/rho = kT/(mu m_p).  Then
+    with c_T^2 = P/rho = kT/(mu m_u).  Then
 
         dln v/dln r = [(alpha - e_T) c_T^2 - GM/r] / v^2
 
@@ -748,7 +763,7 @@ def euler_slope_from_fits(which='avg', mu=MU_WIND, r=AU, GM=GMsun):
 
     def s_of(dv, dT, en, eT):
         v = dv*1e5                       # km/s -> cm/s
-        cT2 = kB*dT/(mu*mp)
+        cT2 = kB*dT/(mu*mu_u)
         return ((-en - eT)*cT2 - GM/r)/(v*v)
 
     s0 = s_of(d_v, d_T, e_n, e_T)
@@ -797,7 +812,11 @@ def main():
     P('MODULE 9 NUMBERS: Bondi accretion and the Parker wind')
     P('=' * 74)
     P(f'  composition: He/H = {HE_FRAC} by number, fully ionised')
-    P(f'  mu = rho/(n_tot m_p)              = {MU_WIND:.5f}')
+    P(f'  mu = rho/(n_tot m_u)              = {MU_WIND:.5f}'
+      f'   (= {MU_WIND/MU_H:.5f} against m_p)')
+    P(f'  mu is measured against m_u book-wide from Module 6.  Every')
+    P(f'  product mu*m below is unchanged by that choice; only this')
+    P(f'  printed value is, by m_p/m_u = {MU_H:.5f}.')
     P(f'  M_sun = GM/G                      = {Msun:.5e} g')
 
     # ---------------------------------------------------------------- A
@@ -809,10 +828,10 @@ def main():
         a = sound_speed_iso(T0)
         rc = sonic_radius(a*a)
         # Hydrostatic isothermal atmosphere around a point mass:
-        #   P(r) = P0 exp[-(GM mu m_p/k T)(1/r0 - 1/r)],
-        # so P(infinity)/P0 = exp(-GM mu m_p/(k T r0)) = exp(-2 r_c/r0).
+        #   P(r) = P0 exp[-(GM mu m_u/k T)(1/r0 - 1/r)],
+        # so P(infinity)/P0 = exp(-GM mu m_u/(k T r0)) = exp(-2 r_c/r0).
         ratio = np.exp(-2.0*rc/r0)
-        P(f'  T_0 = {T0/1e6:.1f} MK: a = {a/1e5:6.1f} km/s, '
+        P(f'  T_0 = {T0/1e6:.1f} MK: c_T = {a/1e5:6.1f} km/s, '
           f'r_c = {rc/Rsun:6.2f} R_sun, P(inf)/P(r_0) = {ratio:.3e}')
     # The coronal base pressure, for the comparison with the ISM.
     ne0 = baumbach_allen_ne(1.03)
@@ -981,7 +1000,7 @@ def main():
     P(f'  base radius r_0 = 1.03 R_sun       = {r0:.4e} cm')
     P(f'  escape speed at r_0                = '
       f'{np.sqrt(2*GMsun/r0)/1e5:.1f} km/s')
-    P(f'  {"T_0 [MK]":>9} {"a [km/s]":>9} {"r_c [R_sun]":>12} '
+    P(f'  {"T_0 [MK]":>9} {"c_T [km/s]":>11} {"r_c [R_sun]":>12} '
       f'{"r_c [au]":>10} {"v(0.29au)":>10} {"v(1au)":>9} {"chord beta":>11}')
     for T0 in (0.5e6, 1.0e6, 1.5e6, 2.0e6, 3.0e6):
         v, a, rc = parker_wind(np.array([HELIOS_RMIN*AU, AU]), T0)
@@ -1111,14 +1130,14 @@ def main():
         d_T, sd_T, e_T, se_T, _ = vb('temperature', which)
         d_n, sd_n, e_n, se_n, _ = vb('density', which)
         s_pred, s_err = euler_slope_from_fits(which)
-        cT2 = kB*d_T/(MU_WIND*mp)
+        cT2 = kB*d_T/(MU_WIND*mu_u)
         v1 = d_v*1e5
         press = (-e_n - e_T)*cT2/(v1*v1)
         grav = GMsun/(AU*v1*v1)
         P(f'    {label} fits at 1 au: v = {d_v:.1f} km/s, T = {d_T:.3e} K, '
           f'n_p = {d_n:.2f} cm^-3')
         P(f'      -dln P/dln r = alpha - e_T  = {-e_n - e_T:.3f}')
-        P(f'      c_T^2 = kT/(mu m_p)         = {cT2:.4e} cm^2/s^2 '
+        P(f'      c_T^2 = kT/(mu m_u)         = {cT2:.4e} cm^2/s^2 '
           f'(= ({np.sqrt(cT2)/1e5:.1f} km/s)^2)')
         P(f'      pressure term               = {press:+.5f}')
         P(f'      gravity term -GM/(r v^2)    = {-grav:+.5f}')
@@ -1144,12 +1163,13 @@ def main():
     # The composition is this module's choice, not VB18's -- they treat the
     # wind as a pure proton plasma.  Show that using THEIR convention does
     # not rescue the prediction, so the reader can see it is unmoved.
-    s0, e0 = euler_slope_from_fits('avg', mu=0.5)
+    s0, e0 = euler_slope_from_fits('avg', mu=MU_PROTON)
     P('    AND THE COMPOSITION DOES NOT RESCUE IT.  VB18 treat the wind as')
     P('    a pure proton plasma (their section 1); this module chooses 5 per')
     P('    cent helium.  Redo the mean-fit prediction at mu = 1/2:')
-    P(f'      c_T^2 rises by a factor {(1.0/0.5)/(1.0/MU_WIND):.4f} to '
-      f'{kB*vb("temperature")[0]/(0.5*mp):.4e} cm^2/s^2')
+    P(f'      c_T^2 rises by a factor '
+      f'{(1.0/MU_PROTON)/(1.0/MU_WIND):.4f} to '
+      f'{kB*vb("temperature")[0]/(MU_PROTON*mu_u):.4e} cm^2/s^2')
     P(f'      predicted dln v/dln r       = {s0:.5f} +/- {e0:.5f}')
     P(f'      ratio measured/predicted    = {vb("velocity")[2]/s0:.2f}, '
       f'against {vb("velocity")[2]/euler_slope_from_fits("avg")[0]:.2f}')
@@ -1243,7 +1263,7 @@ def main():
     v_1au = poly_v_at(ge, cc2, AU)
     E_poly = cc2*(5.0 - 3.0*ge)/(2.0*(ge - 1.0))
     cs2_1au = (ge - 1.0)*(E_poly + GMsun/AU - 0.5*v_1au*v_1au)
-    T_1au_poly = cs2_1au*MU_WIND*mp/(ge*kB)
+    T_1au_poly = cs2_1au*MU_WIND*mu_u/(ge*kB)
     s_poly = dlnv_dlnr(AU, v_1au, cs2_1au)
     P(f'    Forcing gamma = {ge:.4f} to give v(1 au) = {d_v:.1f} km/s needs')
     P(f'      T_0                              = {T_poly/1e6:.2f} MK')
@@ -1306,7 +1326,7 @@ def main():
     a_fit = sound_speed_iso(T_fit)
     rc_fit = sonic_radius(a_fit*a_fit)
     sens = 2.0*rc_fit/r0
-    P(f'    SENSITIVITY: ln(v_0/a) = -(2 r_c/r_0) to leading order, so')
+    P(f'    SENSITIVITY: ln(v_0/c_T) = -(2 r_c/r_0) to leading order, so')
     P(f'      dln Mdot/dln T_0 ~ 2 r_c/r_0   = {sens:.1f}')
     P(f'      A factor of 3 in Mdot is therefore a {np.log(3.0)/sens*100:.1f}'
       f' per cent test of T_0.')
@@ -1459,11 +1479,12 @@ def main():
     md_sun = bondi_hoyle_rate(Msun, rho_lic, cs_lic, LIC_VREL, 1.0)
     P(f'  P1. Sun through the local ISM (ASSUMED n = {LIC_N} cm^-3, '
       f'T = {LIC_T:.0e} K, v = {LIC_VREL/1e5:.0f} km/s,')
-    P(f'      mu = {LIC_MU} -- the cloud taken as FULLY IONISED; neutral '
-      f'would give')
-    P(f'      mu = 1.27 and c_s = '
-      f'{sound_speed_iso(LIC_T, 1.27)/1e5:.2f} km/s, moving Mdot by '
-      f'{100*abs((cs_lic**2+LIC_VREL**2)**1.5/((sound_speed_iso(LIC_T,1.27))**2+LIC_VREL**2)**1.5-1):.0f} per cent)')
+    P(f'      mu = {LIC_MU:.4f} vs m_u (0.6 vs m_H) -- the cloud taken '
+      f'as FULLY IONISED;')
+    P(f'      neutral would give mu = {LIC_MU_NEUTRAL:.4f} (1.27 vs m_H) '
+      f'and c_s = '
+      f'{sound_speed_iso(LIC_T, LIC_MU_NEUTRAL)/1e5:.2f} km/s, moving Mdot by '
+      f'{100*abs((cs_lic**2+LIC_VREL**2)**1.5/((sound_speed_iso(LIC_T,LIC_MU_NEUTRAL))**2+LIC_VREL**2)**1.5-1):.0f} per cent)')
     P(f'      c_s = {cs_lic/1e5:.2f} km/s, so motion dominates: '
       f'v/c_s = {LIC_VREL/cs_lic:.2f}')
     P(f'      R_B = 2GM/(c_s^2+v^2)          = {rB_sun:.3e} cm '
@@ -1482,15 +1503,16 @@ def main():
     # P2. 10 Msun black hole in a molecular cloud.
     M_bh = BH_M_MSUN*Msun
     cs_mc = sound_speed_iso(MC_T, MC_MU)
-    rho_mc = MC_N*MC_MU*mp
+    rho_mc = MC_N*MC_MU*mu_u
     md_bh = bondi_rate(M_bh, rho_mc, cs_mc, 1.0)
     L_edd = eddington_luminosity(M_bh)
     md_edd = L_edd/(ETA_ACC*c*c)
     rB_bh = 2.0*G*M_bh/cs_mc**2
     P(f'  P2. 10 M_sun black hole in a molecular cloud (ASSUMED '
       f'n = {MC_N:.0e} cm^-3 TOTAL')
-    P(f'      particle density, not H2; T = {MC_T:.0f} K, mu = {MC_MU}, so '
-      f'rho = n mu m_p.  Reading n')
+    P(f'      particle density, not H2; T = {MC_T:.0f} K, '
+      f'mu = {MC_MU:.4f} vs m_u (2.33 vs m_H),')
+    P(f'      so rho = n mu m_u.  Reading n')
     P('      as the H2 density instead would raise rho by 20 per cent.)')
     P(f'      c_s (isothermal)               = {cs_mc/1e5:.4f} km/s')
     P(f'      lambda(1) = e^(3/2)/4          = {bondi_lambda(1.0):.4f}')
@@ -1507,14 +1529,14 @@ def main():
     a1 = sound_speed_iso(1.0e6)
     rc1 = sonic_radius(a1*a1)
     P(f'  P3. Parker sonic point at T_0 = 1 MK')
-    P(f'      a                              = {a1/1e5:.2f} km/s')
+    P(f'      c_T                            = {a1/1e5:.2f} km/s')
     P(f'      r_c = GM/(2a^2)                = {rc1:.4e} cm '
       f'= {rc1/Rsun:.3f} R_sun = {rc1/AU:.5f} au')
     P(f'      escape speed at r_c            = '
       f'{np.sqrt(2*GMsun/rc1)/1e5:.1f} km/s = 2a, as it must be')
     P(f'      v(1 au)                        = '
       f'{parker_wind(AU, 1.0e6)[0][0]/1e5:.1f} km/s = '
-      f'{parker_wind(AU, 1.0e6)[0][0]/a1:.2f} a')
+      f'{parker_wind(AU, 1.0e6)[0][0]/a1:.2f} c_T')
 
     # P4. Kinetic energy flux of the wind.
     md_ref = mdot_from_Fm(VBV21_FM_POLAR_FLS1)
@@ -1574,7 +1596,7 @@ def main():
     T_unbound = T_BASE_SONIC     # GM mu m_p/(2 k r_0), the PART F ceiling
     P(f'  P8. The temperature at which the sonic point reaches the base')
     P(f'      T such that r_c = 1.03 R_sun   = {T_unbound/1e6:.2f} MK')
-    P(f'      = GM mu m_p/(2 k r_0); above it the corona is supersonic')
+    P(f'      = GM mu m_u/(2 k r_0); above it the corona is supersonic')
     P(f'      everywhere and there is no subsonic base.')
     P(f'      The measured corona, {T_CORONA_LO/1e6:.0f}-'
       f'{T_CORONA_HI/1e6:.0f} MK, is a factor {T_unbound/T_CORONA_HI:.1f} '
