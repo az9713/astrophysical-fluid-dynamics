@@ -335,7 +335,19 @@ def section_3_2():
     assert vals[2] == min(vals), "0.5018 R must be the minimum of these rows"
     assert all(vals[k] < vals[k+1] for k in range(2, len(vals)-1)), \
         "grad must rise monotonically outward from 0.5018 R"
-    check("rise from 0.4002 R to 0.7500 R", vals[-1]/vals[1], 2.014, tol=0.01)
+    check("rise from 0.4002 R to 0.7500 R", vals[-1]/vals[1], 2.014,
+          tol=0.01)
+    # the minimum of the PROFILE is not the minimum of the sampled
+    # rows: section 3.2 prints both, and they are 0.4531 R and
+    # 0.5018 R respectively
+    band = ((tab['rfrac'] >= 0.4002) & (tab['rfrac'] <= 0.7500)
+            & np.isfinite(gr))
+    idip = int(np.arange(len(gr))[band][np.argmin(gr[band])])
+    check("profile minimum of grad", gr[idip], 0.1937, tol=0.01)
+    check("radius of that minimum [R]", tab['rfrac'][idip], 0.4531,
+          tol=1e-3)
+    check("rise measured from the profile minimum",
+          vals[-1]/gr[idip], 2.046, tol=0.01)
 
 
 # ==================================================================== D3
