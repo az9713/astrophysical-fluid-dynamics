@@ -613,8 +613,8 @@ $$ \frac{\Lambda(T)}{\Gamma} \;=\; 10^{7}\exp\!\left(\frac{-1.184\times10^{5}}{T
 
 <div class="prop"><b>Proposition 7 (the criterion for this heating law).</b> Let the volumetric heating be $n\Gamma$ and the volumetric cooling $n^2\Lambda(T)$, with $\Gamma$ constant and $n = \rho/m_{\rm H}$. Then thermal equilibrium is
 $$ n_{\rm eq}(T) \;=\; \frac{\Gamma}{\Lambda(T)}, \tag{8.4}$$
-and Field's isobaric criterion (8.2) reduces at every equilibrium state to
-$$ \frac{d\ln\Lambda}{d\ln T} \;\lt \; 1 \quad\text{for stability}. \tag{8.5}$$</div>
+and Field's isobaric runaway condition (8.2) reduces at every equilibrium state to $d\ln\Lambda/d\ln T \lt 1$, so that the gas is stable against an isobaric perturbation exactly when
+$$ \frac{d\ln\Lambda}{d\ln T} \;\gt \; 1 \quad\text{for stability}. \tag{8.5}$$</div>
 
 <div class="proof">
 <p>Per gram, the losses are $n^2\Lambda/\rho = \rho\Lambda/m_{\rm H}^2$ and the gains are $n\Gamma/\rho = \Gamma/m_{\rm H}$, so
@@ -623,7 +623,7 @@ Setting $\mathcal{L}=0$ gives $\rho = m_{\rm H}\Gamma/\Lambda(T)$, that is (8.4)
 $$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!\rho} = \frac{\rho}{m_{\rm H}^2}\frac{d\Lambda}{dT}, \qquad \left(\frac{\partial\mathcal{L}}{\partial\rho}\right)_{\!T} = \frac{\Lambda}{m_{\rm H}^2},$$
 so (8.2) reads
 $$ \left(\frac{\partial\mathcal{L}}{\partial T}\right)_{\!P} = \frac{\rho}{m_{\rm H}^2}\left[\frac{d\Lambda}{dT} - \frac{\Lambda}{T}\right] \lt 0 \iff \frac{T}{\Lambda}\frac{d\Lambda}{dT} \lt 1,$$
-after dividing by the positive factor $\rho\Lambda/(m_{\rm H}^2T)$. That is (8.5). Note also that $(\partial\mathcal{L}/\partial\rho)_T = \Lambda/m_{\rm H}^2\gt 0$, so Proposition 6's ordering of the two criteria applies: the isochoric criterion here is $d\ln\Lambda/d\ln T \lt 0$, which is strictly harder to satisfy. <span class="qed">∎</span></p>
+after dividing by the positive factor $\rho\Lambda/(m_{\rm H}^2T)$. The layer is therefore stable exactly when $d\ln\Lambda/d\ln T \gt 1$, which is (8.5). Note also that $(\partial\mathcal{L}/\partial\rho)_T = \Lambda/m_{\rm H}^2\gt 0$, so Proposition 6's ordering of the two criteria applies: the isochoric runaway condition here is $d\ln\Lambda/d\ln T \lt 0$, which is strictly harder to meet than $d\ln\Lambda/d\ln T \lt 1$, so every isochorically unstable state on this curve is isobarically unstable and not conversely. <span class="qed">∎</span></p>
 </div>
 
 <table>
@@ -644,7 +644,7 @@ after dividing by the positive factor $\rho\Lambda/(m_{\rm H}^2T)$. That is (8.5
 <tr><td>10000</td><td>$4.2587\times10^{-24}$</td><td>9.7247</td><td>0.0047</td><td>47.0</td><td>stable</td><td>stable</td></tr>
 </table>
 
-<p>Read the two right-hand columns together. The isochoric criterion is satisfied nowhere in this table: $\Lambda$ increases with $T$ throughout, so $d\Lambda/dT\gt 0$ everywhere and (8.1) never fires. The isobaric criterion is satisfied over a wide band. That is the whole content of Field's 1965 correction, in one table.</p>
+<p>Read the two right-hand columns together, remembering that (8.1) and (8.2) are conditions for <em>runaway</em> while (8.5) is the condition for stability. The isochoric runaway fires nowhere in this table: $\Lambda$ increases with $T$ throughout, so $d\Lambda/dT\gt 0$ everywhere and (8.1) is never met. The isobaric runaway fires over a wide band, wherever the slope falls below $1$. That is the whole content of Field's 1965 correction, in one table.</p>
 
 <p>The slope crosses $1$ twice: at $T = 184.0$ K, where $n_{\rm eq} = 8.682\ \mathrm{cm^{-3}}$ and $P/k = 1597.5\ \mathrm{K\,cm^{-3}}$, and again at $T = 5039.4$ K, where $n_{\rm eq} = 0.994\ \mathrm{cm^{-3}}$ and $P/k = 5007.0\ \mathrm{K\,cm^{-3}}$. Those two states bound the unstable branch, and <a class="secref" href="#window">§9</a> shows they are also the turning points of the equilibrium pressure.</p>
 
@@ -652,7 +652,7 @@ after dividing by the positive factor $\rho\Lambda/(m_{\rm H}^2T)$. That is (8.5
 
 <div class="prop"><b>Proposition 8 (the pressure window).</b> On the thermal-equilibrium curve (8.4), the equilibrium pressure satisfies
 $$ \frac{P}{k_B} \;=\; n_{\rm eq}(T)\,T \;=\; \frac{\Gamma\,T}{\Lambda(T)}, \qquad \frac{d\ln P}{d\ln T} \;=\; 1 - \frac{d\ln\Lambda}{d\ln T}. \tag{9.1}$$
-Hence $P$ has a turning point exactly where Field's isobaric criterion (8.5) changes sign, and $dP/dn\lt 0$ exactly on the unstable branch. Between the local minimum $P_{\min}$ and the local maximum $P_{\max}$ of the curve, a single pressure is attained at three densities, of which the two extreme ones are stable and the middle one is not: two stable phases coexist at the same pressure.</div>
+Hence $P$ has a turning point exactly at the states where (8.5) holds with equality, which are the two ends of the isobarically unstable branch, and $dP/dn\lt 0$ exactly on that branch. Between the local minimum $P_{\min}$ and the local maximum $P_{\max}$ of the curve, a single pressure is attained at three densities, of which the two extreme ones are stable and the middle one is not: two stable phases coexist at the same pressure.</div>
 
 <div class="proof">
 <p>(9.1) is (8.4) multiplied by $T$, and its logarithmic derivative. A turning point of $P$ along the curve is $d\ln P/d\ln T = 0$, which by (9.1) is $d\ln\Lambda/d\ln T = 1$, which is the boundary case of (8.5). For the density, (8.4) gives $d\ln n/d\ln T = -\,d\ln\Lambda/d\ln T \equiv -s$, so on any part of the curve with $s\neq0$,
