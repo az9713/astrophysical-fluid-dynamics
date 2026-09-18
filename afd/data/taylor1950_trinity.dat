@@ -1,0 +1,94 @@
+# Trinity fireball radius R against time t after detonation.
+#
+# SOURCE, read from the paper itself (not from memory, not from a secondary
+# transcription):
+#
+#   Sir Geoffrey Taylor, F.R.S., "The formation of a blast wave by a very
+#   intense explosion.  II.  The atomic explosion of 1945",
+#   Proceedings of the Royal Society of London, Series A, Mathematical and
+#   Physical Sciences, volume 201, issue 1065, pages 175-186 (1950).
+#   DOI 10.1098/rspa.1950.0050.   Received 10 November 1949.
+#   TABLE 1, "Radius R of blast wave at time t after the explosion",
+#   printed on page 176 of the paper.
+#
+# The publisher returns HTTP 403 to a direct request.  The PDF was fetched
+# through the Internet Archive:
+#   https://web.archive.org/web/2021/https://royalsocietypublishing.org/doi/pdf/10.1098/rspa.1950.0050
+# and the page text was extracted with PyMuPDF.  The scan is a 1950 letterpress
+# page and the optical character recognition of the DIGITS is imperfect, so
+# every value below was cross-checked against the two logarithm columns that
+# Taylor prints beside his t and R columns:
+#
+#   column 4 of his table is  log10 t   with t in SECONDS, in bar notation;
+#   column 5 is               log10 R   with R in CENTIMETRES;
+#   column 6 is               (5/2) log10 R.
+#
+# All 25 R values reproduce Taylor's own log10 R column to the last printed
+# digit.  Two t values were recovered from his log10 t column because the
+# optical character recognition of the t column was ambiguous:
+#
+#   row 8   t = 1.08 ms   (his log10 t = -3 + 0.033 -> 1.079e-3 s;
+#                          the digits were read as "1-08" and confirmed)
+#   row 12  t = 1.65 ms   (his log10 t = -3 + 0.217 -> 1.648e-3 s;
+#                          the digits were read as "1-05", which is wrong,
+#                          and is also not monotonic with its neighbours)
+#
+# Taylor's own provenance for the measurements, in his words: the radii in
+# his column 3 were measured "partly from photographs in Mack (1947), partly
+# from some clearer glossy prints of the same photographs kindly sent to me
+# by Dr N. E. Bradbury, Director of Los Alamos Laboratory and partly from
+# some declassified photographs lent me by the Ministry of Supply".  The
+# times in his column 2 "are taken directly from the photographs".
+#   Mack (1947) is J. E. Mack, "Semi-popular motion-picture record of the
+#   Trinity explosion", U.S. Atomic Energy Commission MDDC-221, declassified
+#   17 July 1947.
+#
+# Taylor groups the rows by the source of the photograph.  His "authority"
+# column is reproduced here as the fourth field:
+#   A = strip of small images, MDDC-221
+#   B = strip of declassified photographs lent by the Ministry of Supply
+#   C = strip of small images from MDDC-221
+#   D = large single photographs, MDDC-221
+#
+# Other numbers from the same paper, used in afd/figs/m08_numbers.py:
+#   his equation (1):  (5/2) log10 R - log10 t = 11.915   (R in cm, t in s)
+#   his equation (3):  R^5 t^-2 = 6.67e23 cm^5 s^-2
+#   his assumed ambient density: rho_0 = 1.25e-3 g/cm^3
+#   his Table 3, for gamma = 1.40:  I_1 = 0.185, I_2 = 0.187, K = 0.856,
+#     E = 7.14e20 erg, T.N.T. equivalent 16,800 tons
+#   his ton of T.N.T.: 1 g of T.N.T. taken as 1000 calories = 4.18e10 erg,
+#     so 1 ton = 4.25e16 erg.  That is the LONG ton, 1.016e6 g.  The modern
+#     convention, 1 kt = 4.184e19 erg, is NOT the one Taylor used, and the
+#     two differ by 1.6 per cent.
+#
+# Columns below:
+#   t_ms   time after detonation, milliseconds
+#   R_m    radius of the luminous globe, metres
+#   auth   Taylor's authority code, A-D as above
+#
+#  t_ms      R_m   auth
+    0.10     11.1   A
+    0.24     19.9   A
+    0.38     25.4   A
+    0.52     28.8   A
+    0.66     31.9   A
+    0.80     34.2   A
+    0.94     36.3   A
+    1.08     38.9   A
+    1.22     41.0   A
+    1.36     42.8   A
+    1.50     44.4   A
+    1.65     46.0   A
+    1.79     46.9   A
+    1.93     48.7   A
+    3.26     59.0   B
+    3.53     61.1   B
+    3.80     62.9   B
+    4.07     64.3   B
+    4.34     65.6   B
+    4.61     67.3   B
+   15.0     106.5   C
+   25.0     130.0   C
+   34.0     145.0   C
+   53.0     175.0   D
+   62.0     185.0   D
