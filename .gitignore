@@ -6,3 +6,6 @@ HANDOFF.md
 afd/figs/_*
 __pycache__/
 *.pyc
+
+afd/figs/m09_body*.html
+afd/figs/assemble09.py
