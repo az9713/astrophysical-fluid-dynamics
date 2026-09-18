@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Module 7 — Rayleigh–Taylor and Kelvin–Helmholtz | Astrophysical Fluid Dynamics</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags: 'ams' },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js" async></script>
+<style>
+  :root{
+    --bg:#0f172a; --box:#1e293b; --fg:#e2e8f0; --fg2:#cbd5e1;
+    --muted:#94a3b8; --accent:#fb923c; --accent2:#2dd4bf;
+    --rule:#334155; --rule2:#1e293b;
+  }
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{ max-width: 52rem; margin: 2.5rem auto; padding: 0 1.25rem 6rem;
+        font: 16px/1.7 Georgia, 'Times New Roman', serif; color:var(--fg);
+        background:var(--bg); counter-reset: fig; }
+  h1{ font-size: 1.9rem; line-height:1.2; margin:.2rem 0 .2rem; color:#f8fafc; }
+  h2{ font-size:1.35rem; margin:2.6rem 0 .6rem; border-bottom:2px solid var(--accent);
+      padding-bottom:.2rem; color:#f8fafc; }
+  h3{ font-size:1.08rem; margin:1.7rem 0 .4rem; color:var(--accent); }
+  h4{ font-size:1rem; margin:1.2rem 0 .3rem; color:var(--accent2); }
+  .sub{ color:var(--muted); font-style:italic; margin-top:0; }
+  a{ color:var(--accent2); }
+  code{ font-family: ui-monospace,'SFMono-Regular',Consolas,monospace; font-size:.92em;
+        background:#111c33; color:#e2e8f0; padding:.05rem .28rem; border-radius:3px;
+        border:1px solid var(--rule2); }
+  pre{ background:#0b1324; border:1px solid var(--rule); padding:.8rem 1rem; border-radius:5px;
+       overflow:auto; font-size:.84rem; line-height:1.45; color:#e2e8f0; }
+  pre code{ background:none; padding:0; border:none; }
+  .codewrap{ position:relative; }
+  .copybtn{ position:absolute; top:.5rem; right:.5rem; display:inline-flex; align-items:center; gap:.3rem;
+    font:600 .72rem/1 ui-monospace,Consolas,monospace; color:var(--muted);
+    background:var(--box); border:1px solid var(--rule); border-radius:5px; padding:.32rem .5rem; cursor:pointer; }
+  .copybtn:hover{ color:var(--accent); border-color:var(--accent); }
+  .copybtn.copied{ color:var(--accent2); border-color:var(--accent2); }
+  .copybtn svg{ width:13px; height:13px; }
+  .thm,.def,.lem,.prop{ background:var(--box); border-left:4px solid var(--accent);
+      padding:.6rem .9rem; margin:1rem 0; border-radius:0 4px 4px 0; }
+  .def{ border-left-color:var(--accent2); }
+  .thm b,.lem b,.prop b{ color:var(--accent); }
+  .def b{ color:var(--accent2); }
+  .proof{ border-left:2px solid var(--rule); padding-left:.9rem; margin:.8rem 0 1.2rem; color:var(--fg2); }
+  .proof::before{ content:"Proof."; font-style:italic; font-weight:bold; margin-right:.4rem; color:var(--muted); }
+  .qed{ float:right; color:var(--accent); }
+  table{ border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+  th,td{ border:1px solid var(--rule); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+  th{ background:var(--box); color:#f8fafc; }
+  figure{ margin:1.6rem 0; text-align:center; counter-increment: fig; }
+  figcaption{ color:var(--muted); font-size:.9rem; font-style:italic; margin-top:.4rem; text-align:left; }
+  figcaption::before{ content:"Fig. " counter(fig) ". "; font-weight:bold; font-style:normal; color:var(--accent); }
+  .proof figure,.thm figure,.lem figure,.prop figure{ margin:.2rem auto .7rem; max-width:480px;
+      background:var(--bg); border:1px solid var(--rule); border-radius:5px; padding:.4rem; }
+  .proof figcaption,.thm figcaption,.lem figcaption,.prop figcaption{ font-size:.8rem; line-height:1.45; }
+  .setupfig{ display:block; }
+  .setupfig text{ paint-order:stroke; stroke:#0f172a; stroke-width:3px; stroke-linejoin:round; }
+  .setupfig text.onfill{ stroke:none; }
+  figure svg text{ font-family:"STIX Two Math",STIXGeneral,"Times New Roman",Georgia,serif; fill:#cbd5e1; }
+  figure svg text.v{ font-style:italic; }
+  figure svg text.vb{ font-weight:bold; }
+  .secref{ color:var(--accent); text-decoration:none; border-bottom:1px dotted #9a6a3a; }
+  .secref:hover{ border-bottom:1px solid var(--accent); }
+  .toc{ background:var(--box); padding:.8rem 1.2rem; border-radius:6px; font-size:.95rem; border:1px solid var(--rule); }
+  .toc ul{ list-style:none; padding-left:.3rem; margin:.3rem 0; }
+  .toc a{ color:var(--accent2); text-decoration:none; }
+  .toc a:hover{ text-decoration:underline; }
+  .small{ font-size:.88rem; color:var(--muted); }
+  hr{ border:none; border-top:1px solid var(--rule); margin:2.5rem 0; }
+  .keyresult{ background:#2a2410; border:1px solid #6b5a1f; padding:.5rem .9rem; border-radius:4px; color:#fde68a; }
+  .prov{ display:block; border-left:3px solid #c08a00; padding:.15rem .7rem;
+         margin:.5rem 0; font-size:.94em; color:var(--muted); }
+  .prov::before{ content:"provenance — "; font-variant:small-caps; letter-spacing:.04em; color:#d4a017; }
+  .warn{ display:block; border-left:3px solid #f87171; background:#2a1414; padding:.4rem .8rem;
+         margin:.8rem 0; font-size:.95em; color:#fecaca; border-radius:0 4px 4px 0; }
+  .prob{ background:var(--box); border:1px solid var(--rule); border-radius:5px;
+         padding:.6rem .9rem; margin:.9rem 0; }
+  .prob b{ color:var(--accent); }
+  details.sol{ margin-top:.5rem; }
+  details.sol summary{ cursor:pointer; color:var(--accent2); font-size:.9rem; }
+  details.sol > div{ border-top:1px solid var(--rule); margin-top:.5rem; padding-top:.5rem; color:var(--fg2); }
+</style>
+</head>
+<body>
+
+<h1>Module 7 — Rayleigh–Taylor and Kelvin–Helmholtz</h1>
+<p class="sub">Two fluids meet at a surface. If the heavy one is on top, the surface overturns; if they slide past each other, the surface rolls up. Both come out of one dispersion relation with four terms, and every section of this module switches one term on or off. The laboratory cases first — an upside-down glass of water, a jet stream — then the astrophysical ones, where the surface tension is gone and the gravity points the wrong way. Two checks: the non-linear mixing law against a laser experiment at the National Ignition Facility, and the linear theory against Kelvin–Helmholtz vortices seen on the flank of a coronal mass ejection.</p>
+
+<div class="toc">
+<b>Contents</b>
+<ul>
+<li><b>1.</b> <a href="#problem">One relation, two instabilities</a></li>
+<li><b>2.</b> <a href="#setup">The interface, and what is perturbed</a></li>
+<li><b>3.</b> <a href="#disp">The dispersion relation</a></li>
+<li><b>4.</b> <a href="#lab">Rayleigh–Taylor in a glass of water</a></li>
+<li><b>5.</b> <a href="#noskin">Rayleigh–Taylor with no skin: the astrophysical case</a></li>
+<li><b>6.</b> <a href="#kh">Kelvin–Helmholtz, and the two ways gravity stops it</a></li>
+<li><b>7.</b> <a href="#compress">The compressible limit, quoted not derived</a></li>
+<li><b>8.</b> <a href="#mixing">After the linear theory: the mixing law, and the laboratory check</a></li>
+<li><b>9.</b> <a href="#anchor">The anchor: Kelvin–Helmholtz on the flank of a CME</a></li>
+<li><b>10.</b> <a href="#limits">What this model captures, and what it misses</a></li>
+<li><b>11.</b> <a href="#problems">Problems</a></li>
+<li><b>—</b> <a href="#notation">Notation</a> · <a href="#sources">Sources</a></li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="problem">1. One relation, two instabilities</h2>
+
+<p>Modules 5 and 6 asked whether a smoothly stratified fluid would stay where it was put. Gravity against pressure gave the Jeans criterion; buoyancy against an adiabatic gradient gave Schwarzschild's, and cooling against heating gave Field's. In all three the fluid varied continuously, and the question was about a gradient.</p>
+
+<p>This module asks the same question about a <em>surface</em>. Two fluids of different densities meet across a plane, and the properties jump rather than slide. That is not a special case of the earlier work: a jump is where a gradient's length scale goes to zero, and the earlier criteria, which compare one length against another, have nothing left to compare. A separate calculation is needed, and it produces something the earlier ones did not — a growth rate that depends on the wavelength of the disturbance, so the interface picks a scale.</p>
+
+<p>Two mechanisms live on such a surface, and they turn out to be two terms of one formula.</p>
+
+<p><b>Rayleigh–Taylor.</b> Put the heavy fluid on top. Every parcel of it that sinks and every parcel of the light fluid that rises lowers the potential energy of the pair, so the arrangement is unstable and the interface breaks into descending spikes and ascending bubbles. Nothing is flowing; only gravity and the density difference matter. <a class="secref" href="#lab">§4</a> derives the terrestrial case, where surface tension cuts the instability off below a centimetre or two, and <a class="secref" href="#noskin">§5</a> removes the surface tension, which is what happens between two plasmas.</p>
+
+<p><b>Kelvin–Helmholtz.</b> Now let the two fluids slide past each other. A ripple on the interface forces the streaming fluid to go faster over its crest, which by Bernoulli lowers the pressure there, which lifts the crest further. Gravity is not needed and may be absent; what is needed is a velocity jump. <a class="secref" href="#kh">§6</a> derives it, and finds that gravity, when it does act across the interface, kills the <em>long</em> waves rather than the short ones — the opposite end of the spectrum from surface tension.</p>
+
+<p>The reason to treat them together is that one calculation gives both. <a class="secref" href="#disp">§3</a> derives a single dispersion relation whose four terms are the Kelvin–Helmholtz drive, the Rayleigh–Taylor drive, the capillary restoring force and the magnetic tension. Setting the shear to zero leaves Rayleigh–Taylor; setting gravity to zero leaves Kelvin–Helmholtz; keeping both gives the mixed problem that a real astrophysical interface presents. The five limits of <a class="secref" href="#disp">§3</a> check the relation before it is used on any case that has no closed form, which is the discipline <a href="module03.html">Module 3</a> applied to its Lane–Emden integrator.</p>
+
+<p>The two halves of the module are tested differently, and the difference is worth stating at the start. The Rayleigh–Taylor half is checked against a <em>laboratory</em> measurement — a laser-driven experiment at the National Ignition Facility — and that is the only place in this module where a standard deviation exists. The Kelvin–Helmholtz half is checked against a solar observation which quotes every input to one significant figure and gives no uncertainty at all. <a class="secref" href="#anchor">§9</a> says so in its first paragraph, and then shows what such an observation can still be made to yield: not a confirmation, but a bound on a magnetic field that nobody measured.</p>
+
+<h2 id="setup">2. The interface, and what is perturbed</h2>
+
+<p>Everything in this module is a statement about the following configuration, and every hypothesis it carries is listed here once so that the propositions can name them rather than repeat them.</p>
+
+<div class="def"><b>Definition 1 (the plane interface).</b> Two fluids fill the half-spaces above and below the plane $z = 0$. The upper fluid has uniform density $\rho_t$ and streams with uniform velocity $U_t\hat{x}$; the lower has uniform density $\rho_b$ and streams with $U_b\hat{x}$. Write $\Delta U \equiv U_t - U_b$. Gravity is $-g\hat{z}$ with $g \gt 0$, so <em>down</em> is towards the lower fluid. The interface carries an interfacial tension $T_s \ge 0$. Each half-space carries a uniform magnetic field lying in the plane of the interface, of magnitude $B_t$ and $B_b$. Both fluids are incompressible, inviscid and perfectly conducting, and the interface is sharp: the density, the velocity and the field change discontinuously across $z = 0$.</div>
+
+<p>The hypotheses that will later be paid for are worth naming now. <em>Incompressible</em> deletes the sound speed, so nothing derived here can contain a compressible effect — <a class="secref" href="#compress">§7</a> quotes one from the literature precisely because this relation cannot produce it. <em>Inviscid</em> deletes the only dissipation, so the theory has no way to stop short wavelengths growing; <a class="secref" href="#lab">§4</a> estimates where viscosity would take over and says plainly that it does not solve the viscous problem. <em>Semi-infinite</em> deletes every length except the wavelength itself, which is what makes the answer scale-free. <em>Sharp</em> is the assumption <a class="secref" href="#anchor">§9</a> finds broken in the observation it uses.</p>
+
+<div class="def"><b>Definition 2 (the Atwood number).</b>
+$$ A \;\equiv\; \frac{\rho_t-\rho_b}{\rho_t+\rho_b}. \tag{2.1}$$
+With the convention of Definition 1 — $\rho_t$ above — $A \gt 0$ means the heavy fluid is on top, which is the Rayleigh–Taylor-unstable ordering, and $-1 \lt A \lt 1$ always. Shimony et al. (2022), whose mixing law <a class="secref" href="#mixing">§8</a> tests, write $A = (\rho_2-\rho_1)/(\rho_1+\rho_2)$ with $\rho_2$ the heavier fluid, so their $A$ and this one are the same number.</div>
+
+<div class="def"><b>Definition 3 (the normal mode).</b> Every perturbed quantity is written
+$$ q_1(\mathbf{x},t) \;=\; \hat q(z)\,\exp\!\big(i\mathbf{k}\cdot\mathbf{x}_\perp + \sigma t\big), \tag{2.2}$$
+with $\mathbf{k}$ a real horizontal wavevector of magnitude $k = 2\pi/\lambda$ and $\sigma$ complex. The mode <b>grows</b> if $\operatorname{Re}\sigma \gt 0$, and $\operatorname{Im}\sigma/k$ is the speed at which its pattern travels along the interface. Products of perturbations are dropped, which is the linearisation of <a href="module04.html">Module 4</a> Definition 2 applied here.</div>
+
+<p>Two things follow from Definition 3 alone and are worth having before any algebra. First, $\sigma$ has dimensions of inverse time, so $1/\sigma$ is an e-folding time and a growth is only meaningful against some other clock — the age of a supernova remnant, the duration of an observation. Second, because $\sigma$ will turn out to depend on $k$, the interface does not simply "go unstable": it goes unstable at some wavelengths and not at others, and the one that grows fastest is what an experiment or an image shows.</p>
+
+<span class="prov">$\sigma$ is this module's growth rate throughout, and is module-local. From <a href="module06.html">Module 6</a> a bare $\sigma$ elsewhere in this book is a collision cross-section; no cross-section appears in this module, so there is no collision in practice, and the notation table records the decision. $T_s$, not $T$, is the interfacial tension here, because $T$ is a temperature in <a class="secref" href="#kh">§6</a> and <a class="secref" href="#compress">§7</a> of this same module.</span>
+
+<h2 id="disp">3. The dispersion relation</h2>
+
+<p>One proposition carries the module. It is derived once, checked against five limits that are known independently, and then used on cases that have no closed form.</p>
+
+<div class="prop"><b>Proposition 1 (the dispersion relation of a plane interface).</b> For the configuration of Definition 1, with the field of each half-space making an angle $\theta$ with $\mathbf{k}$, and with $\mathbf{k}$ <b>parallel to the streaming direction</b>, the normal mode of Definition 3 has
+
+$$ \Big(\sigma + i\,\mathbf{k}\!\cdot\!\overline{\mathbf{U}}\Big)^{2} \;=\; \underbrace{\frac{k^{2}\rho_t\rho_b\,\Delta U^{2}}{(\rho_t+\rho_b)^{2}}}_{\text{Kelvin–Helmholtz drive}} \;+\; \underbrace{A\,g\,k\vphantom{\frac{k^2}{(\rho)^2}}}_{\text{Rayleigh–Taylor drive}} \;-\; \underbrace{\frac{T_s k^{3}}{\rho_t+\rho_b}}_{\text{capillarity}} \;-\; \underbrace{\frac{k^{2}\big(B_t^{2}+B_b^{2}\big)\cos^{2}\theta}{4\pi(\rho_t+\rho_b)}}_{\text{magnetic tension}}, \tag{3.1}$$
+
+where $\overline{\mathbf{U}} \equiv (\rho_t\mathbf{U}_t + \rho_b\mathbf{U}_b)/(\rho_t+\rho_b)$ is the density-weighted mean stream velocity. Writing $\sigma^2$ for the right-hand side, the interface is unstable to the mode $\mathbf{k}$ if and only if $\sigma^2 \gt 0$, and the pattern then travels at $\mathbf{k}\!\cdot\!\overline{\mathbf{U}}/k$. <b>For an oblique $\mathbf{k}$</b>, the proof below produces $\mathbf{k}\!\cdot\!\Delta\mathbf{U}$ wherever $k\,\Delta U$ appears, so every $\Delta U$ in (3.1) and in the sections that use it is the projection $\hat k\!\cdot\!\Delta\mathbf{U} = \Delta U\cos\varphi$. That is what <a class="secref" href="#compress">§7</a> relies on, and it is stated here rather than assumed there.</div>
+
+<div class="proof">
+In each half-space the perturbed flow is incompressible and, being started from rest relative to its own stream, irrotational: $\mathbf{u}_1 = \nabla\phi$ with $\nabla^2\phi = 0$. With the $\exp(i\mathbf{k}\cdot\mathbf{x}_\perp)$ dependence of Definition 3, Laplace's equation reduces to $\hat\phi'' = k^2\hat\phi$, whose solutions decaying away from the interface are
+$$ \phi_t = C_t\,e^{-kz}\,e^{i\mathbf{k}\cdot\mathbf{x}_\perp + \sigma t}\ (z\gt0), \qquad \phi_b = C_b\,e^{+kz}\,e^{i\mathbf{k}\cdot\mathbf{x}_\perp + \sigma t}\ (z\lt0). $$
+Let the interface sit at $z = \eta(\mathbf{x}_\perp,t) = \hat\eta\exp(i\mathbf{k}\cdot\mathbf{x}_\perp+\sigma t)$. The kinematic condition is that a fluid element on the interface stays on it, $\partial_t\eta + \mathbf{U}\!\cdot\!\nabla_\perp\eta = u_z$, which linearises on each side to
+$$ (\sigma + i\mathbf{k}\!\cdot\!\mathbf{U}_t)\,\hat\eta = -kC_t, \qquad (\sigma + i\mathbf{k}\!\cdot\!\mathbf{U}_b)\,\hat\eta = +kC_b. \tag{3.2}$$
+The dynamic condition is the pressure jump. Bernoulli's equation in each streaming frame gives the perturbation $-\rho(\partial_t + \mathbf{U}\!\cdot\!\nabla_\perp)\phi$, and the interface is displaced into a background whose pressure varies as $dp_0/dz = -\rho g$, so the total pressure perturbation evaluated <em>at the displaced surface</em> is
+$$ \delta p = -\rho\big(\partial_t + \mathbf{U}\!\cdot\!\nabla_\perp\big)\phi \;-\; \rho g\eta . \tag{3.3}$$
+A crest bulges into the upper fluid and curves with its centre below, so tension raises the pressure on the lower side: $\delta p^{(b)} - \delta p^{(t)} = -T_s\nabla_\perp^2\eta = T_sk^2\hat\eta$. Substituting (3.3) on each side, evaluating $\phi$ at $z=0$ and eliminating $C_t$, $C_b$ with (3.2),
+$$ -\frac{\rho_b}{k}(\sigma + i\mathbf{k}\!\cdot\!\mathbf{U}_b)^2 - \frac{\rho_t}{k}(\sigma + i\mathbf{k}\!\cdot\!\mathbf{U}_t)^2 + (\rho_t-\rho_b)g \;=\; T_sk^2 ,$$
+where every term has been divided by $\hat\eta$. Multiplying by $-k$,
+$$ \rho_t(\sigma + i\mathbf{k}\!\cdot\!\mathbf{U}_t)^2 + \rho_b(\sigma + i\mathbf{k}\!\cdot\!\mathbf{U}_b)^2 \;=\; (\rho_t-\rho_b)gk \;-\; T_sk^3 . \tag{3.4}$$
+Write $a_t = \mathbf{k}\!\cdot\!\mathbf{U}_t$, $a_b = \mathbf{k}\!\cdot\!\mathbf{U}_b$ and $\bar a = \mathbf{k}\!\cdot\!\overline{\mathbf{U}}$. Expanding both sides of the identity
+$$ \rho_t(\sigma+ia_t)^2 + \rho_b(\sigma+ia_b)^2 \;=\; (\rho_t+\rho_b)(\sigma+i\bar a)^2 \;-\; \frac{\rho_t\rho_b(a_t-a_b)^2}{\rho_t+\rho_b} $$
+shows it holds term by term in $\sigma^2$, $\sigma$ and the constant, the last by $(\rho_t+\rho_b)\bar a^2 - (\rho_ta_t^2+\rho_ba_b^2) = -\rho_t\rho_b(a_t-a_b)^2/(\rho_t+\rho_b)$. Substituting it into (3.4), dividing by $\rho_t+\rho_b$ and using $a_t - a_b = \mathbf{k}\!\cdot\!\Delta\mathbf{U}$ gives the first three terms of (3.1), with the middle one $+Agk$ by Definition 2 — positive, and therefore destabilising, exactly when the heavy fluid is on top.
+
+For the field, ideal MHD adds the Lorentz force $(\nabla\times\mathbf{B})\times\mathbf{B}/4\pi$. A field lying in the interface and frozen into the fluid is bent by the ripple, and the bending pulls back like a stretched string. With $\mathbf{B}_1 = (\mathbf{B}\!\cdot\!\nabla)\boldsymbol\xi$ for an incompressible displacement $\boldsymbol\xi$, the restoring force per unit volume is $(\mathbf{B}\!\cdot\!\nabla)\mathbf{B}_1/4\pi = -(\mathbf{k}\!\cdot\!\mathbf{B})^2\boldsymbol\xi/4\pi$, and the perturbation occupies a depth $1/k$ on each side of the interface. Integrating over that depth turns the bulk force into a force per unit <em>area</em> of interface, so the field acts as an extra interfacial tension
+$$ T_{\rm mag} \;=\; \frac{(B_t^2+B_b^2)\cos^2\theta}{4\pi k}, \tag{3.5}$$
+with $\theta$ the angle between $\mathbf{k}$ and $\mathbf{B}$. Adding $T_{\rm mag}$ to $T_s$ in (3.4) and dividing through as before contributes $-T_{\rm mag}k^3/(\rho_t+\rho_b)$, which is the fourth term of (3.1). Only the component of $\mathbf{B}$ along $\mathbf{k}$ appears, because a field perpendicular to $\mathbf{k}$ is carried sideways by the ripple without being bent. The step from a force per unit volume to a force per unit area is the one heuristic in this proof — it replaces the exact integral over the exponential profile by its scale height $1/k$ — and it is the step limit 4 of <a class="secref" href="#limits">§3.1</a> checks, by recovering a published form of the magnetic term independently. <span class="qed">∎</span>
+</div>
+
+<p>Four terms, four physical effects, and each one is a section of this module. The two drives are positive and destabilising; the two restoring terms are negative. Their $k$-dependences are all different — $k^2$, $k$, $k^3$, $k^2$ — and that is the whole story of which wavelengths grow:</p>
+
+<ul>
+<li>The Rayleigh–Taylor drive $Agk$ grows only linearly in $k$, so it is beaten at large $k$ by <em>anything</em> that rises faster.</li>
+<li>Capillarity rises as $k^3$, so it always wins at short wavelength. It sets a <b>short</b>-wavelength cutoff. <a class="secref" href="#lab">§4</a>.</li>
+<li>The Kelvin–Helmholtz drive rises as $k^2$, so it beats gravity at short wavelength and loses to it at long. Gravity therefore sets a <b>long</b>-wavelength cutoff on Kelvin–Helmholtz. <a class="secref" href="#kh">§6</a>.</li>
+<li>Magnetic tension rises as $k^2$ and not as $k^3$, because by (3.5) the equivalent surface tension it supplies is itself proportional to $1/k$: the field is bent through a depth $1/k$, not confined to the surface. That puts it at exactly the same power of $k$ as the Kelvin–Helmholtz drive, and two terms with the same power of $k$ do not produce a cutoff at all. They produce a <em>threshold on the amplitudes</em>, one that either holds at every wavelength or at none. That is why <a class="secref" href="#anchor">§9</a> can turn the mere existence of the instability into a bound on the field, with no wavelength entering.</li>
+</ul>
+
+<h3 id="limits">3.1 Five limits, checked before the relation is used</h3>
+
+<p>Equation (3.1) will shortly be applied to cases whose answer nobody knows independently. Before that, it is checked against five that are known. The numbers below are produced by <code>afd/figs/m07_numbers.py</code>, PART A.</p>
+
+<table>
+<tr><th>#</th><th>Limit</th><th>Independent value</th><th>Ratio</th></tr>
+<tr><td>1</td><td>pure Rayleigh–Taylor: $\Delta U = T_s = B = 0$</td><td>$\sigma^2 = Agk$</td><td>$1.0000000000$</td></tr>
+<tr><td>2</td><td>Kelvin–Helmholtz, equal densities: $g = T_s = B = 0$, $\rho_t=\rho_b$</td><td>$\sigma = k\Delta U/2$</td><td>$1.0000000000$</td></tr>
+<tr><td>3</td><td>Kelvin–Helmholtz, unequal densities</td><td>$\sigma = k\Delta U\sqrt{\rho_t\rho_b}/(\rho_t+\rho_b)$</td><td>$1.0000000000$</td></tr>
+<tr><td>4</td><td>Ofman &amp; Thompson (2011) eq. (1)</td><td>$\sigma = \tfrac12 k\Delta U\sqrt{1-(2V_A/\Delta U)^2}$</td><td>$1.0000000000$</td></tr>
+<tr><td>5</td><td>Rayleigh–Taylor with tension, at $\lambda_{\max}$</td><td>$d\sigma^2/dk = 0$</td><td>residual $5.49\times10^{-11}$ of $Ag$</td></tr>
+</table>
+
+<p>Limit 4 deserves a word, because it is used again in <a class="secref" href="#anchor">§9</a>. Ofman &amp; Thompson's published growth rate for the solar observation is exactly (3.1) with $\rho_t = \rho_b$ and $g = T_s = 0$, rearranged so that the magnetic term appears inside a square root as a fractional reduction. Recovering their formula from this one is a check that the two agree algebraically. It is <em>not</em> a check of either against a measurement, and <a class="secref" href="#anchor">§9</a> is explicit about that.</p>
+
+<span class="prov">Limit 5 is a numerical statement, not an algebraic one: the derivative of $\sigma^2$ with respect to $k$ is evaluated at the wavelength Proposition 2 predicts and compared against the scale $Ag$ set by the first term. The residual $5.49\times10^{-11}$ is floating-point noise, not a physical margin.</span>
+
+<h2 id="lab">4. Rayleigh–Taylor in a glass of water</h2>
+
+<p>Switch off the shear and the field. Equation (3.1) becomes
+$$ \sigma^2 \;=\; Agk \;-\; \frac{T_sk^3}{\rho_t+\rho_b}, \tag{4.1}$$
+which is the whole of terrestrial Rayleigh–Taylor. Two terms with different powers of $k$ must cross, and where they cross is the answer to a question anyone can ask in a kitchen: fill a glass with water, put a card over it, turn it upside down and take the card away. The water falls out. Put the same water in a drinking straw and it does not.</p>
+
+<div class="prop"><b>Proposition 2 (the capillary cutoff and the fastest mode).</b> Under (4.1) with $A \gt 0$ and $T_s \gt 0$, write $\Delta\rho \equiv \rho_t-\rho_b$. Then $\sigma^2 \gt 0$ if and only if $k \lt k_c$, where
+$$ k_c \;=\; \sqrt{\frac{g\,\Delta\rho}{T_s}}, \qquad \lambda_c \;=\; 2\pi\sqrt{\frac{T_s}{g\,\Delta\rho}}. \tag{4.2}$$
+The growth rate is largest at $k_{\max} = k_c/\sqrt3$, so that
+$$ \lambda_{\max} \;=\; \sqrt3\,\lambda_c \tag{4.3}$$
+<em>exactly</em>, independently of $g$, $T_s$ and both densities.</div>
+
+<div class="proof">
+Instability needs $Agk \gt T_sk^3/(\rho_t+\rho_b)$. Using $A(\rho_t+\rho_b) = \Delta\rho$ from Definition 2, this is $g\Delta\rho \gt T_sk^2$, which is (4.2); the $k$ on each side has cancelled, so the cutoff is where the two <em>slopes</em> balance, not where the rates do. For the maximum, differentiate: $d\sigma^2/dk = Ag - 3T_sk^2/(\rho_t+\rho_b) = 0$ gives $k_{\max}^2 = Ag(\rho_t+\rho_b)/(3T_s) = g\Delta\rho/(3T_s) = k_c^2/3$. Since $\lambda \propto 1/k$, $\lambda_{\max} = \sqrt3\,\lambda_c$. The factor $\sqrt3$ is the ratio of the two powers of $k$ in (4.1), $3$ and $1$, and nothing else enters. <span class="qed">∎</span>
+</div>
+
+<p>Water over air at $20\ ^\circ$C, with $\rho_t = 0.998207\ \mathrm{g\,cm^{-3}}$, $\rho_b = 1.2041\times10^{-3}\ \mathrm{g\,cm^{-3}}$ and $T_s = 72.75\ \mathrm{dyn\,cm^{-1}}$, gives $A = 0.997590$ — as close to the maximum $1$ as makes no difference, which is why the air's inertia can be ignored in every hand calculation of this problem. The capillary length is $\sqrt{T_s/(g\Delta\rho)} = 2.728$ mm, and</p>
+
+<div class="keyresult"><b>Key result (the upside-down glass).</b> $\lambda_c = 1.7139$ cm and $\lambda_{\max} = 2.9686$ cm, at which $\sigma_{\max} = 37.15\ \mathrm{s^{-1}}$, an e-folding time of $26.9$ ms. A water surface held above air selects a $3.0$ cm wave and turns it over in $27$ milliseconds. Nothing shorter than $1.71$ cm grows at all.</div>
+
+<p>That is the straw. A tube much narrower than $\lambda_c = 1.71$ cm admits no unstable mode, because the longest wave that fits across it is already inside the capillary cutoff, so the water stays in. <b>The comparison is an order-of-magnitude one and is not exact:</b> Definition 1's interface is unbounded, and a tube imposes a boundary condition at its wall whose lowest admissible wavelength is $\lambda_c$ only up to a geometrical factor of order unity that this module does not compute. What is exact is that the cutoff is a <em>length</em>, fixed by three material constants, and that it is of order a centimetre for water — which is why the demonstration works with a drinking straw and fails with a tumbler.</p>
+
+<figure>
+<!--FIG_GROWTH-->
+<svg class="setupfig" viewBox="0 0 760 664" width="100%" role="img" aria-label="Upper panel: Rayleigh-Taylor growth rate against wavelength for water held above air, drawn twice, once with interfacial tension and once without. Without tension the rate rises without limit as the wavelength shortens. With tension it peaks at about three centimetres and falls to zero at 1.71 centimetres. Lower panel: Kelvin-Helmholtz growth rate against wavelength for the solar interface of the anchor observation, drawn twice, once with gravity acting across the interface and once without. Without gravity the rate rises steadily as the wavelength shortens; with gravity it falls to zero at about five thousand kilometres, which is shorter than the seven thousand kilometre wavelength that was observed.">
+<text x="395" y="28" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Rayleigh–Taylor: water held above air, with and without surface tension</text>
+<rect x="84" y="58" width="622" height="224" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="84.0" y1="282" x2="84.0" y2="287" stroke="#334155" stroke-width="1"/>
+<text x="84.0" y="300" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.3</text>
+<line x1="237.1" y1="282" x2="237.1" y2="287" stroke="#334155" stroke-width="1"/>
+<text x="237.1" y="300" font-size="10.5" text-anchor="middle" fill="#94a3b8">1</text>
+<line x1="376.7" y1="282" x2="376.7" y2="287" stroke="#334155" stroke-width="1"/>
+<text x="376.7" y="300" font-size="10.5" text-anchor="middle" fill="#94a3b8">3</text>
+<line x1="529.8" y1="282" x2="529.8" y2="287" stroke="#334155" stroke-width="1"/>
+<text x="529.8" y="300" font-size="10.5" text-anchor="middle" fill="#94a3b8">10</text>
+<line x1="669.4" y1="282" x2="669.4" y2="287" stroke="#334155" stroke-width="1"/>
+<text x="669.4" y="300" font-size="10.5" text-anchor="middle" fill="#94a3b8">30</text>
+<line x1="79" y1="282.0" x2="84" y2="282.0" stroke="#334155" stroke-width="1"/>
+<text x="75" y="286.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="79" y1="218.0" x2="84" y2="218.0" stroke="#334155" stroke-width="1"/>
+<text x="75" y="222.0" font-size="10.5" text-anchor="end" fill="#94a3b8">20</text>
+<line x1="79" y1="154.0" x2="84" y2="154.0" stroke="#334155" stroke-width="1"/>
+<text x="75" y="158.0" font-size="10.5" text-anchor="end" fill="#94a3b8">40</text>
+<line x1="79" y1="90.0" x2="84" y2="90.0" stroke="#334155" stroke-width="1"/>
+<text x="75" y="94.0" font-size="10.5" text-anchor="end" fill="#94a3b8">60</text>
+<text x="395" y="318" font-size="11.5" text-anchor="middle" fill="#cbd5e1">wavelength λ / cm</text>
+<text x="38" y="170" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 38 170)">σ / s⁻¹</text>
+<path d="M 266.4,58.5 L 267.3,59.3 L 268.2,60.0 L 269.1,60.8 L 270.0,61.6 L 270.9,62.4 L 271.8,63.1 L 272.6,63.9 L 273.5,64.7 L 274.4,65.4 L 275.3,66.2 L 276.2,66.9 L 277.1,67.7 L 278.0,68.4 L 278.9,69.2 L 279.8,69.9 L 280.7,70.7 L 281.5,71.4 L 282.4,72.1 L 283.3,72.9 L 284.2,73.6 L 285.1,74.3 L 286.0,75.0 L 286.9,75.8 L 287.8,76.5 L 288.7,77.2 L 289.6,77.9 L 290.4,78.6 L 291.3,79.3 L 292.2,80.1 L 293.1,80.8 L 294.0,81.5 L 294.9,82.2 L 295.8,82.9 L 296.7,83.6 L 297.6,84.2 L 298.5,84.9 L 299.3,85.6 L 300.2,86.3 L 301.1,87.0 L 302.0,87.7 L 302.9,88.4 L 303.8,89.0 L 304.7,89.7 L 305.6,90.4 L 306.5,91.1 L 307.4,91.7 L 308.2,92.4 L 309.1,93.0 L 310.0,93.7 L 310.9,94.4 L 311.8,95.0 L 312.7,95.7 L 313.6,96.3 L 314.5,97.0 L 315.4,97.6 L 316.2,98.3 L 317.1,98.9 L 318.0,99.5 L 318.9,100.2 L 319.8,100.8 L 320.7,101.4 L 321.6,102.1 L 322.5,102.7 L 323.4,103.3 L 324.3,104.0 L 325.1,104.6 L 326.0,105.2 L 326.9,105.8 L 327.8,106.4 L 328.7,107.0 L 329.6,107.7 L 330.5,108.3 L 331.4,108.9 L 332.3,109.5 L 333.2,110.1 L 334.0,110.7 L 334.9,111.3 L 335.8,111.9 L 336.7,112.5 L 337.6,113.1 L 338.5,113.7 L 339.4,114.2 L 340.3,114.8 L 341.2,115.4 L 342.1,116.0 L 342.9,116.6 L 343.8,117.2 L 344.7,117.7 L 345.6,118.3 L 346.5,118.9 L 347.4,119.4 L 348.3,120.0 L 349.2,120.6 L 350.1,121.1 L 351.0,121.7 L 351.8,122.3 L 352.7,122.8 L 353.6,123.4 L 354.5,123.9 L 355.4,124.5 L 356.3,125.0 L 357.2,125.6 L 358.1,126.1 L 359.0,126.7 L 359.9,127.2 L 360.7,127.8 L 361.6,128.3 L 362.5,128.8 L 363.4,129.4 L 364.3,129.9 L 365.2,130.4 L 366.1,131.0 L 367.0,131.5 L 367.9,132.0 L 368.7,132.5 L 369.6,133.1 L 370.5,133.6 L 371.4,134.1 L 372.3,134.6 L 373.2,135.1 L 374.1,135.6 L 375.0,136.2 L 375.9,136.7 L 376.8,137.2 L 377.6,137.7 L 378.5,138.2 L 379.4,138.7 L 380.3,139.2 L 381.2,139.7 L 382.1,140.2 L 383.0,140.7 L 383.9,141.2 L 384.8,141.7 L 385.7,142.2 L 386.5,142.6 L 387.4,143.1 L 388.3,143.6 L 389.2,144.1 L 390.1,144.6 L 391.0,145.1 L 391.9,145.5 L 392.8,146.0 L 393.7,146.5 L 394.6,147.0 L 395.4,147.4 L 396.3,147.9 L 397.2,148.4 L 398.1,148.8 L 399.0,149.3 L 399.9,149.8 L 400.8,150.2 L 401.7,150.7 L 402.6,151.2 L 403.5,151.6 L 404.3,152.1 L 405.2,152.5 L 406.1,153.0 L 407.0,153.4 L 407.9,153.9 L 408.8,154.3 L 409.7,154.8 L 410.6,155.2 L 411.5,155.7 L 412.4,156.1 L 413.2,156.5 L 414.1,157.0 L 415.0,157.4 L 415.9,157.8 L 416.8,158.3 L 417.7,158.7 L 418.6,159.1 L 419.5,159.6 L 420.4,160.0 L 421.3,160.4 L 422.1,160.9 L 423.0,161.3 L 423.9,161.7 L 424.8,162.1 L 425.7,162.5 L 426.6,163.0 L 427.5,163.4 L 428.4,163.8 L 429.3,164.2 L 430.1,164.6 L 431.0,165.0 L 431.9,165.4 L 432.8,165.8 L 433.7,166.2 L 434.6,166.6 L 435.5,167.0 L 436.4,167.4 L 437.3,167.8 L 438.2,168.2 L 439.0,168.6 L 439.9,169.0 L 440.8,169.4 L 441.7,169.8 L 442.6,170.2 L 443.5,170.6 L 444.4,171.0 L 445.3,171.4 L 446.2,171.8 L 447.1,172.2 L 447.9,172.5 L 448.8,172.9 L 449.7,173.3 L 450.6,173.7 L 451.5,174.1 L 452.4,174.4 L 453.3,174.8 L 454.2,175.2 L 455.1,175.6 L 456.0,175.9 L 456.8,176.3 L 457.7,176.7 L 458.6,177.0 L 459.5,177.4 L 460.4,177.8 L 461.3,178.1 L 462.2,178.5 L 463.1,178.9 L 464.0,179.2 L 464.9,179.6 L 465.7,179.9 L 466.6,180.3 L 467.5,180.7 L 468.4,181.0 L 469.3,181.4 L 470.2,181.7 L 471.1,182.1 L 472.0,182.4 L 472.9,182.8 L 473.8,183.1 L 474.6,183.5 L 475.5,183.8 L 476.4,184.1 L 477.3,184.5 L 478.2,184.8 L 479.1,185.2 L 480.0,185.5 L 480.9,185.8 L 481.8,186.2 L 482.6,186.5 L 483.5,186.8 L 484.4,187.2 L 485.3,187.5 L 486.2,187.8 L 487.1,188.2 L 488.0,188.5 L 488.9,188.8 L 489.8,189.1 L 490.7,189.5 L 491.5,189.8 L 492.4,190.1 L 493.3,190.4 L 494.2,190.8 L 495.1,191.1 L 496.0,191.4 L 496.9,191.7 L 497.8,192.0 L 498.7,192.3 L 499.6,192.7 L 500.4,193.0 L 501.3,193.3 L 502.2,193.6 L 503.1,193.9 L 504.0,194.2 L 504.9,194.5 L 505.8,194.8 L 506.7,195.1 L 507.6,195.4 L 508.5,195.7 L 509.3,196.0 L 510.2,196.3 L 511.1,196.6 L 512.0,196.9 L 512.9,197.2 L 513.8,197.5 L 514.7,197.8 L 515.6,198.1 L 516.5,198.4 L 517.4,198.7 L 518.2,199.0 L 519.1,199.3 L 520.0,199.6 L 520.9,199.9 L 521.8,200.1 L 522.7,200.4 L 523.6,200.7 L 524.5,201.0 L 525.4,201.3 L 526.3,201.6 L 527.1,201.8 L 528.0,202.1 L 528.9,202.4 L 529.8,202.7 L 530.7,203.0 L 531.6,203.2 L 532.5,203.5 L 533.4,203.8 L 534.3,204.1 L 535.2,204.3 L 536.0,204.6 L 536.9,204.9 L 537.8,205.1 L 538.7,205.4 L 539.6,205.7 L 540.5,205.9 L 541.4,206.2 L 542.3,206.5 L 543.2,206.7 L 544.0,207.0 L 544.9,207.3 L 545.8,207.5 L 546.7,207.8 L 547.6,208.0 L 548.5,208.3 L 549.4,208.6 L 550.3,208.8 L 551.2,209.1 L 552.1,209.3 L 552.9,209.6 L 553.8,209.8 L 554.7,210.1 L 555.6,210.3 L 556.5,210.6 L 557.4,210.8 L 558.3,211.1 L 559.2,211.3 L 560.1,211.6 L 561.0,211.8 L 561.8,212.1 L 562.7,212.3 L 563.6,212.6 L 564.5,212.8 L 565.4,213.0 L 566.3,213.3 L 567.2,213.5 L 568.1,213.8 L 569.0,214.0 L 569.9,214.2 L 570.7,214.5 L 571.6,214.7 L 572.5,214.9 L 573.4,215.2 L 574.3,215.4 L 575.2,215.6 L 576.1,215.9 L 577.0,216.1 L 577.9,216.3 L 578.8,216.6 L 579.6,216.8 L 580.5,217.0 L 581.4,217.2 L 582.3,217.5 L 583.2,217.7 L 584.1,217.9 L 585.0,218.1 L 585.9,218.4 L 586.8,218.6 L 587.7,218.8 L 588.5,219.0 L 589.4,219.3 L 590.3,219.5 L 591.2,219.7 L 592.1,219.9 L 593.0,220.1 L 593.9,220.3 L 594.8,220.6 L 595.7,220.8 L 596.5,221.0 L 597.4,221.2 L 598.3,221.4 L 599.2,221.6 L 600.1,221.8 L 601.0,222.0 L 601.9,222.3 L 602.8,222.5 L 603.7,222.7 L 604.6,222.9 L 605.4,223.1 L 606.3,223.3 L 607.2,223.5 L 608.1,223.7 L 609.0,223.9 L 609.9,224.1 L 610.8,224.3 L 611.7,224.5 L 612.6,224.7 L 613.5,224.9 L 614.3,225.1 L 615.2,225.3 L 616.1,225.5 L 617.0,225.7 L 617.9,225.9 L 618.8,226.1 L 619.7,226.3 L 620.6,226.5 L 621.5,226.7 L 622.4,226.9 L 623.2,227.1 L 624.1,227.3 L 625.0,227.5 L 625.9,227.6 L 626.8,227.8 L 627.7,228.0 L 628.6,228.2 L 629.5,228.4 L 630.4,228.6 L 631.3,228.8 L 632.1,229.0 L 633.0,229.1 L 633.9,229.3 L 634.8,229.5 L 635.7,229.7 L 636.6,229.9 L 637.5,230.1 L 638.4,230.2 L 639.3,230.4 L 640.2,230.6 L 641.0,230.8 L 641.9,231.0 L 642.8,231.1 L 643.7,231.3 L 644.6,231.5 L 645.5,231.7 L 646.4,231.8 L 647.3,232.0 L 648.2,232.2 L 649.1,232.4 L 649.9,232.5 L 650.8,232.7 L 651.7,232.9 L 652.6,233.1 L 653.5,233.2 L 654.4,233.4 L 655.3,233.6 L 656.2,233.7 L 657.1,233.9 L 657.9,234.1 L 658.8,234.2 L 659.7,234.4 L 660.6,234.6 L 661.5,234.7 L 662.4,234.9 L 663.3,235.1 L 664.2,235.2 L 665.1,235.4 L 666.0,235.6 L 666.8,235.7 L 667.7,235.9 L 668.6,236.0 L 669.5,236.2 L 670.4,236.4 L 671.3,236.5 L 672.2,236.7 L 673.1,236.8 L 674.0,237.0 L 674.9,237.2 L 675.7,237.3 L 676.6,237.5 L 677.5,237.6 L 678.4,237.8 L 679.3,237.9 L 680.2,238.1 L 681.1,238.2 L 682.0,238.4 L 682.9,238.6 L 683.8,238.7 L 684.6,238.9 L 685.5,239.0 L 686.4,239.2 L 687.3,239.3 L 688.2,239.5 L 689.1,239.6 L 690.0,239.8 L 690.9,239.9 L 691.8,240.0 L 692.7,240.2 L 693.5,240.3 L 694.4,240.5 L 695.3,240.6 L 696.2,240.8 L 697.1,240.9 L 698.0,241.1 L 698.9,241.2 L 699.8,241.3 L 700.7,241.5 L 701.6,241.6 L 702.4,241.8 L 703.3,241.9 L 704.2,242.1 L 705.1,242.2 L 706.0,242.3" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5 3"/>
+<path d="M 84.0,282.0 L 84.9,282.0 L 85.8,282.0 L 86.7,282.0 L 87.6,282.0 L 88.4,282.0 L 89.3,282.0 L 90.2,282.0 L 91.1,282.0 L 92.0,282.0 L 92.9,282.0 L 93.8,282.0 L 94.7,282.0 L 95.6,282.0 L 96.5,282.0 L 97.3,282.0 L 98.2,282.0 L 99.1,282.0 L 100.0,282.0 L 100.9,282.0 L 101.8,282.0 L 102.7,282.0 L 103.6,282.0 L 104.5,282.0 L 105.4,282.0 L 106.2,282.0 L 107.1,282.0 L 108.0,282.0 L 108.9,282.0 L 109.8,282.0 L 110.7,282.0 L 111.6,282.0 L 112.5,282.0 L 113.4,282.0 L 114.3,282.0 L 115.1,282.0 L 116.0,282.0 L 116.9,282.0 L 117.8,282.0 L 118.7,282.0 L 119.6,282.0 L 120.5,282.0 L 121.4,282.0 L 122.3,282.0 L 123.2,282.0 L 124.0,282.0 L 124.9,282.0 L 125.8,282.0 L 126.7,282.0 L 127.6,282.0 L 128.5,282.0 L 129.4,282.0 L 130.3,282.0 L 131.2,282.0 L 132.1,282.0 L 132.9,282.0 L 133.8,282.0 L 134.7,282.0 L 135.6,282.0 L 136.5,282.0 L 137.4,282.0 L 138.3,282.0 L 139.2,282.0 L 140.1,282.0 L 140.9,282.0 L 141.8,282.0 L 142.7,282.0 L 143.6,282.0 L 144.5,282.0 L 145.4,282.0 L 146.3,282.0 L 147.2,282.0 L 148.1,282.0 L 149.0,282.0 L 149.8,282.0 L 150.7,282.0 L 151.6,282.0 L 152.5,282.0 L 153.4,282.0 L 154.3,282.0 L 155.2,282.0 L 156.1,282.0 L 157.0,282.0 L 157.9,282.0 L 158.7,282.0 L 159.6,282.0 L 160.5,282.0 L 161.4,282.0 L 162.3,282.0 L 163.2,282.0 L 164.1,282.0 L 165.0,282.0 L 165.9,282.0 L 166.8,282.0 L 167.6,282.0 L 168.5,282.0 L 169.4,282.0 L 170.3,282.0 L 171.2,282.0 L 172.1,282.0 L 173.0,282.0 L 173.9,282.0 L 174.8,282.0 L 175.7,282.0 L 176.5,282.0 L 177.4,282.0 L 178.3,282.0 L 179.2,282.0 L 180.1,282.0 L 181.0,282.0 L 181.9,282.0 L 182.8,282.0 L 183.7,282.0 L 184.6,282.0 L 185.4,282.0 L 186.3,282.0 L 187.2,282.0 L 188.1,282.0 L 189.0,282.0 L 189.9,282.0 L 190.8,282.0 L 191.7,282.0 L 192.6,282.0 L 193.5,282.0 L 194.3,282.0 L 195.2,282.0 L 196.1,282.0 L 197.0,282.0 L 197.9,282.0 L 198.8,282.0 L 199.7,282.0 L 200.6,282.0 L 201.5,282.0 L 202.3,282.0 L 203.2,282.0 L 204.1,282.0 L 205.0,282.0 L 205.9,282.0 L 206.8,282.0 L 207.7,282.0 L 208.6,282.0 L 209.5,282.0 L 210.4,282.0 L 211.2,282.0 L 212.1,282.0 L 213.0,282.0 L 213.9,282.0 L 214.8,282.0 L 215.7,282.0 L 216.6,282.0 L 217.5,282.0 L 218.4,282.0 L 219.3,282.0 L 220.1,282.0 L 221.0,282.0 L 221.9,282.0 L 222.8,282.0 L 223.7,282.0 L 224.6,282.0 L 225.5,282.0 L 226.4,282.0 L 227.3,282.0 L 228.2,282.0 L 229.0,282.0 L 229.9,282.0 L 230.8,282.0 L 231.7,282.0 L 232.6,282.0 L 233.5,282.0 L 234.4,282.0 L 235.3,282.0 L 236.2,282.0 L 237.1,282.0 L 237.9,282.0 L 238.8,282.0 L 239.7,282.0 L 240.6,282.0 L 241.5,282.0 L 242.4,282.0 L 243.3,282.0 L 244.2,282.0 L 245.1,282.0 L 246.0,282.0 L 246.8,282.0 L 247.7,282.0 L 248.6,282.0 L 249.5,282.0 L 250.4,282.0 L 251.3,282.0 L 252.2,282.0 L 253.1,282.0 L 254.0,282.0 L 254.8,282.0 L 255.7,282.0 L 256.6,282.0 L 257.5,282.0 L 258.4,282.0 L 259.3,282.0 L 260.2,282.0 L 261.1,282.0 L 262.0,282.0 L 262.9,282.0 L 263.7,282.0 L 264.6,282.0 L 265.5,282.0 L 266.4,282.0 L 267.3,282.0 L 268.2,282.0 L 269.1,282.0 L 270.0,282.0 L 270.9,282.0 L 271.8,282.0 L 272.6,282.0 L 273.5,282.0 L 274.4,282.0 L 275.3,282.0 L 276.2,282.0 L 277.1,282.0 L 278.0,282.0 L 278.9,282.0 L 279.8,282.0 L 280.7,282.0 L 281.5,282.0 L 282.4,282.0 L 283.3,282.0 L 284.2,282.0 L 285.1,282.0 L 286.0,282.0 L 286.9,282.0 L 287.8,282.0 L 288.7,282.0 L 289.6,282.0 L 290.4,282.0 L 291.3,282.0 L 292.2,282.0 L 293.1,282.0 L 294.0,282.0 L 294.9,282.0 L 295.8,282.0 L 296.7,282.0 L 297.6,282.0 L 298.5,282.0 L 299.3,282.0 L 300.2,282.0 L 301.1,282.0 L 302.0,282.0 L 302.9,282.0 L 303.8,282.0 L 304.7,282.0 L 305.6,278.2 L 306.5,259.2 L 307.4,250.2 L 308.2,243.4 L 309.1,237.8 L 310.0,232.9 L 310.9,228.6 L 311.8,224.8 L 312.7,221.2 L 313.6,218.0 L 314.5,215.0 L 315.4,212.3 L 316.2,209.7 L 317.1,207.2 L 318.0,205.0 L 318.9,202.8 L 319.8,200.8 L 320.7,198.8 L 321.6,197.0 L 322.5,195.3 L 323.4,193.7 L 324.3,192.1 L 325.1,190.6 L 326.0,189.2 L 326.9,187.8 L 327.8,186.5 L 328.7,185.3 L 329.6,184.1 L 330.5,183.0 L 331.4,182.0 L 332.3,180.9 L 333.2,180.0 L 334.0,179.0 L 334.9,178.1 L 335.8,177.3 L 336.7,176.5 L 337.6,175.7 L 338.5,174.9 L 339.4,174.2 L 340.3,173.5 L 341.2,172.9 L 342.1,172.3 L 342.9,171.7 L 343.8,171.1 L 344.7,170.6 L 345.6,170.1 L 346.5,169.6 L 347.4,169.1 L 348.3,168.7 L 349.2,168.2 L 350.1,167.8 L 351.0,167.5 L 351.8,167.1 L 352.7,166.8 L 353.6,166.5 L 354.5,166.2 L 355.4,165.9 L 356.3,165.6 L 357.2,165.3 L 358.1,165.1 L 359.0,164.9 L 359.9,164.7 L 360.7,164.5 L 361.6,164.3 L 362.5,164.2 L 363.4,164.0 L 364.3,163.9 L 365.2,163.7 L 366.1,163.6 L 367.0,163.5 L 367.9,163.4 L 368.7,163.4 L 369.6,163.3 L 370.5,163.2 L 371.4,163.2 L 372.3,163.2 L 373.2,163.1 L 374.1,163.1 L 375.0,163.1 L 375.9,163.1 L 376.8,163.1 L 377.6,163.1 L 378.5,163.2 L 379.4,163.2 L 380.3,163.2 L 381.2,163.3 L 382.1,163.3 L 383.0,163.4 L 383.9,163.5 L 384.8,163.5 L 385.7,163.6 L 386.5,163.7 L 387.4,163.8 L 388.3,163.9 L 389.2,164.0 L 390.1,164.1 L 391.0,164.3 L 391.9,164.4 L 392.8,164.5 L 393.7,164.6 L 394.6,164.8 L 395.4,164.9 L 396.3,165.1 L 397.2,165.2 L 398.1,165.4 L 399.0,165.6 L 399.9,165.7 L 400.8,165.9 L 401.7,166.1 L 402.6,166.2 L 403.5,166.4 L 404.3,166.6 L 405.2,166.8 L 406.1,167.0 L 407.0,167.2 L 407.9,167.4 L 408.8,167.6 L 409.7,167.8 L 410.6,168.0 L 411.5,168.2 L 412.4,168.4 L 413.2,168.6 L 414.1,168.9 L 415.0,169.1 L 415.9,169.3 L 416.8,169.5 L 417.7,169.8 L 418.6,170.0 L 419.5,170.2 L 420.4,170.5 L 421.3,170.7 L 422.1,170.9 L 423.0,171.2 L 423.9,171.4 L 424.8,171.7 L 425.7,171.9 L 426.6,172.2 L 427.5,172.4 L 428.4,172.7 L 429.3,172.9 L 430.1,173.2 L 431.0,173.4 L 431.9,173.7 L 432.8,174.0 L 433.7,174.2 L 434.6,174.5 L 435.5,174.7 L 436.4,175.0 L 437.3,175.3 L 438.2,175.5 L 439.0,175.8 L 439.9,176.1 L 440.8,176.3 L 441.7,176.6 L 442.6,176.9 L 443.5,177.2 L 444.4,177.4 L 445.3,177.7 L 446.2,178.0 L 447.1,178.3 L 447.9,178.5 L 448.8,178.8 L 449.7,179.1 L 450.6,179.4 L 451.5,179.6 L 452.4,179.9 L 453.3,180.2 L 454.2,180.5 L 455.1,180.8 L 456.0,181.0 L 456.8,181.3 L 457.7,181.6 L 458.6,181.9 L 459.5,182.2 L 460.4,182.4 L 461.3,182.7 L 462.2,183.0 L 463.1,183.3 L 464.0,183.6 L 464.9,183.9 L 465.7,184.1 L 466.6,184.4 L 467.5,184.7 L 468.4,185.0 L 469.3,185.3 L 470.2,185.5 L 471.1,185.8 L 472.0,186.1 L 472.9,186.4 L 473.8,186.7 L 474.6,187.0 L 475.5,187.2 L 476.4,187.5 L 477.3,187.8 L 478.2,188.1 L 479.1,188.4 L 480.0,188.7 L 480.9,188.9 L 481.8,189.2 L 482.6,189.5 L 483.5,189.8 L 484.4,190.1 L 485.3,190.3 L 486.2,190.6 L 487.1,190.9 L 488.0,191.2 L 488.9,191.5 L 489.8,191.7 L 490.7,192.0 L 491.5,192.3 L 492.4,192.6 L 493.3,192.9 L 494.2,193.1 L 495.1,193.4 L 496.0,193.7 L 496.9,194.0 L 497.8,194.2 L 498.7,194.5 L 499.6,194.8 L 500.4,195.1 L 501.3,195.3 L 502.2,195.6 L 503.1,195.9 L 504.0,196.2 L 504.9,196.4 L 505.8,196.7 L 506.7,197.0 L 507.6,197.2 L 508.5,197.5 L 509.3,197.8 L 510.2,198.1 L 511.1,198.3 L 512.0,198.6 L 512.9,198.9 L 513.8,199.1 L 514.7,199.4 L 515.6,199.7 L 516.5,199.9 L 517.4,200.2 L 518.2,200.5 L 519.1,200.7 L 520.0,201.0 L 520.9,201.2 L 521.8,201.5 L 522.7,201.8 L 523.6,202.0 L 524.5,202.3 L 525.4,202.6 L 526.3,202.8 L 527.1,203.1 L 528.0,203.3 L 528.9,203.6 L 529.8,203.8 L 530.7,204.1 L 531.6,204.4 L 532.5,204.6 L 533.4,204.9 L 534.3,205.1 L 535.2,205.4 L 536.0,205.6 L 536.9,205.9 L 537.8,206.1 L 538.7,206.4 L 539.6,206.6 L 540.5,206.9 L 541.4,207.1 L 542.3,207.4 L 543.2,207.6 L 544.0,207.9 L 544.9,208.1 L 545.8,208.4 L 546.7,208.6 L 547.6,208.9 L 548.5,209.1 L 549.4,209.4 L 550.3,209.6 L 551.2,209.8 L 552.1,210.1 L 552.9,210.3 L 553.8,210.6 L 554.7,210.8 L 555.6,211.0 L 556.5,211.3 L 557.4,211.5 L 558.3,211.7 L 559.2,212.0 L 560.1,212.2 L 561.0,212.5 L 561.8,212.7 L 562.7,212.9 L 563.6,213.2 L 564.5,213.4 L 565.4,213.6 L 566.3,213.9 L 567.2,214.1 L 568.1,214.3 L 569.0,214.5 L 569.9,214.8 L 570.7,215.0 L 571.6,215.2 L 572.5,215.4 L 573.4,215.7 L 574.3,215.9 L 575.2,216.1 L 576.1,216.3 L 577.0,216.6 L 577.9,216.8 L 578.8,217.0 L 579.6,217.2 L 580.5,217.5 L 581.4,217.7 L 582.3,217.9 L 583.2,218.1 L 584.1,218.3 L 585.0,218.5 L 585.9,218.8 L 586.8,219.0 L 587.7,219.2 L 588.5,219.4 L 589.4,219.6 L 590.3,219.8 L 591.2,220.0 L 592.1,220.3 L 593.0,220.5 L 593.9,220.7 L 594.8,220.9 L 595.7,221.1 L 596.5,221.3 L 597.4,221.5 L 598.3,221.7 L 599.2,221.9 L 600.1,222.1 L 601.0,222.3 L 601.9,222.5 L 602.8,222.7 L 603.7,222.9 L 604.6,223.1 L 605.4,223.4 L 606.3,223.6 L 607.2,223.8 L 608.1,224.0 L 609.0,224.2 L 609.9,224.4 L 610.8,224.5 L 611.7,224.7 L 612.6,224.9 L 613.5,225.1 L 614.3,225.3 L 615.2,225.5 L 616.1,225.7 L 617.0,225.9 L 617.9,226.1 L 618.8,226.3 L 619.7,226.5 L 620.6,226.7 L 621.5,226.9 L 622.4,227.1 L 623.2,227.3 L 624.1,227.4 L 625.0,227.6 L 625.9,227.8 L 626.8,228.0 L 627.7,228.2 L 628.6,228.4 L 629.5,228.6 L 630.4,228.7 L 631.3,228.9 L 632.1,229.1 L 633.0,229.3 L 633.9,229.5 L 634.8,229.7 L 635.7,229.8 L 636.6,230.0 L 637.5,230.2 L 638.4,230.4 L 639.3,230.6 L 640.2,230.7 L 641.0,230.9 L 641.9,231.1 L 642.8,231.3 L 643.7,231.4 L 644.6,231.6 L 645.5,231.8 L 646.4,232.0 L 647.3,232.1 L 648.2,232.3 L 649.1,232.5 L 649.9,232.7 L 650.8,232.8 L 651.7,233.0 L 652.6,233.2 L 653.5,233.3 L 654.4,233.5 L 655.3,233.7 L 656.2,233.8 L 657.1,234.0 L 657.9,234.2 L 658.8,234.3 L 659.7,234.5 L 660.6,234.7 L 661.5,234.8 L 662.4,235.0 L 663.3,235.2 L 664.2,235.3 L 665.1,235.5 L 666.0,235.6 L 666.8,235.8 L 667.7,236.0 L 668.6,236.1 L 669.5,236.3 L 670.4,236.4 L 671.3,236.6 L 672.2,236.8 L 673.1,236.9 L 674.0,237.1 L 674.9,237.2 L 675.7,237.4 L 676.6,237.5 L 677.5,237.7 L 678.4,237.8 L 679.3,238.0 L 680.2,238.2 L 681.1,238.3 L 682.0,238.5 L 682.9,238.6 L 683.8,238.8 L 684.6,238.9 L 685.5,239.1 L 686.4,239.2 L 687.3,239.4 L 688.2,239.5 L 689.1,239.7 L 690.0,239.8 L 690.9,239.9 L 691.8,240.1 L 692.7,240.2 L 693.5,240.4 L 694.4,240.5 L 695.3,240.7 L 696.2,240.8 L 697.1,241.0 L 698.0,241.1 L 698.9,241.2 L 699.8,241.4 L 700.7,241.5 L 701.6,241.7 L 702.4,241.8 L 703.3,242.0 L 704.2,242.1 L 705.1,242.2 L 706.0,242.4" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<line x1="305.5" y1="282.0" x2="305.5" y2="58" stroke="#2dd4bf" stroke-width="1.6" stroke-dasharray="4 3"/>
+<line x1="375.4" y1="282.0" x2="375.4" y2="163.1" stroke="#facc15" stroke-width="1.6" stroke-dasharray="4 3"/>
+<circle cx="375.4" cy="163.1" r="4.2" fill="#facc15"/>
+<text x="297.5" y="230.8" font-size="10.5" text-anchor="end" fill="#2dd4bf">λ<tspan baseline-shift="sub" font-size="75%">c</tspan> = 1.71 cm</text>
+<text x="297.5" y="253.2" font-size="10.5" text-anchor="end" fill="#2dd4bf">nothing shorter grows</text>
+<text x="696" y="70.8" font-size="10.5" text-anchor="end" fill="#94a3b8">σ = √(Agk), no tension</text>
+<text x="696" y="93.2" font-size="10.5" text-anchor="end" fill="#fb923c">σ = √(Agk − T<tspan baseline-shift="sub" font-size="75%">s</tspan> k³/(ρ₁+ρ₂))</text>
+<text x="696" y="115.6" font-size="10.5" text-anchor="end" fill="#facc15">λ<tspan baseline-shift="sub" font-size="75%">max</tspan> = 2.97 cm, σ = 37.2 s⁻¹ (27 ms)</text>
+<text x="696" y="138.0" font-size="10.5" text-anchor="end" fill="#cbd5e1">A = 0.9976, T<tspan baseline-shift="sub" font-size="75%">s</tspan> = 72.75 dyn/cm, 20 °C</text>
+<text x="395" y="366" font-size="12.5" text-anchor="middle" fill="#cbd5e1">Kelvin–Helmholtz on the CME flank: what gravity would do if it acted across the interface</text>
+<rect x="84" y="396" width="622" height="170" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="84.0" y1="566" x2="84.0" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="84.0" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">2000</text>
+<line x1="294.5" y1="566" x2="294.5" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="294.5" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">5000</text>
+<line x1="453.7" y1="566" x2="453.7" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="453.7" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">10000</text>
+<line x1="612.9" y1="566" x2="612.9" y2="571" stroke="#334155" stroke-width="1"/>
+<text x="612.9" y="584" font-size="10.5" text-anchor="middle" fill="#94a3b8">20000</text>
+<line x1="79" y1="566.0" x2="84" y2="566.0" stroke="#334155" stroke-width="1"/>
+<text x="75" y="570.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="79" y1="512.9" x2="84" y2="512.9" stroke="#334155" stroke-width="1"/>
+<text x="75" y="516.9" font-size="10.5" text-anchor="end" fill="#94a3b8">10</text>
+<line x1="79" y1="459.8" x2="84" y2="459.8" stroke="#334155" stroke-width="1"/>
+<text x="75" y="463.8" font-size="10.5" text-anchor="end" fill="#94a3b8">20</text>
+<line x1="79" y1="406.6" x2="84" y2="406.6" stroke="#334155" stroke-width="1"/>
+<text x="75" y="410.6" font-size="10.5" text-anchor="end" fill="#94a3b8">30</text>
+<text x="395" y="602" font-size="11.5" text-anchor="middle" fill="#cbd5e1">wavelength λ / km</text>
+<text x="36" y="481" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 36 481)">σ / 10⁻³ s⁻¹</text>
+<path d="M 84.0,411.8 L 84.9,412.4 L 85.8,412.9 L 86.7,413.5 L 87.6,414.1 L 88.4,414.7 L 89.3,415.3 L 90.2,415.9 L 91.1,416.5 L 92.0,417.0 L 92.9,417.6 L 93.8,418.2 L 94.7,418.8 L 95.6,419.3 L 96.5,419.9 L 97.3,420.5 L 98.2,421.0 L 99.1,421.6 L 100.0,422.1 L 100.9,422.7 L 101.8,423.3 L 102.7,423.8 L 103.6,424.4 L 104.5,424.9 L 105.4,425.5 L 106.2,426.0 L 107.1,426.5 L 108.0,427.1 L 108.9,427.6 L 109.8,428.1 L 110.7,428.7 L 111.6,429.2 L 112.5,429.7 L 113.4,430.3 L 114.3,430.8 L 115.1,431.3 L 116.0,431.8 L 116.9,432.4 L 117.8,432.9 L 118.7,433.4 L 119.6,433.9 L 120.5,434.4 L 121.4,434.9 L 122.3,435.4 L 123.2,435.9 L 124.0,436.4 L 124.9,436.9 L 125.8,437.4 L 126.7,437.9 L 127.6,438.4 L 128.5,438.9 L 129.4,439.4 L 130.3,439.9 L 131.2,440.4 L 132.1,440.9 L 132.9,441.4 L 133.8,441.8 L 134.7,442.3 L 135.6,442.8 L 136.5,443.3 L 137.4,443.7 L 138.3,444.2 L 139.2,444.7 L 140.1,445.2 L 140.9,445.6 L 141.8,446.1 L 142.7,446.6 L 143.6,447.0 L 144.5,447.5 L 145.4,447.9 L 146.3,448.4 L 147.2,448.8 L 148.1,449.3 L 149.0,449.8 L 149.8,450.2 L 150.7,450.7 L 151.6,451.1 L 152.5,451.5 L 153.4,452.0 L 154.3,452.4 L 155.2,452.9 L 156.1,453.3 L 157.0,453.7 L 157.9,454.2 L 158.7,454.6 L 159.6,455.0 L 160.5,455.5 L 161.4,455.9 L 162.3,456.3 L 163.2,456.7 L 164.1,457.2 L 165.0,457.6 L 165.9,458.0 L 166.8,458.4 L 167.6,458.8 L 168.5,459.3 L 169.4,459.7 L 170.3,460.1 L 171.2,460.5 L 172.1,460.9 L 173.0,461.3 L 173.9,461.7 L 174.8,462.1 L 175.7,462.5 L 176.5,462.9 L 177.4,463.3 L 178.3,463.7 L 179.2,464.1 L 180.1,464.5 L 181.0,464.9 L 181.9,465.3 L 182.8,465.7 L 183.7,466.1 L 184.6,466.4 L 185.4,466.8 L 186.3,467.2 L 187.2,467.6 L 188.1,468.0 L 189.0,468.4 L 189.9,468.7 L 190.8,469.1 L 191.7,469.5 L 192.6,469.9 L 193.5,470.2 L 194.3,470.6 L 195.2,471.0 L 196.1,471.3 L 197.0,471.7 L 197.9,472.1 L 198.8,472.4 L 199.7,472.8 L 200.6,473.1 L 201.5,473.5 L 202.3,473.9 L 203.2,474.2 L 204.1,474.6 L 205.0,474.9 L 205.9,475.3 L 206.8,475.6 L 207.7,476.0 L 208.6,476.3 L 209.5,476.7 L 210.4,477.0 L 211.2,477.4 L 212.1,477.7 L 213.0,478.0 L 213.9,478.4 L 214.8,478.7 L 215.7,479.1 L 216.6,479.4 L 217.5,479.7 L 218.4,480.1 L 219.3,480.4 L 220.1,480.7 L 221.0,481.1 L 221.9,481.4 L 222.8,481.7 L 223.7,482.0 L 224.6,482.4 L 225.5,482.7 L 226.4,483.0 L 227.3,483.3 L 228.2,483.7 L 229.0,484.0 L 229.9,484.3 L 230.8,484.6 L 231.7,484.9 L 232.6,485.2 L 233.5,485.5 L 234.4,485.9 L 235.3,486.2 L 236.2,486.5 L 237.1,486.8 L 237.9,487.1 L 238.8,487.4 L 239.7,487.7 L 240.6,488.0 L 241.5,488.3 L 242.4,488.6 L 243.3,488.9 L 244.2,489.2 L 245.1,489.5 L 246.0,489.8 L 246.8,490.1 L 247.7,490.4 L 248.6,490.7 L 249.5,491.0 L 250.4,491.3 L 251.3,491.5 L 252.2,491.8 L 253.1,492.1 L 254.0,492.4 L 254.8,492.7 L 255.7,493.0 L 256.6,493.3 L 257.5,493.5 L 258.4,493.8 L 259.3,494.1 L 260.2,494.4 L 261.1,494.7 L 262.0,494.9 L 262.9,495.2 L 263.7,495.5 L 264.6,495.7 L 265.5,496.0 L 266.4,496.3 L 267.3,496.6 L 268.2,496.8 L 269.1,497.1 L 270.0,497.4 L 270.9,497.6 L 271.8,497.9 L 272.6,498.2 L 273.5,498.4 L 274.4,498.7 L 275.3,498.9 L 276.2,499.2 L 277.1,499.5 L 278.0,499.7 L 278.9,500.0 L 279.8,500.2 L 280.7,500.5 L 281.5,500.7 L 282.4,501.0 L 283.3,501.2 L 284.2,501.5 L 285.1,501.7 L 286.0,502.0 L 286.9,502.2 L 287.8,502.5 L 288.7,502.7 L 289.6,503.0 L 290.4,503.2 L 291.3,503.5 L 292.2,503.7 L 293.1,503.9 L 294.0,504.2 L 294.9,504.4 L 295.8,504.7 L 296.7,504.9 L 297.6,505.1 L 298.5,505.4 L 299.3,505.6 L 300.2,505.8 L 301.1,506.1 L 302.0,506.3 L 302.9,506.5 L 303.8,506.8 L 304.7,507.0 L 305.6,507.2 L 306.5,507.4 L 307.4,507.7 L 308.2,507.9 L 309.1,508.1 L 310.0,508.3 L 310.9,508.6 L 311.8,508.8 L 312.7,509.0 L 313.6,509.2 L 314.5,509.5 L 315.4,509.7 L 316.2,509.9 L 317.1,510.1 L 318.0,510.3 L 318.9,510.5 L 319.8,510.8 L 320.7,511.0 L 321.6,511.2 L 322.5,511.4 L 323.4,511.6 L 324.3,511.8 L 325.1,512.0 L 326.0,512.2 L 326.9,512.4 L 327.8,512.6 L 328.7,512.8 L 329.6,513.1 L 330.5,513.3 L 331.4,513.5 L 332.3,513.7 L 333.2,513.9 L 334.0,514.1 L 334.9,514.3 L 335.8,514.5 L 336.7,514.7 L 337.6,514.9 L 338.5,515.1 L 339.4,515.3 L 340.3,515.5 L 341.2,515.7 L 342.1,515.9 L 342.9,516.0 L 343.8,516.2 L 344.7,516.4 L 345.6,516.6 L 346.5,516.8 L 347.4,517.0 L 348.3,517.2 L 349.2,517.4 L 350.1,517.6 L 351.0,517.8 L 351.8,517.9 L 352.7,518.1 L 353.6,518.3 L 354.5,518.5 L 355.4,518.7 L 356.3,518.9 L 357.2,519.0 L 358.1,519.2 L 359.0,519.4 L 359.9,519.6 L 360.7,519.8 L 361.6,519.9 L 362.5,520.1 L 363.4,520.3 L 364.3,520.5 L 365.2,520.7 L 366.1,520.8 L 367.0,521.0 L 367.9,521.2 L 368.7,521.4 L 369.6,521.5 L 370.5,521.7 L 371.4,521.9 L 372.3,522.0 L 373.2,522.2 L 374.1,522.4 L 375.0,522.5 L 375.9,522.7 L 376.8,522.9 L 377.6,523.0 L 378.5,523.2 L 379.4,523.4 L 380.3,523.5 L 381.2,523.7 L 382.1,523.9 L 383.0,524.0 L 383.9,524.2 L 384.8,524.4 L 385.7,524.5 L 386.5,524.7 L 387.4,524.8 L 388.3,525.0 L 389.2,525.2 L 390.1,525.3 L 391.0,525.5 L 391.9,525.6 L 392.8,525.8 L 393.7,525.9 L 394.6,526.1 L 395.4,526.3 L 396.3,526.4 L 397.2,526.6 L 398.1,526.7 L 399.0,526.9 L 399.9,527.0 L 400.8,527.2 L 401.7,527.3 L 402.6,527.5 L 403.5,527.6 L 404.3,527.8 L 405.2,527.9 L 406.1,528.1 L 407.0,528.2 L 407.9,528.4 L 408.8,528.5 L 409.7,528.6 L 410.6,528.8 L 411.5,528.9 L 412.4,529.1 L 413.2,529.2 L 414.1,529.4 L 415.0,529.5 L 415.9,529.6 L 416.8,529.8 L 417.7,529.9 L 418.6,530.1 L 419.5,530.2 L 420.4,530.3 L 421.3,530.5 L 422.1,530.6 L 423.0,530.8 L 423.9,530.9 L 424.8,531.0 L 425.7,531.2 L 426.6,531.3 L 427.5,531.4 L 428.4,531.6 L 429.3,531.7 L 430.1,531.8 L 431.0,532.0 L 431.9,532.1 L 432.8,532.2 L 433.7,532.4 L 434.6,532.5 L 435.5,532.6 L 436.4,532.7 L 437.3,532.9 L 438.2,533.0 L 439.0,533.1 L 439.9,533.3 L 440.8,533.4 L 441.7,533.5 L 442.6,533.6 L 443.5,533.8 L 444.4,533.9 L 445.3,534.0 L 446.2,534.1 L 447.1,534.3 L 447.9,534.4 L 448.8,534.5 L 449.7,534.6 L 450.6,534.7 L 451.5,534.9 L 452.4,535.0 L 453.3,535.1 L 454.2,535.2 L 455.1,535.3 L 456.0,535.5 L 456.8,535.6 L 457.7,535.7 L 458.6,535.8 L 459.5,535.9 L 460.4,536.0 L 461.3,536.2 L 462.2,536.3 L 463.1,536.4 L 464.0,536.5 L 464.9,536.6 L 465.7,536.7 L 466.6,536.8 L 467.5,537.0 L 468.4,537.1 L 469.3,537.2 L 470.2,537.3 L 471.1,537.4 L 472.0,537.5 L 472.9,537.6 L 473.8,537.7 L 474.6,537.8 L 475.5,538.0 L 476.4,538.1 L 477.3,538.2 L 478.2,538.3 L 479.1,538.4 L 480.0,538.5 L 480.9,538.6 L 481.8,538.7 L 482.6,538.8 L 483.5,538.9 L 484.4,539.0 L 485.3,539.1 L 486.2,539.2 L 487.1,539.3 L 488.0,539.4 L 488.9,539.5 L 489.8,539.6 L 490.7,539.7 L 491.5,539.8 L 492.4,539.9 L 493.3,540.0 L 494.2,540.1 L 495.1,540.2 L 496.0,540.3 L 496.9,540.4 L 497.8,540.5 L 498.7,540.6 L 499.6,540.7 L 500.4,540.8 L 501.3,540.9 L 502.2,541.0 L 503.1,541.1 L 504.0,541.2 L 504.9,541.3 L 505.8,541.4 L 506.7,541.5 L 507.6,541.6 L 508.5,541.7 L 509.3,541.8 L 510.2,541.9 L 511.1,542.0 L 512.0,542.1 L 512.9,542.2 L 513.8,542.3 L 514.7,542.3 L 515.6,542.4 L 516.5,542.5 L 517.4,542.6 L 518.2,542.7 L 519.1,542.8 L 520.0,542.9 L 520.9,543.0 L 521.8,543.1 L 522.7,543.2 L 523.6,543.2 L 524.5,543.3 L 525.4,543.4 L 526.3,543.5 L 527.1,543.6 L 528.0,543.7 L 528.9,543.8 L 529.8,543.9 L 530.7,543.9 L 531.6,544.0 L 532.5,544.1 L 533.4,544.2 L 534.3,544.3 L 535.2,544.4 L 536.0,544.4 L 536.9,544.5 L 537.8,544.6 L 538.7,544.7 L 539.6,544.8 L 540.5,544.9 L 541.4,544.9 L 542.3,545.0 L 543.2,545.1 L 544.0,545.2 L 544.9,545.3 L 545.8,545.3 L 546.7,545.4 L 547.6,545.5 L 548.5,545.6 L 549.4,545.7 L 550.3,545.7 L 551.2,545.8 L 552.1,545.9 L 552.9,546.0 L 553.8,546.1 L 554.7,546.1 L 555.6,546.2 L 556.5,546.3 L 557.4,546.4 L 558.3,546.4 L 559.2,546.5 L 560.1,546.6 L 561.0,546.7 L 561.8,546.7 L 562.7,546.8 L 563.6,546.9 L 564.5,547.0 L 565.4,547.0 L 566.3,547.1 L 567.2,547.2 L 568.1,547.3 L 569.0,547.3 L 569.9,547.4 L 570.7,547.5 L 571.6,547.5 L 572.5,547.6 L 573.4,547.7 L 574.3,547.8 L 575.2,547.8 L 576.1,547.9 L 577.0,548.0 L 577.9,548.0 L 578.8,548.1 L 579.6,548.2 L 580.5,548.2 L 581.4,548.3 L 582.3,548.4 L 583.2,548.4 L 584.1,548.5 L 585.0,548.6 L 585.9,548.7 L 586.8,548.7 L 587.7,548.8 L 588.5,548.9 L 589.4,548.9 L 590.3,549.0 L 591.2,549.1 L 592.1,549.1 L 593.0,549.2 L 593.9,549.2 L 594.8,549.3 L 595.7,549.4 L 596.5,549.4 L 597.4,549.5 L 598.3,549.6 L 599.2,549.6 L 600.1,549.7 L 601.0,549.8 L 601.9,549.8 L 602.8,549.9 L 603.7,549.9 L 604.6,550.0 L 605.4,550.1 L 606.3,550.1 L 607.2,550.2 L 608.1,550.3 L 609.0,550.3 L 609.9,550.4 L 610.8,550.4 L 611.7,550.5 L 612.6,550.6 L 613.5,550.6 L 614.3,550.7 L 615.2,550.7 L 616.1,550.8 L 617.0,550.9 L 617.9,550.9 L 618.8,551.0 L 619.7,551.0 L 620.6,551.1 L 621.5,551.1 L 622.4,551.2 L 623.2,551.3 L 624.1,551.3 L 625.0,551.4 L 625.9,551.4 L 626.8,551.5 L 627.7,551.5 L 628.6,551.6 L 629.5,551.7 L 630.4,551.7 L 631.3,551.8 L 632.1,551.8 L 633.0,551.9 L 633.9,551.9 L 634.8,552.0 L 635.7,552.0 L 636.6,552.1 L 637.5,552.1 L 638.4,552.2 L 639.3,552.3 L 640.2,552.3 L 641.0,552.4 L 641.9,552.4 L 642.8,552.5 L 643.7,552.5 L 644.6,552.6 L 645.5,552.6 L 646.4,552.7 L 647.3,552.7 L 648.2,552.8 L 649.1,552.8 L 649.9,552.9 L 650.8,552.9 L 651.7,553.0 L 652.6,553.0 L 653.5,553.1 L 654.4,553.1 L 655.3,553.2 L 656.2,553.2 L 657.1,553.3 L 657.9,553.3 L 658.8,553.4 L 659.7,553.4 L 660.6,553.5 L 661.5,553.5 L 662.4,553.6 L 663.3,553.6 L 664.2,553.7 L 665.1,553.7 L 666.0,553.8 L 666.8,553.8 L 667.7,553.9 L 668.6,553.9 L 669.5,553.9 L 670.4,554.0 L 671.3,554.0 L 672.2,554.1 L 673.1,554.1 L 674.0,554.2 L 674.9,554.2 L 675.7,554.3 L 676.6,554.3 L 677.5,554.4 L 678.4,554.4 L 679.3,554.4 L 680.2,554.5 L 681.1,554.5 L 682.0,554.6 L 682.9,554.6 L 683.8,554.7 L 684.6,554.7 L 685.5,554.8 L 686.4,554.8 L 687.3,554.8 L 688.2,554.9 L 689.1,554.9 L 690.0,555.0 L 690.9,555.0 L 691.8,555.1 L 692.7,555.1 L 693.5,555.1 L 694.4,555.2 L 695.3,555.2 L 696.2,555.3 L 697.1,555.3 L 698.0,555.4 L 698.9,555.4 L 699.8,555.4 L 700.7,555.5 L 701.6,555.5 L 702.4,555.6 L 703.3,555.6 L 704.2,555.6 L 705.1,555.7 L 706.0,555.7" fill="none" stroke="#fb923c" stroke-width="2.6"/>
+<path d="M 84.0,445.6 L 84.9,446.2 L 85.8,446.8 L 86.7,447.4 L 87.6,448.0 L 88.4,448.6 L 89.3,449.2 L 90.2,449.8 L 91.1,450.4 L 92.0,451.0 L 92.9,451.6 L 93.8,452.2 L 94.7,452.8 L 95.6,453.4 L 96.5,454.0 L 97.3,454.6 L 98.2,455.1 L 99.1,455.7 L 100.0,456.3 L 100.9,456.9 L 101.8,457.5 L 102.7,458.0 L 103.6,458.6 L 104.5,459.2 L 105.4,459.7 L 106.2,460.3 L 107.1,460.9 L 108.0,461.4 L 108.9,462.0 L 109.8,462.5 L 110.7,463.1 L 111.6,463.7 L 112.5,464.2 L 113.4,464.8 L 114.3,465.3 L 115.1,465.8 L 116.0,466.4 L 116.9,466.9 L 117.8,467.5 L 118.7,468.0 L 119.6,468.5 L 120.5,469.1 L 121.4,469.6 L 122.3,470.1 L 123.2,470.7 L 124.0,471.2 L 124.9,471.7 L 125.8,472.3 L 126.7,472.8 L 127.6,473.3 L 128.5,473.8 L 129.4,474.3 L 130.3,474.8 L 131.2,475.4 L 132.1,475.9 L 132.9,476.4 L 133.8,476.9 L 134.7,477.4 L 135.6,477.9 L 136.5,478.4 L 137.4,478.9 L 138.3,479.4 L 139.2,479.9 L 140.1,480.4 L 140.9,480.9 L 141.8,481.4 L 142.7,481.9 L 143.6,482.4 L 144.5,482.9 L 145.4,483.4 L 146.3,483.8 L 147.2,484.3 L 148.1,484.8 L 149.0,485.3 L 149.8,485.8 L 150.7,486.2 L 151.6,486.7 L 152.5,487.2 L 153.4,487.7 L 154.3,488.1 L 155.2,488.6 L 156.1,489.1 L 157.0,489.6 L 157.9,490.0 L 158.7,490.5 L 159.6,490.9 L 160.5,491.4 L 161.4,491.9 L 162.3,492.3 L 163.2,492.8 L 164.1,493.2 L 165.0,493.7 L 165.9,494.2 L 166.8,494.6 L 167.6,495.1 L 168.5,495.5 L 169.4,496.0 L 170.3,496.4 L 171.2,496.9 L 172.1,497.3 L 173.0,497.7 L 173.9,498.2 L 174.8,498.6 L 175.7,499.1 L 176.5,499.5 L 177.4,499.9 L 178.3,500.4 L 179.2,500.8 L 180.1,501.3 L 181.0,501.7 L 181.9,502.1 L 182.8,502.5 L 183.7,503.0 L 184.6,503.4 L 185.4,503.8 L 186.3,504.3 L 187.2,504.7 L 188.1,505.1 L 189.0,505.5 L 189.9,506.0 L 190.8,506.4 L 191.7,506.8 L 192.6,507.2 L 193.5,507.6 L 194.3,508.1 L 195.2,508.5 L 196.1,508.9 L 197.0,509.3 L 197.9,509.7 L 198.8,510.1 L 199.7,510.5 L 200.6,510.9 L 201.5,511.4 L 202.3,511.8 L 203.2,512.2 L 204.1,512.6 L 205.0,513.0 L 205.9,513.4 L 206.8,513.8 L 207.7,514.2 L 208.6,514.6 L 209.5,515.0 L 210.4,515.4 L 211.2,515.8 L 212.1,516.2 L 213.0,516.6 L 213.9,517.0 L 214.8,517.4 L 215.7,517.8 L 216.6,518.2 L 217.5,518.6 L 218.4,519.0 L 219.3,519.4 L 220.1,519.8 L 221.0,520.2 L 221.9,520.6 L 222.8,521.0 L 223.7,521.3 L 224.6,521.7 L 225.5,522.1 L 226.4,522.5 L 227.3,522.9 L 228.2,523.3 L 229.0,523.7 L 229.9,524.1 L 230.8,524.5 L 231.7,524.9 L 232.6,525.3 L 233.5,525.6 L 234.4,526.0 L 235.3,526.4 L 236.2,526.8 L 237.1,527.2 L 237.9,527.6 L 238.8,528.0 L 239.7,528.4 L 240.6,528.7 L 241.5,529.1 L 242.4,529.5 L 243.3,529.9 L 244.2,530.3 L 245.1,530.7 L 246.0,531.1 L 246.8,531.5 L 247.7,531.9 L 248.6,532.3 L 249.5,532.6 L 250.4,533.0 L 251.3,533.4 L 252.2,533.8 L 253.1,534.2 L 254.0,534.6 L 254.8,535.0 L 255.7,535.4 L 256.6,535.8 L 257.5,536.2 L 258.4,536.6 L 259.3,537.0 L 260.2,537.4 L 261.1,537.8 L 262.0,538.2 L 262.9,538.6 L 263.7,539.0 L 264.6,539.4 L 265.5,539.8 L 266.4,540.3 L 267.3,540.7 L 268.2,541.1 L 269.1,541.5 L 270.0,541.9 L 270.9,542.4 L 271.8,542.8 L 272.6,543.2 L 273.5,543.7 L 274.4,544.1 L 275.3,544.6 L 276.2,545.0 L 277.1,545.5 L 278.0,545.9 L 278.9,546.4 L 279.8,546.9 L 280.7,547.3 L 281.5,547.8 L 282.4,548.3 L 283.3,548.8 L 284.2,549.3 L 285.1,549.9 L 286.0,550.4 L 286.9,550.9 L 287.8,551.5 L 288.7,552.1 L 289.6,552.7 L 290.4,553.3 L 291.3,553.9 L 292.2,554.6 L 293.1,555.3 L 294.0,556.0 L 294.9,556.8 L 295.8,557.6 L 296.7,558.6 L 297.6,559.6 L 298.5,560.9 L 299.3,562.6" fill="none" stroke="#2dd4bf" stroke-width="2.4" stroke-dasharray="6 3"/>
+<line x1="300.1" y1="566" x2="300.1" y2="396" stroke="#2dd4bf" stroke-width="1.6"/>
+<line x1="371.7" y1="566" x2="371.7" y2="396" stroke="#a78bfa" stroke-width="2"/>
+<circle cx="371.7" cy="521.9" r="4.2" fill="#a78bfa"/>
+<line x1="300.1" y1="418.0" x2="371.7" y2="418.0" stroke="#cbd5e1" stroke-width="1.6"/>
+<text x="335.9" y="410.0" font-size="11" text-anchor="middle" fill="#cbd5e1">factor 1.37</text>
+<text x="696" y="438.5" font-size="10.5" text-anchor="end" fill="#fb923c">no gravity across the interface</text>
+<text x="696" y="453.5" font-size="10.5" text-anchor="end" fill="#2dd4bf">gravity across it: cut off at 5124 km</text>
+<text x="696" y="468.5" font-size="10.5" text-anchor="end" fill="#a78bfa">observed λ = 7000 km, σ = 8.30×10⁻³ s⁻¹</text>
+<text x="696" y="483.5" font-size="10.5" text-anchor="end" fill="#94a3b8">ΔU = 20 km/s, ρ ratio 2.24, n<tspan baseline-shift="sub" font-size="75%">e</tspan> = 3×10⁸ cm⁻³</text>
+<text x="36" y="652" font-size="10.5" fill="#94a3b8">Solar inputs: Ofman &amp; Thompson (2011), ApJ 734, L11. The coronal density is carried from Module 1 and is an input, not a measurement; the cutoff moves as n<tspan baseline-shift="sub" font-size="75%">e</tspan>⁰.</text>
+</svg>
+<!--/FIG_GROWTH-->
+<figcaption><b>The two cutoffs sit at opposite ends of the spectrum.</b> Upper panel: (4.1) for water over air, drawn twice. Without surface tension, $\sigma = \sqrt{Agk}$ of Proposition 4 rises without limit as the wavelength shortens and there is no fastest mode; with it, the curve turns over at $\lambda_{\max} = 2.9686$ cm and falls to zero at $\lambda_c = 1.7139$ cm, and the ratio of those two wavelengths is $\sqrt3$ exactly by Proposition 2. Lower panel, which belongs to <a class="secref" href="#counter">§9.7</a> and is drawn here for the contrast: the Kelvin–Helmholtz rate for the solar interface of the anchor observation, with and without gravity acting across it. Gravity cuts off the <em>long</em> waves, at $5124$ km, and the observed mode at $7000$ km lies a factor $1.37$ beyond that cutoff. The capillary cutoff above and the gravitational cutoff below are the same algebra at opposite ends of $k$.</figcaption>
+</figure>
+
+<h3 id="visc">4.1 Where viscosity would take over, and why it does not here</h3>
+
+<p>Equation (4.1) has no dissipation in it, so it is silent about whether the fastest mode it predicts is the one a real fluid shows. A crude but sufficient test compares the inviscid growth rate against the rate at which viscosity damps a surface wave.</p>
+
+<div class="prop"><b>Proposition 3 (the viscous crossover, as an estimate).</b> A free-surface wave of wavenumber $k$ in a fluid of kinematic viscosity $\nu$ is damped at the rate $2\nu k^2$. Equating that with the inviscid growth rate $\sqrt{Agk}$ gives the crossover
+$$ k_\nu \;=\; \left(\frac{Ag}{4\nu^2}\right)^{1/3}, \qquad \lambda_\nu = 2\pi/k_\nu. \tag{4.4}$$
+Above $\lambda_\nu$ viscosity is a correction; below it, the inviscid rate is not the answer. <b>This is a crossover estimate and not a solution.</b> The viscous Rayleigh–Taylor problem is a quartic eigenvalue problem (Chandrasekhar 1961, ch. X) and is not solved in this module; (4.4) says only where the neglected term becomes comparable to the retained one.</div>
+
+<div class="proof">
+The damping rate $2\nu k^2$ for a free surface is quoted, not derived: it follows from the viscous dissipation of an irrotational wave whose velocity field decays as $e^{-k|z|}$, and its derivation needs the viscous stress conditions this module's Definition 1 discards. Setting $\sqrt{Agk} = 2\nu k^2$ and solving for $k$ gives $k^3 = Ag/(4\nu^2)$, which is (4.4). <span class="qed">∎</span>
+</div>
+
+<p>For water, $\nu = 1.0034\times10^{-2}\ \mathrm{cm^2\,s^{-1}}$ gives $\lambda_\nu = 0.467$ mm against $\lambda_{\max} = 29.7$ mm, a factor $63.5$. Viscosity is irrelevant to the kitchen experiment, and capillarity alone chooses the pattern. Problem K1 does the same calculation for glycerol, where $\nu$ is a thousand times larger, $\lambda_\nu = 5.207$ cm exceeds $\lambda_{\max} = 2.458$ cm by $2.12$, and the ordering reverses: the same instability, with the opposite cut-off in charge.</p>
+
+<h3 id="miscible">4.2 Two fluids that mix: no capillary cutoff at all</h3>
+
+<p>Proposition 2 assumed $T_s \gt 0$. Interfacial tension exists only between fluids that do not mix. Pour salt water gently on top of fresh and there is a density difference but no skin: the two are miscible, molecules cross the boundary freely, and $T_s$ is essentially zero.</p>
+
+<p>Three per cent NaCl by mass at $20\ ^\circ$C has $\rho = 1.0210\ \mathrm{g\,cm^{-3}}$ against fresh water's $0.998207$, giving $A = 0.011288$, some $88$ times smaller than water over air. With $T_s = 0$ equation (4.1) reduces to $\sigma = \sqrt{Agk}$, which has no cutoff and no maximum: every wavelength grows, and shorter ones grow faster.</p>
+
+<table>
+<tr><th>$\lambda$</th><th>$\sigma$</th><th>$1/\sigma$</th></tr>
+<tr><td>$1.0$ cm</td><td>$8.3399\ \mathrm{s^{-1}}$</td><td>$0.12$ s</td></tr>
+<tr><td>$10.0$ cm</td><td>$2.6373\ \mathrm{s^{-1}}$</td><td>$0.38$ s</td></tr>
+</table>
+
+<p>What stops the small scales here is not capillarity but diffusion and viscosity. By (4.4) with the salt-water Atwood number, $\lambda_\nu = 2.08$ mm, against $0.467$ mm for water over air. The two differ by $4.45$, which is $88^{1/3}$ exactly: $\lambda_\nu \propto A^{-1/3}$ by (4.4), and $A$ has fallen by $88$. Diffusion of salt smooths the interface as well, which Definition 1's model does not contain at all. Problem C2 makes this the point: a student who reaches for $72.75\ \mathrm{dyn\,cm^{-1}}$ here has used a number that does not exist for this pair.</p>
+
+<p>The miscible case is the one that matters for the rest of the module, because two plasmas are always miscible.</p>
+
+<h2 id="noskin">5. Rayleigh–Taylor with no skin: the astrophysical case</h2>
+
+<p>Between two regions of ionised gas there is no interfacial tension. Setting $T_s = 0$ and $B = 0$ in (3.1) leaves the barest possible statement.</p>
+
+<div class="prop"><b>Proposition 4 (no cutoff, and no fastest mode).</b> For two ideal fluids with $A \gt 0$, $T_s = 0$, $B = 0$ and no shear,
+$$ \sigma \;=\; \sqrt{A\,g\,k}, \tag{5.1}$$
+which is positive for every $k \gt 0$ and increases without bound as $k$ increases. The linear problem therefore has no fastest-growing wavelength, and the shortest scale present grows first.</div>
+
+<div class="proof">
+Immediate from (3.1) with three of its four terms set to zero. That $\sigma$ has no maximum follows because $\sqrt{Agk}$ is monotone in $k$ and the only term that could turn it over, $-T_sk^3/(\rho_t+\rho_b)$, has been discarded by hypothesis. <span class="qed">∎</span>
+</div>
+
+<p>Proposition 4 is a short statement with a long consequence, and it is worth spelling out because it is a standing hazard in this subject rather than an elegant result.</p>
+
+<p><b>A simulation of this problem has no converged answer.</b> The growth rate rises as $\sqrt{k}$, so whatever the smallest resolved scale is, that is the scale that goes unstable first, and refining the grid changes the answer rather than improving it. The cut-off must come from somewhere the ideal equations do not contain: from viscosity, as in (4.4); from a finite interface thickness, which <a class="secref" href="#anchor">§9</a> shows is the realistic case for an astrophysical boundary; or from the magnetic tension term of (3.1), which Module 12 takes up. What Proposition 4 establishes is that <em>something</em> must supply it, and that the ideal fluid model of Modules 2–11 does not.</p>
+
+<h3 id="shell">5.1 A decelerating shell: where $g$ comes from when there is no star</h3>
+
+<p>Equation (5.1) needs a $g$. For a supernova remnant there is no external gravity worth the name at the relevant radius; the acceleration that matters is the deceleration of the ejecta by the material they sweep up. The ejecta are dense and the ambient medium ahead of them is thin, so in the frame of the decelerating shell the effective gravity points from the dense fluid towards the light one — which is the unstable ordering.</p>
+
+<div class="prop"><b>Proposition 5 (the effective gravity of a decelerating shell).</b> Let a shell expand with $R(t) \propto t^{\,m}$. In its instantaneous rest frame the effective gravity across its outer face has magnitude
+$$ g \;=\; |\ddot R| \;=\; m(1-m)\,\frac{R}{t^{2}}, \tag{5.2}$$
+which is positive — that is, the shell is decelerating — for every $0 \lt m \lt 1$, and vanishes at $m = 0$ and $m = 1$.</div>
+
+<div class="proof">
+$R = R_0(t/t_0)^m$ gives $\dot R = mR/t$ and $\ddot R = m(m-1)R/t^2$. For $0 \lt m \lt 1$ the factor $m(m-1)$ is negative, so $\ddot R \lt 0$ and $|\ddot R| = m(1-m)R/t^2$. At $m = 1$ the expansion is free and unaccelerated; at $m = 0$ the shell has stopped. The maximum of $m(1-m)$ is at $m = 1/2$. <span class="qed">∎</span>
+</div>
+
+<p>Two standard cases bracket the range. The Sedov–Taylor blast wave of Module 8 has $m = 2/5$; a young remnant still driven by its own ejecta has $m \simeq 0.7$. Both are evaluated below, and the point of putting them side by side is that the answer barely moves.</p>
+
+<table>
+<tr><th>Stage</th><th>$m$</th><th>$R$</th><th>$t$</th><th>$g$ [cm s$^{-2}$]</th><th>$\lambda$</th><th>$1/\sigma$</th><th>e-foldings in $t$</th></tr>
+<tr><td>young</td><td>$2/5$</td><td>$3$ pc</td><td>$400$ yr</td><td>$1.3943\times10^{-2}$</td><td>$0.030$ pc</td><td>$34.3$ yr</td><td>$11.6$</td></tr>
+<tr><td>young</td><td>$2/5$</td><td>$3$ pc</td><td>$400$ yr</td><td>$1.3943\times10^{-2}$</td><td>$0.300$ pc</td><td>$108.6$ yr</td><td>$3.7$</td></tr>
+<tr><td>young</td><td>$0.70$</td><td>$3$ pc</td><td>$400$ yr</td><td>$1.2200\times10^{-2}$</td><td>$0.030$ pc</td><td>$36.7$ yr</td><td>$10.9$</td></tr>
+<tr><td>young</td><td>$0.70$</td><td>$3$ pc</td><td>$400$ yr</td><td>$1.2200\times10^{-2}$</td><td>$0.300$ pc</td><td>$116.1$ yr</td><td>$3.4$</td></tr>
+<tr><td>older</td><td>$2/5$</td><td>$10$ pc</td><td>$2000$ yr</td><td>$1.8591\times10^{-3}$</td><td>$0.100$ pc</td><td>$171.7$ yr</td><td>$11.6$</td></tr>
+<tr><td>older</td><td>$2/5$</td><td>$10$ pc</td><td>$2000$ yr</td><td>$1.8591\times10^{-3}$</td><td>$1.000$ pc</td><td>$542.9$ yr</td><td>$3.7$</td></tr>
+</table>
+
+<span class="prov">All six rows use $A = 0.9$, a round value for a dense shell against a thin ambient medium, not a measurement. The remnant radii and ages are illustrative, chosen to bracket the young-remnant regime; they are not taken from any named object. The e-folding counts are $\sigma t$ with $t$ the age in the same row.</span>
+
+<p>Two readings. First, changing the expansion index from $2/5$ to $0.70$ changes $g$ by $13$ per cent and the e-folding count by $6$ per cent, because $m(1-m)$ is flat near its maximum: the instability does not care much which self-similar stage the remnant is in. Second, the e-folding counts are in the range $3$ to $12$ over a decade in wavelength, which is the useful statement — a young remnant is many e-folding times old at every scale from a hundredth of its radius to a tenth of it, so the linear theory is exhausted and the structure seen in an image is non-linear. That is the subject of <a class="secref" href="#mixing">§8</a>, and it is why the only Rayleigh–Taylor comparison in this module is with a non-linear law rather than with (5.1).</p>
+
+<h2 id="kh">6. Kelvin–Helmholtz, and the two ways gravity stops it</h2>
+
+<p>Now switch the shear on. With $T_s = 0$ and $B = 0$, (3.1) reads
+$$ \sigma^2 \;=\; \frac{k^2\rho_t\rho_b\,\Delta U^2}{(\rho_t+\rho_b)^2} \;+\; A\,g\,k. \tag{6.1}$$
+If the light fluid is on top, $A \lt 0$ and the two terms compete. The first rises as $k^2$ and the second only as $k$, so the shear wins at short wavelength and gravity wins at long: the cutoff is at the opposite end of the spectrum from the capillary one.</p>
+
+<div class="prop"><b>Proposition 6 (the gravitational cutoff of Kelvin–Helmholtz).</b> For two fluids with the <em>light</em> fluid above, $\rho_t \lt \rho_b$, no tension and no field, the mode $\mathbf{k}$ parallel to the shear is unstable if and only if
+$$ \Delta U^2 \;\gt\; \frac{g\,(\rho_b^2-\rho_t^2)}{k\,\rho_t\rho_b}, \qquad\text{that is}\qquad k \;\gt\; k_{\rm cut} \;=\; \frac{g\,(\rho_b^2-\rho_t^2)}{\rho_t\rho_b\,\Delta U^2}. \tag{6.2}$$
+Every wavelength longer than $2\pi/k_{\rm cut}$ is stabilised. As $\rho_t \to \rho_b$ the cutoff wavenumber goes to zero and every wavelength is unstable at every shear, recovering limit 2 of <a class="secref" href="#limits">§3.1</a>.</div>
+
+<div class="proof">
+With the light fluid above, $A = -(\rho_b-\rho_t)/(\rho_t+\rho_b)$, so (6.1) gives instability when
+$$ \frac{k^2\rho_t\rho_b\Delta U^2}{(\rho_t+\rho_b)^2} \;\gt\; \frac{(\rho_b-\rho_t)gk}{\rho_t+\rho_b}. $$
+Dividing by $k$ and by $\rho_t\rho_b/(\rho_t+\rho_b)^2$ gives $k\Delta U^2 \gt g(\rho_b-\rho_t)(\rho_t+\rho_b)/(\rho_t\rho_b) = g(\rho_b^2-\rho_t^2)/(\rho_t\rho_b)$, which is (6.2). Setting $\rho_t = \rho_b$ makes the numerator vanish, so $k_{\rm cut} = 0$. <span class="qed">∎</span>
+</div>
+
+<p>The physical reading is worth keeping, because the sign of the effect is counter-intuitive the first time. A long wave displaces a large volume of fluid; a short wave displaces a small one. Gravity charges by volume and the shear pays by area, so the longer the wave, the worse the bargain. Long waves have too much heavy fluid to lift.</p>
+
+<h3 id="cat">6.1 Clear-air turbulence: the Richardson number</h3>
+
+<p>Proposition 6 is a statement about a discontinuity. Real shear layers are continuous, and the continuous problem has a famous answer that is <em>not</em> a special case of Proposition 6 and must not be run together with it.</p>
+
+<span class="warn"><b>Quoted, not derived, and about a different flow.</b> Miles (1961) and Howard (1961) proved that for a continuously stratified, inviscid, parallel shear flow, the condition
+$$ \mathrm{Ri} \;\equiv\; \frac{N^2}{(dU/dz)^2} \;\gt\; \frac14 \quad\text{at every height} \tag{6.3}$$
+is <b>sufficient for stability</b>. Neither paper is in this folder and neither theorem is proved here. Two things follow from the logical form alone and are the traps. First, $\mathrm{Ri} \gt 1/4$ everywhere is sufficient for stability, so $\mathrm{Ri} \lt 1/4$ somewhere is <em>necessary</em> for instability and not sufficient for it: a flow with $\mathrm{Ri} \lt 1/4$ is <b>permitted</b> to be unstable, not compelled. Second, this is a theorem about a smooth profile, whereas Proposition 6 is about a jump; the two are different statements and this module does not translate between them.</span>
+
+<p>$N$ in (6.3) is the Brunt–Väisälä frequency of Module 6 Proposition 2, unchanged, and $\mathrm{Ri}$ compares the energy it takes to lift a parcel against the energy available in the shear. The atmospheric case is the one everybody has met.</p>
+
+<p>Near the jet stream, at $T = 220$ K with an environmental lapse rate of $6.0\ \mathrm{K\,km^{-1}}$, Module 6's expression $N^2 = (g/T)(dT/dz + g/c_p)$ for dry air gives $N^2 = 1.6764\times10^{-4}\ \mathrm{s^{-2}}$, so $N = 0.01295\ \mathrm{s^{-1}}$ and the buoyancy period $2\pi/N$ is $8.1$ minutes.</p>
+
+<table>
+<tr><th>Wind shear</th><th>$dU/dz$</th><th>$\mathrm{Ri}$</th><th>Status</th></tr>
+<tr><td>$10\ \mathrm{m\,s^{-1}}$ per km</td><td>$1.000\times10^{-2}\ \mathrm{s^{-1}}$</td><td>$1.676$</td><td>stable; (6.3) holds with room to spare</td></tr>
+<tr><td>$30\ \mathrm{m\,s^{-1}}$ per km</td><td>$3.000\times10^{-2}\ \mathrm{s^{-1}}$</td><td>$0.186$</td><td>(6.3) fails; instability is permitted</td></tr>
+</table>
+
+<div class="keyresult"><b>Key result (why clear-air turbulence is common and unforecastable).</b> $\mathrm{Ri} = 1/4$ is reached at a shear of $2.5895\times10^{-2}\ \mathrm{s^{-1}}$, that is $25.9\ \mathrm{m\,s^{-1}}$ per kilometre of altitude, or $2.6\ \mathrm{m\,s^{-1}}$ per $100$ m. Near a jet stream that is an ordinary number. So the necessary condition is met often — and because it is only necessary, meeting it predicts nothing about any particular flight.</div>
+
+<p>Problem C3 asks for the second half of that statement to be argued rather than quoted.</p>
+
+<h2 id="compress">7. The compressible limit, quoted not derived</h2>
+
+<p>Definition 1 made the fluids incompressible, which deleted the sound speed. Nothing derived from (3.1) can therefore contain a compressible effect, and there is one that matters: a fast enough shear layer is <em>stabilised</em> by compressibility, and (3.1) cannot see it.</p>
+
+<span class="warn"><b>Quoted, not derived.</b> Landau (1944) and Miles (1958) showed that a plane vortex sheet between two identical ideal gases is stable to two-dimensional perturbations once
+$$ \Delta U \;\gt\; 2\sqrt2\,c_s, \qquad\text{that is}\qquad M \equiv \Delta U/c_s \;\gt\; 2.8284. \tag{7.1}$$
+Neither paper is in this folder; both are cited for this result alone, and no number is taken from either. The mechanism is that above that speed the disturbance radiates sound away from the interface faster than the shear can feed it. <b>This module's (3.1) has no $c_s$ in it and therefore cannot contain (7.1).</b> That is not a failure of the derivation; it is the hypothesis "incompressible" being paid for.</span>
+
+<p>The sheet is not absolutely stable above $M = 2.8284$, and the escape is geometric. A mode whose wavevector makes an angle $\varphi$ with the flow direction sees only the projected shear $\Delta U\cos\varphi$, so its effective Mach number is $M\cos\varphi$. Oblique modes with</p>
+$$ \cos\varphi \;\lt\; \frac{2\sqrt2}{M}, \qquad\text{that is}\qquad \varphi \;\gt\; \arccos\!\big(2\sqrt2/M\big), \tag{7.2}$$
+<p>therefore remain unstable at every Mach number (Miles 1958; Fejer &amp; Miles 1963). The window narrows but never closes.</p>
+
+<table>
+<tr><th>$M$</th><th>Two-dimensional modes</th><th>Oblique modes</th></tr>
+<tr><td>$1.00$</td><td>unstable</td><td>—</td></tr>
+<tr><td>$2.00$</td><td>unstable</td><td>—</td></tr>
+<tr><td>$2.83$</td><td>unstable, marginally</td><td>—</td></tr>
+<tr><td>$5.00$</td><td>stable</td><td>unstable for $\varphi \gt 55.6^\circ$</td></tr>
+<tr><td>$10.00$</td><td>stable</td><td>unstable for $\varphi \gt 73.6^\circ$</td></tr>
+</table>
+
+<h3 id="jet">7.1 An extragalactic jet, and a rate that cannot be reached</h3>
+
+<p>A jet of radius $R = 100$ pc moving at Mach $5$ through an ambient medium at $10^7$ K is a standard configuration, and it shows what (7.1) costs. With $\mu = 0.60$ and $\gamma = 5/3$ the ambient sound speed is $c_s = 480.6\ \mathrm{km\,s^{-1}}$, so $\Delta U = 5c_s = 2403\ \mathrm{km\,s^{-1}}$. Take a density contrast $\eta \equiv \rho_j/\rho_a = 0.010$, for which the prefactor of (6.1) is $\sqrt\eta/(1+\eta) = 0.09901$, and take $k = 1/R = 3.2408\times10^{-21}\ \mathrm{cm^{-1}}$ for the longest mode the jet can support across its own width. Equation (6.1) with $g = 0$ then gives</p>
+
+$$ \sigma \;=\; 7.7102\times10^{-14}\ \mathrm{s^{-1}}, \qquad 1/\sigma \;=\; 4.110\times10^{5}\ \mathrm{yr}. $$
+
+<p>The jet crosses $1$ kpc in $4.069\times10^{5}$ yr, so the incompressible theory says the interface has $0.99$ e-folding times in which to roll up over that length — marginal, and just interesting enough to believe.</p>
+
+<span class="warn"><b>It cannot be reached.</b> $M = 5$ exceeds $2\sqrt2$, so by (7.1) the two-dimensional mode that $0.99$ e-foldings was computed for is stable, and the incompressible rate is an upper limit the flow does not achieve. What survives is the oblique modes beyond $\varphi = 55.6^\circ$, which see a projected shear of at most $\Delta U\cos\varphi \lt 1359\ \mathrm{km\,s^{-1}}$ and therefore grow more slowly still. Problem K3 walks a student into this and back out of it.</span>
+
+<span class="prov">The jet numbers are a configuration, not an object: $R = 100$ pc, $M = 5$, $\eta = 0.010$ and $T = 10^7$ K are round choices in the range these sources occupy, and no measured jet is being described. Nothing in this module is checked against them. The extragalactic jet is not taken up by any later module of this book; Module 10 treats turbulence, and Module 11 accretion discs.</span>
+
+<h2 id="mixing">8. After the linear theory: the mixing law, and the laboratory check</h2>
+
+<p><a class="secref" href="#shell">§5.1</a> ended with a count: a young supernova remnant is three to twelve e-folding times old at every wavelength from a hundredth of its radius to a tenth of it. Linear theory has therefore been exhausted long before anything is observable, and the quantity an image can measure — how far the two fluids have interpenetrated — is not something (5.1) predicts. A separate claim is needed for the non-linear stage, and it is a claim of a different kind: not a growth rate for each wavelength, but a single width for the whole mixing layer.</p>
+
+<div class="def"><b>Definition 4 (the mixing width).</b> $h_B$ is the distance the leading <em>bubbles</em> of light fluid have penetrated into the heavy fluid, measured from the unperturbed interface; $h_S$ is the corresponding penetration of the heavy <em>spikes</em> into the light fluid. The two are different numbers, and at large Atwood number $h_S$ is the larger, because a dense spike falling through a light fluid is less retarded than a light bubble rising through a dense one. This module uses $h_B$.</div>
+
+<div class="prop"><b>Proposition 7 (the self-similar mixing law).</b> Assume (i) a narrowband multimode initial perturbation, (ii) a constant acceleration $g$ across the interface, and (iii) that <b>the mixing layer has forgotten its initial condition</b> — that is, that the only length in the problem is the width $h_B$ itself, so the dominant bubble wavelength satisfies $\langle\lambda\rangle = h_B/b$ for a pure number $b$. Then
+$$ h_B \;=\; \alpha_B\,A\,g\,t^{2}, \tag{8.1}$$
+with $\alpha_B$ determined by $b$, by the drag and added-mass coefficients $C_d$ and $C_a$, and by the density ratio — and by nothing about how the layer was started, and nothing about $g$ or $t$.</div>
+
+<span class="prov">Equation (8.4) below makes the dependence on the density ratio explicit, and it is a real dependence, not a pure number: with $C_a = 1$ and $C_d = 2\pi$, the three-dimensional values Shimony et al. adopt, (8.4) gives $\alpha_B = 1/(2 + 8\pi b)$ in the limit $\rho_1\ll\rho_2$ and $1/(2 + 4\pi b)$ at equal densities. Every comparison made in this section is between experiments and models at high Atwood number, so the comparison is consistent, but $\alpha_B$ is not a universal constant even inside the model that defines it.</span>
+
+<div class="proof">
+A bubble of size $\langle\lambda\rangle$ rising at speed $u_B$ through the heavy fluid feels a buoyancy force per unit volume $(\rho_2-\rho_1)g$, a drag $C_d\rho_2u_B^2/\langle\lambda\rangle$ and an added-mass inertia $(\rho_1 + C_a\rho_2)\,du_B/dt$. The balance is
+$$ (\rho_1 + C_a\rho_2)\frac{du_B}{dt} \;=\; (\rho_2-\rho_1)g \;-\; C_d\rho_2\frac{u_B^2}{\langle\lambda\rangle}. \tag{8.2}$$
+Hypothesis (iii) sets $\langle\lambda\rangle = h_B/b$ with $b$ constant, and $u_B = dh_B/dt$. Try $h_B = \alpha_B Agt^2$. Then
+$$ u_B = 2\alpha_BAgt, \qquad \frac{du_B}{dt} = 2\alpha_BAg, \qquad \frac{u_B^2}{\langle\lambda\rangle} = \frac{4\alpha_B^2A^2g^2t^2}{\alpha_BAgt^2/b} = 4b\,\alpha_B A g, $$
+and every power of $t$ has cancelled from both sides. Substituting into (8.2), dividing by $(\rho_1+\rho_2)g$ and using $(\rho_2-\rho_1)/(\rho_1+\rho_2) = A$ from Definition 2, the common factor $A$ cancels and leaves
+$$ \alpha_B \;=\; \frac{\rho_1+\rho_2}{2(\rho_1 + C_a\rho_2) + 4b\,C_d\,\rho_2}, \tag{8.4}$$
+which contains neither $g$, nor $t$, nor anything about the initial perturbation. It is the only power law that works: putting $h_B \propto t^{\,p}$ into (8.2) gives $du_B/dt \propto t^{\,p-2}$ and $u_B^2/\langle\lambda\rangle \propto t^{\,p-2}$, and both must balance a term independent of $t$, which forces $p = 2$. <span class="qed">∎</span>
+</div>
+
+<p>Hypothesis (iii) is the whole content of the proposition, and it is not a technical convenience. It is the assertion that a mixing layer eventually stops remembering the ripple it grew from — that after enough bubble mergers, the width alone sets the scale. Shimony et al. state it in those words: <em>"We assumed that at the self-similar stage, the initial conditions are forgotten."</em> Everything that follows tests it.</p>
+
+<p>When $g$ varies in time, (8.1) generalises by replacing $Agt^2$ with the <b>Read integral</b>
+$$ x_{\rm Read} \;\equiv\; A\left(\int\!\sqrt{g(t)}\,dt\right)^{2}, \tag{8.3}$$
+which for constant $g$ is $Agt^2$ exactly — a consistency the numbers script verifies to ten decimal places. Plotting a mix width against $x_{\rm Read}$ rather than against time is what allows experiments driven by different acceleration histories to be compared on one axis.</p>
+
+<span class="prov">(8.3) is <b>quoted, not derived</b>. It is Read's (1984) prescription, reached here through Shimony et al.'s equation (1); Read's paper is not in this folder and no number is taken from it. What Proposition 7 derives is (8.1), at constant $g$, and the buoyancy–drag balance (8.2) has no power-law solution for a general $g(t)$. The one thing checked here is that (8.3) reduces to (8.1) when $g$ is constant.</span>
+
+<h3 id="nif">8.1 The experiment</h3>
+
+<p>Shimony et al. (2022) drove a planar interface at the National Ignition Facility: a plastic disk of pre-shock density $1.43\ \mathrm{g\,cm^{-3}}$ against a carbon-resorcinol foam at about $0.08\ \mathrm{g\,cm^{-3}}$, with machined narrowband perturbations of mean wavelength $\langle\lambda\rangle = 15$ and $30\ \mu$m, imaged by x-ray radiography. The measured result is</p>
+
+$$ \alpha_B \;=\; 0.038 \pm 0.008, $$
+
+<p>from the $\langle\lambda\rangle = 15\ \mu$m case, with $\chi^2$ bounds from their Fig. 4 of $0.030$ and $0.046$.</p>
+
+<span class="warn"><b>This source is a preprint, which departs from this book's citation convention.</b> arXiv:2210.06631v1 carries no journal reference and no publisher's DOI; the only DOI on the record is the arXiv one. The convention everywhere else in this book is journal, volume and page. It is used anyway, because it is the measurement that exists and because every number taken from it is read from its own text — but the departure is recorded here and in the sources list rather than hidden.</span>
+
+<span class="prov">No Atwood number is taken from this paper. The two densities quoted above are <em>pre-shock</em>, and the paper's own Fig. 3 shows the foam compressed to $0.2$–$0.6\ \mathrm{g\,cc^{-1}}$ during the Rayleigh–Taylor phase. The paper never states $A$, so none is quoted from it here, and the comparisons below are all of $\alpha_B$ against $\alpha_B$, never of a width against a width.</span>
+
+<h3 id="confirmed">8.2 Confirmed: the form of the law</h3>
+
+<p>What is confirmed is a functional form, not a number, and it is worth being exact about how far the evidence goes. The experiment fielded four initial conditions: a two-dimensional seed at $\langle\lambda\rangle = 30\ \mu$m, the same with a thinner ablator, a three-dimensional seed at $30\ \mu$m, and a two-dimensional seed at $15\ \mu$m. Each gives a mix-width history in time. Plotted against the Read integral (8.3), each becomes <em>linear</em> at late times once the Richtmyer–Meshkov and decompression contributions are removed, and the slope of that line is $\alpha_S + \alpha_B$. Linearity in $x_{\rm Read}$ is exactly (8.1); a layer still governed by its seed would not be linear in it at all.</p>
+
+<span class="prov">The two seeds do <b>not</b> lie on one line, and this module does not say they do. The paper reports that the $15\ \mu$m seed "exhibit[s] the largest initial growth rate" and reaches the largest widths, that the $30\ \mu$m data "show a similar slope to the model result for $\alpha_B \sim 0.03$", and that the $15\ \mu$m case "offers a better constraint" and gives $0.038\pm0.008$. Its Fig. 4 draws separate model curves for the two seeds, with different initial amplitudes. So the two slopes are two measurements, $1.00\,\sigma$ apart, not one.</span>
+
+<div class="keyresult"><b>Confirmed.</b> The <em>form</em> $h_B = \alpha_B A g t^2$, in the generalised version (8.3): four initial conditions, differing by a factor $2$ in seed wavelength and by dimensionality, each give a mix width linear in $x_{\rm Read}$ at late time. The form is what is confirmed; the coefficient is what is measured, and the two seeds measure it $1.00\,\sigma$ apart.</div>
+
+<h3 id="refuted">8.3 Refuted: that the measurement settles the coefficient</h3>
+
+<p>The paper's abstract makes a second claim: <em>"This resolved the known discrepancy between experiments and simulations of RTI."</em> The discrepancy it names on its own first page runs from a theoretical model value of about $0.05$ for three-dimensional immiscible fluids down, by "a factor of $\sim$2", to the results of full three-dimensional numerical simulations. Test that claim against the measurement.</p>
+
+<table>
+<tr><th>Candidate $\alpha_B$</th><th>What it is</th><th>Distance from $0.038\pm0.008$</th><th>Verdict</th></tr>
+<tr><td>$0.025$</td><td>full 3D simulations. <b>Inferred</b>, not read: the paper prints the ratio "a factor of $\sim$2" below $0.05$, not the value</td><td>$1.62\,\sigma$</td><td>not excluded</td></tr>
+<tr><td>$0.030$</td><td>their own $\langle\lambda\rangle = 30\ \mu$m data, read from their p. 4</td><td>$1.00\,\sigma$</td><td>not excluded</td></tr>
+<tr><td>$0.050$</td><td>3D immiscible model, read from their p. 1</td><td>$1.50\,\sigma$</td><td>not excluded</td></tr>
+</table>
+
+<div class="keyresult"><b>Refuted.</b> $\alpha_B = 0.038\pm0.008$ sits $1.50\,\sigma$ below $0.050$ and $1.62\,\sigma$ above the $0.025$ inferred for the simulations. It is consistent with <em>both ends</em> of the factor-2 span it is claimed to have closed, so it does not close it. The measurement is sound; the claim made for it is not.</div>
+
+<p>The paper itself supplies the reason the coefficient moves. Its p. 1 attributes the high values from earlier experiments to long wavelengths present in their seeds, citing simulations that show such content raising the measured $\alpha_B$. Read against Proposition 7, that is hypothesis (iii) failing: a layer whose $\alpha_B$ depends on what it was started from has not forgotten its initial condition. The spread is not noise about a constant of nature. It is the constancy itself being only approximate, at the $20$ per cent level.</p>
+
+<span class="warn"><b>Two values that an earlier draft of this module carried have been removed.</b> The figures $\alpha_B = 0.060$ and $0.077$, attributed to "earlier experiments", appear nowhere in Shimony et al.; a full-text search of the preprint returns only its own arXiv identifier. They were the only comparison values the measurement excluded, at $2.75\,\sigma$ and $4.88\,\sigma$, and their removal is what turns this section's refutation from an exclusion into the statement above. Taking a number from a paper this folder does not hold is the rule that was broken once already in this book, in <a href="module02.html">Module 2</a>, and it is not broken here.</span>
+
+<h3 id="cost">8.4 What the unresolved factor costs</h3>
+
+<p>The practical consequence is a width. Take the shell of <a class="secref" href="#shell">§5.1</a> at $A = 0.9$ and $g = 10^{-3}\ \mathrm{cm\,s^{-2}}$, and ask how far the two fluids have interpenetrated after $100$ years.</p>
+
+<table>
+<tr><th>$\alpha_B$</th><th>$h_B$ [cm]</th><th>[AU]</th></tr>
+<tr><td>$0.025$</td><td>$2.2407\times10^{14}$</td><td>$15.0$</td></tr>
+<tr><td>$0.038$</td><td>$3.4059\times10^{14}$</td><td>$22.8$</td></tr>
+<tr><td>$0.050$</td><td>$4.4815\times10^{14}$</td><td>$30.0$</td></tr>
+</table>
+
+<div class="keyresult"><b>The closing number of the Rayleigh–Taylor half.</b> The predicted mixing width of a supernova remnant is uncertain by a factor $2.0$ from the coefficient alone, before anything about the remnant is questioned. That factor is exactly the discrepancy the NIF measurement was meant to close and did not.</div>
+
+<figure>
+<!--FIG_CHECK-->
+<svg class="setupfig" viewBox="0 0 760 576" width="100%" role="img" aria-label="Upper panel: the measured Rayleigh-Taylor mixing constant alpha B, drawn with its error bar on an axis marked in units of that error bar. Three candidate values are marked. The two ends of the factor-of-two discrepancy this measurement was meant to close, 0.025 and 0.05, both lie within two sigma of it, so it closes neither. Lower panel: the observed vortex propagation speed band, from six to fourteen kilometres per second, with two predictions drawn on it. Both fall inside the band, so the observation cannot separate them.">
+<text x="398" y="34" font-size="12.5" text-anchor="middle" fill="#cbd5e1">The one place in this module where a σ exists: the mixing constant α<tspan baseline-shift="sub" font-size="75%">B</tspan></text>
+<text x="398" y="50" font-size="10.5" text-anchor="middle" fill="#94a3b8">measured 0.038 ± 0.008; the axis is the distance from that measurement, in its own σ</text>
+<rect x="96" y="74" width="604" height="176" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="225.4" y="74" width="345.1" height="176" fill="#2dd4bf" fill-opacity="0.07"/>
+<rect x="311.7" y="74" width="172.6" height="176" fill="#2dd4bf" fill-opacity="0.10"/>
+<line x1="139.1" y1="250" x2="139.1" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="139.1" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">-3</text>
+<line x1="225.4" y1="250" x2="225.4" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="225.4" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">-2</text>
+<line x1="311.7" y1="250" x2="311.7" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="311.7" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">-1</text>
+<line x1="398.0" y1="250" x2="398.0" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="398.0" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">+0</text>
+<line x1="484.3" y1="250" x2="484.3" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="484.3" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">+1</text>
+<line x1="570.6" y1="250" x2="570.6" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="570.6" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">+2</text>
+<line x1="656.9" y1="250" x2="656.9" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="656.9" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">+3</text>
+<text x="398" y="286" font-size="11.5" text-anchor="middle" fill="#cbd5e1">(candidate α<tspan baseline-shift="sub" font-size="75%">B</tspan> − 0.038) / 0.008</text>
+<line x1="311.7" y1="104.0" x2="484.3" y2="104.0" stroke="#facc15" stroke-width="3"/>
+<line x1="311.7" y1="97.0" x2="311.7" y2="111.0" stroke="#facc15" stroke-width="2"/>
+<line x1="484.3" y1="97.0" x2="484.3" y2="111.0" stroke="#facc15" stroke-width="2"/>
+<circle cx="398.0" cy="104.0" r="5" fill="#facc15"/>
+<text x="494.3" y="108.0" font-size="10.5" fill="#facc15">α<tspan baseline-shift="sub" font-size="75%">B</tspan> = 0.038 ± 0.008, Shimony et al. (2022)</text>
+<line x1="570.6" y1="74.0" x2="570.6" y2="84.0" stroke="#cbd5e1" stroke-width="1.6"/>
+<line x1="570.6" y1="240.0" x2="570.6" y2="250.0" stroke="#cbd5e1" stroke-width="1.6"/>
+<line x1="257.8" y1="220.0" x2="527.4" y2="220.0" stroke="#cbd5e1" stroke-width="1.3" stroke-dasharray="4 3"/>
+<line x1="257.8" y1="216.0" x2="257.8" y2="224.0" stroke="#cbd5e1" stroke-width="1.3"/>
+<line x1="527.4" y1="216.0" x2="527.4" y2="224.0" stroke="#cbd5e1" stroke-width="1.3"/>
+<text x="392.6" y="234.0" font-size="10" text-anchor="middle" fill="#cbd5e1">the factor 2 the abstract says this measurement resolved</text>
+<line x1="257.8" y1="126.0" x2="257.8" y2="138.0" stroke="#2dd4bf" stroke-width="2.2"/>
+<text x="265.8" y="136.0" font-size="10.5" fill="#2dd4bf">3D simulations, inferred 0.05/2 0.025 — 1.6σ, not excluded</text>
+<line x1="311.7" y1="158.0" x2="311.7" y2="170.0" stroke="#94a3b8" stroke-width="2.2"/>
+<text x="319.7" y="168.0" font-size="10.5" fill="#94a3b8">their λ=30 µm data 0.030 — 1.0σ, not excluded</text>
+<line x1="527.4" y1="190.0" x2="527.4" y2="202.0" stroke="#a78bfa" stroke-width="2.2"/>
+<text x="519.4" y="200.0" font-size="10.5" text-anchor="end" fill="#a78bfa">3D immiscible model 0.050 — 1.5σ, not excluded</text>
+<text x="398" y="332" font-size="12.5" text-anchor="middle" fill="#cbd5e1">A check that does NOT discriminate, drawn so that you can see it does not</text>
+<text x="398" y="348" font-size="10.5" text-anchor="middle" fill="#94a3b8">the phase speed of the vortices: two predictions, one observed band</text>
+<rect x="96" y="372" width="604" height="120" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="309.2" y="372" width="284.2" height="120" fill="#a78bfa" fill-opacity="0.16"/>
+<line x1="96.0" y1="492" x2="96.0" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="96.0" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">0</text>
+<line x1="167.1" y1="492" x2="167.1" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="167.1" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">2</text>
+<line x1="238.1" y1="492" x2="238.1" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="238.1" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">4</text>
+<line x1="309.2" y1="492" x2="309.2" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="309.2" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">6</text>
+<line x1="380.2" y1="492" x2="380.2" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="380.2" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">8</text>
+<line x1="451.3" y1="492" x2="451.3" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="451.3" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">10</text>
+<line x1="522.4" y1="492" x2="522.4" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="522.4" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">12</text>
+<line x1="593.4" y1="492" x2="593.4" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="593.4" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">14</text>
+<line x1="664.5" y1="492" x2="664.5" y2="497" stroke="#334155" stroke-width="1"/>
+<text x="664.5" y="510" font-size="10.5" text-anchor="middle" fill="#94a3b8">16</text>
+<text x="398" y="528" font-size="11.5" text-anchor="middle" fill="#cbd5e1">propagation speed / km s⁻¹</text>
+<text x="451.3" y="390" font-size="10.5" text-anchor="middle" fill="#a78bfa">observed, 6–14 km/s</text>
+<line x1="266.7" y1="418.0" x2="356.1" y2="418.0" stroke="#2dd4bf" stroke-width="3"/>
+<line x1="266.7" y1="412.0" x2="266.7" y2="424.0" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="356.1" y1="412.0" x2="356.1" y2="424.0" stroke="#2dd4bf" stroke-width="2"/>
+<circle cx="315.6" cy="418.0" r="4.6" fill="#2dd4bf"/>
+<text x="366.1" y="422.0" font-size="10.5" fill="#2dd4bf">ΔU/(1+ρ<tspan baseline-shift="sub" font-size="75%">h</tspan>/ρ<tspan baseline-shift="sub" font-size="75%">l</tspan>) = 6.18 km/s</text>
+<circle cx="451.3" cy="448.0" r="4.6" fill="#fb923c"/>
+<line x1="451.3" y1="441.0" x2="451.3" y2="455.0" stroke="#fb923c" stroke-width="2"/>
+<text x="461.3" y="452.0" font-size="10.5" fill="#fb923c">equal densities, ΔU/2 = 10 km/s</text>
+<text x="106" y="480" font-size="10.5" fill="#cbd5e1">both land in the band; a band a factor 2.3 wide cannot separate predictions a factor 1.62 apart</text>
+<text x="8" y="548" font-size="10.5" fill="#94a3b8">Upper: Shimony et al. (2022), arXiv:2210.06631 (preprint; no journal reference). Lower: Ofman &amp; Thompson (2011), ApJ 734, L11,</text>
+<text x="8" y="564" font-size="10.5" fill="#94a3b8">whose numbers carry one significant figure and no uncertainties, so the lower panel has no σ to draw.</text>
+</svg>
+<!--/FIG_CHECK-->
+<figcaption><b>One refutation and one non-discrimination, drawn the same way.</b> Upper panel, belonging to this section: the measured $\alpha_B$ with its error bar, on an axis marked in units of that error bar. The three candidate values are plotted at their distances from it, and the bracket spans the factor-of-2 discrepancy the abstract claims to have resolved; the measurement reaches both ends of the bracket inside $2\,\sigma$, which is why it resolves neither. Lower panel, belonging to <a class="secref" href="#phase">§9.3</a>: the observed vortex propagation band of $6$–$14\ \mathrm{km\,s^{-1}}$, with the two competing predictions for the phase speed drawn on it. Both land inside the band. A band a factor $2.3$ wide cannot separate two predictions a factor $1.62$ apart, and the panel is drawn so that the reader can see the arithmetic rather than be told it.</figcaption>
+</figure>
+
+<h2 id="anchor">9. The anchor: Kelvin–Helmholtz on the flank of a CME</h2>
+
+<p>On 8 April 2010, beginning at 02:34 UT, SDO/AIA observed a flare and coronal mass ejection from an active region at $16^\circ$E, $29^\circ$N. The flare peaked at 03:25 UT at GOES class B3.7 and STEREO/SECCHI measured the ejection at about $500\ \mathrm{km\,s^{-1}}$. Along the boundary of one of the dimming regions left behind by the evacuated plasma, Ofman &amp; Thompson (2011) identified a chain of vortex-shaped features, several to ten arcseconds across, travelling at $6$–$14\ \mathrm{km\,s^{-1}}$ — the first reported observation of the Kelvin–Helmholtz instability in the solar corona in the extreme ultraviolet.</p>
+
+<span class="warn"><b>Say the weakness first, because it governs everything below.</b> Every input this paper supplies is quoted to one significant figure with no uncertainty: the wavelength is "$\sim$7000 km", the interface is "1–3 pixels", the growth time is "on the order of 14 minutes", and the driving shear is "$\sim$20 km/s" and is explicitly an <b>upper limit</b>. <b>No standard deviation can be computed from this source and none is claimed anywhere in this section.</b> Every ratio below is a factor-of-two statement. This is a weaker anchor than Module 2's independently fitted exponents or Module 3's helioseismic boundary, and it is used because it is the readable observation that exists: Foullon et al. (2011), which does quote uncertainties, is not on arXiv and could not be read, and a number taken from a paper this folder does not hold is the rule that was broken in Module 2.</span>
+
+<p>What such an observation can still be made to yield is the subject of this section, and the answer is stated in advance so that no check below has to carry more weight than it can.</p>
+
+<div class="keyresult"><b>What this anchor does and does not deliver.</b> It delivers <em>no</em> confirmation of Proposition 1 against a measured number. What it delivers is one <b>derived bound</b> — on a magnetic field that nobody measured (<a class="secref" href="#bfield">§9.5</a>) — together with three critiques of assumptions the paper makes, each carried out with the paper's own numbers, and one counterfactual about geometry. <a href="module01.html">Module 1</a>'s anchor was a bare ratio with no $\sigma$ either; the difference is that this is said here rather than implied by the word "confirmed".</div>
+
+<h3 id="inputs">9.1 The inputs, and one that is not theirs</h3>
+
+<table>
+<tr><th>Quantity</th><th>Value</th><th>Read from</th></tr>
+<tr><td>wavelength $\lambda$</td><td>$7000$ km, so $k = 8.9760\times10^{-9}\ \mathrm{cm^{-1}}$</td><td>p. 5, p. 10</td></tr>
+<tr><td>vortex propagation speed</td><td>$6$ to $14\ \mathrm{km\,s^{-1}}$ along the boundary</td><td>p. 2, p. 5, p. 6</td></tr>
+<tr><td>driving shear $\Delta U$</td><td>$20\ \mathrm{km\,s^{-1}}$, an <b>upper limit</b></td><td>p. 6</td></tr>
+<tr><td>interface thickness $a$</td><td>$800$ km, averaged from "1–3 pixels"</td><td>p. 6</td></tr>
+<tr><td>EUV emission ratio</td><td>$5$, range $3$–$10$</td><td>p. 9</td></tr>
+<tr><td>density ratio $\rho_h/\rho_l$</td><td>$\sqrt5 = 2.2361$ (range $1.7321$–$3.1623$)</td><td>p. 9</td></tr>
+<tr><td>coronal $n_e$</td><td>$3.0\times10^{8}\ \mathrm{cm^{-3}}$</td><td><b>not in the paper</b> — see below</td></tr>
+</table>
+
+<span class="prov">The paper gives the <em>ratio</em> of the two densities and never an absolute value; it states flatly that "the value of the magnetic field in the observations is unknown". The absolute density is therefore an <b>input carried from Module 1's census of astrophysical gases</b>, where the quiet corona sits at $n_e = 3\times10^{8}\ \mathrm{cm^{-3}}$ and $T = 2\times10^{6}$ K. With $\mu_e = 2/(1+X) = 1.1765$ at $X = 0.70$, the dense side is $\rho_h = \mu_e n_e m_u = 5.8607\times10^{-16}\ \mathrm{g\,cm^{-3}}$ and the light side $\rho_l = \rho_h/2.236 = 2.6210\times10^{-16}\ \mathrm{g\,cm^{-3}}$. <b>Every quantity below that uses it carries its $\sqrt{n_e}$ scaling explicitly</b>, so a reader who prefers a denser active-region value can rescale by eye. Only the field bound of <a class="secref" href="#bfield">§9.5</a> needs the absolute density. Sections <a class="secref" href="#repro">9.2</a> to <a class="secref" href="#dens">9.4</a> and <a class="secref" href="#counter">9.7</a> use only the <em>ratio</em> of the two densities, which the paper does measure: the prefactor $\sqrt{\rho_h\rho_l}/(\rho_h+\rho_l)$ is $\sqrt{r}/(1+r)$ with $r = \rho_h/\rho_l$, and $n_e$ cancels out of it.</span>
+
+<p>Before any check, three internal consistencies of the paper itself, which cost nothing and set the precision. One arcsecond at 1 AU is $725.3$ km, so the AIA pixel of $0.6''$ is $435.2$ km and the quoted vortex sizes of $3$–$10''$ span $2176$–$7253$ km: the adopted $\lambda = 7000$ km is the <em>top</em> of the observed range, at $0.9652$ of its upper edge, not its middle. The quoted "1–3 pixels" is $435$–$1305$ km, which the paper averages to $800$ km. And the interval from the first sign of vortex formation at 3:00:13 UT to the first motion along the front at 3:13:53 UT is $820$ s $= 13.7$ min, which is the number the paper rounds to "on the order of 14 minutes" — although the sentence that introduces that estimate names the dimming times 2:42:53 and 2:51:13 instead, which would give $31.0$ and $22.7$ minutes.</p>
+
+<h3 id="repro">9.2 Reproduced, not confirmed: their published growth rate</h3>
+
+<p>Their equation (1) is Proposition 1 with $\rho_t = \rho_b$, $g = T_s = 0$, rearranged so the field appears as a fractional reduction — limit 4 of <a class="secref" href="#limits">§3.1</a>. Evaluating it at their two speeds:</p>
+
+<table>
+<tr><th>$\Delta U$</th><th>This module</th><th>They print</th><th>Computed / published</th></tr>
+<tr><td>$6\ \mathrm{km\,s^{-1}}$</td><td>$0.00269\ \mathrm{s^{-1}}$</td><td>$0.003$</td><td>$0.8976$</td></tr>
+<tr><td>$14\ \mathrm{km\,s^{-1}}$</td><td>$0.00628\ \mathrm{s^{-1}}$</td><td>$0.006$</td><td>$1.0472$</td></tr>
+</table>
+
+<span class="warn"><b>This is a check on arithmetic, not on nature, and is labelled so.</b> Their $0.003$–$0.006\ \mathrm{s^{-1}}$ <em>is</em> $\tfrac12 k\Delta V$ evaluated at $6$ and $14\ \mathrm{km\,s^{-1}}$ — it is their own formula evaluated at their own numbers, not an independent measurement of a growth rate. Recovering it shows that this module's Proposition 1 reduces to their equation (1); it shows nothing about whether either describes the Sun. <a href="module05.html">Module 5</a> met the identical trap in Kandori's density-contrast column, which had been computed from the column it was being compared against, and refused to call it a check. So does this.</span>
+
+<p>Their nonlinear saturation "at several $\gamma^{-1}$ or in about 10 minutes" is likewise reproduced: $600$ s is $1.62$ to $3.77$ e-folding times at those rates, so "several" means $1.6$ to $3.8$. That is arithmetic too. The observational content of the section is the $820$ s of development, and even that is not a test, because the seed amplitude was never measured: any e-folding count of a few is admissible against an unmeasured starting amplitude.</p>
+
+<p>One substitution in their own Section 3 is worth naming, because it changes what their published rate means. The $6$–$14\ \mathrm{km\,s^{-1}}$ they insert into equation (1) as "the observed velocity shear" is introduced on their p. 5 as the speed at which the vortices <em>travel along the boundary</em>. The driving shear is measured separately, on p. 6, as $\sim$20 km/s. Those are different quantities: the propagation speed is what Proposition 8 of <a class="secref" href="#phase">§9.3</a> predicts <em>from</em> the shear, so using it <em>as</em> the shear assumes the answer. Substituting the shear they actually measured into their own formula gives</p>
+
+$$ \tfrac12 k\,\Delta U \;=\; 0.00898\ \mathrm{s^{-1}}, $$
+
+<p>which is $1.5$ to $3.0$ times the range they print.</p>
+
+<h3 id="phase">9.3 Consistent, but not discriminating</h3>
+
+<p>Proposition 1 makes a second prediction, independent of the growth rate: the imaginary part of $\sigma$ gives the speed at which the pattern travels.</p>
+
+<div class="prop"><b>Proposition 8 (the phase speed).</b> Under Definition 1, the pattern of the mode $\mathbf{k}$ travels at $\mathbf{k}\!\cdot\!\overline{\mathbf{U}}/k$, the <em>density-weighted</em> mean of the two stream velocities. With the dense side at rest and the light side moving at $\Delta U$,
+$$ c_{\rm ph} \;=\; \frac{\Delta U}{1 + \rho_h/\rho_l}. \tag{9.1}$$
+This is fixed by the same algebra that fixes $\sigma^2$ and needs no new hypothesis; it is a separate observable prediction, not a restatement of the growth rate.</div>
+
+<div class="proof">
+Immediate from Proposition 1: the left-hand side of (3.1) is $(\sigma + i\mathbf{k}\!\cdot\!\overline{\mathbf{U}})^2$ and the right-hand side is real, so when the mode is unstable the whole of $\operatorname{Im}\sigma$ is $-\mathbf{k}\!\cdot\!\overline{\mathbf{U}}$. With $U_t = \Delta U$ on the light side, $U_b = 0$ on the dense side and $\overline{U} = (\rho_l\Delta U + \rho_h\cdot 0)/(\rho_l+\rho_h)$, dividing numerator and denominator by $\rho_l$ gives (9.1). <span class="qed">∎</span>
+</div>
+
+<table>
+<tr><th>Prediction</th><th>Value</th></tr>
+<tr><td>(9.1) at the measured density ratio $2.236$</td><td>$6.18\ \mathrm{km\,s^{-1}}$</td></tr>
+<tr><td>the same, over their emission range $3$–$10$</td><td>$4.81$ to $7.32\ \mathrm{km\,s^{-1}}$</td></tr>
+<tr><td>the equal-density value $\Delta U/2$, which their own equation assumes</td><td>$10.00\ \mathrm{km\,s^{-1}}$</td></tr>
+<tr><td><b>observed</b></td><td>$6$ to $14\ \mathrm{km\,s^{-1}}$</td></tr>
+</table>
+
+<div class="keyresult"><b>Consistent, not discriminating — and counted as neither a confirmation nor a refutation.</b> The prediction $6.18\ \mathrm{km\,s^{-1}}$ lands inside the observed band, $1.030$ times its lower edge. So does the equal-density value $10.00$. A band a factor $2.3$ wide cannot separate two predictions a factor $1.62$ apart. Fig. 2, lower panel, draws both so that the reader can see why.</div>
+
+<span class="prov">$\Delta U$ is an upper limit, so $6.18\ \mathrm{km\,s^{-1}}$ is an upper bound on the phase speed, not a point prediction; the same applies to every rate in <a class="secref" href="#dens">§9.4</a> and to the field bound of <a class="secref" href="#bfield">§9.5</a>, all of which are linear in $\Delta U$.</span>
+
+<h3 id="dens">9.4 Refuted: the equal-density assumption in their own equation</h3>
+
+<p>Their equation (1) carries the prefactor $\tfrac12$, which by limit 2 of <a class="secref" href="#limits">§3.1</a> is the equal-density case. But the same paper measures a density ratio of $\sqrt5 = 2.236$ across that interface, and by limit 3 the correct prefactor is $\sqrt{\rho_h\rho_l}/(\rho_h+\rho_l)$.</p>
+
+<table>
+<tr><th>Quantity</th><th>Value</th></tr>
+<tr><td>prefactor they use, $\sqrt{\rho\rho}/(\rho+\rho)$</td><td>$0.50000$</td></tr>
+<tr><td>prefactor their measured ratio requires</td><td>$0.46209$</td></tr>
+<tr><td><b>ratio</b></td><td>$0.92418$, so their rate is $8.2$ per cent too high</td></tr>
+<tr><td>rate at $\Delta U = 20\ \mathrm{km\,s^{-1}}$, two-density form</td><td>$0.00830\ \mathrm{s^{-1}}$, $1/\sigma = 120.5$ s</td></tr>
+<tr><td>the same, equal-density form</td><td>$0.00898\ \mathrm{s^{-1}}$, $1/\sigma = 111.4$ s</td></tr>
+</table>
+
+<p>A second factor compounds with it, and it is also theirs. Their MHD model is initialised with $V_0 = 5V_{A,xy}$, so the bracket in their own equation (1) is $\sqrt{1-(2/5)^2} = 0.91652$: the model they <em>ran</em> is $8.3$ per cent below the field-free rate they <em>quote</em>. Compounded, $0.92418\times0.91652 = 0.84702$.</p>
+
+<div class="keyresult"><b>Refuted, with the paper's own inputs.</b> The published growth rate is $15.3$ per cent above what the paper's own density ratio and own model field require.</div>
+
+<p>And their own numerics had already found the larger half of it. Their p. 9 reports: <em>"We have also performed runs with density ratios of 2 and 3 and found similar results, with the growth rate of KH instability decreasing by $\sim$15% with the density ratio in this range."</em> The two-density prefactor predicts exactly that behaviour:</p>
+
+<table>
+<tr><th>Density ratio $r$</th><th>$\sqrt r/(1+r)$</th><th>Below the equal-density $0.5$</th></tr>
+<tr><td>$2$</td><td>$0.47140$</td><td>$5.7$ per cent</td></tr>
+<tr><td>$3$</td><td>$0.43301$</td><td>$13.4$ per cent</td></tr>
+</table>
+
+<p>Their $\sim$15 per cent from a numerical experiment against $13.4$ per cent from the algebra. The correction this section makes to their quoted rate is one their own model had already measured and their quoted formula did not carry.</p>
+
+<span class="prov">The e-folding count over the observed $820$ s, at the corrected rate, is $6.80$. That is a consistency statement and not a test: the seed amplitude was never measured, so any count of a few e-foldings is admissible.</span>
+
+<h3 id="bfield">9.5 The sharp result: what the instability measures about the field</h3>
+
+<p>Their p. 8 states an assumption plainly: <em>"For simplicity, we have assumed that the magnetic field has no parallel component to the interface in Equation 1."</em> Undo it, and the observation stops being a consistency check and becomes a measurement — because for the vortices to have been seen at all, the magnetic term in (3.1) must have lost to the Kelvin–Helmholtz drive.</p>
+
+<div class="prop"><b>Proposition 9 (an observed Kelvin–Helmholtz instability bounds the field along $\mathbf{k}$).</b> Under Definition 1 with $g = T_s = 0$, the mode $\mathbf{k}$ is unstable if and only if
+$$ (B_t^2+B_b^2)\cos^2\theta \;\lt\; \frac{4\pi\,\rho_t\rho_b\,\Delta U^{2}}{\rho_t+\rho_b}. \tag{9.2}$$
+The wavenumber $k$ has cancelled: both competing terms of (3.1) go as $k^2$, so the condition holds at every wavelength or at none. In particular, with <b>equal field magnitudes on both sides</b>, $B_t = B_b = B$,
+$$ B\cos\theta \;\lt\; \Delta U\sqrt{\frac{2\pi\,\rho_t\rho_b}{\rho_t+\rho_b}}, \tag{9.3}$$
+and with the field on <b>one side only</b> the same inequality holds with $4\pi$ in place of $2\pi$, giving a bound larger by $\sqrt2$.</div>
+
+<div class="proof">
+Set $g = T_s = 0$ in (3.1) and require $\sigma^2 \gt 0$:
+$$ \frac{k^2\rho_t\rho_b\Delta U^2}{(\rho_t+\rho_b)^2} \;\gt\; \frac{k^2(B_t^2+B_b^2)\cos^2\theta}{4\pi(\rho_t+\rho_b)} .$$
+Both sides carry $k^2$, which cancels; multiplying by $4\pi(\rho_t+\rho_b)$ gives (9.2). Putting $B_t = B_b = B$ makes the left side $2B^2\cos^2\theta$, and taking the square root gives (9.3); putting $B_b = 0$ makes it $B_t^2\cos^2\theta$ and replaces the $2\pi$ by $4\pi$. <span class="qed">∎</span>
+</div>
+
+<p>The hypothesis about <em>where</em> the field is matters at the $\sqrt2$ level, so both cases are printed rather than one. Ofman &amp; Thompson's model puts a field on both sides, so (9.3) is the case matching their configuration; the one-sided value is the weaker and therefore the safer statement.</p>
+
+<div class="keyresult"><b>The instability existing at all bounds the field along $\mathbf{k}$.</b> $B\cos\theta \lt 0.0675$ G for equal fields on both sides, or $\lt 0.0954$ G for a one-sided field, at $n_e = 3\times10^{8}\ \mathrm{cm^{-3}}$. The bound scales as $\sqrt{n_e}$: it is $0.1232$ G at $10^{9}\ \mathrm{cm^{-3}}$ and $0.0390$ G at $10^{8}\ \mathrm{cm^{-3}}$. Both are upper bounds twice over, because $\Delta U$ is itself an upper limit and the bound is linear in $\Delta U$.</div>
+
+<p>Expressed as an angle, the bound is more striking than as a field strength, because the coronal field is not small.</p>
+
+<table>
+<tr><th>Total field $B$</th><th>$\cos\theta \lt$</th><th>$\mathbf{k}$ within … of perpendicular to $\mathbf{B}$</th></tr>
+<tr><td>$1.0$ G</td><td>$0.06747$</td><td>$3.87^\circ$</td></tr>
+<tr><td>$2.0$ G</td><td>$0.03373$</td><td>$1.93^\circ$</td></tr>
+<tr><td>$5.0$ G</td><td>$0.01349$</td><td>$0.77^\circ$</td></tr>
+<tr><td>$10.0$ G</td><td>$0.00675$</td><td>$0.39^\circ$</td></tr>
+<tr><td>$50.0$ G</td><td>$0.00135$</td><td>$0.08^\circ$</td></tr>
+</table>
+
+<p>In an active-region corona of $10$ gauss, the wavevector must lie within $0.39^\circ$ of perpendicular to the field — $0.55^\circ$ on the one-sided hypothesis — for the hydrodynamic rate of <a class="secref" href="#repro">§9.2</a> to be even approximately right. The paper reaches the same conclusion qualitatively, noting that the instability "is not strongly suppressed, implying that the magnetic field was mostly radial"; the number is this module's.</p>
+
+<p>That number is also this module's clearest statement of its own boundary. A purely hydrodynamic calculation that needs a one-degree statement about a field it never mentions is a calculation waiting for magnetohydrodynamics, and Module 12 is where it is repaid.</p>
+
+<figure>
+<!--FIG_FIELD-->
+<svg class="setupfig" viewBox="0 0 760 616" width="100%" role="img" aria-label="Upper panel: the Kelvin-Helmholtz growth rate as a fraction of its field-free value, against the magnetic field component along the wavevector. The curve is a quarter circle falling to zero at 0.0675 gauss. Lower panel: the same bound expressed as an angle. For a total field of ten gauss the wavevector must lie within four tenths of a degree of perpendicular to the field.">
+<text x="395" y="28" font-size="12.5" text-anchor="middle" fill="#cbd5e1">What the instability measures: the field along the wavevector</text>
+<text x="395" y="44" font-size="10.5" text-anchor="middle" fill="#94a3b8">the paper assumed this component was zero; undoing the assumption turns the observation into a bound</text>
+<rect x="90" y="62" width="610" height="200" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="574.2" y="62" width="125.8" height="200" fill="#fb923c" fill-opacity="0.09"/>
+<line x1="90.0" y1="262" x2="90.0" y2="267" stroke="#334155" stroke-width="1"/>
+<text x="90.0" y="280" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.00</text>
+<line x1="233.5" y1="262" x2="233.5" y2="267" stroke="#334155" stroke-width="1"/>
+<text x="233.5" y="280" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.02</text>
+<line x1="377.1" y1="262" x2="377.1" y2="267" stroke="#334155" stroke-width="1"/>
+<text x="377.1" y="280" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.04</text>
+<line x1="520.6" y1="262" x2="520.6" y2="267" stroke="#334155" stroke-width="1"/>
+<text x="520.6" y="280" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.06</text>
+<line x1="664.1" y1="262" x2="664.1" y2="267" stroke="#334155" stroke-width="1"/>
+<text x="664.1" y="280" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.08</text>
+<line x1="85" y1="262.0" x2="90" y2="262.0" stroke="#334155" stroke-width="1"/>
+<text x="81" y="266.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.00</text>
+<line x1="85" y1="212.0" x2="90" y2="212.0" stroke="#334155" stroke-width="1"/>
+<text x="81" y="216.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.25</text>
+<line x1="85" y1="162.0" x2="90" y2="162.0" stroke="#334155" stroke-width="1"/>
+<text x="81" y="166.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.50</text>
+<line x1="85" y1="112.0" x2="90" y2="112.0" stroke="#334155" stroke-width="1"/>
+<text x="81" y="116.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.75</text>
+<line x1="85" y1="62.0" x2="90" y2="62.0" stroke="#334155" stroke-width="1"/>
+<text x="81" y="66.0" font-size="10.5" text-anchor="end" fill="#94a3b8">1.00</text>
+<text x="395" y="298" font-size="11.5" text-anchor="middle" fill="#cbd5e1">B cos θ, the field along k / gauss</text>
+<text x="40" y="162" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 40 162)">σ / σ(B = 0)</text>
+<path d="M 90.0,62.0 L 91.0,62.0 L 91.9,62.0 L 92.9,62.0 L 93.9,62.0 L 94.9,62.0 L 95.8,62.0 L 96.8,62.0 L 97.8,62.0 L 98.7,62.0 L 99.7,62.0 L 100.7,62.0 L 101.6,62.1 L 102.6,62.1 L 103.6,62.1 L 104.6,62.1 L 105.5,62.1 L 106.5,62.1 L 107.5,62.1 L 108.4,62.1 L 109.4,62.2 L 110.4,62.2 L 111.3,62.2 L 112.3,62.2 L 113.3,62.2 L 114.3,62.3 L 115.2,62.3 L 116.2,62.3 L 117.2,62.3 L 118.1,62.3 L 119.1,62.4 L 120.1,62.4 L 121.0,62.4 L 122.0,62.4 L 123.0,62.5 L 124.0,62.5 L 124.9,62.5 L 125.9,62.6 L 126.9,62.6 L 127.8,62.6 L 128.8,62.6 L 129.8,62.7 L 130.8,62.7 L 131.7,62.7 L 132.7,62.8 L 133.7,62.8 L 134.6,62.9 L 135.6,62.9 L 136.6,62.9 L 137.5,63.0 L 138.5,63.0 L 139.5,63.0 L 140.5,63.1 L 141.4,63.1 L 142.4,63.2 L 143.4,63.2 L 144.3,63.3 L 145.3,63.3 L 146.3,63.4 L 147.2,63.4 L 148.2,63.5 L 149.2,63.5 L 150.2,63.5 L 151.1,63.6 L 152.1,63.7 L 153.1,63.7 L 154.0,63.8 L 155.0,63.8 L 156.0,63.9 L 156.9,63.9 L 157.9,64.0 L 158.9,64.0 L 159.9,64.1 L 160.8,64.2 L 161.8,64.2 L 162.8,64.3 L 163.7,64.3 L 164.7,64.4 L 165.7,64.5 L 166.7,64.5 L 167.6,64.6 L 168.6,64.7 L 169.6,64.7 L 170.5,64.8 L 171.5,64.9 L 172.5,64.9 L 173.4,65.0 L 174.4,65.1 L 175.4,65.1 L 176.4,65.2 L 177.3,65.3 L 178.3,65.4 L 179.3,65.4 L 180.2,65.5 L 181.2,65.6 L 182.2,65.7 L 183.1,65.7 L 184.1,65.8 L 185.1,65.9 L 186.1,66.0 L 187.0,66.1 L 188.0,66.1 L 189.0,66.2 L 189.9,66.3 L 190.9,66.4 L 191.9,66.5 L 192.8,66.6 L 193.8,66.7 L 194.8,66.7 L 195.8,66.8 L 196.7,66.9 L 197.7,67.0 L 198.7,67.1 L 199.6,67.2 L 200.6,67.3 L 201.6,67.4 L 202.6,67.5 L 203.5,67.6 L 204.5,67.7 L 205.5,67.8 L 206.4,67.9 L 207.4,68.0 L 208.4,68.1 L 209.3,68.2 L 210.3,68.3 L 211.3,68.4 L 212.3,68.5 L 213.2,68.6 L 214.2,68.7 L 215.2,68.8 L 216.1,68.9 L 217.1,69.0 L 218.1,69.1 L 219.0,69.2 L 220.0,69.3 L 221.0,69.5 L 222.0,69.6 L 222.9,69.7 L 223.9,69.8 L 224.9,69.9 L 225.8,70.0 L 226.8,70.2 L 227.8,70.3 L 228.8,70.4 L 229.7,70.5 L 230.7,70.6 L 231.7,70.8 L 232.6,70.9 L 233.6,71.0 L 234.6,71.1 L 235.5,71.3 L 236.5,71.4 L 237.5,71.5 L 238.5,71.6 L 239.4,71.8 L 240.4,71.9 L 241.4,72.0 L 242.3,72.2 L 243.3,72.3 L 244.3,72.4 L 245.2,72.6 L 246.2,72.7 L 247.2,72.8 L 248.2,73.0 L 249.1,73.1 L 250.1,73.3 L 251.1,73.4 L 252.0,73.5 L 253.0,73.7 L 254.0,73.8 L 254.9,74.0 L 255.9,74.1 L 256.9,74.3 L 257.9,74.4 L 258.8,74.6 L 259.8,74.7 L 260.8,74.9 L 261.7,75.0 L 262.7,75.2 L 263.7,75.3 L 264.7,75.5 L 265.6,75.6 L 266.6,75.8 L 267.6,75.9 L 268.5,76.1 L 269.5,76.3 L 270.5,76.4 L 271.4,76.6 L 272.4,76.7 L 273.4,76.9 L 274.4,77.1 L 275.3,77.2 L 276.3,77.4 L 277.3,77.6 L 278.2,77.7 L 279.2,77.9 L 280.2,78.1 L 281.1,78.2 L 282.1,78.4 L 283.1,78.6 L 284.1,78.8 L 285.0,78.9 L 286.0,79.1 L 287.0,79.3 L 287.9,79.5 L 288.9,79.7 L 289.9,79.8 L 290.8,80.0 L 291.8,80.2 L 292.8,80.4 L 293.8,80.6 L 294.7,80.8 L 295.7,80.9 L 296.7,81.1 L 297.6,81.3 L 298.6,81.5 L 299.6,81.7 L 300.6,81.9 L 301.5,82.1 L 302.5,82.3 L 303.5,82.5 L 304.4,82.7 L 305.4,82.9 L 306.4,83.1 L 307.3,83.3 L 308.3,83.5 L 309.3,83.7 L 310.3,83.9 L 311.2,84.1 L 312.2,84.3 L 313.2,84.5 L 314.1,84.7 L 315.1,84.9 L 316.1,85.1 L 317.0,85.4 L 318.0,85.6 L 319.0,85.8 L 320.0,86.0 L 320.9,86.2 L 321.9,86.4 L 322.9,86.7 L 323.8,86.9 L 324.8,87.1 L 325.8,87.3 L 326.7,87.5 L 327.7,87.8 L 328.7,88.0 L 329.7,88.2 L 330.6,88.4 L 331.6,88.7 L 332.6,88.9 L 333.5,89.1 L 334.5,89.4 L 335.5,89.6 L 336.5,89.8 L 337.4,90.1 L 338.4,90.3 L 339.4,90.6 L 340.3,90.8 L 341.3,91.0 L 342.3,91.3 L 343.2,91.5 L 344.2,91.8 L 345.2,92.0 L 346.2,92.3 L 347.1,92.5 L 348.1,92.8 L 349.1,93.0 L 350.0,93.3 L 351.0,93.5 L 352.0,93.8 L 352.9,94.1 L 353.9,94.3 L 354.9,94.6 L 355.9,94.8 L 356.8,95.1 L 357.8,95.4 L 358.8,95.6 L 359.7,95.9 L 360.7,96.2 L 361.7,96.5 L 362.6,96.7 L 363.6,97.0 L 364.6,97.3 L 365.6,97.6 L 366.5,97.8 L 367.5,98.1 L 368.5,98.4 L 369.4,98.7 L 370.4,99.0 L 371.4,99.2 L 372.4,99.5 L 373.3,99.8 L 374.3,100.1 L 375.3,100.4 L 376.2,100.7 L 377.2,101.0 L 378.2,101.3 L 379.1,101.6 L 380.1,101.9 L 381.1,102.2 L 382.1,102.5 L 383.0,102.8 L 384.0,103.1 L 385.0,103.4 L 385.9,103.7 L 386.9,104.0 L 387.9,104.3 L 388.8,104.6 L 389.8,105.0 L 390.8,105.3 L 391.8,105.6 L 392.7,105.9 L 393.7,106.2 L 394.7,106.6 L 395.6,106.9 L 396.6,107.2 L 397.6,107.5 L 398.5,107.9 L 399.5,108.2 L 400.5,108.5 L 401.5,108.9 L 402.4,109.2 L 403.4,109.6 L 404.4,109.9 L 405.3,110.2 L 406.3,110.6 L 407.3,110.9 L 408.3,111.3 L 409.2,111.6 L 410.2,112.0 L 411.2,112.3 L 412.1,112.7 L 413.1,113.0 L 414.1,113.4 L 415.0,113.8 L 416.0,114.1 L 417.0,114.5 L 418.0,114.9 L 418.9,115.2 L 419.9,115.6 L 420.9,116.0 L 421.8,116.4 L 422.8,116.7 L 423.8,117.1 L 424.7,117.5 L 425.7,117.9 L 426.7,118.3 L 427.7,118.7 L 428.6,119.1 L 429.6,119.4 L 430.6,119.8 L 431.5,120.2 L 432.5,120.6 L 433.5,121.0 L 434.4,121.4 L 435.4,121.9 L 436.4,122.3 L 437.4,122.7 L 438.3,123.1 L 439.3,123.5 L 440.3,123.9 L 441.2,124.3 L 442.2,124.8 L 443.2,125.2 L 444.2,125.6 L 445.1,126.1 L 446.1,126.5 L 447.1,126.9 L 448.0,127.4 L 449.0,127.8 L 450.0,128.2 L 450.9,128.7 L 451.9,129.1 L 452.9,129.6 L 453.9,130.1 L 454.8,130.5 L 455.8,131.0 L 456.8,131.4 L 457.7,131.9 L 458.7,132.4 L 459.7,132.8 L 460.6,133.3 L 461.6,133.8 L 462.6,134.3 L 463.6,134.8 L 464.5,135.3 L 465.5,135.7 L 466.5,136.2 L 467.4,136.7 L 468.4,137.2 L 469.4,137.7 L 470.3,138.2 L 471.3,138.8 L 472.3,139.3 L 473.3,139.8 L 474.2,140.3 L 475.2,140.8 L 476.2,141.4 L 477.1,141.9 L 478.1,142.4 L 479.1,143.0 L 480.1,143.5 L 481.0,144.1 L 482.0,144.6 L 483.0,145.2 L 483.9,145.7 L 484.9,146.3 L 485.9,146.9 L 486.8,147.4 L 487.8,148.0 L 488.8,148.6 L 489.8,149.2 L 490.7,149.8 L 491.7,150.3 L 492.7,150.9 L 493.6,151.5 L 494.6,152.2 L 495.6,152.8 L 496.5,153.4 L 497.5,154.0 L 498.5,154.6 L 499.5,155.3 L 500.4,155.9 L 501.4,156.5 L 502.4,157.2 L 503.3,157.8 L 504.3,158.5 L 505.3,159.2 L 506.3,159.8 L 507.2,160.5 L 508.2,161.2 L 509.2,161.9 L 510.1,162.6 L 511.1,163.3 L 512.1,164.0 L 513.0,164.7 L 514.0,165.4 L 515.0,166.2 L 516.0,166.9 L 516.9,167.7 L 517.9,168.4 L 518.9,169.2 L 519.8,169.9 L 520.8,170.7 L 521.8,171.5 L 522.7,172.3 L 523.7,173.1 L 524.7,173.9 L 525.7,174.7 L 526.6,175.6 L 527.6,176.4 L 528.6,177.3 L 529.5,178.1 L 530.5,179.0 L 531.5,179.9 L 532.4,180.8 L 533.4,181.7 L 534.4,182.6 L 535.4,183.5 L 536.3,184.5 L 537.3,185.4 L 538.3,186.4 L 539.2,187.4 L 540.2,188.4 L 541.2,189.4 L 542.2,190.5 L 543.1,191.5 L 544.1,192.6 L 545.1,193.7 L 546.0,194.8 L 547.0,195.9 L 548.0,197.1 L 548.9,198.3 L 549.9,199.5 L 550.9,200.7 L 551.9,202.0 L 552.8,203.3 L 553.8,204.6 L 554.8,205.9 L 555.7,207.3 L 556.7,208.8 L 557.7,210.2 L 558.6,211.8 L 559.6,213.3 L 560.6,215.0 L 561.6,216.6 L 562.5,218.4 L 563.5,220.2 L 564.5,222.2 L 565.4,224.2 L 566.4,226.3 L 567.4,228.6 L 568.3,231.1 L 569.3,233.8 L 570.3,236.7 L 571.3,240.1 L 572.2,244.1 L 573.2,249.3 L 574.2,262.0" fill="none" stroke="#2dd4bf" stroke-width="2.8"/>
+<line x1="574.2" y1="62" x2="574.2" y2="262" stroke="#fb923c" stroke-width="2"/>
+<text x="690" y="78.0" font-size="10.5" text-anchor="end" fill="#fb923c">STABLE: no instability possible</text>
+<text x="690" y="93.0" font-size="10.5" text-anchor="end" fill="#fb923c">B cos θ &gt; 0.0675 G</text>
+<text x="118.7" y="202.0" font-size="10.5" fill="#2dd4bf">σ/σ₀ = √(1 − (B cos θ / 0.0675 G)²)</text>
+<text x="118.7" y="217.0" font-size="10.5" fill="#cbd5e1">the vortices were seen, so the Sun sits to the LEFT of the line</text>
+<text x="118.7" y="232.0" font-size="10.5" fill="#94a3b8">bound ∝ √n<tspan baseline-shift="sub" font-size="75%">e</tspan>: 0.123 G at n<tspan baseline-shift="sub" font-size="75%">e</tspan> = 10⁹ cm⁻³</text>
+<text x="395" y="352" font-size="12.5" text-anchor="middle" fill="#cbd5e1">The same bound as an angle: how nearly perpendicular k must lie</text>
+<rect x="90" y="386" width="610" height="150" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="90.0" y1="536" x2="90.0" y2="541" stroke="#334155" stroke-width="1"/>
+<text x="90.0" y="554" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.5</text>
+<line x1="169.8" y1="536" x2="169.8" y2="541" stroke="#334155" stroke-width="1"/>
+<text x="169.8" y="554" font-size="10.5" text-anchor="middle" fill="#94a3b8">1</text>
+<line x1="249.6" y1="536" x2="249.6" y2="541" stroke="#334155" stroke-width="1"/>
+<text x="249.6" y="554" font-size="10.5" text-anchor="middle" fill="#94a3b8">2</text>
+<line x1="355.1" y1="536" x2="355.1" y2="541" stroke="#334155" stroke-width="1"/>
+<text x="355.1" y="554" font-size="10.5" text-anchor="middle" fill="#94a3b8">5</text>
+<line x1="434.9" y1="536" x2="434.9" y2="541" stroke="#334155" stroke-width="1"/>
+<text x="434.9" y="554" font-size="10.5" text-anchor="middle" fill="#94a3b8">10</text>
+<line x1="514.7" y1="536" x2="514.7" y2="541" stroke="#334155" stroke-width="1"/>
+<text x="514.7" y="554" font-size="10.5" text-anchor="middle" fill="#94a3b8">20</text>
+<line x1="620.2" y1="536" x2="620.2" y2="541" stroke="#334155" stroke-width="1"/>
+<text x="620.2" y="554" font-size="10.5" text-anchor="middle" fill="#94a3b8">50</text>
+<line x1="700.0" y1="536" x2="700.0" y2="541" stroke="#334155" stroke-width="1"/>
+<text x="700.0" y="554" font-size="10.5" text-anchor="middle" fill="#94a3b8">100</text>
+<line x1="85" y1="536.0" x2="90" y2="536.0" stroke="#334155" stroke-width="1"/>
+<text x="81" y="540.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="85" y1="498.5" x2="90" y2="498.5" stroke="#334155" stroke-width="1"/>
+<text x="81" y="502.5" font-size="10.5" text-anchor="end" fill="#94a3b8">2</text>
+<line x1="85" y1="461.0" x2="90" y2="461.0" stroke="#334155" stroke-width="1"/>
+<text x="81" y="465.0" font-size="10.5" text-anchor="end" fill="#94a3b8">4</text>
+<line x1="85" y1="423.5" x2="90" y2="423.5" stroke="#334155" stroke-width="1"/>
+<text x="81" y="427.5" font-size="10.5" text-anchor="end" fill="#94a3b8">6</text>
+<line x1="85" y1="386.0" x2="90" y2="386.0" stroke="#334155" stroke-width="1"/>
+<text x="81" y="390.0" font-size="10.5" text-anchor="end" fill="#94a3b8">8</text>
+<text x="395" y="572" font-size="11.5" text-anchor="middle" fill="#cbd5e1">total field B / gauss</text>
+<text x="40" y="461" font-size="11.5" text-anchor="middle" fill="#cbd5e1" transform="rotate(-90 40 461)">90° − θ / degrees</text>
+<path d="M 90.0,390.6 L 91.2,392.1 L 92.4,393.7 L 93.7,395.2 L 94.9,396.7 L 96.1,398.2 L 97.3,399.6 L 98.6,401.1 L 99.8,402.5 L 101.0,403.9 L 102.2,405.3 L 103.4,406.7 L 104.7,408.1 L 105.9,409.4 L 107.1,410.8 L 108.3,412.1 L 109.6,413.4 L 110.8,414.7 L 112.0,416.0 L 113.2,417.3 L 114.4,418.5 L 115.7,419.8 L 116.9,421.0 L 118.1,422.2 L 119.3,423.4 L 120.6,424.6 L 121.8,425.8 L 123.0,427.0 L 124.2,428.1 L 125.5,429.3 L 126.7,430.4 L 127.9,431.5 L 129.1,432.6 L 130.3,433.7 L 131.6,434.8 L 132.8,435.9 L 134.0,437.0 L 135.2,438.0 L 136.5,439.0 L 137.7,440.1 L 138.9,441.1 L 140.1,442.1 L 141.3,443.1 L 142.6,444.1 L 143.8,445.0 L 145.0,446.0 L 146.2,447.0 L 147.5,447.9 L 148.7,448.8 L 149.9,449.8 L 151.1,450.7 L 152.3,451.6 L 153.6,452.5 L 154.8,453.3 L 156.0,454.2 L 157.2,455.1 L 158.5,455.9 L 159.7,456.8 L 160.9,457.6 L 162.1,458.5 L 163.3,459.3 L 164.6,460.1 L 165.8,460.9 L 167.0,461.7 L 168.2,462.5 L 169.5,463.2 L 170.7,464.0 L 171.9,464.8 L 173.1,465.5 L 174.3,466.3 L 175.6,467.0 L 176.8,467.7 L 178.0,468.5 L 179.2,469.2 L 180.5,469.9 L 181.7,470.6 L 182.9,471.3 L 184.1,472.0 L 185.4,472.6 L 186.6,473.3 L 187.8,474.0 L 189.0,474.6 L 190.2,475.3 L 191.5,475.9 L 192.7,476.6 L 193.9,477.2 L 195.1,477.8 L 196.4,478.4 L 197.6,479.0 L 198.8,479.6 L 200.0,480.2 L 201.2,480.8 L 202.5,481.4 L 203.7,482.0 L 204.9,482.5 L 206.1,483.1 L 207.4,483.7 L 208.6,484.2 L 209.8,484.8 L 211.0,485.3 L 212.2,485.9 L 213.5,486.4 L 214.7,486.9 L 215.9,487.4 L 217.1,487.9 L 218.4,488.4 L 219.6,488.9 L 220.8,489.4 L 222.0,489.9 L 223.2,490.4 L 224.5,490.9 L 225.7,491.4 L 226.9,491.9 L 228.1,492.3 L 229.4,492.8 L 230.6,493.2 L 231.8,493.7 L 233.0,494.1 L 234.2,494.6 L 235.5,495.0 L 236.7,495.5 L 237.9,495.9 L 239.1,496.3 L 240.4,496.7 L 241.6,497.1 L 242.8,497.5 L 244.0,498.0 L 245.3,498.4 L 246.5,498.8 L 247.7,499.1 L 248.9,499.5 L 250.1,499.9 L 251.4,500.3 L 252.6,500.7 L 253.8,501.1 L 255.0,501.4 L 256.3,501.8 L 257.5,502.1 L 258.7,502.5 L 259.9,502.9 L 261.1,503.2 L 262.4,503.6 L 263.6,503.9 L 264.8,504.2 L 266.0,504.6 L 267.3,504.9 L 268.5,505.2 L 269.7,505.6 L 270.9,505.9 L 272.1,506.2 L 273.4,506.5 L 274.6,506.8 L 275.8,507.1 L 277.0,507.4 L 278.3,507.7 L 279.5,508.0 L 280.7,508.3 L 281.9,508.6 L 283.1,508.9 L 284.4,509.2 L 285.6,509.5 L 286.8,509.8 L 288.0,510.0 L 289.3,510.3 L 290.5,510.6 L 291.7,510.9 L 292.9,511.1 L 294.1,511.4 L 295.4,511.6 L 296.6,511.9 L 297.8,512.2 L 299.0,512.4 L 300.3,512.7 L 301.5,512.9 L 302.7,513.1 L 303.9,513.4 L 305.2,513.6 L 306.4,513.9 L 307.6,514.1 L 308.8,514.3 L 310.0,514.6 L 311.3,514.8 L 312.5,515.0 L 313.7,515.2 L 314.9,515.5 L 316.2,515.7 L 317.4,515.9 L 318.6,516.1 L 319.8,516.3 L 321.0,516.5 L 322.3,516.7 L 323.5,516.9 L 324.7,517.1 L 325.9,517.3 L 327.2,517.5 L 328.4,517.7 L 329.6,517.9 L 330.8,518.1 L 332.0,518.3 L 333.3,518.5 L 334.5,518.7 L 335.7,518.8 L 336.9,519.0 L 338.2,519.2 L 339.4,519.4 L 340.6,519.6 L 341.8,519.7 L 343.0,519.9 L 344.3,520.1 L 345.5,520.2 L 346.7,520.4 L 347.9,520.6 L 349.2,520.7 L 350.4,520.9 L 351.6,521.1 L 352.8,521.2 L 354.0,521.4 L 355.3,521.5 L 356.5,521.7 L 357.7,521.8 L 358.9,522.0 L 360.2,522.1 L 361.4,522.3 L 362.6,522.4 L 363.8,522.6 L 365.1,522.7 L 366.3,522.8 L 367.5,523.0 L 368.7,523.1 L 369.9,523.3 L 371.2,523.4 L 372.4,523.5 L 373.6,523.7 L 374.8,523.8 L 376.1,523.9 L 377.3,524.0 L 378.5,524.2 L 379.7,524.3 L 380.9,524.4 L 382.2,524.5 L 383.4,524.7 L 384.6,524.8 L 385.8,524.9 L 387.1,525.0 L 388.3,525.1 L 389.5,525.2 L 390.7,525.4 L 391.9,525.5 L 393.2,525.6 L 394.4,525.7 L 395.6,525.8 L 396.8,525.9 L 398.1,526.0 L 399.3,526.1 L 400.5,526.2 L 401.7,526.3 L 402.9,526.4 L 404.2,526.5 L 405.4,526.6 L 406.6,526.7 L 407.8,526.8 L 409.1,526.9 L 410.3,527.0 L 411.5,527.1 L 412.7,527.2 L 413.9,527.3 L 415.2,527.4 L 416.4,527.5 L 417.6,527.6 L 418.8,527.7 L 420.1,527.8 L 421.3,527.8 L 422.5,527.9 L 423.7,528.0 L 424.9,528.1 L 426.2,528.2 L 427.4,528.3 L 428.6,528.3 L 429.8,528.4 L 431.1,528.5 L 432.3,528.6 L 433.5,528.7 L 434.7,528.7 L 436.0,528.8 L 437.2,528.9 L 438.4,529.0 L 439.6,529.0 L 440.8,529.1 L 442.1,529.2 L 443.3,529.3 L 444.5,529.3 L 445.7,529.4 L 447.0,529.5 L 448.2,529.5 L 449.4,529.6 L 450.6,529.7 L 451.8,529.7 L 453.1,529.8 L 454.3,529.9 L 455.5,529.9 L 456.7,530.0 L 458.0,530.1 L 459.2,530.1 L 460.4,530.2 L 461.6,530.3 L 462.8,530.3 L 464.1,530.4 L 465.3,530.4 L 466.5,530.5 L 467.7,530.6 L 469.0,530.6 L 470.2,530.7 L 471.4,530.7 L 472.6,530.8 L 473.8,530.8 L 475.1,530.9 L 476.3,530.9 L 477.5,531.0 L 478.7,531.0 L 480.0,531.1 L 481.2,531.2 L 482.4,531.2 L 483.6,531.3 L 484.8,531.3 L 486.1,531.4 L 487.3,531.4 L 488.5,531.5 L 489.7,531.5 L 491.0,531.5 L 492.2,531.6 L 493.4,531.6 L 494.6,531.7 L 495.9,531.7 L 497.1,531.8 L 498.3,531.8 L 499.5,531.9 L 500.7,531.9 L 502.0,532.0 L 503.2,532.0 L 504.4,532.0 L 505.6,532.1 L 506.9,532.1 L 508.1,532.2 L 509.3,532.2 L 510.5,532.2 L 511.7,532.3 L 513.0,532.3 L 514.2,532.4 L 515.4,532.4 L 516.6,532.4 L 517.9,532.5 L 519.1,532.5 L 520.3,532.5 L 521.5,532.6 L 522.7,532.6 L 524.0,532.7 L 525.2,532.7 L 526.4,532.7 L 527.6,532.8 L 528.9,532.8 L 530.1,532.8 L 531.3,532.9 L 532.5,532.9 L 533.7,532.9 L 535.0,533.0 L 536.2,533.0 L 537.4,533.0 L 538.6,533.1 L 539.9,533.1 L 541.1,533.1 L 542.3,533.1 L 543.5,533.2 L 544.7,533.2 L 546.0,533.2 L 547.2,533.3 L 548.4,533.3 L 549.6,533.3 L 550.9,533.4 L 552.1,533.4 L 553.3,533.4 L 554.5,533.4 L 555.8,533.5 L 557.0,533.5 L 558.2,533.5 L 559.4,533.5 L 560.6,533.6 L 561.9,533.6 L 563.1,533.6 L 564.3,533.6 L 565.5,533.7 L 566.8,533.7 L 568.0,533.7 L 569.2,533.7 L 570.4,533.8 L 571.6,533.8 L 572.9,533.8 L 574.1,533.8 L 575.3,533.9 L 576.5,533.9 L 577.8,533.9 L 579.0,533.9 L 580.2,533.9 L 581.4,534.0 L 582.6,534.0 L 583.9,534.0 L 585.1,534.0 L 586.3,534.1 L 587.5,534.1 L 588.8,534.1 L 590.0,534.1 L 591.2,534.1 L 592.4,534.2 L 593.6,534.2 L 594.9,534.2 L 596.1,534.2 L 597.3,534.2 L 598.5,534.3 L 599.8,534.3 L 601.0,534.3 L 602.2,534.3 L 603.4,534.3 L 604.6,534.3 L 605.9,534.4 L 607.1,534.4 L 608.3,534.4 L 609.5,534.4 L 610.8,534.4 L 612.0,534.4 L 613.2,534.5 L 614.4,534.5 L 615.7,534.5 L 616.9,534.5 L 618.1,534.5 L 619.3,534.5 L 620.5,534.6 L 621.8,534.6 L 623.0,534.6 L 624.2,534.6 L 625.4,534.6 L 626.7,534.6 L 627.9,534.6 L 629.1,534.7 L 630.3,534.7 L 631.5,534.7 L 632.8,534.7 L 634.0,534.7 L 635.2,534.7 L 636.4,534.7 L 637.7,534.8 L 638.9,534.8 L 640.1,534.8 L 641.3,534.8 L 642.5,534.8 L 643.8,534.8 L 645.0,534.8 L 646.2,534.8 L 647.4,534.9 L 648.7,534.9 L 649.9,534.9 L 651.1,534.9 L 652.3,534.9 L 653.5,534.9 L 654.8,534.9 L 656.0,534.9 L 657.2,534.9 L 658.4,535.0 L 659.7,535.0 L 660.9,535.0 L 662.1,535.0 L 663.3,535.0 L 664.5,535.0 L 665.8,535.0 L 667.0,535.0 L 668.2,535.0 L 669.4,535.1 L 670.7,535.1 L 671.9,535.1 L 673.1,535.1 L 674.3,535.1 L 675.6,535.1 L 676.8,535.1 L 678.0,535.1 L 679.2,535.1 L 680.4,535.1 L 681.7,535.2 L 682.9,535.2 L 684.1,535.2 L 685.3,535.2 L 686.6,535.2 L 687.8,535.2 L 689.0,535.2 L 690.2,535.2 L 691.4,535.2 L 692.7,535.2 L 693.9,535.2 L 695.1,535.2 L 696.3,535.3 L 697.6,535.3 L 698.8,535.3 L 700.0,535.3" fill="none" stroke="#facc15" stroke-width="2.8"/>
+<circle cx="434.9" cy="528.8" r="4.4" fill="#a78bfa"/>
+<line x1="434.9" y1="528.8" x2="535.7" y2="479.8" stroke="#a78bfa" stroke-width="1"/>
+<text x="540.4" y="483.8" font-size="10.5" fill="#a78bfa">10 G: within 0.39° of perpendicular</text>
+<text x="223.9" y="412.2" font-size="10.5" fill="#cbd5e1">the hydrodynamic rate of Module 7 needs a one-degree statement</text>
+<text x="223.9" y="427.2" font-size="10.5" fill="#cbd5e1">about a field it never mentions — which is Module 12</text>
+<text x="8" y="590" font-size="10.5" fill="#94a3b8">Shear ΔU = 20 km/s and density ratio 2.24 from Ofman &amp; Thompson (2011), ApJ 734, L11; the absolute density</text>
+<text x="8" y="604" font-size="10.5" fill="#94a3b8">n<tspan baseline-shift="sub" font-size="75%">e</tspan> = 3×10⁸ cm⁻³ is an input carried from Module 1. Equal field on both sides; a one-sided field weakens the bound by √2.</text>
+</svg>
+<!--/FIG_FIELD-->
+<figcaption><b>Turning a missing measurement into a bound.</b> Upper panel: the Kelvin–Helmholtz growth rate as a fraction of its field-free value, against the field component along $\mathbf{k}$, from (3.1) with $g = T_s = 0$. The curve is the quarter circle $\sigma/\sigma_0 = \sqrt{1-(B\cos\theta/0.0675\ \mathrm{G})^2}$ and reaches zero at the bound of Proposition 9; because the vortices were observed, the Sun sits to the <em>left</em> of that line. The annotation gives the $\sqrt{n_e}$ scaling. Lower panel: the same bound as an angle, against total field strength on a logarithmic axis from $0.5$ to $100$ G. Both panels assume equal fields on the two sides; a one-sided field weakens the bound by $\sqrt2$.</figcaption>
+</figure>
+
+<h3 id="sheet">9.6 Refuted: the vortex-sheet assumption</h3>
+
+<p>Their p. 7 justifies treating the velocity jump as a discontinuity because the layer is "much smaller than the wavelength": $a/\lambda = 800/7000 = 0.1143$, a factor $8.75$. But the parameter that decides whether a layer may be treated as a sheet is not $a/\lambda$; it is $ka$, because $k$ is the inverse depth over which the perturbation decays and $a$ is the depth over which the shear is spread. Those are the two lengths that must be compared.</p>
+
+<div class="keyresult">$ka = 0.7181$, and over their own "1–3 pixels" it runs from $0.3906$ to $1.1718$. It is of order unity, not small. The vortex-sheet growth rate is therefore an <b>upper limit</b>, not an estimate: a finite layer both lowers the rate and closes the unstable band above $ka$ of order $1$.</div>
+
+<p>And here the paper supplies its own comparison. Its p. 9 states that the modelled region is "$\sim$5$\pi a$ corresponding to the wavelength of the fastest growing mode", citing Miura &amp; Pritchett (1982) — a statement about the same finite layer.</p>
+
+<table>
+<tr><th></th><th>$\lambda$</th><th>$ka$</th></tr>
+<tr><td>fastest mode of a $\tanh$ layer, $5\pi a$</td><td>$12\,566$ km</td><td>$0.400$</td></tr>
+<tr><td>observed</td><td>$7000$ km</td><td>$0.718$</td></tr>
+<tr><td>ratio</td><td>$1.795$</td><td>$1.795$</td></tr>
+</table>
+
+<p>So the wavelength their model runs is $1.8$ times the wavelength they observed, and the observed mode sits past the peak of the finite-layer growth curve by the same factor.</p>
+
+<span class="prov">The $\tanh$-layer eigenproblem is <b>not</b> solved in this module, and the omission is deliberate rather than an oversight. The layer thickness $a$ is uncertain by a factor $3$ — it is "1–3 pixels" — so solving the eigenproblem would produce a rate more precise than the input that feeds it. What is claimed here is only the direction and the order of magnitude of the correction.</span>
+
+<h3 id="counter">9.7 A counterfactual, not a refutation: the geometry is load-bearing</h3>
+
+<p>Their p. 8 says the model is run "without gravity (since it is perpendicular to the plane)". That is correct and it is also the most consequential sentence in the setup. The CME flank is radial, so solar gravity lies <em>along</em> the interface and exerts no restoring force across it; Proposition 6, which needs gravity across the interface, does not apply.</p>
+
+<p>Suppose it did. The dense corona would be <em>below</em> and the evacuated side above, which is the stable ordering Proposition 6 needs — the other way up is heavy fluid on top, which is Rayleigh–Taylor unstable outright and has no Kelvin–Helmholtz cutoff at all, as problem D2 makes a student notice. With the solar surface gravity $GM_\odot/R_\odot^2 = 2.7420\times10^{4}\ \mathrm{cm\,s^{-2}}$, (6.2) gives</p>
+
+<table>
+<tr><th>Quantity</th><th>Value</th></tr>
+<tr><td>cutoff wavenumber</td><td>$1.2263\times10^{-8}\ \mathrm{cm^{-1}}$</td></tr>
+<tr><td>cutoff wavelength</td><td>$5124$ km</td></tr>
+<tr><td>observed wavelength</td><td>$7000$ km</td></tr>
+<tr><td><b>ratio</b> $\lambda_{\rm obs}/\lambda_{\rm cut}$</td><td>$1.366$</td></tr>
+</table>
+
+<p>Long waves are the stabilised ones, so a ratio above $1$ means the observed mode would not have grown. It fails by a factor $1.37$ — which is inside the factor-of-two accuracy of these inputs, so the honest reading is that the observed mode would sit <em>at</em> the cutoff rather than safely beyond it. Fig. 1, lower panel, draws the two curves.</p>
+
+<span class="warn"><b>This is a counterfactual and is not counted as a refutation.</b> Nothing measured is being contradicted: the gravity term is genuinely absent from this geometry, and the calculation asks what would happen in a geometry the observation does not have. Its value is the conclusion it forces — that the orientation of the interface is not a detail of the setup but the thing that decides whether this mode exists at all. Neither this paper nor its companion says so.</span>
+
+<h2 id="limits">10. What this model captures, and what it misses</h2>
+
+<p>Each idealisation, and where it is repaid if it is repaid at all.</p>
+
+<ul>
+<li><b>The Rayleigh–Taylor half of this module is never tested against an astronomical measurement.</b> This is the largest gap and it is named first. The terrestrial result is derived in <a class="secref" href="#lab">§4</a>, the regime is changed in <a class="secref" href="#noskin">§5</a>, and the non-linear law is checked in <a class="secref" href="#mixing">§8</a> — against a laser experiment. Nothing in this module compares a Rayleigh–Taylor prediction with a measured astronomical number. Foullon et al. (2011) and Hester (1996) were sought for that purpose and neither is readable in full from this folder, and a comparison built on a number this folder does not hold is the rule that was broken once in Module 2 and is not broken here. The nearest honest substitute considered was the mixing width of (8.1) against the gap between the contact discontinuity and the forward shock in a young remnant; it was rejected, because (8.1) is proved for a planar interface at constant $g$ and that gap is a spherical, thin-shell, time-varying configuration whose measured quantity is a <em>position</em> and not a mixing width. <b>It is not repaid in Modules 1–10.</b> Module 8 derives the expansion index $m = 2/5$ that <a class="secref" href="#shell">§5.1</a> here borrows as a number, and checks it against a measured blast wave — but that measurement is Taylor's Trinity table, a terrestrial explosion, so it does not supply the astronomical Rayleigh–Taylor check this module lacks.</li>
+<li><b>Incompressible.</b> Definition 1 deletes the sound speed, so <a class="secref" href="#compress">§7</a>'s stabilisation at $\Delta U \gt 2\sqrt2\,c_s$ has to be quoted from Landau and Miles rather than derived. Module 8's shock jump conditions are the compressible fluid, but the compressible <em>stability</em> problem is not treated anywhere in Modules 1–10.</li>
+<li><b>Inviscid.</b> There is no dissipation in (3.1), so Proposition 4's growth rate rises without bound and the linear problem has no smallest scale. <a class="secref" href="#visc">§4.1</a> estimates where viscosity would take over and says explicitly that it does not solve the viscous problem; Chandrasekhar's viscous quartic is not solved in this book.</li>
+<li><b>The interface is sharp.</b> <a class="secref" href="#sheet">§9.6</a> finds this assumption broken in the one observation this module uses, at $ka = 0.72$, and declines to solve the finite-layer eigenproblem because the layer thickness is uncertain by a factor $3$. A finite layer lowers the rate and closes the unstable band at short wavelength; neither correction is computed here.</li>
+<li><b>Linear stability only, for everything except <a class="secref" href="#mixing">§8</a>.</b> Propositions 1 to 6 and 8 to 9 say that a perturbation grows and at what rate. They do not say what it grows into. <a class="secref" href="#shell">§5.1</a> shows the cost directly: a young remnant is already $3$ to $12$ e-folding times old at every scale of interest, so the linear theory has expired before anything is observable. Proposition 7 is this module's only non-linear statement, and it is a scaling law with a coefficient known to a factor $2$.</li>
+<li><b>No magnetic field, except as a term that is switched off.</b> The fourth term of (3.1) is derived and then set to zero everywhere but <a class="secref" href="#bfield">§9.5</a>, where it is used backwards, to bound a field rather than to compute a rate. The consequence is stated as sharply as this module can state it: a hydrodynamic calculation of a coronal instability needs the wavevector to lie within a degree of perpendicular to a field the paper never measured. Module 12 is where that is repaid.</li>
+<li><b>Uniform density on each side.</b> Definition 1's half-spaces are homogeneous, so the only length in the problem is $1/k$. Real interfaces sit inside stratifications with their own scale heights, and when the scale height is comparable to $1/k$ the half-space solutions $e^{\mp kz}$ are wrong. Not treated anywhere in Modules 1–10.</li>
+<li><b>Two dimensions of the three matter, and the third is only sampled.</b> <a class="secref" href="#compress">§7</a>'s oblique modes are the one place a genuinely three-dimensional wavevector appears, and there only through the projection $\cos\varphi$. The full three-dimensional problem, in which modes at different angles interact, is not treated.</li>
+<li><b>The coefficient $\alpha_B$ is measured, not derived.</b> Equation (8.4) expresses it in terms of $b$, $C_d$ and $C_a$, none of which this module computes; they are taken from the buoyancy–drag literature through Shimony et al. The factor $2$ in <a class="secref" href="#cost">§8.4</a> is the price, and it is the module's closing number.</li>
+<li><b>One absolute density is an input, not a measurement.</b> The coronal $n_e = 3\times10^{8}\ \mathrm{cm^{-3}}$ of <a class="secref" href="#inputs">§9.1</a> comes from Module 1's census, because the observation gives only a ratio. Every quantity built on it carries its $\sqrt{n_e}$ scaling in print, which is the most this module can do about it.</li>
+</ul>
+
+<h2 id="problems">11. Problems</h2>
+
+<p class="small">Nine problems in the house set: three conceptual (C), three derivational (D), three computational (K). Every printed answer is reproduced independently by <code>afd/figs/m07_problems_check.py</code>.</p>
+
+<h3 id="conceptual">Conceptual <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>C1.</b> Water will not fall out of a drinking straw held vertically with its top sealed, but the same water falls out of a tumbler turned upside down. Explain the difference using Proposition 2, and give the diameter at which the behaviour changes. Then explain why the argument fails for mercury at a diameter of $1.20$ cm rather than $1.71$ cm.
+<details class="sol"><summary>Solution</summary><div>
+By Proposition 2 the interface is unstable only to wavelengths longer than $\lambda_c = 2\pi\sqrt{T_s/(g\Delta\rho)}$. A tube of internal width $d$ cannot support a disturbance of wavelength longer than about $d$ — the wall pins the interface — so if $d \lt \lambda_c$ there is no unstable mode available and the surface is stable. For water over air at $20\ ^\circ$C, $\lambda_c = 1.7139$ cm. A straw is a few millimetres across and holds its water; a tumbler is several centimetres across, admits wavelengths beyond $\lambda_c$, and does not.
+<br>The number is material-specific because all three of $T_s$, $g$ and $\Delta\rho$ enter. For mercury, $T_s = 487\ \mathrm{dyn\,cm^{-1}}$ and $\rho = 13.55\ \mathrm{g\,cm^{-3}}$, so $\lambda_c = 2\pi\sqrt{487/(980.665\times13.55)} = 1.2029$ cm and $\lambda_{\max} = \sqrt3\lambda_c = 2.0835$ cm. Mercury has a much larger surface tension than water, which would raise $\lambda_c$, but it is also $13.6$ times denser, which lowers it; the density wins, and the critical tube is <em>narrower</em> for mercury than for water. The general statement is that $\lambda_c \propto \sqrt{T_s/\Delta\rho}$, so it is the ratio and not either quantity that sets the scale.
+</div></details></div>
+
+<div class="prob"><b>C2.</b> Three per cent salt water is poured carefully on top of fresh water. A student computes the cutoff wavelength from Proposition 2 using the surface tension of water, $72.75\ \mathrm{dyn\,cm^{-1}}$, and concludes that nothing below $11.3$ cm can grow. What is wrong, and what actually cuts off the short wavelengths?
+<details class="sol"><summary>Solution</summary><div>
+The error is the existence of $T_s$ at all. Interfacial tension is the energy cost of an interface between two fluids that do <em>not</em> mix; salt water and fresh water are miscible, molecules cross freely, and there is no such cost. The $72.75\ \mathrm{dyn\,cm^{-1}}$ the student used is the tension of water against <em>air</em>, a different pair. For salt against fresh, $T_s$ is essentially zero, Proposition 2 does not apply, and (4.1) reduces to Proposition 4: $\sigma = \sqrt{Agk}$, with no cutoff and no fastest mode.
+<br>The arithmetic itself is right: with $\Delta\rho = 0.022793\ \mathrm{g\,cm^{-3}}$ and $T_s = 72.75\ \mathrm{dyn\,cm^{-1}}$, equation (4.2) does give $\lambda_c = 11.336$ cm. Its wrongness is visible before any computation, because a capillary cutoff of $11$ cm would mean salt water could be held above fresh water in any beaker narrower than a dinner plate, which nobody has observed.
+<br>What actually cuts off the small scales is dissipation. With $A = 0.011288$ and $\nu = 1.0034\times10^{-2}\ \mathrm{cm^2\,s^{-1}}$, the crossover (4.4) is $\lambda_\nu = 2.08$ mm. Molecular diffusion of salt smooths the interface as well, which the model of Definition 1 does not contain at all. Above $\lambda_\nu$ the growth rates are those of <a class="secref" href="#miscible">§4.2</a>: $8.34\ \mathrm{s^{-1}}$ at $1$ cm and $2.64\ \mathrm{s^{-1}}$ at $10$ cm.
+</div></details></div>
+
+<div class="prob"><b>C3.</b> A pilot is told that clear-air turbulence occurs when the Richardson number falls below $1/4$. Using the result quoted at (6.3), state precisely what is and is not implied, and explain why turbulence forecasts for a given flight are nevertheless poor even when the shear and stratification are known.
+<details class="sol"><summary>Solution</summary><div>
+Miles (1961) and Howard (1961) proved that $\mathrm{Ri} \gt 1/4$ <em>everywhere</em> is <b>sufficient for stability</b>. Reading the contrapositive: if a flow is unstable, then $\mathrm{Ri} \lt 1/4$ somewhere. So $\mathrm{Ri} \lt 1/4$ is a <b>necessary</b> condition for instability and not a sufficient one. A layer with $\mathrm{Ri} = 0.186$ is permitted to be unstable; nothing in the theorem says it is.
+<br>Two further gaps separate the criterion from the forecast. First, the theorem is about a smooth parallel shear flow of an inviscid, continuously stratified fluid, and says nothing about when, where, or at what amplitude an instability that is permitted will actually appear — that depends on the disturbances present, which are not part of the theorem. Second, the numbers are small and the measurements are coarse. At $T = 220$ K with a $6.0\ \mathrm{K\,km^{-1}}$ lapse rate, $N = 0.01295\ \mathrm{s^{-1}}$ and $\mathrm{Ri} = 1/4$ is reached at a shear of $25.9\ \mathrm{m\,s^{-1}}$ per kilometre, or $2.6\ \mathrm{m\,s^{-1}}$ per $100$ m of altitude. Near a jet stream that is an ordinary value, met routinely and over large volumes; a criterion that is satisfied most of the time in the region of interest, and that only permits rather than compels, cannot localise a patch of turbulence a few kilometres across.
+<br>The honest summary for the pilot is that $\mathrm{Ri} \lt 1/4$ marks where turbulence is <em>possible</em>, and that the possibility is widespread.
+</div></details></div>
+
+<h3 id="derivational">Derivational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>D1.</b> From (4.1), derive the cutoff wavenumber and the fastest-growing wavenumber, and show that $\lambda_{\max}/\lambda_c = \sqrt3$ exactly. Then show that the same relation holds for <em>any</em> dispersion relation of the form $\sigma^2 = \alpha k^p - \beta k^q$ with $q \gt p \gt 0$, and give the general ratio.
+<details class="sol"><summary>Solution</summary><div>
+The first part is Proposition 2: $\sigma^2 = 0$ at $Ag = T_sk^2/(\rho_t+\rho_b)$, giving $k_c = \sqrt{g\Delta\rho/T_s}$; and $d\sigma^2/dk = Ag - 3T_sk^2/(\rho_t+\rho_b) = 0$ gives $k_{\max} = k_c/\sqrt3$, so $\lambda_{\max} = \sqrt3\lambda_c = 2.9686$ cm against $\lambda_c = 1.7139$ cm.
+<br>In general, $\sigma^2 = \alpha k^p - \beta k^q$ vanishes at $k_c^{q-p} = \alpha/\beta$ and is stationary where $p\alpha k^{p-1} = q\beta k^{q-1}$, that is at $k_{\max}^{q-p} = p\alpha/(q\beta)$. Dividing,
+$$ \left(\frac{k_{\max}}{k_c}\right)^{q-p} = \frac{p}{q}, \qquad\text{so}\qquad \frac{\lambda_{\max}}{\lambda_c} = \left(\frac{q}{p}\right)^{1/(q-p)}.$$
+With $p = 1$ and $q = 3$ this is $3^{1/2} = \sqrt3$, as required. The ratio depends only on the two <em>powers</em> of $k$, never on $\alpha$ or $\beta$, which is why $\sqrt3$ survives every change of fluid, gravity and tension. It also shows what to expect elsewhere: for the magnetic case of (3.1), where the competing powers are $p = 1$ and $q = 2$, the ratio would be $2$.
+</div></details></div>
+
+<div class="prob"><b>D2.</b> Derive the Kelvin–Helmholtz gravitational cutoff (6.2) from Proposition 1. Then apply it to a quiescent solar prominence: dense chromospheric material, density ratio $100$ against the corona below it, with a shear of $20\ \mathrm{km\,s^{-1}}$ along the interface and $g = GM_\odot/R_\odot^2$. Before computing anything, decide which of Propositions 4 and 6 applies.
+<details class="sol"><summary>Solution</summary><div>
+The derivation is the proof of Proposition 6. Setting $T_s = B = 0$ in (3.1) and requiring $\sigma^2 \gt 0$ with the light fluid above gives $k\Delta U^2 \gt g(\rho_b^2-\rho_t^2)/(\rho_t\rho_b)$, so $k_{\rm cut} = g(\rho_b^2-\rho_t^2)/(\rho_t\rho_b\Delta U^2)$ and every longer wave is stabilised.
+<br><b>The prominence as described is the wrong way up for Proposition 6.</b> Dense material sitting <em>above</em> tenuous corona has $A = (100-1)/(100+1) = 0.9802 \gt 0$, which is the Rayleigh–Taylor-unstable ordering of Proposition 4, not the Kelvin–Helmholtz-with-gravity configuration of Proposition 6. The gravitational cutoff does not apply at all: the interface is unstable outright, at every wavelength, whether or not there is any shear. At $\lambda = 1000$ km, $\sigma = \sqrt{Agk} = 0.04109\ \mathrm{s^{-1}}$, so $1/\sigma = 24.3$ s, that is $0.41$ minutes. Recognising the sign before reaching for a formula is the whole of the problem.
+<br>Turn the configuration over — light fluid above dense, so $A \lt 0$ — and Proposition 6 does apply, with $g_\odot = 2.7420\times10^{4}\ \mathrm{cm\,s^{-2}}$ and a density ratio of $100$. Then $k_{\rm cut}$ corresponds to a cutoff wavelength of $92$ km: <em>every</em> wavelength longer than $92$ km is gravitationally stabilised at $20\ \mathrm{km\,s^{-1}}$ of shear. Since the AIA pixel of <a class="secref" href="#inputs">§9.1</a> is $435$ km, that interface would be quiet on every scale any current imager could resolve. The contrast with the observed CME flank is the point: there, gravity lay along the interface rather than across it, which is what <a class="secref" href="#counter">§9.7</a> identifies as load-bearing.
+</div></details></div>
+
+<div class="prob"><b>D3.</b> A supernova remnant expands with $R \propto t^{\,m}$. Derive the effective gravity across its outer face and evaluate it for two remnants: $R = 3$ pc at $t = 400$ yr, and $R = 10$ pc at $t = 2000$ yr, both with $m = 2/5$. A textbook problem then asks for the Rayleigh–Taylor growth time at $g = 10^{-3}\ \mathrm{cm\,s^{-2}}$. Comment on whether that value is free to be chosen.
+<details class="sol"><summary>Solution</summary><div>
+The derivation is Proposition 5: $R = R_0(t/t_0)^m$ gives $\ddot R = m(m-1)R/t^2$, so the magnitude of the deceleration is $g = m(1-m)R/t^2$, positive for $0 \lt m \lt 1$. In the shell's instantaneous rest frame this is the effective gravity, and it points from the dense shell towards the tenuous medium ahead — the unstable ordering.
+<br>With $m = 2/5$, so $m(1-m) = 6/25 = 0.24$:
+<table>
+<tr><th>$R$</th><th>$t$</th><th>$g$ [cm s$^{-2}$]</th></tr>
+<tr><td>$3$ pc</td><td>$400$ yr</td><td>$1.3943\times10^{-2}$</td></tr>
+<tr><td>$10$ pc</td><td>$2000$ yr</td><td>$1.8591\times10^{-3}$</td></tr>
+</table>
+<b>The value $10^{-3}\ \mathrm{cm\,s^{-2}}$ is not free.</b> It is within a factor $1.86$ of the older remnant, and a factor $14$ below the younger one. A problem that hands a student $g$ has hidden the only piece of the calculation that connects the instability to the object: $g$ is fixed by $R$, $t$ and the expansion index, and choosing it independently amounts to choosing an unstated remnant. Note also how insensitive it is to $m$: at $R = 3$ pc and $t = 400$ yr, changing $m$ from $2/5$ to $0.70$ moves $g$ only from $1.3943\times10^{-2}$ to $1.2200\times10^{-2}$, because $m(1-m)$ is flat near its maximum at $m = 1/2$.
+</div></details></div>
+
+<h3 id="computational">Computational <a class="small" href="#problems">↑ contents</a></h3>
+
+<div class="prob"><b>K1.</b> For water over air at $20\ ^\circ$C, tabulate the Rayleigh–Taylor growth rate at $\lambda = 0.5$, $2$, $2.969$, $10$ and $100$ cm, saying what happens in each case. Then repeat the viscous crossover of (4.4) for glycerol, $\nu = 11.8\ \mathrm{cm^2\,s^{-1}}$, $\rho = 1.261\ \mathrm{g\,cm^{-3}}$, $T_s = 63\ \mathrm{dyn\,cm^{-1}}$, and say which cut-off is in charge.
+<details class="sol"><summary>Solution</summary><div>
+From (4.1) with $A = 0.997590$, $T_s = 72.75\ \mathrm{dyn\,cm^{-1}}$ and $\rho_t+\rho_b = 0.999411\ \mathrm{g\,cm^{-3}}$:
+<table>
+<tr><th>$\lambda$ [cm]</th><th>$\sigma$</th><th>$1/\sigma$</th><th>Status</th></tr>
+<tr><td>$0.500$</td><td>—</td><td>—</td><td><b>stable</b>: $\sigma^2 \lt 0$, so the surface oscillates at $363.53\ \mathrm{rad\,s^{-1}}$, a period of $17.3$ ms — a capillary wave, not an instability</td></tr>
+<tr><td>$2.000$</td><td>$28.573\ \mathrm{s^{-1}}$</td><td>$35.00$ ms</td><td>unstable, above $\lambda_c$</td></tr>
+<tr><td>$2.969$</td><td>$37.154\ \mathrm{s^{-1}}$</td><td>$26.91$ ms</td><td>the fastest mode</td></tr>
+<tr><td>$10.000$</td><td>$24.426\ \mathrm{s^{-1}}$</td><td>$40.94$ ms</td><td>unstable, tension negligible</td></tr>
+<tr><td>$100.000$</td><td>$7.839\ \mathrm{s^{-1}}$</td><td>$127.57$ ms</td><td>unstable; $\sigma \to \sqrt{Agk}$, so $\sigma$ falls as $\lambda^{-1/2}$</td></tr>
+</table>
+The $0.5$ cm entry is the one to notice: below $\lambda_c = 1.7139$ cm the growth rate is imaginary, which is not "no motion" but an oscillation — surface tension has turned the unstable mode into a wave.
+<br>For glycerol, (4.4) with $A = (1.261-0.0012041)/(1.261+0.0012041) = 0.998092$ gives $\lambda_\nu = 5.207$ cm, while Proposition 2 gives $\lambda_c = 2\pi\sqrt{63/(980.665\times1.2598)} = 1.4191$ cm and $\lambda_{\max} = \sqrt3\lambda_c = 2.458$ cm. Now $\lambda_\nu/\lambda_{\max} = 2.12 \gt 1$: viscosity acts at a <em>larger</em> scale than capillarity, so the pattern that appears is chosen by viscosity, and the $\lambda_{\max}$ of Proposition 2 is not the observed wavelength. For water the same ratio is $0.467/29.686 = 0.0157$, sixty-four times the other way. Same instability, same two cut-offs, opposite one in charge.
+</div></details></div>
+
+<div class="prob"><b>K2.</b> Using Proposition 7 with $A = 0.9$ and $g = 10^{-3}\ \mathrm{cm\,s^{-2}}$, compute the mixing-layer width $h_B$ at $t = 10$, $100$ and $1000$ yr, taking $\alpha_B = 0.038$. Then bracket the $100$-year value over the range of $\alpha_B$ that <a class="secref" href="#refuted">§8.3</a> leaves open, and state in one sentence what the bracket means for interpreting an image of a remnant.
+<details class="sol"><summary>Solution</summary><div>
+$h_B = \alpha_B A g t^2$ with $\alpha_B A g = 0.038\times0.9\times10^{-3} = 3.42\times10^{-5}\ \mathrm{cm\,s^{-2}}$:
+<table>
+<tr><th>$t$</th><th>$h_B$ [cm]</th><th>[AU]</th><th>[pc]</th></tr>
+<tr><td>$10$ yr</td><td>$3.4059\times10^{12}$</td><td>$0.2$</td><td>$2\times10^{-7}$</td></tr>
+<tr><td>$100$ yr</td><td>$3.4059\times10^{14}$</td><td>$22.8$</td><td>$0.00011$</td></tr>
+<tr><td>$1000$ yr</td><td>$3.4059\times10^{16}$</td><td>$2276.7$</td><td>$0.01104$</td></tr>
+</table>
+The $t^2$ scaling is the whole table: a factor $10$ in age is a factor $100$ in width.
+<br>At $100$ yr, $\alpha_B = 0.025$ gives $2.2407\times10^{14}$ cm $= 15.0$ AU and $\alpha_B = 0.050$ gives $4.4815\times10^{14}$ cm $= 30.0$ AU, a factor $2.0$.
+<br>What it means for an image: a measured mixing width can be converted into an age, or an age into a predicted width, only to within a factor $2$ — so a measurement that disagrees with a model by less than a factor $2$ has not tested the model, and one that disagrees by more has tested it against a coefficient the experiments themselves do not agree on.
+</div></details></div>
+
+<div class="prob"><b>K3.</b> An extragalactic jet of radius $R = 100$ pc moves at Mach $5$ through an ambient medium at $10^{7}$ K with $\mu = 0.60$, with a jet-to-ambient density ratio $\eta = 0.010$. Using (6.1) with $g = 0$ and $k = 1/R$, compute the growth time and the number of e-foldings over $1$ kpc of travel. Then decide whether that number is attainable.
+<details class="sol"><summary>Solution</summary><div>
+The ambient sound speed is $c_s = \sqrt{\gamma k_BT/(\mu m_u)} = 480.6\ \mathrm{km\,s^{-1}}$ with $\gamma = 5/3$, so $\Delta U = 5c_s = 2403\ \mathrm{km\,s^{-1}}$. The prefactor of (6.1) is $\sqrt{\rho_j\rho_a}/(\rho_j+\rho_a) = \sqrt\eta/(1+\eta) = 0.09901$, and $k = 1/R = 3.2408\times10^{-21}\ \mathrm{cm^{-1}}$. Hence
+$$\sigma = k\,\frac{\sqrt\eta}{1+\eta}\,\Delta U = 7.7102\times10^{-14}\ \mathrm{s^{-1}}, \qquad 1/\sigma = 4.110\times10^{5}\ \mathrm{yr}.$$
+The jet covers $1$ kpc in $1000\,\mathrm{pc}/\Delta U = 4.069\times10^{5}$ yr, so the e-folding count over that length is $4.069/4.110 = 0.99$.
+<br><b>It is not attainable.</b> The calculation used (6.1), which comes from (3.1), which assumes incompressible fluids. At $M = 5$ the condition (7.1) for compressible stabilisation, $M \gt 2\sqrt2 = 2.8284$, is met with room to spare, so the two-dimensional mode whose rate was just computed is <em>stable</em>. The $0.99$ e-foldings is an upper limit the flow does not reach.
+<br>What survives is the oblique modes of (7.2): those with $\varphi \gt \arccos(2\sqrt2/5) = 55.6^\circ$, which see a projected shear of at most $\Delta U\cos(55.6^\circ) = 1359\ \mathrm{km\,s^{-1}}$ and therefore grow at most $0.57$ times as fast, giving at most $0.56$ e-foldings over the kiloparsec. The lesson is the one <a class="secref" href="#compress">§7</a> states: a relation with no sound speed in it cannot tell you when the sound speed matters, and the check has to be made from outside it.
+</div></details></div>
+
+<h2 id="notation">Notation</h2>
+
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Units (CGS)</th><th>First used</th></tr>
+<tr><td>$\sigma$</td><td>the growth rate of a normal mode; $\operatorname{Re}\sigma \gt 0$ is a growing mode and $1/\sigma$ its e-folding time. <b>Module-local:</b> from Module 6 a bare $\sigma$ elsewhere in this book is a collision cross-section, and no cross-section appears in this module</td><td>$\mathrm{s^{-1}}$</td><td>Definition 3</td></tr>
+<tr><td>$A$</td><td>the Atwood number $(\rho_t-\rho_b)/(\rho_t+\rho_b)$, positive when the heavy fluid is on top. Book-wide from this module. Shimony et al. write it with the heavy fluid in the numerator too, so their $A$ and this one agree</td><td>—</td><td>Definition 2</td></tr>
+<tr><td>$T_s$</td><td><b>interfacial tension</b>, never written $T$: $T$ is a temperature in <a class="secref" href="#cat">§6.1</a> and <a class="secref" href="#jet">§7.1</a> of this same module</td><td>$\mathrm{dyn\,cm^{-1}}$</td><td>Definition 1</td></tr>
+<tr><td>$\rho_t$, $\rho_b$</td><td>the densities above and below the interface. In <a class="secref" href="#anchor">§9</a> the same two are written $\rho_h$ (dense, the corona at rest) and $\rho_l$ (light, the evacuated side), because there the ordering is by density rather than by height</td><td>$\mathrm{g\,cm^{-3}}$</td><td>Definition 1</td></tr>
+<tr><td>$\Delta U$, $\overline{\mathbf{U}}$</td><td>the velocity jump $U_t-U_b$ across the interface; the density-weighted mean stream velocity. In <a class="secref" href="#anchor">§9</a>, $\Delta U = 20\ \mathrm{km\,s^{-1}}$ is an <b>upper limit</b>, and every quantity linear in it inherits that</td><td>$\mathrm{cm\,s^{-1}}$</td><td>Definition 1, Proposition 1</td></tr>
+<tr><td>$k$, $\lambda$</td><td>horizontal wavenumber and wavelength, $k = 2\pi/\lambda$. $\lambda_c$ is the capillary cutoff, $\lambda_{\max}$ the fastest-growing wavelength, $\lambda_\nu$ the viscous crossover, $\langle\lambda\rangle$ the mean bubble wavelength of Proposition 7</td><td>$\mathrm{cm^{-1}}$, cm</td><td>Definition 3, (4.2)</td></tr>
+<tr><td>$a$</td><td><b>module-local:</b> the thickness of a finite shear layer, and the parameter in $ka$. Module 5's length scale is $\alpha$ by the book-wide decision, so $a$ is free here</td><td>cm</td><td><a class="secref" href="#sheet">§9.6</a></td></tr>
+<tr><td>$\theta$, $\varphi$</td><td>the angle between $\mathbf{k}$ and the magnetic field; the angle between $\mathbf{k}$ and the flow direction for an oblique compressible mode. Two different angles, never interchanged</td><td>rad, deg</td><td>Proposition 1, (7.2)</td></tr>
+<tr><td>$N$, $\mathrm{Ri}$</td><td>the Brunt–Väisälä frequency of Module 6 Proposition 2, unchanged; the Richardson number $N^2/(dU/dz)^2$</td><td>$\mathrm{rad\,s^{-1}}$, —</td><td>(6.3)</td></tr>
+<tr><td>$h_B$, $h_S$</td><td>the penetration of the bubbles into the heavy fluid and of the spikes into the light fluid. This module uses $h_B$ throughout</td><td>cm</td><td>Definition 4</td></tr>
+<tr><td>$\alpha_B$, $\alpha_S$</td><td>the self-similar mixing coefficients of Proposition 7, always subscripted. <b>Not</b> Module 5's $\alpha$, the length scale of the isothermal sphere, and <b>not</b> Module 6's $\alpha$, the mixing-length parameter</td><td>—</td><td>Proposition 7</td></tr>
+<tr><td>$x_{\rm Read}$</td><td>the Read integral $A\big(\int\sqrt{g}\,dt\big)^2$, which equals $Agt^2$ for constant $g$</td><td>cm</td><td>(8.3)</td></tr>
+<tr><td>$b$, $C_d$, $C_a$</td><td>quoted from the buoyancy–drag model, not computed here: the ratio of bubble amplitude to bubble wavelength; the drag coefficient, $2\pi$ in three dimensions and $6\pi$ in two; the added-mass coefficient, $1$ and $2$</td><td>—</td><td>(8.2), (8.4)</td></tr>
+<tr><td>$m$</td><td><b>module-local:</b> the expansion index of a shell, $R \propto t^{\,m}$. Module 2's $m$ is a particle mass and Module 3's $m(r)$ an enclosed mass; neither appears here</td><td>—</td><td>Proposition 5</td></tr>
+<tr><td>$M$</td><td>the Mach number $\Delta U/c_s$ of the shear layer, and only that</td><td>—</td><td>(7.1)</td></tr>
+<tr><td>$B_t$, $B_b$, $V_A$</td><td>the field magnitudes on the two sides; the Alfvén speed $B/\sqrt{4\pi\rho}$. The bound of Proposition 9 depends on which of $B_t$, $B_b$ is non-zero, so both cases are printed</td><td>G, $\mathrm{cm\,s^{-1}}$</td><td>Proposition 1, Proposition 9</td></tr>
+<tr><td>$g$</td><td>the acceleration across the interface. In <a class="secref" href="#lab">§4</a> it is terrestrial gravity, in <a class="secref" href="#shell">§5.1</a> the deceleration of a shell, in <a class="secref" href="#counter">§9.7</a> the solar surface gravity. Always the acceleration a parcel feels in the frame of the interface</td><td>$\mathrm{cm\,s^{-2}}$</td><td>Definition 1, Proposition 5</td></tr>
+<tr><td>$\nu$, $\eta$</td><td>kinematic viscosity; <b>module-local:</b> in <a class="secref" href="#jet">§7.1</a> only, $\eta$ is the jet-to-ambient density ratio. Module 6's decision makes $\eta$ the dynamic viscosity book-wide, which does not appear in this module</td><td>$\mathrm{cm^2\,s^{-1}}$, —</td><td>(4.4), <a class="secref" href="#jet">§7.1</a></td></tr>
+<tr><td>$n_e$, $\mu_e$, $X$</td><td>electron density; mean molecular weight per electron $2/(1+X)$; hydrogen mass fraction, $0.70$. $n_e = 3\times10^{8}\ \mathrm{cm^{-3}}$ is an input from Module 1, not a measurement of this event</td><td>$\mathrm{cm^{-3}}$, —, —</td><td><a class="secref" href="#inputs">§9.1</a></td></tr>
+<tr><td>$c_s$, $\gamma$, $\mu$</td><td>adiabatic sound speed $\sqrt{\gamma k_BT/(\mu m_u)}$; ratio of specific heats; mean molecular weight measured against $m_u$, as book-wide from Module 6</td><td>$\mathrm{cm\,s^{-1}}$, —, —</td><td>(7.1), <a class="secref" href="#jet">§7.1</a></td></tr>
+<tr><td>$m_u$, $k_B$, $G$</td><td>atomic mass unit; Boltzmann's constant; the gravitational constant</td><td>g, $\mathrm{erg\,K^{-1}}$, $\mathrm{cm^3\,g^{-1}\,s^{-2}}$</td><td><a class="secref" href="#inputs">§9.1</a></td></tr>
+</table>
+
+<h2 id="sources">Sources</h2>
+
+<p class="small">Every published value this module compares against, with what was taken from it and from which page.</p>
+
+<ol>
+<li><b>The astrophysical anchor.</b> L. Ofman and B. J. Thompson, <em>SDO/AIA Observation of Kelvin–Helmholtz Instability in the Solar Corona</em>, <em>The Astrophysical Journal Letters</em> <b>734</b>, L11 (2011), <a href="https://doi.org/10.1088/2041-8205/734/1/L11">doi:10.1088/2041-8205/734/1/L11</a>, read as <a href="https://arxiv.org/abs/1101.4249">arXiv:1101.4249v2</a>; page numbers are the printed pages of that preprint.
+  <br><b>p. 4:</b> the event — 8 April 2010, onset 02:34 UT, GOES B3.7 peaking 03:25 UT, CME speed "around 500 km s$^{-1}$" from STEREO SECCHI; AIA pixel width $0.6''$.
+  <br><b>p. 5:</b> vortices "ranging from several to ten arcseconds in size"; "$\sim$7000 km"; travelling "$\sim6-14$ km s$^{-1}$" <em>along the boundary</em>; first sign of vortex formation 3:00:13 UT, flow "fully developed by 3:13:13UT".
+  <br><b>p. 6:</b> dashed lines at $6$ and $14\ \mathrm{km\,s^{-1}}$ "after compensating for the velocity of solar rotation"; "the upper limit of the speed of the shearing field motion … was $\sim 20$ km s$^{-1}$", called "the initial driving shear"; interface "1-3 pixels", "on average the interface is $\sim$800 km thick"; "the first image where we see any motion along the KH front is 3:13:53UT"; growth time to the nonlinear stage "on the order of 14 minutes".
+  <br><b>p. 7:</b> their equation (1), $\gamma = \tfrac12|\mathbf{k}\!\cdot\!\Delta\mathbf{V}|[1-(2V_A\hat k\!\cdot\!\hat B)^2/(\hat k\!\cdot\!\Delta\mathbf{V})^2]^{1/2}$ with $V_A = B/\sqrt{4\pi\rho}$; and the substitution of the $6$–$14\ \mathrm{km\,s^{-1}}$ propagation speeds into it as "the observed velocity shear".
+  <br><b>p. 8:</b> "$\gamma_{KH} \approx 0.003 - 0.006$ s$^{-1}$"; "we have assumed that the magnetic field has no parallel component to the interface in Equation 1"; saturation "at time scale of several $\gamma^{-1}$ or in about 10 minutes"; "implying that the magnetic field was mostly radial"; the model solved "without gravity (since it is perpendicular to the plane)"; $a = 800$ km.
+  <br><b>p. 9:</b> "the emission ratio is on average $\sim$5 with a range of 3-10", and "we have used $\rho_{\max}/\rho_{\min} = 5^{1/2}$"; runs at density ratios $2$ and $3$ "with the growth rate of KH instability decreasing by $\sim$15% with the density ratio in this range"; $B_{x0} \approx 0.04\langle B_{z0}\rangle$ and $V_0 = 5V_{A,xy}$; the modelled region "$\sim5\pi a$ corresponding to the wavelength of the fastest growing mode", citing Miura &amp; Pritchett (1982); and "the value of the magnetic field in the observations is unknown".
+  <br>Miura &amp; Pritchett (1982), <em>J. Geophys. Res.</em> <b>87</b>, 7431, is named through this paper for the $5\pi a$ result and was not opened.</li>
+
+<li><b>The terrestrial check. A PREPRINT, which departs from this book's citation convention.</b> A. Shimony, C. M. Huntington, K. A. Flippo, Y. Elbaz, S. A. MacLaren, D. Shvarts and G. Malamud, <em>Determining the Self-Similar Stage of the Rayleigh–Taylor Instability via LLNL's NIF Discovery Science Experiments</em>, <a href="https://arxiv.org/abs/2210.06631">arXiv:2210.06631v1</a> (12 October 2022). The arXiv record carries v1 only, no <code>journal-ref</code>, and no DOI but the arXiv one; a title and author search returns no published version. Every other source in this book is cited by journal, volume and page, and this one cannot be.
+  <br><b>p. 1:</b> $h_{S/B} = \alpha_{S/B}Agt^2$ with $A = (\rho_2-\rho_1)/(\rho_1+\rho_2)$, $\rho_2$ the heavier; self-similarity "after $G \approx 3$" merger generations; $\alpha_B = 0.038\pm0.008$ (abstract); "This resolved the known discrepancy between experiments and simulations of RTI" (abstract); "Recent theoretical model results suggest a value of $\sim$0.05 for 3D immiscible fluids", which is "a factor of $\sim$2 higher than the results of full numerical 3D simulations"; "initial long wavelengths could affect growth and increase the measured value of $\alpha_B$"; plastic disk $1.43\ \mathrm{g\,cm^{-3}}$ and carbon-resorcinol foam "approximately 0.08 g/cm$^3$", both pre-shock.
+  <br><b>p. 3:</b> their equation (1), the Read integral $x_{\rm Read} = A(\int\sqrt{g}\,dt)^2$; their equations (2) and (3), the buoyancy–drag model with $\langle\lambda\rangle = \max(\langle\lambda_0\rangle, h_B/b)$; "We assumed that at the self-similar stage, the initial conditions are forgotten, so that $C_d = 2\pi$, $6\pi$ and $C_a = 1$, $2$".
+  <br><b>p. 3, Fig. 4 caption:</b> the $\chi^2$ bounds $\alpha_B = 0.03$ and $0.046$ for $\langle\lambda\rangle = 15\ \mu$m.
+  <br><b>p. 4:</b> "$\alpha_B = 0.038\pm0.008$" from the $\langle\lambda\rangle = 15\ \mu$m case; "our $\langle\lambda\rangle = 30\mu$m data show a similar slope to the model result for $\alpha_B \sim 0.03$"; decompression "increases the apparent mix width by nearly 30%"; Richtmyer–Meshkov velocity jump "16 $\mu$m/ns according to simulations".
+  <br><b>Not taken from this paper:</b> an Atwood number — the densities on p. 1 are pre-shock and their Fig. 3 shows the foam at $0.2$–$0.6\ \mathrm{g\,cc^{-1}}$ during the Rayleigh–Taylor phase, and the paper never states $A$. <b>Also not taken from it:</b> $\alpha_B = 0.060$ and $0.077$ for "earlier experiments". A full-text search of the preprint returns neither string; an earlier draft of this module printed both and excluded them at $2.75\,\sigma$ and $4.88\,\sigma$, and <a class="secref" href="#refuted">§8.3</a> records their removal and what replaced it. The value $0.025$ used in <a class="secref" href="#refuted">§8.3</a> is <b>inferred</b> from the printed ratio "a factor of $\sim$2", not read.</li>
+
+<li><b>Quoted, not read, and no number taken from any of them.</b>
+  <br>L. D. Landau, <em>Doklady Akademii Nauk SSSR</em> <b>44</b>, 139 (1944), and J. W. Miles, <em>On the disturbed motion of a plane vortex sheet</em>, <em>Journal of Fluid Mechanics</em> <b>4</b>, 538 (1958): the compressible stabilisation $\Delta U \gt 2\sqrt2\,c_s$ of (7.1), and with Fejer &amp; Miles (1963) the oblique-mode escape (7.2). This module's (3.1) is incompressible and cannot contain either.
+  <br>J. W. Miles, <em>Journal of Fluid Mechanics</em> <b>10</b>, 496 (1961), and L. N. Howard, <em>Journal of Fluid Mechanics</em> <b>10</b>, 509 (1961): the sufficiency of $\mathrm{Ri} \gt 1/4$ for stability of a continuously stratified parallel shear flow, (6.3). A theorem about a different flow from Proposition 6's, and this module does not translate between them.
+  <br>K. I. Read, <em>Experimental investigation of turbulent mixing by Rayleigh–Taylor instability</em>, <em>Physica D</em> <b>12</b>, 45 (1984): named only as the origin of the Read integral, reached through Shimony et al.'s reference list.
+  <br>S. Chandrasekhar, <em>Hydrodynamic and Hydromagnetic Stability</em> (Oxford, 1961), chs. X and XI: the classical source of the dispersion relation Proposition 1 derives rather than quotes, and of the viscous Rayleigh–Taylor quartic, which is <b>not</b> solved here — <a class="secref" href="#visc">§4.1</a> gives a crossover estimate and says so.</li>
+
+<li><b>Sought and not readable.</b> C. Foullon, E. Verwichte, V. M. Nakariakov, K. Nykyri and C. J. Farrugia, <em>The Astrophysical Journal Letters</em> <b>729</b>, L8 (2011), the other 2011 report of coronal Kelvin–Helmholtz vortices, which quotes uncertainties that Ofman &amp; Thompson do not. It is not on arXiv and could not be read in full, so no number is taken from it. J. J. Hester et al., <em>The Astrophysical Journal</em> <b>456</b>, 225 (1996), on magnetic Rayleigh–Taylor filaments in the Crab Nebula, likewise. Their absence is why <a class="secref" href="#limits">§10</a> records that the Rayleigh–Taylor half of this module has no astronomical check.</li>
+
+<li><b>Laboratory fluid properties, used as inputs and not checked against anything.</b> At $20\ ^\circ$C and $1$ atm: water $\rho = 0.998207\ \mathrm{g\,cm^{-3}}$ and $\nu = 1.0034\times10^{-2}\ \mathrm{cm^2\,s^{-1}}$; dry air $\rho = 1.2041\times10^{-3}\ \mathrm{g\,cm^{-3}}$; water–air interfacial tension $72.75\ \mathrm{dyn\,cm^{-1}}$; $3$ per cent NaCl brine $\rho = 1.0210\ \mathrm{g\,cm^{-3}}$; mercury $\rho = 13.55\ \mathrm{g\,cm^{-3}}$ and $T_s = 487\ \mathrm{dyn\,cm^{-1}}$; glycerol $\rho = 1.261\ \mathrm{g\,cm^{-3}}$, $\nu = 11.8\ \mathrm{cm^2\,s^{-1}}$ and $T_s = 63\ \mathrm{dyn\,cm^{-1}}$. Handbook values.</li>
+
+<li><b>Constants and standards.</b> CODATA 2018 for $k_B$, $m_u$, $m_p$ and $G$; IAU 2015 Resolution B3 for the nominal $GM_\odot$ and $R_\odot$, which give the solar surface gravity $2.7420\times10^{4}\ \mathrm{cm\,s^{-2}}$ of <a class="secref" href="#counter">§9.7</a>; standard gravity $g = 980.665\ \mathrm{cm\,s^{-2}}$, definitional.</li>
+
+<li><b>Earlier modules.</b> The linearisation of Module 4 Definition 2; the Brunt–Väisälä frequency of Module 6 Proposition 2 and its plane-parallel form $N^2 = (g/T)(dT/dz+g/c_p)$, used in <a class="secref" href="#cat">§6.1</a>; the coronal entry of Module 1's census of astrophysical gases, $n_e = 3\times10^{8}\ \mathrm{cm^{-3}}$ at $T = 2\times10^{6}$ K, which is an <b>input</b> to <a class="secref" href="#anchor">§9</a> and not a measurement of this event; the Sedov–Taylor index $m = 2/5$, derived in Module 8 and used in <a class="secref" href="#shell">§5.1</a> only as a number.</li>
+</ol>
+
+<hr>
+<p class="small">Module 7 of <a href="index.html">Astrophysical Fluid Dynamics</a>. Previous: <a href="module06.html">Module 6 — Convection and Thermal Instability</a></p>
+
+<script>
+function copyCode(btn){
+  var code = btn.parentElement.querySelector('code');
+  var text = code.textContent;
+  function done(){
+    btn.classList.add('copied');
+    var old = btn.lastChild.nodeValue;
+    btn.lastChild.nodeValue = 'Copied!';
+    setTimeout(function(){ btn.classList.remove('copied'); btn.lastChild.nodeValue = old; }, 1500);
+  }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); } finally { document.body.removeChild(ta); }
+  }
+}
+</script>
+
+</body>
+</html>
