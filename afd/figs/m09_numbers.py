@@ -17,7 +17,9 @@ limits by a factor of 40 to 160, but ONLY for a near-equipartition field; at
 3 per cent of equipartition their own scaling turns the 40 into 4.  It also
 compares two different papers against a one-sided limit, so it carries no
 sigma.  The two legs of PART H that do NOT depend on the field are Marrone's
-lower limits (factors 535 to 2674) and the X-ray radiative efficiency.  CHECK 1 is the anchor
+lower limits, which they state as RANGES (1-2e-8 and 2-4e-9 M_sun/yr, so factors 401 to 4011,
+and at least 401 on the reading kindest to the model), and the X-ray radiative
+efficiency.  CHECK 1 is the anchor
 because it confirms and refutes from the same table and both sides carry a
 sigma; CHECK 2 is the sharpest refutation by magnitude.
 
@@ -287,8 +289,18 @@ BAG_LOCAL_NE, BAG_LOCAL_KT_KEV, BAG_LOCAL_MDOT = 26.0, 1.3, 1.0e-6
 MAR_RM, MAR_RM_ERR = -5.6e5, 0.7e5     # rad m^-2
 MAR_UPPER_HEAD = 2.0e-7     # M_sun/yr, r_in ~ 30 r_S
 MAR_UPPER_TIGHT = 5.0e-8    # M_sun/yr, r_in ~ 100 r_S
-MAR_LOWER_10RS = 1.5e-8     # M_sun/yr, midpoint of their 1-2e-8
-MAR_LOWER_3RS = 3.0e-9      # M_sun/yr, midpoint of their 2-4e-9
+# Marrone et al. give each LOWER limit as a range, not a single value, and
+# their exact sentence is quoted in the module: "we find that Mdot must be
+# greater than 1-2e-8 M_sun/yr or 2-4e-9 M_sun/yr, respectively."  The two
+# ends are carried separately because the excess over the Bondi rate is a
+# range too; _HI is the end KINDEST to the Bondi model, so the ratio it
+# gives is the conservative one to quote.  (Earlier drafts printed the
+# midpoints 1.5e-8 and 3.0e-9, which are this module's interpolation of a
+# source's limits and appear in neither the paper nor its abstract.)
+MAR_LOWER_10RS_LO = 1.0e-8  # M_sun/yr, weak end of their 1-2e-8
+MAR_LOWER_10RS_HI = 2.0e-8  # M_sun/yr, strong end; conservative here
+MAR_LOWER_3RS_LO = 2.0e-9   # M_sun/yr, weak end of their 2-4e-9
+MAR_LOWER_3RS_HI = 4.0e-9   # M_sun/yr, strong end; conservative here
 
 # --- the coronal base, and the ceiling on an isothermal coronal temperature
 # R0_BASE is the radius every wind in this file is launched from.
@@ -1398,11 +1410,15 @@ def main():
     P(f'    RM = ({MAR_RM/1e5:.1f} +/- {MAR_RM_ERR/1e5:.1f})e5 rad m^-2, '
       f'{abs(MAR_RM/MAR_RM_ERR):.1f} sigma from zero')
     for lab, val in (('upper limit, r_in ~ 30 r_S', MAR_UPPER_HEAD),
-                     ('upper limit, r_in ~ 100 r_S', MAR_UPPER_TIGHT),
-                     ('lower limit, r_in ~ 10 r_S', MAR_LOWER_10RS),
-                     ('lower limit, r_in ~ 3 r_S', MAR_LOWER_3RS)):
+                     ('upper limit, r_in ~ 100 r_S', MAR_UPPER_TIGHT)):
         P(f'    {lab:<28} {val:.1e} M_sun/yr   '
           f'Bondi/this = {Mdot_msun_yr/val:8.1f}')
+    for lab, lo, hi in (('lower limit, r_in ~ 10 r_S',
+                         MAR_LOWER_10RS_LO, MAR_LOWER_10RS_HI),
+                        ('lower limit, r_in ~ 3 r_S',
+                         MAR_LOWER_3RS_LO, MAR_LOWER_3RS_HI)):
+        P(f'    {lab:<28} {lo:.0e}-{hi:.0e} M_sun/yr   '
+          f'Bondi/this = {Mdot_msun_yr/lo:.0f} to {Mdot_msun_yr/hi:.0f}')
     P(f'    PUNCHLINE ratio against the headline bound = '
       f'{Mdot_msun_yr/MAR_UPPER_HEAD:.0f}')
     P(f'    range against the two upper bounds        = '
@@ -1428,8 +1444,11 @@ def main():
     P('    Marrone\'s LOWER limits, which their section 4 says are "not')
     P('    subject to the above caveats since the uncertainties act to raise')
     P(f'    the minimum accretion rate" (ratios '
-      f'{Mdot_msun_yr/MAR_LOWER_10RS:.0f} to '
-      f'{Mdot_msun_yr/MAR_LOWER_3RS:.0f} above), and the X-ray radiative')
+      f'{Mdot_msun_yr/MAR_LOWER_10RS_HI:.0f} to '
+      f'{Mdot_msun_yr/MAR_LOWER_3RS_LO:.0f} above, and at least '
+      f'{Mdot_msun_yr/MAR_LOWER_10RS_HI:.0f} to '
+      f'{Mdot_msun_yr/MAR_LOWER_3RS_HI:.0f} on the reading kindest to the')
+    P('    model), and the X-ray radiative')
     P('    efficiency below.')
     P('')
     P('    REFUTED.  Note exactly what is refuted.  Not Bondi\'s algebra,')
@@ -1691,8 +1710,11 @@ def main():
       f'Marrone\'s own')
     P(f'  scaling turns the {Mdot_msun_yr/MAR_UPPER_HEAD:.0f} into 4.  Two '
       f'legs do not depend on the field: their')
-    P(f'  LOWER limits, which they say carry no such caveat (factors '
-      f'535 to 2674), and')
+    P(f'  LOWER limits, which they say carry no such caveat and which they '
+      f'give as ranges')
+    P(f'  (factors {Mdot_msun_yr/MAR_LOWER_10RS_HI:.0f} to '
+      f'{Mdot_msun_yr/MAR_LOWER_3RS_LO:.0f}, and at least '
+      f'{Mdot_msun_yr/MAR_LOWER_10RS_HI:.0f}), and')
     P(f'  the implied X-ray radiative efficiency of 4e-09 against ~0.1 for a '
       f'thin disc.')
     P(f'  What fails is not the algebra -- and note that Bondi proves only '

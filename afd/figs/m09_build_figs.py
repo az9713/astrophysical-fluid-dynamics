@@ -101,7 +101,7 @@ def leader_svg(ax_, ay_, tx, ty, w, h, gap=3.0):
             f'stroke-dasharray="2 3"/>')
 
 
-def place_label(cands, occupied, box, w, h, ink=None, pad=4.0):
+def place_label(cands, occupied, box, w, h, ink=None, pad=4.0, window=None):
     """Choose a position for a label by search, never by eye.
 
     cands    list of (x, y) text anchors in preference order.  The search
@@ -130,6 +130,15 @@ def place_label(cands, occupied, box, w, h, ink=None, pad=4.0):
            for x in np.arange(X0 + 4, X1 - w - 2, 26.0)
            for y in np.arange(Y0 + h + 4, Y1 - 4, 18.0)]
     lat.sort(key=lambda p: (p[0] - px0)**2 + (p[1] - py0)**2)
+    # A label whose only clear seat is on the far side of the plot is worse
+    # than a crowded one: it lands among a DIFFERENT family and says the
+    # wrong thing about the curves it sits on.  `window` caps how far the
+    # fallback may travel from the preferred spot, in user units, so the
+    # search stays in the neighbourhood of the thing being labelled and the
+    # later, weaker passes settle it there.
+    if window is not None:
+        lat = [p for p in lat
+               if (p[0] - px0)**2 + (p[1] - py0)**2 <= window*window]
     ordered += lat
 
     def fits(x, y):
@@ -324,9 +333,10 @@ def build_topology():
                 out.append((x_pref + dxx, y_pref + dyy))
         return out
 
-    def label(text, colour, anchor_x, anchor_y, x_pref, y_pref, wide):
+    def label(text, colour, anchor_x, anchor_y, x_pref, y_pref, wide,
+              window=120.0):
         x, y, fell = place_label(grid(x_pref, y_pref, wide), occupied, box,
-                                 wide, 13.0, ink=ink)
+                                 wide, 13.0, ink=ink, window=window)
         s.append(f'<text x="{x:.1f}" y="{y:.1f}" font-size="11" '
                  f'fill="{colour}">{esc(text)}</text>')
         if fell or abs(x - anchor_x) > 34 or abs(y - anchor_y) > 26:
@@ -338,13 +348,21 @@ def build_topology():
     # accretion: anchor on the supersonic branch inside x = 1
     ax_, ay_ = px(0.35), py(M.parker_u(0.35, 'sup'))
     label("transonic ACCRETION", ACC2, ax_, ay_, ax_ + 12, ay_ - 6, 148)
-    # breeze: anchor on the topmost breeze curve at its peak
-    ax_, ay_ = px(1.0), py(M.solve_h(4.0 - 1.2, 'sub'))
+    # Breeze: anchor on a breeze curve out at x = 2.2, where the family is
+    # flattest, and prefer the empty band above it.  Every breeze contour
+    # lies below u = 0.45 and the wind curve is at u ~ 1.8 there, so the
+    # band around u = 0.7 is clear of ink and clear of the u = 1 reference
+    # line.  (An earlier preferred spot near x = 1.3 let the search push
+    # the label up to u = 3, into the middle of the supersonic family.)
+    ax_, ay_ = px(2.2), py(M.solve_h(4*np.log(2.2) + 4/2.2 - 1.2, 'sub'))
     label("breeze, v ~ r⁻²", VIO, ax_, ay_,
-          px(1.3), py(0.72), 118)
-    # supersonic everywhere
-    ax_, ay_ = px(0.6), py(M.solve_h(4*np.log(0.6) + 4/0.6 - 1.2, 'sup'))
-    label("supersonic everywhere", YEL, ax_, ay_, ax_ + 12, ay_ - 8, 156)
+          px(2.3), py(0.70), 118)
+    # Supersonic everywhere: anchor and label inside the yellow family
+    # itself, out at x = 3 where its three contours have fanned apart and
+    # the space above the topmost one is empty up to the frame.
+    ax_, ay_ = px(3.0), py(M.solve_h(4*np.log(3.0) + 4/3.0 + 0.2, 'sup'))
+    label("supersonic everywhere", YEL, ax_, ay_,
+          px(1.9), py(3.05), 156)
     # double-valued
     ax_, ay_ = px(0.28), py(M.solve_h(4*np.log(0.28) + 4/0.28 - 4.2, 'sub'))
     label("double-valued", RED, ax_, ay_, ax_ + 10, ay_ + 20, 126)
@@ -484,17 +502,22 @@ def build_parker():
              f'of 0.049 and a slope of 0.19 differ by a few pixels. Here '
              f'they do not.</text>')
 
+    # The colour key is the UPPER panel's: teal 1.0 MK, yellow 1.5 MK,
+    # violet 2.0 MK.  Reusing those three hues for anything else in this
+    # panel would tell a reader who has just learned the key that the
+    # steady-Euler bar is the 1 MK model, so the two bars that are not one
+    # of the three isothermal curves are drawn in neutral grey.
     rows = []
-    for T0 in (1.0e6, 1.5e6, 2.0e6):
+    for T0, col in ((1.0e6, ACC2), (1.5e6, YEL), (2.0e6, VIO)):
         rows.append((f'isothermal, T₀ = {T0/1e6:.1f} MK',
-                     M.parker_slope_chord(T0), 0.0, YEL))
+                     M.parker_slope_chord(T0), 0.0, col))
     Ts = np.linspace(M.T_SCAN_LO, M.T_BASE_SONIC, 121)
     chords = np.array([M.parker_slope_chord(T) for T in Ts])
     imin = int(np.argmin(chords))
     rows.append((f'isothermal, best of 0.5–{M.T_BASE_SONIC/1e6:.2f} MK',
-                 chords[imin], 0.0, VIO))
+                 chords[imin], 0.0, MUT))
     s_pred, s_err = M.euler_slope_from_fits('avg')
-    rows.append(('steady Euler, measured ∇P', s_pred, s_err, ACC2))
+    rows.append(('steady Euler, measured ∇P', s_pred, s_err, MUT))
     rows.append(('measured (VB18 mean fit)', e_v,
                  M.vb('velocity', 'avg')[3], ACC))
 
@@ -579,10 +602,12 @@ def build_sgra():
          'Marrone et al. (2007), Faraday rotation'),
         ('upper limit, r~IN~ ≈ 100 r~S~', M.MAR_UPPER_TIGHT, 'upper', ACC2,
          'Marrone et al. (2007), their Sect. 4'),
-        ('lower limit, r~IN~ ≈ 10 r~S~', M.MAR_LOWER_10RS, 'lower', VIO,
-         'Marrone et al. (2007), their Sect. 4, 1–2×10⁻⁸'),
-        ('lower limit, r~IN~ ≈ 3 r~S~', M.MAR_LOWER_3RS, 'lower', VIO,
-         'Marrone et al. (2007), their Sect. 4, 2–4×10⁻⁹'),
+        ('lower limit, r~IN~ ≈ 10 r~S~',
+         (M.MAR_LOWER_10RS_LO, M.MAR_LOWER_10RS_HI), 'lower', VIO,
+         'Marrone et al. (2007), their Sect. 4'),
+        ('lower limit, r~IN~ ≈ 3 r~S~',
+         (M.MAR_LOWER_3RS_LO, M.MAR_LOWER_3RS_HI), 'lower', VIO,
+         'Marrone et al. (2007), their Sect. 4'),
     ]
 
     s = [f'<svg class="setupfig" viewBox="0 0 {W} {H}" width="100%" '
@@ -594,8 +619,9 @@ def build_sgra():
          f'minus six and three times ten to the minus six. Below them, four '
          f'limits from Faraday rotation: two upper limits at two times ten '
          f'to the minus seven and five times ten to the minus eight, and '
-         f'two lower limits at one and a half times ten to the minus eight '
-         f'and three times ten to the minus nine. The gap between the Bondi '
+         f'two lower limits, each given by its source as a range: one to '
+         f'two times ten to the minus eight, and two to four times ten to '
+         f'the minus nine. The gap between the Bondi '
          f'rate and the highest upper limit is a factor of forty, but that '
          f'upper limit assumes a magnetic field near equipartition strength; '
          f'at three per cent of equipartition the same rotation measure '
@@ -628,11 +654,25 @@ def build_sgra():
                  f'text-anchor="end" fill="{FG}">{marks(esc(lab))}</text>')
         s.append(f'<text x="{X0-10:.0f}" y="{yc+13:.1f}" font-size="9" '
                  f'text-anchor="end" fill="{MUT}">{marks(esc(note))}</text>')
-        x = lx(val)
+        # A limit given by its source as a RANGE is drawn as a range: the
+        # arrow starts at the end kindest to the Bondi model, and a bar
+        # runs back to the other end.  Marrone et al. state each lower
+        # limit as "1-2e-8" and "2-4e-9"; printing a midpoint would put a
+        # number in the figure that is in neither the paper nor the text.
+        span = val if isinstance(val, tuple) else None
+        x = lx(span[1] if span else val)
         if kind == 'point':
             s.append(f'<circle cx="{x:.1f}" cy="{yc:.1f}" r="5.5" '
                      f'fill="{col}"/>')
         else:
+            if span:
+                s.append(f'<line x1="{lx(span[0]):.1f}" y1="{yc:.1f}" '
+                         f'x2="{x:.1f}" y2="{yc:.1f}" stroke="{col}" '
+                         f'stroke-width="2" stroke-opacity="0.45"/>')
+                s.append(f'<line x1="{lx(span[0]):.1f}" y1="{yc-5:.1f}" '
+                         f'x2="{lx(span[0]):.1f}" y2="{yc+5:.1f}" '
+                         f'stroke="{col}" stroke-width="1.6" '
+                         f'stroke-opacity="0.45"/>')
             # an arrow running in the permitted direction
             x2 = lx(10.0**LMIN) + 6 if kind == 'upper' else lx(10.0**LMAX) - 6
             s.append(f'<line x1="{x:.1f}" y1="{yc:.1f}" x2="{x2:.1f}" '
@@ -651,9 +691,12 @@ def build_sgra():
         tvx = min(max(x + (-9 if end else 9), X0 + (66 if end else 4)),
                   X1 - (4 if end else 66))
         tvy = min(max(yc - 10.0, Y0 + 12.0), Y1 - 4.0)
+        vtext = (f'{span[0]/10.0**int(np.floor(np.log10(span[1]))):.0f}–'
+                 f'{_sci(span[1]).replace(".0", "", 1)}') if span \
+            else _sci(val)
         s.append(f'<text x="{tvx:.1f}" y="{tvy:.1f}" font-size="10" '
                  f'text-anchor="{"end" if end else "start"}" '
-                 f'fill="{col}">{esc(_sci(val))}</text>')
+                 f'fill="{col}">{esc(vtext)}</text>')
 
     # The annotated gap between the Bondi rate (row 0) and the headline
     # bound (row 2).  The horizontal bar sits between them, and a stub

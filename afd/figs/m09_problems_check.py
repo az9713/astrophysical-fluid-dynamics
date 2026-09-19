@@ -340,11 +340,11 @@ for tag, key, sf, sy in [('mean', 'v_mean', 4.9, 4.1),
     chkr(f'beta > 0, formal ({tag})', b/db, sf, 1)
     chkr(f'beta > 0, yearly ({tag})', b/dy, sy, 1)
 
-# Check 6(i)
+# Check 5(i)
 chkr('e_T against 0, formal sigma', 0.792/0.028, 28.3, 1)
 chkr('e_T against 0, yearly sigma', 0.792/0.050, 15.8, 1)
 
-# Check 6(ii): the scan, and the floor at the ceiling
+# Check 5(ii): the scan, and the floor at the ceiling
 scan = [(0.50e6, 0.2477), (1.00e6, 0.1885), (1.50e6, 0.1645),
         (2.00e6, 0.1505), (3.00e6, 0.1343), (4.00e6, 0.1246),
         (5.00e6, 0.1179), (T_ceil_closed, 0.1119)]
@@ -365,7 +365,7 @@ chkr('  which is this many times 3 MK', T_reach/3.0e6, 548.0, 0)
 chkr('  and this many times 2 MK', T_reach/2.0e6, 822.0, 0)
 chkr('  and this many times the ceiling', T_reach/T_ceil_closed, 263.0, 0)
 
-# Check 6(iii): fit T_0 to the 1-au speed
+# Check 5(iii): fit T_0 to the 1-au speed
 def v_1au(T0):
     return float(u_iso(AU/r_crit(T0), 'super'))*c_T(T0)/1e5
 
@@ -379,7 +379,7 @@ chkr('3 MK / fitted', 3.0e6/T_fit_mean, 3.17, 2)
 chkr('v(1 au) at 2 MK over measured', v_1au(2.0e6)/435.6, 1.61, 2)
 chkr('v(1 au) at 3 MK over measured', v_1au(3.0e6)/435.6, 2.07, 2)
 
-# Check 5: steady Euler with the measured pressure gradient, (7.2)
+# Check 7: steady Euler with the measured pressure gradient, (7.2)
 for tag, nk, vk, Tk, dlnP, cT2, pterm, gterm, pred, perr, ratio, sf, sy in [
         ('mean', 'n_mean', 'v_mean', 'T_mean', 2.802, 1.4301e13,
          0.02112, -0.00468, 0.01644, 0.00061, 2.98, 3.2, 2.7),
@@ -422,7 +422,7 @@ chk('predicted slope with alpha tied to 2 + beta', pred_tied, 0.01674, 5e-3)
 chkr('  which moves the prediction by this many per cent',
      100.0*(pred_tied/0.01644 - 1.0), 1.8, 1)
 
-# Check 7: the single-polytrope repair
+# Check 6: the single-polytrope repair
 def poly_launch_Tmin(g, r0=R0, GM=GM_sun, mu=MU_WIND):
     """Minimum base temperature for a transonic polytropic wind from r0.
 
@@ -544,8 +544,13 @@ chkr('the alternative density convention, as a factor',
      rho_alt/rho_sgra, 1.67, 2)
 chk('Mdot under it', md_bondi*rho_alt/rho_sgra*yr/M_sun, 1.34e-5, 5e-3)
 
-for lim, want in [(2.0e-7, 40.1), (5.0e-8, 160.4), (1.5e-8, 534.8),
-                  (3.0e-9, 2674.2)]:
+# Marrone et al.'s own four numbers, read from their Sect. 4: two upper
+# limits that are single values, and two lower limits that are RANGES.
+# Every endpoint is checked, because the module now quotes the excess as a
+# range and quotes the kindest end separately.
+for lim, want in [(2.0e-7, 40.1), (5.0e-8, 160.4),
+                  (1.0e-8, 802.2), (2.0e-8, 401.1),
+                  (2.0e-9, 4011.2), (4.0e-9, 2005.6)]:
     chk(f'Bondi over {lim:g}', md_bondi*yr/M_sun/lim, want, 1e-3)
 # Marrone's epsilon^(-2/3) scaling, rebuilt from their sentence
 for eps, lim_want, ratio_want in [(1.00, 2.0e-7, 40.0), (0.10, 9.3e-7, 9.0),
@@ -691,6 +696,76 @@ chk('K3 Mdot_Edd [M_sun/yr]', md_edd_sgra*yr/M_sun, 9.545e-2, 3e-3)
 chk('K3 Mdot_Bondi/Mdot_Edd', md_bondi/md_edd_sgra, 8.405e-5, 3e-3)
 chk('K3 Marrone bound over Eddington',
     2.0e-7/(md_edd_sgra*yr/M_sun), 2.095e-6, 3e-3)
+
+
+# ------------------------------------------- the editor pass's own numbers
+# Every number the science-editor pass put into the prose, checked here so
+# that "N checks, 0 mismatches" covers the repair as well as the draft.
+
+# B2.  The free-fall SCALE, printed beside the time so that a reader who
+# drops the pi/2 recognises what they have.
+chk('C3 free-fall scale without the pi/2 [yr]',
+    np.sqrt(R_B**3/(2.0*G*M_SGRA))/yr, 117.4, 5e-3)
+chkr('  and the pi/2 between them', np.pi/2.0, 1.571, 3)
+
+# B3.  K1's density is n_H m_p (1+4y), not n_H mu m_H; the prose now says
+# so and quotes both the factor and its size in dex.
+rho_naive = LIC_N*mu_lic*m_u
+chk('K1 rho from n_H m_p (1+4y) [g/cm^3]', rho_lic, 4.683e-25, 2e-3)
+chkr('K1 that over n_H mu m_H', rho_lic/rho_naive, 2.33, 2)
+chkr('K1 the same as a dex', np.log10(rho_lic/rho_naive), 0.37, 2)
+chk('K1 lambda_c(1) = e^{3/2}/4', lambda_c(1.0), 1.1204, 1e-3)
+
+# B4.  K3's decomposition, rebuilt from the two printed column values.
+gap_total = 8.405e-5/3.700e-12
+chk('K3 the whole gap', gap_total, 2.27e7, 5e-3)
+chkr('K3 that in orders of magnitude', np.log10(gap_total), 7.4, 1)
+gap_rate = 8.405e-5/2.095e-6
+chkr('K3 the part in the rate', gap_rate, 40.1, 1)
+chk('K3 the part in the efficiency', gap_total/gap_rate, 5.7e5, 2e-2)
+chkr('K3 that in orders of magnitude', np.log10(gap_total/gap_rate),
+     5.75, 2)
+
+# B5.  What mu = 1/2 EXACTLY would have given, which is not what the
+# module prints; the printed numbers are mu = m_p/(2 m_u) = 0.50364.
+a2_half = kB*VB['T_mean'][0]/(0.5*m_u)
+chkr('what a literal mu = 1/2 does to c_T^2',
+     a2_half/(kB*VB['T_mean'][0]/(MU_WIND*m_u)), 1.1244, 4)
+chkr('  and to the ratio', 0.049/((2.802*a2_half - GM_sun/AU)/v_m**2),
+     2.57, 2)
+chk('  while the printed mu is half of m_p/m_u', MU_PROTON, 0.50364, 1e-4)
+
+# B6.  Section 7.7's Helios cross-check, with and without the helium mass,
+# and Module 2's own row of the same table.
+md_pure = 4.0*np.pi*AU**2*7.57*m_p*435.6e5
+chk('7.7 Mdot for a pure proton plasma [g/s]', md_pure, 1.551e12, 2e-3)
+chk('  as an F_m', md_pure/(4.0*np.pi*AU**2), 5.52e-16, 3e-3)
+chkr('  and the helium mass factor between them', md_vb/md_pure, 1.2, 3)
+chk("Module 2's own row of the same table [g/s]",
+    4.0*np.pi*AU**2*5.61*m_p*410.7e5, 1.084e12, 3e-3)
+
+# B13.  Baganoff's two radii in their own Schwarzschild units, and the
+# mass-independence of the ratio, which is exact and not approximate.
+r_S_bag = 2.0*G*(2.6e6*M_sun)/c_light**2
+chk('C3 their COMPUTED 0.05 pc in their own r_S', 0.05*pc/r_S_bag,
+    2.01e5, 5e-3)
+chk('C3 their ADOPTED 0.06 pc in their own r_S', 0.06*pc/r_S_bag,
+    2.41e5, 5e-3)
+chk('C3 R_B/r_S is exactly c^2/c_inf^2', R_B/r_S,
+    (c_light/cs_sgra)**2, 1e-12)
+
+# S1.  Check 5(ii)'s second error bar, the one the module promises.
+chkr('Check 5(ii) against the year-to-year scatter',
+     (0.1119 - 0.049)/0.012, 5.2, 1)
+
+# S3.  The 8.3 per cent restated as a factor in T_0 itself.
+chkr('a factor 3 in Mdot as a factor in T_0', 3.0**(1.0/13.2), 1.087, 3)
+
+# S4.  The enthalpy flux K2 leaves out, and its size.
+F_enth = 2.5*(kB*VB['T_mean'][0]/(MU_WIND*m_u))*9.843e11
+chk('K2 enthalpy flux [erg/s]', F_enth, 3.5e25, 3e-2)
+chkr('  as a per cent of the measured energy flux',
+     100.0*F_enth/2.812e27, 1.3, 1)
 
 
 # ---------------------------------------------------------------- report
