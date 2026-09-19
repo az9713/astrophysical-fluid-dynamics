@@ -338,7 +338,6 @@ LARSON_SIGMA_THERMAL = 0.32      # km/s, his THREE-dimensional 10 K value
 # answered, and the answer is that the assumption is wrong in kind.  The
 # refutation gets STRONGER: the formal statistical error is smaller than
 # 0.05, so 1/3 lies further from 0.5 in statistical terms, not nearer.
-SOLOMON_ERR_IS_SYSTEMATIC = True
 SOLOMON_A = 1.0                  # km/s at S = 1 pc
 SOLOMON_A_ERR = 0.1
 SOLOMON_EXP = 0.5
@@ -1078,6 +1077,9 @@ def main():
     P(f'  Fit window {PODESTA_FIT_LO_HZ:.0e} to {PODESTA_FIT_HI_HZ:.0e} Hz.  '
       f'Errors are {PODESTA_CI_LEVEL:.0%} confidence')
     P(f'  limits, not standard deviations: divide by {PODESTA_CI_TO_SIGMA:.3f} for sigma.')
+    P(f'  Their Section 3 bounds the window itself: moving the endpoints')
+    P(f'  over 7e-4 to 1.5e-3 Hz and 7e-3 to 1.5e-2 Hz changes an exponent')
+    P(f'  "typically by {PODESTA_WINDOW_SENSITIVITY:.0%}", always less than the tabulated error.')
     P('')
     P(f'  {"int":>4} {"magnetic":>12} {"d(5/3)/CI":>11} {"d(5/3)/sig":>11} '
       f'{"velocity":>12} {"d(5/3)/CI":>11} {"d(5/3)/sig":>11}')
@@ -1470,11 +1472,14 @@ def main():
     P('=' * 74)
     P('SOURCES')
     P('=' * 74)
-    P('  ALL NINE WERE FETCHED AS PDFs AND READ LOCALLY with PyMuPDF at')
-    P('  step 2, 2026-09-19; where the OCR layer was unreliable the page')
-    P('  was rendered and read as an image.  No web summariser was used.')
-    P('  Volume, page and year for every DOI below were confirmed at')
-    P('  Crossref, not recalled.  The record is')
+    P('  EIGHT PAPERS WERE LISTED FOR STEP 2 AND ALL EIGHT WERE FETCHED')
+    P('  as PDFs and read locally with PyMuPDF, 2026-09-19; where the OCR')
+    P('  layer was unreliable the page was rendered and read as an image.')
+    P('  No web summariser was used.  Volume, page and year for every DOI')
+    P('  below were confirmed at Crossref, not recalled.  TWO ENTRIES')
+    P('  BELOW WERE NOT READ and say so in place: Grant et al. (1962),')
+    P('  quoted only through Sreenivasan\'s Table IV, and Kadoya et al.')
+    P('  (1985), which no server would serve.  The record of the pass is')
     P('  .ignore/m10-source-verification.md.')
     P('  Podesta, J. J., Roberts, D. A. & Goldstein, M. L. (2007),')
     P('    "Spectral exponents of kinetic and magnetic energy spectra in')
