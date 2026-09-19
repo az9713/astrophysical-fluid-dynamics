@@ -91,14 +91,24 @@ source, one exact prediction is CONFIRMED and one assumption is REFUTED.
   number confirms.  Converted with the exact isotropy factor 55/18 that
   the same paper states, the three-dimensional constant is 1.62 +/- 0.17.
 
-  CHECK 3, the repayment to Module 3.  Module 3 ended by naming the
-  hydrostatic-mass bias of galaxy clusters as a turbulence debt.  Hitomi
+  CHECK 3, the price of one of Module 3's idealisations.  SAY IT
+  EXACTLY, because an earlier draft of this docstring did not: Module 3
+  never named turbulence.  The word does not occur in module03.html.
+  What Module 3 did was apply hydrostatic balance to an intracluster
+  medium at r = 1 Mpc (its section 3 scale-height table, and Problem
+  C3), and list "Static: u = 0" in its section 11 table of
+  idealisations, repaid there through Module 4 alone.  CHECK 3 puts a
+  number on that idealisation for one cluster core.  Hitomi
   measured the line-of-sight velocity dispersion of the Perseus cluster
   core directly, 164 +/- 10 km/s at 30-60 kpc.  This script reproduces
   the paper's own headline number, turbulent pressure = 4% of thermal,
   from that dispersion and the measured temperature, and turns it into a
   mass bias.  CONFIRMED: hydrostatic equilibrium, the assumption Module 3
   spent its length on, is good to about 4% in this cluster core.
+  Whether Module 3's section 11 table gains a row pointing here is
+  Simon's decision, open as of 2026-09-19 and bundled with the open
+  Module 3 -> Module 9 Proposition 1 pointer.  This module does not
+  edit Module 3.
 
   CHECK 4, the interstellar medium.  Larson (1981) and Solomon et al.
   (1987) fitted the velocity-dispersion-versus-size relation of molecular
@@ -873,6 +883,20 @@ def main():
     P(f'      Re at Hitomi\'s L = 60 kpc, V = 164 km/s = {Re_icm:.2f}')
     P(f'      Re at L = 1 Mpc, V = 300 km/s      = '
       f'{reynolds(3.0e7, Mpc, nu_icm_kin):.1f}')
+    P(f'        READ THAT ROW NARROWLY.  It carries the CORE mean free')
+    P(f'        path, {lam_icm/kpc:.1f} kpc at n = 1e-3 and T = 1e8, out to a')
+    P('        larger L.  It is NOT a cluster outskirts: lam scales as')
+    P('        T^2/(n ln Lambda), and a real cluster at 1 Mpc has a lower')
+    P('        density, which raises lam and lowers Re again.  Module 3')
+    P('        section 3 put its ICM at r = 1 Mpc but gave no density')
+    P('        there, so this book has no sourced (n, T) pair at that')
+    P('        radius and the row may not be read as one.  What the two')
+    P('        rows together DO support is the statement that at every')
+    P('        scale where the ICM has been MEASURED - Hitomi at 30-60')
+    P('        kpc, Zhuravleva in an offset Coma region where lam is')
+    P('        about 30 kpc - the Coulomb Knudsen number is of order')
+    P('        0.3 to 1, so the collisional Reynolds number is a formula')
+    P('        outside its domain everywhere the data reach.')
     P(f'      Kn = lam/L at 60 kpc               = {lam_icm/L_icm:.3f}')
     P('      READ THE TWO TOGETHER.  Re < 1 BECAUSE Kn > 1/3, and by')
     P('      Module 2\'s identity Re = 3 Ma_th/Kn those are one statement,')
@@ -919,11 +943,25 @@ def main():
     n_sw, T_sw, B_sw = 5.0, 1.2e5, 5.0e-5
     lnL_sw = lnLambda_e(n_sw, T_sw)  # derived, as in m01_numbers.py
     lam_sw = lam_coulomb(n_sw, T_sw, lnL_sw)
-    v_sw_th = v_thermal(T_sw, 1.0)
+    # MU_H, not 1.0: the mean thermal speed of a PROTON.  Module 1's
+    # census gas is hydrogen, and m_p/m_u = 1.00728, so mass 1.0 m_u
+    # overstated v by sqrt(1.00728) = 1.0036 and nu with it.  This is
+    # Module 9's "mu = 1/2 was the m_p convention in m_u clothing" at
+    # 0.36 per cent: nu 4.8668e19 -> 4.8492e19, Re 12.30 -> 12.34.
+    v_sw_th = v_thermal(T_sw, MU_H)
     nu_sw = nu_kinetic(lam_sw, v_sw_th)
     U_sw, L_sw = 4.0e7, AU
     rg_sw = gyroradius(T_sw, B_sw)
     nu_sw_mag = nu_kinetic(rg_sw, v_sw_th)
+    # The same four quantities on Module 9's inputs, printed as a
+    # sensitivity below.  Constants copied verbatim from m09_numbers.py
+    # lines 174-177, Venzmer & Bothmer (2018) A&A 611 A36 Table 3,
+    # MEDIAN-fit column at 1 au, already verified in Module 9's step 2.
+    N_SW_VB, T_SW_VB, B_SW_VB, U_SW_VB = 7.57, 9.67e4, 6.05e-5, 4.356e7
+    lnL_sw_vb = lnLambda_e(N_SW_VB, T_SW_VB)
+    lam_sw_vb = lam_coulomb(N_SW_VB, T_SW_VB, lnL_sw_vb)
+    nu_sw_vb = nu_kinetic(lam_sw_vb, v_thermal(T_SW_VB, MU_H))
+    rg_sw_vb = gyroradius(T_SW_VB, B_SW_VB)
     P('')
     P('  (d) Solar wind at 1 au, n = 5 cm^-3, T = 1.2e5 K, B = 5 nT')
     P(f'      ln Lambda, derived                 = {lnL_sw:.2f}')
@@ -942,6 +980,31 @@ def main():
     P('      the system size, so there is no Navier-Stokes viscosity to')
     P('      put into U L/nu at all.  Module 1 called the way out the')
     P('      magnetic rescue; here is what it buys.')
+    P('')
+    P('      WHICH SOLAR WIND IS THIS?  The four inputs above are Module')
+    P('      1\'s, to one significant figure, and this module reuses them')
+    P('      unchanged so that the two modules cannot diverge: Module 1')
+    P('      section 8 prints lam = 1.9 au and r_g = 93 km from exactly')
+    P('      these.  Module 9 uses a DIFFERENT set - Venzmer & Bothmer')
+    P('      (2018) Table 3, median fits, n = 7.57 cm^-3, T = 9.67e4 K,')
+    P('      B = 6.05 nT, U = 435.6 km/s - because its job is an')
+    P('      acceleration along a fitted radial profile, not a census.')
+    P('      Here is what those inputs would give, so that the')
+    P('      difference is priced and not hidden:')
+    P(f'        lam  = {lam_sw_vb/AU:.4f} au   (against {lam_sw/AU:.4f})')
+    P(f'        Kn   = {lam_sw_vb/L_sw:.4f}      (against {lam_sw/L_sw:.4f})')
+    P(f'        Re   = {reynolds(U_SW_VB, L_sw, nu_sw_vb):.2f}       '
+      f'(against {reynolds(U_sw, L_sw, nu_sw):.2f})')
+    P(f'        r_g  = {rg_sw_vb/1e5:.0f} km       (against {rg_sw/1e5:.0f} km)')
+    P('      THE CONCLUSION DOES NOT MOVE.  Kn is of order one on both')
+    P('      sets, so the collisional viscosity is outside its domain on')
+    P('      both, and the magnetic rescue is needed on both.  What DOES')
+    P('      move is the phrase "twice the system size", which belongs to')
+    P('      Module 1\'s census values alone; on Venzmer & Bothmer\'s the')
+    P('      mean free path is 0.85 of the system size.  Their T is the')
+    P('      PROTON temperature, and ln Lambda above is evaluated at the')
+    P('      same T for both sets, which is a further reason not to mix')
+    P('      the two: an electron temperature belongs in ln Lambda.')
 
     # Module 2's identity, checked line by line.  Re = U L/nu with
     # nu = lam v/3 is 3 (U/v)(L/lam) = 3 Ma_th/Kn identically, so these
@@ -1244,7 +1307,8 @@ def main():
 
     # --- CHECK 3: the repayment to Module 3.
     P('')
-    P('  CHECK 3.  Is the intracluster medium hydrostatic?  Module 3\'s debt.')
+    P('  CHECK 3.  Is the intracluster medium hydrostatic?  The price of')
+    P('  one of Module 3\'s idealisations.')
     P('  Hitomi Collaboration (2016), Nature 535, 117.')
     alpha = turbulent_pressure_fraction(HITOMI_SIGMA_V, HITOMI_KT_OUT)
     cs_icm = sound_speed(HITOMI_KT_OUT/kB, MU_ICM)
@@ -1289,9 +1353,12 @@ def main():
     P(f'      double the estimate                 = {b2*100:.2f}%')
     P('      ASSUMPTION, stated: P_turb/P_th constant with radius.  Drop')
     P('      it and the bias depends on the two pressure scale lengths.')
-    P(f'    CONFIRMED.  Module 3 assumed hydrostatic equilibrium for the')
-    P(f'    ICM and flagged turbulence as the debt.  In this core the debt')
-    P(f'    is {b*100:.1f}% of the mass, or {b2*100:.1f}% if the shear doubles it.')
+    P('    CONFIRMED.  Module 3 applied hydrostatic balance to an ICM at')
+    P('    1 Mpc and listed "Static: u = 0" among its idealisations.  It')
+    P('    did NOT name turbulence; that word does not occur in Module 3,')
+    P('    and this module must not say it does.  What CHECK 3 supplies is')
+    P('    the price of that idealisation, measured, in one cluster core:')
+    P(f'    {b*100:.1f}% of the mass, or {b2*100:.1f}% if the shear doubles it.')
     P('    SCOPE, stated: Hitomi saw ONE pointing, 30-60 kpc, in ONE')
     P('    cluster core.  The paper itself says "in the central regions".')
     P('    Cluster masses for cosmology are measured near r_500, far')
