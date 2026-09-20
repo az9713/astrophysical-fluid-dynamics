@@ -9,3 +9,6 @@ __pycache__/
 
 afd/figs/m09_body*.html
 afd/figs/assemble09.py
+
+afd/figs/m10_body*.html
+afd/figs/assemble10.py

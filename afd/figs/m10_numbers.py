@@ -930,7 +930,21 @@ def main():
       f'{nu_icm_perp_class:.4e} cm^2/s,')
     P(f'      which would give Re_perp           = '
       f'{reynolds(U_icm, L_icm, nu_icm_perp_class):.3e}.')
-    P(f'      The two bracket the truth by a factor {lam_icm/rg_icm:.2e}, and')
+    # STEP 4 CORRECTION.  This line used to print lam/r_g = 5.18e13 as the
+    # factor between the two bounds, which is NOT what the two printed
+    # viscosities differ by.  nu_Bohm/nu_perp_class =
+    # (r_g v_mean/3)/(0.3125 * 0.96 * lam v_rms/3 * (r_g/lam)^2)
+    #   = (v_mean/v_rms)/0.3 * (lam/r_g) = 3.07 lam/r_g,
+    # because the classical value is built on BRAGINSKII's nu_par, which
+    # carries his 0.96 and his RMS speed, not this module's lam v_mean/3.
+    # The spot-check did not catch it: it compared lam/r_g against
+    # lam/r_g and never asked whether that ratio was the bracket.
+    P(f'      The two bracket the truth by a factor '
+      f'{nu_icm_mag/nu_icm_perp_class:.2e}, which is')
+    P(f'      {(nu_icm_mag/nu_icm_perp_class)/(lam_icm/rg_icm):.2f} times '
+      f'lam/r_g = {lam_icm/rg_icm:.2e} and NOT lam/r_g itself, because')
+    P('      the classical value is built on Braginskii nu_par, which')
+    P('      carries his 0.96 and his RMS speed.  And')
     P('      NEITHER is the effective viscosity of the intracluster medium,')
     P('      which is set by pressure-anisotropy microinstabilities that')
     P('      scatter ions far more often than Coulomb collisions do.  This')
