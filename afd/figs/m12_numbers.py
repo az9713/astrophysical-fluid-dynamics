@@ -46,14 +46,19 @@ source, one exact prediction is CONFIRMED and one assumption is REFUTED.
   Fig. 9 gives 0.11 for the field index and 0.072 for the density; those
   are larger than the formal errors and are the cautious choice.
 
-  CHECK 2 IS A REFUTATION AND IT IS THIS MODULE'S SHARPEST RESULT.
-  Extrapolating the 1-au field and density inward at constant wind speed
-  puts the Alfven radius near 23-25 R_sun.  Verscharen, Bale & Velli
-  (2021) Table 3 measure 12.080 +/- 0.236 R_sun (first fast-latitude
-  scan) and 9.504 +/- 0.221 R_sun (third) -- the same table Module 9
-  quotes at module09.html:964.  The extrapolation is wrong by a factor
-  of about two, and it is wrong in the direction that says the wind is
-  still accelerating inside 1 au, which Module 9 measured independently.
+  CHECK 2 IS BRACKETED, AND IT IS THIS MODULE'S SHARPEST RESULT.
+  THIS PARAGRAPH WAS WRONG UNTIL STEP 4 AND IS CORRECTED HERE: it said
+  "near 23-25 R_sun" and "wrong by a factor of about two", which was the
+  framing before step 1 defect 17 put the RADIAL field into the Alfven
+  speed.  The eight extrapolated variants of PART F span 15.76 to 19.35
+  R_sun.  Verscharen, Bale & Velli (2021) Table 3 measure 12.080 +/-
+  0.236 R_sun (first fast-latitude scan) and 9.504 +/- 0.221 (third) --
+  the table Module 9 quotes at module09.html:964 -- and Kasper et al.
+  (2021) Table I put a LOWER bound of 19.8 R_sun on the surface along
+  one Parker Solar Probe trajectory.  Every variant lies ABOVE the
+  first and BELOW the second, so the extrapolation is bracketed by two
+  published numbers and matches neither.  It cannot match both: they
+  are not the same quantity.
 
 A NOTE ON ONE NUMBER THAT MUST NOT BE PRINTED ALONE.  module09.html:846
 prints the solar wind's Alfven surface as "near 12 R_sun", sourced at
@@ -663,6 +668,58 @@ def kepler_omega(M, R):
     return np.sqrt(G*M/R**3)
 
 
+# =========================================================================
+# THE CENSUS, AT MODULE SCOPE.  m12_build_figs.py imports these, so the
+# figures and the prose cannot diverge -- which is m10_build_figs.py's
+# fluid_rows() rule applied to the census instead of to the functions.
+# =========================================================================
+
+# Module 1's photosphere: n = P/kT at tau = 2/3, P = 1.2e5 dyn/cm^2.
+n_phot = 1.2e5/(kB*5772.0)
+# The photospheric field is the QUIET-SUN mean, not a spot.  STILL
+# UNSOURCED AFTER STEP 2; a spot is 3000 G and the difference is four
+# decades in beta, which is why the row is labelled and not averaged.
+# The NASA NSSDC Sun Fact Sheet, read at step 2, prints polar 1-2 G,
+# sunspots 3000 G, prominences 10-100 G, plages 200 G and bright
+# chromospheric network 25 G, and NO quiet-Sun mean and NO coronal
+# value.  Gate D either sources these two rows or relabels them as
+# order-of-magnitude census entries with no check on them.
+B_phot = 5.0                     # G, quiet Sun   STILL UNSOURCED
+T_phot = 5772.0
+MU_PHOT = 1.30                   # Module 10's photosphere row
+# Corona: Module 1's values for the 1e6 K corona.
+n_cor, T_cor = 1.0e9, 1.0e6
+B_cor = 10.0                     # G, active region  UNSOURCED
+# Solar wind at 1 au: Module 1's census, reused by Module 10.
+n_sw, T_sw, B_sw = 5.0, 1.2e5, 5.0e-5
+# ICM: Module 10's values, including the one-microgauss field whose
+# factor of ten the Module 10 editor pass caught.  ONE microgauss.
+n_icm, T_icm, lnL_icm = 1.0e-3, 1.0e8, 37.8
+B_icm = 1.0e-6
+# Molecular cloud: Module 10's 10 pc cloud.  THE FIELD IS STILL
+# UNSOURCED AFTER STEP 2 and Gate D must settle it.  Crutcher (2012)
+# is paywalled and was not read.  Troland & Crutcher (2008) WAS
+# read, and it gives a total mean |B| of 16.4 microgauss -- but at
+# n(H2) of a few times 10^3 cm^-3, thirty times the density of this
+# row, so it is not a source for 10 microgauss at n = 1e2 cm^-3.
+# Nothing is checked against B_mc; PART G checks the critical ratio
+# and not this cloud's lambda.
+# n = 1e2 cm^-3 at mu = 2.33, COPIED FROM m10_numbers.py:802 so the two
+# modules cannot diverge.  The first draft of this file wrote 2e2 under
+# a comment converting an H2 density to a total, which double-counted
+# against mu = 2.33 and moved beta by a factor of two.
+n_mc, T_mc = 1.0e2, 10.0
+B_mc = 1.0e-5                    # 10 microgauss  STILL UNSOURCED
+
+A_ROWS = [
+    ('solar photosphere', n_phot, T_phot, B_phot, MU_PHOT),
+    ('solar corona', n_cor, T_cor, B_cor, 0.61),
+    ('solar wind, 1 au', n_sw, T_sw, B_sw, 0.61),
+    ('intracluster medium', n_icm, T_icm, B_icm, MU_ICM),
+    ('molecular cloud', n_mc, T_mc, B_mc, 2.33),
+]
+
+
 def main():
     P = print
     P('=' * 74)
@@ -688,50 +745,6 @@ def main():
     P(f'  {"system":<24} {"n (cm^-3)":>10} {"T (K)":>9} {"B (G)":>9} '
       f'{"beta":>10} {"v_A (km/s)":>11}')
 
-    # Module 1's photosphere: n = P/kT at tau = 2/3, P = 1.2e5 dyn/cm^2.
-    n_phot = 1.2e5/(kB*5772.0)
-    # The photospheric field is the QUIET-SUN mean, not a spot.  STILL
-    # UNSOURCED AFTER STEP 2; a spot is 3000 G and the difference is four
-    # decades in beta, which is why the row is labelled and not averaged.
-    # The NASA NSSDC Sun Fact Sheet, read at step 2, prints polar 1-2 G,
-    # sunspots 3000 G, prominences 10-100 G, plages 200 G and bright
-    # chromospheric network 25 G, and NO quiet-Sun mean and NO coronal
-    # value.  Gate D either sources these two rows or relabels them as
-    # order-of-magnitude census entries with no check on them.
-    B_phot = 5.0                     # G, quiet Sun   STILL UNSOURCED
-    T_phot = 5772.0
-    MU_PHOT = 1.30                   # Module 10's photosphere row
-    # Corona: Module 1's values for the 1e6 K corona.
-    n_cor, T_cor = 1.0e9, 1.0e6
-    B_cor = 10.0                     # G, active region  UNSOURCED
-    # Solar wind at 1 au: Module 1's census, reused by Module 10.
-    n_sw, T_sw, B_sw = 5.0, 1.2e5, 5.0e-5
-    # ICM: Module 10's values, including the one-microgauss field whose
-    # factor of ten the Module 10 editor pass caught.  ONE microgauss.
-    n_icm, T_icm, lnL_icm = 1.0e-3, 1.0e8, 37.8
-    B_icm = 1.0e-6
-    # Molecular cloud: Module 10's 10 pc cloud.  THE FIELD IS STILL
-    # UNSOURCED AFTER STEP 2 and Gate D must settle it.  Crutcher (2012)
-    # is paywalled and was not read.  Troland & Crutcher (2008) WAS
-    # read, and it gives a total mean |B| of 16.4 microgauss -- but at
-    # n(H2) of a few times 10^3 cm^-3, thirty times the density of this
-    # row, so it is not a source for 10 microgauss at n = 1e2 cm^-3.
-    # Nothing is checked against B_mc; PART G checks the critical ratio
-    # and not this cloud's lambda.
-    # n = 1e2 cm^-3 at mu = 2.33, COPIED FROM m10_numbers.py:802 so the two
-    # modules cannot diverge.  The first draft of this file wrote 2e2 under
-    # a comment converting an H2 density to a total, which double-counted
-    # against mu = 2.33 and moved beta by a factor of two.
-    n_mc, T_mc = 1.0e2, 10.0
-    B_mc = 1.0e-5                    # 10 microgauss  STILL UNSOURCED
-
-    A_ROWS = [
-        ('solar photosphere', n_phot, T_phot, B_phot, MU_PHOT),
-        ('solar corona', n_cor, T_cor, B_cor, 0.61),
-        ('solar wind, 1 au', n_sw, T_sw, B_sw, 0.61),
-        ('intracluster medium', n_icm, T_icm, B_icm, MU_ICM),
-        ('molecular cloud', n_mc, T_mc, B_mc, 2.33),
-    ]
     beta_of = {}
     vA_of = {}
     for name, n, T, B, mu in A_ROWS:
@@ -1635,6 +1648,289 @@ def main():
     P('    Gate D decides.')
 
     # ---------------------------------------------------------------- L
+    P('')
+    P('PART L.  The nine problems, C1-C3, D1-D3, K1-K3')
+    P('-'*74)
+    P('  The slots and the modelling inputs each STATEMENT must carry are')
+    P('  fixed in .ignore/m12-gate-d.md.  afd/figs/m12_problems_check.py')
+    P('  rebuilds every answer below FROM THE PROBLEM STATEMENT and')
+    P('  imports nothing from this file, so a statement that omits an')
+    P('  input is a defect the check finds.')
+
+    P('')
+    P('  P1 (C1).  The active-region corona: beta, v_A, c_s, v_A/c_s.')
+    p1_n, p1_T, p1_B, p1_mu = 1.0e9, 1.0e6, 10.0, 0.61
+    p1_beta = plasma_beta(p1_n, p1_T, p1_B)
+    p1_rho = p1_n*p1_mu*mu_u
+    p1_vA = alfven_speed(p1_B, p1_rho)
+    p1_cs = sound_speed(p1_T, p1_mu)
+    p1_id = np.sqrt(2.0/((5.0/3.0)*p1_beta))
+    P(f'      n = {p1_n:.0e} cm^-3, T = {p1_T:.0e} K, B = {p1_B:.0f} G, '
+      f'mu = {p1_mu}, gamma = 5/3')
+    P(f'      rho = n mu m_u                     = {p1_rho:.4e} g/cm^3')
+    P(f'      p_gas = n k T                      = {p1_n*kB*p1_T:.4e} '
+      f'dyn/cm^2')
+    P(f'      p_mag = B^2/8pi                    = '
+      f'{magnetic_pressure(p1_B):.4e} dyn/cm^2')
+    P(f'      beta                               = {p1_beta:.4f}')
+    P(f'      v_A = B/sqrt(4 pi rho)             = {p1_vA/1e5:.1f} km/s')
+    P(f'      c_s = sqrt(gamma k T/mu m_u)       = {p1_cs/1e5:.1f} km/s')
+    P(f'      v_A/c_s, two speeds                = {p1_vA/p1_cs:.4f}')
+    P(f'      sqrt(2/(gamma beta)), the identity = {p1_id:.4f}')
+    P(f'      ratio of the two                   = '
+      f'{(p1_vA/p1_cs)/p1_id:.6f}')
+    P(f'      THE CORONA IS MAGNETICALLY DOMINATED: beta = '
+      f'{p1_beta:.4f}, so the field')
+    P(f'      carries {1.0/p1_beta:.1f} times the gas pressure, and news '
+      f'travels at')
+    P(f'      {p1_vA/p1_cs:.2f} times the sound speed.')
+
+    P('')
+    P('  P2 (C2).  A coronal loop: eta_m, Rm, the ohmic time, and the')
+    P('            identity (L^2/eta_m)/(L/U) = Rm.')
+    p2_n, p2_T = 1.0e9, 1.0e6
+    p2_L, p2_U = 1.0e10, 1.0e6
+    p2_lnL = lnLambda_e(p2_n, p2_T)
+    p2_eta = resistivity(p2_n, p2_T, p2_lnL)
+    p2_Rm = magnetic_reynolds(p2_U, p2_L, p2_eta)
+    p2_td = diffusion_time(p2_L, p2_eta)
+    P(f'      n = {p2_n:.0e} cm^-3, T = {p2_T:.0e} K, L = {p2_L:.0e} cm '
+      f'(100 Mm), U = {p2_U/1e5:.0f} km/s')
+    P(f'      ln Lambda (electron branch)        = {p2_lnL:.2f}')
+    P(f'      eta_m = c^2/(4 pi sigma_par)       = {p2_eta:.4e} cm^2/s')
+    P(f'      Rm = U L/eta_m                     = {p2_Rm:.4e}')
+    P(f'      t_diff = L^2/eta_m                 = {p2_td/yr:.4e} yr')
+    P(f'      t_dyn  = L/U                       = {p2_L/p2_U/yr:.4e} yr')
+    P(f'      t_diff/t_dyn                       = '
+      f'{p2_td/(p2_L/p2_U):.4e}')
+    P(f'      ratio to Rm, which must be 1       = '
+      f'{p2_td/(p2_L/p2_U)/p2_Rm:.6f}')
+    P('      THE POINT: the same number is computed twice by two routes,')
+    P('      because (L^2/eta_m)/(L/U) = U L/eta_m identically.')
+
+    P('')
+    P('  P3 (C3).  The Parker spiral at 1 au and at 5 au, constant wind.')
+    p3_v = VB18_MEAN['velocity'][0]*1e5
+    p3_om = 2.0*np.pi/(CARRINGTON_SIDEREAL_DAYS*day)
+    p3_r0 = R_SOURCE_SURFACE*Rsun
+    P(f'      Omega (sidereal {CARRINGTON_SIDEREAL_DAYS} d, NSSDC at '
+      f'{CARRINGTON_LATITUDE_DEG:.0f} deg) = {p3_om:.5e} rad/s')
+    P(f'      v = {p3_v/1e5:.1f} km/s, held CONSTANT; r0 = '
+      f'{R_SOURCE_SURFACE} R_sun; theta = 90 deg')
+    for p3_r_au in (1.0, 5.0):
+        p3_r = p3_r_au*AU
+        p3_ratio = parker_ratio(p3_r, p3_v, p3_om, r0=p3_r0)
+        p3_ang = spiral_angle(p3_r, p3_v, p3_om, r0=p3_r0)
+        p3_idx = parker_field_index(p3_r, p3_v, p3_om, r0=p3_r0)
+        P(f'      at r = {p3_r_au:.0f} au:  -B_phi/B_r = {p3_ratio:.4f},  '
+          f'angle = {p3_ang:.2f} deg,  d ln|B|/d ln r = {p3_idx:.4f}')
+    P('      THE SPIRAL TIGHTENS OUTWARD: by 5 au the field is nearly')
+    P('      azimuthal and its local index has risen toward -1.')
+    p3_with = parker_ratio(AU, p3_v, p3_om, r0=p3_r0)
+    p3_without = parker_ratio(AU, p3_v, p3_om, r0=0.0)
+    P(f'      PARKER\'S (r - r0) AGAINST A BARE r AT 1 au.  Carrying r0')
+    P(f'      LOWERS -B_phi/B_r from {p3_without:.4f} to {p3_with:.4f}, by')
+    P(f'      {(1.0 - p3_with/p3_without)*100.0:.2f} per cent; dropping it '
+      f'RAISES the ratio by')
+    P(f'      {(p3_without/p3_with - 1.0)*100.0:.2f} per cent.  The two '
+      f'percentages are one term')
+    P(f'      seen from its two ends, and r0/1 au = '
+      f'{p3_r0/AU:.5f} is why.')
+
+    P('')
+    P('  P4 (D1).  A 10 pc cloud: M, M_Phi and lambda_Phi, both')
+    P('            geometries.')
+    p4_n, p4_mu, p4_B = 1.0e2, 2.33, 1.0e-5
+    p4_R = 5.0*pc
+    p4_rho = p4_n*p4_mu*mu_u
+    p4_M = (4.0/3.0)*np.pi*p4_R**3*p4_rho
+    P(f'      n_tot = {p4_n:.0f} cm^-3 per PARTICLE at mu = {p4_mu}, so')
+    P(f'      n(H2) = n_tot x 2.333/2.8        = {p4_n*2.3333/2.8:.1f} '
+      f'cm^-3')
+    P(f'      R = 5 pc, B = {p4_B*1e6:.0f} microgauss (census, no source '
+      f'at this density)')
+    P(f'      rho = n mu m_u                   = {p4_rho:.4e} g/cm^3')
+    P(f'      M = (4/3) pi R^3 rho             = {p4_M/Msun:.4e} Msun')
+    for p4_tag, p4_c in (('sphere', MS76_C_PHI), ('sheet', NN78_C_PHI)):
+        p4_crit = mass_to_flux_critical(p4_c)
+        p4_Mphi = magnetic_critical_mass(p4_B, p4_R, p4_c)
+        p4_lam = mass_to_flux_ratio(p4_M, p4_B, p4_R, p4_c)
+        P(f'      {p4_tag:<7} c_Phi = {p4_c:.5f}: (M/Phi)_crit = '
+          f'{p4_crit:.4e} g/Mx, M_Phi = {p4_Mphi/Msun:.4e} Msun, '
+          f'lambda_Phi = {p4_lam:.4f}')
+    p4_geom = NN78_C_PHI/MS76_C_PHI
+    P(f'      the geometry factor              = {p4_geom:.4f}')
+    p4_span = (np.log(p4_geom)
+               / np.log(TC08_LAMBDA_MED_HI/TC08_LAMBDA_MEAN_LO))
+    P(f'      BOTH ANSWERS ARE SUPERCRITICAL, and the geometry moves the')
+    P(f'      answer by {p4_geom:.4f} -- which is why neither may be quoted')
+    P(f'      alone.  Troland & Crutcher measure {TC08_LAMBDA_MEAN_LO} to '
+      f'{TC08_LAMBDA_MED_HI}, and this one')
+    P(f'      geometric factor spans {p4_span:.3f} of that log width.')
+
+    P('')
+    P('  P5 (D2).  The Alfven radius by hand, mean fits, protons only,')
+    P('            constant wind speed.')
+    p5_n = VB18_MEAN['density'][0]
+    p5_B = VB18_MEAN['field'][0]*1e-5       # nT -> gauss
+    p5_v = VB18_MEAN['velocity'][0]*1e5
+    # -B_phi/B_r at 1 au, COMPUTED from the same call PART E makes, not
+    # retyped from its output.  Retyping a sibling's number is the defect
+    # this file found four times at step 1.
+    p5_x1 = parker_ratio(AU, p5_v,
+                         2.0*np.pi/(CARRINGTON_SIDEREAL_DAYS*day),
+                         r0=R_SOURCE_SURFACE*Rsun)
+    p5_Br = p5_B/np.sqrt(1.0 + p5_x1*p5_x1)
+    p5_rho = p5_n*mp
+    p5_vA = alfven_speed(p5_Br, p5_rho)
+    p5_rA = alfven_radius_constant_v(AU, p5_v, p5_vA)
+    p5_rA_wrong = alfven_radius_constant_v(
+        AU, p5_v, alfven_speed(p5_B, p5_rho))
+    P(f'      n = {p5_n} cm^-3, |B| = {VB18_MEAN["field"][0]} nT, '
+      f'v = {p5_v/1e5:.1f} km/s (MEAN fits), protons only')
+    P(f'      -B_phi/B_r at 1 au               = {p5_x1:.4f}')
+    P(f'      sqrt(1 + x1^2)                   = '
+      f'{np.sqrt(1.0 + p5_x1*p5_x1):.4f}')
+    P(f'      B_r = |B|/sqrt(1 + x1^2)         = {p5_Br*1e5:.4f} nT')
+    P(f'      v_A(radial) at 1 au              = {p5_vA/1e5:.2f} km/s')
+    P(f'      v/v_A at 1 au                    = {p5_v/p5_vA:.3f}')
+    P(f'      r_A, constant v                  = {p5_rA/Rsun:.2f} R_sun')
+    P(f'      using |B| instead would give      = '
+      f'{p5_rA_wrong/Rsun:.2f} R_sun, on THESE inputs')
+    P('      (PART F\'s parenthetical 23.22 R_sun is the same mistake on')
+    P('      a different row -- helium included and v ~ r^+0.049 -- so')
+    P('      the two are not in conflict.)')
+    P('      THE ALFVEN SPEED TAKES B_r AND NOT |B|, twice over: B_r is')
+    P('      what scales as r^-2 by div B = 0, and the Weber-Davis')
+    P('      surface is defined on the radial Alfven speed.')
+
+    P('')
+    P('  P6 (D3).  The ICM: omega_e tau_e, kappa_perp/kappa_par, and')
+    P('            the comparison that must be made before quoting it.')
+    p6_lnL = lnLambda_e(n_icm, T_icm)
+    p6_taue = tau_electron(n_icm, T_icm, p6_lnL)
+    p6_wt = gyrofrequency(B_icm, m=me)*p6_taue
+    p6_sup = conduction_suppression(p6_wt)
+    P(f'      n = {n_icm} cm^-3, T = {T_icm:.0e} K, B = '
+      f'{B_icm*1e6:.0f} microgauss')
+    P(f'      ln Lambda (derived; census is 37.8) = {p6_lnL:.2f}')
+    P(f'      Braginskii tau_e                   = {p6_taue:.4e} s')
+    P(f'      omega_e = e B/(m_e c)              = '
+      f'{gyrofrequency(B_icm, m=me):.4e} rad/s')
+    P(f'      omega_e tau_e                      = {p6_wt:.4e}')
+    P(f'      kappa_perp/kappa_par               = {p6_sup:.4e}')
+    p6_wti = gyrofrequency(B_icm)*tau_ion(n_icm, T_icm, p6_lnL)
+    p6_nu = viscosity_suppression(p6_wti)
+    P(f'      omega_i tau_i, the ION magnetisation = {p6_wti:.4e}')
+    P(f'      nu_perp/nu_par                     = {p6_nu:.4e}')
+    P(f'      Zhuravleva\'s measured suppression  = '
+      f'{ZHURAVLEVA_SUPPRESSION_LO:.0f} to '
+      f'{ZHURAVLEVA_SUPPRESSION_HI:.0f}')
+    P('      ZHURAVLEVA MEASURE A VISCOSITY, so the comparison is with')
+    P('      nu_perp/nu_par and NOT with kappa_perp/kappa_par.  Comparing')
+    P('      a conduction ratio with a viscosity bound is two quantities')
+    P('      in one sentence, and this problem exists to stop it.')
+    P(f'      classical viscous suppression factor = {1.0/p6_nu:.4e}')
+    P(f'      larger than the measured one by between '
+      f'{np.log10(1.0/p6_nu/ZHURAVLEVA_SUPPRESSION_HI):.1f} and')
+    P(f'      {np.log10(1.0/p6_nu/ZHURAVLEVA_SUPPRESSION_LO):.1f} '
+      f'decades, which is PART H\'s bracket')
+    P(f'      THE ANSWER MUST BE CHECKED BEFORE IT IS QUOTED: '
+      f'{p6_sup:.2e} of the')
+    P('      parallel value would leave a cluster core with no')
+    P('      conduction at all, and that is not what is observed.')
+
+    P('')
+    P('  P7 (K1).  The MRI in a protoplanetary disc at 1 au.')
+    p7_R, p7_B, p7_n, p7_T, p7_mu = AU, 1.0, 1.0e14, 300.0, 2.33
+    p7_om = kepler_omega(Msun, p7_R)
+    p7_gam = mri_growth_rate(p7_om)
+    p7_rho = p7_n*p7_mu*mu_u
+    p7_vA = alfven_speed(p7_B, p7_rho)
+    p7_cs = sound_speed(p7_T, p7_mu)
+    p7_H = p7_cs/p7_om
+    p7_lam_max = mri_wavelength_max(p7_vA, p7_om)
+    p7_lam_crit = mri_wavelength_crit(p7_vA, p7_om)
+    P(f'      M = 1 Msun, R = 1 au, B = {p7_B:.0f} G, n = {p7_n:.0e} '
+      f'cm^-3, T = {p7_T:.0f} K, mu = {p7_mu}')
+    P(f'      q = -d ln Omega/d ln R = {KEPLER_Q} is ASSUMED, not derived')
+    P(f'      Omega_K = sqrt(G M/R^3)          = {p7_om:.4e} rad/s')
+    P(f'      orbital period                   = '
+      f'{2.0*np.pi/p7_om/yr:.4f} yr')
+    P(f'      gamma_max = (q/2) Omega          = {p7_gam:.4e} /s')
+    P(f'      e-folds per orbit = 2 pi gamma/Omega = '
+      f'{2.0*np.pi*p7_gam/p7_om:.4f}')
+    P(f'      3 pi/2, which it equals for ANY Keplerian disc = '
+      f'{3.0*np.pi/2.0:.4f}')
+    P(f'      v_A                              = {p7_vA/1e5:.4f} km/s')
+    P(f'      c_s                              = {p7_cs/1e5:.4f} km/s')
+    P(f'      H = c_s/Omega                    = {p7_H/AU:.5f} au')
+    P(f'      lambda(fastest), at k v_A = sqrt(15)/4 Omega = '
+      f'{p7_lam_max/AU:.5f} au = {p7_lam_max/p7_H:.4f} H')
+    P(f'      lambda(marginal)                 = {p7_lam_crit/AU:.5f} au '
+      f'= {p7_lam_crit/p7_H:.4f} H')
+    P(f'      lambda(marginal)/H < 1?          = '
+      f'{"YES, unstable" if p7_lam_crit < p7_H else "NO, stabilised"}')
+    P('      THE 4.712 DOES NOT DEPEND ON B, n OR T.  gamma_max/Omega is')
+    P('      q/2 for every Keplerian disc, so 2 pi (q/2) = 3 pi/2 is an')
+    P('      identity and not a property of this disc.')
+
+    P('')
+    P('  P8 (K2).  Module 7\'s one-degree bound, recomputed.')
+    p8_rho_h = M07_MU_E*M07_NE*mu_u
+    p8_rho_l = p8_rho_h/M07_DENSITY_RATIO
+    p8_pref = np.sqrt(2.0*np.pi*p8_rho_h*p8_rho_l/(p8_rho_h + p8_rho_l))
+    p8_two = M07_DU*p8_pref
+    p8_one = M07_DU*np.sqrt(2.0)*p8_pref
+    P(f'      rho_h = mu_e n_e m_u at n_e = {M07_NE:.0e} cm^-3, mu_e = '
+      f'{M07_MU_E}  = {p8_rho_h:.4e} g/cm^3')
+    P(f'      rho_l = rho_h/{M07_DENSITY_RATIO}'
+      f'                                 = {p8_rho_l:.4e} g/cm^3')
+    P(f'      Delta_U = {M07_DU/1e5:.0f} km/s, an UPPER LIMIT')
+    P(f'      B cos(theta) < Delta_U sqrt(2 pi rho_h rho_l/(rho_h+rho_l))'
+      f' = {p8_two:.5f} G')
+    P(f'      one-sided field, with 4 pi                                '
+      f' = {p8_one:.5f} G')
+    P(f'      Module 7 prints {M07_BOUND_TWO_SIDED} and '
+      f'{M07_BOUND_ONE_SIDED}; ratios '
+      f'{p8_two/M07_BOUND_TWO_SIDED:.4f} and '
+      f'{p8_one/M07_BOUND_ONE_SIDED:.4f}')
+    for p8_B in (1.0, 10.0):
+        p8_cos = p8_two/p8_B
+        P(f'      at B = {p8_B:>4.0f} G: cos(theta) < {p8_cos:.5f}, so the '
+          f'wavevector must lie within {np.degrees(np.arcsin(p8_cos)):.2f} '
+          f'deg of PERPENDICULAR')
+    P('      THE ANGLE IS MEASURED FROM PERPENDICULAR, so it is')
+    P('      arcsin(cos theta) and not arccos(cos theta): the second')
+    P('      gives 86.13 degrees where Module 7 prints 3.87.')
+
+    P('')
+    P('  P9 (K3).  The two magnetisations of one plasma, accounted for')
+    P('            exactly.')
+    p9_lam = lam_coulomb(n_icm, T_icm, lnL_icm)
+    p9_v2 = np.sqrt(2.0*kB*T_icm/mp)
+    p9_rg = gyroradius(T_icm, B_icm)
+    p9_om = gyrofrequency(B_icm)
+    p9_A = p9_om*(p9_lam/p9_v2)
+    p9_lnLe = lnLambda_e(n_icm, T_icm)
+    p9_H = p9_om*tau_ion(n_icm, T_icm, p9_lnLe)
+    P(f'      lam at ln Lambda = {lnL_icm}          = '
+      f'{p9_lam/kpc:.1f} kpc')
+    P(f'      sqrt(2kT/m_p), the gyroradius speed  = {p9_v2/1e5:.0f} km/s')
+    P(f'      sqrt(3kT/m_p), the rms speed         = '
+      f'{np.sqrt(3.0*kB*T_icm/mp)/1e5:.0f} km/s')
+    P(f'      r_g                                  = {p9_rg/1e5:.4e} km')
+    P(f'      lam/r_g = omega tau with tau = lam/v = {p9_A:.4e}')
+    P(f'      omega_i tau_i with Braginskii tau_i  = {p9_H:.4e}')
+    P(f'      their ratio                          = {p9_A/p9_H:.4f}')
+    P(f'      sqrt(3/2)                            = {np.sqrt(1.5):.6f}')
+    P(f'      ln Lambda_e/ln Lambda                = '
+      f'{p9_lnLe/lnL_icm:.6f}')
+    P(f'      product, which must be the ratio     = '
+      f'{np.sqrt(1.5)*p9_lnLe/lnL_icm:.4f}')
+    P('      THE ONE THAT BELONGS IN (omega_c tau)^-2 IS BRAGINSKII\'S,')
+    P('      because his transport coefficients are defined on his tau.')
+
     P('')
     P('SOURCES')
     P('-'*74)
