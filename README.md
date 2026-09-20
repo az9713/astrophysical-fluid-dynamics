@@ -48,11 +48,11 @@ names the source and gives the ratio.
 | # | Module | Status |
 |---|---|---|
 | 11 | Accretion discs — angular momentum transport and the Shakura–Sunyaev prescription | planned |
-| 12 | Magnetohydrodynamics — flux freezing, magnetic pressure and tension, Alfvén waves, the magnetorotational instability | planned |
+| 12 | **Magnetohydrodynamics** — one extra term in Module 2's momentum equation and one extra equation from Maxwell. Flux freezing is a number: the smallest R_m in the census is 1.02×10¹², 12.0 decades of the system's own dynamical time. Four checks. The anchor is the Parker spiral against Venzmer & Bothmer's Helios fits: CONFIRMED that the field is wound — on both fit sets the prediction beats an unwound r⁻² field by 3.43 and 1.98 year-to-year scatters — and NOT RESOLVED as to how much, since on neither is it inside the formal fit error; the control is the exact half of the same table, the density index 0.49 scatters from mass conservation. The Alfvén surface is BRACKETED: eight variants spanning 15.76–19.35 R_☉ lie above Verscharen's 12.08±0.236 and below Parker Solar Probe's *lower* bound 19.8, matching neither, because the two published values are 1.64 apart and are not the same quantity. Troland & Crutcher's 34 Zeeman cores confirm the critical mass-to-flux coefficient to its two printed figures and refute quoting λ without its geometry, the sphere-to-sheet factor 1.2657 spanning 0.381 of the measured range's log width. Braginskii's classical perpendicular transport is refuted by 22.8–24.8 decades against Zhuravleva's bound, in the direction that says the field is tangled — what the effective transport is, this book does not compute | **ready** |
 | 13 | Radiation hydrodynamics — the Eddington limit; radiation pressure; optically thick and thin regimes | planned |
 | 14 | Numerics — grid against smoothed-particle hydrodynamics; the Courant condition | planned |
 
-Modules 1–10 form a closed arc. Modules 11–14 are the advanced tier.
+Modules 1–10 form a closed arc. Modules 11–14 are the advanced tier, and **Module 12 was built before Module 11**: of Module 10's four checks, the one that confirms Kolmogorov most cleanly is a *magnetic* spectral index in an Alfvénic plasma, so the book was confirming its central result on a quantity for which it had no theory. Module 12 is that theory. Module 11, accretion discs, keeps its number and is built next.
 
 ## Layout
 
