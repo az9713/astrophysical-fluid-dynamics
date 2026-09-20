@@ -562,7 +562,7 @@ def dof_from_reynolds(Re):
 
     L/eta = (U L/nu)^(3/4) = Re^(3/4) follows from eta = (nu^3/eps)^(1/4)
     with eps = U^3/L; cubing it gives the number of grid points a direct
-    numerical simulation needs.  Proposition 7 of module10.html.
+    numerical simulation needs.  Proposition 4 of module10.html.
     """
     return Re**2.25
 
@@ -837,7 +837,11 @@ def main():
     nu_icm_brag = nu_braginskii(T_icm, lam_icm)
     L_icm, U_icm = HITOMI_R_OUT, HITOMI_SIGMA_V
     Re_icm = reynolds(U_icm, L_icm, nu_icm_kin)
-    B_icm = 1.0e-5                   # 1 microgauss, a typical ICM field
+    # 1 microgauss = 1.0e-6 G in Gaussian units.  This line read 1.0e-5,
+    # i.e. TEN microgauss, while the comment, the prose of module10.html
+    # and Problem D1's own statement all said one.  The editor pass of
+    # 2026-09-19 found it; fourteen printed numbers inherited the ten.
+    B_icm = 1.0e-6                   # 1 microgauss, a typical ICM field
     rg_icm = gyroradius(T_icm, B_icm)
     # NOT the classical perpendicular viscosity.  Braginskii (1965) p. 218
     # eq. (2.23) gives eta_1^i = (3/10) n_i T_i/(omega_i^2 tau_i) against
@@ -930,7 +934,7 @@ def main():
       f'{nu_icm_perp_class:.4e} cm^2/s,')
     P(f'      which would give Re_perp           = '
       f'{reynolds(U_icm, L_icm, nu_icm_perp_class):.3e}.')
-    # STEP 4 CORRECTION.  This line used to print lam/r_g = 5.18e13 as the
+    # STEP 4 CORRECTION.  This line used to print lam/r_g as the
     # factor between the two bounds, which is NOT what the two printed
     # viscosities differ by.  nu_Bohm/nu_perp_class =
     # (r_g v_mean/3)/(0.3125 * 0.96 * lam v_rms/3 * (r_g/lam)^2)

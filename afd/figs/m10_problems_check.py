@@ -141,15 +141,23 @@ chk('D1 eta/L -- the premise fails because this exceeds 1', 1.078,
 assert eta_icm > L_icm, 'D1 loses its point if eta <= L'
 chk('D1 Kn = lam/L, the same failure seen from the other end', 0.375,
     lam_icm/L_icm, 5e-3)
-B_icm = 1.0e-5
+# The field is read off D1's own STATEMENT, "at B = 1 microgauss"
+# (module10.html:952), and converted here.  It is NOT copied from
+# m10_numbers.py.  The editor pass of 2026-09-19 found the generator
+# holding 1.0e-5 G, i.e. TEN microgauss, while three prose sites said
+# one -- and this line copied the wrong constant, so the check could
+# not fail.  A modelling input named in a problem statement belongs
+# in this file as that statement's own words, converted once.
+MICROGAUSS = 1.0e-6                       # 1 uG in Gaussian units
+B_icm = 1.0*MICROGAUSS                    # D1 statement: "at B = 1 uG"
 v_perp = math.sqrt(2.0*kB*T_icm/m_p)      # TWO components, across B
 rg_icm = m_p*v_perp*2.99792458e10/(e_esu*B_icm)
-chk('D1 r_g at 1 microgauss (cm)', 1.341e9, rg_icm, 1e-3)
+chk('D1 r_g at 1 microgauss (cm)', 1.341e10, rg_icm, 1e-3)
 nu_perp = rg_icm*v_icm/3.0
-chk('D1 nu_perp upper bound (cm^2/s)', 6.4824e16, nu_perp, 5e-5)
-chk('D1 eta magnetised lower bound (au)', 0.691,
+chk('D1 nu_perp upper bound (cm^2/s)', 6.4824e17, nu_perp, 5e-5)
+chk('D1 eta magnetised lower bound (au)', 3.887,
     (nu_perp**3/eps_icm)**0.25/AU, 2e-3)
-chk('D1 Re_perp lower bound', 4.684e13, U_icm*L_icm/nu_perp, 5e-4)
+chk('D1 Re_perp lower bound', 4.684e12, U_icm*L_icm/nu_perp, 5e-4)
 
 # =========================================================================
 # D2.  STATEMENT GIVES: M = 10, the RMS SONIC Mach number; b = 1/3
@@ -261,7 +269,7 @@ chk('K3a 3 Ma_th, the threshold Kn exceeds', 0.34, 3.0*Ma_icm, 2e-2)
 assert lam_icm/L_icm > 3.0*Ma_icm, 'K3a: Re < 1 because Kn > 3 Ma_th'
 chk('K3a identity 3 Ma_th/Kn == U L/nu', U_icm*L_icm/nu_icm,
     3.0*Ma_icm/(lam_icm/L_icm), 1e-9)
-chk('K3a Re_perp lower bound', 4.68e13, U_icm*L_icm/nu_perp, 2e-3)
+chk('K3a Re_perp lower bound', 4.68e12, U_icm*L_icm/nu_perp, 2e-3)
 chk('K3b Re at which N = 1e9', 1.000e4, (1.0e9)**(4.0/9.0), 1e-6)
 Re_phot = 1.398e9
 # 3.8e20, two figures: 0.05/3.8 = 1.3 per cent.
