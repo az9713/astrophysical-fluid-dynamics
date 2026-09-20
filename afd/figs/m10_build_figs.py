@@ -50,9 +50,21 @@ Lessons carried in from Modules 1 and 9:
   * A colour key belongs to the whole figure.  m10_fig_pdf's two panels
     carry the SAME key, b = 1/3 teal and b = 1 orange, in both.
 """
+import os
+
 import numpy as np
 
 import m10_numbers as M
+
+# Write beside THIS file, whatever the working directory is.  Running
+# `python figs/m10_build_figs.py` from afd/ once dropped four stray
+# SVGs into afd/ that splice.py never reads, because splice.py
+# resolves its own directory and this script did not.
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def out(name):
+    return os.path.join(HERE, name)
 
 BG, FG, MUT, RULE = "#0f172a", "#cbd5e1", "#94a3b8", "#334155"
 ACC, ACC2, VIO, YEL = "#fb923c", "#2dd4bf", "#a78bfa", "#facc15"
@@ -354,7 +366,7 @@ def build_cascade():
     s.extend(leaders)
 
     s.append('</svg>')
-    open("m10_fig_cascade.svg", "w", encoding="utf-8").write("\n".join(s))
+    open(out("m10_fig_cascade.svg"), "w", encoding="utf-8").write("\n".join(s))
     return RE_DRAWN, sep1, sepd
 
 
@@ -526,7 +538,7 @@ def build_domain():
     s.extend(leaders)
 
     s.append('</svg>')
-    open("m10_fig_domain.svg", "w", encoding="utf-8").write("\n".join(s))
+    open(out("m10_fig_domain.svg"), "w", encoding="utf-8").write("\n".join(s))
     return rows
 
 
@@ -639,7 +651,7 @@ def build_podesta():
              f'divide by 2.576 for one &#963;</text>')
 
     s.append('</svg>')
-    open("m10_fig_podesta.svg", "w", encoding="utf-8").write("\n".join(s))
+    open(out("m10_fig_podesta.svg"), "w", encoding="utf-8").write("\n".join(s))
     return mmean, vmean
 
 
@@ -774,7 +786,7 @@ def build_pdf():
              f'<tspan font-style="italic">s</tspan>)</text>')
 
     s.append('</svg>')
-    open("m10_fig_pdf.svg", "w", encoding="utf-8").write("\n".join(s))
+    open(out("m10_fig_pdf.svg"), "w", encoding="utf-8").write("\n".join(s))
     return sg, s0, tails
 
 
