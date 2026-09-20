@@ -298,13 +298,13 @@ NCHK[0] += 1
 
 
 # =========================================================================
-# K2.  STATEMENT GIVES: rho_h = 5.8609e-16, rho_l = 2.6211e-16 g/cm^3
+# K2.  STATEMENT GIVES: rho_h = 5.8607e-16, rho_l = 2.6210e-16 g/cm^3
 #      (from module07.html:638), Delta_U = 20 km/s an UPPER LIMIT, and
 #      (4.2) with 2 pi, or 4 pi one-sided.  Asked for: both bounds and
 #      the angle at 1 G and 10 G, measured FROM PERPENDICULAR.
 # =========================================================================
 head("K2  Module 7's one-degree bound")
-rho_h, rho_l, dU = 5.8609e-16, 2.6211e-16, 2.0e6
+rho_h, rho_l, dU = 5.8607e-16, 2.6210e-16, 2.0e6
 pref = math.sqrt(2.0*math.pi*rho_h*rho_l/(rho_h + rho_l))
 b_two = dU*pref
 chk('K2.bound_two_sided', 0.06747, b_two, 3e-4)
