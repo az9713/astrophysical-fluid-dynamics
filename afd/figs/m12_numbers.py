@@ -165,13 +165,25 @@ VBV21_RS = 0.309                # R_sun, lower limit
 VBV21_RS_ERR = 0.004
 
 # --- Kasper et al. (2021), Phys. Rev. Lett. 127, 255101. ----------------
-# NEEDS STEP 2.  The Parker Solar Probe encounter-8 sub-Alfvenic
-# crossings, widely quoted at 19-20 R_sun.  It is in this file ONLY
-# because m09_numbers.py:1301 prints "19 R_sun" without a source and
-# module09.html:846 prints "12 R_sun" with one.  NOTHING IS CHECKED
-# AGAINST IT until the PDF has been read.
-KASPER21_RA_LO = 19.0           # R_sun   NEEDS STEP 2
-KASPER21_RA_HI = 20.0           # R_sun   NEEDS STEP 2
+# VERIFIED at step 2 from the APS open-access PDF (CC-BY),
+# link.aps.org/pdf/10.1103/PhysRevLett.127.255101.  THE PREP HAD THE
+# RANGE WRONG: it wrote 19-20 R_sun, which is the start of the FIRST
+# interval only.  Their own summary sentence (p. 5) reads "PSP crossed
+# below the Alfven critical surface for the first time in 2021 and at
+# distances of 16-20 R_sun from the Sun", and their Table I lists three
+# sub-Alfvenic intervals during encounter 8, with R_sun = 6.95e5 km:
+#   I1  2021-04-28 09:33-14:42  19.8 -> 18.4 R_sun  median M_A = 0.79
+#   I2  2021-04-29 07:18-07:52  16.0 -> 16.0 R_sun  median M_A = 0.49
+#   I3  2021-04-29 23:40-04-30 01:24  17.7 -> 18.0  median M_A = 0.88
+# EVERY M_A IS BELOW 1, so each figure is a point INSIDE the surface and
+# not the surface itself; 19.8 R_sun is a lower bound on the surface
+# along that one trajectory.  This is a local crossing of an irregular
+# boundary and not a spherically averaged radius, which is the whole of
+# Gate D question 6.
+KASPER21_RA_LO = 16.0           # R_sun, their quoted range    VERIFIED
+KASPER21_RA_HI = 20.0           # R_sun, their quoted range    VERIFIED
+KASPER21_RA_OUTERMOST = 19.8    # R_sun, start of interval I1  VERIFIED
+KASPER21_MA = [0.79, 0.49, 0.88]    # median M_A, I1, I2, I3   VERIFIED
 
 # --- Podesta, Roberts & Goldstein (2007), ApJ 664, 543, Table 2. --------
 # VERIFIED for Module 10 step 2.  The four magnetic spectral indices and
@@ -183,20 +195,36 @@ PODESTA_B_INDEX = [1.66, 1.72, 1.66, 1.58]
 PODESTA_B_ERR = [0.02, 0.02, 0.01, 0.02]
 
 # --- Braginskii (1965), Reviews of Plasma Physics 1, 205-311. -----------
-# The ION viscosity coefficients on p. 218 WERE read from the original
-# Consultants Bureau translation for Module 10 (eq. 2.22, eq. 2.23) and
-# are reused unchanged.  THE CONDUCTION COEFFICIENTS BELOW WERE NOT.
-# Step 2 must read them from the same scan
-# (static.ias.edu/pitp/2016/sites/pitp/files/braginskii_1965-1.pdf, an
-# image scan with no text layer, article page = 2*(PDF page) + 200 for the
-# left half) before any number that uses them is printed as a result.
-BRAG_ETA0_ION = 0.96            # eta_0^i = 0.96 n_i T_i tau_i      VERIFIED
-BRAG_ETA1_ION = 3.0/10.0        # eta_1^i, /(omega^2 tau_i)         VERIFIED
-BRAG_KAPPA_PAR_E = 3.16         # kappa_par^e = 3.16 n T tau_e/m_e  STEP 2
-BRAG_KAPPA_PERP_E = 4.66        # kappa_perp^e, /(omega^2 tau_e)    STEP 2
-BRAG_KAPPA_PAR_I = 3.9          # kappa_par^i                       STEP 2
-BRAG_KAPPA_PERP_I = 2.0         # kappa_perp^i                      STEP 2
-BRAG_SIGMA_PAR = 1.96           # sigma_par = 1.96 n e^2 tau_e/m_e  STEP 2
+# ALL SEVEN COEFFICIENTS ARE NOW VERIFIED from the original Consultants
+# Bureau translation, the image scan at
+# static.ias.edu/pitp/2016/sites/pitp/files/braginskii_1965-1.pdf.  The
+# scan has NO TEXT LAYER, so the pages were rendered at 120-400 dpi and
+# read as images.  THE PAGE MAP IS CONFIRMED, not assumed: PDF page 7
+# carries printed pages 214 (left) and 215 (right), so article page =
+# 2*(PDF page) + 200 on the left half and +201 on the right.
+# The ion viscosity coefficients on p. 218 (eq. 2.22, eq. 2.23) were
+# read for Module 10 and are reused unchanged.  The five read at step 2
+# are on pp. 216-217, all of them EXPLICITLY FOR Z = 1; his Table 1 on
+# p. 216 tabulates the Z-dependence, and the electron conduction
+# coefficient runs 3.16, 4.9, 6.1, 6.9, 12.5 for Z = 1, 2, 3, 4, inf
+# while the perpendicular one runs 4.66, 4.0, 3.7, 3.6, 3.2.  Every
+# plasma in this module is hydrogenic, Z = 1.
+BRAG_ETA0_ION = 0.96            # eta_0^i = 0.96 n_i T_i tau_i    VERIFIED
+BRAG_ETA1_ION = 3.0/10.0        # eta_1^i, /(omega^2 tau_i)       VERIFIED
+BRAG_KAPPA_PAR_E = 3.16         # eq. (2.12), p. 217, Z = 1       VERIFIED
+BRAG_KAPPA_PERP_E = 4.66        # eq. (2.13), p. 217, Z = 1       VERIFIED
+BRAG_KAPPA_PAR_I = 3.9          # eq. (2.15), p. 217              VERIFIED
+BRAG_KAPPA_PERP_I = 2.0         # eq. (2.16), p. 217              VERIFIED
+BRAG_SIGMA_PAR = 1.96           # eq. (2.8), p. 216, Z = 1        VERIFIED
+# His eq. (2.6) on p. 216 writes the friction force with 0.51 u_par,
+# and 1/0.51 = 1.9608, which is where the 1.96 of eq. (2.8) comes from.
+# Table 1 tabulates the 0.51, not the 1.96: 0.51, 0.44, 0.40, 0.38, 0.29
+# for Z = 1, 2, 3, 4, inf.
+BRAG_ALPHA_PAR = 0.51           # eq. (2.6), p. 216, Z = 1        VERIFIED
+# His Coulomb logarithm, p. 215, in eV and cm^-3, recorded but NOT used
+# -- Modules 1 and 10 own that quantity and this file copies theirs:
+#   T_e <  50 eV:  lambda = 23.4 - 1.15 log n + 3.45 log T_e
+#   T_e >= 50 eV:  lambda = 25.3 - 1.15 log n + 2.30 log T_e
 
 # --- Zhuravleva et al. (2019), Nature Astronomy 3, 832-837. -------------
 # VERIFIED for Module 10 step 2.  A one-sided bound, not a value.
@@ -204,24 +232,91 @@ ZHURAVLEVA_SUPPRESSION_LO = 10.0
 ZHURAVLEVA_SUPPRESSION_HI = 1000.0
 
 # --- Solar rotation. ----------------------------------------------------
-# The Carrington sidereal rotation period.  NEEDS STEP 2 for a citable
-# source; the value is standard and the alternative, the equatorial
-# sidereal period of 24.47 d, changes the Parker winding by 3.7 per cent,
-# which PART E prices rather than hides.
-CARRINGTON_SIDEREAL_DAYS = 25.38
-EQUATORIAL_SIDEREAL_DAYS = 24.47
+# BOTH VERIFIED AT STEP 2, AND THEY DIFFER BY MORE THAN LATITUDE.
+# 25.38 d is the NASA NSSDC Sun Fact Sheet's sidereal rotation period,
+# printed there as 609.12 hours (609.12/24 = 25.380 exactly), with the
+# footnote "This is the adopted period at 16 deg. latitude - the actual
+# rotation rate varies with latitude L as (14.37 - 2.33 sin^2 L - 1.56
+# sin^4 L) deg/day".  That law at L = 16 deg gives 14.1840 deg/day and
+# 360/14.1840 = 25.3808 d, so the fact sheet is self-consistent, and the
+# tracer is magnetic features.
+# 24.47 d IS NOT THAT SAME LAW AT THE EQUATOR.  That law at L = 0 gives
+# 14.3700 deg/day and 25.0522 d.  24.47 d is Snodgrass & Ulrich (1990),
+# ApJ 351, 309-316, whose Doppler cross-correlation of the
+# supergranulation network gives omega = 14.71 - 2.39 sin^2 L - 1.78
+# sin^4 L deg/day sidereal; 360/14.71 = 24.4731 d.  Their abstract says
+# their rate is about 2 per cent faster than the magnetic one.
+# SO THE 3.71 PER CENT SPREAD PART E PRICES IS TWO EFFECTS, NOT ONE:
+# 2.36 per cent is WHICH TRACER, at either latitude, and 1.32 per cent
+# is WHICH LATITUDE, on either tracer.  1.0236 x 1.0132 = 1.0371.
+CARRINGTON_SIDEREAL_DAYS = 25.38    # NSSDC, 16 deg, magnetic  VERIFIED
+EQUATORIAL_SIDEREAL_DAYS = 24.47    # Snodgrass & Ulrich 1990  VERIFIED
+NSSDC_OMEGA_DEG_DAY = (14.37, -2.33, -1.56)     # 1, sin^2 L, sin^4 L
+SU90_OMEGA_DEG_DAY = (14.71, -2.39, -1.78)      # 1, sin^2 L, sin^4 L
+CARRINGTON_LATITUDE_DEG = 16.0
 # The source surface, where the coronal field is taken radial.  A MODEL
 # PARAMETER, not a measurement; 2.5 R_sun is the conventional choice and
-# PART E prices the spread from 2.0 to 3.0.
+# PART E prices the spread from 2.0 to 3.0.  Step 2 note: Kasper et al.
+# (2021) chose 2.0 R_sun for their own PFSS solution, "selected to
+# accurately reproduce low latitude coronal holes observed in STEREO
+# ... extreme ultraviolet images of the Sun during the encounter".  That
+# is inside the priced spread, and it is evidence the parameter is
+# fitted per event rather than known.
 R_SOURCE_SURFACE = 2.5          # R_sun
 
-# --- Mouschovias & Spitzer (1976), ApJ 210, 326. ------------------------
-# NEEDS STEP 2.  The magnetic critical mass M_Phi = c_Phi Phi/sqrt(G),
-# with c_Phi = 0.13 for a uniform sphere with a uniform field; the
-# flattened-cloud form (M/Phi)_crit = 1/(2 pi sqrt(G)) is Nakano &
-# Nakamura (1978).  NOTHING IS CHECKED AGAINST EITHER until read.
-MS76_C_PHI = 0.13               # NEEDS STEP 2
-NN78_C_PHI = 1.0/(2.0*np.pi)    # = 0.15915, the disc value  NEEDS STEP 2
+# --- Mouschovias & Spitzer (1976), ApJ 210, 326-327. --------------------
+# VERIFIED at step 2 from the ADS scan, bibcode 1976ApJ...210..326M.
+# THE PAPER NEVER PRINTS 0.13.  It is a two-page note, and its eq. (2)
+# on p. 326 reads
+#       M_cPhi = (c_1/(3 pi)) (5/G)^(1/2) Phi  =  c_1 x M,
+# where c_1 is a correction factor that the virial-theorem analysis sets
+# to unity and their fit to exact equilibrium models sets to c_1 = 0.53
+# in their eq. (4) on p. 327 (with c_2 = 0.60 for the external
+# pressure).  So c_Phi is COMPUTED from their c_1 and never retyped,
+# which is the rule step 1 earned.  The value is 0.125745 and the prep
+# printed 0.13, which is 3.38 per cent high.
+MS76_C1 = 0.53                  # their eq. (4), p. 327        VERIFIED
+MS76_C_PHI = MS76_C1*np.sqrt(5.0)/(3.0*np.pi)   # = 0.125745   VERIFIED
+
+# --- Nakano & Nakamura (1978), PASJ 30, 671-679. ------------------------
+# VERIFIED at step 2 from the ADS scan, bibcode 1978PASJ...30..671N.
+# Their abstract, p. 671: an isothermal gaseous DISK threaded
+# perpendicularly by a uniform frozen-in field "is stable when
+# sigma_0/B_0 < (4 pi^2 G)^(-1/2), where sigma_0 and B_0 are the column
+# density of the disk and magnetic field strength".  (4 pi^2 G)^(-1/2)
+# = 1/(2 pi sqrt(G)), so c_Phi = 1/(2 pi) = 0.15915 -- and it is a
+# COLUMN DENSITY over a field, a sheet and not a sphere.
+NN78_C_PHI = 1.0/(2.0*np.pi)    # = 0.15915, the disc value    VERIFIED
+
+# --- Troland & Crutcher (2008), ApJ 680, 457-465. -----------------------
+# VERIFIED at step 2 from arXiv:0802.2253, fetched and read with PyMuPDF.
+# THIS REPLACES CRUTCHER (2012) AS PART G's CHECK.  The ARA&A review is
+# paywalled, has no open-access copy that OpenAlex or Semantic Scholar
+# knows of, and WAS NOT READ.  Troland & Crutcher is the primary survey
+# behind the part of it PART G wanted: 500 h of Arecibo OH Zeeman
+# observations toward 34 dark cloud cores, and they define lambda
+# against NAKANO & NAKAMURA's critical ratio -- the same constant as
+# NN78_C_PHI above.  Their eq. (2) is lambda = 7.6e-21 N(H2)/B_los with
+# N(H2) in cm^-2 and B_los in microgauss; PART G rebuilds that
+# coefficient from NN78_C_PHI and mu = 2.8 per H2 molecule, gets
+# 7.6022e-21, and that agreement is the check that the two files mean
+# the same critical ratio.
+# Their results, after the geometrical correction the prep did not know
+# about: raw weighted-mean B_los = 8.2 +/- 2.2 microgauss giving lambda
+# = 4.2, median lambda_1/2 = 5.2, total mean |B| = 16.4 microgauss.  The
+# correction lies between 1/2 (only B_los is measured) and 1/3 (disc
+# morphology), and their corrected ranges are below.
+TC08_LAMBDA_MEAN_LO = 1.4       # lambda_c, disc correction    VERIFIED
+TC08_LAMBDA_MEAN_HI = 2.1       # lambda_c, l.o.s. only        VERIFIED
+TC08_LAMBDA_MED_LO = 1.7        # lambda_1/2,c                 VERIFIED
+TC08_LAMBDA_MED_HI = 2.6        # lambda_1/2,c                 VERIFIED
+TC08_B_LOS = 8.2                # microgauss, weighted mean    VERIFIED
+TC08_B_LOS_ERR = 2.2            # microgauss                   VERIFIED
+TC08_B_TOTAL = 16.4             # microgauss, |B| = 2 B_los    VERIFIED
+TC08_LAMBDA_COEFF = 7.6e-21     # their eq. (2)                VERIFIED
+TC08_N_CORES = 34               # dark cloud cores observed    VERIFIED
+TC08_DENSITY = 3.0e3            # cm^-3, "a few times 10^3"    VERIFIED
+MU_PER_H2 = 2.8                 # mass per H2 molecule, with He
 
 # --- predictions, held as named constants so no magic number appears ----
 PARKER_BR_INDEX = -2.0          # B_r r^2 = const, from div B = 0
@@ -315,10 +410,16 @@ def tau_electron(n, T, lnL):
 
     tau_e = 3 sqrt(m_e) (k T)^(3/2) / (4 sqrt(2 pi) n e^4 ln Lambda).
 
-    NEEDS STEP 2: the ION time tau_i was read from p. 215 of the original
-    translation for Module 10; this electron form was not.  It is the
-    standard companion expression and every number that uses it is
-    labelled below.
+    VERIFIED at step 2.  His eq. (2.5e) on p. 215 of the original
+    translation reads
+
+        tau_e = 3 sqrt(m_e) T_e^(3/2) / (4 sqrt(2 pi) lambda e^4 Z^2 n_i)
+
+    with T in energy units, lambda his Coulomb logarithm, and -- note --
+    Z^2 n_i in the denominator and not n_e.  At Z = 1 the two are the
+    same number, and every plasma in this module is hydrogenic, so the
+    n below is right.  The sqrt(2 pi) is his and is the whole difference
+    from the ion form in tau_ion.
     """
     return (3.0*np.sqrt(me)*(kB*T)**1.5
             / (4.0*np.sqrt(2.0*np.pi)*n*e**4*lnL))
@@ -333,9 +434,10 @@ def tau_ion(n, T, lnL, Z=1):
     sqrt(2): Braginskii's ion time has 4 sqrt(pi) where the electron time
     has 4 sqrt(2 pi).  At T_e = T_i and Z = 1 the ratio is therefore
     tau_i/tau_e = sqrt(2 m_p/m_e) = 60.60, and PART H checks that the
-    computed ratio reproduces it.  The ION form was read from p. 215 of
-    the original translation for Module 10 (VERIFIED); the sqrt(2) in the
-    electron form NEEDS STEP 2.
+    computed ratio reproduces it.  BOTH FORMS ARE NOW VERIFIED from
+    p. 215 of the original translation -- the ion one for Module 10 and
+    the electron one at Module 12 step 2.  His denominators are Z^4 n_i
+    for the ion and Z^2 n_i for the electron; at Z = 1 both are n.
     """
     return (3.0*np.sqrt(mp)*(kB*T)**1.5
             / (4.0*np.sqrt(np.pi)*n*Z**4*e**4*lnL))
@@ -344,7 +446,9 @@ def tau_ion(n, T, lnL, Z=1):
 def resistivity(n, T, lnL):
     """Magnetic diffusivity eta = c^2/(4 pi sigma), Spitzer parallel value.
 
-    sigma_par = 1.96 n e^2 tau_e/m_e (Braginskii p. 250, NEEDS STEP 2), so
+    sigma_par = 1.96 n e^2 tau_e/m_e.  VERIFIED at step 2: his eq. (2.7)
+    on p. 216 gives sigma_perp = e^2 n_e tau_e/m_e and his eq. (2.8) on
+    the same page gives sigma_par = 1.96 sigma_perp, at Z = 1.  So
 
         eta = c^2 m_e / (4 pi * 1.96 n e^2 tau_e).
 
@@ -510,8 +614,9 @@ def conduction_suppression(omega_tau, par=BRAG_KAPPA_PAR_E,
 
     The same SQUARED form Module 10 used for the viscosity, and for the
     same reason: the step across the field shrinks to a gyroradius while
-    the randomisation time is still the collision time.  Both coefficients
-    NEED STEP 2.
+    the randomisation time is still the collision time.  Both
+    coefficients are VERIFIED at step 2 from Braginskii pp. 216-217,
+    eqs. (2.12) and (2.13), at Z = 1.
     """
     return (perp/par)/(omega_tau*omega_tau)
 
@@ -559,9 +664,12 @@ def main():
     P('=' * 74)
     P('MODULE 12 NUMBERS: magnetohydrodynamics')
     P('=' * 74)
-    P('STEP 1 OF SIX.  Constants marked NEEDS STEP 2 in the source have')
-    P('not been read out of a PDF in this project.  No CHECK below rests')
-    P('on one; where a number does, it is labelled PROVISIONAL.')
+    P('STEPS 1 AND 2 OF SIX.  Every constant in the source is now marked')
+    P('VERIFIED with the page it was read from, except the three census')
+    P('fields of PART A and Crutcher (2012), which is paywalled and was')
+    P('NOT READ; PART G checks against Troland & Crutcher (2008)')
+    P('instead, which was fetched and read.  See')
+    P('.ignore/m12-source-verification.md.')
 
     # ---------------------------------------------------------------- A
     P('')
@@ -578,29 +686,40 @@ def main():
 
     # Module 1's photosphere: n = P/kT at tau = 2/3, P = 1.2e5 dyn/cm^2.
     n_phot = 1.2e5/(kB*5772.0)
-    # The photospheric field is the QUIET-SUN mean, not a spot.  NEEDS
-    # STEP 2; a spot is 3000 G and the difference is four decades in beta,
-    # which is why the row is labelled and not averaged.
-    B_phot = 5.0                     # G, quiet Sun    NEEDS STEP 2
+    # The photospheric field is the QUIET-SUN mean, not a spot.  STILL
+    # UNSOURCED AFTER STEP 2; a spot is 3000 G and the difference is four
+    # decades in beta, which is why the row is labelled and not averaged.
+    # The NASA NSSDC Sun Fact Sheet, read at step 2, prints polar 1-2 G,
+    # sunspots 3000 G, prominences 10-100 G, plages 200 G and bright
+    # chromospheric network 25 G, and NO quiet-Sun mean and NO coronal
+    # value.  Gate D either sources these two rows or relabels them as
+    # order-of-magnitude census entries with no check on them.
+    B_phot = 5.0                     # G, quiet Sun   STILL UNSOURCED
     T_phot = 5772.0
     MU_PHOT = 1.30                   # Module 10's photosphere row
     # Corona: Module 1's values for the 1e6 K corona.
     n_cor, T_cor = 1.0e9, 1.0e6
-    B_cor = 10.0                     # G, active region NEEDS STEP 2
+    B_cor = 10.0                     # G, active region  UNSOURCED
     # Solar wind at 1 au: Module 1's census, reused by Module 10.
     n_sw, T_sw, B_sw = 5.0, 1.2e5, 5.0e-5
     # ICM: Module 10's values, including the one-microgauss field whose
     # factor of ten the Module 10 editor pass caught.  ONE microgauss.
     n_icm, T_icm, lnL_icm = 1.0e-3, 1.0e8, 37.8
     B_icm = 1.0e-6
-    # Molecular cloud: Module 10's 10 pc cloud.  The field is a Zeeman
-    # value and NEEDS STEP 2 (Crutcher 2012).
+    # Molecular cloud: Module 10's 10 pc cloud.  THE FIELD IS STILL
+    # UNSOURCED AFTER STEP 2 and Gate D must settle it.  Crutcher (2012)
+    # is paywalled and was not read.  Troland & Crutcher (2008) WAS
+    # read, and it gives a total mean |B| of 16.4 microgauss -- but at
+    # n(H2) of a few times 10^3 cm^-3, thirty times the density of this
+    # row, so it is not a source for 10 microgauss at n = 1e2 cm^-3.
+    # Nothing is checked against B_mc; PART G checks the critical ratio
+    # and not this cloud's lambda.
     # n = 1e2 cm^-3 at mu = 2.33, COPIED FROM m10_numbers.py:802 so the two
     # modules cannot diverge.  The first draft of this file wrote 2e2 under
     # a comment converting an H2 density to a total, which double-counted
     # against mu = 2.33 and moved beta by a factor of two.
     n_mc, T_mc = 1.0e2, 10.0
-    B_mc = 1.0e-5                    # 10 microgauss   NEEDS STEP 2
+    B_mc = 1.0e-5                    # 10 microgauss  STILL UNSOURCED
 
     A_ROWS = [
         ('solar photosphere', n_phot, T_phot, B_phot, MU_PHOT),
@@ -697,7 +816,8 @@ def main():
     P('  and ln Lambda ONLY - the density cancels between sigma and')
     P('  tau_e - so a large plasma is a good conductor through its SIZE.')
     P('  ALL FOUR NUMBERS IN THIS PART USE Braginskii\'s sigma = 1.96 n')
-    P('  e^2 tau_e/m_e, which NEEDS STEP 2.')
+    P('  e^2 tau_e/m_e, VERIFIED at step 2 from his eqs. (2.7) and')
+    P('  (2.8) on p. 216 of the Consultants Bureau translation, Z = 1.')
     P('')
     P(f'  {"system":<24} {"T (K)":>9} {"ln Lam":>7} {"eta (cm^2/s)":>13} '
       f'{"L (cm)":>10} {"Rm":>11}')
@@ -1098,8 +1218,21 @@ def main():
       f'Verscharen, Bale &')
     P(f'  Velli\'s {VBV21_RA_FLS1:.3f} +/- {VBV21_RA_FLS1_ERR:.3f} that is '
       f'a ratio of {rA_med/VBV21_RA_FLS1:.2f}; against Parker Solar')
-    P(f'  Probe\'s {KASPER21_RA_LO:.0f}-{KASPER21_RA_HI:.0f} R_sun it is '
-      f'{rA_med/KASPER21_RA_LO:.2f} to {rA_med/KASPER21_RA_HI:.2f}.')
+    P(f'  Probe\'s {KASPER21_RA_LO:.0f}-{KASPER21_RA_HI:.0f} R_sun it '
+      f'LIES INSIDE THE RANGE:')
+    P(f'  {rA_med/KASPER21_RA_HI:.2f} of the outer end and '
+      f'{rA_med/KASPER21_RA_LO:.2f} of the inner one.')
+    P('  STEP 2 CORRECTED THIS RANGE AND IT MOVED THE VERDICT.  The')
+    P('  prep wrote 19-20 R_sun from memory; Kasper et al. print')
+    P('  16-20 R_sun, over three separate intervals whose median')
+    P(f'  Alfven Mach numbers are {KASPER21_MA[0]}, {KASPER21_MA[1]} '
+      f'and {KASPER21_MA[2]}.  ALL THREE ARE')
+    P('  BELOW 1, so each radius is a point already INSIDE the surface')
+    P(f'  and the outermost, {KASPER21_RA_OUTERMOST} R_sun, is a LOWER '
+      f'BOUND on the surface')
+    P(f'  along that one trajectory.  {rA_med:.2f} R_sun is below that '
+      f'bound, so it')
+    P('  is consistent with the crossings rather than merely near them.')
     P('  THE SAME CALCULATION THEREFORE AGREES WITH ONE PUBLISHED ALFVEN')
     P('  RADIUS AND DISAGREES WITH THE OTHER, and that is the result.')
     P('  It is why this module may not print one of the two numbers')
@@ -1109,9 +1242,9 @@ def main():
     P('  of a corrugated boundary along one trajectory.  A single')
     P('  spherically symmetric extrapolation cannot match both, and')
     P('  which one it should match is a question about the definition,')
-    P('  not about the arithmetic.  BOTH NEED STEP 2 - Verscharen is')
-    P('  verified for Module 9, Kasper is not read at all - and Gate D')
-    P('  fixes the verdict before the prose is written.')
+    P('  not about the arithmetic.  BOTH ARE NOW READ - Verscharen for')
+    P('  Module 9, Kasper at Module 12 step 2 - and Gate D fixes the')
+    P('  verdict before the prose is written.')
     P('')
     P('  TWO EXTRAPOLATIONS ARE PRICED HERE AND NEITHER IS HIDDEN.')
     P(f'  (i) v ~ r^{av1:+.3f} is a fit over {VB18_R_LO_AU}-'
@@ -1126,24 +1259,28 @@ def main():
     P('  (ii) The real wind is much slower close in than any power law')
     P('      fitted beyond 0.29 au says, which is the physical reason')
     P('      the Weber-Davis radius comes out smaller than this.')
-    P(f'  m09_numbers.py:1301 prints {KASPER21_RA_HI - 1:.0f} R_sun with '
-      f'no source and')
+    P('  m09_numbers.py:1301 prints 19 R_sun with no source and')
     P('  module09.html:846 prints 12 R_sun with one; Module 9\'s HTML is')
     P('  right and its generator\'s aside is not.')
 
     # ---------------------------------------------------------------- G
     P('')
-    P('PART G.  Magnetic support against collapse -- PROVISIONAL')
+    P('PART G.  Magnetic support against collapse')
     P('-'*74)
     P('  module05.html:763 is promised magnetic pressure and tension as')
     P('  support against collapse.  The statement is a critical')
     P('  mass-to-flux ratio: below it no field strength can be')
     P('  compressed enough to hold the cloud, and above it the cloud is')
     P('  held for as long as the flux stays with the gas.')
-    P('  BOTH COEFFICIENTS NEED STEP 2.  Nothing here is a CHECK yet.')
+    P('  BOTH COEFFICIENTS ARE NOW VERIFIED, and so is a measured')
+    P('  lambda to check them against.  Gate D question 4 is ANSWERED:')
+    P('  PART G survives without Crutcher (2012).')
     P('')
-    P(f'  (M/Phi)_crit, uniform sphere  c_Phi = {MS76_C_PHI}      = '
+    P(f'  (M/Phi)_crit, uniform sphere  c_Phi = {MS76_C_PHI:.5f}  = '
       f'{mass_to_flux_critical(MS76_C_PHI):.4e} g/Mx')
+    P(f'      = 0.53 sqrt(5)/(3 pi), computed from Mouschovias &')
+    P(f'      Spitzer\'s own c_1 and not from the 0.13 the prep typed,')
+    P(f'      which was {0.13/MS76_C_PHI:.4f} times it.')
     P(f'  (M/Phi)_crit, flattened cloud c_Phi = {NN78_C_PHI:.5f}  = '
       f'{mass_to_flux_critical(NN78_C_PHI):.4e} g/Mx')
     P(f'  the two differ by a factor            = '
@@ -1158,10 +1295,65 @@ def main():
         P(f'      M_Phi = {M_phi/Msun:.3e} Msun, lambda = M/M_Phi = '
           f'{lam:.3f}')
     P('  A lambda above 1 is supercritical: the field cannot hold it.')
-    P('  Crutcher (2012) compiles Zeeman measurements and reports')
-    P('  molecular cloud cores mildly supercritical, near lambda = 2-3.')
-    P('  THAT SENTENCE IS FROM MEMORY AND IS NOT A SOURCE.  Step 2 must')
-    P('  read the review, or PART G becomes a derivation with no check.')
+    P('')
+    P('  THE CHECK ON THE CRITICAL RATIO ITSELF.  Troland & Crutcher')
+    P('  (2008), ApJ 680, 457, eq. (2), convert a Zeeman measurement to')
+    P('  a mass-to-flux ratio with')
+    P(f'      lambda = {TC08_LAMBDA_COEFF:.1e} N(H2)/B_los,  N(H2) in '
+      f'cm^-2, B_los in microgauss,')
+    P('  and say in the line above it that their critical ratio is')
+    P('  Nakano & Nakamura\'s.  Rebuilding that coefficient here from')
+    P(f'  NN78_C_PHI = {NN78_C_PHI:.5f} and mu = {MU_PER_H2} per H2'
+      f' molecule:')
+    tc_u = MU_PER_H2*mu_u/(1.0e-6*mass_to_flux_critical(NN78_C_PHI))
+    tc_p = MU_PER_H2*mp/(1.0e-6*mass_to_flux_critical(NN78_C_PHI))
+    P(f'      with the atomic mass unit m_u = {tc_u:.4e}'
+      f'   ratio {tc_u/TC08_LAMBDA_COEFF:.4f}')
+    P(f'      with the proton mass    m_p = {tc_p:.4e}'
+      f'   ratio {tc_p/TC08_LAMBDA_COEFF:.4f}')
+    P(f'      against their               {TC08_LAMBDA_COEFF:.1e}')
+    P('  THE 0.7 PER CENT BETWEEN THE TWO LINES IS NOT NOISE: it is')
+    P('  m_p/m_u = 1.00728, and it says that their 2.8 is 2.8 HYDROGEN')
+    P('  MASSES and not 2.8 atomic mass units.  The proton line')
+    P('  reproduces their coefficient to 3 parts in 10^4, so that is')
+    P('  the convention, and this module must use the same one')
+    P('  wherever it converts a column density to a mass-to-flux')
+    P('  ratio.')
+    P('  The two files therefore mean the same critical ratio.  Their')
+    P('  2.8 is also PER H2 MOLECULE, while this module carries')
+    P('  mu = 2.33 per PARTICLE.  Those are the same mass density')
+    P('  counted two ways -- with He/H = 0.1 by number,')
+    P('  rho/(n_H2 m_H) = 1.4/0.5 = 2.8 and')
+    P('  rho/(n_tot m_H) = 1.4/0.6 = 2.333 -- so the row above, at')
+    P(f'  n_tot = {n_mc:.0f} cm^-3, is n(H2) = {n_mc*0.5/0.6:.1f} cm^-3.')
+    P('  A module that prints one of these against the other is wrong')
+    P('  by 20 per cent and nothing in the check battery reads it.')
+    P('')
+    P('  THE MEASURED LAMBDA.  Troland & Crutcher observed')
+    P(f'  {TC08_N_CORES} dark cloud cores for about 500 h with Arecibo '
+      f'in OH Zeeman,')
+    P(f'  found a weighted-mean B_los = {TC08_B_LOS} +/- '
+      f'{TC08_B_LOS_ERR} microgauss and hence |B| = '
+      f'{TC08_B_TOTAL} microgauss,')
+    P(f'  and a raw lambda of 4.2 (mean) and 5.2 (median).  THOSE ARE')
+    P('  NOT THE NUMBERS TO QUOTE: they correct for geometry by between')
+    P('  1/2, because only B_los is measured, and 1/3, for a disc')
+    P('  morphology, which gives')
+    P(f'      lambda_c        = {TC08_LAMBDA_MEAN_LO} to '
+      f'{TC08_LAMBDA_MEAN_HI}   (mean)')
+    P(f'      lambda_1/2,c    = {TC08_LAMBDA_MED_LO} to '
+      f'{TC08_LAMBDA_MED_HI}   (median)')
+    P('  and their own sentence, which is the one to print: the cores')
+    P(f'  "appear to be slightly supercritical by about a factor of 2"')
+    P(f'  at a typical density of a few times 10^3 cm^-3.')
+    P('  SO THE MEASURED RANGE IS 1.4 to 2.6 AND NOT 2 to 3, AND IT IS')
+    P('  MEASURED AT THIRTY TIMES THE DENSITY OF THE ROW ABOVE.  The')
+    P('  10 pc cloud here is not one of their cores, so this is a check')
+    P('  on the CRITICAL RATIO and on the sign of the answer, not on')
+    P('  the value of lambda for this particular cloud.')
+    P('  Crutcher (2012), ARA&A 50, 29, WAS NOT READ: it is paywalled,')
+    P('  and neither OpenAlex nor Semantic Scholar knows of an open')
+    P('  copy.  Nothing in this file rests on it.')
 
     # ---------------------------------------------------------------- H
     P('')
@@ -1205,7 +1397,7 @@ def main():
     P('    WRONG AND THE MODULE MUST PRINT ONLY ONE, or a reader will')
     P('    find two magnetisations for one plasma.  Gate D decides which.')
     P(f'    kappa_perp/kappa_par (Braginskii)    = {kap_sup:.4e}'
-      f'   NEEDS STEP 2')
+      f'   VERIFIED')
     P(f'    nu_perp/nu_par  (Braginskii, VERIFIED) = {nu_sup:.4e}')
     P('')
     P('  THE SUPPRESSION IS NOT THE ANSWER, AND SAYING SO IS THE POINT.')
@@ -1368,32 +1560,80 @@ def main():
     P('    664, 543-548, Table 2.  VERIFIED FOR MODULE 10 step 2.  Used')
     P('    here only to restate Module 10\'s anchor, not for a new check.')
     P('  Braginskii, S. I. (1965), Reviews of Plasma Physics 1, 205-311,')
-    P('    Consultants Bureau, translated by Herbert Lashinsky.  The ION')
-    P('    VISCOSITY coefficients on p. 218 (eq. 2.22, eq. 2.23) were')
-    P('    read from the original scan for Module 10 and are reused.  THE')
-    P('    CONDUCTION AND CONDUCTIVITY COEFFICIENTS IN THIS FILE WERE')
-    P('    NOT.  Scan:')
+    P('    Consultants Bureau, translated by Herbert Lashinsky.  ALL')
+    P('    SEVEN COEFFICIENTS THIS FILE USES ARE NOW READ FROM THE')
+    P('    ORIGINAL SCAN.  The ion viscosity (eq. 2.22, eq. 2.23,')
+    P('    p. 218) came in at Module 10; at Module 12 step 2 the pages')
+    P('    were rendered as images and read, giving eq. (2.5e) on')
+    P('    p. 215 for tau_e with its 4 sqrt(2 pi) and its Z^2 n_i,')
+    P('    eqs. (2.7) and (2.8) on p. 216 for sigma_par = 1.96')
+    P('    sigma_perp, and eqs. (2.12), (2.13), (2.15) and (2.16) on')
+    P('    p. 217 for 3.16, 4.66, 3.9 and 2.  EVERY ONE IS FOR Z = 1;')
+    P('    his Table 1 on p. 216 gives the Z-dependence, and the')
+    P('    electron conduction coefficient runs 3.16, 4.9, 6.1, 6.9,')
+    P('    12.5 for Z = 1, 2, 3, 4, infinity.  Scan:')
     P('    static.ias.edu/pitp/2016/sites/pitp/files/braginskii_1965-1.pdf')
     P('    - no text layer, two article pages per PDF page, article page')
-    P('    = 2*(PDF page) + 200 for the left half.')
+    P('    = 2*(PDF page) + 200 for the left half, CONFIRMED against the')
+    P('    printed 214 and 215 on PDF page 7.')
     P('  Zhuravleva, I. et al. (2019), Nature Astronomy 3, 832-837.')
     P('    arXiv:1906.06346.  VERIFIED FOR MODULE 10 step 2.  A one-sided')
     P('    bound on the effective ICM viscosity, not a value.')
-    P('  Goldreich, P. & Sridhar, S. (1995), ApJ 438, 763.  NEEDS STEP 2.')
-    P('    Critical balance.  PART J states the argument and builds no')
-    P('    check on it until the paper has been read.')
-    P('  Kasper, J. C. et al. (2021), Phys. Rev. Lett. 127, 255101.')
-    P('    NEEDS STEP 2.  Present only because two files in this repo')
-    P('    print different Alfven radii and one of them is unsourced.')
-    P('  Mouschovias, T. Ch. & Spitzer, L. (1976), ApJ 210, 326, and')
-    P('    Nakano, T. & Nakamura, T. (1978), PASJ 30, 671.  BOTH NEED')
-    P('    STEP 2.  The magnetic critical mass coefficients of PART G.')
-    P('  Crutcher, R. M. (2012), ARA&A 50, 29.  NEEDS STEP 2.  The')
-    P('    Zeeman compilation PART G would check against.')
-    P('  Parker, E. N. (1958), ApJ 128, 664.  NEEDS STEP 2.  The spiral')
-    P('    of PART E and the wind of Module 9 are one paper.')
-    P('  Alfven, H. (1942), Nature 150, 405.  NEEDS STEP 2.  Cited for')
-    P('    the result only, as Module 1 does for Maxwell (1867).')
+    P('  Goldreich, P. & Sridhar, S. (1995), "Toward a theory of')
+    P('    interstellar turbulence. II. Strong Alfvenic turbulence",')
+    P('    ApJ 438, 763-775.  VERIFIED at step 2 from the ADS scan,')
+    P('    1995ApJ...438..763G, rendered and read as images.  Their')
+    P('    abstract gives k_z ~ k_perp^(2/3) L^(-1/3) and a')
+    P('    one-dimensional spectrum proportional to k_perp^(-5/3).')
+    P('    IT ALSO SAYS, IN THE THIRD SENTENCE, that they treat only')
+    P('    the symmetric case and that this "precludes application to')
+    P('    the solar wind in which the outward flux significantly')
+    P('    exceeds the ingoing one" -- so GS95 may not be quoted as a')
+    P('    prediction for Module 10\'s solar-wind anchor.')
+    P('  Kasper, J. C. et al. (2021), "Parker Solar Probe enters the')
+    P('    magnetically dominated solar corona", Phys. Rev. Lett. 127,')
+    P('    255101.  VERIFIED at step 2 from the APS open-access PDF.')
+    P('    Their range is 16-20 R_sun over three intervals, not the')
+    P('    19-20 the prep wrote, and every median M_A is below 1.')
+    P('  Mouschovias, T. Ch. & Spitzer, L. (1976), "Note on the')
+    P('    collapse of magnetic interstellar clouds", ApJ 210, 326-327.')
+    P('    VERIFIED at step 2 from the ADS scan.  Their eq. (2) and')
+    P('    eq. (4); the paper prints c_1 = 0.53, never 0.13.')
+    P('  Nakano, T. & Nakamura, T. (1978), "Gravitational instability')
+    P('    of magnetized gaseous disks", PASJ 30, 671-679.  VERIFIED at')
+    P('    step 2 from the ADS scan.  Abstract, p. 671.')
+    P('  Troland, T. H. & Crutcher, R. M. (2008), "Magnetic fields in')
+    P('    dark cloud cores: Arecibo OH Zeeman observations", ApJ 680,')
+    P('    457-465, arXiv:0802.2253.  VERIFIED at step 2.  PART G\'s')
+    P('    CHECK, and the reason PART G survives.')
+    P('  Crutcher, R. M. (2012), ARA&A 50, 29-63.  NOT READ -- paywalled,')
+    P('    with no open-access copy known to OpenAlex or Semantic')
+    P('    Scholar.  Volume, page and year confirmed at Crossref.')
+    P('    NOTHING IN THIS FILE RESTS ON IT.')
+    P('  Snodgrass, H. B. & Ulrich, R. K. (1990), "Rotation of Doppler')
+    P('    features in the solar photosphere", ApJ 351, 309-316.')
+    P('    VERIFIED at step 2 from the ADS scan.  Their')
+    P('    14.71 - 2.39 sin^2 L - 1.78 sin^4 L deg/day sidereal is')
+    P('    where 24.47 d comes from, and it is a DIFFERENT TRACER from')
+    P('    the NSSDC law, not just a different latitude.')
+    P('  NASA NSSDC Sun Fact Sheet,')
+    P('    nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html.  Read')
+    P('    as HTML at step 2.  Sidereal rotation period 609.12 hours =')
+    P('    25.380 d, adopted at 16 deg latitude, with the law')
+    P('    14.37 - 2.33 sin^2 L - 1.56 sin^4 L deg/day.  It also prints')
+    P('    the field census this module did NOT take its numbers from:')
+    P('    polar 1-2 G, sunspots 3000 G, prominences 10-100 G, plages')
+    P('    200 G, bright chromospheric network 25 G.')
+    P('  Parker, E. N. (1958), ApJ 128, 664.  VERIFIED: Sect. II for')
+    P('    Module 9, and his eq. (26) on p. 673 at Module 12 step 2 --')
+    P('    B_r = B(b/r)^2, B_theta = 0, B_phi = B (omega/v_m)(r - b)')
+    P('    (b/r)^2 sin theta, with the pi/4 surface at r = (v_m/omega)')
+    P('    sin theta in his eq. (27).  NOTE THE (r - b), NOT r.')
+    P('  Alfven, H. (1942), "Existence of electromagnetic-hydrodynamic')
+    P('    waves", Nature 150, 405-406.  Cited for the result only, as')
+    P('    Module 1 does for Maxwell (1867); title, volume, page and')
+    P('    date confirmed at Crossref, DOI 10.1038/150405d0.  The')
+    P('    paper itself was not fetched and the module says so.')
 
 
 if __name__ == '__main__':
