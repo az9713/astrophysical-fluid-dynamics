@@ -1002,6 +1002,21 @@ def main():
     P('      (the same Bohm-like upper bound on nu as the ICM row, so the')
     P('      same lower bound on Re)')
     P(f'      Kn = lam/L at 1 au                 = {lam_sw/L_sw:.3f}')
+    # STEP 4 ADDITION.  Section 7's Taylor-hypothesis paragraph needs a
+    # number rather than the phrase "tens of kilometres per second".  The
+    # Alfven speed on the SAME census inputs, v_A = B/sqrt(4 pi rho) with
+    # rho = n m_p, is what the frozen-flow assumption must be compared
+    # with: Taylor's hypothesis needs the wind to sweep structures past
+    # the spacecraft faster than they propagate.
+    rho_sw = n_sw*mp
+    v_alfven = B_sw/np.sqrt(4.0*np.pi*rho_sw)
+    P(f'      Alfven speed B/sqrt(4 pi rho)      = {v_alfven/1e5:.1f} km/s')
+    P(f'      U / v_A, the Taylor-hypothesis ratio = {U_sw/v_alfven:.1f}')
+    P('      That ratio is what Section 7 needs: the wind sweeps a')
+    P('      structure past the spacecraft this many times faster than')
+    P('      the structure can propagate, so a frequency spectrum may be')
+    P('      read as a wavenumber spectrum.  It is a ratio of order ten,')
+    P('      not of order a hundred, and the prose says ten.')
     P('      Same story as the ICM and worse: the mean free path is TWICE')
     P('      the system size, so there is no Navier-Stokes viscosity to')
     P('      put into U L/nu at all.  Module 1 called the way out the')

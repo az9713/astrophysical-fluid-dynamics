@@ -327,14 +327,14 @@ def build_cascade():
             (3.2, -2.0*3.2, VIO, "E &#8733; k^-2, Burgers",
              83.0, -95.0, 26.0)):
         ax_, ay_ = px(lxv), py(ly)
-        x, y, moved = place_label([(ax_ + dx, ay_ + dy)], occupied, box,
+        x, y, _ = place_label([(ax_ + dx, ay_ + dy)], occupied, box,
                                   wd, 13.0, ink=ink, window=None)
         label = txt.replace("^-5/3", SUP.format("&#8722;5/3")) \
                    .replace("^-2", SUP.format("&#8722;2"))
         s.append(f'<text x="{x:.1f}" y="{y:.1f}" font-size="11.5" '
                  f'fill="{col}">{label}</text>')
         leaders.append(leader_svg(ax_, ay_, x, y, wd, 13.0))
-        del moved
+
 
     # the separation after one decade and after the whole band
     sep1 = 10.0**(2.0 - 5.0/3.0)
@@ -343,9 +343,14 @@ def build_cascade():
     s.append(f'<line x1="{xd:.1f}" y1="{py(-(5.0/3.0)*DEC):.1f}" '
              f'x2="{xd:.1f}" y2="{py(-2.0*DEC):.1f}" stroke="{FG}" '
              f'stroke-width="1.1"/>')
-    s.append(f'<text x="{xd-8:.1f}" y="{py(-1.82*DEC):.1f}" font-size="11" '
-             f'text-anchor="end" fill="{FG}">&#215;{sepd:.1f} here, '
-             f'&#215;{sep1:.2f} after one decade</text>')
+    # BELOW the foot of the separation bar, not beside its middle: beside
+    # its middle is where the Burgers label's computed seat is, and two
+    # texts on one another is a defect check_overlap cannot see, because
+    # it tests labels against curves and not against each other.
+    s.append(f'<text x="{xd-8:.1f}" y="{py(-2.0*DEC) + 16:.1f}" '
+             f'font-size="11" text-anchor="end" fill="{FG}">'
+             f'&#215;{sepd:.1f} here, &#215;{sep1:.2f} after one '
+             f'decade</text>')
     s.extend(leaders)
 
     s.append('</svg>')
