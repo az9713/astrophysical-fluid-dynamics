@@ -238,8 +238,12 @@ ZHURAVLEVA_SUPPRESSION_HI = 1000.0
 # footnote "This is the adopted period at 16 deg. latitude - the actual
 # rotation rate varies with latitude L as (14.37 - 2.33 sin^2 L - 1.56
 # sin^4 L) deg/day".  That law at L = 16 deg gives 14.1840 deg/day and
-# 360/14.1840 = 25.3808 d, so the fact sheet is self-consistent, and the
-# tracer is magnetic features.
+# 360/14.1840 = 25.3808 d, so the fact sheet is self-consistent.  IT
+# NAMES NO TRACER.  Its law is 2.36 per cent slower than Snodgrass &
+# Ulrich's, and they say theirs is about 2 per cent faster than the
+# magnetic rate, so the NSSDC law is CONSISTENT WITH a magnetic-feature
+# rate -- which is an inference from two papers and not something the
+# fact sheet says.
 # 24.47 d IS NOT THAT SAME LAW AT THE EQUATOR.  That law at L = 0 gives
 # 14.3700 deg/day and 25.0522 d.  24.47 d is Snodgrass & Ulrich (1990),
 # ApJ 351, 309-316, whose Doppler cross-correlation of the
@@ -1142,8 +1146,8 @@ def main():
 
     # ---------------------------------------------------------------- F
     P('')
-    P('PART F.  CHECK 2.  The Alfven radius, which agrees with one')
-    P('         published value and not with the other')
+    P('PART F.  CHECK 2.  The Alfven radius, which is BRACKETED by two')
+    P('         published values and matches neither')
     P('-'*74)
     P('  With B_r ~ r^-2 and rho ~ r^-2 v^-1, v_A ~ r^-1 v^(1/2).  The')
     P('  wind crosses its own Alfven speed once, and the radius at which')
@@ -1218,23 +1222,33 @@ def main():
       f'Verscharen, Bale &')
     P(f'  Velli\'s {VBV21_RA_FLS1:.3f} +/- {VBV21_RA_FLS1_ERR:.3f} that is '
       f'a ratio of {rA_med/VBV21_RA_FLS1:.2f}; against Parker Solar')
-    P(f'  Probe\'s {KASPER21_RA_LO:.0f}-{KASPER21_RA_HI:.0f} R_sun it '
-      f'LIES INSIDE THE RANGE:')
-    P(f'  {rA_med/KASPER21_RA_HI:.2f} of the outer end and '
-      f'{rA_med/KASPER21_RA_LO:.2f} of the inner one.')
-    P('  STEP 2 CORRECTED THIS RANGE AND IT MOVED THE VERDICT.  The')
-    P('  prep wrote 19-20 R_sun from memory; Kasper et al. print')
-    P('  16-20 R_sun, over three separate intervals whose median')
-    P(f'  Alfven Mach numbers are {KASPER21_MA[0]}, {KASPER21_MA[1]} '
-      f'and {KASPER21_MA[2]}.  ALL THREE ARE')
-    P('  BELOW 1, so each radius is a point already INSIDE the surface')
-    P(f'  and the outermost, {KASPER21_RA_OUTERMOST} R_sun, is a LOWER '
-      f'BOUND on the surface')
-    P(f'  along that one trajectory.  {rA_med:.2f} R_sun is below that '
-      f'bound, so it')
-    P('  is consistent with the crossings rather than merely near them.')
-    P('  THE SAME CALCULATION THEREFORE AGREES WITH ONE PUBLISHED ALFVEN')
-    P('  RADIUS AND DISAGREES WITH THE OTHER, and that is the result.')
+    P(f'  Probe\'s outermost sub-Alfvenic point, '
+      f'{KASPER21_RA_OUTERMOST} R_sun, it is SHORT BY')
+    P(f'  a factor of {KASPER21_RA_OUTERMOST/rA_med:.2f}.')
+    P('  STEP 2 CORRECTED BOTH THE RANGE AND THE SIGN OF THE')
+    P('  COMPARISON.  The prep wrote 19-20 R_sun from memory; Kasper et')
+    P('  al. print 16-20 R_sun, over three separate intervals whose')
+    P(f'  median Alfven Mach numbers are {KASPER21_MA[0]}, '
+      f'{KASPER21_MA[1]} and {KASPER21_MA[2]}.  ALL THREE')
+    P('  ARE BELOW 1, so each radius is a point the spacecraft was')
+    P('  ALREADY INSIDE the surface, never the surface itself.  The')
+    P(f'  outermost, {KASPER21_RA_OUTERMOST} R_sun, is therefore a '
+      f'LOWER BOUND: r_A >= 19.8')
+    P('  R_sun along that one ray, on that one day.  A MODEL VALUE')
+    P(f'  BELOW A LOWER BOUND VIOLATES IT.  {rA_med:.2f} R_sun puts the')
+    P(f'  surface {100*(1.0 - rA_med/KASPER21_RA_OUTERMOST):.0f} per '
+      f'cent too close to the Sun along interval I1,')
+    P('  sits at the edge of I3 (17.7-18.0, M_A = 0.88), and is')
+    P('  comfortable only against I2 (16.0, M_A = 0.49).  "Inside their')
+    P('  16-20 range" would be true and would mean nothing: that range')
+    P('  is a UNION over three longitudes and two days, not a surface')
+    P('  anything can be inside of.')
+    P('  THE CALCULATION IS THEREFORE BRACKETED BY THE TWO PUBLISHED')
+    P(f'  NUMBERS AND MATCHES NEITHER: '
+      f'{rA_med/VBV21_RA_FLS1:.2f} times Verscharen, Bale &')
+    P(f'  Velli, and {KASPER21_RA_OUTERMOST/rA_med:.2f} times too small '
+      f'against PSP I1.  That is the')
+    P('  result, and it is a sharper one than an agreement would be.')
     P('  It is why this module may not print one of the two numbers')
     P('  alone.  They are not the same quantity: Verscharen, Bale &')
     P('  Velli fit a steady axisymmetric Weber-Davis surface to Ulysses')
@@ -1312,13 +1326,16 @@ def main():
     P(f'      with the proton mass    m_p = {tc_p:.4e}'
       f'   ratio {tc_p/TC08_LAMBDA_COEFF:.4f}')
     P(f'      against their               {TC08_LAMBDA_COEFF:.1e}')
-    P('  THE 0.7 PER CENT BETWEEN THE TWO LINES IS NOT NOISE: it is')
-    P('  m_p/m_u = 1.00728, and it says that their 2.8 is 2.8 HYDROGEN')
-    P('  MASSES and not 2.8 atomic mass units.  The proton line')
-    P('  reproduces their coefficient to 3 parts in 10^4, so that is')
-    P('  the convention, and this module must use the same one')
-    P('  wherever it converts a column density to a mass-to-flux')
-    P('  ratio.')
+    P('  THEIR COEFFICIENT CARRIES TWO SIGNIFICANT FIGURES, so the')
+    P('  discriminating statement is a rounding and not a ratio:')
+    P(f'  {tc_p:.4e} rounds to 7.6e-21 and {tc_u:.4e} rounds to')
+    P('  7.5e-21.  THE ATOMIC MASS UNIT IS EXCLUDED AND THE HYDROGEN')
+    P('  MASS IS NOT.  The 0.7 per cent between the two lines is')
+    P('  m_p/m_u = 1.00728.  m_p and m_H differ by a further 0.05 per')
+    P('  cent, which is INVISIBLE at their precision, so this fixes')
+    P('  the convention to a hydrogen mass and no finer.  The module')
+    P('  must use the same one wherever it converts a column density')
+    P('  to a mass-to-flux ratio.')
     P('  The two files therefore mean the same critical ratio.  Their')
     P('  2.8 is also PER H2 MOLECULE, while this module carries')
     P('  mu = 2.33 per PARTICLE.  Those are the same mass density')
