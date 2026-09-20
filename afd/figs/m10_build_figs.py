@@ -66,6 +66,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def out(name):
     return os.path.join(HERE, name)
 
+
 BG, FG, MUT, RULE = "#0f172a", "#cbd5e1", "#94a3b8", "#334155"
 ACC, ACC2, VIO, YEL = "#fb923c", "#2dd4bf", "#a78bfa", "#facc15"
 RED = "#f87171"
@@ -340,13 +341,12 @@ def build_cascade():
              83.0, -95.0, 26.0)):
         ax_, ay_ = px(lxv), py(ly)
         x, y, _ = place_label([(ax_ + dx, ay_ + dy)], occupied, box,
-                                  wd, 13.0, ink=ink, window=None)
+                              wd, 13.0, ink=ink, window=None)
         label = txt.replace("^-5/3", SUP.format("&#8722;5/3")) \
                    .replace("^-2", SUP.format("&#8722;2"))
         s.append(f'<text x="{x:.1f}" y="{y:.1f}" font-size="11.5" '
                  f'fill="{col}">{label}</text>')
         leaders.append(leader_svg(ax_, ay_, x, y, wd, 13.0))
-
 
     # the separation after one decade and after the whole band
     sep1 = 10.0**(2.0 - 5.0/3.0)
