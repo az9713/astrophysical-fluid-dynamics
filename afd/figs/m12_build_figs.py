@@ -494,15 +494,26 @@ def build_alfven():
     x1 = M.parker_ratio(M.AU, v1, om, r0)
     B1 = M.VB18_MEAN['field'][0]*1e-5/np.sqrt(1.0 + x1*x1)
     vA1 = M.alfven_speed(B1, n1*M.mp)
-    rr = np.logspace(gx0, gx1, 160)*M.Rsun
+    rr = np.logspace(gx0, gx1, 400)*M.Rsun
     d_wind = path([px(r/M.Rsun) for r in rr], [py(v1/1e5)]*len(rr))
     s.append(f'<path d="{d_wind}" fill="none" stroke="{ACC2}" '
              f'stroke-width="2"/>')
     vA_of_r = vA1*(M.AU/rr)
-    d_alf = path([px(r/M.Rsun) for r in rr],
-                 [py(v/1e5) for v in vA_of_r])
+    # CLIP TO THE PLOT BOX.  The first draft drew the whole range and the
+    # Alfven speed ran off the top of the frame at 5 R_sun, where it is
+    # 1478 km/s against a y-axis that stops at 900.  check_frame measures
+    # TEXT extents and check_overlap measures labels, so neither saw it;
+    # a rendered look did.
+    keep = [(px(r/M.Rsun), py(v/1e5))
+            for r, v in zip(rr, vA_of_r) if 10.0**gy0 <= v/1e5 <= 10.0**gy1]
+    d_alf = path([q[0] for q in keep], [q[1] for q in keep])
     s.append(f'<path d="{d_alf}" fill="none" stroke="{ACC}" '
              f'stroke-width="2"/>')
+    # and MARK the crossing, which is what the whole figure is about
+    r_cross = M.AU*vA1/v1
+    s.append(f'<circle cx="{px(r_cross/M.Rsun):.1f}" '
+             f'cy="{py(v1/1e5):.1f}" r="5" fill="none" stroke="{FG}" '
+             f'stroke-width="1.6"/>')
 
     # the two published values
     for val, err, col, lab, dy in (
@@ -521,13 +532,12 @@ def build_alfven():
         # The label goes BELOW the axis, in the legend row.  Inside
         # the box it would cross the other measurement's dashed line --
         # check_overlap found exactly that, twice.
+        rel = '&#8805; ' if lab.startswith('PSP') else ''
         s.append(f'<text x="{X0:.0f}" y="{Y1+62+dy:.0f}" font-size="10.5" '
-                 f'fill="{col}">{lab} {val:g} '
+                 f'fill="{col}">{lab} {rel}{val:g} '
                  f'R{SUB.format("&#9737;")}</text>')
-        if lab.startswith('PSP'):
-            s.append(f'<path d="M {X0+196:.0f},{Y1+58+dy:.0f} l 16,0 '
-                     f'l -5,-4 m 5,4 l -5,4" fill="none" stroke="{col}" '
-                     f'stroke-width="1.2"/>')
+        # The bound's direction is written as a relation, not drawn as
+        # a free-floating arrow that a reader must interpret.
 
     s.append(f'<rect x="{X0:.0f}" y="{Y1+92:.0f}" width="12" '
              f'height="10" fill="{ACC}" opacity="0.30"/>')
@@ -536,9 +546,10 @@ def build_alfven():
              f'{lo:.2f}&#8211;{hi:.2f} R{SUB.format("&#9737;")}</text>')
     s.append(f'<text x="{px(120):.0f}" y="{py(v1/1e5)-9:.0f}" '
              f'font-size="10.5" fill="{ACC2}">wind speed '
-             f'{v1/1e5:.0f} km s{SUP.format(-1)}</text>')
-    y_alf = py(vA1*M.AU/(120*M.Rsun)/1e5) + 16.0
-    s.append(f'<text x="{px(120):.0f}" y="{y_alf:.0f}" '
+             f'{v1/1e5:.1f} km s{SUP.format(-1)}</text>')
+    # BELOW the curve and to the left, in the empty wedge.  Beside the
+    # curve at 120 R_sun the label sat ON it; a rendered look found that.
+    s.append(f'<text x="{px(26):.0f}" y="{Y1-22:.0f}" '
              f'font-size="10.5" fill="{ACC}">radial Alfv&#233;n speed, '
              f'&#8733; 1/r</text>')
 
