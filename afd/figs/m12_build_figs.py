@@ -281,9 +281,13 @@ def build_spiral():
             rr = AR*r/rmax
             xs.append(AX + rr*np.cos(phi))
             ys.append(AY - rr*np.sin(phi))
-        col = ACC if phi0 == 0.0 else RULE
+        # The companions were drawn in RULE at width 1 and were
+        # invisible in a render: a reader saw ONE spiral, not a
+        # field.  MUT at 1.2 reads as background without vanishing.
+        col = ACC if phi0 == 0.0 else MUT
         s.append(f'<path d="{path(xs, ys)}" fill="none" stroke="{col}" '
-                 f'stroke-width="{2.0 if phi0 == 0.0 else 1.0}"/>')
+                 f'stroke-width="{2.2 if phi0 == 0.0 else 1.2}" '
+                 f'opacity="{1.0 if phi0 == 0.0 else 0.75}"/>')
 
     # the tangent at 1 au on the highlighted line, and the angle
     phi_end = -om*(rmax - r0)/v_mean
@@ -585,7 +589,7 @@ def build_alfven():
 # =========================================================================
 
 def build_transport():
-    W, H = 720, 330
+    W, H = 720, 366
     X0, X1, Y0, Y1 = 96.0, 620.0, 60.0, 190.0
     GLO, GHI = -30.0, 1.0
 
@@ -657,7 +661,13 @@ def build_transport():
         x = px(np.log10(val))
         s.append(f'<line x1="{x:.1f}" y1="{Y0:.0f}" x2="{x:.1f}" '
                  f'y2="{Y1:.0f}" stroke="{col}" stroke-width="2"/>')
-        s.append(f'<text x="{X0+330:.0f}" y="{Y1+65+dy-56:.0f}" '
+        # BELOW the axis title, in the legend rows.  At Y1+9 the two
+        # labels landed on the "10^-10" and "10^-5" tick labels; a
+        # rendered look found it, check_overlap does not test text on
+        # text.
+        s.append(f'<rect x="{X0:.0f}" y="{Y1+84+dy:.0f}" width="12" '
+                 f'height="3" fill="{col}"/>')
+        s.append(f'<text x="{X0+18:.0f}" y="{Y1+89+dy:.0f}" '
                  f'font-size="10.5" fill="{col}">Braginskii {lab} = '
                  f'{val:.2e}</text>')
 
@@ -679,10 +689,10 @@ def build_transport():
     s.append(f'<text x="{(X0+X1)/2:.0f}" y="{Y1+44:.0f}" font-size="11.5" '
              f'text-anchor="middle" fill="{FG}">ratio of perpendicular to '
              f'parallel transport</text>')
-    s.append(f'<text x="{20:.0f}" y="{Y1+92:.0f}" font-size="11" '
+    s.append(f'<text x="{20:.0f}" y="{Y1+132:.0f}" font-size="11" '
              f'fill="{MUT}">The measurement lies far nearer the '
              f'UNSUPPRESSED value than the classical one,</text>')
-    s.append(f'<text x="{20:.0f}" y="{Y1+110:.0f}" font-size="11" '
+    s.append(f'<text x="{20:.0f}" y="{Y1+150:.0f}" font-size="11" '
              f'fill="{MUT}">so the step is not the gyroradius. What it '
              f'IS, this book does not compute.</text>')
     s.append('</svg>')
