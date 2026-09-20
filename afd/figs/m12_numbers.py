@@ -97,6 +97,7 @@ e = 4.80320471e-10      # esu            (elementary charge)
 me = 9.1093837015e-28   # g
 mp = 1.67262192369e-24  # g
 mu_u = 1.66053906660e-24  # g            (unified atomic mass unit)
+hbar = 1.054571817e-27  # erg s
 c = 2.99792458e10       # cm/s
 G = 6.67430e-8          # cm^3 g^-1 s^-2
 pc = 3.0856775814913673e18   # cm
@@ -355,12 +356,30 @@ def resistivity(n, T, lnL):
     return c*c*me/(4.0*np.pi*BRAG_SIGMA_PAR*n*e*e*tau)
 
 
+def debye(n, T):
+    """Electron Debye length sqrt(k T/(4 pi n e^2)).  From m01_numbers.py
+    by way of m10_numbers.py."""
+    return np.sqrt(kB*T/(4.0*np.pi*n*e*e))
+
+
+def b_min_e(T):
+    """Smallest usable impact parameter for electrons: the larger of the
+    classical 90-degree impact parameter e^2/(3 k T) and the thermal de
+    Broglie length.  From m01_numbers.py by way of m10_numbers.py."""
+    ve = np.sqrt(3.0*kB*T/me)
+    return max(e*e/(3.0*kB*T), hbar/(me*ve))
+
+
 def lnLambda_e(n, T):
-    """Coulomb logarithm on the electron branch, Module 1's definition."""
-    lam_D = np.sqrt(kB*T/(4.0*np.pi*n*e*e))
-    b_min_class = e*e/(3.0*kB*T)
-    b_min_quant = 1.054571817e-27/(2.0*np.sqrt(3.0*kB*T*me))
-    return np.log(lam_D/max(b_min_class, b_min_quant))
+    """Coulomb logarithm ln(lambda_D/b_min).  From m01_numbers.py.
+
+    COPIED, not retyped.  The first draft of this file wrote the quantum
+    branch as hbar/(2 sqrt(3 k T m_e)), a factor of two smaller than
+    hbar/(m_e v_e) with v_e = sqrt(3 k T/m_e).  It is the same defect as
+    the lam_coulomb pi and the gyroradius speed, for the third time in
+    one file, and it is why the rule is COPY and not RE-DERIVE.
+    """
+    return np.log(debye(n, T)/b_min_e(T))
 
 
 def magnetic_reynolds(U, L, eta):
@@ -905,11 +924,21 @@ def main():
         P(f'    an UNWOUND radial field, -2.000    = {gap_radial:+.4f} = '
           f'{abs(gap_radial)/VB18_SCATTER["field"]:.2f} scatter units, '
           f'{abs(gap_radial)/b_err:.1f} formal errors')
-        # The density index in the same row: the control.
+        # The density index in the same row: the control, and also the
+        # premise CHECK 2 rests on.  Mass conservation through a sphere
+        # gives rho v r^2 = const, so rho ~ r^(-2-alpha_v) and NOT r^-2
+        # exactly.  The first draft compared against -2, which is a
+        # rounder statement about a different prediction.
         d_idx, d_err = fits['density'][2], fits['density'][3]
+        d_pred = -2.0 - alpha_v
         P(f'    CONTROL: the density index in the same row = {d_idx:+.4f} '
           f'+/- {d_err:.3f}')
-        P(f'      against -2 exactly: {abs(d_idx + 2.0):.4f} = '
+        P(f'      mass conservation predicts -2 - alpha_v = {d_pred:+.4f}')
+        P(f'      gap {abs(d_idx - d_pred):.4f} = '
+          f'{abs(d_idx - d_pred)/VB18_SCATTER["density"]:.2f} scatter '
+          f'units, {abs(d_idx - d_pred)/d_err:.2f} formal errors')
+        P(f'      against -2 exactly, for comparison: '
+          f'{abs(d_idx + 2.0):.4f} = '
           f'{abs(d_idx + 2.0)/VB18_SCATTER["density"]:.2f} scatter units')
         E[label] = {
             'fit': idx_fit,
@@ -917,7 +946,8 @@ def main():
             'formal': abs(gap)/b_err,
             'radial_scat': abs(gap_radial)/VB18_SCATTER['field'],
             'err': b_err,
-            'dens_scat': abs(d_idx + 2.0)/VB18_SCATTER['density'],
+            'dens_scat': abs(d_idx - d_pred)/VB18_SCATTER['density'],
+            'dens_pred': d_pred,
         }
 
     P('')
@@ -930,11 +960,15 @@ def main():
     P(f'  two numbers are {E["mean"]["scat"]:.2f} and '
       f'{E["mean"]["radial_scat"]:.2f}.  The CONTROL is what makes this')
     P('  a measurement rather than a coincidence: the DENSITY index in')
-    P(f'  the same row of the same table sits '
-      f'{E["mean"]["dens_scat"]:.2f} scatter units from')
-    P('  -2 on the mean fits, so this data set CAN see an inverse-square')
-    P('  falloff when there is one.  The field does not show one because')
-    P('  it is wound.')
+    P(f'  the same row of the SAME fit set sits '
+      f'{E["median"]["dens_scat"]:.2f} scatter units from')
+    P(f'  the {E["median"]["dens_pred"]:+.4f} that mass conservation '
+      f'predicts, so this data set')
+    P('  CAN see a near-inverse-square falloff when there is one.  The')
+    P('  field does not show one because it is wound.  THE CONTROL AND')
+    P('  THE CHECK NOW USE THE SAME FIT SET; the first draft quoted the')
+    P('  median field against the mean density, which is choosing two')
+    P('  denominators from one table.')
     P('')
     P('  THE VERDICT DEPENDS ON WHICH ERROR BAR IS USED, AND THAT MUST BE')
     P(f'  SAID BEFORE THE VERDICT.  Against the FORMAL fit error of '
@@ -988,16 +1022,33 @@ def main():
 
     # ---------------------------------------------------------------- F
     P('')
-    P('PART F.  CHECK 2.  The Alfven radius, and a factor of two')
+    P('PART F.  CHECK 2.  The Alfven radius, which agrees with one')
+    P('         published value and not with the other')
     P('-'*74)
     P('  With B_r ~ r^-2 and rho ~ r^-2 v^-1, v_A ~ r^-1 v^(1/2).  The')
     P('  wind crosses its own Alfven speed once, and the radius at which')
     P('  it does is measurable.')
+    P('')
+    P('  THE FIELD IN THIS ALFVEN SPEED IS B_r, NOT |B|, AND THE FIRST')
+    P('  DRAFT OF THIS FILE USED |B|.  Two reasons, and either alone')
+    P('  settles it.  (i) PART E has just shown that |B| does NOT scale')
+    P('  as r^-2; B_r does, by div B = 0, and it is the r^-2 scaling')
+    P('  that the extrapolation inward uses.  (ii) The measured quantity')
+    P('  is the Weber-Davis Alfven radius, which Verscharen, Bale &')
+    P('  Velli define on the RADIAL Alfven speed B_r/sqrt(4 pi rho),')
+    P('  because it is the radial components that enter the flow')
+    P('  deflection they fit.  Using |B| inflated every r_A below by')
+    P('  sqrt(1 + x1^2), where x1 = -B_phi/B_r at 1 au is of order one -')
+    P('  a factor near 1.44, which is most of what the first draft')
+    P('  reported as a "factor of two".')
     for label, fits in (('mean', VB18_MEAN), ('median', VB18_MEDIAN)):
         n1 = fits['density'][0]
         v1 = fits['velocity'][0]*1e5
         av = fits['velocity'][2]
-        B1 = fits['field'][0]*1e-5      # nT -> gauss: 1 nT = 1e-5 G
+        B_tot = fits['field'][0]*1e-5      # nT -> gauss: 1 nT = 1e-5 G
+        x1 = parker_ratio(AU, v1, omega_sun, r0)
+        wind_factor = np.sqrt(1.0 + x1*x1)
+        B1 = B_tot/wind_factor             # the RADIAL component at 1 au
         # rho at 1 au.  The 4 per cent helium of Module 9's census raises
         # the mass per proton by a factor 1 + 4*0.04 = 1.16; the row is
         # printed both ways because the choice moves r_A by 8 per cent.
@@ -1006,10 +1057,13 @@ def main():
         vA_H = alfven_speed(B1, rho_H)
         vA_He = alfven_speed(B1, rho_He)
         P('')
-        P(f'  ({label} fits)  n = {n1} cm^-3, B = {fits["field"][0]} nT, '
+        P(f'  ({label} fits)  n = {n1} cm^-3, |B| = {fits["field"][0]} nT, '
           f'v = {fits["velocity"][0]} km/s')
-        P(f'    v_A at 1 au, protons only          = {vA_H/1e5:.2f} km/s')
-        P(f'    v_A at 1 au, with 4% helium        = {vA_He/1e5:.2f} km/s')
+        P(f'    -B_phi/B_r at 1 au (from PART E)   = {x1:.4f}')
+        P(f'    sqrt(1 + x1^2)                     = {wind_factor:.4f}')
+        P(f'    B_r at 1 au = |B|/sqrt(1+x1^2)     = {B1*1e5:.4f} nT')
+        P(f'    v_A(radial) at 1 au, protons only  = {vA_H/1e5:.2f} km/s')
+        P(f'    v_A(radial) at 1 au, with 4% He    = {vA_He/1e5:.2f} km/s')
         P(f'    v/v_A at 1 au (protons only)       = {v1/vA_H:.3f}')
         for tag, vA1 in (('protons only', vA_H), ('with 4% He', vA_He)):
             rA_c = alfven_radius_constant_v(AU, v1, vA1)
@@ -1018,6 +1072,9 @@ def main():
               f'{rA_c/Rsun:.2f} R_sun = {rA_c/AU:.4f} au')
             P(f'    r_A, v ~ r^{av:+.3f} ({tag:<12})  = '
               f'{rA_p/Rsun:.2f} R_sun = {rA_p/AU:.4f} au')
+        P(f'    (|B| in place of B_r would give     '
+          f'{alfven_radius_power_law(AU, v1, vA_He*wind_factor, av)/Rsun:.2f}'
+          f' R_sun, the first draft\'s answer)')
     P('')
     P(f'  MEASURED (Verscharen, Bale & Velli 2021, Table 3, the same')
     P(f'  table module09.html:964 quotes):')
@@ -1030,34 +1087,49 @@ def main():
     # The headline ratio, on the median fits with helium.
     n1 = VB18_MEDIAN['density'][0]
     v1 = VB18_MEDIAN['velocity'][0]*1e5
-    B1 = VB18_MEDIAN['field'][0]*1e-5
+    av1 = VB18_MEDIAN['velocity'][2]
+    x1 = parker_ratio(AU, v1, omega_sun, r0)
+    B1 = VB18_MEDIAN['field'][0]*1e-5/np.sqrt(1.0 + x1*x1)
     vA1 = alfven_speed(B1, n1*mp*1.16)
-    rA_med = alfven_radius_power_law(AU, v1, vA1, VB18_MEDIAN['velocity'][2])
+    rA_med = alfven_radius_power_law(AU, v1, vA1, av1)/Rsun
     P('')
-    P(f'  PUNCHLINE CHECK 2.  The extrapolation gives '
-      f'{rA_med/Rsun:.2f} R_sun against a')
-    P(f'  measured {VBV21_RA_FLS1:.3f} +/- {VBV21_RA_FLS1_ERR:.3f}, a '
-      f'ratio of {rA_med/Rsun/VBV21_RA_FLS1:.2f}.  The gap is')
-    P(f'  {abs(rA_med/Rsun - VBV21_RA_FLS1)/VBV21_RA_FLS1_ERR:.0f} times '
-      f'their quoted error, which is a FORMAL fit error on')
-    P('  a model and not a systematic envelope, so the number to carry')
-    P('  is the factor of two and not the count of errors.')
-    P('  REFUTED, and the direction is the')
-    P('  content: the extrapolation assumes the 1-au wind speed all the')
-    P('  way in, and Module 9 measured that the wind is still')
-    P('  accelerating at 1 au.  A slower wind closer in crosses its')
-    P('  Alfven speed sooner, which is what the measurement says.')
+    P('  PUNCHLINE CHECK 2, AND IT CHANGED WHEN THE RADIAL FIELD WAS PUT')
+    P(f'  IN.  The extrapolation gives {rA_med:.2f} R_sun.  Against '
+      f'Verscharen, Bale &')
+    P(f'  Velli\'s {VBV21_RA_FLS1:.3f} +/- {VBV21_RA_FLS1_ERR:.3f} that is '
+      f'a ratio of {rA_med/VBV21_RA_FLS1:.2f}; against Parker Solar')
+    P(f'  Probe\'s {KASPER21_RA_LO:.0f}-{KASPER21_RA_HI:.0f} R_sun it is '
+      f'{rA_med/KASPER21_RA_LO:.2f} to {rA_med/KASPER21_RA_HI:.2f}.')
+    P('  THE SAME CALCULATION THEREFORE AGREES WITH ONE PUBLISHED ALFVEN')
+    P('  RADIUS AND DISAGREES WITH THE OTHER, and that is the result.')
+    P('  It is why this module may not print one of the two numbers')
+    P('  alone.  They are not the same quantity: Verscharen, Bale &')
+    P('  Velli fit a steady axisymmetric Weber-Davis surface to Ulysses')
+    P('  fast-latitude scans, and Parker Solar Probe reports crossings')
+    P('  of a corrugated boundary along one trajectory.  A single')
+    P('  spherically symmetric extrapolation cannot match both, and')
+    P('  which one it should match is a question about the definition,')
+    P('  not about the arithmetic.  BOTH NEED STEP 2 - Verscharen is')
+    P('  verified for Module 9, Kasper is not read at all - and Gate D')
+    P('  fixes the verdict before the prose is written.')
     P('')
-    P(f'  THE OTHER NUMBER, named so that two modules cannot contradict')
-    P(f'  each other.  Parker Solar Probe reports sub-Alfvenic intervals')
-    P(f'  near {KASPER21_RA_LO:.0f}-{KASPER21_RA_HI:.0f} R_sun (Kasper et '
-      f'al. 2021).  m09_numbers.py:1301')
-    P('  prints that value with no source and module09.html:846 prints')
-    P('  12 R_sun with one.  THEY ARE NOT THE SAME QUANTITY: Verscharen')
-    P('  fits a steady axisymmetric surface to fast-latitude scans, and')
-    P('  Parker Solar Probe reports crossings of a corrugated boundary')
-    P('  along one trajectory.  NEEDS STEP 2 before either is printed in')
-    P('  the module.')
+    P('  TWO EXTRAPOLATIONS ARE PRICED HERE AND NEITHER IS HIDDEN.')
+    P(f'  (i) v ~ r^{av1:+.3f} is a fit over {VB18_R_LO_AU}-'
+      f'{VB18_R_HI_AU} au and it is being used at')
+    P(f'      {rA_med*Rsun/AU:.4f} au, a factor '
+      f'{VB18_R_LO_AU/(rA_med*Rsun/AU):.1f} outside its own range.  It '
+      f'moves r_A by')
+    rA_const = alfven_radius_constant_v(AU, v1, vA1)/Rsun
+    P(f'      {100*(rA_med - rA_const)/rA_med:.1f}'
+      f' per cent against a constant speed, so the extrapolation')
+    P('      is small here, but the book prices this kind of thing.')
+    P('  (ii) The real wind is much slower close in than any power law')
+    P('      fitted beyond 0.29 au says, which is the physical reason')
+    P('      the Weber-Davis radius comes out smaller than this.')
+    P(f'  m09_numbers.py:1301 prints {KASPER21_RA_HI - 1:.0f} R_sun with '
+      f'no source and')
+    P('  module09.html:846 prints 12 R_sun with one; Module 9\'s HTML is')
+    P('  right and its generator\'s aside is not.')
 
     # ---------------------------------------------------------------- G
     P('')
