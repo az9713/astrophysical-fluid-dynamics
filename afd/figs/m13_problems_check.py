@@ -196,8 +196,9 @@ def main():
     # 4497/3090 against the 1.4554, and the 2e-4 tolerance passed it.
     chk('K3 frequency ratio, to the printed digit',
         round(4497.0/3090.0, 4), grab(txt, 'ratio to nu_max:'), rtol=1e-12)
+    chi7 = grab(txt, 'tau_R = 2/3  chi =')      # section 7, from the run
     chk('K3 over section 7, via the chi ratio',
-        4497.0/3090.0*chi/1.1587e13,
+        4497.0/3090.0*chi/chi7 if chi7 else 0.0,
         grab(txt, 'K3 against the same level at nu_max, ratio'), rtol=1e-4)
     # P7 as an identity, from the statement's inputs
     lam = 8.081e5/4497.0e-6
