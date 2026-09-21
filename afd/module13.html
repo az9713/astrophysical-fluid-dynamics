@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>13. Radiation Hydrodynamics — Astrophysical Fluid Dynamics</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags: 'ams' },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js" async></script>
+<style>
+  :root{
+    --bg:#0f172a; --box:#1e293b; --fg:#e2e8f0; --fg2:#cbd5e1;
+    --muted:#94a3b8; --accent:#fb923c; --accent2:#2dd4bf;
+    --rule:#334155; --rule2:#1e293b;
+  }
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{ max-width: 52rem; margin: 2.5rem auto; padding: 0 1.25rem 6rem;
+        font: 16px/1.7 Georgia, 'Times New Roman', serif; color:var(--fg);
+        background:var(--bg); counter-reset: fig; }
+  h1{ font-size: 1.9rem; line-height:1.2; margin:.2rem 0 .2rem; color:#f8fafc; }
+  h2{ font-size:1.35rem; margin:2.6rem 0 .6rem; border-bottom:2px solid var(--accent);
+      padding-bottom:.2rem; color:#f8fafc; }
+  h3{ font-size:1.08rem; margin:1.7rem 0 .4rem; color:var(--accent); }
+  h4{ font-size:1rem; margin:1.2rem 0 .3rem; color:var(--accent2); }
+  .sub{ color:var(--muted); font-style:italic; margin-top:0; }
+  a{ color:var(--accent2); }
+  code{ font-family: ui-monospace,'SFMono-Regular',Consolas,monospace; font-size:.92em;
+        background:#111c33; color:#e2e8f0; padding:.05rem .28rem; border-radius:3px;
+        border:1px solid var(--rule2); }
+  pre{ background:#0b1324; border:1px solid var(--rule); padding:.8rem 1rem; border-radius:5px;
+       overflow:auto; font-size:.84rem; line-height:1.45; color:#e2e8f0; }
+  pre code{ background:none; padding:0; border:none; }
+  .codewrap{ position:relative; }
+  .copybtn{ position:absolute; top:.5rem; right:.5rem; display:inline-flex; align-items:center; gap:.3rem;
+    font:600 .72rem/1 ui-monospace,Consolas,monospace; color:var(--muted);
+    background:var(--box); border:1px solid var(--rule); border-radius:5px; padding:.32rem .5rem; cursor:pointer; }
+  .copybtn:hover{ color:var(--accent); border-color:var(--accent); }
+  .copybtn.copied{ color:var(--accent2); border-color:var(--accent2); }
+  .copybtn svg{ width:13px; height:13px; }
+  .thm,.def,.lem,.prop{ background:var(--box); border-left:4px solid var(--accent);
+      padding:.6rem .9rem; margin:1rem 0; border-radius:0 4px 4px 0; }
+  .def{ border-left-color:var(--accent2); }
+  .thm b,.lem b,.prop b{ color:var(--accent); }
+  .def b{ color:var(--accent2); }
+  .proof{ border-left:2px solid var(--rule); padding-left:.9rem; margin:.8rem 0 1.2rem; color:var(--fg2); }
+  .proof::before{ content:"Proof."; font-style:italic; font-weight:bold; margin-right:.4rem; color:var(--muted); }
+  .qed{ float:right; color:var(--accent); }
+  table{ border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+  th,td{ border:1px solid var(--rule); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+  th{ background:var(--box); color:#f8fafc; }
+  figure{ margin:1.6rem 0; text-align:center; counter-increment: fig; }
+  figcaption{ color:var(--muted); font-size:.9rem; font-style:italic; margin-top:.4rem; text-align:left; }
+  figcaption::before{ content:"Fig. " counter(fig) ". "; font-weight:bold; font-style:normal; color:var(--accent); }
+  .proof figure,.thm figure,.lem figure,.prop figure{ margin:.2rem auto .7rem; max-width:460px;
+      background:var(--bg); border:1px solid var(--rule); border-radius:5px; padding:.4rem; }
+  .proof figcaption,.thm figcaption,.lem figcaption,.prop figcaption{ font-size:.8rem; line-height:1.45; }
+  .setupfig{ display:block; }
+  /* dark halo behind in-plot labels so curves under text stay legible */
+  .setupfig text{ paint-order:stroke; stroke:#0f172a; stroke-width:3px; stroke-linejoin:round; }
+  .setupfig text.onfill{ stroke:none; }
+  figure svg text{ font-family:"STIX Two Math",STIXGeneral,"Times New Roman",Georgia,serif; fill:#cbd5e1; }
+  figure svg text.v{ font-style:italic; }
+  figure svg text.vb{ font-weight:bold; }
+  .secref{ color:var(--accent); text-decoration:none; border-bottom:1px dotted #9a6a3a; }
+  .secref:hover{ border-bottom:1px solid var(--accent); }
+  .toc{ background:var(--box); padding:.8rem 1.2rem; border-radius:6px; font-size:.95rem; border:1px solid var(--rule); }
+  .toc ul{ list-style:none; padding-left:.3rem; margin:.3rem 0; }
+  .toc a{ color:var(--accent2); text-decoration:none; }
+  .toc a:hover{ text-decoration:underline; }
+  .small{ font-size:.88rem; color:var(--muted); }
+  hr{ border:none; border-top:1px solid var(--rule); margin:2.5rem 0; }
+  .keyresult{ background:#2a2410; border:1px solid #6b5a1f; padding:.5rem .9rem; border-radius:4px; color:#fde68a; }
+  .prov{ display:block; border-left:3px solid #c08a00; padding:.15rem .7rem;
+         margin:.5rem 0; font-size:.94em; color:var(--muted); }
+  .prov::before{ content:"provenance — "; font-variant:small-caps; letter-spacing:.04em; color:#d4a017; }
+  .warn{ display:block; border-left:3px solid #f87171; background:#2a1414; padding:.4rem .8rem;
+         margin:.8rem 0; font-size:.95em; color:#fecaca; border-radius:0 4px 4px 0; }
+  .prob{ background:var(--box); border:1px solid var(--rule); border-radius:5px;
+         padding:.6rem .9rem; margin:.9rem 0; }
+  .prob b{ color:var(--accent); }
+  details.sol{ margin-top:.5rem; }
+  details.sol summary{ cursor:pointer; color:var(--accent2); font-size:.9rem; }
+  details.sol > div{ border-top:1px solid var(--rule); margin-top:.5rem; padding-top:.5rem; color:var(--fg2); }
+  mjx-container[jax="SVG"] > svg { color: var(--fg); }
+  .navbar{ font-size:.9rem; color:var(--muted); margin:.6rem 0 0; }
+  .navbar a{ color:var(--accent2); text-decoration:none; }
+</style>
+</head>
+<body>
+
+
+<h1>13. Radiation Hydrodynamics</h1>
+<p class="sub">Photons carry momentum, and a fluid that is lit from inside feels it. This module derives the Eddington limit that five shipped pages have been quoting, prices the composition hidden in its proton mass, and evaluates the one computation the book deferred by name. Four checks: one reproduction confirmed, two refutations, and a grey atmosphere that holds to three per cent.</p>
+
+<p class="navbar"><a href="index.html">Contents</a> · <a href="module12.html">← Module 12</a></p>
+
+<div class="toc">
+<b>Contents</b>
+<ul>
+<li><b>1.</b> <a href="#momentum">Photons carry momentum</a></li>
+<li><b>2.</b> <a href="#transfer">The transfer equation</a></li>
+<li><b>3.</b> <a href="#depth">Optical depth</a></li>
+<li><b>4.</b> <a href="#diffusion">The diffusion limit</a></li>
+<li><b>5.</b> <a href="#grey">The grey atmosphere</a></li>
+<li><b>6.</b> <a href="#anchor">The anchor: the opacity of the solar photosphere</a></li>
+<li><b>7.</b> <a href="#leak">Heat that leaks out of a sound wave</a></li>
+<li><b>8.</b> <a href="#mixture">A gas that contains radiation</a></li>
+<li><b>9.</b> <a href="#eddington">The Eddington limit</a></li>
+<li><b>10.</b> <a href="#accretion">Accretion at the limit</a></li>
+<li><b>11.</b> <a href="#where">Where radiation matters, and where it does not</a></li>
+<li><b>12.</b> <a href="#limits">What this module captures, and what it misses</a></li>
+<li><b>13.</b> <a href="#problems">Problems</a></li>
+<li><b>—</b> <a href="#notation">Notation</a> · <a href="#sources">Sources</a></li>
+</ul>
+</div>
+
+<hr>
+
+<p>Every module of this book so far has treated light as something a fluid emits and never as something that pushes on it. <a href="module01.html#limits">Module 1 §9</a> put that in its closing table in one line — "Photons neither carry momentum nor dominate the energy budget" — and named this module as the repayment. Eleven more debts in six other modules followed it. The sharpest are in <a href="module09.html">Module 9</a>, which used the Eddington luminosity $L_{\rm Edd} = 4\pi GMm_{\rm p}c/\sigma_{\rm T}$ in two problems, wrote in its notation table that the formula is "stated, not derived". Module 9 and <a href="module11.html">Module 11</a> together send the reader here through five live links.</p>
+
+<p><b>The destination is the Eddington limit, in <a class="secref" href="#eddington">§9</a>.</b> It does not come first, because its derivation needs three things the reader does not yet have: an opacity (<a class="secref" href="#transfer">§2</a>), a radiative flux (<a class="secref" href="#diffusion">§4</a>), and the reason the Sun's own surface is not the simple electron-scattering gas the limit assumes (<a class="secref" href="#anchor">§6</a>). A reader who arrived from <code>module09.html:944</code> can go straight to <a class="secref" href="#eddington">§9</a> and come back for the definitions.</p>
+
+<div class="warn"><b>One thing this module does not do, and it says so where each debt is due.</b> It does no atomic physics. The opacity of the solar photosphere is set by the negative hydrogen ion, H⁻, and this book does not compute it; <a class="secref" href="#anchor">§6</a> takes the opacity from a published model atmosphere instead and says what that costs. Three debts that need atomic or dust physics are refused in <a class="secref" href="#limits">§12</a>, each in a row of its own.</div>
+
+<h2 id="momentum">1. Photons carry momentum</h2>
+
+<p>A photon of energy $E$ carries momentum $E/c$. A beam that delivers energy at a rate $F$ per unit area therefore delivers momentum at a rate $F/c$ per unit area, and a body that absorbs the beam feels a pressure $F/c$. For sunlight on the Earth that pressure is negligible. Inside a star the same accounting is not, and near a luminous compact object it decides whether gas can fall in at all. To do the accounting one needs to describe radiation that travels in every direction at once.</p>
+
+<div class="def"><b>Definition 1 (the specific intensity and its moments).</b> The specific intensity $I_\nu(\mathbf{r},\mathbf{n},t)$ is the energy carried in direction $\mathbf{n}$ per unit time, per unit area normal to $\mathbf{n}$, per unit solid angle and per unit frequency, in $\mathrm{erg\,s^{-1}\,cm^{-2}\,sr^{-1}\,Hz^{-1}}$. With $\theta$ the angle between $\mathbf{n}$ and a chosen axis $z$ and $\mathrm{d}\Omega$ the element of solid angle, its first three angular moments are
+$$ u_\nu = \frac{1}{c}\oint I_\nu\,\mathrm{d}\Omega, \qquad F_\nu = \oint I_\nu\cos\theta\,\mathrm{d}\Omega, \qquad P_\nu = \frac{1}{c}\oint I_\nu\cos^{2}\theta\,\mathrm{d}\Omega, \tag{1.1}$$
+the radiation energy density per unit frequency, the flux along $z$, and the flux of $z$-momentum across a surface normal to $z$ — the radiation pressure. The mean intensity is $J_\nu = (1/4\pi)\oint I_\nu\,\mathrm{d}\Omega = c\,u_\nu/4\pi$. Quantities integrated over frequency drop the subscript: $u_{\rm rad} = \int u_\nu\,\mathrm{d}\nu$, $F = \int F_\nu\,\mathrm{d}\nu$, $P_{\rm rad} = \int P_\nu\,\mathrm{d}\nu$.</div>
+
+<p><b>The second moment is written $P_\nu$ and never $K_\nu$</b>, which is what most of the transfer literature writes, because $K$ is <a href="module03.html#whypoly">Module 3</a>'s polytropic constant. That $P_\nu$ is a pressure is the whole point of the first proposition.</p>
+
+<div class="prop"><b>Proposition 1 (the radiation pressure of an isotropic field).</b> If $I_\nu$ does not depend on direction, then $P_\nu = u_\nu/3$ and $F_\nu = 0$. In thermal equilibrium at temperature $T$ the integrated energy density is $u_{\rm rad} = a_{\rm rad}T^{4}$, so
+$$ P_{\rm rad} \;=\; \frac{u_{\rm rad}}{3} \;=\; \frac{a_{\rm rad}T^{4}}{3}, \qquad a_{\rm rad} \;=\; \frac{4\sigma_{\rm SB}}{c}. \tag{1.2}$$
+The factor $1/3$ is derived; the law $u_{\rm rad} = a_{\rm rad}T^4$ is stated.</div>
+
+<div class="proof">Write $\mathrm{d}\Omega = \sin\theta\,\mathrm{d}\theta\,\mathrm{d}\phi = -\mathrm{d}\mu\,\mathrm{d}\phi$ with $\mu = \cos\theta$. For isotropic $I_\nu$ the three integrals in (1.1) are $\oint\mathrm{d}\Omega = 2\pi\int_{-1}^{1}\mathrm{d}\mu = 4\pi$, $\oint\mu\,\mathrm{d}\Omega = 2\pi\int_{-1}^{1}\mu\,\mathrm{d}\mu = 0$ and $\oint\mu^{2}\,\mathrm{d}\Omega = 2\pi\int_{-1}^{1}\mu^{2}\,\mathrm{d}\mu = 4\pi/3$. So $u_\nu = 4\pi I_\nu/c$, $F_\nu = 0$ and $P_\nu = 4\pi I_\nu/3c = u_\nu/3$. Integrating over $\nu$ gives $P_{\rm rad} = u_{\rm rad}/3$. <b>What is stated and not derived</b> is the Stefan–Boltzmann law for black-body radiation, $\int B_\nu(T)\,\mathrm{d}\nu = \sigma_{\rm SB}T^{4}/\pi$, where $B_\nu(T)$ is the Planck function; this book does no statistical mechanics of photons. Given it, the energy crossing a plane from one side of an isotropic black-body field is $\int_0^{2\pi}\!\!\int_0^1 B_\nu\,\mu\,\mathrm{d}\mu\,\mathrm{d}\phi = \pi B_\nu$ per unit frequency, which integrates to $\sigma_{\rm SB}T^4$, while $u_{\rm rad} = (4\pi/c)\int B_\nu\,\mathrm{d}\nu = 4\sigma_{\rm SB}T^{4}/c$. That is $u_{\rm rad} = a_{\rm rad}T^4$ with $a_{\rm rad} = 4\sigma_{\rm SB}/c$. <span class="qed">∎</span></div>
+
+<p>The run evaluates $a_{\rm rad} = 7.565733\times10^{-15}\ \mathrm{erg\,cm^{-3}\,K^{-4}}$ from the exact SI value of $\sigma_{\rm SB}$, which is the constant <a href="module03.html#notation">Module 3</a>'s notation table fixes with its subscript. The factor $1/3$ is a statement about geometry and not about photons. <b>Its trivial limit is a parallel beam</b>, $I_\nu \propto \delta(\mathbf{n}-\mathbf{n}_0)$ along $z$: then $\cos\theta = 1$ wherever the intensity is non-zero, the three integrals in (1.1) are equal, and $P_\nu = u_\nu$. A beam pushes three times harder than an isotropic field of the same energy density. Problem C1 asks for both cases and for a third, a field that fills one hemisphere uniformly and is empty in the other, which also has $P_\nu = u_\nu/3$ — a fact that <a class="secref" href="#grey">§5</a> uses at the surface of a star.</p>
+
+<h2 id="transfer">2. The transfer equation</h2>
+
+<div class="warn"><b>$\nu$ in this module is a frequency, and never the kinematic viscosity.</b> A reader who has just finished <a href="module11.html">Module 11</a> will read $\nu$ as a viscosity, because <a href="module07.html">Module 7</a>, <a href="module10.html">Module 10</a> and <a href="module11.html">Module 11</a> all write it so. In this module the subscript in $I_\nu$, $\kappa_\nu$, $j_\nu$, $B_\nu$ and the bare $\nu$ in $\nu_{\rm max}$ are a frequency, in Hz, as in <a href="module04.html#cutoff">Module 4 §4</a>'s $\nu_{\rm max}$ and $\nu_{\rm ac}$. No viscosity occurs anywhere in this module.</div>
+
+<div class="def"><b>Definition 2 (opacity, emissivity and the source function).</b> A ray crossing a path length $\mathrm{d}s$ of gas of density $\rho$ loses the fraction $\kappa_\nu\rho\,\mathrm{d}s$ of its intensity to absorption and scattering together; $\kappa_\nu$ is the mass extinction coefficient, or <b>opacity</b>, in $\mathrm{cm^{2}\,g^{-1}}$. The same gas adds $j_\nu\rho\,\mathrm{d}s$, where $j_\nu$ is the <b>emissivity</b>, in $\mathrm{erg\,s^{-1}\,g^{-1}\,sr^{-1}\,Hz^{-1}}$. Their ratio $S_\nu \equiv j_\nu/\kappa_\nu$ is the <b>source function</b>. In thermal equilibrium at temperature $T$, $S_\nu = B_\nu(T)$.</div>
+
+<p><b>Opacity is never written bare $\kappa$ here.</b> The bare glyph already has three meanings in this book — <a href="module01.html">Module 1</a>'s thermal conductivity, <a href="module04.html">Module 4</a>'s evanescent decay rate, and <a href="module12.html">Module 12</a>'s $\kappa_\parallel$, $\kappa_\perp$ — so this module writes $\kappa_\nu$ at one frequency, $\kappa_{\rm R}$ for the Rosseland mean of <a class="secref" href="#diffusion">§4</a>, $\kappa_{\rm es}$ for electron scattering and $\kappa_{\rm F}$ for the flux mean of <a class="secref" href="#eddington">§9</a>. And the emissivity is $j_\nu$ and not the $\eta_\nu$ of many texts, because <code>module12.html:927</code> refuses a new bare meaning of $\eta$.</p>
+
+<div class="prop"><b>Proposition 2 (the transfer equation and its formal solution).</b> In a static medium, along a ray with path length $s$,
+$$ \frac{\mathrm{d}I_\nu}{\mathrm{d}s} \;=\; \rho\left(j_\nu - \kappa_\nu I_\nu\right), \qquad\text{equivalently}\qquad \frac{\mathrm{d}I_\nu}{\mathrm{d}\tau_\nu} \;=\; S_\nu - I_\nu, \tag{2.1}$$
+where $\mathrm{d}\tau_\nu = \kappa_\nu\rho\,\mathrm{d}s$ is accumulated in the direction of travel from the point where the ray enters, $\tau_\nu = 0$. Its solution is
+$$ I_\nu(\tau_\nu) \;=\; I_\nu(0)\,e^{-\tau_\nu} \;+\; \int_0^{\tau_\nu} S_\nu(t)\,e^{-(\tau_\nu - t)}\,\mathrm{d}t. \tag{2.2}$$
+The first form of (2.1) is stated; (2.2) is derived.</div>
+
+<div class="proof"><b>What is stated.</b> The first form of (2.1) is energy conservation for the photons in a thin cylinder along the ray: what leaves one end equals what entered the other, less what the gas removed, plus what it emitted. It omits the term $(1/c)\partial I_\nu/\partial t$, which is negligible whenever the light-crossing time is short against the time on which the medium changes, and it assumes the gas is at rest. <b>What is derived.</b> Dividing the first form by $\kappa_\nu\rho$ and using $\mathrm{d}\tau_\nu = \kappa_\nu\rho\,\mathrm{d}s$ and $S_\nu = j_\nu/\kappa_\nu$ gives the second. Multiply it by $e^{\tau_\nu}$: the left side becomes $e^{\tau_\nu}(\mathrm{d}I_\nu/\mathrm{d}\tau_\nu + I_\nu) = \mathrm{d}(I_\nu e^{\tau_\nu})/\mathrm{d}\tau_\nu$, so $\mathrm{d}(I_\nu e^{\tau_\nu})/\mathrm{d}\tau_\nu = S_\nu e^{\tau_\nu}$. Integrating from $0$ to $\tau_\nu$ gives $I_\nu(\tau_\nu)e^{\tau_\nu} - I_\nu(0) = \int_0^{\tau_\nu}S_\nu(t)e^{t}\,\mathrm{d}t$, and multiplying by $e^{-\tau_\nu}$ gives (2.2). <span class="qed">∎</span></div>
+
+<p><b>The trivial limit.</b> For a uniform source function $S_\nu$, (2.2) integrates to $I_\nu = I_\nu(0)e^{-\tau_\nu} + S_\nu(1 - e^{-\tau_\nu})$. At $\tau_\nu \ll 1$ this is $I_\nu(0) + (S_\nu - I_\nu(0))\tau_\nu$: the gas barely changes the ray. At $\tau_\nu \gg 1$ it is $S_\nu$, whatever came in: a thick enough slab forgets the light that entered it and shows only its own source function, which is $B_\nu(T)$ in thermal equilibrium. That is why a star looks like a black body of roughly its surface temperature. When the extinction includes scattering, $S_\nu$ contains the scattered light and depends on $I_\nu$ itself, so (2.2) is then an integral equation and not a solution; <a class="secref" href="#grey">§5</a> meets exactly that.</p>
+
+<h2 id="depth">3. Optical depth</h2>
+
+<div class="def"><b>Definition 3 (optical depth and the photon mean free path).</b> The optical depth is $\mathrm{d}\tau_\nu = \kappa_\nu\rho\,\mathrm{d}s$. In an atmosphere it is measured <b>inward from the observer</b>, with $\tau_\nu = 0$ at the top; along a ray in Proposition 2 the same increment is accumulated in the direction of travel. The photon mean free path is $\lambda_{\rm ph} = 1/(\kappa\rho)$, for whichever opacity $\kappa$ is in use.</div>
+
+<p>The glyph $\tau$ is already the optical depth in this book: <a href="module06.html#notation">Module 6</a>'s notation table claims it "in $\tau = 2/3$ only", and this module takes it over in full. By (2.2) with no source, a ray survives an optical depth $\tau$ with probability $e^{-\tau}$, so the mean optical depth a photon travels before an interaction is $\int_0^\infty\tau e^{-\tau}\,\mathrm{d}\tau = 1$ and the mean distance is $\lambda_{\rm ph}$. In the ATLAS9 solar model of <a class="secref" href="#anchor">§6</a>, at $\tau_{\rm R} = 2/3$, the photon mean free path is $84.2$ km.</p>
+
+<div class="prop"><b>Proposition 3 (the random walk).</b> A photon that is scattered, or absorbed and re-emitted, in a random direction at every step, and that must cross a slab of optical depth $\tau \gg 1$, takes of order
+$$ N \;\approx\; \tau^{2} \tag{3.1}$$
+steps to do it. This is an order of magnitude and is printed as one.</div>
+
+<div class="proof">Let the photon take $N$ steps $\boldsymbol{\ell}_i$, each of length $\lambda_{\rm ph}$ on average and in an independent random direction. The net displacement is $\mathbf{d} = \sum_i\boldsymbol{\ell}_i$, and $\langle|\mathbf{d}|^{2}\rangle = \sum_i\langle|\boldsymbol{\ell}_i|^{2}\rangle + \sum_{i\ne j}\langle\boldsymbol{\ell}_i\cdot\boldsymbol{\ell}_j\rangle = N\lambda_{\rm ph}^{2}$, because independent random directions make every cross term average to zero. The slab has thickness $L = \tau\lambda_{\rm ph}$. Setting the root-mean-square displacement $\lambda_{\rm ph}\sqrt{N}$ equal to $L$ gives $N = \tau^{2}$. The factors of order unity that this sets aside — the spread of step lengths, whether the displacement is measured in one dimension or three, and the absorbing boundary — are what <a class="secref" href="#diffusion">§4</a> fixes. <span class="qed">∎</span></div>
+
+<p>The consequence is that a star is opaque in time as well as in intensity. The photon travels a total path $N\lambda_{\rm ph} = \tau^{2}\lambda_{\rm ph} = \tau L$, which is $\tau$ times longer than the straight line across. <a class="secref" href="#diffusion">§4</a> turns this into a diffusion coefficient with its factor fixed.</p>
+
+<h2 id="diffusion">4. The diffusion limit</h2>
+
+<p>Deep inside a star, where $\tau \gg 1$ over any distance on which the temperature changes, the radiation field is almost isotropic and almost black-body. The flux is then the small anisotropy that a temperature gradient forces on it, and it obeys a diffusion law. The one freedom is which average of $\kappa_\nu$ over frequency appears in it, and that is settled by a definition.</p>
+
+<div class="def"><b>Definition 4 (the Rosseland mean opacity).</b>
+$$ \frac{1}{\kappa_{\rm R}} \;\equiv\; \frac{\displaystyle\int_0^\infty \frac{1}{\kappa_\nu}\,\frac{\partial B_\nu}{\partial T}\,\mathrm{d}\nu}{\displaystyle\int_0^\infty \frac{\partial B_\nu}{\partial T}\,\mathrm{d}\nu}. \tag{4.1}$$
+<b>It is defined so that Proposition 4 holds with a single opacity.</b> It is a harmonic mean, so frequencies where the gas is transparent dominate it, and it is weighted by $\partial B_\nu/\partial T$, which is where the diffusing flux is carried.</div>
+
+<div class="prop"><b>Proposition 4 (radiative diffusion).</b> In a plane-parallel, static medium with $\tau \gg 1$ over a temperature scale height, the frequency-integrated flux along $z$ is
+$$ F \;=\; -\,\frac{c}{3\kappa_{\rm R}\rho}\,\frac{\mathrm{d}}{\mathrm{d}z}\!\left(a_{\rm rad}T^{4}\right) \;=\; -\,\frac{16\sigma_{\rm SB}T^{3}}{3\kappa_{\rm R}\rho}\,\frac{\mathrm{d}T}{\mathrm{d}z}. \tag{4.2}$$
+The assumption that carries the proof is the <b>Eddington closure</b>, $P_\nu = u_\nu/3$, which Proposition 1 made exact for an isotropic field and which is here applied to one that is only nearly isotropic.</div>
+
+<div class="proof">With $\mu = \cos\theta$ and $z$ the coordinate normal to the layers, $\mathrm{d}s = \mathrm{d}z/\mu$, so the first form of (2.1) is $\mu\,\partial I_\nu/\partial z = \rho(j_\nu - \kappa_\nu I_\nu)$. Multiply by $\mu$ and integrate over solid angle. On the left, $\oint\mu^{2}\,\partial I_\nu/\partial z\,\mathrm{d}\Omega = c\,\mathrm{d}P_\nu/\mathrm{d}z$ by (1.1). On the right, the emission of a gas at rest is isotropic, so $\oint j_\nu\mu\,\mathrm{d}\Omega = 0$, and $\oint\kappa_\nu I_\nu\mu\,\mathrm{d}\Omega = \kappa_\nu F_\nu$. The first moment of the transfer equation is therefore exact:
+$$ c\,\frac{\mathrm{d}P_\nu}{\mathrm{d}z} \;=\; -\,\kappa_\nu\rho\,F_\nu. $$
+Now apply the closure $P_\nu = u_\nu/3$, and use that at $\tau\gg1$ the field is black-body to leading order, $u_\nu = 4\pi B_\nu(T)/c$, so that $\mathrm{d}P_\nu/\mathrm{d}z = (4\pi/3c)(\partial B_\nu/\partial T)\,\mathrm{d}T/\mathrm{d}z$. Then
+$$ F_\nu \;=\; -\,\frac{4\pi}{3\kappa_\nu\rho}\,\frac{\partial B_\nu}{\partial T}\,\frac{\mathrm{d}T}{\mathrm{d}z}. $$
+<b>The hinge is the order of the two operations.</b> Integrating over frequency, $\mathrm{d}T/\mathrm{d}z$ and $\rho$ come outside, and what is left inside is $\int(1/\kappa_\nu)(\partial B_\nu/\partial T)\,\mathrm{d}\nu$, which by (4.1) is $(1/\kappa_{\rm R})\int(\partial B_\nu/\partial T)\,\mathrm{d}\nu$. The remaining integral is $\mathrm{d}/\mathrm{d}T$ of $\int B_\nu\,\mathrm{d}\nu = \sigma_{\rm SB}T^4/\pi$, that is $4\sigma_{\rm SB}T^{3}/\pi$. Hence $F = -(4\pi/3\kappa_{\rm R}\rho)(4\sigma_{\rm SB}T^{3}/\pi)\,\mathrm{d}T/\mathrm{d}z = -(16\sigma_{\rm SB}T^3/3\kappa_{\rm R}\rho)\,\mathrm{d}T/\mathrm{d}z$, the second form of (4.2). Since $a_{\rm rad} = 4\sigma_{\rm SB}/c$, $\mathrm{d}(a_{\rm rad}T^4)/\mathrm{d}z = (16\sigma_{\rm SB}T^{3}/c)\,\mathrm{d}T/\mathrm{d}z$, which turns the second form into the first. <span class="qed">∎</span></div>
+
+<p><b>The trivial limit is an isothermal slab.</b> With $\mathrm{d}T/\mathrm{d}z = 0$, (4.2) gives $F = 0$ at any opacity: a region at one temperature is filled with isotropic black-body radiation, and by Proposition 1 an isotropic field carries no flux. The other check is on the weighting. Had one averaged $\kappa_\nu$ directly instead of $1/\kappa_\nu$, a single opaque line would dominate the mean and choke the flux, which is the opposite of what happens: radiation leaks out through the transparent windows, and the harmonic mean (4.1) says so.</p>
+
+<div class="prop"><b>Proposition 5 (the two diffusivities).</b> Written as $F = -D\,\mathrm{d}u_{\rm rad}/\mathrm{d}z$, (4.2) has photon diffusivity
+$$ D \;=\; \frac{c\,\lambda_{\rm ph}}{3}, \qquad \lambda_{\rm ph} = \frac{1}{\kappa_{\rm R}\rho}, \qquad\text{so}\qquad t_{\rm diff} \;\sim\; \frac{R^{2}}{D} \;=\; \frac{3\kappa_{\rm R}\rho R^{2}}{c}. \tag{4.3}$$
+Written as a heat flux in a gas of specific heat $c_P$ at constant pressure, the same law is a diffusion of temperature with diffusivity
+$$ \chi \;=\; \frac{16\sigma_{\rm SB}T^{3}}{3\kappa_{\rm R}\rho^{2}c_P}. \tag{4.4}$$
+The time $R^2/D$ is an order of magnitude and is printed as one.</div>
+
+<div class="proof">With $u_{\rm rad} = a_{\rm rad}T^4$, the first form of (4.2) reads $F = -(c/3\kappa_{\rm R}\rho)\,\mathrm{d}u_{\rm rad}/\mathrm{d}z$, so $D = c/(3\kappa_{\rm R}\rho) = c\lambda_{\rm ph}/3$. For a diffusion equation $\partial u/\partial t = D\,\partial^{2}u/\partial z^{2}$, a disturbance of size $R$ decays on a time of order $R^{2}/D$; the exact coefficient depends on the shape of the disturbance, which is why this is an order of magnitude. Substituting $D$ gives $3\kappa_{\rm R}\rho R^{2}/c$. For (4.4), write the second form of (4.2) as $F = -K_{\rm rad}\,\mathrm{d}T/\mathrm{d}z$ with conductivity $K_{\rm rad} = 16\sigma_{\rm SB}T^3/(3\kappa_{\rm R}\rho)$. Energy conservation in a gas heated only by the divergence of this flux at constant pressure is $\rho c_P\,\partial T/\partial t = -\partial F/\partial z = \partial(K_{\rm rad}\,\partial T/\partial z)/\partial z$, which for locally uniform $K_{\rm rad}$ is a diffusion equation for $T$ with $\chi = K_{\rm rad}/(\rho c_P)$, which is (4.4). <span class="qed">∎</span></div>
+
+<p><b>The factor $3$ in $t_{\rm diff}$ is the $1/3$ of Proposition 4, and it is the same $1/3$</b> as in <a href="module01.html#knudsen">Module 1 §6</a>'s kinetic-theory transport coefficients, $\mu \simeq \tfrac13\rho v\lambda$ (<code>module01.html:363</code>): a flux carried by carriers of speed $v$ and free path $\lambda$ has diffusivity $\tfrac13 v\lambda$, and for photons $v = c$. Proposition 3's random walk had no such factor, because it did not fix the geometry; this is the factor it set aside. The step-1 version of this module's generator carried the $3$ as "the standard three-dimensional correction", with no source; Gate D ruled that it be derived rather than sourced, and it is derived here.</p>
+
+<p>$\chi$ is the diffusivity that <a href="module04.html#checks">Module 4 §7</a> named "the radiative diffusivity of the stellar gas" and did not evaluate. <a class="secref" href="#leak">§7</a> evaluates it.</p>
+
+<h2 id="grey">5. The grey atmosphere</h2>
+
+<p>At the surface of a star the diffusion law must fail, because $\tau$ goes to zero and the radiation field becomes one-sided. The simplest model that carries the radiation from the diffusion regime out to the surface is a <b>grey</b> atmosphere, in which $\kappa_\nu$ does not depend on frequency, in <b>radiative equilibrium</b>, in which every layer emits exactly the energy it absorbs so that the flux is constant with depth. That model has a closed-form temperature profile under the Eddington closure.</p>
+
+<div class="prop"><b>Proposition 6 (Eddington's grey atmosphere).</b> A plane-parallel grey atmosphere in radiative equilibrium and local thermal equilibrium, under the Eddington closure $P_{\rm rad} = u_{\rm rad}/3$ and with no radiation incident from outside, carrying the flux $F = \sigma_{\rm SB}T_{\rm eff}^{4}$, has
+$$ T^{4}(\tau) \;=\; \tfrac34\,T_{\rm eff}^{4}\left(\tau + \tfrac23\right), \tag{5.1}$$
+so that $T = T_{\rm eff}$ at $\tau = 2/3$. The exact grey solution, without the closure, replaces $2/3$ by the Hopf function $q_{\rm H}(\tau)$; that replacement is stated and not derived.</div>
+
+<div class="proof">Let $\tau$ increase inward, $\mathrm{d}\tau = -\kappa\rho\,\mathrm{d}z$ with $z$ outward, and $\mu = \cos\theta$ from the outward normal. The transfer equation (2.1) reads $\mu\,\mathrm{d}I/\mathrm{d}\tau = I - S$, frequency-integrated because $\kappa$ is grey. Integrate over solid angle: $\mathrm{d}F/\mathrm{d}\tau = 4\pi(J - S)$. Radiative equilibrium says $F$ is constant, so $J = S$ at every depth. Multiply by $\mu$ and integrate: $c\,\mathrm{d}P_{\rm rad}/\mathrm{d}\tau = F$, so $P_{\rm rad} = F\tau/c + C$. The closure $P_{\rm rad} = u_{\rm rad}/3 = 4\pi J/3c$ converts this into $J(\tau) = (3F/4\pi)\tau + 3cC/4\pi$. <b>The hinge is the surface condition, which fixes $C$.</b> At $\tau = 0$ nothing comes in, and the Eddington approximation takes the outgoing intensity as uniform over the outward hemisphere, $I = I_0$ for $\mu \gt 0$ and $I = 0$ for $\mu \lt 0$. Then $J(0) = I_0/2$ and $F = 2\pi\int_0^1 I_0\mu\,\mathrm{d}\mu = \pi I_0$, so $J(0) = F/2\pi$. (Such a hemispheric field also has $P_{\rm rad} = u_{\rm rad}/3$, by Problem C1, so the surface condition does not contradict the closure.) Hence $J(\tau) = (3F/4\pi)(\tau + 2/3)$. In local thermal equilibrium $S = \int B_\nu\,\mathrm{d}\nu = \sigma_{\rm SB}T^{4}/\pi$, and $J = S$ gives $\sigma_{\rm SB}T^4/\pi = (3\sigma_{\rm SB}T_{\rm eff}^4/4\pi)(\tau + 2/3)$, which is (5.1). At $\tau = 2/3$ the bracket is $4/3$ and $T = T_{\rm eff}$. <b>What is stated</b>: the exact solution of $J = \Lambda[J]$, the integral equation that (2.2) becomes when $S = J$, is $J = (3F/4\pi)(\tau + q_{\rm H}(\tau))$; this module computes $q_{\rm H}$ numerically and does not derive it. <span class="qed">∎</span></div>
+
+<p><b>The trivial limit is $\tau \to \infty$</b>, and it closes a loop. Deep in the atmosphere (5.1) gives $\mathrm{d}T^4/\mathrm{d}\tau = \tfrac34T_{\rm eff}^4$. Put that into Proposition 4 in its optical-depth form, $F = (c/3)\,\mathrm{d}(a_{\rm rad}T^4)/\mathrm{d}\tau$: the flux is $(ca_{\rm rad}/3)(\tfrac34T_{\rm eff}^4) = (ca_{\rm rad}/4)T_{\rm eff}^4 = \sigma_{\rm SB}T_{\rm eff}^4$ exactly, because $ca_{\rm rad} = 4\sigma_{\rm SB}$. The grey atmosphere at depth is the diffusion law carrying its own flux. The run evaluates the ratio as $1.000000$ (Problem D2).</p>
+
+<p>The Hopf function differs from $2/3$ by little. The run solves the exact grey problem and gets $q_{\rm H}(0) = 0.57730$ against the known $1/\sqrt3 = 0.57735$, and $q_{\rm H}(2/3) = 0.68876$, which moves $T$ at $\tau = 2/3$ by $0.412$ per cent. <b>The closure is a good approximation everywhere except the very top.</b></p>
+
+<p><b>Which $T_{\rm eff}$.</b> The check below uses $5777$ K, because the model atmosphere it is compared against was built at that value and says so in its header. Everywhere else this book uses the IAU nominal $5772$ K, which is $0.087$ per cent lower. Comparing a model to (5.1) at a $T_{\rm eff}$ it was not built for would put a spurious $0.087$ per cent into every row.</p>
+
+<div class="keyresult"><b>CHECK 4 — CONFIRMED, to 3.0 per cent in T.</b> Eddington's grey profile (5.1) against the temperature structure of Castelli's ATLAS9 solar model, read at seven Rosseland optical depths:
+<table>
+<tr><th>$\tau_{\rm R}$</th><th>ATLAS9 $T$ (K)</th><th>grey $T$ (K)</th><th>grey/ATLAS9</th></tr>
+<tr><td>0.01</td><td>4733.5</td><td>4876.0</td><td>1.0301</td></tr>
+<tr><td>0.1</td><td>5081.2</td><td>5030.6</td><td>0.9900</td></tr>
+<tr><td>0.3</td><td>5455.1</td><td>5330.7</td><td>0.9772</td></tr>
+<tr><td>2/3</td><td>5910.1</td><td>5777.0</td><td>0.9775</td></tr>
+<tr><td>1</td><td>6228.3</td><td>6108.4</td><td>0.9807</td></tr>
+<tr><td>2</td><td>6973.4</td><td>6870.0</td><td>0.9852</td></tr>
+<tr><td>3</td><td>7481.8</td><td>7439.4</td><td>0.9943</td></tr>
+</table>
+The largest miss is $0.0301$ in $T$, which is $0.1259$ — <b>12.6 per cent — in $T^4$</b>, and the flux goes as $T^4$. <b>The band of 3.1 per cent was set after this table was computed</b>, so this check measures the size of the grey model's error; it does not test a prediction made blind.</div>
+
+<figure>
+<!--FIG_GREY-->
+<svg class="setupfig" viewBox="0 0 720 520" width="100%" role="img" aria-label="Two stacked panels against Rosseland optical depth from 0.01 to 3 on a logarithmic axis. The upper panel shows temperature from the ATLAS9 solar model and from the grey Eddington atmosphere; the two curves cross near 0.05 and the grey curve lies below the model deeper in. The lower panel shows the grey temperature divided by the model temperature minus one, in per cent, inside a shaded band of plus and minus 3.1 per cent; the largest excursion is plus 3.0 per cent at the top." >
+<rect x="86" y="30" width="554" height="220" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="86" y="300" width="554" height="150" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="86.0" y="323.3" width="554.0" height="103.3" fill="#2dd4bf" opacity="0.12"/>
+<line x1="86.0" y1="323.3" x2="640.0" y2="323.3" stroke="#2dd4bf" stroke-width="1" stroke-dasharray="5 4"/>
+<line x1="86.0" y1="426.7" x2="640.0" y2="426.7" stroke="#2dd4bf" stroke-width="1" stroke-dasharray="5 4"/>
+<line x1="86.0" y1="375.0" x2="640.0" y2="375.0" stroke="#334155" stroke-width="1"/>
+<line x1="493.9" y1="30" x2="493.9" y2="250" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="493.9" y1="300" x2="493.9" y2="450" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="86.0" y1="450" x2="86.0" y2="455" stroke="#334155" stroke-width="1"/>
+<text x="86.0" y="468.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.01</text>
+<line x1="309.6" y1="450" x2="309.6" y2="455" stroke="#334155" stroke-width="1"/>
+<text x="309.6" y="468.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.1</text>
+<line x1="533.3" y1="450" x2="533.3" y2="455" stroke="#334155" stroke-width="1"/>
+<text x="533.3" y="468.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1</text>
+<line x1="86.0" y1="250" x2="86.0" y2="255" stroke="#334155" stroke-width="1"/>
+<line x1="309.6" y1="250" x2="309.6" y2="255" stroke="#334155" stroke-width="1"/>
+<line x1="533.3" y1="250" x2="533.3" y2="255" stroke="#334155" stroke-width="1"/>
+<line x1="81" y1="215.6" x2="86" y2="215.6" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="219.6" font-size="10.5" text-anchor="end" fill="#94a3b8">5000</text>
+<line x1="81" y1="181.2" x2="86" y2="181.2" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="185.2" font-size="10.5" text-anchor="end" fill="#94a3b8">5500</text>
+<line x1="81" y1="146.9" x2="86" y2="146.9" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="150.9" font-size="10.5" text-anchor="end" fill="#94a3b8">6000</text>
+<line x1="81" y1="112.5" x2="86" y2="112.5" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="116.5" font-size="10.5" text-anchor="end" fill="#94a3b8">6500</text>
+<line x1="81" y1="78.1" x2="86" y2="78.1" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="82.1" font-size="10.5" text-anchor="end" fill="#94a3b8">7000</text>
+<line x1="81" y1="43.8" x2="86" y2="43.8" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="47.8" font-size="10.5" text-anchor="end" fill="#94a3b8">7500</text>
+<line x1="81" y1="425.0" x2="86" y2="425.0" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="429.0" font-size="10.5" text-anchor="end" fill="#94a3b8">-3</text>
+<line x1="81" y1="375.0" x2="86" y2="375.0" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="379.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0</text>
+<line x1="81" y1="325.0" x2="86" y2="325.0" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="329.0" font-size="10.5" text-anchor="end" fill="#94a3b8">+3</text>
+<path d="M 86.0,233.9 L 87.9,233.8 L 89.7,233.7 L 91.6,233.5 L 93.4,233.4 L 95.3,233.2 L 97.1,233.1 L 99.0,233.0 L 100.8,232.8 L 102.7,232.7 L 104.5,232.6 L 106.4,232.4 L 108.2,232.3 L 110.1,232.1 L 111.9,232.0 L 113.8,231.9 L 115.6,231.7 L 117.5,231.6 L 119.4,231.4 L 121.2,231.3 L 123.1,231.1 L 124.9,231.0 L 126.8,230.8 L 128.6,230.7 L 130.5,230.5 L 132.3,230.4 L 134.2,230.2 L 136.0,230.1 L 137.9,230.0 L 139.7,229.8 L 141.6,229.7 L 143.4,229.5 L 145.3,229.3 L 147.1,229.2 L 149.0,229.0 L 150.8,228.9 L 152.7,228.7 L 154.6,228.6 L 156.4,228.4 L 158.3,228.3 L 160.1,228.1 L 162.0,227.9 L 163.8,227.8 L 165.7,227.6 L 167.5,227.5 L 169.4,227.3 L 171.2,227.1 L 173.1,227.0 L 174.9,226.8 L 176.8,226.6 L 178.6,226.4 L 180.5,226.3 L 182.3,226.1 L 184.2,225.9 L 186.1,225.8 L 187.9,225.6 L 189.8,225.4 L 191.6,225.2 L 193.5,225.1 L 195.3,224.9 L 197.2,224.7 L 199.0,224.5 L 200.9,224.3 L 202.7,224.1 L 204.6,223.9 L 206.4,223.7 L 208.3,223.5 L 210.1,223.4 L 212.0,223.2 L 213.8,223.0 L 215.7,222.8 L 217.6,222.6 L 219.4,222.4 L 221.3,222.2 L 223.1,222.0 L 225.0,221.8 L 226.8,221.6 L 228.7,221.4 L 230.5,221.1 L 232.4,220.9 L 234.2,220.7 L 236.1,220.5 L 237.9,220.3 L 239.8,220.0 L 241.6,219.8 L 243.5,219.6 L 245.3,219.4 L 247.2,219.2 L 249.1,218.9 L 250.9,218.7 L 252.8,218.5 L 254.6,218.3 L 256.5,218.0 L 258.3,217.8 L 260.2,217.5 L 262.0,217.2 L 263.9,217.0 L 265.7,216.7 L 267.6,216.5 L 269.4,216.2 L 271.3,216.0 L 273.1,215.7 L 275.0,215.5 L 276.8,215.2 L 278.7,215.0 L 280.5,214.7 L 282.4,214.4 L 284.3,214.1 L 286.1,213.8 L 288.0,213.5 L 289.8,213.2 L 291.7,212.9 L 293.5,212.6 L 295.4,212.3 L 297.2,212.0 L 299.1,211.7 L 300.9,211.4 L 302.8,211.1 L 304.6,210.8 L 306.5,210.5 L 308.3,210.3 L 310.2,209.9 L 312.0,209.6 L 313.9,209.2 L 315.8,208.9 L 317.6,208.5 L 319.5,208.2 L 321.3,207.8 L 323.2,207.5 L 325.0,207.1 L 326.9,206.8 L 328.7,206.4 L 330.6,206.1 L 332.4,205.7 L 334.3,205.4 L 336.1,205.0 L 338.0,204.7 L 339.8,204.3 L 341.7,203.9 L 343.5,203.5 L 345.4,203.0 L 347.3,202.6 L 349.1,202.2 L 351.0,201.8 L 352.8,201.4 L 354.7,201.0 L 356.5,200.6 L 358.4,200.2 L 360.2,199.8 L 362.1,199.3 L 363.9,198.9 L 365.8,198.5 L 367.6,198.0 L 369.5,197.6 L 371.3,197.1 L 373.2,196.6 L 375.0,196.1 L 376.9,195.6 L 378.7,195.2 L 380.6,194.7 L 382.5,194.2 L 384.3,193.7 L 386.2,193.2 L 388.0,192.7 L 389.9,192.3 L 391.7,191.8 L 393.6,191.3 L 395.4,190.7 L 397.3,190.2 L 399.1,189.6 L 401.0,189.0 L 402.8,188.5 L 404.7,187.9 L 406.5,187.3 L 408.4,186.8 L 410.2,186.2 L 412.1,185.6 L 414.0,185.1 L 415.8,184.5 L 417.7,183.9 L 419.5,183.4 L 421.4,182.8 L 423.2,182.2 L 425.1,181.5 L 426.9,180.8 L 428.8,180.2 L 430.6,179.5 L 432.5,178.8 L 434.3,178.2 L 436.2,177.5 L 438.0,176.9 L 439.9,176.2 L 441.7,175.5 L 443.6,174.9 L 445.5,174.2 L 447.3,173.6 L 449.2,172.9 L 451.0,172.2 L 452.9,171.4 L 454.7,170.6 L 456.6,169.8 L 458.4,169.1 L 460.3,168.3 L 462.1,167.5 L 464.0,166.7 L 465.8,166.0 L 467.7,165.2 L 469.5,164.4 L 471.4,163.6 L 473.2,162.9 L 475.1,162.1 L 476.9,161.3 L 478.8,160.5 L 480.7,159.5 L 482.5,158.6 L 484.4,157.7 L 486.2,156.8 L 488.1,155.9 L 489.9,155.0 L 491.8,154.1 L 493.6,153.2 L 495.5,152.3 L 497.3,151.4 L 499.2,150.5 L 501.0,149.6 L 502.9,148.7 L 504.7,147.7 L 506.6,146.8 L 508.4,145.7 L 510.3,144.6 L 512.2,143.5 L 514.0,142.4 L 515.9,141.4 L 517.7,140.3 L 519.6,139.2 L 521.4,138.1 L 523.3,137.0 L 525.1,136.0 L 527.0,134.9 L 528.8,133.8 L 530.7,132.7 L 532.5,131.6 L 534.4,130.5 L 536.2,129.3 L 538.1,128.0 L 539.9,126.7 L 541.8,125.5 L 543.7,124.2 L 545.5,123.0 L 547.4,121.7 L 549.2,120.4 L 551.1,119.2 L 552.9,117.9 L 554.8,116.7 L 556.6,115.4 L 558.5,114.1 L 560.3,112.9 L 562.2,111.6 L 564.0,110.2 L 565.9,108.7 L 567.7,107.2 L 569.6,105.7 L 571.4,104.3 L 573.3,102.8 L 575.2,101.3 L 577.0,99.8 L 578.9,98.3 L 580.7,96.9 L 582.6,95.4 L 584.4,93.9 L 586.3,92.4 L 588.1,90.9 L 590.0,89.5 L 591.8,87.9 L 593.7,86.2 L 595.5,84.5 L 597.4,82.9 L 599.2,81.2 L 601.1,79.5 L 602.9,77.9 L 604.8,76.2 L 606.6,74.5 L 608.5,72.8 L 610.4,71.2 L 612.2,69.5 L 614.1,67.8 L 615.9,66.2 L 617.8,64.5 L 619.6,62.8 L 621.5,61.2 L 623.3,59.6 L 625.2,58.0 L 627.0,56.3 L 628.9,54.7 L 630.7,53.1 L 632.6,51.5 L 634.4,49.9 L 636.3,48.2 L 638.1,46.6 L 640.0,45.0" fill="none" stroke="#fb923c" stroke-width="2.2"/>
+<path d="M 86.0,224.2 L 87.9,224.1 L 89.7,224.1 L 91.6,224.1 L 93.4,224.1 L 95.3,224.0 L 97.1,224.0 L 99.0,224.0 L 100.8,223.9 L 102.7,223.9 L 104.5,223.9 L 106.4,223.9 L 108.2,223.8 L 110.1,223.8 L 111.9,223.8 L 113.8,223.7 L 115.6,223.7 L 117.5,223.7 L 119.4,223.6 L 121.2,223.6 L 123.1,223.6 L 124.9,223.5 L 126.8,223.5 L 128.6,223.5 L 130.5,223.4 L 132.3,223.4 L 134.2,223.4 L 136.0,223.3 L 137.9,223.3 L 139.7,223.2 L 141.6,223.2 L 143.4,223.2 L 145.3,223.1 L 147.1,223.1 L 149.0,223.0 L 150.8,223.0 L 152.7,222.9 L 154.6,222.9 L 156.4,222.8 L 158.3,222.8 L 160.1,222.7 L 162.0,222.7 L 163.8,222.6 L 165.7,222.6 L 167.5,222.5 L 169.4,222.5 L 171.2,222.4 L 173.1,222.4 L 174.9,222.3 L 176.8,222.3 L 178.6,222.2 L 180.5,222.1 L 182.3,222.1 L 184.2,222.0 L 186.1,221.9 L 187.9,221.9 L 189.8,221.8 L 191.6,221.7 L 193.5,221.7 L 195.3,221.6 L 197.2,221.5 L 199.0,221.5 L 200.9,221.4 L 202.7,221.3 L 204.6,221.2 L 206.4,221.2 L 208.3,221.1 L 210.1,221.0 L 212.0,220.9 L 213.8,220.8 L 215.7,220.7 L 217.6,220.6 L 219.4,220.6 L 221.3,220.5 L 223.1,220.4 L 225.0,220.3 L 226.8,220.2 L 228.7,220.1 L 230.5,220.0 L 232.4,219.9 L 234.2,219.8 L 236.1,219.7 L 237.9,219.6 L 239.8,219.5 L 241.6,219.3 L 243.5,219.2 L 245.3,219.1 L 247.2,219.0 L 249.1,218.9 L 250.9,218.8 L 252.8,218.6 L 254.6,218.5 L 256.5,218.4 L 258.3,218.2 L 260.2,218.1 L 262.0,218.0 L 263.9,217.8 L 265.7,217.7 L 267.6,217.6 L 269.4,217.4 L 271.3,217.3 L 273.1,217.1 L 275.0,217.0 L 276.8,216.8 L 278.7,216.6 L 280.5,216.5 L 282.4,216.3 L 284.3,216.1 L 286.1,216.0 L 288.0,215.8 L 289.8,215.6 L 291.7,215.4 L 293.5,215.3 L 295.4,215.1 L 297.2,214.9 L 299.1,214.7 L 300.9,214.5 L 302.8,214.3 L 304.6,214.1 L 306.5,213.9 L 308.3,213.7 L 310.2,213.5 L 312.0,213.2 L 313.9,213.0 L 315.8,212.8 L 317.6,212.6 L 319.5,212.3 L 321.3,212.1 L 323.2,211.8 L 325.0,211.6 L 326.9,211.4 L 328.7,211.1 L 330.6,210.8 L 332.4,210.6 L 334.3,210.3 L 336.1,210.0 L 338.0,209.8 L 339.8,209.5 L 341.7,209.2 L 343.5,208.9 L 345.4,208.6 L 347.3,208.3 L 349.1,208.0 L 351.0,207.7 L 352.8,207.4 L 354.7,207.1 L 356.5,206.7 L 358.4,206.4 L 360.2,206.1 L 362.1,205.7 L 363.9,205.4 L 365.8,205.0 L 367.6,204.7 L 369.5,204.3 L 371.3,203.9 L 373.2,203.5 L 375.0,203.2 L 376.9,202.8 L 378.7,202.4 L 380.6,202.0 L 382.5,201.6 L 384.3,201.2 L 386.2,200.7 L 388.0,200.3 L 389.9,199.9 L 391.7,199.4 L 393.6,199.0 L 395.4,198.5 L 397.3,198.1 L 399.1,197.6 L 401.0,197.1 L 402.8,196.6 L 404.7,196.1 L 406.5,195.7 L 408.4,195.1 L 410.2,194.6 L 412.1,194.1 L 414.0,193.6 L 415.8,193.0 L 417.7,192.5 L 419.5,192.0 L 421.4,191.4 L 423.2,190.8 L 425.1,190.2 L 426.9,189.7 L 428.8,189.1 L 430.6,188.5 L 432.5,187.9 L 434.3,187.2 L 436.2,186.6 L 438.0,186.0 L 439.9,185.3 L 441.7,184.7 L 443.6,184.0 L 445.5,183.3 L 447.3,182.7 L 449.2,182.0 L 451.0,181.3 L 452.9,180.6 L 454.7,179.8 L 456.6,179.1 L 458.4,178.4 L 460.3,177.6 L 462.1,176.9 L 464.0,176.1 L 465.8,175.3 L 467.7,174.5 L 469.5,173.7 L 471.4,172.9 L 473.2,172.1 L 475.1,171.3 L 476.9,170.4 L 478.8,169.6 L 480.7,168.7 L 482.5,167.8 L 484.4,166.9 L 486.2,166.0 L 488.1,165.1 L 489.9,164.2 L 491.8,163.3 L 493.6,162.4 L 495.5,161.4 L 497.3,160.4 L 499.2,159.5 L 501.0,158.5 L 502.9,157.5 L 504.7,156.5 L 506.6,155.5 L 508.4,154.4 L 510.3,153.4 L 512.2,152.3 L 514.0,151.3 L 515.9,150.2 L 517.7,149.1 L 519.6,148.0 L 521.4,146.9 L 523.3,145.7 L 525.1,144.6 L 527.0,143.4 L 528.8,142.3 L 530.7,141.1 L 532.5,139.9 L 534.4,138.7 L 536.2,137.5 L 538.1,136.3 L 539.9,135.0 L 541.8,133.8 L 543.7,132.5 L 545.5,131.2 L 547.4,129.9 L 549.2,128.6 L 551.1,127.3 L 552.9,126.0 L 554.8,124.6 L 556.6,123.3 L 558.5,121.9 L 560.3,120.5 L 562.2,119.1 L 564.0,117.7 L 565.9,116.3 L 567.7,114.8 L 569.6,113.4 L 571.4,111.9 L 573.3,110.5 L 575.2,109.0 L 577.0,107.5 L 578.9,105.9 L 580.7,104.4 L 582.6,102.9 L 584.4,101.3 L 586.3,99.7 L 588.1,98.1 L 590.0,96.5 L 591.8,94.9 L 593.7,93.3 L 595.5,91.6 L 597.4,90.0 L 599.2,88.3 L 601.1,86.6 L 602.9,84.9 L 604.8,83.2 L 606.6,81.5 L 608.5,79.7 L 610.4,78.0 L 612.2,76.2 L 614.1,74.4 L 615.9,72.6 L 617.8,70.8 L 619.6,69.0 L 621.5,67.1 L 623.3,65.3 L 625.2,63.4 L 627.0,61.5 L 628.9,59.6 L 630.7,57.7 L 632.6,55.8 L 634.4,53.8 L 636.3,51.9 L 638.1,49.9 L 640.0,47.9" fill="none" stroke="#2dd4bf" stroke-width="2.2" stroke-dasharray="7 4"/>
+<path d="M 86.0,324.8 L 87.9,325.5 L 89.7,326.1 L 91.6,326.7 L 93.4,327.3 L 95.3,327.9 L 97.1,328.5 L 99.0,329.1 L 100.8,329.7 L 102.7,330.3 L 104.5,330.8 L 106.4,331.4 L 108.2,332.0 L 110.1,332.6 L 111.9,333.2 L 113.8,333.7 L 115.6,334.3 L 117.5,334.9 L 119.4,335.5 L 121.2,336.1 L 123.1,336.7 L 124.9,337.3 L 126.8,337.9 L 128.6,338.4 L 130.5,339.0 L 132.3,339.6 L 134.2,340.1 L 136.0,340.7 L 137.9,341.2 L 139.7,341.8 L 141.6,342.3 L 143.4,342.9 L 145.3,343.5 L 147.1,344.1 L 149.0,344.7 L 150.8,345.3 L 152.7,345.8 L 154.6,346.4 L 156.4,347.0 L 158.3,347.5 L 160.1,348.1 L 162.0,348.6 L 163.8,349.2 L 165.7,349.7 L 167.5,350.2 L 169.4,350.8 L 171.2,351.3 L 173.1,351.9 L 174.9,352.5 L 176.8,353.1 L 178.6,353.7 L 180.5,354.3 L 182.3,354.8 L 184.2,355.4 L 186.1,356.0 L 187.9,356.5 L 189.8,357.1 L 191.6,357.6 L 193.5,358.1 L 195.3,358.6 L 197.2,359.2 L 199.0,359.7 L 200.9,360.4 L 202.7,361.0 L 204.6,361.5 L 206.4,362.1 L 208.3,362.7 L 210.1,363.3 L 212.0,363.9 L 213.8,364.4 L 215.7,365.0 L 217.6,365.5 L 219.4,366.0 L 221.3,366.5 L 223.1,367.1 L 225.0,367.6 L 226.8,368.1 L 228.7,368.7 L 230.5,369.3 L 232.4,369.9 L 234.2,370.5 L 236.1,371.0 L 237.9,371.6 L 239.8,372.2 L 241.6,372.7 L 243.5,373.2 L 245.3,373.7 L 247.2,374.2 L 249.1,374.7 L 250.9,375.2 L 252.8,375.7 L 254.6,376.2 L 256.5,376.8 L 258.3,377.4 L 260.2,378.0 L 262.0,378.6 L 263.9,379.1 L 265.7,379.7 L 267.6,380.2 L 269.4,380.7 L 271.3,381.3 L 273.1,381.8 L 275.0,382.2 L 276.8,382.7 L 278.7,383.2 L 280.5,383.6 L 282.4,384.1 L 284.3,384.7 L 286.1,385.3 L 288.0,385.9 L 289.8,386.5 L 291.7,387.1 L 293.5,387.6 L 295.4,388.1 L 297.2,388.6 L 299.1,389.1 L 300.9,389.6 L 302.8,390.1 L 304.6,390.5 L 306.5,390.9 L 308.3,391.3 L 310.2,391.8 L 312.0,392.4 L 313.9,393.0 L 315.8,393.6 L 317.6,394.1 L 319.5,394.6 L 321.3,395.2 L 323.2,395.6 L 325.0,396.1 L 326.9,396.6 L 328.7,397.0 L 330.6,397.4 L 332.4,397.8 L 334.3,398.1 L 336.1,398.5 L 338.0,398.9 L 339.8,399.4 L 341.7,400.0 L 343.5,400.5 L 345.4,401.0 L 347.3,401.5 L 349.1,402.0 L 351.0,402.4 L 352.8,402.8 L 354.7,403.2 L 356.5,403.6 L 358.4,403.9 L 360.2,404.2 L 362.1,404.5 L 363.9,404.7 L 365.8,405.0 L 367.6,405.5 L 369.5,406.0 L 371.3,406.5 L 373.2,406.9 L 375.0,407.3 L 376.9,407.7 L 378.7,408.1 L 380.6,408.4 L 382.5,408.7 L 384.3,408.9 L 386.2,409.2 L 388.0,409.4 L 389.9,409.5 L 391.7,409.7 L 393.6,409.8 L 395.4,410.2 L 397.3,410.6 L 399.1,411.0 L 401.0,411.4 L 402.8,411.7 L 404.7,412.0 L 406.5,412.2 L 408.4,412.5 L 410.2,412.6 L 412.1,412.8 L 414.0,412.9 L 415.8,413.0 L 417.7,413.0 L 419.5,413.0 L 421.4,413.0 L 423.2,413.3 L 425.1,413.6 L 426.9,413.9 L 428.8,414.1 L 430.6,414.3 L 432.5,414.5 L 434.3,414.6 L 436.2,414.6 L 438.0,414.7 L 439.9,414.7 L 441.7,414.6 L 443.6,414.6 L 445.5,414.4 L 447.3,414.3 L 449.2,414.1 L 451.0,414.2 L 452.9,414.4 L 454.7,414.6 L 456.6,414.7 L 458.4,414.7 L 460.3,414.8 L 462.1,414.8 L 464.0,414.7 L 465.8,414.6 L 467.7,414.5 L 469.5,414.3 L 471.4,414.1 L 473.2,413.8 L 475.1,413.5 L 476.9,413.1 L 478.8,413.0 L 480.7,413.1 L 482.5,413.2 L 484.4,413.2 L 486.2,413.2 L 488.1,413.1 L 489.9,413.0 L 491.8,412.8 L 493.6,412.6 L 495.5,412.3 L 497.3,412.0 L 499.2,411.7 L 501.0,411.3 L 502.9,410.8 L 504.7,410.3 L 506.6,410.0 L 508.4,410.2 L 510.3,410.2 L 512.2,410.2 L 514.0,410.2 L 515.9,410.1 L 517.7,410.0 L 519.6,409.8 L 521.4,409.6 L 523.3,409.3 L 525.1,409.0 L 527.0,408.7 L 528.8,408.3 L 530.7,407.8 L 532.5,407.3 L 534.4,406.8 L 536.2,406.9 L 538.1,406.9 L 539.9,406.9 L 541.8,406.8 L 543.7,406.7 L 545.5,406.6 L 547.4,406.3 L 549.2,406.1 L 551.1,405.8 L 552.9,405.4 L 554.8,405.0 L 556.6,404.5 L 558.5,404.0 L 560.3,403.5 L 562.2,402.9 L 564.0,402.9 L 565.9,403.0 L 567.7,403.1 L 569.6,403.1 L 571.4,403.1 L 573.3,403.0 L 575.2,402.9 L 577.0,402.7 L 578.9,402.4 L 580.7,402.2 L 582.6,401.8 L 584.4,401.5 L 586.3,401.1 L 588.1,400.6 L 590.0,400.1 L 591.8,399.9 L 593.7,399.9 L 595.5,399.9 L 597.4,399.9 L 599.2,399.8 L 601.1,399.7 L 602.9,399.5 L 604.8,399.3 L 606.6,399.0 L 608.5,398.6 L 610.4,398.3 L 612.2,397.9 L 614.1,397.4 L 615.9,396.9 L 617.8,396.3 L 619.6,395.7 L 621.5,394.9 L 623.3,394.0 L 625.2,393.1 L 627.0,392.2 L 628.9,391.2 L 630.7,390.2 L 632.6,389.1 L 634.4,388.0 L 636.3,386.9 L 638.1,385.7 L 640.0,384.5" fill="none" stroke="#facc15" stroke-width="2"/>
+<circle cx="86.0" cy="324.8" r="3.4" fill="#facc15"/>
+<circle cx="309.6" cy="391.6" r="3.4" fill="#facc15"/>
+<circle cx="416.4" cy="413.0" r="3.4" fill="#facc15"/>
+<circle cx="493.9" cy="412.5" r="3.4" fill="#facc15"/>
+<circle cx="533.3" cy="407.1" r="3.4" fill="#facc15"/>
+<circle cx="600.6" cy="399.7" r="3.4" fill="#facc15"/>
+<circle cx="640.0" cy="384.5" r="3.4" fill="#facc15"/>
+<circle cx="493.9" cy="153.1" r="4.2" fill="#fb923c"/>
+<circle cx="493.9" cy="162.2" r="4.2" fill="#2dd4bf"/>
+<text x="186.6" y="85.0" font-size="11.5" text-anchor="start" fill="#fb923c">ATLAS9 model, T(&#964;<tspan baseline-shift="sub" font-size="8">R</tspan>)</text>
+<text x="186.6" y="102.2" font-size="11.5" text-anchor="start" fill="#2dd4bf">grey Eddington atmosphere, T<tspan baseline-shift="sub" font-size="8">eff</tspan> = 5777 K</text>
+<text x="485.9" y="141.1" font-size="10.5" text-anchor="end" fill="#fb923c">5910.1 K</text>
+<text x="501.9" y="178.2" font-size="10.5" text-anchor="start" fill="#2dd4bf">T = T<tspan baseline-shift="sub" font-size="8">eff</tspan></text>
+<text x="487.9" y="44.0" font-size="10.5" text-anchor="end" fill="#a78bfa">&#964;<tspan baseline-shift="sub" font-size="8">R</tspan> = 2/3</text>
+<text x="309.6" y="338.3" font-size="10.5" text-anchor="start" fill="#2dd4bf">&#177;3.1 per cent band</text>
+<text x="103.9" y="440.8" font-size="10.5" text-anchor="start" fill="#facc15">grey/ATLAS9 &#8722; 1, per cent</text>
+<text x="22.0" y="140.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">T (K)</text>
+<text x="363.0" y="490.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">Rosseland optical depth &#964;<tspan baseline-shift="sub" font-size="8">R</tspan></text>
+</svg>
+<!--/FIG_GREY-->
+<figcaption>CHECK 4. Upper panel: temperature against Rosseland optical depth in the ATLAS9 solar model (solid) and in Eddington's grey atmosphere (5.1) at the model's own $T_{\rm eff} = 5777$ K (dashed). Lower panel: grey/ATLAS9 $-\,1$ in per cent, with the seven levels of the table as dots and the $\pm3.1$ per cent band shaded. The residual panel is the check. The vertical dotted line is $\tau_{\rm R} = 2/3$, where the grey model gives $T_{\rm eff}$ by construction and ATLAS9 gives $5910.1$ K.</figcaption>
+</figure>
+
+<p><b>What the check tests, and what it cannot separate.</b> At $\tau = 2/3$ the grey model gives $T = T_{\rm eff}$ by construction, so the $2.30$ per cent miss there is the whole finding: ATLAS9's $\tau_{\rm R} = 2/3$ layer is $133.1$ K hotter than $T_{\rm eff}$. The exact grey solution raises $T(2/3)$ by only $0.412$ per cent, so $1.89$ of the $2.30$ per cent is <em>not</em> the Eddington closure. What it is, this check does not say: ATLAS9 has a frequency-dependent opacity and a mixing-length convection zone with $l/H = 1.25$, and both are absent from (5.1). At $\tau = 0.01$ the balance is the other way round. There the exact grey solution multiplies the grey temperature by $0.9697$, which would bring grey/ATLAS9 from $1.0301$ to $0.9988$: <b>at the top of the atmosphere the closure, and not the grey opacity, is the error.</b></p>
+
+<div class="prov">This check <b>replaces</b> the CHECK 4 that step 1 of this module's preparation designed — Eddington's standard-model $1 - \beta$ against the tabulated Sun, a ratio of $2.30$. That ratio is <a href="module03.html#problems">Module 3</a>'s result: its Problem K3 solution (<code>module03.html:885</code>) prints it and argues that it does not refute $n = 3$. It is cited in <a class="secref" href="#mixture">§8</a> and not re-checked here.</div>
+
+<h2 id="anchor">6. The anchor: the opacity of the solar photosphere</h2>
+
+<p><a href="module06.html#mlt">Module 6 §6</a> built the solar photosphere from convection: a mixing length, the Schwarzschild criterion, and the flux the Sun must carry. It computed a pressure scale height $H = 142.9$ km and a density $\rho = 3.0631\times10^{-7}\ \mathrm{g\,cm^{-3}}$ and never wrote down an opacity. Yet the photosphere is <em>defined</em> by one: it is the layer at optical depth $2/3$. Those two numbers therefore imply an opacity, and the implication can be checked against a published model that neither module was built from.</p>
+
+<p><b>The inference.</b> In an isothermal layer the density falls as $e^{-z/H}$, so the mass column above a level of density $\rho$ is $\int\rho\,\mathrm{d}z = \rho H$ exactly. If $\kappa$ is the same all the way up, the optical depth of that column is $\tau = \kappa\rho H$, and demanding $\tau = 2/3$ gives</p>
+
+$$ \kappa \;=\; \frac{2/3}{\rho H} \;=\; 0.15231\ \mathrm{cm^{2}\,g^{-1}}. \tag{6.1}$$
+
+<p>By construction the photon mean free path at that opacity is $H/\tau = 1.5000\,H$. The target is Castelli's ATLAS9 model of the solar atmosphere, which tabulates the Rosseland mean at every depth together with the temperature and pressure; the run integrates $\tau_{\rm R} = \int\kappa_{\rm R}\,\mathrm{d}m$ down the column and rebuilds the density from the pressure, the electron density and the file's own abundances. ATLAS9 gives $\kappa_{\rm R} = 0.4447\ \mathrm{cm^{2}\,g^{-1}}$ at $\tau_{\rm R} = 2/3$, where $T = 5910.1$ K and $\rho = 2.6721\times10^{-7}\ \mathrm{g\,cm^{-3}}$, and $\kappa_{\rm R} = 0.3596$ at $T = 5772$ K, which it reaches at $\tau_{\rm R} = 0.5430$. As a test of the rebuild, the file's pressure satisfies hydrostatic balance $P = g\,m$ at its deepest layer to $0.9999$.</p>
+
+<div class="keyresult"><b>CHECK 2, THE ANCHOR — REFUTED as a digit; a tie at order of magnitude.</b> The one-scale-height inference (6.1) is low against ATLAS9 by a factor of <b>2.361</b> at $T = T_{\rm eff}$ and <b>2.920</b> at $\tau_{\rm R} = 2/3$. <b>The tolerance was fixed in advance at a factor of 2</b>, and the reason is the spread of the inputs themselves: Module 6's density is $1.1463$ times ATLAS9's at $\tau_{\rm R} = 2/3$, and the two ATLAS9 levels differ from each other by $1.2367$; together that is $1.4176$. A miss above a factor of two lies outside what the inputs' own spread can produce, and the run asserts it.</div>
+
+<p><b>What is refuted is the premise, and Fig. 2 shows it.</b> The inference assumes $\kappa$ constant over the column it averages. ATLAS9's $\kappa_{\rm R}$ rises from $0.360$ to $0.727$ between $\tau_{\rm R} = 0.543$ and $1$ — a factor of $2.0228$ across exactly the layer in question. An opacity that doubles inside one scale height cannot be recovered from one number at one level. The order of magnitude survives: Module 6's convection model and ATLAS9 agree that the photospheric opacity is a few tenths of a $\mathrm{cm^2\,g^{-1}}$.</p>
+
+<figure>
+<!--FIG_OPACITY-->
+<svg class="setupfig" viewBox="0 0 720 420" width="100%" role="img" aria-label="The Rosseland mean opacity of the ATLAS9 solar model against Rosseland optical depth, both axes logarithmic. The curve rises by about two decades from optical depth 0.01 to 3. Two horizontal dashed lines mark the opacity inferred from one scale height, 0.152, and the fully ionised electron-scattering opacity, 0.350. A shaded band between optical depth 0.543 and 1 shows the model opacity doubling across the layer the inference averages." >
+<rect x="86" y="44" width="554" height="300" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="474.0" y="44" width="59.3" height="300" fill="#a78bfa" opacity="0.13"/>
+<line x1="86.0" y1="344" x2="86.0" y2="349" stroke="#334155" stroke-width="1"/>
+<text x="86.0" y="362.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.01</text>
+<line x1="309.6" y1="344" x2="309.6" y2="349" stroke="#334155" stroke-width="1"/>
+<text x="309.6" y="362.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.1</text>
+<line x1="533.3" y1="344" x2="533.3" y2="349" stroke="#334155" stroke-width="1"/>
+<text x="533.3" y="362.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1</text>
+<line x1="81" y1="334.7" x2="86" y2="334.7" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="338.7" font-size="10.5" text-anchor="end" fill="#94a3b8">0.03</text>
+<line x1="81" y1="272.0" x2="86" y2="272.0" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="276.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.1</text>
+<line x1="81" y1="214.7" x2="86" y2="214.7" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="218.7" font-size="10.5" text-anchor="end" fill="#94a3b8">0.3</text>
+<line x1="81" y1="152.0" x2="86" y2="152.0" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="156.0" font-size="10.5" text-anchor="end" fill="#94a3b8">1</text>
+<line x1="81" y1="94.7" x2="86" y2="94.7" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="98.7" font-size="10.5" text-anchor="end" fill="#94a3b8">3</text>
+<line x1="86" y1="250.1" x2="640" y2="250.1" stroke="#2dd4bf" stroke-width="1.4" stroke-dasharray="6 4"/>
+<line x1="86" y1="206.8" x2="640" y2="206.8" stroke="#f87171" stroke-width="1.4" stroke-dasharray="6 4"/>
+<path d="M 86.0,316.7 L 87.9,316.2 L 89.7,315.8 L 91.6,315.3 L 93.4,314.9 L 95.3,314.4 L 97.1,314.0 L 99.0,313.5 L 100.8,313.1 L 102.7,312.6 L 104.5,312.2 L 106.4,311.7 L 108.2,311.3 L 110.1,310.8 L 111.9,310.4 L 113.8,309.9 L 115.6,309.5 L 117.5,309.0 L 119.4,308.6 L 121.2,308.1 L 123.1,307.7 L 124.9,307.2 L 126.8,306.8 L 128.6,306.3 L 130.5,305.9 L 132.3,305.4 L 134.2,305.0 L 136.0,304.5 L 137.9,304.0 L 139.7,303.6 L 141.6,303.1 L 143.4,302.7 L 145.3,302.2 L 147.1,301.8 L 149.0,301.3 L 150.8,300.8 L 152.7,300.4 L 154.6,299.9 L 156.4,299.4 L 158.3,299.0 L 160.1,298.5 L 162.0,298.1 L 163.8,297.6 L 165.7,297.1 L 167.5,296.7 L 169.4,296.2 L 171.2,295.7 L 173.1,295.3 L 174.9,294.8 L 176.8,294.4 L 178.6,293.9 L 180.5,293.4 L 182.3,293.0 L 184.2,292.5 L 186.1,292.0 L 187.9,291.6 L 189.8,291.1 L 191.6,290.6 L 193.5,290.2 L 195.3,289.7 L 197.2,289.3 L 199.0,288.8 L 200.9,288.3 L 202.7,287.9 L 204.6,287.4 L 206.4,286.9 L 208.3,286.5 L 210.1,286.0 L 212.0,285.5 L 213.8,285.1 L 215.7,284.6 L 217.6,284.1 L 219.4,283.7 L 221.3,283.2 L 223.1,282.7 L 225.0,282.3 L 226.8,281.8 L 228.7,281.3 L 230.5,280.9 L 232.4,280.4 L 234.2,279.9 L 236.1,279.5 L 237.9,279.0 L 239.8,278.5 L 241.6,278.1 L 243.5,277.6 L 245.3,277.1 L 247.2,276.7 L 249.1,276.2 L 250.9,275.7 L 252.8,275.3 L 254.6,274.8 L 256.5,274.3 L 258.3,273.8 L 260.2,273.4 L 262.0,272.9 L 263.9,272.4 L 265.7,271.9 L 267.6,271.5 L 269.4,271.0 L 271.3,270.5 L 273.1,270.0 L 275.0,269.6 L 276.8,269.1 L 278.7,268.6 L 280.5,268.1 L 282.4,267.7 L 284.3,267.2 L 286.1,266.7 L 288.0,266.2 L 289.8,265.7 L 291.7,265.2 L 293.5,264.8 L 295.4,264.3 L 297.2,263.8 L 299.1,263.3 L 300.9,262.8 L 302.8,262.3 L 304.6,261.8 L 306.5,261.4 L 308.3,260.9 L 310.2,260.4 L 312.0,259.9 L 313.9,259.4 L 315.8,258.9 L 317.6,258.4 L 319.5,257.9 L 321.3,257.4 L 323.2,256.9 L 325.0,256.4 L 326.9,255.9 L 328.7,255.4 L 330.6,254.9 L 332.4,254.5 L 334.3,254.0 L 336.1,253.5 L 338.0,253.0 L 339.8,252.4 L 341.7,251.9 L 343.5,251.4 L 345.4,250.9 L 347.3,250.4 L 349.1,249.9 L 351.0,249.4 L 352.8,248.9 L 354.7,248.4 L 356.5,247.8 L 358.4,247.3 L 360.2,246.8 L 362.1,246.3 L 363.9,245.8 L 365.8,245.3 L 367.6,244.7 L 369.5,244.2 L 371.3,243.6 L 373.2,243.1 L 375.0,242.5 L 376.9,242.0 L 378.7,241.4 L 380.6,240.9 L 382.5,240.3 L 384.3,239.8 L 386.2,239.2 L 388.0,238.7 L 389.9,238.2 L 391.7,237.6 L 393.6,237.1 L 395.4,236.4 L 397.3,235.8 L 399.1,235.2 L 401.0,234.6 L 402.8,233.9 L 404.7,233.3 L 406.5,232.7 L 408.4,232.0 L 410.2,231.4 L 412.1,230.8 L 414.0,230.2 L 415.8,229.5 L 417.7,228.9 L 419.5,228.3 L 421.4,227.7 L 423.2,226.9 L 425.1,226.2 L 426.9,225.5 L 428.8,224.8 L 430.6,224.1 L 432.5,223.3 L 434.3,222.6 L 436.2,221.9 L 438.0,221.2 L 439.9,220.5 L 441.7,219.7 L 443.6,219.0 L 445.5,218.3 L 447.3,217.6 L 449.2,216.8 L 451.0,216.0 L 452.9,215.2 L 454.7,214.3 L 456.6,213.4 L 458.4,212.6 L 460.3,211.7 L 462.1,210.8 L 464.0,210.0 L 465.8,209.1 L 467.7,208.2 L 469.5,207.4 L 471.4,206.5 L 473.2,205.6 L 475.1,204.8 L 476.9,203.9 L 478.8,202.9 L 480.7,201.9 L 482.5,200.8 L 484.4,199.7 L 486.2,198.7 L 488.1,197.6 L 489.9,196.5 L 491.8,195.5 L 493.6,194.4 L 495.5,193.3 L 497.3,192.3 L 499.2,191.2 L 501.0,190.1 L 502.9,189.1 L 504.7,188.0 L 506.6,186.9 L 508.4,185.6 L 510.3,184.3 L 512.2,183.1 L 514.0,181.8 L 515.9,180.5 L 517.7,179.2 L 519.6,178.0 L 521.4,176.7 L 523.3,175.4 L 525.1,174.2 L 527.0,172.9 L 528.8,171.6 L 530.7,170.4 L 532.5,169.1 L 534.4,167.8 L 536.2,166.4 L 538.1,164.9 L 539.9,163.4 L 541.8,162.0 L 543.7,160.5 L 545.5,159.0 L 547.4,157.6 L 549.2,156.1 L 551.1,154.7 L 552.9,153.2 L 554.8,151.7 L 556.6,150.3 L 558.5,148.8 L 560.3,147.3 L 562.2,145.9 L 564.0,144.3 L 565.9,142.6 L 567.7,141.0 L 569.6,139.3 L 571.4,137.7 L 573.3,136.0 L 575.2,134.4 L 577.0,132.7 L 578.9,131.1 L 580.7,129.4 L 582.6,127.7 L 584.4,126.1 L 586.3,124.4 L 588.1,122.8 L 590.0,121.1 L 591.8,119.4 L 593.7,117.7 L 595.5,115.9 L 597.4,114.1 L 599.2,112.3 L 601.1,110.6 L 602.9,108.8 L 604.8,107.0 L 606.6,105.2 L 608.5,103.5 L 610.4,101.7 L 612.2,99.9 L 614.1,98.2 L 615.9,96.4 L 617.8,94.6 L 619.6,92.9 L 621.5,91.2 L 623.3,89.6 L 625.2,88.0 L 627.0,86.3 L 628.9,84.7 L 630.7,83.0 L 632.6,81.4 L 634.4,79.7 L 636.3,78.1 L 638.1,76.4 L 640.0,74.8" fill="none" stroke="#fb923c" stroke-width="2.4"/>
+<circle cx="474.0" cy="205.3" r="4" fill="#fb923c"/>
+<circle cx="493.9" cy="194.2" r="4" fill="#fb923c"/>
+<circle cx="533.3" cy="168.6" r="4" fill="#fb923c"/>
+<text x="97.2" y="266.1" font-size="10.5" text-anchor="start" fill="#2dd4bf">inferred from one scale height, 0.15231</text>
+<text x="97.2" y="199.8" font-size="10.5" text-anchor="start" fill="#f87171">fully ionised electron scattering, X = 0.7583: 0.34966</text>
+<text x="108.4" y="116.0" font-size="11.5" text-anchor="start" fill="#fb923c">ATLAS9 &#954;<tspan baseline-shift="sub" font-size="8">R</tspan>(&#964;<tspan baseline-shift="sub" font-size="8">R</tspan>)</text>
+<text x="480.0" y="225.3" font-size="10" text-anchor="start" fill="#fb923c">0.3596 at T = 5772 K</text>
+<text x="540.3" y="172.6" font-size="10" text-anchor="start" fill="#fb923c">0.7274 at &#964;<tspan baseline-shift="sub" font-size="8">R</tspan> = 1</text>
+<text x="503.6" y="58.0" font-size="10" text-anchor="middle" fill="#a78bfa">the layer</text>
+<text x="503.6" y="71.0" font-size="10" text-anchor="middle" fill="#a78bfa">&#215;2.02</text>
+<text x="86.0" y="32.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">&#954;<tspan baseline-shift="sub" font-size="8">R</tspan> (cm<tspan baseline-shift="super" font-size="8">2</tspan> g<tspan baseline-shift="super" font-size="8">&#8722;1</tspan>)</text>
+<text x="363.0" y="384.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">Rosseland optical depth &#964;<tspan baseline-shift="sub" font-size="8">R</tspan></text>
+</svg>
+<!--/FIG_OPACITY-->
+<figcaption>CHECK 2. ATLAS9's Rosseland mean opacity against Rosseland optical depth, both axes logarithmic, with the opacity inferred from Module 6's scale height (6.1) and the <b>fully ionised</b> electron-scattering opacity at $X = 0.7583$ as dashed lines. The shaded band runs from $T = 5772$ K ($\tau_{\rm R} = 0.543$) to $\tau_{\rm R} = 1$, and across it $\kappa_{\rm R}$ doubles. The middle dot is $\tau_{\rm R} = 2/3$, $\kappa_{\rm R} = 0.4447$. The electron-scattering line is <em>not</em> the photosphere's electron scattering, which is about four decades lower, off the bottom of the plot; see the text.</figcaption>
+</figure>
+
+<p><b>The limit of the target, stated in print.</b> ATLAS9 is a model, with its own opacity distribution functions, its own convection and — per the file's own title card — Asplund et al. (2005) abundances; it is not a measurement. It is the right kind of number for this check, because it tabulates $\kappa_{\rm R}$ with the $T$ and $\rho$ at which it applies, and a check against it is a check against a published model and not against the Sun.</p>
+
+<h3>Why the photosphere is not electron-scattering</h3>
+
+<p>Electron scattering is the one opacity with no atomic physics in it: every free electron scatters with the Thomson cross-section $\sigma_{\rm T}$, whatever its energy (for $kT \ll m_{\rm e}c^2$). A fully ionised gas of hydrogen mass fraction $X$, the rest helium, has $n_{\rm e} = (\rho/2m_{\rm p})(1+X)$ electrons per unit volume — one per hydrogen nucleus, two per helium nucleus of mass $4m_{\rm p}$ — so</p>
+
+$$ \kappa_{\rm es} \;=\; \frac{\sigma_{\rm T}n_{\rm e}}{\rho} \;=\; \frac{\sigma_{\rm T}}{2m_{\rm p}}(1+X). \tag{6.2}$$
+
+<p>At $X = 1$ this is $\sigma_{\rm T}/m_{\rm p} = 0.39773\ \mathrm{cm^2\,g^{-1}}$, and at the Sun's present surface composition, $X = 0.7583$, it is $0.34966$. (The round formula $0.2(1+X)$ gives $0.3517$, which differs by $0.572$ per cent.) Heavier elements, fully ionised, contribute about one electron per two nucleon masses, like helium, so (6.2) holds for them too.</p>
+
+<p><b>The photosphere is not fully ionised</b>, and that, not the size of its opacity, is why electron scattering does not set it. At $5910$ K hydrogen is almost entirely neutral, and ATLAS9's own electron density at $\tau_{\rm R} = 2/3$ is $2.4815\times10^{13}\ \mathrm{cm^{-3}}$, supplied mostly by easily ionised metals. With those electrons, $\sigma_{\rm T}n_{\rm e}/\rho = 6.1780\times10^{-5}\ \mathrm{cm^2\,g^{-1}}$ — $5659.8$ times below the fully ionised value, and $7198.5$ times below ATLAS9's $\kappa_{\rm R}$. The opacity that fills that gap is bound–free and free–free absorption by the negative hydrogen ion, H⁻, a hydrogen atom that has captured one of those scarce electrons. <b>This book does no atomic physics, and H⁻ is refused here</b>: its cross-sections are what ATLAS9 contains and what this module borrows.</p>
+
+<div class="prov">The preparation run argued the same conclusion differently: that the inferred $0.15231$ lies below the fully ionised $0.34966$, so the photosphere cannot be fully ionised. <b>That argument does not survive CHECK 2</b>, because ATLAS9's $\kappa_{\rm R} = 0.4447$ lies <em>above</em> $0.34966$. The electron-density argument above replaces it; the run prints both and says which stands.</div>
+
+<h2 id="leak">7. Heat that leaks out of a sound wave</h2>
+
+<p><a href="module04.html#checks">Module 4 §7</a> derived the Sun's acoustic modes on the assumption that every compression is adiabatic, and then wrote: "By (3.4) it requires $\omega\chi/c^2\ll1$, with $\chi$ now the radiative diffusivity of the stellar gas. That criterion is not evaluated for the Sun in this module … the size of the failure is a subject of Module 13" (<code>module04.html:429</code>). It is the book's one explicitly deferred computation. In Module 4's criterion $c$ is the <b>sound speed</b>; in this module $c$ is the speed of light, so the sound speed is written $c_{\rm s}$ and the criterion is $\omega\chi/c_{\rm s}^2 \ll 1$.</p>
+
+<div class="prop"><b>Proposition 7 (the criterion is a ratio of two times).</b> For a sound wave of cyclic frequency $\nu$, angular frequency $\omega = 2\pi\nu$, speed $c_{\rm s}$ and wavelength $c_{\rm s}/\nu$, in a gas of thermal diffusivity $\chi$,
+$$ \frac{\omega\chi}{c_{\rm s}^{2}} \;=\; \frac{2\pi}{t_{\rm diff}/\mathcal{P}}, \tag{7.1}$$
+where $t_{\rm diff} = (c_{\rm s}/\nu)^2/\chi$ is the time for heat to diffuse across one wavelength and $\mathcal{P} = 1/\nu$ is the period. Adiabatic means $t_{\rm diff}/\mathcal{P} \gg 2\pi$.</div>
+
+<div class="proof">$t_{\rm diff}/\mathcal{P} = [(c_{\rm s}/\nu)^2/\chi]\,\nu = c_{\rm s}^{2}/(\nu\chi)$. Then $2\pi/(t_{\rm diff}/\mathcal{P}) = 2\pi\nu\chi/c_{\rm s}^{2} = \omega\chi/c_{\rm s}^2$. <span class="qed">∎</span></div>
+
+<p>So the criterion is not about a scale height at all. It asks whether heat has time to diffuse across a wavelength during one oscillation. If it does not, the compressions keep their heat and the wave is adiabatic; if it does, temperature differences smooth out within a cycle and the wave approaches isothermal. At order unity it is neither, and the wave loses energy to the radiation every cycle. The run checks (7.1) numerically to $10^{-9}$.</p>
+
+<p>The inputs are $\nu_{\rm max} = 3090\ \mu$Hz, so $\omega = 1.941504\times10^{-2}\ \mathrm{rad\,s^{-1}}$; <a href="module04.html#problems">Module 4</a>'s photospheric sound speed $c_{\rm s} = 8.0810\times10^{5}\ \mathrm{cm\,s^{-1}}$; <a href="module06.html#mlt">Module 6</a>'s $c_P = 1.6968\times10^{8}\ \mathrm{erg\,g^{-1}\,K^{-1}}$; and $\kappa_{\rm R}$, $\rho$ and $T$ from ATLAS9 at two levels. By (4.4), $\chi = 1.5027\times10^{13}\ \mathrm{cm^2\,s^{-1}}$ at $T = T_{\rm eff}$ and $1.1587\times10^{13}$ at $\tau_{\rm R} = 2/3$.</p>
+
+<div class="keyresult"><b>CHECK 3 — REFUTED. <code>module04.html:429</code>'s adiabatic criterion fails at the photosphere.</b>
+<table>
+<tr><th>level</th><th>$\chi$ ($\mathrm{cm^2\,s^{-1}}$)</th><th>$\omega\chi/c_{\rm s}^2$</th><th>$t_{\rm diff}/\mathcal{P}$</th></tr>
+<tr><td>$T = T_{\rm eff}$</td><td>$1.5027\times10^{13}$</td><td><b>0.4468</b></td><td>14.06</td></tr>
+<tr><td>$\tau_{\rm R} = 2/3$</td><td>$1.1587\times10^{13}$</td><td><b>0.3445</b></td><td>18.24</td></tr>
+</table>
+The criterion is $\ll 1$, and $0.34$ to $0.45$ is not. Adiabatic wants the diffusion time across one wavelength to be many periods; at the photosphere it is $14$ to $18$.</div>
+
+<p><b>What CHECK 2 moved.</b> With the refuted inferred opacity $0.15231$ and Module 6's density, the same calculation gives $\chi = 2.398397\times10^{13}\ \mathrm{cm^2\,s^{-1}}$ and $\omega\chi/c_{\rm s}^2 = 0.7131$, a diffusion time across the $2615.2$ km wavelength of $2.8516\times10^{3}$ s against a period of $3.2362\times10^{2}$ s — $8.81$ periods. <b>That value is superseded</b> and is printed once, here, to show what the anchor check changed: the ATLAS9 opacity and density move the criterion from $0.7131$ to between $0.3445$ and $0.4468$, and the verdict with it from "order unity" to "a few tenths". Fig. 3 draws all three values.</p>
+
+<figure>
+<!--FIG_CRITERION-->
+<svg class="setupfig" viewBox="0 0 720 330" width="100%" role="img" aria-label="A horizontal axis from 0 to 1.2 of the adiabaticity parameter at the solar frequency of maximum power. A shaded strip from 0 to 0.1 marks much less than one, and a vertical line marks 1. Three rows: a hollow marker at 0.713 labelled superseded, from the refuted inferred opacity, and two filled markers at 0.447 and 0.345 from the ATLAS9 model. None lies in the shaded strip." >
+<rect x="250" y="30" width="430" height="220" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="250.0" y="30" width="35.8" height="220" fill="#2dd4bf" opacity="0.18"/>
+<line x1="608.3" y1="30" x2="608.3" y2="250" stroke="#f87171" stroke-width="1.6" stroke-dasharray="6 4"/>
+<line x1="250.0" y1="250" x2="250.0" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="250.0" y="268.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.0</text>
+<line x1="321.7" y1="250" x2="321.7" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="321.7" y="268.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.2</text>
+<line x1="393.3" y1="250" x2="393.3" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="393.3" y="268.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.4</text>
+<line x1="465.0" y1="250" x2="465.0" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="465.0" y="268.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.6</text>
+<line x1="536.7" y1="250" x2="536.7" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="536.7" y="268.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">0.8</text>
+<line x1="608.3" y1="250" x2="608.3" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="608.3" y="268.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1.0</text>
+<line x1="680.0" y1="250" x2="680.0" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="680.0" y="268.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1.2</text>
+<line x1="250.0" y1="80.0" x2="505.5" y2="80.0" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="2 3"/>
+<circle cx="505.5" cy="80.0" r="6.5" fill="none" stroke="#94a3b8" stroke-width="2"/>
+<text x="516.5" y="71.0" font-size="11" text-anchor="start" fill="#94a3b8">0.7131</text>
+<text x="240.0" y="78.0" font-size="11.5" text-anchor="end" fill="#94a3b8">inferred opacity, 0.15231</text>
+<text x="240.0" y="93.0" font-size="9.5" text-anchor="end" fill="#f87171">SUPERSEDED by CHECK 2</text>
+<line x1="250.0" y1="142.0" x2="410.1" y2="142.0" stroke="#fb923c" stroke-width="1.2" stroke-dasharray="2 3"/>
+<circle cx="410.1" cy="142.0" r="6.5" fill="#fb923c"/>
+<text x="421.1" y="133.0" font-size="11" text-anchor="start" fill="#fb923c">0.4468</text>
+<text x="240.0" y="140.0" font-size="11.5" text-anchor="end" fill="#cbd5e1">ATLAS9, T = 5772 K</text>
+<text x="240.0" y="155.0" font-size="9.5" text-anchor="end" fill="#94a3b8">&#954;<tspan baseline-shift="sub" font-size="8">R</tspan> = 0.3596</text>
+<line x1="250.0" y1="204.0" x2="373.4" y2="204.0" stroke="#fb923c" stroke-width="1.2" stroke-dasharray="2 3"/>
+<circle cx="373.4" cy="204.0" r="6.5" fill="#fb923c"/>
+<text x="384.4" y="195.0" font-size="11" text-anchor="start" fill="#fb923c">0.3445</text>
+<text x="240.0" y="202.0" font-size="11.5" text-anchor="end" fill="#cbd5e1">ATLAS9, &#964;<tspan baseline-shift="sub" font-size="8">R</tspan> = 2/3</text>
+<text x="240.0" y="217.0" font-size="9.5" text-anchor="end" fill="#94a3b8">&#954;<tspan baseline-shift="sub" font-size="8">R</tspan> = 0.4447</text>
+<text x="267.9" y="22.0" font-size="10.5" text-anchor="middle" fill="#2dd4bf">&#8810; 1</text>
+<text x="602.3" y="22.0" font-size="10.5" text-anchor="end" fill="#f87171">the boundary, 1</text>
+<text x="465.0" y="292.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">&#969;&#967;/c<tspan baseline-shift="sub" font-size="8">s</tspan><tspan baseline-shift="super" font-size="8">2</tspan> at &#957;<tspan baseline-shift="sub" font-size="8">max</tspan> = 3090 &#956;Hz</text>
+<text x="20.0" y="316.0" font-size="10.5" text-anchor="start" fill="#94a3b8">The shaded strip ends at 0.1 by convention: the criterion says much less than one and names no edge.</text>
+</svg>
+<!--/FIG_CRITERION-->
+<figcaption>CHECK 3. The adiabaticity parameter $\omega\chi/c_{\rm s}^2$ at $\nu_{\rm max}$ for three opacities. The hollow marker, $0.7131$, uses the one-scale-height opacity that CHECK 2 refuted, and is superseded. The two filled markers use ATLAS9's $\kappa_{\rm R}$ and $\rho$ at two levels. The dashed line at $1$ is where, by (7.1), the diffusion time across a wavelength is $2\pi$ periods. The shaded strip marks "much less than one"; its edge at $0.1$ is a convention, because the criterion names none. No marker lies in it.</figcaption>
+</figure>
+
+<p><b>What is not computed.</b> <a href="module04.html#limits">Module 4 §8</a> (<code>module04.html:563</code>) said the failure "damps the modes and shifts their frequencies". This check establishes the regime — that radiative leakage is an order-unity effect at the photosphere — and it does not compute the damping rate or the frequency shift. Those need the non-adiabatic oscillation equations, which this book does not write; <a class="secref" href="#limits">§12</a> lists that debt as half paid. Module 4 expected the criterion to hold deep in the star, where $\rho$ is larger and $\chi \propto T^3/(\kappa_{\rm R}\rho^2)$ is smaller; this module does not evaluate it there.</p>
+
+<h2 id="mixture">8. A gas that contains radiation</h2>
+
+<p><a href="module02.html#limits">Module 2 §11</a> listed $\gamma = 5/3$ among its idealisations and said it is wrong "for radiation-dominated interiors where $\gamma\to4/3$" (<code>module02.html:688</code>). This section pays that debt with the general statement: the adiabatic index of a mixture of an ideal monatomic gas and black-body radiation, at any gas fraction.</p>
+
+<p>Let the total pressure be $P = P_{\rm gas} + P_{\rm rad}$ with $P_{\rm gas} = \rho k_BT/(\mu m_u)$ and $P_{\rm rad} = a_{\rm rad}T^{4}/3$, and let $\beta \equiv P_{\rm gas}/P$, <a href="module03.html#notation">Module 3</a>'s meaning exactly. The specific internal energy is written $e$, as in <a href="module02.html">Module 2</a>, and it is the gas's $\tfrac32P_{\rm gas}/\rho$ plus the radiation's $u_{\rm rad}/\rho$.</p>
+
+<div class="prop"><b>Proposition 8 (the first adiabatic index of a gas-plus-radiation mixture).</b> With $e = 3P_{\rm gas}/(2\rho) + a_{\rm rad}T^{4}/\rho$, the adiabatic index $\Gamma_1 \equiv (\partial\ln P/\partial\ln\rho)_{\rm ad}$ is
+$$ \Gamma_1 \;=\; \beta \;+\; \frac{(4-3\beta)^{2}(\gamma-1)}{\beta + 12(\gamma-1)(1-\beta)}, \qquad \gamma = \tfrac53, \tag{8.1}$$
+which is $5/3$ at $\beta = 1$ and $4/3$ at $\beta = 0$.</div>
+
+<div class="proof">Work per unit mass with $v = 1/\rho$ and write $\mathcal{R} = k_B/(\mu m_u)$, so $P_{\rm gas} = \mathcal{R}T/v$ and $e = \tfrac32\mathcal{R}T + a_{\rm rad}T^{4}v$. The first law for an adiabatic change is $\mathrm{d}e + P\,\mathrm{d}v = 0$. Differentiating $e$,
+$$ \left(\tfrac32\mathcal{R} + 4a_{\rm rad}T^{3}v\right)\mathrm{d}T \;+\; \left(a_{\rm rad}T^{4} + \frac{\mathcal{R}T}{v} + \frac{a_{\rm rad}T^{4}}{3}\right)\mathrm{d}v \;=\; 0. $$
+Express every term through $P$ and $\beta$: $\mathcal{R}T/v = \beta P$ and $a_{\rm rad}T^4 = 3(1-\beta)P$. The first bracket times $\mathrm{d}T$ is $Pv\,(\mathrm{d}T/T)\left[\tfrac32\beta + 12(1-\beta)\right]$, and the second bracket is $P\left[3(1-\beta) + \beta + (1-\beta)\right] = P(4 - 3\beta)$. With $\mathrm{d}v/v = -\mathrm{d}\ln\rho$,
+$$ \left.\frac{\mathrm{d}\ln T}{\mathrm{d}\ln\rho}\right|_{\rm ad} \;=\; \frac{4-3\beta}{\tfrac32\beta + 12(1-\beta)} \;=\; \frac{(4-3\beta)(\gamma-1)}{\beta + 12(\gamma-1)(1-\beta)}, $$
+the second form multiplying top and bottom by $\gamma - 1 = 2/3$. Now differentiate the pressure itself: $\mathrm{d}P = P_{\rm gas}(\mathrm{d}\ln\rho + \mathrm{d}\ln T) + 4P_{\rm rad}\,\mathrm{d}\ln T$, so
+$$ \mathrm{d}\ln P \;=\; \beta\,\mathrm{d}\ln\rho \;+\; (4 - 3\beta)\,\mathrm{d}\ln T. $$
+Dividing by $\mathrm{d}\ln\rho$ along the adiabat and substituting the previous line gives (8.1). <b>Both limits.</b> At $\beta = 1$ the fraction is $1\cdot(\gamma-1)/1$, so $\Gamma_1 = 1 + (\gamma - 1) = \gamma = 5/3$. At $\beta = 0$ it is $16(\gamma-1)/[12(\gamma-1)] = 4/3$, and $\Gamma_1 = 4/3$. <span class="qed">∎</span></div>
+
+<p>(8.1) is Chandrasekhar's eq. (131), p. 57, of his 1939 <em>Introduction to the Study of Stellar Structure</em>, and he states both limits under it himself. His Table 1, p. 59, tabulates $\Gamma_1$ for $\gamma = 5/3$ at $1 - \beta = 0, 0.1, \ldots, 1$ to three decimals, and the run reproduces all eleven rows to $3.44\times10^{-4}$, inside the $5\times10^{-4}$ that three printed decimals allow. Selected values: $\Gamma_1 = 1.650997$ at $\beta = 0.99$, $1.562745$ at $0.9$, $1.425926$ at $0.5$ and $1.350228$ at $0.1$. Radiation lowers $\Gamma_1$ quickly: a radiation share of one per cent, $\beta = 0.99$, already takes it from $1.666667$ to $1.650997$.</p>
+
+<div class="warn"><b>Two different claims, and Module 2 was promised the first.</b> (8.1) is a <em>local</em> statement: at any point, the adiabatic index is set by the local $\beta$. <a href="module03.html#whypoly">Module 3 §5</a>'s Proposition 6 (<code>module03.html:366</code>) is a <em>global</em> one — that a star with $\beta$ and $\mu$ uniform throughout is a polytrope $P = K\rho^{4/3}$ — and <a href="module03.html#checks">Module 3 §10</a> (<code>module03.html:653</code>) refutes that premise for the Sun. The two share the number $4/3$ and nothing else. <code>module02.html:688</code> asked for the local statement, and Proposition 8 gives it at every $\beta$, with $4/3$ as its $\beta\to0$ limit.</div>
+
+<p>At the Sun's centre, <a href="module03.html#ssm">Module 3 §9</a> computed $1 - \beta_c = 6.1940\times10^{-4}$ from the tabulated model (<code>module03.html:628</code>); this module's run reproduces it as $6.193970\times10^{-4}$. By (8.1) that gives $\Gamma_1 = 1.665639$, short of $5/3$ by $1.0276\times10^{-3}$. Module 3's Problem K3 (<code>module03.html:885</code>) already sets Eddington's standard-model value, $1.4247\times10^{-3}$, against the tabulated one and finds it $2.30$ times larger; that is Module 3's result and is cited here, not re-checked.</p>
+
+<div class="prop"><b>Proposition 9 (where radiation pressure equals gas pressure).</b> At temperature $T$, $P_{\rm rad} = P_{\rm gas}$ at the density
+$$ \rho_{\rm eq}(T) \;=\; \frac{a_{\rm rad}\,\mu m_u\,T^{3}}{3k_B}, \tag{8.2}$$
+and radiation dominates the pressure where $\rho \lt \rho_{\rm eq}(T)$. At any point, $\rho/\rho_{\rm eq}(T) = \beta/(1-\beta)$.</div>
+
+<div class="proof">Setting $\rho k_BT/(\mu m_u) = a_{\rm rad}T^4/3$ and solving for $\rho$ gives (8.2). At fixed $T$, $P_{\rm gas}$ is proportional to $\rho$ and $P_{\rm rad}$ does not depend on it, so $P_{\rm gas} \lt P_{\rm rad}$ exactly when $\rho \lt \rho_{\rm eq}$. Finally $P_{\rm gas}/P_{\rm rad} = \rho/\rho_{\rm eq}$ by the same proportionality, and $P_{\rm gas}/P_{\rm rad} = \beta/(1-\beta)$ by the definition of $\beta$. <span class="qed">∎</span></div>
+
+<p>At $\mu = 0.832$, the value <a href="module03.html#problems">Module 3</a>'s Problem K3 uses, (8.2) gives $\rho_{\rm eq} = 2.5236\times10^{-5}\ \mathrm{g\,cm^{-3}}$ at $10^{6}$ K and $25.236$ at $10^{8}$ K. <a class="secref" href="#where">§11</a> draws the line.</p>
+
+<h2 id="eddington">9. The Eddington limit</h2>
+
+<p>Now the destination. A source of luminosity $L$ and mass $M$ sits at the centre, and ionised gas surrounds it. Gravity pulls each gram inward. The radiation streaming outward pushes each gram outward, by the momentum it deposits. Both forces fall as $1/r^2$.</p>
+
+<div class="prop"><b>Proposition 10 (the Eddington luminosity).</b> Let gas at radius $r$ have flux-mean opacity $\kappa_{\rm F} \equiv (1/F)\int\kappa_\nu F_\nu\,\mathrm{d}\nu$, and let the source radiate $L$ isotropically. Gravity holds the gas only if
+$$ L \;\lt\; L_{\rm Edd} \;\equiv\; \frac{4\pi GMc}{\kappa_{\rm F}}, \tag{9.1}$$
+independent of $r$. For fully ionised gas the opacity is electron scattering, $\kappa_{\rm F} = \kappa_{\rm es} = \sigma_{\rm T}(1+X)/(2m_{\rm p})$, and at $X = 1$ this is
+$$ L_{\rm Edd} \;=\; \frac{4\pi GMm_{\rm p}c}{\sigma_{\rm T}}, \tag{9.2}$$
+which is the formula <code>module09.html:944</code> states.</div>
+
+<div class="proof">The flux at radius $r$ is $F = L/(4\pi r^2)$, and it carries momentum $F/c$ per unit area per unit time. By Proposition 2, a layer of thickness $\mathrm{d}s$ removes the fraction $\kappa_\nu\rho\,\mathrm{d}s$ of the flux at each frequency. Absorbed photons deposit their momentum; photons scattered symmetrically forward and backward, as Thomson scattering does, deposit it on average too. The momentum removed per unit volume per unit time is therefore $\rho\int\kappa_\nu F_\nu\,\mathrm{d}\nu/c = \kappa_{\rm F}\rho F/c$, and per unit mass the outward force is $\kappa_{\rm F}F/c = \kappa_{\rm F}L/(4\pi r^{2}c)$. Gravity per unit mass is $GM/r^2$ inward. The gas is held when
+$$ \frac{\kappa_{\rm F}L}{4\pi r^{2}c} \;\lt\; \frac{GM}{r^{2}}, $$
+and <b>the $r^2$ cancels</b>, leaving (9.1). For electron scattering, $\sigma_{\rm T}$ does not depend on frequency, so $\kappa_{\rm F} = \kappa_{\rm es}$ whatever the spectrum, and (6.2) gives $\kappa_{\rm es}$. At $X = 1$, $\kappa_{\rm es} = \sigma_{\rm T}/m_{\rm p}$, and (9.1) becomes (9.2). The radiation pushes on the electrons and gravity pulls mainly on the protons; the electric field that holds a plasma neutral couples the two, which is why the force balance is taken per unit mass of plasma. <span class="qed">∎</span></div>
+
+<p><b>The trivial limit is $\kappa_{\rm F} \to 0$</b>, and (9.1) gives $L_{\rm Edd}\to\infty$: a gas that does not interact with the radiation feels no force from it, and there is no limit. The cancellation of $r$ is the content of the proposition. Without it there would be a critical <em>radius</em> for a given luminosity; with it there is a critical <em>luminosity</em> for a given mass, the same at every radius.</p>
+
+<div class="keyresult"><b>CHECK 1 — CONFIRMED as a reproduction. The finding is the composition.</b> (9.2) reproduces every Eddington number the book already prints:
+<table>
+<tr><th>quantity</th><th>computed</th><th>in print</th><th>ratio</th></tr>
+<tr><td>$L_{\rm Edd}(10\,M_\odot)$</td><td>$1.257065\times10^{39}\ \mathrm{erg\,s^{-1}}$</td><td>$1.257\times10^{39}$, <code>module09.html:913</code></td><td>1.000052</td></tr>
+<tr><td>$\dot M_{\rm Edd}(10\,M_\odot)$, $\eta_{\rm rad} = 0.1$</td><td>$1.398674\times10^{19}\ \mathrm{g\,s^{-1}}$</td><td>$1.399\times10^{19}$</td><td>0.999767</td></tr>
+<tr><td>Bondi/Eddington</td><td>3663.5</td><td>3664</td><td>0.999856</td></tr>
+<tr><td>$L_{\rm Edd}(4.30\times10^{6}\,M_\odot)$</td><td>$5.405380\times10^{44}\ \mathrm{erg\,s^{-1}}$</td><td>$5.405\times10^{44}$, <code>module09.html:921</code></td><td>1.000070</td></tr>
+<tr><td>$\dot M_{\rm Edd}$, Sgr A*</td><td>$9.545153\times10^{-2}\,M_\odot\,\mathrm{yr^{-1}}$</td><td>$9.545\times10^{-2}$</td><td>1.000016</td></tr>
+<tr><td>AGN disc, fraction of Eddington</td><td>0.100002</td><td>"a tenth", <code>module11.html:666</code></td><td>exact to 0.002 per cent</td></tr>
+<tr><td>Eddington's bound for the Sun</td><td>$k \lt 13061$</td><td>$k \lt 13{,}200$, his p. 115</td><td>0.9895</td></tr>
+</table>
+<b>The finding.</b> By (6.2) and (9.1), $L_{\rm Edd}$ scales as $2/(1+X)$. The $m_{\rm p}$ of <code>module09.html:944</code> therefore means $X = 1$, pure ionised hydrogen. For accreted gas of protosolar composition, $X = 0.7261$, the limit for a $10\,M_\odot$ hole is $1.4565\times10^{39}\ \mathrm{erg\,s^{-1}}$, <b>1.1587 times Module 9's value — 15.9 per cent higher</b>. At the Sun's present surface composition, $X = 0.7583$, it is $1.4299\times10^{39}$, $1.1375$ times.</div>
+
+<p><a href="module09.html#problems">Module 9 §10</a> wrote that the $m_{\rm p}$ "is a genuine proton mass and not a mean molecular weight" (<code>module09.html:915</code>). That is true, and it is also a statement about composition: a proton mass per electron is what pure ionised hydrogen has. Module 9's formula is correct for the gas it assumes, and nothing in <a href="module09.html">Module 9</a> is changed. The three compositions are sourced: $X = 1$ is what the formula means; $X = 0.7583$ is the present solar surface of the BS2005-AGS,OP model, which <a href="module04.html#cutoff">Module 4 §4</a> already uses; and $X = 0.7261$ is the same model's initial composition, $1 - Y_i - Z_i$ from Bahcall, Serenelli and Basu's Table 1, which is the apt value for gas a black hole accretes because it has not had the Sun's helium settling. <b>The 1.1 per cent against Eddington's own bound is not traced</b>: his 1926 solar luminosity and mass were not read.</p>
+
+<h3>Eddington's own form</h3>
+
+<p>Eddington did not state a limiting luminosity, and he did not use electron scattering. In his Sect. 82, p. 115, of <em>The Internal Constitution of the Stars</em> he derives "an upper limit to the opacity $k$ in any star (perfect gas or not) for which $L$ and $M$ are known by observation", and gives its physical reading on the same page: "the radiation observed to be emitted must work its way through the star, and if there were too much obstruction it would blow up the star".</p>
+
+<div class="prop"><b>Proposition 11 (Eddington's bound on the opacity).</b> In a star in hydrostatic equilibrium, if the gas pressure $p_{\rm G}$ increases inward, $\mathrm{d}p_{\rm G} \gt 0$ for an inward step, and if the luminosity per unit mass $L_r/M_r$ inside radius $r$ is no smaller than its surface value $L/M$, then the flux-mean opacity satisfies
+$$ k \;\lt\; \frac{4\pi cGM}{L}. \tag{9.3}$$
+This is (9.1) read as a bound on the opacity of a star of known $L$ and $M$.</div>
+
+<div class="proof">Hydrostatic balance for an inward step $\mathrm{d}r \lt 0$ gives the increase of total pressure $\mathrm{d}P = -\rho(GM_r/r^{2})\,\mathrm{d}r$. The frequency-integrated first moment from the proof of Proposition 4, $c\,\mathrm{d}P_{\rm rad} = -k\rho F\,\mathrm{d}r$ with $F = L_r/4\pi r^2$, gives the increase of radiation pressure. Their ratio is $\mathrm{d}P_{\rm rad}/\mathrm{d}P = kL_r/(4\pi cGM_r)$. Since $\mathrm{d}P = \mathrm{d}p_{\rm G} + \mathrm{d}P_{\rm rad}$ and $\mathrm{d}p_{\rm G} \gt 0$, $\mathrm{d}P_{\rm rad} \lt \mathrm{d}P$, so $kL_r/(4\pi cGM_r) \lt 1$. With $L_r/M_r \ge L/M$, $kL/(4\pi cGM) \le kL_r/(4\pi cGM_r) \lt 1$, which is (9.3). At the surface, $L_r = L$ and $M_r = M$, and (9.3) is (9.1) with $k$ for $\kappa_{\rm F}$: the same inequality. <span class="qed">∎</span></div>
+
+<p>Eddington writes the ratio $(L_r/M_r)/(L/M)$ as a single symbol and argues that it exceeds one because energy generation is concentrated toward the centre; the symbol is not used here, because <code>module12.html:927</code> refuses a new bare meaning of the glyph he chose. His "If both temperature and density increase the material pressure $p_G$ must increase" is the condition $\mathrm{d}p_{\rm G} \gt 0$. <b>The name "Eddington limit" is kept</b> because it is what the literature calls (9.1), with the qualification that Eddington stated it as a bound on $k$ and not with $\kappa_{\rm es}$. For the Sun (9.3) gives $k \lt 13061\ \mathrm{cm^2\,g^{-1}}$ with this book's constants; he gives $13{,}200$.</p>
+
+<p><b>The limit's assumptions, each of which can fail.</b> It assumes spherical symmetry, so that the flux at $r$ is $L/4\pi r^2$; a disc or a beam puts the flux where the gas is not. It assumes the opacity is electron scattering; any additional absorption lowers $L_{\rm Edd}$. And it assumes a steady state; a transient can exceed it while it blows the gas away. This module names no observed violation, because none was read.</p>
+
+<h2 id="accretion">10. Accretion at the limit</h2>
+
+<p>An accreting black hole radiates $L = \eta_{\rm rad}\dot Mc^{2}$, where the radiative efficiency $\eta_{\rm rad}$ is <a href="module09.html#notation">Module 9</a>'s notation. <a href="module09.html#notation">Module 9</a> defines the Eddington accretion rate as $\dot M_{\rm Edd} = L_{\rm Edd}/(\eta_{\rm rad}c^2)$ at $\eta_{\rm rad} = 0.1$ (<code>module09.html:944</code>).</p>
+
+<div class="prop"><b>Proposition 12 (growth at the Eddington rate).</b> A hole that accretes at $\dot M_{\rm Edd}$ and radiates $\eta_{\rm rad}\dot Mc^2$ keeps $(1-\eta_{\rm rad})\dot M$, and its mass grows as $M \propto e^{t/t_{\rm e}}$ with
+$$ t_{\rm e} \;=\; \frac{\eta_{\rm rad}\,\kappa_{\rm es}\,c}{4\pi G\,(1-\eta_{\rm rad})}, \tag{10.1}$$
+which does not depend on $M$.</div>
+
+<div class="proof">The energy radiated, $\eta_{\rm rad}\dot Mc^2$ per unit time, leaves as photons and with it the rest mass $\eta_{\rm rad}\dot M$, so the hole gains $\mathrm{d}M/\mathrm{d}t = (1-\eta_{\rm rad})\dot M$. At $\dot M = \dot M_{\rm Edd} = L_{\rm Edd}/(\eta_{\rm rad}c^{2})$ with (9.1),
+$$ \frac{\mathrm{d}M}{\mathrm{d}t} \;=\; (1-\eta_{\rm rad})\,\frac{4\pi GMc}{\kappa_{\rm es}\,\eta_{\rm rad}c^{2}} \;=\; \frac{M}{t_{\rm e}}, $$
+with $t_{\rm e}$ as in (10.1). The right side is linear in $M$, so $M = M_0e^{t/t_{\rm e}}$; $M$ cancelled out of $t_{\rm e}$. <span class="qed">∎</span></div>
+
+<p>At $\eta_{\rm rad} = 0.1$ and $\kappa_{\rm es} = \sigma_{\rm T}/m_{\rm p}$ the run gives $M/\dot M_{\rm Edd} = 4.5049\times10^{7}$ yr — the <b>Salpeter time</b>, $\eta_{\rm rad}\kappa_{\rm es}c/4\pi G$, the same at $10\,M_\odot$ and at $10^{8}\,M_\odot$ to $3.33\times10^{-16}$ — and $t_{\rm e} = 5.0054\times10^{7}$ yr. The difference is the $(1-\eta_{\rm rad})$: the first number is the e-folding time if the hole kept everything that falls in, and it does not. Problem K1 asks how long a $10\,M_\odot$ seed takes to reach $10^{9}\,M_\odot$.</p>
+
+<p><b>A sentence <a href="module09.html#problems">Module 9 §10</a> leaves unsaid.</b> <code>module09.html:913</code> prints that the Bondi-fed hole "would double its mass in $1.23\times10^{4}$ yr"; the run recomputes $M/\dot M = 1.2297\times10^{4}$ yr. That is exact at constant $\dot M$, and the page states no growth law. Under Bondi's $\dot M \propto M^{2}$ the doubling time halves, to $6.1484\times10^{3}$ yr; at an Eddington-limited $\dot M \propto M$ it is $\ln 2$ times $M/\dot M$, $8.5235\times10^{3}$ yr. This is not a defect in Module 9, which is not edited.</p>
+
+<h3>Which efficiency, and what it costs</h3>
+
+<p>$\dot M_{\rm Edd}$ carries $\eta_{\rm rad}$, and the book prints three values of it. <a href="module11.html#efficiency">Module 11 §9</a> derives $1/12$ for a Newtonian thin disc at the Schwarzschild innermost stable orbit and computes $0.057191$ from Bardeen, Press and Teukolsky's orbit formula.</p>
+
+<table>
+<tr><th>$\eta_{\rm rad}$</th><th>where</th><th>$\dot M_{\rm Edd}(10\,M_\odot)$ ($\mathrm{g\,s^{-1}}$)</th><th>against <code>module09.html:913</code>'s print</th></tr>
+<tr><td>0.1</td><td><code>module09.html:944</code>, assumed</td><td>$1.3987\times10^{19}$</td><td>$-0.0$ per cent</td></tr>
+<tr><td>$1/12 = 0.083333$</td><td>Module 11, Newtonian</td><td>$1.6784\times10^{19}$</td><td>$+20.0$ per cent</td></tr>
+<tr><td>0.057191</td><td>Module 11, Bardeen et al.</td><td>$2.4456\times10^{19}$</td><td>$+74.8$ per cent</td></tr>
+</table>
+
+<p>(Against the computed value rather than the rounded print, the last row is $+74.9$ per cent.) <b>This book keeps $\dot M_{\rm Edd}$ defined at $\eta_{\rm rad} = 0.1$</b>, so no shipped number moves. The $0.1$ is a convention of the book and not a derived efficiency; the table shows what the convention costs.</p>
+
+<p><b>What this section answers for <code>module09.html:914</code>.</b> Module 9 found Bondi accretion onto a $10\,M_\odot$ hole in a molecular cloud running at $3664$ times $\dot M_{\rm Edd}$ and called the calculation self-inconsistent: "a calculation that includes radiation is required". <b>That debt is paid as a bound and not as a flow.</b> Proposition 10 shows that gas radiating at $\eta_{\rm rad} = 0.1$ cannot be held above $L_{\rm Edd}$, so it cannot accrete steadily above $\dot M_{\rm Edd}$; Problem K2 prices the excess and finds the efficiency at which such a flow would sit exactly at the limit. <b>This module does not solve radiative Bondi accretion</b> — the flow in which radiation pressure and gravity act on the same infalling gas — and no module of this book does.</p>
+
+<p>Sagittarius A* sits at the other end. <a href="module09.html#problems">Module 9 §10</a>'s Problem K3 (<code>module09.html:921</code>) puts its X-ray luminosity at $3.70\times10^{-12}$ of Eddington while its Bondi rate is $8.405\times10^{-5}$ of $\dot M_{\rm Edd}$, a gap of $2.2716\times10^{7}$, or $7.356$ decades; the efficiency it implies, $4.4021\times10^{-9}$, is the $\eta_{\rm rad} \approx 4\times10^{-9}$ that <a href="module09.html#limits">Module 9 §9</a> prints (<code>module09.html:847</code>), to a ratio of $1.101$. That refutation is Module 9's and is cited, not re-checked. <a href="module11.html#steady">Module 11 §8</a>'s AGN disc, at $1.3987\times10^{25}\ \mathrm{g\,s^{-1}}$ onto $10^{8}\,M_\odot$, runs at $0.100002$ of $\dot M_{\rm Edd} = 1.398674\times10^{26}\ \mathrm{g\,s^{-1}}$: the "tenth of Eddington" of <code>module11.html:666</code> is exact to $0.002$ per cent. Fig. 4 puts the four cases on one axis.</p>
+
+<figure>
+<!--FIG_EDDRATIO-->
+<svg class="setupfig" viewBox="0 0 720 330" width="100%" role="img" aria-label="One logarithmic axis of luminosity over the Eddington luminosity, from ten to the minus thirteen to ten to the five. A vertical line marks 1, the limit. Filled circles mark two measured luminosities, Sagittarius A star at 3.7 times ten to the minus twelve and the Sun at 2.7 times ten to the minus five. Open diamonds mark two accretion rates read as luminosities at efficiency 0.1: the Module 11 disc at 0.1 and the Module 9 Bondi hole at 3664, above the limit." >
+<rect x="40" y="40" width="640" height="190" fill="none" stroke="#334155" stroke-width="1"/>
+<rect x="502.2" y="40" width="177.8" height="190" fill="#f87171" opacity="0.10"/>
+<line x1="502.2" y1="40" x2="502.2" y2="230" stroke="#f87171" stroke-width="1.8"/>
+<line x1="75.6" y1="230" x2="75.6" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="75.6" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-12</tspan></text>
+<line x1="146.7" y1="230" x2="146.7" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="146.7" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-10</tspan></text>
+<line x1="217.8" y1="230" x2="217.8" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="217.8" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-8</tspan></text>
+<line x1="288.9" y1="230" x2="288.9" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="288.9" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-6</tspan></text>
+<line x1="360.0" y1="230" x2="360.0" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="360.0" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-4</tspan></text>
+<line x1="431.1" y1="230" x2="431.1" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="431.1" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-2</tspan></text>
+<line x1="502.2" y1="230" x2="502.2" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="502.2" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">0</tspan></text>
+<line x1="573.3" y1="230" x2="573.3" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="573.3" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">2</tspan></text>
+<line x1="644.4" y1="230" x2="644.4" y2="235" stroke="#334155" stroke-width="1"/>
+<text x="644.4" y="248.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">4</tspan></text>
+<line x1="40" y1="145.0" x2="680" y2="145.0" stroke="#334155" stroke-width="1"/>
+<circle cx="95.8" cy="145.0" r="7" fill="#fb923c"/>
+<text x="95.8" y="101.0" font-size="11" text-anchor="middle" fill="#fb923c">Sgr A*, X-ray</text>
+<text x="95.8" y="115.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">3.70&#215;10<tspan baseline-shift="super" font-size="8">&#8722;12</tspan></text>
+<circle cx="339.7" cy="145.0" r="7" fill="#fb923c"/>
+<text x="339.7" y="179.0" font-size="11" text-anchor="middle" fill="#fb923c">the Sun</text>
+<text x="339.7" y="193.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">2.6772&#215;10<tspan baseline-shift="super" font-size="8">&#8722;5</tspan></text>
+<path d="M 466.7,137.0 L 474.7,145.0 L 466.7,153.0 L 458.7,145.0 Z" fill="#0f172a" stroke="#2dd4bf" stroke-width="2"/>
+<text x="478.7" y="101.0" font-size="11" text-anchor="end" fill="#2dd4bf">AGN disc, Module 11</text>
+<text x="478.7" y="115.0" font-size="10.5" text-anchor="end" fill="#94a3b8">0.100002</text>
+<path d="M 628.9,137.0 L 636.9,145.0 L 628.9,153.0 L 620.9,145.0 Z" fill="#0f172a" stroke="#2dd4bf" stroke-width="2"/>
+<text x="638.9" y="179.0" font-size="11" text-anchor="end" fill="#2dd4bf">Bondi hole, Module 9</text>
+<text x="638.9" y="193.0" font-size="10.5" text-anchor="end" fill="#94a3b8">3663.5</text>
+<text x="508.2" y="56.0" font-size="11" text-anchor="start" fill="#f87171">L = L<tspan baseline-shift="sub" font-size="8">Edd</tspan></text>
+<text x="508.2" y="70.0" font-size="10" text-anchor="start" fill="#f87171">above: no</text>
+<text x="508.2" y="83.0" font-size="10" text-anchor="start" fill="#f87171">steady state</text>
+<text x="360.0" y="270.0" font-size="11" text-anchor="middle" fill="#cbd5e1">L/L<tspan baseline-shift="sub" font-size="8">Edd</tspan> (filled circle: a measured luminosity; open diamond: &#7744;/&#7744;<tspan baseline-shift="sub" font-size="8">Edd</tspan> read at &#951;<tspan baseline-shift="sub" font-size="8">rad</tspan> = 0.1)</text>
+</svg>
+<!--/FIG_EDDRATIO-->
+<figcaption>Four systems on one logarithmic axis of $L/L_{\rm Edd}$. <b>Two kinds of point.</b> Filled circles are measured luminosities over the Eddington luminosity: Sgr A*'s X-ray luminosity at $3.70\times10^{-12}$ and the Sun at $2.6772\times10^{-5}$ (with $\kappa_{\rm es}$ at $X = 0.7583$). Open diamonds are accretion rates over $\dot M_{\rm Edd}$, which equal $L/L_{\rm Edd}$ only if the gas radiates at $\eta_{\rm rad} = 0.1$: Module 11's AGN disc at $0.100002$ and Module 9's Bondi hole at $3663.5$ (printed there as $3664$). The Bondi hole lies above the line at $1$, which is Module 9's self-inconsistency drawn as a point.</figcaption>
+</figure>
+
+<h2 id="where">11. Where radiation matters, and where it does not</h2>
+
+<p>Proposition 9 draws the boundary between gas-pressure and radiation-pressure support as a line $\rho_{\rm eq}\propto T^{3}$, which is a straight line of slope $3$ in the logarithms. Fig. 5 draws it with two points from this book.</p>
+
+<figure>
+<!--FIG_REGIMES-->
+<svg class="setupfig" viewBox="0 0 720 440" width="100%" role="img" aria-label="The density-temperature plane on logarithmic axes, temperature across and density up. A straight line of slope 3 marks where radiation pressure equals gas pressure; the region below it, at lower density for the temperature, is shaded and labelled radiation dominated. The Sun's centre sits more than three decades above the line and the photosphere about five decades above it." >
+<rect x="86" y="44" width="554" height="330" fill="none" stroke="#334155" stroke-width="1"/>
+<path d="M 86.0,356.5 L 88.8,355.0 L 91.6,353.6 L 94.4,352.1 L 97.1,350.6 L 99.9,349.2 L 102.7,347.7 L 105.5,346.2 L 108.3,344.8 L 111.1,343.3 L 113.8,341.9 L 116.6,340.4 L 119.4,338.9 L 122.2,337.5 L 125.0,336.0 L 127.8,334.5 L 130.5,333.1 L 133.3,331.6 L 136.1,330.2 L 138.9,328.7 L 141.7,327.2 L 144.5,325.8 L 147.2,324.3 L 150.0,322.8 L 152.8,321.4 L 155.6,319.9 L 158.4,318.4 L 161.2,317.0 L 163.9,315.5 L 166.7,314.1 L 169.5,312.6 L 172.3,311.1 L 175.1,309.7 L 177.9,308.2 L 180.7,306.7 L 183.4,305.3 L 186.2,303.8 L 189.0,302.4 L 191.8,300.9 L 194.6,299.4 L 197.4,298.0 L 200.1,296.5 L 202.9,295.0 L 205.7,293.6 L 208.5,292.1 L 211.3,290.6 L 214.1,289.2 L 216.8,287.7 L 219.6,286.3 L 222.4,284.8 L 225.2,283.3 L 228.0,281.9 L 230.8,280.4 L 233.5,278.9 L 236.3,277.5 L 239.1,276.0 L 241.9,274.6 L 244.7,273.1 L 247.5,271.6 L 250.3,270.2 L 253.0,268.7 L 255.8,267.2 L 258.6,265.8 L 261.4,264.3 L 264.2,262.8 L 267.0,261.4 L 269.7,259.9 L 272.5,258.5 L 275.3,257.0 L 278.1,255.5 L 280.9,254.1 L 283.7,252.6 L 286.4,251.1 L 289.2,249.7 L 292.0,248.2 L 294.8,246.8 L 297.6,245.3 L 300.4,243.8 L 303.1,242.4 L 305.9,240.9 L 308.7,239.4 L 311.5,238.0 L 314.3,236.5 L 317.1,235.0 L 319.8,233.6 L 322.6,232.1 L 325.4,230.7 L 328.2,229.2 L 331.0,227.7 L 333.8,226.3 L 336.6,224.8 L 339.3,223.3 L 342.1,221.9 L 344.9,220.4 L 347.7,218.9 L 350.5,217.5 L 353.3,216.0 L 356.0,214.6 L 358.8,213.1 L 361.6,211.6 L 364.4,210.2 L 367.2,208.7 L 370.0,207.2 L 372.7,205.8 L 375.5,204.3 L 378.3,202.9 L 381.1,201.4 L 383.9,199.9 L 386.7,198.5 L 389.4,197.0 L 392.2,195.5 L 395.0,194.1 L 397.8,192.6 L 400.6,191.1 L 403.4,189.7 L 406.2,188.2 L 408.9,186.8 L 411.7,185.3 L 414.5,183.8 L 417.3,182.4 L 420.1,180.9 L 422.9,179.4 L 425.6,178.0 L 428.4,176.5 L 431.2,175.1 L 434.0,173.6 L 436.8,172.1 L 439.6,170.7 L 442.3,169.2 L 445.1,167.7 L 447.9,166.3 L 450.7,164.8 L 453.5,163.3 L 456.3,161.9 L 459.0,160.4 L 461.8,159.0 L 464.6,157.5 L 467.4,156.0 L 470.2,154.6 L 473.0,153.1 L 475.7,151.6 L 478.5,150.2 L 481.3,148.7 L 484.1,147.3 L 486.9,145.8 L 489.7,144.3 L 492.5,142.9 L 495.2,141.4 L 498.0,139.9 L 500.8,138.5 L 503.6,137.0 L 506.4,135.5 L 509.2,134.1 L 511.9,132.6 L 514.7,131.2 L 517.5,129.7 L 520.3,128.2 L 523.1,126.8 L 525.9,125.3 L 528.6,123.8 L 531.4,122.4 L 534.2,120.9 L 537.0,119.5 L 539.8,118.0 L 542.6,116.5 L 545.3,115.1 L 548.1,113.6 L 550.9,112.1 L 553.7,110.7 L 556.5,109.2 L 559.3,107.7 L 562.1,106.3 L 564.8,104.8 L 567.6,103.4 L 570.4,101.9 L 573.2,100.4 L 576.0,99.0 L 578.8,97.5 L 581.5,96.0 L 584.3,94.6 L 587.1,93.1 L 589.9,91.7 L 592.7,90.2 L 595.5,88.7 L 598.2,87.3 L 601.0,85.8 L 603.8,84.3 L 606.6,82.9 L 609.4,81.4 L 612.2,79.9 L 614.9,78.5 L 617.7,77.0 L 620.5,75.6 L 623.3,74.1 L 626.1,72.6 L 628.9,71.2 L 631.6,69.7 L 634.4,68.2 L 637.2,66.8 L 640.0,65.3 L 640.0,374.0 L 86.0,374.0 Z" fill="#a78bfa" opacity="0.16"/>
+<path d="M 86.0,356.5 L 88.8,355.0 L 91.6,353.6 L 94.4,352.1 L 97.1,350.6 L 99.9,349.2 L 102.7,347.7 L 105.5,346.2 L 108.3,344.8 L 111.1,343.3 L 113.8,341.9 L 116.6,340.4 L 119.4,338.9 L 122.2,337.5 L 125.0,336.0 L 127.8,334.5 L 130.5,333.1 L 133.3,331.6 L 136.1,330.2 L 138.9,328.7 L 141.7,327.2 L 144.5,325.8 L 147.2,324.3 L 150.0,322.8 L 152.8,321.4 L 155.6,319.9 L 158.4,318.4 L 161.2,317.0 L 163.9,315.5 L 166.7,314.1 L 169.5,312.6 L 172.3,311.1 L 175.1,309.7 L 177.9,308.2 L 180.7,306.7 L 183.4,305.3 L 186.2,303.8 L 189.0,302.4 L 191.8,300.9 L 194.6,299.4 L 197.4,298.0 L 200.1,296.5 L 202.9,295.0 L 205.7,293.6 L 208.5,292.1 L 211.3,290.6 L 214.1,289.2 L 216.8,287.7 L 219.6,286.3 L 222.4,284.8 L 225.2,283.3 L 228.0,281.9 L 230.8,280.4 L 233.5,278.9 L 236.3,277.5 L 239.1,276.0 L 241.9,274.6 L 244.7,273.1 L 247.5,271.6 L 250.3,270.2 L 253.0,268.7 L 255.8,267.2 L 258.6,265.8 L 261.4,264.3 L 264.2,262.8 L 267.0,261.4 L 269.7,259.9 L 272.5,258.5 L 275.3,257.0 L 278.1,255.5 L 280.9,254.1 L 283.7,252.6 L 286.4,251.1 L 289.2,249.7 L 292.0,248.2 L 294.8,246.8 L 297.6,245.3 L 300.4,243.8 L 303.1,242.4 L 305.9,240.9 L 308.7,239.4 L 311.5,238.0 L 314.3,236.5 L 317.1,235.0 L 319.8,233.6 L 322.6,232.1 L 325.4,230.7 L 328.2,229.2 L 331.0,227.7 L 333.8,226.3 L 336.6,224.8 L 339.3,223.3 L 342.1,221.9 L 344.9,220.4 L 347.7,218.9 L 350.5,217.5 L 353.3,216.0 L 356.0,214.6 L 358.8,213.1 L 361.6,211.6 L 364.4,210.2 L 367.2,208.7 L 370.0,207.2 L 372.7,205.8 L 375.5,204.3 L 378.3,202.9 L 381.1,201.4 L 383.9,199.9 L 386.7,198.5 L 389.4,197.0 L 392.2,195.5 L 395.0,194.1 L 397.8,192.6 L 400.6,191.1 L 403.4,189.7 L 406.2,188.2 L 408.9,186.8 L 411.7,185.3 L 414.5,183.8 L 417.3,182.4 L 420.1,180.9 L 422.9,179.4 L 425.6,178.0 L 428.4,176.5 L 431.2,175.1 L 434.0,173.6 L 436.8,172.1 L 439.6,170.7 L 442.3,169.2 L 445.1,167.7 L 447.9,166.3 L 450.7,164.8 L 453.5,163.3 L 456.3,161.9 L 459.0,160.4 L 461.8,159.0 L 464.6,157.5 L 467.4,156.0 L 470.2,154.6 L 473.0,153.1 L 475.7,151.6 L 478.5,150.2 L 481.3,148.7 L 484.1,147.3 L 486.9,145.8 L 489.7,144.3 L 492.5,142.9 L 495.2,141.4 L 498.0,139.9 L 500.8,138.5 L 503.6,137.0 L 506.4,135.5 L 509.2,134.1 L 511.9,132.6 L 514.7,131.2 L 517.5,129.7 L 520.3,128.2 L 523.1,126.8 L 525.9,125.3 L 528.6,123.8 L 531.4,122.4 L 534.2,120.9 L 537.0,119.5 L 539.8,118.0 L 542.6,116.5 L 545.3,115.1 L 548.1,113.6 L 550.9,112.1 L 553.7,110.7 L 556.5,109.2 L 559.3,107.7 L 562.1,106.3 L 564.8,104.8 L 567.6,103.4 L 570.4,101.9 L 573.2,100.4 L 576.0,99.0 L 578.8,97.5 L 581.5,96.0 L 584.3,94.6 L 587.1,93.1 L 589.9,91.7 L 592.7,90.2 L 595.5,88.7 L 598.2,87.3 L 601.0,85.8 L 603.8,84.3 L 606.6,82.9 L 609.4,81.4 L 612.2,79.9 L 614.9,78.5 L 617.7,77.0 L 620.5,75.6 L 623.3,74.1 L 626.1,72.6 L 628.9,71.2 L 631.6,69.7 L 634.4,68.2 L 637.2,66.8 L 640.0,65.3" fill="none" stroke="#a78bfa" stroke-width="2.2"/>
+<line x1="141.4" y1="374" x2="141.4" y2="379" stroke="#334155" stroke-width="1"/>
+<text x="141.4" y="392.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">4</tspan></text>
+<line x1="252.2" y1="374" x2="252.2" y2="379" stroke="#334155" stroke-width="1"/>
+<text x="252.2" y="392.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">5</tspan></text>
+<line x1="363.0" y1="374" x2="363.0" y2="379" stroke="#334155" stroke-width="1"/>
+<text x="363.0" y="392.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">6</tspan></text>
+<line x1="473.8" y1="374" x2="473.8" y2="379" stroke="#334155" stroke-width="1"/>
+<text x="473.8" y="392.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">7</tspan></text>
+<line x1="584.6" y1="374" x2="584.6" y2="379" stroke="#334155" stroke-width="1"/>
+<text x="584.6" y="392.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">8</tspan></text>
+<line x1="81" y1="374.0" x2="86" y2="374.0" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="378.0" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-13</tspan></text>
+<line x1="81" y1="315.8" x2="86" y2="315.8" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="319.8" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-10</tspan></text>
+<line x1="81" y1="257.5" x2="86" y2="257.5" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="261.5" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-7</tspan></text>
+<line x1="81" y1="199.3" x2="86" y2="199.3" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="203.3" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-4</tspan></text>
+<line x1="81" y1="141.1" x2="86" y2="141.1" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="145.1" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-1</tspan></text>
+<line x1="81" y1="82.8" x2="86" y2="82.8" stroke="#334155" stroke-width="1"/>
+<text x="78.0" y="86.8" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">2</tspan></text>
+<circle cx="494.8" cy="79.4" r="5.5" fill="#fb923c"/>
+<text x="484.8" y="75.4" font-size="11" text-anchor="end" fill="#fb923c">the Sun's centre (tabulated)</text>
+<text x="484.8" y="90.4" font-size="10" text-anchor="end" fill="#94a3b8">1614.5 times the line's density</text>
+<circle cx="116.1" cy="249.2" r="5.5" fill="#fb923c"/>
+<text x="126.1" y="245.2" font-size="11" text-anchor="start" fill="#fb923c">the photosphere, &#964;<tspan baseline-shift="sub" font-size="8">R</tspan> = 2/3</text>
+<text x="126.1" y="260.2" font-size="10" text-anchor="start" fill="#94a3b8">P<tspan baseline-shift="sub" font-size="8">rad</tspan>/P = 2.95&#215;10<tspan baseline-shift="super" font-size="8">&#8722;5</tspan></text>
+<text x="374.1" y="280.8" font-size="11.5" text-anchor="start" fill="#a78bfa">P<tspan baseline-shift="sub" font-size="8">rad</tspan> &gt; P<tspan baseline-shift="sub" font-size="8">gas</tspan>: radiation dominates</text>
+<text x="141.4" y="102.2" font-size="11.5" text-anchor="start" fill="#cbd5e1">P<tspan baseline-shift="sub" font-size="8">gas</tspan> &gt; P<tspan baseline-shift="sub" font-size="8">rad</tspan></text>
+<text x="351.9" y="172.1" font-size="10.5" text-anchor="end" fill="#a78bfa">P<tspan baseline-shift="sub" font-size="8">rad</tspan> = P<tspan baseline-shift="sub" font-size="8">gas</tspan>, slope 3</text>
+<text x="351.9" y="186.1" font-size="10.5" text-anchor="end" fill="#94a3b8">&#956; = 0.832</text>
+<text x="86.0" y="32.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">&#961; (g cm<tspan baseline-shift="super" font-size="8">&#8722;3</tspan>)</text>
+<text x="363.0" y="414.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">T (K)</text>
+</svg>
+<!--/FIG_REGIMES-->
+<figcaption>The $(\rho, T)$ plane on logarithmic axes. The line is $P_{\rm rad} = P_{\rm gas}$, (8.2), at $\mu = 0.832$; below it, at lower density for the temperature, radiation dominates the pressure. The Sun's tabulated centre ($\rho_c = 150.50\ \mathrm{g\,cm^{-3}}$, $T_c = 1.5480\times10^{7}$ K, Module 3's BS2005-AGS,OP row) lies $1614.5$ times above the line's density at the centre's own $\mu = 0.82851$. The photosphere point is ATLAS9 at $\tau_{\rm R} = 2/3$, where $P_{\rm rad}/P = 2.9454\times10^{-5}$.</figcaption>
+</figure>
+
+<p>At the Sun's centre the line lies at $9.3219\times10^{-2}\ \mathrm{g\,cm^{-3}}$ for $\mu = 0.82851$, against the actual $150.50$: the centre is $1614.5$ times denser than the crossover, and by Proposition 9 that ratio is $\beta/(1-\beta)$, the same statement as $1 - \beta = 6.190\times10^{-4}$. <b>Why radiation matters more in more massive stars follows from the slope.</b> Along a sequence of stars of the same structure and composition, $\rho_c \propto M/R^3$, and the hydrostatic central pressure $P_c \propto GM^2/R^4$ with $P_c \propto \rho_cT_c$ gives $T_c \propto M/R$. Then $\rho_c/\rho_{\rm eq}(T_c) \propto (M/R^3)/(M/R)^3 = M^{-2}$: the radius cancels, and each factor of ten in mass moves the centre two decades toward the line. This is the scaling inside Eddington's quartic, whose $(1-\beta)/\beta^4 \propto M^2$ <a href="module03.html#problems">Module 3</a> solves in its Problem K3.</p>
+
+<p><b>The Sun as a whole</b> sits at $L_\odot/L_{\rm Edd} = 2.6772\times10^{-5}$, with $\kappa_{\rm es}$ at $X = 0.7583$ (Problem D3). That is the fraction of the Sun's gravity that radiation pressure carries in the outer layers where the opacity is electron scattering, and it is the size of what <a href="module03.html#limits">Module 3 §11</a> dropped when it wrote "Ideal gas (3.2), with radiation only in Proposition 6" (<code>module03.html:795</code>). The centre's share, $1 - \beta_c = 6.1940\times10^{-4}$, is <a href="module03.html#ssm">Module 3 §9</a>'s (<code>module03.html:628</code>). At the photosphere, $P_{\rm rad}/P = 2.9454\times10^{-5}$. Radiation pressure is a correction of a few parts in $10^{4}$ or $10^{5}$ everywhere in the Sun; radiation <em>transport</em>, which sets the temperature gradient through (4.2), is not a correction at all.</p>
+
+<p><b>The radiating shock.</b> <a href="module08.html#ratios">Module 8 §3</a> (<code>module08.html:336</code>) computed that a $10\ \mathrm{km\,s^{-1}}$ shock in molecular gas at $10$ K that radiates away its heat compresses the gas by a factor of $2802$, against $4$ for an adiabatic shock. That is radiation's other role in fluid dynamics — as an energy sink rather than a force — and it is Module 8's result, cited here and not re-derived.</p>
+
+<h2 id="limits">12. What this module captures, and what it misses</h2>
+
+<p>The module captures radiation as a momentum carrier and as a heat carrier, in the two limits where each has a closed form: the optically thick diffusion law and the grey atmosphere, and the force balance on optically thin gas. What it misses are frequency dependence beyond the Rosseland mean, the time-dependent and moving-medium terms of the transfer equation, and all the atomic physics that sets real opacities.</p>
+
+<table>
+<tr><th>idealisation</th><th>what it costs</th><th>where it is repaid</th></tr>
+<tr><td><b>Static medium</b>; no $(1/c)\partial I/\partial t$, no Doppler or aberration terms</td><td>Exact for the Sun's photosphere to the ratio of flow speed to $c$; wrong for relativistic outflows and for radiation-driven winds, where the gas moves at a sizeable fraction of the speeds that set the opacity</td><td>Nowhere in this book</td></tr>
+<tr><td><b>No atomic physics</b>: H⁻ and every bound–free and line opacity borrowed</td><td><a class="secref" href="#anchor">§6</a> takes $\kappa_{\rm R}$ from ATLAS9, a model. CHECK 2 inherits its opacity distribution functions</td><td><b>Refused in print, here.</b> This book does no atomic physics</td></tr>
+<tr><td><b>Grey opacity and the Eddington closure</b> in the atmosphere</td><td>CHECK 4 measures the combined error: $3.0$ per cent in $T$, $12.6$ per cent in $T^{4}$. The closure alone is $0.412$ per cent at $\tau = 2/3$</td><td>Not repaid; non-grey atmospheres need the atomic physics above</td></tr>
+<tr><td><b>The adiabatic criterion evaluated, the damping not computed</b> (<code>module04.html:563</code>)</td><td><a class="secref" href="#leak">§7</a> shows radiative leakage is an order-unity effect at the photosphere. The damping rate and the frequency shift that <a href="module04.html#limits">Module 4 §8</a> names are <b>not</b> computed</td><td><b>Half paid.</b> The non-adiabatic oscillation equations are in no module of this book</td></tr>
+<tr><td><b>Spherical, steady, electron-scattering limit</b></td><td>(9.1) bounds steady spherical accretion; it says nothing about a disc, a beam or a transient</td><td>Nowhere in this book</td></tr>
+<tr><td><b>Radiative Bondi accretion not solved</b> (<code>module09.html:914</code>)</td><td><a class="secref" href="#accretion">§10</a> pays the debt as a bound, and Problem K2 prices the excess; the flow itself is not computed</td><td><b>Paid as a bound, not as a flow</b></td></tr>
+<tr><td><b>Radiative heating of the solar wind</b> (<code>module02.html:685</code>)</td><td><a href="module02.html#limits">Module 2 §11</a> split the wind's missing heating three ways and named this module for radiation. The radiative heating of a wind is not computed here</td><td><b>Refused in print, here</b></td></tr>
+<tr><td><b>Radiative heating of dust</b> (<code>module05.html:759</code>)</td><td><a href="module05.html#limits">Module 5 §8</a> named this module for the radiative heating that holds Barnard 68's dust temperature. That needs dust opacities, which the book does not carry</td><td><b>Refused in print, here</b></td></tr>
+<tr><td><b>The inner AGN disc with radiation pressure</b> (<code>module11.html:666</code>)</td><td>The disc's inner $P_{\rm rad}/P_{\rm gas}$ at a tenth of Eddington needs its vertical structure with radiation pressure in it, which <a href="module11.html#limits">Module 11 §12</a> did not build. The "tenth" itself is confirmed by CHECK 1</td><td><b>Refused in print, here</b></td></tr>
+</table>
+
+<p>Of the twelve debts the shipped pages printed against this module, eight are paid in full or as stated above: the charter row of <a href="module01.html#limits">Module 1 §9</a> by the module as a whole; <code>module02.html:688</code> by Proposition 8; <code>module03.html:795</code> by <a class="secref" href="#where">§11</a>; <code>module04.html:429</code> by CHECK 3; <code>module09.html:847</code>, <code>:915</code> and <code>:944</code> by Proposition 10 and CHECK 1; and <code>module09.html:914</code> as a bound. One is half paid (<code>module04.html:563</code>) and three are refused in the table above.</p>
+
+<h2 id="problems">13. Problems</h2>
+
+<div class="prob"><b>C1.</b> Show that a radiation field whose intensity $I_\nu$ does not depend on direction has $P_\nu = u_\nu/3$. Then compute $P_\nu/u_\nu$ for a parallel beam, $I_\nu \propto \delta(\mathbf{n} - \mathbf{n}_0)$ with $\mathbf{n}_0$ along $z$, and for a field that is uniform over the hemisphere $\cos\theta \gt 0$ and zero over the other.
+<details class="sol"><summary>Solution</summary><div>For isotropic $I_\nu$, $P_\nu/u_\nu = \oint\cos^2\theta\,\mathrm{d}\Omega/\oint\mathrm{d}\Omega = (4\pi/3)/4\pi = 0.333333$; see the proof of Proposition 1. For the beam, all the intensity has $\cos\theta = 1$, so $P_\nu/u_\nu = 1.000000$: three times the isotropic value. For the hemisphere, $\int_0^1\mu^2\,\mathrm{d}\mu/\int_0^1\mathrm{d}\mu = 1/3$, so $P_\nu/u_\nu = 0.333333$ again, although its flux is not zero. The $1/3$ needs only that $\langle\cos^{2}\theta\rangle = 1/3$, not isotropy; this is why the surface condition of Proposition 6 does not contradict its closure.</div></details></div>
+
+<div class="prob"><b>C2.</b> Compute $L_{\rm Edd}$ and $\dot M_{\rm Edd}$ for a neutron star of $M = 1.4\,M_\odot$, with $M_\odot = 1.9884\times10^{33}$ g, for fully ionised gas of hydrogen mass fraction $X = 1$ and $X = 0.7261$, the rest helium. Use the book's convention $\eta_{\rm rad} = 0.1$ in $\dot M_{\rm Edd} = L_{\rm Edd}/(\eta_{\rm rad}c^2)$.
+<details class="sol"><summary>Solution</summary><div>$M = 2.783774\times10^{33}$ g. By (9.1) with (6.2), $L_{\rm Edd} = 1.759891\times10^{38}\ \mathrm{erg\,s^{-1}}$ at $X = 1$ and $2.039153\times10^{38}$ at $X = 0.7261$, a ratio of $1.158681 = 2/(1+X)$. The rates are $\dot M_{\rm Edd} = 1.958143\times10^{18}\ \mathrm{g\,s^{-1}}$ and $2.268864\times10^{18}\ \mathrm{g\,s^{-1}}$. The composition moves the limit by the factor $2/(1+X)$ and nothing else.</div></details></div>
+
+<div class="prob"><b>C3.</b> In Eddington's grey atmosphere (5.1) with $T_{\rm eff} = 5772$ K, compute $T$ at $\tau = 0$, $2/3$ and $2$. The model is grey: $\kappa_\nu$ does not depend on frequency.
+<details class="sol"><summary>Solution</summary><div>$T(0) = T_{\rm eff}(1/2)^{1/4} = 0.840896\,T_{\rm eff} = 4853.7$ K; $T(2/3) = 5772.0$ K by construction; $T(2) = T_{\rm eff}2^{1/4} = 6864.1$ K. The surface is not at zero temperature: it sees radiation from below and is heated by it. The exact grey solution <em>lowers</em> $T(0)$, because $q_{\rm H}(0) = 1/\sqrt3$ is less than $2/3$; the surface temperature falls by the factor $(q_{\rm H}(0)/(2/3))^{1/4}$.</div></details></div>
+
+<div class="prob"><b>D1.</b> Derive (8.1) from the first law, $\mathrm{d}e + P\,\mathrm{d}(1/\rho) = 0$, with $e = 3P_{\rm gas}/(2\rho) + a_{\rm rad}T^{4}/\rho$ for a monatomic gas, $\gamma = 5/3$, and check both limits. Evaluate $\Gamma_1$ at $\beta = 1/2$.
+<details class="sol"><summary>Solution</summary><div>See the proof of Proposition 8. The adiabatic temperature exponent $\mathrm{d}\ln T/\mathrm{d}\ln\rho$ is $0.666667 = \gamma - 1$ at $\beta = 1$ and $0.333333$ at $\beta = 0$, and $\Gamma_1 = \beta + (4 - 3\beta)\,\mathrm{d}\ln T/\mathrm{d}\ln\rho$ gives $1.666667$ and $1.333333$. At $\beta = 1/2$, $\Gamma_1 = 1.425926$; Chandrasekhar's Table 1 prints $1.426$ at $1 - \beta = 0.5$.</div></details></div>
+
+<div class="prob"><b>D2.</b> Derive (4.2) from the first angular moment of the transfer equation, stating the Eddington closure $P_\nu = u_\nu/3$ as the assumption it is. Then apply the result to the grey atmosphere (5.1) at large $\tau$ and show that it carries exactly the flux $\sigma_{\rm SB}T_{\rm eff}^4$.
+<details class="sol"><summary>Solution</summary><div>See the proof of Proposition 4; the closure enters once, in replacing $P_\nu$ by $u_\nu/3$, and it is exact only for $\langle\cos^2\theta\rangle = 1/3$. With $z$ outward and $\tau$ inward, $\mathrm{d}\tau = -\kappa\rho\,\mathrm{d}z$, and (4.2) reads $F = (c/3)\,\mathrm{d}(a_{\rm rad}T^{4})/\mathrm{d}\tau$. From (5.1), $\mathrm{d}T^{4}/\mathrm{d}\tau = \tfrac34T_{\rm eff}^{4}$ at every depth, so $F = (ca_{\rm rad}/4)T_{\rm eff}^4 = \sigma_{\rm SB}T_{\rm eff}^4$. The run evaluates the ratio as $1.000000$.</div></details></div>
+
+<div class="prob"><b>D3.</b> Show that Propositions 10 and 11 are one inequality. Use Proposition 11's condition that the gas pressure increases inward, $\mathrm{d}p_{\rm G} \gt 0$ for an inward step. Then evaluate Eddington's bound for the Sun, with $L_\odot = 3.828\times10^{33}\ \mathrm{erg\,s^{-1}}$ and $GM_\odot = 1.3271244\times10^{26}\ \mathrm{cm^3\,s^{-2}}$, and divide the Sun's surface electron-scattering opacity at $X = 0.7583$ by it.
+<details class="sol"><summary>Solution</summary><div>At the surface, $L_r = L$ and $M_r = M$, and the proof of Proposition 11 gives $kL/(4\pi cGM) \lt 1$, which rearranges to $L \lt 4\pi GMc/k$: (9.1) with $\kappa_{\rm F} = k$. Proposition 10 reads the inequality as a bound on $L$ at given opacity; Proposition 11 reads it as a bound on the opacity at given $L$. For the Sun, $4\pi cGM_\odot/L_\odot = 13060.8\ \mathrm{cm^2\,g^{-1}}$. With $\kappa_{\rm es} = 0.34966$ the ratio is $2.6772\times10^{-5}$, which is $L_\odot/L_{\rm Edd}$: the two readings give the same number.</div></details></div>
+
+<div class="prob"><b>K1.</b> A $10\,M_\odot$ black hole accretes at exactly the Eddington rate, with $\eta_{\rm rad} = 0.1$ and $\kappa_{\rm es} = \sigma_{\rm T}/m_{\rm p}$. The hole keeps the fraction $(1-\eta_{\rm rad})$ of what falls in. How long does it take to reach $10^{9}\,M_\odot$?
+<details class="sol"><summary>Solution</summary><div>By (10.1), $t_{\rm e} = 5.0054\times10^{7}$ yr. The growth factor is $10^{8}$, which is $\ln 10^{8} = 18.420681$ e-folds, so the time is $9.2204\times10^{8}$ yr. Dropping the $(1-\eta_{\rm rad})$ — using the Salpeter time $4.5049\times10^{7}$ yr as the e-folding time — gives $8.2983\times10^{8}$ yr, 10 per cent short. The time does not depend on the seed's mass except through the logarithm of the growth factor.</div></details></div>
+
+<div class="prob"><b>K2.</b> <a href="module09.html#problems">Module 9 §10</a>'s Bondi hole has $M = 10\,M_\odot$, with $M_\odot = 1.9884\times10^{33}$ g, and accretes $\dot M = 5.124\times10^{22}\ \mathrm{g\,s^{-1}}$ (<code>module09.html:913</code>). $\dot M_{\rm Edd}$ is defined at $\eta_{\rm rad} = 0.1$ and $L_{\rm Edd}$ by (9.2). What luminosity would the hole radiate at $\eta_{\rm rad} = 0.1$, how many times $L_{\rm Edd}$ is it, and at what $\eta_{\rm rad}$ would it sit exactly at $L_{\rm Edd}$?
+<details class="sol"><summary>Solution</summary><div>$L = 0.1\,\dot Mc^2 = 4.6052\times10^{42}\ \mathrm{erg\,s^{-1}}$, which is $3663.5$ times $L_{\rm Edd} = 1.257065\times10^{39}$ — the same number as $\dot M/\dot M_{\rm Edd}$, because $\dot M_{\rm Edd}$ is defined at the same $0.1$. At $L = L_{\rm Edd}$ the efficiency is $L_{\rm Edd}/\dot Mc^2 = 2.7297\times10^{-5}$. <b>A flow that radiates that inefficiently escapes the limit</b>: it can accrete at the Bondi rate without radiation pressure stopping it. That is the regime <a href="module09.html#limits">Module 9 §9</a> puts Sgr A* in, at $\eta_{\rm rad} \approx 4\times10^{-9}$.</div></details></div>
+
+<div class="prob"><b>K3.</b> Evaluate the adiabaticity parameter $\omega\chi/c_{\rm s}^2$ at the solar acoustic cutoff, $\nu_{\rm ac} = 4497\ \mu$Hz, with ATLAS9's values at $\tau_{\rm R} = 2/3$: $\kappa_{\rm R} = 0.4447\ \mathrm{cm^2\,g^{-1}}$, $\rho = 2.6721\times10^{-7}\ \mathrm{g\,cm^{-3}}$, $T = 5910.1$ K, $c_P = 1.6968\times10^{8}\ \mathrm{erg\,g^{-1}\,K^{-1}}$ and $c_{\rm s} = 8.081\times10^{5}\ \mathrm{cm\,s^{-1}}$.
+<details class="sol"><summary>Solution</summary><div>By (4.4), $\chi = 1.1588\times10^{13}\ \mathrm{cm^2\,s^{-1}}$, and with $\omega = 2\pi\nu_{\rm ac}$ the parameter is $0.5014$. By (7.1) the diffusion time across a wavelength is $12.532$ periods. The parameter is linear in $\omega$, so it is $1.4554 = 4497/3090$ times its value at $\nu_{\rm max}$. At the cutoff, the highest frequency the atmosphere traps, the leakage is half a radian of heat per radian of oscillation.</div></details></div>
+
+<h2 id="notation">Notation</h2>
+
+<table>
+<tr><th>symbol</th><th>meaning</th><th>units</th><th>first use</th></tr>
+<tr><td>$I_\nu$, $J_\nu$, $u_\nu$, $F_\nu$, $P_\nu$</td><td>specific intensity, mean intensity, energy density, flux and pressure (Definition 1); without $\nu$, integrated over frequency. <b>$P_\nu$, not the literature's $K_\nu$</b>, because $K$ is <a href="module03.html">Module 3</a>'s polytropic constant. $J_\nu$ always carries its subscript; <a href="module08.html">Module 8</a>'s bare $J$ is the Sedov energy integral and does not occur here</td><td>various</td><td>Definition 1</td></tr>
+<tr><td>$u_{\rm rad}$, $P_{\rm rad}$</td><td>radiation energy density and pressure, subscripted because bare $u$ is the book's velocity</td><td>$\mathrm{erg\,cm^{-3}}$</td><td>Proposition 1</td></tr>
+<tr><td>$a_{\rm rad}$</td><td>radiation constant $4\sigma_{\rm SB}/c$, <a href="module03.html">Module 3</a>'s symbol; never bare $a$</td><td>$\mathrm{erg\,cm^{-3}\,K^{-4}}$</td><td>Proposition 1</td></tr>
+<tr><td>$\sigma_{\rm SB}$, $\sigma_{\rm T}$</td><td>Stefan–Boltzmann constant and Thomson cross-section, always subscripted; bare $\sigma$ stays <a href="module01.html">Module 1</a>'s collision cross-section</td><td>cgs; $\mathrm{cm^2}$</td><td>Proposition 1; (6.2)</td></tr>
+<tr><td>$\nu$</td><td><b>frequency</b>, bare and as a subscript. <a href="module07.html">Module 7</a>'s, <a href="module10.html">Module 10</a>'s and <a href="module11.html">Module 11</a>'s kinematic viscosity does not occur here</td><td>Hz</td><td><a class="secref" href="#transfer">§2</a></td></tr>
+<tr><td>$\kappa_\nu$, $\kappa_{\rm R}$, $\kappa_{\rm es}$, $\kappa_{\rm F}$</td><td>opacity at one frequency, Rosseland mean, electron scattering, flux mean. <b>Never bare $\kappa$</b>: <a href="module01.html">Module 1</a>'s thermal conductivity, <a href="module04.html">Module 4</a>'s evanescent decay rate and <a href="module12.html">Module 12</a>'s $\kappa_\parallel$, $\kappa_\perp$ already claim it. Eddington's $k$ appears only in his own inequality (9.3)</td><td>$\mathrm{cm^2\,g^{-1}}$</td><td>Definition 2</td></tr>
+<tr><td>$j_\nu$, $S_\nu$, $B_\nu(T)$</td><td>emissivity (not $\eta_\nu$), source function, Planck function. $B_\nu$ always carries its subscript and argument, because bare $B$ is <a href="module12.html">Module 12</a>'s magnetic field</td><td>cgs</td><td>Definition 2</td></tr>
+<tr><td>$\tau$, $\tau_\nu$, $\tau_{\rm R}$</td><td>optical depth, <a href="module06.html">Module 6</a>'s ruling; $\tau_{\rm R}$ the Rosseland optical depth. <a href="module01.html">Module 1</a>'s collision time, <a href="module02.html">Module 2</a>'s radial exponent, <a href="module04.html">Module 4</a>'s acoustic radius and <a href="module12.html">Module 12</a>'s $\tau_e$, $\tau_i$ do not occur</td><td>—</td><td>Definition 3</td></tr>
+<tr><td>$\lambda_{\rm ph}$</td><td>photon mean free path $1/(\kappa\rho)$, of <a href="module01.html">Module 1</a>'s $\lambda$ family. The acoustic wavelength in Proposition 7 is written $c_{\rm s}/\nu$ and gets no symbol</td><td>cm</td><td>Definition 3</td></tr>
+<tr><td>$D$, $t_{\rm diff}$</td><td>photon diffusivity $c\lambda_{\rm ph}/3$ and diffusion time</td><td>$\mathrm{cm^2\,s^{-1}}$, s</td><td>Proposition 5</td></tr>
+<tr><td>$\chi$</td><td>radiative heat diffusivity (4.4), as <a href="module04.html">Module 4</a> set it up. <b>Not</b> the extinction coefficient that the transfer literature writes $\chi$</td><td>$\mathrm{cm^2\,s^{-1}}$</td><td>Proposition 5</td></tr>
+<tr><td>$c$, $c_{\rm s}$</td><td>speed of light; sound speed. <b><a href="module04.html">Module 4</a> writes the sound speed $c$</b>, and its criterion $\omega\chi/c^2$ is written $\omega\chi/c_{\rm s}^2$ here</td><td>$\mathrm{cm\,s^{-1}}$</td><td>(1.1); Proposition 7</td></tr>
+<tr><td>$\mathcal{P}$</td><td>the period $1/\nu$ of a sound wave, in Proposition 7 only; calligraphic because $P$ is a pressure</td><td>s</td><td>Proposition 7</td></tr>
+<tr><td>$q_{\rm H}(\tau)$</td><td>the Hopf function, subscripted because bare $q$ is <a href="module11.html">Module 11</a>'s shear parameter</td><td>—</td><td>Proposition 6</td></tr>
+<tr><td>$T_{\rm eff}$</td><td>effective temperature, $\sigma_{\rm SB}T_{\rm eff}^4 = F$. $5772$ K (IAU) except in CHECK 4, which uses ATLAS9's $5777$ K</td><td>K</td><td>Proposition 6</td></tr>
+<tr><td>$\beta$</td><td>$P_{\rm gas}/P$, <a href="module03.html">Module 3</a>'s meaning. <a href="module12.html">Module 12</a>'s plasma beta does not occur</td><td>—</td><td><a class="secref" href="#mixture">§8</a></td></tr>
+<tr><td>$\Gamma_1$, $\gamma$</td><td>first adiabatic index of the mixture, <a href="module04.html">Module 4</a>'s Definition 1, the same quantity; $\gamma = 5/3$ the gas's own. <b>$L/L_{\rm Edd}$ is written out and never $\Gamma$</b></td><td>—</td><td>Proposition 8</td></tr>
+<tr><td>$e$</td><td>specific internal energy, <a href="module02.html">Module 2</a>'s symbol</td><td>$\mathrm{erg\,g^{-1}}$</td><td>Proposition 8</td></tr>
+<tr><td>$X$</td><td>hydrogen mass fraction, as <a href="module04.html">Module 4</a> uses it: $1$, $0.7583$ (present solar surface) or $0.7261$ (protosolar)</td><td>—</td><td>(6.2)</td></tr>
+<tr><td>$L_{\rm Edd}$, $\dot M_{\rm Edd}$, $\eta_{\rm rad}$</td><td>Eddington luminosity, Eddington rate at $\eta_{\rm rad} = 0.1$, radiative efficiency, <a href="module09.html">Module 9</a>'s notation unchanged</td><td>$\mathrm{erg\,s^{-1}}$, $\mathrm{g\,s^{-1}}$, —</td><td>Proposition 10</td></tr>
+<tr><td>$t_{\rm e}$</td><td>e-folding time of a hole growing at $\dot M_{\rm Edd}$, with $(1-\eta_{\rm rad})$ kept</td><td>s, yr</td><td>Proposition 12</td></tr>
+<tr><td>$L$, $F$</td><td>luminosity and flux, <a href="module03.html">Module 3</a>'s and <a href="module06.html">Module 6</a>'s</td><td>$\mathrm{erg\,s^{-1}}$, $\mathrm{erg\,cm^{-2}\,s^{-1}}$</td><td><a class="secref" href="#momentum">§1</a></td></tr>
+</table>
+
+<h2 id="sources">Sources</h2>
+
+<ol>
+<li><b>Eddington, A. S. (1926)</b>, <em>The Internal Constitution of the Stars</em>, Cambridge University Press. <b>Read in the 1930 second impression</b> (archive.org <code>in.ernet.dli.2015.165852</code>), whose note says the text is reprinted unchanged apart from a few misprints; the 1926 printing itself was not seen. The scan has no text layer; pages were rendered and read as images. His Sect. 82, p. 115, gives $k \lt 4\pi cGM/L$ and the Sun's $k \lt 13{,}200$; his eq. (83.4), p. 116, gives $L = 4\pi cGM(1-\beta)/k_0$.</li>
+<li><b>Chandrasekhar, S. (1939)</b>, <em>An Introduction to the Study of Stellar Structure</em>, University of Chicago Press (archive.org <code>in.ernet.dli.2015.212456</code>), read from rendered pages. Eq. (131), p. 57, is (8.1); Table 1, p. 59, is reproduced to $3.44\times10^{-4}$.</li>
+<li><b>Castelli, F.</b>, ATLAS9 solar model <code>ap00t5777g44377k1asp.dat</code>, $T_{\rm eff} = 5777$ K, $\log g = 4.4377$, fetched 2026-09-21 from <code>https://wwwuser.oats.inaf.it/castelli/sun/</code> and stored verbatim as <code>afd/data/castelli_atlas9_sun.dat</code>. Supplies every ATLAS9 value in <a class="secref" href="#grey">§5</a> to <a class="secref" href="#leak">§7</a>. A model, not a measurement.</li>
+<li><b>Castelli, F. &amp; Kurucz, R. L. (2003)</b>, IAU Symp. 210, poster A20, arXiv:astro-ph/0405087. Describes the ATLAS9 opacity-distribution-function grid; it does not contain the solar file, which carries its own header.</li>
+<li><b>Bahcall, J. N., Serenelli, A. M. &amp; Basu, S. (2005)</b>, "New Solar Opacities, Abundances, Helioseismology, and Neutrino Fluxes", <em>ApJ</em> <b>621</b>, L85–L88. Table 1, row BS05(AGS,OP): $Y_i = 0.2599$, $Z_i = 0.0140$, hence the protosolar $X = 0.7261$. It prints no central density, temperature or $1-\beta$.</li>
+<li><b>Ferguson, J. W. et al. (2005)</b>, "Low-Temperature Opacities", <em>ApJ</em> <b>623</b>, 585–596. Read; it prints no Rosseland mean at photospheric conditions, and no number here comes from it.</li>
+<li><b>The Hopf function</b> is computed by this module's generator from the exact grey integral equation, and no table of it was read. The value $q_{\rm H}(0) = 1/\sqrt3$ against which it is checked is exact.</li>
+</ol>
+
+<p class="navbar"><a href="index.html">Contents</a> · <a href="module12.html">← Module 12</a></p>
+
+
+<script>
+function copyCode(btn){
+  var code = btn.parentElement.querySelector('code');
+  if(!code) return;
+  var text = code.textContent;
+  var done = function(){
+    var label = btn.querySelector('span'), prev = label.textContent;
+    btn.classList.add('copied'); label.textContent = 'Copied!';
+    setTimeout(function(){ btn.classList.remove('copied'); label.textContent = prev; }, 1500);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done, function(){});
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }catch(e){}
+    document.body.removeChild(ta);
+  }
+}
+(function(){
+  try{
+    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.querySelectorAll('svg').forEach(function(svg){
+        if(typeof svg.pauseAnimations === 'function') svg.pauseAnimations();
+      });
+    }
+  }catch(e){}
+})();
+</script>
+
+</body>
+</html>

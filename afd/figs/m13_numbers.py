@@ -8,7 +8,8 @@ Every physical number quoted in module13.html is produced here, so the prose
 can be checked against a run rather than against memory.
 Units: CGS-Gaussian throughout (cm, g, s, erg, K, statcoulomb, gauss).
 
-STEP 3 OF SIX.  Every published value this file compares against was read
+STEP 4 OF SIX; PARTS L AND M were added at step 4.  Every published value
+this file compares against was read
 off its page at step 2; the record is .ignore/m13-source-verification.md.
 Step 2 also found that step 1's CHECK 4 read the n = 3 column of
 module03.html, and that the ratio CHECK 4 was built to find is already in
@@ -486,17 +487,11 @@ def random_walk_steps(tau):
     return tau*tau
 
 
-def atlas9_photosphere(tau_target=2.0/3.0, T_target=None):
-    """Read the ATLAS9 solar model and return (T, P, rho, kappa_R, tau_R)
-    at Rosseland optical depth tau_target, or at temperature T_target.
-
-    tau_R = int ABROSS d(RHOX), starting from ABROSS RHOX at the top layer.
-    ATLAS9 gives P and the electron density but not rho, so
-        rho = (P/k_B T - n_e) m_bar,
-    with m_bar the mean mass per nucleus from the file's own abundance
-    cards (H and He as number fractions, Z >= 3 as log10 of them).
-    Elements outside the mass table use A = 2Z; their share of m_bar is
-    below 1e-4.  Interpolation is linear in log tau_R.
+def atlas9_profile():
+    """The whole ATLAS9 column as arrays: (tau_R, T, P, rho, kappa_R, n_e,
+    RHOX), top layer first.  Step 4 added it for Figs. 2 and 3, which need
+    the profile and not one interpolated level; atlas9_photosphere() is
+    built on it and returns exactly what it returned before.
     """
     import os
     import re
@@ -523,6 +518,22 @@ def atlas9_photosphere(tau_target=2.0/3.0, T_target=None):
     rho = (P/(kB*T) - xne)*mbar*mu_u
     tau = kR[0]*rhox[0] + np.concatenate(
         ([0.0], np.cumsum(0.5*(kR[1:] + kR[:-1])*np.diff(rhox))))
+    return tau, T, P, rho, kR, xne, rhox
+
+
+def atlas9_photosphere(tau_target=2.0/3.0, T_target=None):
+    """Read the ATLAS9 solar model and return (T, P, rho, kappa_R, tau_R)
+    at Rosseland optical depth tau_target, or at temperature T_target.
+
+    tau_R = int ABROSS d(RHOX), starting from ABROSS RHOX at the top layer.
+    ATLAS9 gives P and the electron density but not rho, so
+        rho = (P/k_B T - n_e) m_bar,
+    with m_bar the mean mass per nucleus from the file's own abundance
+    cards (H and He as number fractions, Z >= 3 as log10 of them).
+    Elements outside the mass table use A = 2Z; their share of m_bar is
+    below 1e-4.  Interpolation is linear in log tau_R.
+    """
+    tau, T, P, rho, kR, xne, rhox = atlas9_profile()
     if T_target is None:
         x, xs = np.log(tau_target), np.log(tau)
     else:
@@ -662,7 +673,7 @@ def eddington_ratio_of_a_star(M, L, kappa):
 def main():
     P = print
     P('=' * 72)
-    P('MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 3 OF SIX.')
+    P('MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 4 OF SIX.')
     P('Gate D is .ignore/m13-gate-d.md.  Every published value below was')
     P('read at step 2; the record is')
     P('.ignore/m13-source-verification.md.  Every comparison against a')
@@ -1149,6 +1160,148 @@ def main():
       % (h001, h001*grey_eddington_T(0.01, TEFF_A9)
          / atlas9_photosphere(0.01)[0]))
     P('  CHECK 4 VERDICT (Gate D): CONFIRMED within 3.1 per cent in T.')
+
+    # ------------------------------------------------------------------
+    # PART L.  Added at step 4.  Every answer is computed from the numbers
+    # the problem STATEMENT prints, so that m13_problems_check.py, which
+    # imports nothing from here, can recompute it from the statement and
+    # parse the expected value out of this run.  Labels carry no digits,
+    # because a digit inside a label is what grab() finds first.
+    P('')
+    P('PART L.  The nine problems')
+    P('-' * 72)
+    xg, wg = np.polynomial.legendre.leggauss(8)
+    P('  C1 isotropic field, P_rad/u_rad        = %.6f'
+      % (np.sum(wg*xg*xg)/np.sum(wg)))
+    P('  C1 one open hemisphere, P_rad/u_rad    = %.6f'
+      % (np.sum(wg*(0.5*xg + 0.5)**2)/np.sum(wg)))
+    P('  C1 parallel beam, P_rad/u_rad          = %.6f' % 1.0)
+    assert abs(np.sum(wg*xg*xg)/np.sum(wg) - 1.0/3.0) < 1.0e-14, \
+        'C1: the isotropic angular average of cos^2 must be 1/3'
+
+    M_ns = 1.4*Msun
+    L_ns_H = eddington_luminosity(M_ns, kappa_electron_scattering(1.0))
+    L_ns_i = eddington_luminosity(M_ns, kap_init)
+    P('  C2 neutron-star mass, g               = %.6e' % M_ns)
+    P('  C2 L_Edd, pure hydrogen, erg/s        = %.6e' % L_ns_H)
+    P('  C2 L_Edd, protosolar X, erg/s         = %.6e' % L_ns_i)
+    P('  C2 Mdot_Edd, pure hydrogen, g/s       = %.6e'
+      % (L_ns_H/(M9_ETA_ASSUMED*c*c)))
+    P('  C2 Mdot_Edd, protosolar X, g/s        = %.6e'
+      % (L_ns_i/(M9_ETA_ASSUMED*c*c)))
+    P('  C2 ratio of the two limits            = %.6f' % (L_ns_i/L_ns_H))
+
+    for lab, tv in (('surface', 0.0), ('two-thirds', 2.0/3.0),
+                    ('depth two', 2.0)):
+        P('  C3 grey T at the %s, K = %.1f'
+          % (lab, grey_eddington_T(tv, M6_TEFF)))
+    P('  C3 surface T over Teff                = %.6f'
+      % (grey_eddington_T(0.0, M6_TEFF)/M6_TEFF))
+
+    def dlnT_dlnrho(beta, gg=5.0/3.0):
+        return ((4.0 - 3.0*beta)*(gg - 1.0)
+                / (beta + 12.0*(gg - 1.0)*(1.0 - beta)))
+    P('  D1 Gamma_one, pure gas                = %.6f' % gamma_effective(1.0))
+    P('  D1 Gamma_one, pure radiation          = %.6f'
+      % gamma_effective(0.0))
+    P('  D1 Gamma_one, half and half           = %.6f'
+      % gamma_effective(0.5))
+    P('  D1 dlnT/dlnrho, pure gas              = %.6f' % dlnT_dlnrho(1.0))
+    P('  D1 dlnT/dlnrho, pure radiation        = %.6f' % dlnT_dlnrho(0.0))
+    # the product rule of the proof, checked against eq. (131)
+    for bt in (0.0, 0.3, 0.5, 0.9, 1.0):
+        assert abs(bt + (4.0 - 3.0*bt)*dlnT_dlnrho(bt)
+                   - gamma_effective(bt)) < 1.0e-12, \
+            'D1: beta + (4 - 3 beta) dlnT/dlnrho must be eq. (131)'
+
+    # D2: P6 at depth, fed to P4 in its optical-depth form, must carry
+    # sigma Teff^4 exactly.  T^4 is linear in tau, so a difference is exact.
+    t1, t2 = 100.0, 101.0
+    dT4 = (grey_eddington_T(t2, M6_TEFF)**4
+           - grey_eddington_T(t1, M6_TEFF)**4)/(t2 - t1)
+    P('  D2 deep flux from the diffusion law over sigma Teff^4 = %.6f'
+      % ((c*a_rad/3.0)*dT4/(sigma_SB*M6_TEFF**4)))
+
+    bound_sun = 4.0*np.pi*c*G*Msun/Lsun
+    P('  D3 Eddington opacity bound for the Sun, cm^2/g = %.1f' % bound_sun)
+    P('  D3 kappa_es over that bound            = %.4e'
+      % (kap_solar/bound_sun))
+    P('  D3 L_sun/L_Edd from the limit          = %.4e'
+      % eddington_ratio_of_a_star(Msun, Lsun, kap_solar))
+
+    t_e = t_sal/(1.0 - M9_ETA_ASSUMED)
+    nfold = np.log(1.0e9/10.0)
+    P('  K1 e-folding time with the kept fraction, yr    = %.4e'
+      % (t_e/yr))
+    P('  K1 number of e-folds                            = %.6f' % nfold)
+    P('  K1 growth time with the kept fraction, yr       = %.4e'
+      % (nfold*t_e/yr))
+    P('  K1 growth time if all the inflow were kept, yr  = %.4e'
+      % (nfold*t_sal/yr))
+
+    L_k2 = M9_ETA_ASSUMED*M9_K2_MDOT_BONDI*c*c
+    P('  K2 luminosity at the book efficiency, erg/s = %.4e' % L_k2)
+    P('  K2 that luminosity over L_Edd               = %.1f' % (L_k2/L2))
+    P('  K2 efficiency that would sit at L_Edd       = %.4e'
+      % (L2/(M9_K2_MDOT_BONDI*c*c)))
+
+    k3 = dict(kap=0.4447, rho=2.6721e-7, T=5910.1, cP=1.6968e8,
+              cs=8.081e5, nu=4497.0e-6)
+    chi_k3 = radiative_diffusivity(k3['kap'], k3['rho'], k3['T'], k3['cP'])
+    par_k3 = adiabaticity_parameter(2.0*np.pi*k3['nu'], chi_k3, k3['cs'])
+    P('  K3 chi from the stated inputs, cm^2/s  = %.4e' % chi_k3)
+    P('  K3 adiabaticity parameter at the cutoff = %.4f' % par_k3)
+    P('  K3 diffusion time over period at the cutoff = %.3f'
+      % (2.0*np.pi/par_k3))
+    P('  K3 against the same level at nu_max, ratio = %.4f'
+      % (par_k3/pars[1]))
+
+    # ------------------------------------------------------------------
+    # PART M.  Added at step 4: numbers the draft prints that no earlier
+    # part printed.  Each is arithmetic on values above, done here so the
+    # prose copies it from a run and does not type it.
+    P('')
+    P('PART M.  Numbers the draft prints that earlier parts did not')
+    P('-' * 72)
+    k_one = atlas9_photosphere(1.0)[3]
+    P('  CHECK 2 spread of the two levels, kappa ratio   = %.4f'
+      % (ka/kb_))
+    P('  CHECK 2 input spread, rho ratio times level ratio = %.4f'
+      % ((M6_PHOT_RHO/rhoa)*(ka/kb_)))
+    P('  CHECK 2 kappa_R rise over the averaged column   = %.4f'
+      % (k_one/kb_))
+    tau_p, T_p, P_p, rho_p, kR_p, xne_p, _ = atlas9_profile()
+    ne23 = np.exp(np.interp(np.log(2.0/3.0), np.log(tau_p), np.log(xne_p)))
+    kes_true = sigma_T*ne23/rhoa
+    P('  electron density at tau_R = 2/3, ATLAS9, cm^-3 = %.4e' % ne23)
+    P('  electron scattering with that n_e, cm^2/g      = %.4e' % kes_true)
+    P('  kappa_R over that electron scattering          = %.1f'
+      % (ka/kes_true))
+    P('  fully ionised kappa_es over it                  = %.1f'
+      % (kap_solar/kes_true))
+    P('    PART C said the inferred 0.15231 below the fully ionised')
+    P('    0.34966 shows the photosphere is not electron-scattering.')
+    P('    ATLAS9 kappa_R = %.4f is ABOVE 0.34966, so that argument does'
+      % ka)
+    P('    not survive CHECK 2.  The reason is ionisation: with the')
+    P('    electrons ATLAS9 actually has, electron scattering is the')
+    P('    number above, and kappa_R exceeds it by the ratio above.')
+    P('  photon mean free path at tau_R = 2/3, ATLAS9, km = %.1f'
+      % (photon_mean_free_path(ka, rhoa)/1.0e5))
+    P('  P_rad/P at tau_R = 2/3, ATLAS9                  = %.4e'
+      % (radiation_pressure(Ta)/Pa))
+    P('  ATLAS9 T at tau_R = 2/3 minus its Teff, K       = %.1f'
+      % (Ta23 - TEFF_A9))
+    P('  the part of the 2/3 miss the closure leaves, per cent = %.2f'
+      % (100.0*(Ta23/TEFF_A9 - 1.0) - 100.0*shift))
+    P('  diffusion time over period, T = Teff level      = %.2f'
+      % (2.0*np.pi/pars[0]))
+    P('  diffusion time over period, tau_R = 2/3 level   = %.2f'
+      % (2.0*np.pi/pars[1]))
+    P('  Gamma_one at the Sun\'s centre, beta_c           = %.6f'
+      % gamma_effective(b_c))
+    P('  its shortfall below five-thirds                 = %.4e'
+      % (5.0/3.0 - gamma_effective(b_c)))
 
     # ------------------------------------------------------------------
     P('')
