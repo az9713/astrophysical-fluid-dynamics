@@ -501,7 +501,11 @@ def build_efficiency():
              f'{SUB.format("g")}/2R{SUB.format("in")}</text>')
 
     x6 = px(np.log10(M.ISCO_SCHWARZSCHILD_RG))
-    s.append(f'<line x1="{x6:.1f}" y1="{Y0:.0f}" x2="{x6:.1f}" '
+    # THE RULE STOPS BELOW THE TOP LABEL ROW.  Drawn full height it
+    # crossed the extreme-Kerr label, which check_overlap caught: the
+    # label is 177 px wide and the rule sits at its right-hand end.  A
+    # partial rule marks the radius just as well.
+    s.append(f'<line x1="{x6:.1f}" y1="{Y0+64:.0f}" x2="{x6:.1f}" '
              f'y2="{Y1:.0f}" stroke="{RULE}" stroke-width="1" '
              f'stroke-dasharray="4 4"/>')
     s.append(f'<text x="{x6+7:.1f}" y="{Y1-8:.0f}" font-size="10.5" '
@@ -518,14 +522,31 @@ def build_efficiency():
         (1.0, M.ETA_KERR_EXTREME, YEL, 'extreme Kerr, BPT eq. (2.14)', 1),
         (1.0, M.SS73_ETA_KERR_MAX, VIO, 'S&amp;S "can attain 40%"', -1),
     ]
+    # LABELS ARE STACKED ON A LADDER, NOT OFFSET FROM THEIR OWN POINTS.
+    # Shooting the first version showed four labels at 6 R_g written on
+    # top of one another: 1/12, 0.1, 0.06 and 0.0572 are all within a
+    # factor of 1.75, so on a log axis their points are 8 px apart and no
+    # per-point offset can separate 10.5 px text.  Each cluster now gets
+    # a fixed ladder of rows with a leader to its own point.
+    ladders = {}
     for xr, yv, col, lab, side in pts:
-        cx, cy = px(np.log10(xr)), py(np.log10(yv))
-        s.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="4.6" '
-                 f'fill="{col}"/>')
-        ty = cy - 9.0 if side > 0 else cy + 15.0
-        ty += (abs(side) - 1)*(14.0 if side > 0 else -14.0)
-        s.append(f'<text x="{cx+9:.1f}" y="{ty:.1f}" font-size="10.5" '
-                 f'fill="{col}">{lab} = {yv:.4f}</text>')
+        ladders.setdefault(round(np.log10(xr), 6), []).append(
+            (yv, col, lab))
+    for lx, group in ladders.items():
+        group.sort(key=lambda g: -g[0])
+        cxs = px(lx)
+        top = py(np.log10(max(g[0] for g in group))) - 30.0
+        for j, (yv, col, lab) in enumerate(group):
+            cy = py(np.log10(yv))
+            s.append(f'<circle cx="{cxs:.1f}" cy="{cy:.1f}" r="4.6" '
+                     f'fill="{col}"/>')
+            ty = top + j*16.0
+            s.append(f'<line x1="{cxs+5:.1f}" y1="{cy:.1f}" '
+                     f'x2="{cxs+24:.1f}" y2="{ty-4:.1f}" stroke="{col}" '
+                     f'stroke-width="0.8" stroke-dasharray="2 3"/>')
+            s.append(f'<text x="{cxs+27:.1f}" y="{ty:.1f}" '
+                     f'font-size="10.5" fill="{col}">{lab} = '
+                     f'{yv:.4f}</text>')
 
     ratio = (1.0/12.0)/M.ETA_SCHWARZSCHILD
     s.append(f'<text x="{X0:.0f}" y="{Y1+44:.0f}" font-size="11" '
