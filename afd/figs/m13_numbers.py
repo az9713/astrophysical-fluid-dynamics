@@ -8,10 +8,12 @@ Every physical number quoted in module13.html is produced here, so the prose
 can be checked against a run rather than against memory.
 Units: CGS-Gaussian throughout (cm, g, s, erg, K, statcoulomb, gauss).
 
-STEP 1 OF SIX.  NO PUBLISHED VALUE IN THIS FILE IS VERIFIED YET.  Every one
-carries the tag NOT YET VERIFIED and the paper it must be read from.  Step 2
-fetches those papers, reads the page, and replaces the tag.  Nothing here may
-be quoted in prose until it does.
+STEP 2 OF SIX.  Every published value this file compares against was read
+off its page at step 2; the record is .ignore/m13-source-verification.md.
+Step 2 also found that step 1's CHECK 4 read the n = 3 column of
+module03.html, and that the ratio CHECK 4 was built to find is already in
+print at module03.html:885.  The CHECK blocks below are step 1's design,
+kept for the record; Gate D rules on them.
 
 WHAT THIS MODULE OWES, AND TO WHOM.  The twelve debts seven shipped pages
 have already printed against Module 13 are listed, each with the file and
@@ -114,10 +116,16 @@ Rsun = 6.957e10         # cm             (IAU 2015 nominal)
 Lsun = 3.828e33         # erg/s          (IAU 2015 nominal)
 Msun = GMsun/G          # g
 
-# Composition.  X, Y, Z are mass fractions.  The pair below is the
-# conventional Population I mixture; step 2 must source it.
-X_H = 0.70              # hydrogen mass fraction    NOT YET VERIFIED
-Y_HE = 0.28             # helium mass fraction      NOT YET VERIFIED
+# Composition.  X, Y, Z are mass fractions.  VERIFIED AT STEP 2: the
+# present-day SURFACE of BS2005-AGS,OP, the model Module 3 tabulated --
+# the last row of data/bs05_agsop.dat, which Bahcall, Serenelli & Basu
+# (2005), ApJ 621, L85, Table 1 confirms as Ysurf = 0.229, Zsurf = 0.0126.
+# module04.html's photospheric mu = 1.2250 is built from the same row, so
+# the book already uses this composition at the photosphere.  Step 1 had
+# the unsourced round pair 0.70/0.28; the change moves CHECK 1's ratio
+# from 1.1765 to 1.1375.
+X_H = 0.75830           # hydrogen mass fraction, bs05_agsop.dat last row
+Y_HE = 0.22905          # helium mass fraction, same row
 
 # =========================================================================
 # WHAT THE BOOK ALREADY PRINTS.  Every one of these was read off the shipped
@@ -193,10 +201,16 @@ M8_ISOTHERMAL_COMPRESSION = 2802.0      # module08.html:336
 # The standard model and the quartic are his.  Module 3 already carries
 # the quartic at module03.html:885 and credits him at :366.  This module
 # needs his statement of the LIMIT, which is not in Module 3.
-#     STEP 2 MUST FIND: whether Eddington states the limiting luminosity
-#     in the form 4 pi c G M/kappa, and on which page.  The modern
-#     attribution is routinely made without a page.
-EDDINGTON_1926_LIMIT_FORM = None        # NOT YET VERIFIED
+#     VERIFIED AT STEP 2, read off the rendered scan of the 1930 reprint
+#     (whose preface says the text "has been reprinted unchanged" apart
+#     from misprints).  Section 82, p. 115: from dp_G > 0 inward and his
+#     (81.7), "k < 4 pi c G M/L < 25100 M/L", i.e. he states it as an
+#     UPPER LIMIT ON THE OPACITY of a star of known L and M, "perfect gas
+#     or not", and never as a limiting luminosity or with electron
+#     scattering.  For the Sun he gets k < 13,200.  Eq. (83.4), p. 116,
+#     is L = 4 pi c G M (1 - beta)/k_0.
+EDDINGTON_1926_LIMIT_FORM = 'k < 4 pi c G M/L, sect. 82, p. 115'
+EDDINGTON_1926_SUN_K_BOUND = 13200.0    # cm^2/g, p. 115
 
 # --- the solar photospheric Rosseland mean opacity ----------------------
 # CHECK 2 compares an INFERRED opacity against a tabulated one.  The
@@ -207,29 +221,55 @@ EDDINGTON_1926_LIMIT_FORM = None        # NOT YET VERIFIED
 #   (c) any stellar-structure text quoting kappa_R at T = 5772 K and
 #       rho = 3e-7 g/cm^3.
 # THE PHOTOSPHERE IS H-MINUS DOMINATED, not electron scattering, and the
-# opacity there is a steep function of both T and rho.  Step 2 must obtain
-# a value WITH its conditions, or CHECK 2 becomes an order-of-magnitude
-# statement and must be labelled as one.
-KAPPA_R_PHOTOSPHERE = None              # cm^2/g   NOT YET VERIFIED
-KAPPA_R_PHOTOSPHERE_RANGE = None        # NOT YET VERIFIED
+# opacity there is a steep function of both T and rho.
+#     VERIFIED AT STEP 2, and by a route that beats (a)-(c): a MODEL
+#     ATMOSPHERE, which tabulates the Rosseland mean at every depth WITH
+#     its T and P.  Castelli's ATLAS9 solar model, Teff = 5777 K,
+#     log g = 4.4377, Asplund et al. (2005) abundances, stored verbatim as
+#     data/castelli_atlas9_sun.dat (the grid is Castelli & Kurucz 2003,
+#     IAU Symp. 210, poster A20).  Columns RHOX, T, P, XNE, ABROSS.
+#     atlas9_photosphere() integrates tau_R = int ABROSS d(RHOX) and reads
+#     kappa_R off at tau_R = 2/3.  It is a MODEL, not a measurement, and
+#     its opacities are ATLAS9's own ODFs, not OPAL.  Ferguson et al.
+#     (2005), ApJ 623, 585, was read and prints NO value at photospheric
+#     conditions -- its tables are a download.
+ATLAS9_FILE = 'data/castelli_atlas9_sun.dat'
 
 # --- a tabulated solar model, for CHECK 4 -------------------------------
 # Module 3 used a tabulated model at module03.html:644-646 with
 # rho_c = 76.293 g/cm^3 and T_c = 1.6233e7 K.  Those two numbers give
 # 1 - beta directly and need no new source, but the MODEL does need one.
-#     STEP 2 MUST FIND: which solar model Module 3 tabulated, and whether
-#     it prints 1 - beta itself.  module03.html's sources list is the
-#     place to start.
-M3_RHO_C = 76.293               # g/cm^3     module03.html:644
-M3_T_C = 1.6233e7               # K          module03.html:646
-SOLAR_MODEL_SOURCE = None               # NOT YET VERIFIED
+#     VERIFIED AT STEP 2.  The model is BS2005-AGS,OP (module03.html:620).
+#     The paper does NOT print 1 - beta, rho_c or T_c; module03.html:628
+#     computes 1 - beta_c = 6.1940e-4 from the first row of the data table,
+#     as (9.1).
+#     STEP 1 READ THE WRONG COLUMN.  76.293 and 1.6233e7 at
+#     module03.html:644 and :646 are the n = 3 PREDICTION column, not the
+#     tabulated model, so step 1's "1 - beta of the Sun" was Eddington's
+#     polytrope checked against Eddington's polytrope.  Kept below under
+#     their true name; the tabulated centre is the next three lines.
+M3_N3_RHO_C = 76.293            # g/cm^3     module03.html:644, n=3 column
+M3_N3_T_C = 1.6233e7            # K          module03.html:646, n=3 column
+M3_RHO_C = 150.50               # g/cm^3     module03.html:620, tabulated
+M3_T_C = 1.5480e7               # K          module03.html:620, tabulated
+M3_P_C = 2.3380e17              # dyn/cm^2   module03.html:620, tabulated
+M3_MU_C = 0.82851               # module03.html:624, effective, tabulated
+M3_ONE_MINUS_BETA_C = 6.1940e-4         # module03.html:628, (9.1)
+SOLAR_MODEL_SOURCE = 'BS2005-AGS,OP, ApJ 621, L85; data/bs05_agsop.dat'
 
 # --- a super-Eddington source, for context ------------------------------
 # Not a check at step 1.  If CHECK 1 or CHECK 3 needs an observed
 # violation of the limit, the ultraluminous X-ray pulsars are the class.
-#     STEP 2 MUST FIND: one source with a published L and a published
-#     compact-object mass, both with errors.
-ULX_SOURCE = None                       # NOT YET VERIFIED
+#     NOT FETCHED AT STEP 2: optional, and no check needs it yet.  Gate D
+#     decides whether CHECK 1 or CHECK 3 wants one.
+ULX_SOURCE = None                       # NOT FETCHED
+
+# --- Chandrasekhar (1939), Table 1, p. 59: Gamma_1 against 1 - beta ------
+# Read off the rendered scan, three decimals as printed, gamma = 5/3.
+CHANDRA_TABLE1_GAMMA1 = {
+    0.0: 1.667, 0.1: 1.563, 0.2: 1.511, 0.3: 1.476, 0.4: 1.449,
+    0.5: 1.426, 0.6: 1.405, 0.7: 1.386, 0.8: 1.368, 0.9: 1.350,
+    1.0: 1.333}
 
 
 # =========================================================================
@@ -385,10 +425,13 @@ def gamma_effective(beta):
     module02.html:688 was promised: Gamma_1 -> 5/3 as beta -> 1 (pure gas)
     and Gamma_1 -> 4/3 as beta -> 0 (pure radiation).
 
-    STEP 2 MUST SOURCE THIS FORMULA.  It is standard, and this module may
-    not print a standard formula without a page.  Chandrasekhar, An
-    Introduction to the Study of Stellar Structure (1939), Chapter II is
-    the expected home.
+    VERIFIED AT STEP 2 off the rendered scan: Chandrasekhar, An
+    Introduction to the Study of Stellar Structure (Chicago, 1939),
+    Chapter II, eq. (131), p. 57, derived from his (122), (127) and the
+    definition (129) of beta.  He states both limits himself under it:
+    Gamma_1 = gamma at beta = 1 and 4/3 at beta = 0.  His Table 1, p. 59,
+    tabulates Gamma_1 for gamma = 5/3; CHANDRA_TABLE1_GAMMA1 is that
+    column, and main() asserts this function reproduces all eleven rows.
     """
     gg = 5.0/3.0
     num = (4.0 - 3.0*beta)**2*(gg - 1.0)
@@ -445,6 +488,54 @@ def random_walk_steps(tau):
     intensity.
     """
     return tau*tau
+
+
+def atlas9_photosphere(tau_target=2.0/3.0, T_target=None):
+    """Read the ATLAS9 solar model and return (T, P, rho, kappa_R, tau_R)
+    at Rosseland optical depth tau_target, or at temperature T_target.
+
+    tau_R = int ABROSS d(RHOX), starting from ABROSS RHOX at the top layer.
+    ATLAS9 gives P and the electron density but not rho, so
+        rho = (P/k_B T - n_e) m_bar,
+    with m_bar the mean mass per nucleus from the file's own abundance
+    cards (H and He as number fractions, Z >= 3 as log10 of them).
+    Elements outside the mass table use A = 2Z; their share of m_bar is
+    below 1e-4.  Interpolation is linear in log tau_R.
+    """
+    import os
+    import re
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',
+                        ATLAS9_FILE)
+    lines = open(path).read().splitlines()
+    ab = {}
+    for ln in lines:
+        if 'ABUNDANCE CHANGE' in ln:
+            for z, v in re.findall(r'(\d+)\s+(-?\d+\.\d+)',
+                                   ln.split('CHANGE', 1)[1]):
+                ab[int(z)] = float(v)
+    mass = {1: 1.008, 2: 4.0026, 6: 12.011, 7: 14.007, 8: 15.999,
+            10: 20.180, 11: 22.990, 12: 24.305, 13: 26.982, 14: 28.085,
+            16: 32.06, 18: 39.95, 20: 40.078, 26: 55.845, 28: 58.693}
+    frac = {z: (v if z <= 2 else 10.0**v) for z, v in ab.items()}
+    mbar = (sum(f*mass.get(z, 2.0*z) for z, f in frac.items())
+            / sum(frac.values()))
+    i0 = next(i for i, ln in enumerate(lines) if ln.startswith('READ DECK6'))
+    n = int(lines[i0].split()[2])
+    rows = np.array([[float(x) for x in ln.split()[:5]]
+                     for ln in lines[i0 + 1:i0 + 1 + n]])
+    rhox, T, P, xne, kR = rows.T
+    rho = (P/(kB*T) - xne)*mbar*mu_u
+    tau = kR[0]*rhox[0] + np.concatenate(
+        ([0.0], np.cumsum(0.5*(kR[1:] + kR[:-1])*np.diff(rhox))))
+    if T_target is None:
+        x, xs = np.log(tau_target), np.log(tau)
+    else:
+        x, xs = T_target, T
+
+    def at(y):
+        return np.interp(x, xs, y)
+    return (at(T), np.exp(at(np.log(P))), np.exp(at(np.log(rho))),
+            np.exp(at(np.log(kR))), np.exp(at(np.log(tau))), rhox, P)
 
 
 # =========================================================================
@@ -534,10 +625,10 @@ def eddington_ratio_of_a_star(M, L, kappa):
 def main():
     P = print
     P('=' * 72)
-    P('MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 1 OF SIX.')
-    P('No published value below has been read yet.  Every comparison')
-    P('against a PAPER is provisional; every comparison against a SHIPPED')
-    P('PAGE of this book is already final, because the page is on disk.')
+    P('MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 2 OF SIX.')
+    P('Every published value below was read at step 2; the record is')
+    P('.ignore/m13-source-verification.md.  Every comparison against a')
+    P('SHIPPED PAGE of this book is final, because the page is on disk.')
     P('=' * 72)
 
     # ------------------------------------------------------------------
@@ -548,7 +639,7 @@ def main():
     kap_H = sigma_T/mp                  # pure ionised hydrogen
     kap_solar = kappa_electron_scattering(X_H)
     P('  kappa_es, pure ionised hydrogen (X = 1)   = %.5f cm^2/g' % kap_H)
-    P('  kappa_es at X = %.2f                       = %.5f cm^2/g'
+    P('  kappa_es at X = %.4f                     = %.5f cm^2/g'
       % (X_H, kap_solar))
     P('  ratio                                      = %.5f'
       % (kap_H/kap_solar))
@@ -669,11 +760,11 @@ def main():
     P('  CHECK 1.  THE COMPOSITION INSIDE module09.html:944\'s FORMULA.')
     L_solar = eddington_luminosity(M9_K2_M, kap_solar)
     P('    L_Edd with kappa = sigma_T/m_p (X = 1)  = %.4e erg/s' % L2)
-    P('    L_Edd with kappa_es at X = %.2f          = %.4e erg/s'
+    P('    L_Edd with kappa_es at X = %.4f        = %.4e erg/s'
       % (X_H, L_solar))
     P('    ratio = %.4f, i.e. Module 9\'s value is %.1f per cent BELOW'
       % (L_solar/L2, 100.0*(L_solar/L2 - 1.0)))
-    P('    the Population I value.  module09.html:915 defends the m_p as')
+    P('    the solar-surface value.  module09.html:915 defends the m_p as')
     P('    "a genuine proton mass and not a mean molecular weight", which')
     P('    is true and is not the point: writing m_p rather than')
     P('    2 m_p/(1+X) is a statement that the gas is PURE IONISED')
@@ -723,26 +814,54 @@ def main():
         'solve_one_minus_beta does not invert eddington_quartic_rhs'
 
     P('')
-    P('  THE SUN\'S CENTRE, from Module 3\'s own tabulated model:')
-    P('    rho_c = %.4f g/cm^3, T_c = %.5e K  (module03.html:644, :646)'
-      % (M3_RHO_C, M3_T_C))
-    b_c = beta_gas_fraction(M3_RHO_C, M3_T_C, M3_MU)
-    P('    P_gas = %.6e, P_rad = %.6e erg/cm^3'
-      % (gas_pressure(M3_RHO_C, M3_T_C, M3_MU),
-         radiation_pressure(M3_T_C)))
-    P('    1 - beta = %.6e' % (1.0 - b_c))
-    P('    Module 3\'s standard-model value = %.6e'
+    P('  THE SUN\'S CENTRE, from Module 3\'s TABULATED model, BS2005-AGS,OP:')
+    P('    rho_c = %.2f g/cm^3, T_c = %.4e K, P_c = %.4e  (module03.html:620)'
+      % (M3_RHO_C, M3_T_C, M3_P_C))
+    omb_c = radiation_pressure(M3_T_C)/M3_P_C
+    P('    1 - beta_c = P_rad/P_c   = %.6e' % omb_c)
+    P('    module03.html:628, (9.1) = %.6e' % M3_ONE_MINUS_BETA_C)
+    P('    ratio                    = %.6f' % (omb_c/M3_ONE_MINUS_BETA_C))
+    assert abs(omb_c/M3_ONE_MINUS_BETA_C - 1.0) < 1.0e-3, \
+        'module03.html:628 (9.1) does not reproduce'
+    b_c = beta_gas_fraction(M3_RHO_C, M3_T_C, M3_MU_C)
+    P('    the same from rho_c, T_c at mu = %.5f  = %.6e  (ratio %.6f)'
+      % (M3_MU_C, 1.0 - b_c, (1.0 - b_c)/omb_c))
+    P('    Eddington\'s standard model, module03.html:885 = %.6e'
       % M3_ONE_MINUS_BETA_1MSUN)
-    P('    ratio = %.4f' % ((1.0 - b_c)/M3_ONE_MINUS_BETA_1MSUN))
-    P('    PUNCHLINE CHECK 4, AND THE VERDICT IS NOT FIXED AT STEP 1.')
-    P('    Module 3 already REFUTED the uniform-beta premise at')
-    P('    module03.html:653; this prices that refutation in the radiation')
-    P('    share rather than in the polytropic index.')
+    P('    standard model / tabulated Sun = %.4f'
+      % (M3_ONE_MINUS_BETA_1MSUN/omb_c))
+    P('    PUNCHLINE CHECK 4: the standard model puts %.2f times the'
+      % (M3_ONE_MINUS_BETA_1MSUN/omb_c))
+    P('    tabulated radiation share at the Sun\'s centre.  Both numbers')
+    P('    are in print, and SO IS THE RATIO: module03.html:885, Problem')
+    P('    K3\'s solution, says "Eddington\'s 1 Msun value is 2.30 times')
+    P('    the tabulated central value".  CHECK 4 is Module 3\'s, not new.')
+    b_n3 = beta_gas_fraction(M3_N3_RHO_C, M3_N3_T_C, M3_MU)
+    P('')
+    P('    STEP 1\'s CHECK 4 read the n = 3 PREDICTION column of')
+    P('    module03.html:644-646 as the Sun.  From it, 1 - beta = %.6e,'
+      % (1.0 - b_n3))
+    P('    which is %.4f of the standard model: Eddington against'
+      % ((1.0 - b_n3)/M3_ONE_MINUS_BETA_1MSUN))
+    P('    Eddington, a check that could not fail.  Kept here as the')
+    P('    record of the defect, and never as a check.')
 
     P('')
     P('  gamma OF A GAS-PLUS-RADIATION MIXTURE, module02.html:688\'s debt:')
     for b in (1.0, 0.99, 0.9, 0.5, 0.1, 0.01, 1.0e-6):
         P('    beta = %-10.6g Gamma_1 = %.6f' % (b, gamma_effective(b)))
+    P('    against Chandrasekhar (1939) Table 1, p. 59, three decimals:')
+    worst = 0.0
+    for omb_t, g_t in sorted(CHANDRA_TABLE1_GAMMA1.items()):
+        g_c = gamma_effective(1.0 - omb_t)
+        worst = max(worst, abs(g_c - g_t))
+        P('      1 - beta = %.1f   computed %.4f   printed %.3f'
+          % (omb_t, g_c, g_t))
+    P('    largest difference = %.2e, inside the 5e-4 of a three-decimal'
+      % worst)
+    P('    table.  Eq. (131), p. 57, is the formula this file computes.')
+    assert worst <= 5.0e-4 + 1.0e-12, \
+        'gamma_effective does not reproduce Chandrasekhar Table 1'
     assert abs(gamma_effective(1.0) - 5.0/3.0) < 1.0e-12, \
         'the pure-gas limit of Gamma_1 must be 5/3'
     assert abs(gamma_effective(1.0e-12) - 4.0/3.0) < 1.0e-8, \
@@ -764,20 +883,45 @@ def main():
                                               M6_PHOT_H)
     P('    kappa inferred at tau = 2/3 over one H = %.5f cm^2/g'
       % kap_inferred)
-    P('    electron scattering at X = %.2f would be %.5f cm^2/g,'
+    P('    electron scattering at X = %.4f would be %.5f cm^2/g,'
       % (X_H, kap_solar))
     P('    which is %.2f times larger.  The photosphere is NOT'
       % (kap_solar/kap_inferred))
     P('    electron-scattering dominated, and this is the arithmetic')
     P('    that says so: it is H-minus, and H-minus is atomic physics')
     P('    this book does not do.')
-    P('    THE COMPARISON TARGET IS NOT YET READ.  KAPPA_R_PHOTOSPHERE is')
-    P('    None; step 2 must obtain a tabulated Rosseland mean WITH its')
-    P('    conditions, or CHECK 2 becomes an order-of-magnitude statement')
-    P('    and must be labelled as one in print.')
-    P('    PUNCHLINE CHECK 2, AND THE VERDICT IS NOT FIXED AT STEP 1.')
     assert kap_inferred < kap_solar, \
         'the inferred photospheric opacity must be below electron scattering'
+
+    P('')
+    P('    THE TABULATED TARGET: Castelli\'s ATLAS9 solar model, %s' %
+      ATLAS9_FILE)
+    Ta, Pa, rhoa, ka, taua, rhox_all, P_all = atlas9_photosphere(2.0/3.0)
+    P('      at tau_R = %.4f: T = %.1f K, P = %.4e dyn/cm^2,'
+      % (taua, Ta, Pa))
+    P('        rho = %.4e g/cm^3, kappa_R = %.4f cm^2/g' % (rhoa, ka))
+    Tb, Pb, rhob, kb_, taub = atlas9_photosphere(T_target=M6_TEFF)[:5]
+    P('      at T = %.0f K: tau_R = %.4f, rho = %.4e, kappa_R = %.4f'
+      % (Tb, taub, rhob, kb_))
+    # ATLAS9 gives rho through an equation of state this file rebuilt;
+    # hydrostatic balance P = g RHOX checks that rebuild's input side
+    # without it.
+    g_atl = 10.0**4.4377
+    hs = P_all[-1]/(g_atl*rhox_all[-1])
+    P('      hydrostatic check at the deepest layer, P/(g RHOX) = %.4f'
+      % hs)
+    assert abs(hs - 1.0) < 0.05, 'ATLAS9 file does not satisfy P = g m'
+    P('    Module 6\'s rho / ATLAS9 rho at tau_R = 2/3 = %.4f'
+      % (M6_PHOT_RHO/rhoa))
+    P('    ATLAS9 kappa_R / inferred kappa: %.3f at tau_R = 2/3, %.3f at'
+      % (ka/kap_inferred, kb_/kap_inferred))
+    P('    T = Teff.  PUNCHLINE CHECK 2: the one-scale-height inference')
+    P('    is LOW by a factor %.2f to %.2f.  It assumes kappa constant over'
+      % (kb_/kap_inferred, ka/kap_inferred))
+    P('    the column; kappa_R in the file rises from %.3f to %.3f between'
+      % (kb_, atlas9_photosphere(1.0)[3]))
+    P('    tau_R = %.3f and 1.  The verdict is Gate D\'s, not step 2\'s.'
+      % taub)
 
     lph = photon_mean_free_path(kap_inferred, M6_PHOT_RHO)
     P('')
@@ -822,13 +966,25 @@ def main():
     P('    adiabatic nor isothermal.  module04.html:563 predicted exactly')
     P('    this in print -- "fails near the photosphere where radiation')
     P('    carries heat out of a compression within a period" -- and')
-    P('    %.4f is the size of that failure, which is what' % par)
-    P('    module04.html:429 asked Module 13 for.')
-    P('    *** STEP 1 CANNOT FIX THIS VERDICT, because chi carries the')
-    P('    *** INFERRED opacity of PART C and that opacity is not yet')
-    P('    *** checked against any table.  chi goes as 1/kappa, so the')
-    P('    *** answer moves in direct proportion to whatever step 2')
-    P('    *** finds.  Gate D question Q5. ***')
+    P('    %.4f is that failure AT THE INFERRED OPACITY OF PART C,' % par)
+    P('    which step 2 found low; the ATLAS9 values follow.')
+    P('    *** chi above carries the INFERRED opacity of PART C, which')
+    P('    *** step 2 found LOW against ATLAS9.  With the ATLAS9 kappa_R')
+    P('    *** and ATLAS9 rho at the same two levels (c_P and c held at')
+    P('    *** Module 6\'s and Module 4\'s values):')
+    pars = []
+    for lab, Tl, rl, kl in (('T = Teff', Tb, rhob, kb_),
+                            ('tau_R = 2/3', Ta, rhoa, ka)):
+        chi_l = radiative_diffusivity(kl, rl, Tl, M6_PHOT_CP)
+        par_l = adiabaticity_parameter(omega_max, chi_l, M4_SOUND_SPEED)
+        pars.append(par_l)
+        P('    ***   %-11s  chi = %.4e  omega chi/c^2 = %.4f'
+          % (lab, chi_l, par_l))
+    P('    *** Both lie between %.4f and %.4f: below 1, and not << 1.'
+      % (min(pars), max(pars)))
+    P('    *** Which level the module prints is Gate D question Q5. ***')
+    assert 0.1 < min(pars) and max(pars) < 1.0, \
+        'the ATLAS9 adiabaticity parameter left the range the text states'
 
     P('')
     P('    The same at the acoustic cutoff, nu_ac = %.0f microHz:'
@@ -869,9 +1025,10 @@ def main():
     for T in (1.0e4, 1.0e5, 1.0e6, M3_T_C, 1.0e8):
         rho_eq = prad_equals_pgas_density(T, M3_MU)
         P('    T = %.2e K   rho = %.4e g/cm^3' % (T, rho_eq))
-    ratio_check = M3_RHO_C/prad_equals_pgas_density(M3_T_C, M3_MU)
-    P('  The Sun\'s centre sits at rho = %.2f g/cm^3 against %.4e,'
-      % (M3_RHO_C, prad_equals_pgas_density(M3_T_C, M3_MU)))
+    ratio_check = M3_RHO_C/prad_equals_pgas_density(M3_T_C, M3_MU_C)
+    P('  The Sun\'s tabulated centre, at mu = %.5f, sits at rho = %.2f'
+      % (M3_MU_C, M3_RHO_C))
+    P('  g/cm^3 against %.4e,' % prad_equals_pgas_density(M3_T_C, M3_MU_C))
     P('  i.e. %.1f times denser than the crossover -- and that ratio is'
       % ratio_check)
     P('  beta/(1-beta) = %.1f, the same statement as 1 - beta = %.3e.'
@@ -882,7 +1039,7 @@ def main():
     P('')
     P('  The Sun as a whole, against its own Eddington limit:')
     gam_sun = eddington_ratio_of_a_star(Msun, Lsun, kap_solar)
-    P('    L_sun/L_Edd(1 Msun, kappa_es at X = %.2f) = %.4e'
+    P('    L_sun/L_Edd(1 Msun, kappa_es at X = %.4f) = %.4e'
       % (X_H, gam_sun))
     P('    i.e. radiation carries %.2e of the Sun\'s gravity.' % gam_sun)
     P('    Module 3\'s (3.1) drops it, and this is the size of what it')
@@ -890,17 +1047,16 @@ def main():
 
     # ------------------------------------------------------------------
     P('')
-    P('PART F.  What step 1 has NOT done')
+    P('PART F.  What step 2 read, and what is still open')
     P('-' * 72)
-    P('  Not one published value in this file has been read.  The four')
-    P('  that step 2 must fetch, in order of how much they matter:')
-    P('    1. a tabulated solar photospheric Rosseland mean opacity WITH')
-    P('       its (T, rho).  CHECK 2 and the whole of PART D hang on it.')
-    P('    2. Chandrasekhar\'s Gamma_1 for a gas-plus-radiation mixture,')
-    P('       with a page.  PART B prints it and may not without one.')
-    P('    3. Eddington (1926) on the limiting luminosity, with a page.')
-    P('    4. the solar model Module 3 tabulated, and whether it prints')
-    P('       1 - beta itself.')
+    P('  Read at step 2, each off the page:')
+    P('    1. kappa_R at the solar photosphere: ATLAS9, PART C.')
+    P('    2. Gamma_1: Chandrasekhar (1939) eq. (131) p. 57, Table 1 p. 59.')
+    P('    3. Eddington (1926): %s.' % EDDINGTON_1926_LIMIT_FORM)
+    P('       His Sun bound is k < %.0f; this file\'s constants give %.0f.'
+      % (EDDINGTON_1926_SUN_K_BOUND, 4.0*np.pi*c*G*Msun/Lsun))
+    P('    4. BS2005-AGS,OP prints no 1 - beta; module03.html:628 does.')
+    P('  Still open: diffusion_time\'s factor 3 has no source; no ULX.')
     P('  And three things the run has FOUND that are not about papers:')
     P('    (a) module09.html:913\'s doubling time is M/Mdot, exact at')
     P('        constant Mdot; the page states no growth law.  NOT a defect.')
