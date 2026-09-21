@@ -1,0 +1,41 @@
+<svg class="setupfig" viewBox="0 0 720 430" width="100%" role="img" aria-label="Six estimates of the disc viscosity parameter alpha, all from one review, on a horizontal logarithmic axis spanning four decades. Four are drawn as bars because the review gives a range; two are drawn as arrows with an open end because the review gives only a bound, one pointing up and one pointing down. A vertical dashed line marks the value above which the fastest-growing magnetorotational mode is longer than the disc is thick." >
+<rect x="196" y="44" width="424" height="224" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="196.0" y1="268" x2="196.0" y2="273" stroke="#334155" stroke-width="1"/>
+<text x="196.0" y="286" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-4</tspan></text>
+<line x1="290.2" y1="268" x2="290.2" y2="273" stroke="#334155" stroke-width="1"/>
+<text x="290.2" y="286" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-3</tspan></text>
+<line x1="384.4" y1="268" x2="384.4" y2="273" stroke="#334155" stroke-width="1"/>
+<text x="384.4" y="286" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-2</tspan></text>
+<line x1="478.7" y1="268" x2="478.7" y2="273" stroke="#334155" stroke-width="1"/>
+<text x="478.7" y="286" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">-1</tspan></text>
+<line x1="572.9" y1="268" x2="572.9" y2="273" stroke="#334155" stroke-width="1"/>
+<text x="572.9" y="286" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">0</tspan></text>
+<line x1="476.6" y1="44" x2="476.6" y2="268" stroke="#a78bfa" stroke-width="1.4" stroke-dasharray="5 4"/>
+<rect x="478.7" y="63.0" width="56.7" height="14" fill="#fb923c" opacity="0.75"/>
+<text x="186" y="69.0" font-size="11.5" text-anchor="end" fill="#cbd5e1">thin, fully-ionised discs</text>
+<text x="186" y="83.0" font-size="9.5" text-anchor="end" fill="#94a3b8">abstract</text>
+<rect x="478.7" y="97.0" width="45.0" height="14" fill="#fb923c" opacity="0.75"/>
+<text x="186" y="103.0" font-size="11.5" text-anchor="end" fill="#cbd5e1">dwarf novae</text>
+<text x="186" y="117.0" font-size="9.5" text-anchor="end" fill="#94a3b8">&#167;2.1</text>
+<rect x="507.0" y="131.0" width="28.4" height="14" fill="#fb923c" opacity="0.75"/>
+<text x="186" y="137.0" font-size="11.5" text-anchor="end" fill="#cbd5e1">soft X-ray transients</text>
+<text x="186" y="151.0" font-size="9.5" text-anchor="end" fill="#94a3b8">&#167;2.2</text>
+<line x1="384.4" y1="172.0" x2="443.0" y2="172.0" stroke="#facc15" stroke-width="3"/>
+<path d="M 453.0,172.0 L 443.0,167.0 L 443.0,177.0 Z" fill="#facc15"/>
+<line x1="384.4" y1="165.0" x2="384.4" y2="179.0" stroke="#facc15" stroke-width="2.4"/>
+<text x="186" y="171.0" font-size="11.5" text-anchor="end" fill="#cbd5e1">AGN variability</text>
+<text x="186" y="185.0" font-size="9.5" text-anchor="end" fill="#94a3b8">&#167;2.3.1, LOWER limits</text>
+<circle cx="384.4" cy="206.0" r="5.4" fill="#2dd4bf"/>
+<text x="186" y="205.0" font-size="11.5" text-anchor="end" fill="#cbd5e1">T Tauri, 10&#8211;100 au</text>
+<text x="186" y="219.0" font-size="9.5" text-anchor="end" fill="#94a3b8">&#167;2.3.2</text>
+<line x1="412.8" y1="240.0" x2="202.0" y2="240.0" stroke="#f87171" stroke-width="3"/>
+<path d="M 202.0,240.0 L 212.0,235.0 L 212.0,245.0 Z" fill="#f87171"/>
+<line x1="412.8" y1="233.0" x2="412.8" y2="247.0" stroke="#f87171" stroke-width="2.4"/>
+<text x="186" y="239.0" font-size="11.5" text-anchor="end" fill="#cbd5e1">MHD simulations</text>
+<text x="186" y="253.0" font-size="9.5" text-anchor="end" fill="#94a3b8">&#167;5, A BOUND</text>
+<text x="468.6" y="58" font-size="10.5" text-anchor="end" fill="#a78bfa">&#945; = 15/16&#960;&#178; = 0.0950</text>
+<text x="468.6" y="71" font-size="9.5" text-anchor="end" fill="#94a3b8">above this the fastest MRI mode is longer than 2H</text>
+<text x="408" y="308" font-size="11.5" text-anchor="middle" fill="#cbd5e1">&#945;</text>
+<text x="26" y="332" font-size="11" fill="#cbd5e1">An ARROW is a bound and a BAR is a range. The two arrows point in opposite directions, so the gap between the</text>
+<text x="26" y="348" font-size="11" fill="#94a3b8">observations and the simulations is one-sided: at least 5, and the review says the simulations probably underestimate.</text>
+</svg>

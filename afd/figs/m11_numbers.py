@@ -106,6 +106,8 @@ Msun = GMsun/G          # g
 SPITZER_C = 3.0**1.5/(4.0*np.sqrt(np.pi))   # = 0.7329, Sarazin eq. 5.32
 MU_IONISED_H = 0.6      # mean molecular weight, fully ionised H + He
 MU_MOLECULAR = 2.34     # mean molecular weight, H2 + He, protoplanetary
+SIGMA_NEUTRAL = 1.0e-15    # cm^2, Module 1's order-of-magnitude
+# neutral cross-section, copied from m12_numbers.py's SIGMA_H.
 MU_H_ION = mp/mu_u      # = 1.00728, a proton measured against m_u.
 # THE VISCOSITY CARRIER, not the mixture.  Module 1's convention, and
 # Module 12's MU_H is the same quantity under the same name.
@@ -986,6 +988,38 @@ def _self_check():
     assert abs(mri_containment_ratio(alpha_max_for_containment())
                - 1.0) < 1e-12
 
+    # PART L's own limits, each known in advance.
+    # C1: a rigid rotator has kappa_ep = 2 Omega, and kappa_ep vanishes
+    # exactly at the Rayleigh boundary q = 2.
+    assert abs(epicyclic_frequency(1.0, 0.0) - 2.0) < 1e-14
+    assert abs(epicyclic_frequency(1.0, RAYLEIGH_Q_CRIT)) < 1e-14
+    # C3: the steady disc's temperature maximum is at 49/36 of R_in, a
+    # number that depends on nothing at all.
+    _Rin = ISCO_SCHWARZSCHILD_RG*gravitational_radius(M_AGN)
+    _g = np.linspace(1.0001*_Rin, 4.0*_Rin, 400001)
+    _i = int(np.argmax(t_effective(1.0e25, M_AGN, _g, _Rin)))
+    assert abs(_g[_i]/_Rin - 49.0/36.0) < 1e-4
+    # D2: the dissipation is exactly the local release at R = 9/4 R_in,
+    # because 3(1 - sqrt(R_in/R)) = 1 there, and tends to 3 far out.
+    _R94 = 2.25*_Rin
+    _loc = G*M_AGN*1.0e25/(8.0*np.pi*_R94**3)
+    assert abs(dissipation_per_area(1.0e25, M_AGN, _R94, _Rin)/_loc
+               - 1.0) < 1e-9
+    _Rfar = 1.0e9*_Rin
+    _locf = G*M_AGN*1.0e25/(8.0*np.pi*_Rfar**3)
+    assert abs(dissipation_per_area(1.0e25, M_AGN, _Rfar, _Rin)/_locf
+               - 3.0) < 1e-4
+    # K2: the luminosity route and the efficiency route must give the
+    # same eta, and it must be 1/12.
+    _Ms = M09_BH_MASS_G
+    _Rins = ISCO_SCHWARZSCHILD_RG*gravitational_radius(_Ms)
+    _Md = M09_MDOT_C2/(c*c)
+    assert abs(disc_luminosity(_Md, _Ms, _Rins)/(_Md*c*c)
+               - 1.0/12.0) < 1e-12
+    # and K2's decades must match PART G's factor for the same eta.
+    assert abs(np.log10(disc_luminosity(_Md, _Ms, _Rins)/M09_LX)
+               - np.log10((1.0/12.0)/M09_ETA_RAD)) < 1e-9
+
     # The three timescales must be ordered for a thin disc.
     cT_dn = isothermal_sound_speed(T_DN, MU_IONISED_H)
     H_dn = cT_dn/Om
@@ -1570,10 +1604,130 @@ def main():
     P('')
     P('PART L.  The nine problems')
     P('-'*74)
-    P('  [NUMBER NOT YET COMPUTED: PART L is written at step 4, after')
-    P('  Gate D fixes the nine problem slots and the modelling inputs')
-    P('  each STATEMENT must carry.  Module 12 wrote its PART L at step 4')
-    P('  for the same reason.]')
+    P('  Every number a solution prints is produced here.  The slots and')
+    P('  the modelling inputs are fixed by .ignore/m11-gate-d.md.')
+
+    P('')
+    P('  C1.  The epicyclic frequency, and the Rayleigh boundary')
+    for qq in (0.0, 1.0, KEPLER_Q, 1.9, RAYLEIGH_Q_CRIT):
+        P(f'    q = {qq:<4} kappa_ep/Omega = '
+          f'{epicyclic_frequency(1.0, qq):.6f}')
+    P(f'    kappa_ep^2 = 2 Omega^2 (2 - q) vanishes at q = '
+      f'{RAYLEIGH_Q_CRIT:.1f}, so a disc')
+    P('    is Rayleigh-unstable only for q > 2, which a point mass cannot')
+    P('    produce.  A rigidly rotating fluid has q = 0 and')
+    P(f'    kappa_ep = 2 Omega; Keplerian q = 3/2 gives exactly Omega.')
+
+    P('')
+    P('  C2.  The protoplanetary row at alpha = 0.01')
+    tt = census['protoplanetary, 10 au']
+    a_c2 = KPL07_ALPHA_PROTOSTELLAR
+    nu_c2 = alpha_viscosity(a_c2, tt['cT'], tt['H'])
+    tnu_c2 = viscous_time(tt['R'], nu_c2)
+    P(f'    c_T                     = {tt["cT"]/1e5:.6f} km/s')
+    P(f'    Omega                   = {tt["Om"]:.6e} s^-1')
+    P(f'    H                       = {tt["H"]:.6e} cm '
+      f'= {tt["H"]/AU:.6f} au')
+    P(f'    H/R                     = {tt["H"]/tt["R"]:.6f}')
+    P(f'    rho_0                   = {tt["rho0"]:.6e} g cm^-3')
+    P(f'    nu = alpha c_T H        = {nu_c2:.6e} cm^2 s^-1')
+    P(f'    t_nu = R^2/nu           = {tnu_c2:.6e} s '
+      f'= {tnu_c2/yr:.6e} yr')
+    P(f'    alpha is Hartmann et al. (1998) through King, Pringle &')
+    P(f'    Livio section 2.3.2, at 10-100 au.  This row is at 10 au.')
+
+    P('')
+    P('  C3.  Where the steady disc is hottest')
+    P(f'    R_max/R_in              = {49.0/36.0:.6f}  (= 49/36)')
+    P(f'    R_max                   = {R_peak/Rg_agn:.6f} R_g '
+      f'= {R_peak:.6e} cm')
+    T_peak = t_effective(Mdot_agn, M_AGN, R_peak, R_in_agn)
+    P(f'    T_eff(R_max)            = {T_peak:.4f} K')
+    P(f'    T_eff at R_in           = 0 exactly, because f vanishes there')
+    P(f'    numerical maximum       = {num_peak/R_in_agn:.6f} R_in')
+
+    P('')
+    P('  D2.  Three times the local release')
+    P('    The specific orbital energy is -G M/2R, so matter moving in')
+    P('    releases G M Mdot/(2R^2) dR over an annulus, and the annulus')
+    P('    has area 2 x 2 pi R dR.  Per unit area PER SIDE that is')
+    P('      G M Mdot/(8 pi R^3),')
+    P('    against a dissipation of (3 G M Mdot/8 pi R^3) f.')
+    P(f'    {"R/R_in":>10} {"ratio D/(local release)":>26}')
+    for x in (1.5, 2.0, 10.0, 1.0e2, 1.0e4):
+        R = x*R_in_agn
+        local = G*M_AGN*Mdot_agn/(8.0*np.pi*R**3)
+        P(f'  {x:>12.4g} '
+          f'{dissipation_per_area(Mdot_agn, M_AGN, R, R_in_agn)/local:>26.6f}')
+    P('    The limit is 3.  ONE of those three units is the energy')
+    P('    released locally; the other TWO are carried out to this radius')
+    P('    by the viscous torque of P3, from material further in.  Energy')
+    P('    is not conserved annulus by annulus, and that is the whole')
+    P('    content of the bracket f.')
+    P('    Below R = 9/4 R_in exactly -- set 3(1 - sqrt(R_in/R)) = 1 --')
+    P('    the ratio is LESS than 1: those annuli')
+    P('    radiate less than they release, because they are exporting')
+    P('    energy outward rather than importing it.')
+
+    P('')
+    P('  K1.  The protoplanetary disc is MOLECULAR, so the plasma')
+    P('       formula does not apply')
+    sigma_H2 = SIGMA_NEUTRAL
+    lam_k1 = 1.0/(tt['n0']*sigma_H2)
+    vth_k1 = v_thermal(tt['T'], tt['mu'])
+    nu_k1 = lam_k1*vth_k1/3.0
+    tnu_k1 = viscous_time(tt['R'], nu_k1)
+    P(f'    n                       = {tt["n0"]:.6e} cm^-3')
+    P(f'    sigma (neutral, Module 1)= {sigma_H2:.1e} cm^2')
+    P(f'    lambda = 1/(n sigma)    = {lam_k1:.6e} cm')
+    P(f'    v_th at 50 K, mu = 2.34 = {vth_k1/1e5:.6f} km/s')
+    P(f'    nu_mol = v_th lambda/3  = {nu_k1:.6e} cm^2 s^-1')
+    P(f'    t_nu = R^2/nu_mol       = {tnu_k1:.6e} s '
+      f'= {tnu_k1/yr:.6e} yr')
+    P(f'    against C2 at alpha = {a_c2}: a factor '
+      f'{tnu_k1/tnu_c2:.6e},')
+    P(f'    that is {np.log10(tnu_k1/tnu_c2):.2f} decades.')
+    P('    AND THE TRAP: lam_coulomb is a PLASMA formula.  Using it at')
+    P('    50 K in a molecular gas is meaningless, because there are no')
+    P('    free charges to deflect.  The neutral cross-section above is')
+    P('    Module 1\'s order-of-magnitude value and the problem says so.')
+
+    P('')
+    P('  K2.  A thin disc at Sgr A*, on Module 9\'s own accretion rate')
+    Mdot_sgra = M09_MDOT_C2/(c*c)
+    M_sgra = M09_BH_MASS_G
+    Rin_sgra = ISCO_SCHWARZSCHILD_RG*gravitational_radius(M_sgra)
+    L_thin = disc_luminosity(Mdot_sgra, M_sgra, Rin_sgra)
+    P(f'    M (module09.html:672)   = {M_sgra:.4e} g '
+      f'= {M_sgra/Msun:.4e} M_sun')
+    P(f'    Mdot = (Mdot c^2)/c^2   = {Mdot_sgra:.6e} g/s')
+    P(f'    R_in = 6 R_g            = {Rin_sgra:.6e} cm')
+    P(f'    L = G M Mdot/(2 R_in)   = {L_thin:.6e} erg/s')
+    P(f'    eta implied             = {L_thin/(Mdot_sgra*c*c):.6f} '
+      f'(= 1/12 = {1.0/12.0:.6f})')
+    P(f'    observed L_X            = {M09_LX:.4e} erg/s')
+    P(f'    ratio L_thin/L_X        = {L_thin/M09_LX:.6e}')
+    P(f'    that is {np.log10(L_thin/M09_LX):.2f} decades.  Module 9')
+    P(f'    prints the same refutation as a factor of '
+      f'{M09_PRINTED_FACTOR:.0e}, from')
+    P('    the efficiency rather than the luminosity; the two routes are')
+    P('    the same arithmetic and must agree.')
+
+    P('')
+    P('  K3.  The alpha at which the MRI outgrows the disc')
+    P(f'    lambda_max/(2H) = 4 pi sqrt(alpha)/sqrt(15) = 1 at')
+    P(f'      alpha = 15/(16 pi^2)  = {a_max:.6f}')
+    P(f'    dwarf novae (KPL07 2.1) = {KPL07_DN_ALPHA_LO}-'
+      f'{KPL07_DN_ALPHA_HI}')
+    P(f'      ratios to the bound   = {KPL07_DN_ALPHA_LO/a_max:.4f} to '
+      f'{KPL07_DN_ALPHA_HI/a_max:.4f}')
+    P(f'    protostellar            = {KPL07_ALPHA_PROTOSTELLAR}')
+    P(f'      ratio to the bound    = '
+      f'{KPL07_ALPHA_PROTOSTELLAR/a_max:.4f}, INSIDE it')
+    P('    So the crude equipartition identification is self-consistent')
+    P('    in protostellar discs and marginal in ionised ones, which is')
+    P('    the same split CHECK 4 measures -- and the module must not')
+    P('    claim that is more than a coincidence of two crude numbers.')
 
     P('')
     P('=' * 74)

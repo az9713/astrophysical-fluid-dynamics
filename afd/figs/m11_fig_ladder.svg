@@ -1,0 +1,50 @@
+<svg class="setupfig" viewBox="0 0 720 400" width="100%" role="img" aria-label="Five timescales for one dwarf-nova disc on a single logarithmic axis spanning eighteen decades in seconds. The dynamical and thermal times sit at the left, the observed outburst near the middle, and the viscous time computed from molecular collisions alone at the far right, twelve decades beyond the outburst. A brace marks that gap and labels it." >
+<rect x="92" y="52" width="528" height="198" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="92.0" y1="250" x2="92.0" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="92.0" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">1</tspan></text>
+<line x1="150.7" y1="250" x2="150.7" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="150.7" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">3</tspan></text>
+<line x1="209.3" y1="250" x2="209.3" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="209.3" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">5</tspan></text>
+<line x1="268.0" y1="250" x2="268.0" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="268.0" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">7</tspan></text>
+<line x1="326.7" y1="250" x2="326.7" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="326.7" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">9</tspan></text>
+<line x1="385.3" y1="250" x2="385.3" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="385.3" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">11</tspan></text>
+<line x1="444.0" y1="250" x2="444.0" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="444.0" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">13</tspan></text>
+<line x1="502.7" y1="250" x2="502.7" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="502.7" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">15</tspan></text>
+<line x1="561.3" y1="250" x2="561.3" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="561.3" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">17</tspan></text>
+<line x1="620.0" y1="250" x2="620.0" y2="255" stroke="#334155" stroke-width="1"/>
+<text x="620.0" y="268" font-size="10.5" text-anchor="middle" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">19</tspan></text>
+<line x1="92" y1="82.0" x2="122.8" y2="82.0" stroke="#2dd4bf" stroke-width="2.4" opacity="0.55"/>
+<circle cx="122.8" cy="82.0" r="5" fill="#2dd4bf"/>
+<text x="98" y="75.0" font-size="11.5" fill="#2dd4bf">t<tspan baseline-shift="sub" font-size="8">dyn</tspan> = 1/&#937;</text>
+<text x="98" y="97.0" font-size="10" fill="#94a3b8">one radian of orbit</text>
+<line x1="92" y1="120.0" x2="143.3" y2="120.0" stroke="#facc15" stroke-width="2.4" opacity="0.55"/>
+<circle cx="143.3" cy="120.0" r="5" fill="#facc15"/>
+<text x="98" y="113.0" font-size="11.5" fill="#facc15">t<tspan baseline-shift="sub" font-size="8">th</tspan> at &#945; = 0.2</text>
+<text x="98" y="135.0" font-size="10" fill="#94a3b8">the disc reaches thermal balance</text>
+<line x1="92" y1="158.0" x2="228.0" y2="158.0" stroke="#fb923c" stroke-width="2.4" opacity="0.55"/>
+<circle cx="228.0" cy="158.0" r="5" fill="#fb923c"/>
+<text x="98" y="151.0" font-size="11.5" fill="#fb923c">observed outburst</text>
+<text x="98" y="173.0" font-size="10" fill="#94a3b8">five days &#8212; a configuration</text>
+<line x1="92" y1="196.0" x2="239.6" y2="196.0" stroke="#a78bfa" stroke-width="2.4" opacity="0.55"/>
+<circle cx="239.6" cy="196.0" r="5" fill="#a78bfa"/>
+<text x="98" y="189.0" font-size="11.5" fill="#a78bfa">t<tspan baseline-shift="sub" font-size="8">&#957;</tspan> at &#945; = 0.2</text>
+<text x="98" y="211.0" font-size="10" fill="#94a3b8">the &#945;-disc drains</text>
+<line x1="92" y1="234.0" x2="580.4" y2="234.0" stroke="#f87171" stroke-width="2.4" opacity="0.55"/>
+<circle cx="580.4" cy="234.0" r="5" fill="#f87171"/>
+<text x="98" y="227.0" font-size="11.5" fill="#f87171">t<tspan baseline-shift="sub" font-size="8">&#957;</tspan> molecular</text>
+<text x="98" y="249.0" font-size="10" fill="#94a3b8">collisions alone &#8212; 14.1 billion years</text>
+<line x1="228.0" y1="234.0" x2="580.4" y2="234.0" stroke="#f87171" stroke-width="1.6"/>
+<line x1="228.0" y1="228.0" x2="228.0" y2="240.0" stroke="#f87171" stroke-width="1.6"/>
+<line x1="580.4" y1="228.0" x2="580.4" y2="240.0" stroke="#f87171" stroke-width="1.6"/>
+<text x="404.2" y="222.0" font-size="12" text-anchor="middle" fill="#f87171">12.01 decades</text>
+<text x="356" y="290" font-size="11.5" text-anchor="middle" fill="#cbd5e1">time (seconds)</text>
+<text x="92" y="314" font-size="11" fill="#cbd5e1">CHECK 1 is the red bar. Nothing inside the transport coefficient closes it: the carrier is worth 1.30 and</text>
+<text x="92" y="330" font-size="11" fill="#94a3b8">doubling ln&#923; is worth 0.5, together 0.35 of a decade against 12.01.</text>
+</svg>
