@@ -419,7 +419,7 @@ def build_temperature():
              f'fill="{YEL}"/>')
     s.append(f'<text x="{_cx+10:.1f}" y="{_cy-4:.1f}" font-size="11" '
              f'fill="{YEL}">maximum at (49/36)R{SUB.format("in")} = '
-             f'{xpk:.3f} R{SUB.format("g")}, {Tpk:,.0f} K</text>')
+             f'{xpk:.4f} R{SUB.format("g")}, {Tpk:,.0f} K</text>')
     far = M.t_eff_index(Mdot, M.M_AGN, 1.0e5*Rg, Rin)
     s.append(f'<text x="{X1-8:.0f}" y="{pyb(-0.75)-10:.1f}" '
              f'font-size="11" text-anchor="end" fill="{ACC2}">'
