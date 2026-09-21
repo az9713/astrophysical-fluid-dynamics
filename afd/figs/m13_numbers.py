@@ -8,12 +8,12 @@ Every physical number quoted in module13.html is produced here, so the prose
 can be checked against a run rather than against memory.
 Units: CGS-Gaussian throughout (cm, g, s, erg, K, statcoulomb, gauss).
 
-STEP 2 OF SIX.  Every published value this file compares against was read
+STEP 3 OF SIX.  Every published value this file compares against was read
 off its page at step 2; the record is .ignore/m13-source-verification.md.
 Step 2 also found that step 1's CHECK 4 read the n = 3 column of
 module03.html, and that the ratio CHECK 4 was built to find is already in
-print at module03.html:885.  The CHECK blocks below are step 1's design,
-kept for the record; Gate D rules on them.
+print at module03.html:885.  Gate D (.ignore/m13-gate-d.md) has ruled on
+all four checks; the block below is the ruled design.
 
 WHAT THIS MODULE OWES, AND TO WHOM.  The twelve debts seven shipped pages
 have already printed against Module 13 are listed, each with the file and
@@ -41,44 +41,31 @@ The four debts that drive the design:
                       PART D evaluates it.  This is the book's one
                       explicitly deferred COMPUTATION, and it is cheap.
 
-THE FOUR CHECKS, WITH THE VERDICTS NOT FIXED AT STEP 1 -- Gate D fixes them.
+THE FOUR CHECKS, WITH THE VERDICTS FIXED AT GATE D (step 3).
 
-  CHECK 1  THE EDDINGTON LUMINOSITY AGAINST ITS OWN COMPOSITION.  Module 9
-           prints L_Edd with m_p, which is the opacity of pure ionised
-           hydrogen, kappa = sigma_T/m_p.  The Sun is not pure hydrogen.
-           At X = 0.7 the electron-scattering opacity is 0.2(1+X) and the
-           limit moves.  THIS IS A CHECK ON THE BOOK, not on a paper, and
-           step 1 expects it to move a shipped number.
-
-  CHECK 2  THE PHOTOSPHERE AT tau = 2/3.  Module 6 prints rho and H at the
-           solar photosphere from a convection calculation that never
-           mentions opacity.  Demanding tau = 2/3 over one scale height
-           INFERS an opacity.  Compare it against a published solar
-           photospheric Rosseland mean.  If the inference lands in the
-           tabulated range, two independent modules agree through a
-           quantity neither of them computed.
-
-  CHECK 3  SGR A* AND THE RADIATIVE EFFICIENCY.  module09.html:847 already
-           prints eta_rad ~ 4e-9 against 0.1 and module09.html:921 prices
-           the gap at 7.4 orders of magnitude.  A radiatively INEFFICIENT
-           flow is the prediction; the check is whether the Eddington
-           machinery this module builds says the gap is allowed.  REFUTES
-           the premise that accretion radiates at 0.1.
-
-  CHECK 4  EDDINGTON'S QUARTIC AGAINST A SOLAR MODEL.  Module 3 prints
-           1 - beta = 1.4247e-3 at 1 Msun from its own K.  Recompute it
-           from this module's radiation pressure and compare against a
-           tabulated central 1 - beta for the Sun.  Module 3 already
-           REFUTED the uniform-beta premise; this prices the refutation in
-           the radiation share itself rather than in the polytropic index.
+  CHECK 1  THE LIMIT, REPRODUCED, AND ITS COMPOSITION.  CONFIRMED as a
+           reproduction: Module 9's five printed numbers to 0.03 per cent
+           and Eddington's own Sun bound, k < 13,200 (p. 115), to 1.1 per
+           cent.  The finding is the composition: m_p means X = 1.  At the
+           protosolar X = 0.7261 the limit is 15.9 per cent higher.
+  CHECK 2  THE ANCHOR.  THE PHOTOSPHERE AT tau = 2/3.  REFUTED: the
+           one-scale-height inference from Module 6's rho and H is LOW by
+           2.36 to 2.92 against ATLAS9's kappa_R.  ATLAS9 is a model.
+  CHECK 3  module04.html:429's CRITERION.  REFUTED: omega chi/c^2 is
+           0.3445 to 0.4468 at the photosphere, below 1 and not << 1.
+  CHECK 4  EDDINGTON'S GREY ATMOSPHERE AGAINST ATLAS9's T(tau_R).
+           CONFIRMED within 3.1 per cent in T (13 per cent in T^4) for
+           tau_R = 0.01 to 3.  Replaces step 1's CHECK 4, which is Module
+           3's result (module03.html:885) and is cited, not re-checked.
+           Step 1's CHECK 3 (Sgr A*) is Module 9's refutation and is cited.
 
 WHAT THE BOOK ALREADY CARRIES THAT THIS MODULE MAY NOT RE-RULE.
   - eta_rad: module09.html:944 fixes 0.1.  module11.html DERIVES 1/12 at
     the Schwarzschild ISCO and computes 0.057191 from Bardeen, Press &
     Teukolsky.  THE BOOK CARRIES THREE VALUES OF ONE SYMBOL.  PART A
-    computes Mdot_Edd at all three and prints the spread.  Which one the
-    book adopts is Gate D's ruling and Simon's call, because changing it
-    moves a number inside a SHIPPED page.
+    computes Mdot_Edd at all three and prints the spread.  RULED BY SIMON,
+    2026-09-21: Mdot_Edd stays defined at eta_rad = 0.1, and no shipped
+    page moves.
   - tau is the optical depth: module06.html:1054 already rules it.
   - a_rad is the radiation constant WITH its subscript: module03.html:904.
   - Bare eta is FORBIDDEN as a new meaning: module12.html:927 prints "a
@@ -126,6 +113,10 @@ Msun = GMsun/G          # g
 # from 1.1765 to 1.1375.
 X_H = 0.75830           # hydrogen mass fraction, bs05_agsop.dat last row
 Y_HE = 0.22905          # helium mass fraction, same row
+# The same model's INITIAL composition, 1 - Yi - Zi with Yi = 0.2599 and
+# Zi = 0.0140 from BS05 Table 1.  Gate D rules it the X for ACCRETED gas,
+# which has not had the Sun's helium settling.  CHECK 1 uses it.
+X_INITIAL = 1.0 - 0.2599 - 0.0140
 
 # =========================================================================
 # WHAT THE BOOK ALREADY PRINTS.  Every one of these was read off the shipped
@@ -422,7 +413,8 @@ def solve_one_minus_beta(rhs, tol=1.0e-15):
 def gamma_effective(beta):
     """The effective adiabatic index of a gas-plus-radiation mixture.
 
-    Chandrasekhar's Gamma_1 for a mixture at constant beta:
+    Chandrasekhar's Gamma_1 for a mixture, evaluated at the local beta
+    (beta itself changes along an adiabat):
         Gamma_1 = beta + (4 - 3 beta)^2 (gamma_g - 1)
                          / [beta + 12(gamma_g - 1)(1 - beta)]
     with gamma_g = 5/3 for a monatomic gas.  The two limits are what
@@ -542,6 +534,45 @@ def atlas9_photosphere(tau_target=2.0/3.0, T_target=None):
             np.exp(at(np.log(kR))), np.exp(at(np.log(tau))), rhox, P)
 
 
+def grey_eddington_T(tau, Teff):
+    """T(tau) = Teff [(3/4)(tau + 2/3)]^(1/4), K.  CHECK 4.
+
+    The grey atmosphere under the Eddington closure K = J/3.  T = Teff at
+    tau = 2/3 by construction, so the check at that level tests the grey
+    assumption and nothing else.
+    """
+    return Teff*(0.75*(tau + 2.0/3.0))**0.25
+
+
+def hopf_q(tau_out, tmax=30.0, n=3001):
+    """The exact grey (Milne) solution's Hopf function q(tau).
+
+    S = (3/4) F (tau + q) solves S = Lambda[S].  Because Lambda[tau] =
+    tau + E3(tau)/2, q obeys q = Lambda[q] + E3/2, iterated here with
+    Lambda integrated exactly over piecewise-constant cells and q held at
+    q(inf) = 0.7104460 beyond tmax.  Its limits, q(0) = 1/sqrt(3) and
+    q(inf), are the check.  Used only to show that the exact grey
+    solution moves T at tau = 2/3 by under 0.5 per cent.
+    """
+    from scipy.special import expn
+    t = np.linspace(0.0, tmax, n)
+    dt = t[1] - t[0]
+    edges = np.concatenate(([0.0], 0.5*(t[1:] + t[:-1]), [tmax + 0.5*dt]))
+
+    def prim(ti, s):   # int E1(|ti - s|) ds, up to a constant
+        d = s - ti
+        return np.sign(d)*(1.0 - expn(2, np.abs(d)))
+    ti = t[:, None]
+    A = 0.5*(prim(ti, edges[None, 1:]) - prim(ti, edges[None, :-1]))
+    q_inf = 0.7104460
+    tail = 0.5*expn(2, edges[-1] - t)*q_inf
+    src = 0.5*expn(3, t)
+    # q = A q + tail + src, solved directly: Lambda iteration converges
+    # too slowly at large tau to be worth running.
+    q = np.linalg.solve(np.eye(n) - A, tail + src)
+    return np.interp(tau_out, t, q)
+
+
 # =========================================================================
 # PART D.  Radiative diffusion, and the criterion Module 4 deferred
 # =========================================================================
@@ -589,9 +620,11 @@ def diffusion_time(kappa, rho, R):
 
     From N = tau^2 steps of length l = 1/(kappa rho) at speed c:
         t = N l/c = tau^2/(kappa rho c) = kappa rho R^2/c,
-    and the factor 3 is the standard three-dimensional correction.  The
-    factor is a CONVENTION and the module must print it as one; step 2
-    must find a text that states it.
+    and the 3 is DERIVED, not sourced (Gate D): the diffusion flux above,
+    F = -(c/(3 kappa rho)) dE/dz, makes the photon diffusivity
+    D = c l/3, and t = R^2/D = 3 kappa rho R^2/c exactly.  It is the 1/3
+    of module01.html:363's (1/3) rho v lambda.  R^2/D is itself an order
+    of magnitude, and the module prints it as one.
     """
     return 3.0*kappa*rho*R*R/c
 
@@ -629,8 +662,9 @@ def eddington_ratio_of_a_star(M, L, kappa):
 def main():
     P = print
     P('=' * 72)
-    P('MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 2 OF SIX.')
-    P('Every published value below was read at step 2; the record is')
+    P('MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 3 OF SIX.')
+    P('Gate D is .ignore/m13-gate-d.md.  Every published value below was')
+    P('read at step 2; the record is')
     P('.ignore/m13-source-verification.md.  Every comparison against a')
     P('SHIPPED PAGE of this book is final, because the page is on disk.')
     P('=' * 72)
@@ -751,31 +785,45 @@ def main():
         md = eddington_accretion_rate(M9_K2_M, eta)
         P('    %s eta = %.6f  Mdot_Edd = %.4e g/s  (%+.1f%% on print)'
           % (label, eta, md, 100.0*(md/M9_K2_MDOTEDD - 1.0)))
-    P('    PUNCHLINE, AND IT IS A DECISION AND NOT A CALCULATION:')
-    P('    adopting Module 11\'s own derived 1/12 moves module09.html:913')
-    P('    by %+.1f per cent and its relativistic value by %+.1f per cent.'
-      % (100.0*(M9_ETA_ASSUMED/M11_ETA_NEWTONIAN_ISCO - 1.0),
-         100.0*(M9_ETA_ASSUMED/M11_ETA_RELATIVISTIC - 1.0)))
-    P('    A ruling that moves a number inside a SHIPPED page is Simon\'s')
-    P('    call.  Gate D question Q2 of .ignore/m13-promises.md.')
+    P('    Against the computed 0.1 value, Module 11\'s 1/12 would move')
+    P('    module09.html:913 by %+.1f per cent and the relativistic value'
+      % (100.0*(M9_ETA_ASSUMED/M11_ETA_NEWTONIAN_ISCO - 1.0)))
+    P('    by %+.1f; the table\'s +74.8 is against the rounded print.'
+      % (100.0*(M9_ETA_ASSUMED/M11_ETA_RELATIVISTIC - 1.0)))
+    P('    RULED BY SIMON, 2026-09-21 (Gate D Q2): Mdot_Edd stays defined')
+    P('    at eta_rad = 0.1.  No shipped page moves; the module prints this')
+    P('    table so the reader sees what the convention costs.')
 
     # --- CHECK 1 ------------------------------------------------------
     P('')
     P('  CHECK 1.  THE COMPOSITION INSIDE module09.html:944\'s FORMULA.')
     L_solar = eddington_luminosity(M9_K2_M, kap_solar)
+    kap_init = kappa_electron_scattering(X_INITIAL)
+    L_init = eddington_luminosity(M9_K2_M, kap_init)
     P('    L_Edd with kappa = sigma_T/m_p (X = 1)  = %.4e erg/s' % L2)
-    P('    L_Edd with kappa_es at X = %.4f        = %.4e erg/s'
-      % (X_H, L_solar))
-    P('    ratio = %.4f, i.e. Module 9\'s value is %.1f per cent BELOW'
-      % (L_solar/L2, 100.0*(L_solar/L2 - 1.0)))
-    P('    the solar-surface value.  module09.html:915 defends the m_p as')
-    P('    "a genuine proton mass and not a mean molecular weight", which')
-    P('    is true and is not the point: writing m_p rather than')
-    P('    2 m_p/(1+X) is a statement that the gas is PURE IONISED')
-    P('    HYDROGEN, and no shipped page says so.')
-    P('    PUNCHLINE CHECK 1, AND THE VERDICT IS NOT FIXED AT STEP 1.')
-    assert L_solar > L2, \
-        'a lower opacity must give a HIGHER limit; the sign is the check'
+    P('    L_Edd at X = %.4f (BS05 initial)       = %.4e erg/s  ratio %.4f'
+      % (X_INITIAL, L_init, L_init/L2))
+    P('    L_Edd at X = %.4f (BS05 present surface) = %.4e erg/s  ratio %.4f'
+      % (X_H, L_solar, L_solar/L2))
+    P('    The limit scales as 2/(1+X): the m_p of module09.html:944 means')
+    P('    X = 1, PURE IONISED HYDROGEN, and no shipped page says so.')
+    P('    Gate D rules X = %.4f for accreted gas, so Module 9\'s value is'
+      % X_INITIAL)
+    P('    %.1f per cent BELOW the limit for protosolar gas.'
+      % (100.0*(L_init/L2 - 1.0)))
+    assert abs(L_init/L2 - 2.0/(1.0 + X_INITIAL)) < 1.0e-12, \
+        'the composition factor must be exactly 2/(1+X)'
+    assert L_init > L_solar > L2, \
+        'a lower X must give a lower opacity and a HIGHER limit'
+    eb = 4.0*np.pi*c*G*Msun/Lsun
+    P('    Eddington\'s own Sun bound, p. 115: k < %.0f; recomputed %.0f,'
+      % (EDDINGTON_1926_SUN_K_BOUND, eb))
+    P('    ratio %.4f.  His 1926 L and M were not read; the %.1f per cent'
+      % (eb/EDDINGTON_1926_SUN_K_BOUND,
+         100.0*(1.0 - eb/EDDINGTON_1926_SUN_K_BOUND)))
+    P('    is not traced.  CHECK 1 VERDICT: CONFIRMED as a reproduction.')
+    assert abs(eb/EDDINGTON_1926_SUN_K_BOUND - 1.0) < 0.02, \
+        'Eddington\'s p. 115 Sun bound does not reproduce to 2 per cent'
 
     # --- the Salpeter time --------------------------------------------
     P('')
@@ -789,6 +837,10 @@ def main():
       % abs(t_sal_big/t_sal - 1.0))
     assert abs(t_sal_big/t_sal - 1.0) < 1.0e-12, \
         'the Salpeter time must not depend on M'
+    # Gate D: the hole keeps (1 - eta) of what falls in, so the e-folding
+    # time of M itself is t_Sal/(1 - eta).  The module prints this one.
+    P('  the hole keeps (1 - eta) of Mdot, so M e-folds in t/(1 - eta)'
+      ' = %.4e yr' % (t_sal/(1.0 - M9_ETA_ASSUMED)/yr))
 
     # ------------------------------------------------------------------
     P('')
@@ -834,12 +886,12 @@ def main():
       % M3_ONE_MINUS_BETA_1MSUN)
     P('    standard model / tabulated Sun = %.4f'
       % (M3_ONE_MINUS_BETA_1MSUN/omb_c))
-    P('    PUNCHLINE CHECK 4: the standard model puts %.2f times the'
+    P('    The standard model puts %.2f times the tabulated radiation'
       % (M3_ONE_MINUS_BETA_1MSUN/omb_c))
-    P('    tabulated radiation share at the Sun\'s centre.  Both numbers')
-    P('    are in print, and SO IS THE RATIO: module03.html:885, Problem')
-    P('    K3\'s solution, says "Eddington\'s 1 Msun value is 2.30 times')
-    P('    the tabulated central value".  CHECK 4 is Module 3\'s, not new.')
+    P('    share at the Sun\'s centre.  Both numbers are in print, and SO')
+    P('    IS THE RATIO: module03.html:885, Problem K3\'s solution, says')
+    P('    "Eddington\'s 1 Msun value is 2.30 times the tabulated central')
+    P('    value".  Gate D: CITED as Module 3\'s result, NOT a check here.')
     b_n3 = beta_gas_fraction(M3_N3_RHO_C, M3_N3_T_C, M3_MU)
     P('')
     P('    STEP 1\'s CHECK 4 read the n = 3 PREDICTION column of')
@@ -919,13 +971,15 @@ def main():
       % (M6_PHOT_RHO/rhoa))
     P('    ATLAS9 kappa_R / inferred kappa: %.3f at tau_R = 2/3, %.3f at'
       % (ka/kap_inferred, kb_/kap_inferred))
-    P('    T = Teff.  PUNCHLINE CHECK 2: the one-scale-height inference')
+    P('    T = Teff.  CHECK 2, THE ANCHOR: the one-scale-height inference')
     P('    is LOW by a factor %.2f to %.2f.  It assumes kappa constant over'
       % (kb_/kap_inferred, ka/kap_inferred))
     P('    the column; kappa_R in the file rises from %.3f to %.3f between'
       % (kb_, atlas9_photosphere(1.0)[3]))
-    P('    tau_R = %.3f and 1.  The verdict is Gate D\'s, not step 2\'s.'
+    P('    tau_R = %.3f and 1.  VERDICT (Gate D): REFUTED as a digit.'
       % taub)
+    assert kb_/kap_inferred > 2.0 and ka/kap_inferred > 2.0, \
+        'CHECK 2 is REFUTED only while the miss exceeds a factor 2'
 
     lph = photon_mean_free_path(kap_inferred, M6_PHOT_RHO)
     P('')
@@ -986,7 +1040,10 @@ def main():
           % (lab, chi_l, par_l))
     P('    *** Both lie between %.4f and %.4f: below 1, and not << 1.'
       % (min(pars), max(pars)))
-    P('    *** Which level the module prints is Gate D question Q5. ***')
+    P('    *** CHECK 3 VERDICT (Gate D Q5): REFUTED.  The module prints')
+    P('    *** BOTH levels; %.4f above is the inferred-opacity value and'
+      % par)
+    P('    *** is superseded, printed only to show what CHECK 2 moved. ***')
     assert 0.1 < min(pars) and max(pars) < 1.0, \
         'the ATLAS9 adiabaticity parameter left the range the text states'
 
@@ -1051,7 +1108,50 @@ def main():
 
     # ------------------------------------------------------------------
     P('')
-    P('PART F.  What step 2 read, and what is still open')
+    P('PART F.  CHECK 4: Eddington\'s grey atmosphere against ATLAS9')
+    P('-' * 72)
+    TEFF_A9 = 5777.0     # the file's own header, not the IAU 5772
+    P('  T(tau) = Teff [(3/4)(tau + 2/3)]^(1/4), Teff = %.0f K (the file\'s'
+      % TEFF_A9)
+    P('  own header; the book\'s IAU 5772 K is %.3f per cent lower).'
+      % (100.0*(1.0 - M6_TEFF/TEFF_A9)))
+    P('    tau_R     ATLAS9 T    grey T    grey/ATLAS9')
+    worst_T = 0.0
+    for tv in (0.01, 0.1, 0.3, 2.0/3.0, 1.0, 2.0, 3.0):
+        Tat = atlas9_photosphere(tv)[0]
+        Tg = grey_eddington_T(tv, TEFF_A9)
+        worst_T = max(worst_T, abs(Tg/Tat - 1.0))
+        P('    %6.4f   %8.1f  %8.1f     %.4f' % (tv, Tat, Tg, Tg/Tat))
+    P('    largest |grey/ATLAS9 - 1| = %.4f in T, %.4f in T^4.'
+      % (worst_T, (1.0 + worst_T)**4 - 1.0))
+    assert worst_T < 0.031, \
+        'CHECK 4: grey T(tau) left the 3.1 per cent band fixed at Gate D'
+    q0, q23, q001 = hopf_q(np.array([0.0, 2.0/3.0, 0.01]))
+    P('  The exact grey solution replaces 2/3 by the Hopf function q(tau):')
+    P('    q(0) = %.5f against 1/sqrt(3) = %.5f' % (q0, 1.0/np.sqrt(3.0)))
+    assert abs(q0 - 1.0/np.sqrt(3.0)) < 2.0e-4, \
+        'the Hopf iteration must reproduce q(0) = 1/sqrt(3)'
+    shift = ((2.0/3.0 + q23)/(4.0/3.0))**0.25 - 1.0
+    P('    q(2/3) = %.5f, which moves T at tau = 2/3 by %.3f per cent.'
+      % (q23, 100.0*shift))
+    assert abs(shift) < 0.005, \
+        'the exact grey solution must move T(2/3) by under 0.5 per cent'
+    Ta23 = atlas9_photosphere(2.0/3.0)[0]
+    P('    ATLAS9 at tau_R = 2/3 is %.1f K, %.2f per cent above Teff.'
+      % (Ta23, 100.0*(Ta23/TEFF_A9 - 1.0)))
+    P('    The closure accounts for %.2f per cent of it; the rest is the'
+      % (100.0*shift))
+    P('    non-grey opacity the grey model leaves out.')
+    h001 = ((0.01 + q001)/(0.01 + 2.0/3.0))**0.25
+    P('    At tau = 0.01 the other way round: Hopf multiplies grey T by')
+    P('    %.4f, so grey/ATLAS9 becomes %.4f -- the closure is the error.'
+      % (h001, h001*grey_eddington_T(0.01, TEFF_A9)
+         / atlas9_photosphere(0.01)[0]))
+    P('  CHECK 4 VERDICT (Gate D): CONFIRMED within 3.1 per cent in T.')
+
+    # ------------------------------------------------------------------
+    P('')
+    P('PART G.  What steps 2 and 3 settled, and what is still open')
     P('-' * 72)
     P('  Read at step 2, each off the page:')
     P('    1. kappa_R at the solar photosphere: ATLAS9, PART C.')
@@ -1060,14 +1160,16 @@ def main():
     P('       His Sun bound is k < %.0f; this file\'s constants give %.0f.'
       % (EDDINGTON_1926_SUN_K_BOUND, 4.0*np.pi*c*G*Msun/Lsun))
     P('    4. BS2005-AGS,OP prints no 1 - beta; module03.html:628 does.')
-    P('  Still open: diffusion_time\'s factor 3 has no source; no ULX.')
+    P('  Ruled at Gate D: diffusion_time\'s factor 3 is derived, not')
+    P('  sourced.  Still open: no ULX (optional); Eddington\'s 1926')
+    P('  printing was not seen, only the 1930 reprint.')
     P('  And three things the run has FOUND that are not about papers:')
     P('    (a) module09.html:913\'s doubling time is M/Mdot, exact at')
     P('        constant Mdot; the page states no growth law.  NOT a defect.')
     P('    (b) module09.html:944\'s m_p is a COMPOSITION -- pure ionised')
     P('        hydrogen -- and no shipped page says so.  CHECK 1.')
     P('    (c) the book carries three values of eta_rad and Mdot_Edd')
-    P('        carries it, so a ruling moves a shipped number.')
+    P('        carries it.  Simon ruled 0.1 stays; nothing shipped moves.')
     P('')
     P('=' * 72)
     P('END OF RUN.  All asserts passed.')
