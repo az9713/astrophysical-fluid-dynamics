@@ -105,65 +105,242 @@ MU_MOLECULAR = 2.34     # mean molecular weight, H2 + He, protoplanetary
 # =========================================================================
 
 # --- Shakura & Sunyaev (1973), A&A 24, 337-355. -------------------------
-# The alpha prescription itself.  Their form is t_r,phi = alpha P, a
-# stress proportional to the pressure, with 0 < alpha < 1 because the
-# turbulent velocity cannot exceed the sound speed and the field cannot
-# exceed equipartition.  NOT YET VERIFIED: step 2 must read the page that
-# prints the bound and the page that prints nu = alpha c_T H, and must
-# record whether they write the bound as alpha <= 1 or alpha < 1.
-SS73_ALPHA_MAX = 1.0            # their upper bound      NOT YET VERIFIED
+# VERIFIED at step 2 from the ADS scan, bibcode 1973A&A....24..337S.  The
+# scan has NO TEXT LAYER -- 398 characters, all of it the bibcode
+# watermark -- so pages 338 and 339 were rendered at 190 dpi and read as
+# images.  The ADS gateway returned 504 on the first request and worked
+# on the second.
+#
+# STEP 1 DESCRIBED THEIR ALPHA WRONGLY.  It said "t_r,phi = alpha P, a
+# stress proportional to the pressure".  That is the later standard
+# restatement.  Their p. 338, right column, prints
+#
+#       alpha = v_t/v_s + H^2/(4 pi rho v_s^2)
+#
+# with, in the same sentence, rho v_s^2/2 = (3/2) rho kT/m_p + eps_r as
+# "the thermal energy density of the matter", eps_r the radiation energy
+# density, v_s the sound velocity and v_t the turbulent velocity.
+#
+# THREE CONSEQUENCES, ALL OF WHICH THIS MODULE MUST CARRY.
+#  (1) Their alpha is a SUM of a turbulent Mach number and a
+#      magnetic-to-thermal-energy ratio, not one stress coefficient.
+#  (2) THEIR H IS THE MAGNETIC FIELD, in the old convention where H
+#      denotes B.  This book's H is the scale height.  The two symbols
+#      collide inside the founding paper of the subject, and the module
+#      says so where it first writes nu = alpha c_T H.
+#  (3) THEIR v_s IS NOT THIS BOOK'S c_T.  With radiation neglected their
+#      own definition gives v_s^2 = 3kT/m_p, the rms thermal speed,
+#      larger than c_T = sqrt(kT/(mu m_u)) by sqrt(3 mu m_u/m_p) = 1.34
+#      at mu = 0.6.  Writing nu = alpha c_T H is a CONVENTION of this
+#      book and alpha absorbs the factor.
+#
+# Their bound, same column: "In part II below we show that alpha <~ 1."
+# The printed relation is <~ and not <=.
+SS73_ALPHA_MAX = 1.0            # their bound, alpha <~ 1      VERIFIED
+# Their footnote 3, p. 338: alpha "is assumed to be constant along the
+# disk in our calculations", and "the observational appearance of the
+# disk (spectrum of its radiation and the effective temperature of the
+# surface) DO NOT STRONGLY DEPEND on the chosen value of alpha".  That
+# footnote is CHECK 4's context: the founding paper says the easiest
+# observable is the one least able to measure alpha.
+#
+# Their p. 339, left column, inside the parenthesis defining L_cr:
+#   "(eta is the efficiency of gravitational energy release, in the case
+#    of Schwarzschild's metric eta ~= 0.06, in a Kerr black hole eta can
+#    attain 40%)"
+# THE FOUNDING PAPER PRINTS BOTH ENDS OF CHECK 3's RANGE.
+SS73_ETA_SCHWARZSCHILD = 0.06   # their p. 339                 VERIFIED
+SS73_ETA_KERR_MAX = 0.40        # their p. 339, "40%"          VERIFIED
+# Recorded from the same page and NOT used: L_cr = 1e38 (M/M_sun) erg/s
+# and Mdot_cr = 3e-8 (0.06/eta)(M/M_sun) M_sun/yr.
 
 # --- King, Pringle & Livio (2007), MNRAS 376, 1740-1746. ----------------
-# "Accretion disc viscosity: how big is alpha?"  Their review of dwarf-nova
-# outburst modelling.  NOT YET VERIFIED: step 2 must read the abstract and
-# the section that states the range, and must record whether 0.1-0.4 is the
-# OUTBURST value and what the quiescent value is stated as.
-KPL07_ALPHA_LO = 0.1            # outburst, dwarf novae  NOT YET VERIFIED
-KPL07_ALPHA_HI = 0.4            # outburst, dwarf novae  NOT YET VERIFIED
-KPL07_ALPHA_QUIESCENT = 0.01    # quiescent              NOT YET VERIFIED
-
-# --- Flaherty et al. (2018), ApJ 856, 117. ------------------------------
-# ALMA CO line widths toward the protoplanetary disc HD 163296, read as a
-# bound on the non-thermal velocity and therefore on alpha.  NOT YET
-# VERIFIED: step 2 must read the paper, record whether the bound is on
-# delta v/c_T or on alpha directly, and record which molecular line and
-# which radii it applies to.  A bound has a direction and step 2 must
-# record which way it points.
-FLAHERTY18_ALPHA_MAX = 3.0e-3   # upper bound            NOT YET VERIFIED
+# VERIFIED at step 2 from arXiv:astro-ph/0701803, fetched and read with
+# PyMuPDF.  Their abstract, verbatim:
+#   "We consider observational and theoretical estimates of the accretion
+#    disc viscosity parameter alpha.  We find that in THIN, FULLY-IONIZED
+#    DISCS, the best observational evidence suggests a typical range
+#    alpha ~ 0.1 - 0.4, whereas the relevant NUMERICAL SIMULATIONS tend to
+#    derive estimates for alpha which are AN ORDER OF MAGNITUDE SMALLER.
+#    We discuss possible reasons for this apparent discrepancy."
+# STEP 1 LABELLED 0.1-0.4 "outburst, dwarf novae".  IT IS WIDER THAN THAT:
+# "thin, fully-ionized discs".  Relabelled here.
+KPL07_ALPHA_LO = 0.1            # thin fully-ionised discs     VERIFIED
+KPL07_ALPHA_HI = 0.4            # thin fully-ionised discs     VERIFIED
+# Their section 3, the simulations, two values read in context:
+KPL07_SIM_LO = 0.004            # Hirose, Krolik & Stone       VERIFIED
+KPL07_SIM_HI = 0.02             # "a global average of 0.02"   VERIFIED
+# Their section 2.3.2: "Estimates for alpha in protostellar (T Tauri)
+# discs, based on evolutionary lifetimes, are given by Hartmann et al.
+# (1998).  They give estimates of alpha ~= 0.01 at disc radii
+# R ~ 10 - 100 AU."  HARTMANN ET AL. WAS NOT READ; this module quotes it
+# through the review and names the route in print.
+# THIS MODULE'S CENSUS SITS AT 10 au, INSIDE THAT RANGE.
+KPL07_ALPHA_PROTOSTELLAR = 0.01     # Hartmann et al. (1998)   VERIFIED
+KPL07_PROTO_R_LO_AU = 10.0          # their stated range       VERIFIED
+KPL07_PROTO_R_HI_AU = 100.0         # their stated range       VERIFIED
+# STEP 1 INVENTED A CONSTANT.  It carried KPL07_ALPHA_QUIESCENT = 0.01
+# as a "quiescent dwarf-nova" value.  The 0.01 in this paper is the
+# PROTOSTELLAR value above, and the two are different physics.  Removed.
+# Their section 2.3.1, Starling et al. (2004), AGN optical variability
+# read through the thermal time: 0.01 <= alpha <= 0.03, and Starling et
+# al. "note that these values of alpha are really LOWER LIMITS because
+# data sampling means that they might miss shorter timescales".  A BOUND
+# HAS A DIRECTION and this one points UP.  Recorded, not used in a check.
+KPL07_AGN_ALPHA_LO = 0.01       # a lower limit, not a value   VERIFIED
+KPL07_AGN_ALPHA_HI = 0.03       # a lower limit, not a value   VERIFIED
+# Their section 1, and PART F's observational anchor: the radial run of
+# effective temperature across a steady disc, T ~ R^-3/4, "is independent
+# of the viscosity, being just a statement of energy conservation, and is
+# in reasonable accord with both continuum spectra and eclipse mapping of
+# cataclysmic variables".
 
 # --- Yu & Tremaine (2002), MNRAS 335, 965-976. --------------------------
-# The Soltan argument: the mass in local black holes against the integrated
-# quasar light gives a population-mean radiative efficiency.  NOT YET
-# VERIFIED: step 2 must read the paper and record the value, its error, and
-# whether it is quoted as a value or as a lower bound.  If it is a bound,
-# CHECK 3's wording changes.
-YT02_EFFICIENCY = 0.1           # population mean        NOT YET VERIFIED
+# VERIFIED at step 2 from arXiv:astro-ph/0203082, fetched and read with
+# PyMuPDF.  IT IS NOT A MEASUREMENT WITH AN ERROR BAR.  Their abstract:
+#   "The local BH mass density is CONSISTENT WITH the density accreted
+#    during optically bright QSO phases IF QSOs have a mass-to-energy
+#    conversion efficiency eps ~= 0.1."
+# and further on, "luminous QSOs ... have a high efficiency (e.g.
+# eps ~ 0.2, WHICH IS POSSIBLE FOR THIN-DISK ACCRETION ONTO A KERR BH)",
+# and "less luminous QSOs must accrete with a low efficiency < 0.1".
+# Their local density carries an h_0.65 scaling:
+# rho_bh(z=0) = (2.5 +/- 0.4) x 10^5 h_0.65^2 M_sun Mpc^-3.
+# CHECK 3 must say "the efficiency that makes the accounting close", not
+# "the measured efficiency".
+YT02_EFFICIENCY = 0.1           # closes the Soltan argument   VERIFIED
+YT02_EFFICIENCY_KERR = 0.2      # their luminous-QSO case      VERIFIED
 
 # --- Toomre (1964), ApJ 139, 1217-1238. ---------------------------------
-# The local stability criterion for a differentially rotating sheet.  NOT
-# YET VERIFIED: step 2 must read the paper and record whether his criterion
-# is written with the epicyclic frequency or with 2 Omega, and whether the
-# coefficient for a GAS disc is pi (Toomre's stellar disc uses 3.36).  The
-# difference is 7 per cent in Q and the module must not average them.
-TOOMRE_GAS_COEFF = np.pi        # Q = c_T kappa_ep/(pi G Sigma)  NOT YET VER.
-TOOMRE_STELLAR_COEFF = 3.36     # Toomre's own, stellar  NOT YET VERIFIED
+# VERIFIED at step 2 from the ADS scan, bibcode 1964ApJ...139.1217T.
+#
+# THE PAPER DOES NOT CONTAIN THE CRITERION FOR A GAS DISC, AND STEP 1
+# CITED IT FOR ONE.  His p. 1217: "it seemed a legitimate first
+# approximation TO IGNORE THE INTERSTELLAR GAS AND DUST, and to
+# concentrate here on the stability of a thin disk composed ONLY OF
+# STARS.  A discussion of the gravitational stability of a thin layer of
+# GASEOUS material imbedded within an otherwise stable galaxy WILL BE
+# PRESENTED IN A LATER PAPER (Toomre 1964)."
+#
+# His own result is his eq. (65), and his abstract states the same:
+#   sigma_u,min = (0.2857)^(1/2) kappa/alpha_crit = 3.36 G mu/kappa,
+# with mu the projected STELLAR density.  The 3.36 is his.  The pi is not.
+TOOMRE_STELLAR_COEFF = 3.36     # his eq. (65), STARS          VERIFIED
+# THE GAS COEFFICIENT IS DERIVED IN PART H, NOT CITED.  See
+# toomre_gas_coefficient() below, which obtains pi from the rotating
+# isothermal sheet's own dispersion relation.  Safronov (1960), Ann.
+# d'Ap. 23, 979 -- which Toomre's own reference list carries -- is the
+# gas-disc precedent and WAS NOT READ; it is named for the precedent
+# only, exactly as Module 12 cited Balbus & Hawley (1991).
 
-# --- the innermost stable circular orbit. -------------------------------
-# Schwarzschild: R_isco = 6 G M/c^2, and the binding energy of a circular
-# orbit there is 1 - sqrt(8/9) of the rest mass.  NOT YET VERIFIED: this is
-# textbook general relativity and step 2 must cite a page for it, not a
-# memory.  It is the one number in CHECK 3 this book cannot derive, because
-# the book is Newtonian throughout.
-ISCO_SCHWARZSCHILD_RG = 6.0     # in units of G M/c^2    NOT YET VERIFIED
-ETA_SCHWARZSCHILD = 1.0 - np.sqrt(8.0/9.0)   # = 0.05719  NOT YET VERIFIED
+# --- Bardeen, Press & Teukolsky (1972), ApJ 178, 347-369. ---------------
+# VERIFIED at step 2 from the ADS scan, bibcode 1972ApJ...178..347B.
+# Their eq. (2.21): r_ms = 6M for a = 0, the Schwarzschild innermost
+# stable circular orbit.  Their eq. (2.12), the energy per unit rest mass
+# of an equatorial circular orbit:
+#   E/mu = (r^3/2 - 2 M r^1/2 +/- a M^1/2)
+#          / (r^3/4 (r^3/2 - 3 M r^1/2 +/- 2 a M^1/2)^1/2).
+# THEY PRINT NO EFFICIENCY.  The strings "8/9", "0.057" and "0.42" do not
+# occur in the paper.  ETA_SCHWARZSCHILD below is COMPUTED from their
+# formula by bpt_orbit_energy(), not retyped, and the assert checks it
+# against the closed form 4/(3 sqrt 2).
+ISCO_SCHWARZSCHILD_RG = 6.0     # their eq. (2.21), a = 0      VERIFIED
 
-# --- Module 9's asserted thin-disc efficiency. --------------------------
-# module09.html:757, a SHIPPED page: "A geometrically thin accretion disc
-# radiates with eta_rad ~ 0.1."  Asserted there, derived here.  Read off
-# the file on 2026-09-20; the line is quoted in .ignore/m11-promises.md
-# row 8.  This is not a published value and carries no tag: it is what this
-# book already printed.
-M09_ASSERTED_ETA = 0.1
+# --- Module 9's numbers, READ FROM ITS OWN RUN. -------------------------
+# Not retyped off module09.html.  `python m09_numbers.py` prints:
+#   L_X (2-10 keV, Baganoff)     = 2.0e+33 erg/s
+#   Mdot_Bondi c^2               = 4.543e+41 erg/s
+#   implied radiative efficiency = 4e-09
+#   a thin disc would give ~0.1, a factor 2e+07 larger
+# and module09.html:672 gives the mass: "the GRAVITY Collaboration's,
+# from the orbits of individual stars: M = 4.30x10^6 M_sun to about
+# +/-0.25 per cent, that is 8.5502x10^39 g".
+M09_LX = 2.0e33                 # erg/s, from its run          VERIFIED
+M09_MDOT_C2 = 4.543e41          # erg/s, from its run          VERIFIED
+M09_ETA_RAD = M09_LX/M09_MDOT_C2    # = 4.402e-9, not retyped
+M09_PRINTED_FACTOR = 2.0e7      # what module09.html:757 says  VERIFIED
+M09_ASSERTED_ETA = 0.1          # module09.html:757, asserted  VERIFIED
+M09_BH_MASS_MSUN = 4.30e6       # module09.html:672, GRAVITY   VERIFIED
+M09_BH_MASS_G = 8.5502e39       # module09.html:672            VERIFIED
+
+# =========================================================================
+# TWO NUMBERS THIS FILE DERIVES RATHER THAN QUOTES.  Both were cited to a
+# paper at step 1 and step 2 found that neither paper prints them.
+# =========================================================================
+
+
+def bpt_orbit_energy(r_over_M, a_over_M=0.0, direct=True):
+    """E/mu for an equatorial circular orbit, Bardeen, Press & Teukolsky
+    (1972) eq. (2.12), in geometrised units with M = 1.
+
+        E/mu = (r^3/2 - 2 r^1/2 +/- a)
+               / (r^3/4 (r^3/2 - 3 r^1/2 +/- 2a)^1/2)
+
+    THEY PRINT NO EFFICIENCY.  This function evaluates the formula they
+    do print.  At a = 0, r = 6 the value is 4/(3 sqrt 2) = sqrt(8/9)
+    exactly, and the assert in _self_check() requires it.
+    """
+    r = float(r_over_M)
+    a = float(a_over_M) if direct else -float(a_over_M)
+    num = r**1.5 - 2.0*np.sqrt(r) + a
+    den = r**0.75*np.sqrt(r**1.5 - 3.0*np.sqrt(r) + 2.0*a)
+    return num/den
+
+
+def toomre_gas_coefficient():
+    """The pi in Q = c_T kappa_ep/(pi G Sigma), DERIVED and not cited.
+
+    STEP 1 CITED TOOMRE (1964) FOR THIS AND HE DOES NOT PRINT IT: his
+    p. 1217 says he ignores the gas and treats a disc "composed only of
+    stars", and sends the gaseous case to a later paper.  His own
+    coefficient, eq. (65), is 3.36 and is for stars.
+
+    The derivation, which costs nothing.  A rotating isothermal sheet has
+
+        omega^2 = c_T^2 k^2 - 2 pi G Sigma k + kappa_ep^2,
+
+    which is Module 5's Jeans dispersion relation with the rotation term
+    added.  The minimum over k is at k* = pi G Sigma/c_T^2, where
+
+        omega^2(k*) = kappa_ep^2 - (pi G Sigma)^2/c_T^2,
+
+    so marginal stability is exactly c_T kappa_ep/(pi G Sigma) = 1.  The
+    function below finds the coefficient numerically from that dispersion
+    relation, so it is the algebra and not a literal that supplies the pi.
+    """
+    # Work in units where c_T = Sigma = kappa_ep = G = 1 and solve for the
+    # coefficient C such that marginal stability is kappa_ep = C G Sigma/c_T.
+    k = np.linspace(1e-6, 20.0, 4000001)
+    # omega^2 = k^2 - 2 pi k + kappa^2; marginal when min over k is zero.
+    # min of (k^2 - 2 pi k) is at k = pi, value -pi^2, so kappa^2 = pi^2.
+    kappa_sq = -np.min(k*k - 2.0*np.pi*k)
+    return np.sqrt(kappa_sq)
+
+
+def bpt_orbit_energy_extreme_kerr(r_over_M, direct=True):
+    """E/mu for a = M, Bardeen, Press & Teukolsky (1972) eq. (2.14).
+
+        E/mu = (r +/- M^1/2 r^1/2 - M)/(r^3/4 (r^1/2 + 2 M^1/2)^1/2)
+
+    A SEPARATE FUNCTION IS NECESSARY AND THE PAPER SAYS WHY.  Their
+    general eq. (2.12) has r^3/2 - 3 M r^1/2 + 2 a M^1/2 under the root,
+    which at a = M and r = M is 1 - 3 + 2 = 0 exactly: evaluating the
+    general formula at the extreme-Kerr innermost stable orbit divides by
+    zero.  The first draft of this file did precisely that and got NaN.
+    Their own text warns of it -- "Appearances are deceptive!  ... The
+    confusion is due to the subtle nature of the Boyer-Lindquist
+    coordinates at r = M for a = M" -- and their eq. (2.14) is the
+    simplification to use.  At r = M it gives 1/sqrt(3).
+    """
+    r = float(r_over_M)
+    s = 1.0 if direct else -1.0
+    return (r + s*np.sqrt(r) - 1.0)/(r**0.75*np.sqrt(np.sqrt(r) + 2.0))
+
+
+ETA_SCHWARZSCHILD = 1.0 - bpt_orbit_energy(ISCO_SCHWARZSCHILD_RG, 0.0)
+# Their eq. (2.21) gives r_ms = M for a = M, direct orbits.
+ETA_KERR_EXTREME = 1.0 - bpt_orbit_energy_extreme_kerr(1.0)
+TOOMRE_GAS_COEFF = toomre_gas_coefficient()     # = pi, derived above
 
 # --- predictions, held as named constants so no magic number appears ----
 KEPLER_Q = 1.5          # q = -d ln Omega/d ln R for a point mass
@@ -697,6 +874,34 @@ def _self_check():
     eta = efficiency_newtonian(ISCO_SCHWARZSCHILD_RG)
     assert abs(eta - 1.0/12.0) < 1e-15, f'eta is {eta}, not 1/12'
 
+    # BPT's eq. (2.12) at a = 0, r = 6 must give 4/(3 sqrt 2) = sqrt(8/9)
+    # EXACTLY.  This is the assert that makes ETA_SCHWARZSCHILD a
+    # computation from their formula rather than a retyped literal.
+    assert abs(bpt_orbit_energy(6.0, 0.0) - 4.0/(3.0*np.sqrt(2.0))) < 1e-14
+    assert abs(bpt_orbit_energy(6.0, 0.0) - np.sqrt(8.0/9.0)) < 1e-14
+    # And their eq. (2.14) at r = M, a = M must give 1/sqrt(3).
+    assert abs(bpt_orbit_energy_extreme_kerr(1.0)
+               - 1.0/np.sqrt(3.0)) < 1e-14
+    # The general formula DIVIDES BY ZERO there, which is why a second
+    # function exists.  If this ever stops being nan, the note is stale.
+    assert not np.isfinite(bpt_orbit_energy(1.0, 1.0))
+    # Both derived efficiencies must land on Shakura & Sunyaev's own
+    # printed values to the one figure they printed them with.
+    assert abs(ETA_SCHWARZSCHILD - SS73_ETA_SCHWARZSCHILD) < 0.005
+    assert abs(ETA_KERR_EXTREME - SS73_ETA_KERR_MAX) < 0.03
+
+    # The gas coefficient must come out of the dispersion relation as pi.
+    assert abs(TOOMRE_GAS_COEFF - np.pi) < 1e-9, \
+        f'gas coefficient is {TOOMRE_GAS_COEFF}, not pi'
+    # It must NOT be Toomre's own 3.36, which is the STELLAR value.
+    assert abs(TOOMRE_GAS_COEFF - TOOMRE_STELLAR_COEFF) > 0.2
+
+    # Module 9's efficiency must be what its own run prints, and the
+    # factor its HTML prints must follow from it to one figure.
+    assert abs(M09_ETA_RAD - 4.402e-9) < 1e-11, f'{M09_ETA_RAD}'
+    assert abs(np.log10(M09_ASSERTED_ETA/M09_ETA_RAD)
+               - np.log10(M09_PRINTED_FACTOR)) < 0.06
+
     # The efficiency must also equal the luminosity route, which uses
     # disc_luminosity and gravitational_radius and shares no line of code.
     R_in = ISCO_SCHWARZSCHILD_RG*gravitational_radius(M_AGN)
@@ -767,11 +972,13 @@ def main():
     P('=' * 74)
     P('MODULE 11 NUMBERS: accretion discs')
     P('=' * 74)
-    P('STEP 1 OF SIX.  NOT ONE PUBLISHED CONSTANT IN THIS FILE HAS BEEN')
-    P('READ YET.  Every one carries the tag NOT YET VERIFIED and the paper')
-    P('step 2 must fetch.  No number below may be quoted in prose until')
-    P('step 2 replaces the tag.  The four checks have no verdicts yet:')
-    P('Gate D fixes them in advance, as Modules 7 to 12 did.')
+    P('STEPS 1 AND 2 OF SIX.  Every published constant is now marked')
+    P('VERIFIED with the page it was read from, EXCEPT the dwarf-nova')
+    P('parameters, which are STILL UNSOURCED -- see the end of this run.')
+    P('Five papers were fetched; one, Shakura & Sunyaev (1973), is an')
+    P('image-only scan and was rendered at 190 dpi and read as images.')
+    P('The four checks have no verdicts yet: Gate D fixes them in')
+    P('advance, as Modules 7 to 12 did.')
 
     # ---------------------------------------------------------------- B
     P('')
@@ -979,43 +1186,77 @@ def main():
     P('PART G.  CHECK 3.  The radiative efficiency, and Module 9\'s 0.1')
     P('-'*74)
     eta_newt = efficiency_newtonian(ISCO_SCHWARZSCHILD_RG)
-    P(f'  Newtonian thin disc at R_in = 6 R_g:')
-    P(f'    eta = R_g/(2 R_in) = 1/12 = {eta_newt:.6f}   DERIVED HERE')
-    P(f'  Relativistic Schwarzschild:')
-    P(f'    eta = 1 - sqrt(8/9)       = {ETA_SCHWARZSCHILD:.6f}'
-      f'   NOT YET VERIFIED')
-    P(f'  Soltan argument, Yu & Tremaine (2002):')
-    P(f'    eta (population mean)     = {YT02_EFFICIENCY:.6f}'
-      f'   NOT YET VERIFIED')
-    P(f'  module09.html:757, asserted in a SHIPPED page:')
-    P(f'    eta_rad ~ {M09_ASSERTED_ETA}')
+    P('  EIGHT NUMBERS IN THREE CLUSTERS: zero spin, maximal spin,')
+    P('  and the value the quasar accounting needs.')
+    P(f'    Newtonian thin disc at R_in = 6 R_g, DERIVED in PART F:')
+    P(f'      eta = R_g/(2 R_in) = 1/12        = {eta_newt:.6f}')
+    P(f'    Schwarzschild, COMPUTED from Bardeen, Press & Teukolsky')
+    P(f'    (1972) eq. (2.12) at a = 0 and their eq. (2.21) r_ms = 6M:')
+    P(f'      eta = 1 - E/mu = 1 - sqrt(8/9)   = '
+      f'{ETA_SCHWARZSCHILD:.6f}')
+    P(f'    Extreme Kerr, their eq. (2.14) at r_ms = M:')
+    P(f'      eta = 1 - 1/sqrt(3)              = {ETA_KERR_EXTREME:.6f}')
+    P(f'    Shakura & Sunyaev (1973) p. 339, printed by them:')
+    P(f'      Schwarzschild                    = '
+      f'{SS73_ETA_SCHWARZSCHILD:.6f}')
+    P(f'      Kerr, "can attain 40%"           = '
+      f'{SS73_ETA_KERR_MAX:.6f}')
+    P(f'    Yu & Tremaine (2002), the value that CLOSES the Soltan')
+    P(f'    accounting -- not a measurement with an error bar:')
+    P(f'      eps                              = {YT02_EFFICIENCY:.6f}')
+    P(f'      their luminous-QSO case, "possible for thin-disk')
+    P(f'      accretion onto a Kerr BH"        = '
+      f'{YT02_EFFICIENCY_KERR:.6f}')
+    P(f'    module09.html:757, asserted in a SHIPPED page:')
+    P(f'      eta_rad                          ~ {M09_ASSERTED_ETA:.6f}')
     P('')
-    P('  PUNCHLINE CHECK 3.')
-    P(f'    0.1 / (1/12)              = {M09_ASSERTED_ETA/eta_newt:.4f}')
-    P(f'    0.1 / (1 - sqrt(8/9))     = '
+    P('  TWO INDEPENDENT ROUTES AGREE, WHICH IS THE CHECK.')
+    P(f'    derived Schwarzschild / their 0.06 = '
+      f'{ETA_SCHWARZSCHILD/SS73_ETA_SCHWARZSCHILD:.4f}')
+    P(f'    derived Kerr / their 40 per cent   = '
+      f'{ETA_KERR_EXTREME/SS73_ETA_KERR_MAX:.4f}')
+    P('    A 1972 orbit formula evaluated here and a 1973 sentence about')
+    P('    the same two metrics agree to 5 per cent at both ends.')
+    P('')
+    P('  PUNCHLINE CHECK 3, AND THE VERDICT IS NOT FIXED AT STEP 2.')
+    P(f'    The NEWTONIAN thin disc overstates the Schwarzschild value:')
+    P(f'      (1/12)/(1 - sqrt(8/9))           = '
+      f'{eta_newt/ETA_SCHWARZSCHILD:.4f}')
+    P('    THIS BOOK IS NEWTONIAN, and that ratio is the price.  A')
+    P('    Newtonian calculation at a radius six gravitational radii')
+    P(f'    from a black hole gets the efficiency '
+      f'{100*(eta_newt/ETA_SCHWARZSCHILD - 1.0):.1f} per cent too')
+    P('    high, because')
+    P('    it has no gravitational redshift and no relativistic binding')
+    P('    energy.  Naming the number is the only honest way to use it.')
+    P('')
+    P(f'    Module 9\'s round 0.1 against the two zero-spin values:')
+    P(f'      0.1/(1/12)                       = '
+      f'{M09_ASSERTED_ETA/eta_newt:.4f}')
+    P(f'      0.1/(1 - sqrt(8/9))              = '
       f'{M09_ASSERTED_ETA/ETA_SCHWARZSCHILD:.4f}')
-    P('    The round 0.1 lies ABOVE both zero-spin values.  It is not a')
-    P('    thin-disc number at a Schwarzschild ISCO; it is a number that')
-    P('    requires the hole to spin, or the population to contain')
-    P('    spinning holes.  A NON-ROTATING hole gives 0.057 and a')
-    P('    maximally rotating one gives about 0.4.')
+    P('    0.1 is not a Schwarzschild thin-disc number.  Yu & Tremaine')
+    P('    say so themselves: their 0.2 is "possible for thin-disk')
+    P('    accretion onto a Kerr BH".  The population that closes the')
+    P('    Soltan accounting at 0.1 contains spinning holes.')
     P('')
-    P('  WHAT THIS DOES TO MODULE 9, WHICH IS GATE D QUESTION 1.')
-    P('    module09.html:757 divides 0.1 by its measured eta and prints')
-    P('    a factor of 2e7 to one significant figure.  BOTH DERIVED')
-    P('    VALUES ARE SMALLER THAN 0.1, so both make that factor')
-    P('    SMALLER.  The direction matters and the ratios are:')
-    P(f'      with 1/12         factor x {eta_newt/M09_ASSERTED_ETA:.4f}'
-      f'  (down {1.0 - eta_newt/M09_ASSERTED_ETA:.1%})')
-    P(f'      with 1-sqrt(8/9)  factor x '
-      f'{ETA_SCHWARZSCHILD/M09_ASSERTED_ETA:.4f}'
-      f'  (down {1.0 - ETA_SCHWARZSCHILD/M09_ASSERTED_ETA:.1%})')
-    P('    Neither moves it off 10^7, so no shipped sentence becomes')
-    P('    false -- but the module may not assert that without the')
-    P('    number.  STEP 2 MUST RUN m09_numbers.py and read its printed')
-    P('    eta, because the exact factor is computed there and this file')
-    P('    may not retype it.  A number typed into a record passes no')
-    P('    check.')
+    P('  GATE D QUESTION 1, ANSWERED WITH MODULE 9\'S OWN RUN.')
+    P(f'    m09_numbers.py prints L_X = {M09_LX:.1e} erg/s and')
+    P(f'    Mdot c^2 = {M09_MDOT_C2:.3e} erg/s, so its eta is')
+    P(f'    {M09_ETA_RAD:.4e}, which it prints as 4e-09.')
+    P(f'    {"efficiency":<24} {"factor":>12} {"1 sig. fig.":>14}')
+    for label, val in (('0.1, as shipped', M09_ASSERTED_ETA),
+                       ('1/12, Newtonian', eta_newt),
+                       ('1 - sqrt(8/9)', ETA_SCHWARZSCHILD),
+                       ('0.06, S&S p. 339', SS73_ETA_SCHWARZSCHILD)):
+        f = val/M09_ETA_RAD
+        P(f'    {label:<24} {f:>12.4e} {f"{f:.0e}":>14}')
+    P('    THE NEWTONIAN VALUE LEAVES module09.html:757 TRUE at one')
+    P('    significant figure; the relativistic one would make it read')
+    P('    1e7 and not 2e7.  No number in Module 9 depends on the factor')
+    P('    -- it is the size of a refutation that stays a refutation --')
+    P('    so the edit, if Gate D wants it, is one HTML cell and')
+    P('    170c4da is the precedent.')
 
     # ---------------------------------------------------------------- H
     P('')
@@ -1173,29 +1414,55 @@ def main():
     P('')
     P('PART K.  CHECK 4.  alpha is not a constant of nature')
     P('-'*74)
-    P('  King, Pringle & Livio titled their paper with this question.')
-    P(f'    dwarf novae, outburst     = {KPL07_ALPHA_LO}-{KPL07_ALPHA_HI}'
-      f'   NOT YET VERIFIED')
-    P(f'    dwarf novae, quiescent    = {KPL07_ALPHA_QUIESCENT}'
-      f'   NOT YET VERIFIED')
-    P(f'    protoplanetary, bound     < {FLAHERTY18_ALPHA_MAX}'
-      f'   NOT YET VERIFIED')
+    P('  King, Pringle & Livio titled their paper with this question, and')
+    P('  EVERY NUMBER BELOW IS FROM THAT ONE REVIEW.  A single-source')
+    P('  comparison cannot be a disagreement between two papers.')
     P('')
-    P('  PUNCHLINE CHECK 4, AND THE VERDICT IS NOT FIXED AT STEP 1.')
-    lo = np.log10(KPL07_ALPHA_LO/FLAHERTY18_ALPHA_MAX)
-    hi = np.log10(KPL07_ALPHA_HI/FLAHERTY18_ALPHA_MAX)
-    P(f'    The dwarf-nova range exceeds the protoplanetary BOUND by')
-    P(f'    {lo:.2f} to {hi:.2f} decades.')
-    P(f'    Within dwarf novae alone, outburst over quiescent = '
-      f'{KPL07_ALPHA_LO/KPL07_ALPHA_QUIESCENT:.0f} to '
-      f'{KPL07_ALPHA_HI/KPL07_ALPHA_QUIESCENT:.0f}.')
-    P('    A BOUND HAS A DIRECTION, and this one points down: the')
-    P('    protoplanetary number is an upper limit, so the true gap is at')
-    P('    least this large and may be larger.  What is refuted is not')
-    P('    the prescription -- nu = alpha c_T H remains a definition of')
-    P('    alpha -- but the reading of alpha as a constant of nature.')
-    P('    Shakura & Sunyaev never claimed it was one; alpha <= 1 is the')
-    P('    only bound their argument gives.')
+    P(f'    {"system":<34} {"alpha":>14} {"kind":>14}')
+    P(f'    {"thin, fully-ionised discs":<34} '
+      f'{f"{KPL07_ALPHA_LO}-{KPL07_ALPHA_HI}":>14} {"a range":>14}')
+    P(f'    {"soft X-ray transients (Dubus+01)":<34} '
+      f'{"0.2-0.4":>14} {"a range":>14}')
+    P(f'    {"T Tauri, 10-100 au (Hartmann+98)":<34} '
+      f'{KPL07_ALPHA_PROTOSTELLAR:>14} {"a value":>14}')
+    P(f'    {"AGN variability (Starling+04)":<34} '
+      f'{f"{KPL07_AGN_ALPHA_LO}-{KPL07_AGN_ALPHA_HI}":>14} '
+      f'{"LOWER LIMITS":>14}')
+    P(f'    {"MHD simulations":<34} '
+      f'{f"{KPL07_SIM_LO}-{KPL07_SIM_HI}":>14} {"a range":>14}')
+    P('')
+    P('  PUNCHLINE CHECK 4, AND THE VERDICT IS NOT FIXED AT STEP 2.')
+    P('  TWO GAPS, AND THE SECOND IS THE ONE THE PAPER IS ABOUT.')
+    lo = np.log10(KPL07_ALPHA_LO/KPL07_ALPHA_PROTOSTELLAR)
+    hi = np.log10(KPL07_ALPHA_HI/KPL07_ALPHA_PROTOSTELLAR)
+    P(f'    (a) ACROSS DISC CLASSES.  Fully-ionised over protostellar =')
+    P(f'        {KPL07_ALPHA_LO/KPL07_ALPHA_PROTOSTELLAR:.0f} to '
+      f'{KPL07_ALPHA_HI/KPL07_ALPHA_PROTOSTELLAR:.0f}, that is '
+      f'{lo:.2f} to {hi:.2f} decades.')
+    P('        The two classes differ in ionisation, so this gap has a')
+    P('        candidate physical cause and is not a contradiction.')
+    slo = np.log10(KPL07_ALPHA_LO/KPL07_SIM_HI)
+    shi = np.log10(KPL07_ALPHA_HI/KPL07_SIM_LO)
+    P(f'    (b) OBSERVATION AGAINST SIMULATION, on the SAME class of')
+    P(f'        disc.  {KPL07_ALPHA_LO}-{KPL07_ALPHA_HI} observed against '
+      f'{KPL07_SIM_LO}-{KPL07_SIM_HI} simulated =')
+    P(f'        {slo:.2f} to {shi:.2f} decades, and the authors call it')
+    P('        "an order of magnitude smaller" in their own abstract.')
+    P('        THE SIMULATIONS ARE OF THE MAGNETOROTATIONAL INSTABILITY')
+    P('        OF MODULE 12 SS9.  So the mechanism this book derives does')
+    P('        not, in the simulations that solve it, produce the alpha')
+    P('        the observations need.')
+    P('')
+    P('    A BOUND HAS A DIRECTION.  Starling et al.\'s AGN row is a set')
+    P('    of LOWER limits, so it cannot be read as an alpha near 0.02;')
+    P('    it says only that alpha is at least that.  It is recorded and')
+    P('    is used in no check.')
+    P('    WHAT IS REFUTED is not the prescription -- nu = alpha c_T H')
+    P('    remains a definition of alpha -- but the reading of alpha as a')
+    P('    constant of nature.  Shakura & Sunyaev never claimed it was')
+    P(f'    one: their bound is alpha <~ {SS73_ALPHA_MAX:.0f}, and their')
+    P('    own footnote 3 says the disc\'s observational appearance "do')
+    P('    not strongly depend on the chosen value of alpha".')
 
     # ---------------------------------------------------------------- L
     P('')
@@ -1208,21 +1475,36 @@ def main():
 
     P('')
     P('=' * 74)
-    P('END OF STEP 1.  WHAT STEP 2 MUST DO, in one list:')
-    P('  1. Shakura & Sunyaev (1973) -- the prescription and its bound.')
-    P('  2. King, Pringle & Livio (2007) -- the alpha range and what')
-    P('     observable it came from.  CHECK 2 and CHECK 4 both need it.')
-    P('  3. Flaherty et al. (2018) -- the protoplanetary bound, and')
-    P('     WHICH WAY IT POINTS.')
-    P('  4. Yu & Tremaine (2002) -- value or lower bound?  CHECK 3\'s')
-    P('     wording depends on the answer.')
-    P('  5. Toomre (1964) -- the gas coefficient, pi or 3.36.')
-    P('  6. A general-relativity page for 1 - sqrt(8/9) and for 6 R_g.')
-    P('  7. The dwarf-nova parameters, from a NAMED SYSTEM if CHECK 2 is')
-    P('     to be a measurement rather than a class average.')
-    P('  8. RUN m09_numbers.py and read its printed eta_rad.  Do not')
-    P('     retype 4e-9 or 2e7 from module09.html.')
-    P('  9. Read Module 9\'s black-hole mass off module09.html.')
+    P('END OF STEP 2.  FIVE PAPERS FETCHED AND READ; THREE FINDINGS')
+    P('CHANGED WHAT THIS MODULE MAY PRINT.')
+    P('  1. Shakura & Sunyaev\'s alpha is v_t/v_s + H^2/(4 pi rho v_s^2),')
+    P('     a SUM of two terms, and THEIR H IS THE MAGNETIC FIELD.  Step')
+    P('     1 described it as a stress proportional to the pressure,')
+    P('     which is the later restatement and not their equation.')
+    P('  2. TOOMRE (1964) DOES NOT CONTAIN THE GAS CRITERION.  His')
+    P('     p. 1217 says he ignores the gas and treats a disc "composed')
+    P('     only of stars"; his 3.36 is eq. (65) and is for stars.  The')
+    P('     pi is now DERIVED from the dispersion relation instead.')
+    P('  3. Bardeen, Press & Teukolsky print NO efficiency.  The')
+    P('     Schwarzschild value is computed from their eq. (2.12), and')
+    P('     their general formula divides by zero at extreme Kerr, which')
+    P('     is why eq. (2.14) has its own function.')
+    P('')
+    P('AND ONE CONSTANT STEP 1 INVENTED: KPL07_ALPHA_QUIESCENT = 0.01,')
+    P('called a quiescent dwarf-nova value.  The 0.01 in that paper is')
+    P('the PROTOSTELLAR value of Hartmann et al.  Removed.')
+    P('Flaherty et al. (2018) was not fetched and is not needed: King,')
+    P('Pringle & Livio supply the protostellar number themselves, so')
+    P('CHECK 4 is a SINGLE-SOURCE comparison.')
+    P('')
+    P('WHAT IS STILL UNSOURCED, AND GATE D MUST RULE ON IT:')
+    P('  The dwarf-nova parameters -- 0.6 M_sun, 1e10 cm, 3e4 K,')
+    P('  100 g/cm^2, a 5-day outburst.  NO NAMED SYSTEM WAS FETCHED, so')
+    P('  CHECK 2 is a class CONFIGURATION in the sense')
+    P('  module07.html:453 uses the phrase, and its alpha may not be')
+    P('  called a measurement.  Gate D sources a named dwarf nova or')
+    P('  says this in print.')
+    P('  The full record is .ignore/m11-source-verification.md.')
     P('=' * 74)
 
 
