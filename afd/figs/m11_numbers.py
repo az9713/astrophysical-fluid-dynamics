@@ -106,6 +106,10 @@ Msun = GMsun/G          # g
 SPITZER_C = 3.0**1.5/(4.0*np.sqrt(np.pi))   # = 0.7329, Sarazin eq. 5.32
 MU_IONISED_H = 0.6      # mean molecular weight, fully ionised H + He
 MU_MOLECULAR = 2.34     # mean molecular weight, H2 + He, protoplanetary
+# In a fully ionised hydrogen plasma the electrons and the ions are
+# equal in number, so the ION density is half the total particle
+# density.  lam_coulomb's n is the density of SCATTERERS.
+ION_FRACTION_H = 0.5    # n_i/n_total, fully ionised hydrogen
 SIGMA_NEUTRAL = 1.0e-15    # cm^2, Module 1's order-of-magnitude
 # neutral cross-section, copied from m12_numbers.py's SIGMA_H.
 MU_H_ION = mp/mu_u      # = 1.00728, a proton measured against m_u.
@@ -209,6 +213,13 @@ KPL07_SIM_MAX = 0.02            # their section 5, a BOUND     VERIFIED
 # through the review and names the route in print.
 # THIS MODULE'S CENSUS SITS AT 10 au, INSIDE THAT RANGE.
 KPL07_ALPHA_PROTOSTELLAR = 0.01     # Hartmann et al. (1998)   VERIFIED
+# Their section 2.3.3 gives a SECOND protostellar number, from FU
+# Orionis outbursts, and the first draft of the alpha table omitted it.
+# Module 11's editor pass found the omission and fetched the paper to
+# confirm it.  Including it widens CHECK 4(a), because it is an order
+# of magnitude below Hartmann's.
+KPL07_ALPHA_FUORI_LO = 0.001        # their section 2.3.3      VERIFIED
+KPL07_ALPHA_FUORI_HI = 0.003        # their section 2.3.3      VERIFIED
 KPL07_PROTO_R_LO_AU = 10.0          # their stated range       VERIFIED
 KPL07_PROTO_R_HI_AU = 100.0         # their stated range       VERIFIED
 # STEP 1 INVENTED A CONSTANT.  It carried KPL07_ALPHA_QUIESCENT = 0.01
@@ -1189,7 +1200,22 @@ def main():
       f'{nu_mol_mixture/nu_mol:.4f}')
     P(f'      doubling ln Lambda from {lnL:.2f} to {2*lnL:.2f}      x '
       f'{0.5:.4f}')
-    P('    Together they are worth 0.35 of a decade against 12.01.')
+    nu_ion = molecular_viscosity(dn['n0']*ION_FRACTION_H, dn['T'], lnL)
+    gap_ion = viscous_time(dn['R'], nu_ion)/T_OUTBURST_OBSERVED
+    P(f'      using the total particle density rather than')
+    P(f'      the ION density, n_i = n/2                  x '
+      f'{nu_mol/nu_ion:.4f}')
+    P(f'    Together they are worth '
+      f'{np.log10(nu_mol_mixture/nu_mol) + np.log10(2.0) + np.log10(2.0):.2f}'
+      f' of a decade against {np.log10(gap):.2f}.')
+    P(f'    THE THIRD ONE IS THE ONE THAT MOVES THE HEADLINE, and it')
+    P(f'    moves it DOWNWARD: taking n_i = n/2 gives '
+      f'{np.log10(gap_ion):.2f} decades')
+    P(f'    in place of {np.log10(gap):.2f}.  The module prints '
+      f'{np.log10(gap):.2f} because that is what')
+    P('    Module 1 SS6\'s formula gives on the census row as tabled,')
+    P('    and prints this line because the reader is entitled to the')
+    P('    other number too.  Neither reading changes the verdict.')
     P('    SOMETHING OTHER THAN COLLISIONS MOVES THE ANGULAR MOMENTUM.')
     alpha_needed = nu_mol/(dn['cT']*dn['H'])
     P(f'    alpha_equivalent of nu_mol = {alpha_needed:.4e}')
@@ -1574,6 +1600,9 @@ def main():
       f'{"0.2-0.4":>14} {"a range":>14}')
     P(f'    {"T Tauri, 10-100 au (Hartmann+98)":<34} '
       f'{KPL07_ALPHA_PROTOSTELLAR:>14} {"a value":>14}')
+    P(f'    {"FU Orionis outbursts":<34} '
+      f'{f"{KPL07_ALPHA_FUORI_LO}-{KPL07_ALPHA_FUORI_HI}":>14} '
+      f'{"a range":>14}')
     P(f'    {"AGN variability (Starling+04)":<34} '
       f'{f"{KPL07_AGN_ALPHA_LO}-{KPL07_AGN_ALPHA_HI}":>14} '
       f'{"LOWER LIMITS":>14}')
@@ -1586,10 +1615,21 @@ def main():
     P('  TWO GAPS, AND THE SECOND IS THE ONE THE PAPER IS ABOUT.')
     lo = np.log10(KPL07_ALPHA_LO/KPL07_ALPHA_PROTOSTELLAR)
     hi = np.log10(KPL07_ALPHA_HI/KPL07_ALPHA_PROTOSTELLAR)
-    P(f'    (a) ACROSS DISC CLASSES.  Fully-ionised over protostellar =')
-    P(f'        {KPL07_ALPHA_LO/KPL07_ALPHA_PROTOSTELLAR:.0f} to '
+    P(f'    (a) ACROSS DISC CLASSES.  Fully-ionised over Hartmann\'s')
+    P(f'        T Tauri value = '
+      f'{KPL07_ALPHA_LO/KPL07_ALPHA_PROTOSTELLAR:.0f} to '
       f'{KPL07_ALPHA_HI/KPL07_ALPHA_PROTOSTELLAR:.0f}, that is '
       f'{lo:.2f} to {hi:.2f} decades.')
+    flo = np.log10(KPL07_ALPHA_LO/KPL07_ALPHA_FUORI_HI)
+    fhi = np.log10(KPL07_ALPHA_HI/KPL07_ALPHA_FUORI_LO)
+    P(f'        Against their FU Orionis range the same comparison is')
+    P(f'        {KPL07_ALPHA_LO/KPL07_ALPHA_FUORI_HI:.0f} to '
+      f'{KPL07_ALPHA_HI/KPL07_ALPHA_FUORI_LO:.0f}, that is '
+      f'{flo:.2f} to {fhi:.2f} decades.')
+    P('        SO THE PROTOSTELLAR SIDE IS ITSELF A RANGE, and the')
+    P('        module quotes the narrower comparison as the headline')
+    P('        and this one beside it, rather than picking whichever')
+    P('        is larger.')
     P('        The two classes differ in ionisation, so this gap has a')
     P('        candidate physical cause and is not a contradiction.')
     P(f'    (b) OBSERVATION AGAINST SIMULATION, on the SAME class of')
