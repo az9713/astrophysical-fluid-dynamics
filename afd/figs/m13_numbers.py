@@ -585,15 +585,22 @@ def main():
         'module09.html:913 Bondi/Eddington ratio does not reproduce'
 
     tdouble = M9_K2_M/M9_K2_MDOT_BONDI
-    P('    e-folding at the Bondi rate = %.4e yr  (in print: %.2e yr)'
+    P('    M/Mdot at the Bondi rate = %.4e yr  (in print: %.2e yr)'
       % (tdouble/yr, M9_K2_DOUBLING/yr))
-    P('    ratio                       = %.4f' % (tdouble/M9_K2_DOUBLING))
-    P('    NOTE: M/Mdot is an e-folding, not a DOUBLING.  Doubling is')
-    P('    ln 2 = %.5f of it, i.e. %.4e yr.  module09.html:913 says'
-      % (np.log(2.0), np.log(2.0)*tdouble/yr))
-    P('    "double its mass in 1.23e4 yr" and prints the e-folding value.')
-    P('    *** STEP 1 FINDING, TO BE RULED AT GATE D: either the word')
-    P('    *** or the number at module09.html:913 is wrong. ***')
+    P('    ratio                    = %.4f' % (tdouble/M9_K2_DOUBLING))
+    # m09_numbers.py:1545 prints M_bh/md_bh as "time to double its mass".
+    # That is exact AT CONSTANT Mdot, which is the reading the page takes.
+    # It is NOT a defect.  What the page leaves unsaid is the growth law:
+    #   constant Mdot       -> doubling = M/Mdot
+    #   Mdot ~ M (Eddington) -> doubling = ln2 M/Mdot
+    #   Mdot ~ M^2 (Bondi)   -> doubling = M/(2 Mdot)
+    P('    That is the doubling time AT CONSTANT Mdot, as m09_numbers.py:1545')
+    P('    computes it.  Bondi\'s Mdot grows as M^2, which halves it to')
+    P('    %.4e yr; an Eddington-limited Mdot ~ M gives ln 2 of it,'
+      % (0.5*tdouble/yr))
+    P('    %.4e yr.  The page states no growth law.  Not a defect; a'
+      % (np.log(2.0)*tdouble/yr))
+    P('    sentence Module 13 may add when it discusses growth.')
 
     P('')
     P('  MODULE 9 PROBLEM K3, module09.html:921, Sgr A*:')
@@ -895,8 +902,8 @@ def main():
     P('    4. the solar model Module 3 tabulated, and whether it prints')
     P('       1 - beta itself.')
     P('  And three things the run has FOUND that are not about papers:')
-    P('    (a) module09.html:913 calls M/Mdot a DOUBLING time; it is an')
-    P('        e-folding.  ln 2 = 0.693 of it.')
+    P('    (a) module09.html:913\'s doubling time is M/Mdot, exact at')
+    P('        constant Mdot; the page states no growth law.  NOT a defect.')
     P('    (b) module09.html:944\'s m_p is a COMPOSITION -- pure ionised')
     P('        hydrogen -- and no shipped page says so.  CHECK 1.')
     P('    (c) the book carries three values of eta_rad and Mdot_Edd')
