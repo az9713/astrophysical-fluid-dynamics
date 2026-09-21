@@ -38,7 +38,7 @@ The four debts that drive the design:
   module04.html:429   "That criterion is NOT EVALUATED FOR THE SUN in this
                       module ... the size of the failure is a subject of
                       Module 13."  The criterion is omega chi/c^2 << 1.
-                      PART E evaluates it.  This is the book's one
+                      PART D evaluates it.  This is the book's one
                       explicitly deferred COMPUTATION, and it is cheap.
 
 THE FOUR CHECKS, WITH THE VERDICTS NOT FIXED AT STEP 1 -- Gate D fixes them.
@@ -225,9 +225,13 @@ EDDINGTON_1926_SUN_K_BOUND = 13200.0    # cm^2/g, p. 115
 #     VERIFIED AT STEP 2, and by a route that beats (a)-(c): a MODEL
 #     ATMOSPHERE, which tabulates the Rosseland mean at every depth WITH
 #     its T and P.  Castelli's ATLAS9 solar model, Teff = 5777 K,
-#     log g = 4.4377, Asplund et al. (2005) abundances, stored verbatim as
-#     data/castelli_atlas9_sun.dat (the grid is Castelli & Kurucz 2003,
-#     IAU Symp. 210, poster A20).  Columns RHOX, T, P, XNE, ABROSS.
+#     log g = 4.4377, "NEW ODF ASPLUND ABUNDANCES" per the file's own
+#     title card, fetched 2026-09-21 from
+#     https://wwwuser.oats.inaf.it/castelli/sun/ap00t5777g44377k1asp.dat
+#     and stored verbatim as data/castelli_atlas9_sun.dat.  Castelli &
+#     Kurucz (2003), IAU Symp. 210, poster A20, describes the ATLAS9/ODF
+#     method only; it does not contain this file.  Columns RHOX, T, P,
+#     XNE, ABROSS.
 #     atlas9_photosphere() integrates tau_R = int ABROSS d(RHOX) and reads
 #     kappa_R off at tau_R = 2/3.  It is a MODEL, not a measurement, and
 #     its opacities are ATLAS9's own ODFs, not OPAL.  Ferguson et al.
