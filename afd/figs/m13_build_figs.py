@@ -3,8 +3,9 @@ functions and constants so that a figure and the prose cannot diverge.
 
     m13_fig_grey.svg       T(tau_R): ATLAS9 against the grey atmosphere,
                            with the residual panel that IS CHECK 4
-    m13_fig_opacity.svg    ATLAS9's kappa_R(tau_R) against the inferred
-                           opacity and fully ionised electron scattering:
+    m13_fig_opacity.svg    ATLAS9's kappa_R(tau_R) and its column mean
+                           against the inferred column mean and fully
+                           ionised electron scattering:
                            CHECK 2, the anchor
     m13_fig_criterion.svg  omega chi/c_s^2 at three levels: CHECK 3
     m13_fig_eddratio.svg   L/L_Edd on one log axis, section 10
@@ -200,16 +201,17 @@ def build_grey():
 
 
 # =========================================================================
-# Fig. 2 (renders second, section 6).  CHECK 2, THE ANCHOR.  kappa_R must
-# be seen to DOUBLE across the column the one-scale-height inference
-# averages.
+# Fig. 2 (renders second, section 6).  CHECK 2, THE ANCHOR.  Step 5: the
+# inference (6.1) is a COLUMN MEAN, so the figure draws ATLAS9's own column
+# mean tau_R/m beside the local kappa_R, and shades the column 0.01 to 2/3
+# that the mean is taken over.
 # =========================================================================
 
 def build_opacity():
     W, H = 720, 420
     X0, X1, Y0, Y1 = 86.0, 640.0, 44.0, 344.0
     LO, HI = -2.0, np.log10(3.0)
-    KLO, KHI = -1.6, 0.9
+    KLO, KHI = -1.7, 0.9
 
     def px(v):
         return X0 + (v - LO)/(HI - LO)*(X1 - X0)
@@ -217,7 +219,7 @@ def build_opacity():
     def py(v):
         return Y1 - (v - KLO)/(KHI - KLO)*(Y1 - Y0)
 
-    tau_p, _, _, _, kR = M.atlas9_profile()[:5]
+    tau_p, _, _, _, kR, _, rhox_p = M.atlas9_profile()
     lt = np.linspace(LO, HI, 300)
     lk = np.interp(lt*np.log(10.0), np.log(tau_p), np.log10(kR))
     k_inf = M.opacity_from_optical_depth(M.M6_PHOT_TAU, M.M6_PHOT_RHO,
@@ -231,13 +233,14 @@ def build_opacity():
          'role="img" aria-label="The Rosseland mean opacity of the ATLAS9 '
          'solar model against Rosseland optical depth, both axes '
          'logarithmic. The curve rises by about two decades from optical '
-         'depth 0.01 to 3. Two horizontal dashed lines mark the opacity '
-         'inferred from one scale height, 0.152, and the fully ionised '
-         'electron-scattering opacity, 0.350. A shaded band between '
-         'optical depth 0.543 and 1 shows the model opacity doubling '
-         'across the layer the inference averages." >' % (W, H)]
+         'depth 0.01 to 3. A second curve, the model\'s mean opacity over '
+         'the column above each depth, lies below it. Two horizontal '
+         'dashed lines mark the column-mean opacity inferred from Module '
+         '6\'s pressure, 0.152, and the fully ionised electron-scattering '
+         'opacity, 0.350. A shaded band from optical depth 0.01 to 2/3 '
+         'marks the column the inference averages." >' % (W, H)]
     frame(s, X0, Y0, X1, Y1)
-    xa, xb = px(np.log10(taub)), px(0.0)
+    xa, xb = px(LO), px(np.log10(2.0/3.0))
     s.append(f'<rect x="{xa:.1f}" y="{Y0:.0f}" width="{xb-xa:.1f}" '
              f'height="{Y1-Y0:.0f}" fill="{VIO}" opacity="0.13"/>')
     xticks_log(s, LO, HI, px, Y1, tau_labels)
@@ -254,23 +257,38 @@ def build_opacity():
                  f'stroke-dasharray="6 4"/>')
     s.append(f'<path d="{path(px(lt), py(lk))}" fill="none" '
              f'stroke="{ACC}" stroke-width="2.4"/>')
+    # Step 5: ATLAS9's own column mean tau_R/m, the like-for-like target
+    # of (6.1).  Drawn dotted, with its value at tau_R = 2/3 as a hollow
+    # marker.
+    lcm = np.interp(lt*np.log(10.0), np.log(tau_p),
+                    np.log10(tau_p/rhox_p))
+    cm23 = M.atlas9_column(2.0/3.0)[1]
+    s.append(f'<path d="{path(px(lt), py(lcm))}" fill="none" '
+             f'stroke="{ACC}" stroke-width="2" stroke-dasharray="2 3"/>')
+    s.append(f'<circle cx="{px(np.log10(2.0/3.0)):.1f}" '
+             f'cy="{py(np.log10(cm23)):.1f}" r="4" fill="{BG}" '
+             f'stroke="{ACC}" stroke-width="1.6"/>')
     for tv, kv in ((taub, kb), (2.0/3.0, k23), (1.0, k1)):
         s.append(f'<circle cx="{px(np.log10(tv)):.1f}" '
                  f'cy="{py(np.log10(kv)):.1f}" r="4" fill="{ACC}"/>')
 
-    text(s, px(-1.95), py(np.log10(k_inf)) + 16,
-         f'inferred from one scale height, {k_inf:.5f}', 10.5, ACC2)
+    text(s, px(-1.95), py(np.log10(k_inf)) - 7,
+         f'inferred column mean (6.1): {k_inf:.5f}', 10.5, ACC2)
     text(s, px(-1.95), py(np.log10(k_es)) - 7,
          f'fully ionised electron scattering, X = {M.X_H:.4f}: '
          f'{k_es:.5f}', 10.5, RED)
     text(s, px(-1.9), py(0.3), 'ATLAS9 ' + KAP_R + '(' + TAU_R + ')',
          11.5, ACC)
-    text(s, xa + 6, py(np.log10(kb)) + 20, f'{kb:.4f} at T = 5772 K',
-         10, ACC)
-    text(s, xb + 7, py(np.log10(k1)) + 4, f'{k1:.4f} at ' + TAU_R + ' = 1',
-         10, ACC)
-    text(s, (xa + xb)/2, Y0 + 14, 'the layer', 10, VIO, "middle")
-    text(s, (xa + xb)/2, Y0 + 27, f'&#215;{k1/kb:.2f}', 10, VIO, "middle")
+    text(s, px(np.log10(taub)) - 8, py(np.log10(kb)) - 9,
+         f'{kb:.4f} at T = 5772 K', 10, ACC, "end")
+    text(s, px(0.0) + 7, py(np.log10(k1)) + 4,
+         f'{k1:.4f} at ' + TAU_R + ' = 1', 10, ACC)
+    text(s, (xa + xb)/2, Y0 + 14, 'the averaged column', 10, VIO,
+         "middle")
+    lab_t = -0.8
+    text(s, px(lab_t) + 4,
+         py(np.interp(lab_t, lt, lcm)) + 18,
+         'ATLAS9 column mean ' + TAU_R + '/m', 10.5, ACC)
     text(s, X0, Y0 - 12, KAP_R + ' (cm' + SUP.format('2')
          + ' g' + SUP.format('&#8722;1') + ')', 11.5, FG, "middle")
     text(s, (X0 + X1)/2, Y1 + 40, 'Rosseland optical depth ' + TAU_R,
@@ -304,7 +322,7 @@ def build_criterion():
     for Tl, rl, kl in ((Tb, rb, kb), (Ta, ra, ka)):
         chi = M.radiative_diffusivity(kl, rl, Tl, M.M6_PHOT_CP)
         vals.append(M.adiabaticity_parameter(omega, chi, M.M4_SOUND_SPEED))
-    rows = [('inferred opacity, 0.15231', 'SUPERSEDED by CHECK 2', p0,
+    rows = [('inferred opacity, 0.15231', 'column mean, not local', p0,
              True),
             ('ATLAS9, T = 5772 K', KAP_R + ' = %.4f' % kb, vals[0], False),
             ('ATLAS9, ' + TAU_R + ' = 2/3', KAP_R + ' = %.4f' % ka, vals[1],
@@ -315,7 +333,8 @@ def build_criterion():
          'adiabaticity parameter at the solar frequency of maximum power. '
          'A shaded strip from 0 to 0.1 marks much less than one, and a '
          'vertical line marks 1. Three rows: a hollow marker at 0.713 '
-         'labelled superseded, from the refuted inferred opacity, and '
+         'labelled superseded, from the column-mean opacity used as a '
+         'local one, and '
          'two filled markers at 0.447 and 0.345 from the ATLAS9 model. '
          'None lies in the shaded strip." >' % (W, H)]
     frame(s, X0, Y0, X1, Y1)
@@ -461,7 +480,8 @@ def build_regimes():
          'gas pressure; the region below it, at lower density for the '
          'temperature, is shaded and labelled radiation dominated. The '
          'Sun\'s centre sits more than three decades above the line and '
-         'the photosphere about five decades above it." >' % (W, H)]
+         'the photosphere between four and five decades above it." >'
+         % (W, H)]
     frame(s, X0, Y0, X1, Y1)
     s.append('<path d="M ' + ' L '.join(f'{a:.1f},{b:.1f}' for a, b in poly)
              + f' Z" fill="{VIO}" opacity="0.16"/>')
@@ -479,7 +499,7 @@ def build_regimes():
     ratio_c = rc/M.prad_equals_pgas_density(Tc, M.M3_MU_C)
     for (T, r, name, note) in (
             (Tc, rc, "the Sun's centre (tabulated)",
-             f'{ratio_c:.1f} times the line\'s density'),
+             f'{ratio_c:.1f} times the crossover at its own &#956;'),
             (Ta, ra, 'the photosphere, ' + TAU_R + ' = 2/3',
              'P' + SUB.format('rad') + '/P = %.2f&#215;10'
              % (M.radiation_pressure(Ta)/M.atlas9_photosphere(2.0/3.0)[1]

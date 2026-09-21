@@ -189,8 +189,16 @@ def main():
         grab(txt, 'K3 adiabaticity parameter at the cutoff'))
     chk('K3 periods', 2.0*math.pi/par,
         grab(txt, 'K3 diffusion time over period at the cutoff'))
-    chk('K3 ratio to nu_max', 4497.0/3090.0,
-        grab(txt, 'K3 against the same level at nu_max, ratio'))
+    # Step 5 (editor B6): two different ratios, and the solution prints
+    # both.  4497/3090 at fixed chi is the run's 1.4553 at PART D; the
+    # K3 parameter over section 7's is 1.4554, because K3's rounded
+    # inputs give a chi above section 7's 1.1587e13.  Step 4 checked
+    # 4497/3090 against the 1.4554, and the 2e-4 tolerance passed it.
+    chk('K3 frequency ratio, to the printed digit',
+        round(4497.0/3090.0, 4), grab(txt, 'ratio to nu_max:'), rtol=1e-12)
+    chk('K3 over section 7, via the chi ratio',
+        4497.0/3090.0*chi/1.1587e13,
+        grab(txt, 'K3 against the same level at nu_max, ratio'), rtol=1e-4)
     # P7 as an identity, from the statement's inputs
     lam = 8.081e5/4497.0e-6
     chk('K3 P7 identity', 2.0*math.pi/((lam*lam/chi)*4497.0e-6), par,

@@ -8,7 +8,8 @@ Every physical number quoted in module13.html is produced here, so the prose
 can be checked against a run rather than against memory.
 Units: CGS-Gaussian throughout (cm, g, s, erg, K, statcoulomb, gauss).
 
-STEP 4 OF SIX; PARTS L AND M were added at step 4.  Every published value
+STEP 5 OF SIX; PARTS L AND M were added at step 4, and step 5 re-ruled
+CHECK 2 as a column mean (PART C) and extended PART M.  Every published value
 this file compares against was read
 off its page at step 2; the record is .ignore/m13-source-verification.md.
 Step 2 also found that step 1's CHECK 4 read the n = 3 column of
@@ -164,8 +165,14 @@ M3_RHS_1MSUN = 1.4329e-3        # the quartic's right side        :885
 M3_ONE_MINUS_BETA_1MSUN = 1.4247e-3     # its root                :885
 
 # --- module06.html:496-497, the solar photosphere -----------------------
-# Module 6 computed these from a convection calculation that never
-# mentions an opacity.  PART D turns them into one.
+# Module 6 computed H and rho from four INPUTS (module06.html:488): T, mu,
+# the IAU gravity and a gas pressure at tau = 2/3 that module06.html:490
+# says "comes from a solar atmosphere calculation".  No convection enters
+# H or rho.  PART C turns them into an opacity.  (Step 1 wrote here that
+# they came "from a convection calculation"; the step-5 editor found that
+# wrong, and PART M shows the inference depends on P/g alone.)
+M6_PHOT_P = 1.2e5               # dyn/cm^2   module06.html:488, at tau = 2/3
+M6_PHOT_G_IAU = 2.7420e4        # cm/s^2     module06.html:488, IAU nominal
 M6_PHOT_H = 142.9e5             # cm         module06.html:496, 142.9 km
 M6_PHOT_RHO = 3.0631e-7         # g/cm^3     module06.html:497
 M6_PHOT_CP = 1.6968e8           # erg/g/K    module06.html:498
@@ -457,11 +464,12 @@ def opacity_from_optical_depth(tau, rho, length):
     """kappa = tau/(rho L), the inverse of optical_depth.
 
     CHECK 2 uses this.  Module 6 computed rho and H at the solar
-    photosphere from a CONVECTION calculation -- mixing length, the
-    Schwarzschild criterion, a flux -- and never wrote an opacity.
-    Demanding tau = 2/3 over one scale height turns its two numbers into
-    an opacity, which can then be compared against a tabulated Rosseland
-    mean.  Nothing in Module 6 knew about that comparison.
+    photosphere from four inputs, one of them a pressure borrowed from a
+    model atmosphere, and never wrote an opacity.  With rho H = P/g = m,
+    the column mass above the level, tau/(rho H) is EXACTLY the
+    mass-weighted MEAN opacity of the column above tau, whether or not
+    kappa varies.  It is not the local opacity at the foot of the column,
+    and CHECK 2 compares it with ATLAS9's own column mean (PART M).
     """
     return tau/(rho*length)
 
@@ -543,6 +551,39 @@ def atlas9_photosphere(tau_target=2.0/3.0, T_target=None):
         return np.interp(x, xs, y)
     return (at(T), np.exp(at(np.log(P))), np.exp(at(np.log(rho))),
             np.exp(at(np.log(kR))), np.exp(at(np.log(tau))), rhox, P)
+
+
+def atlas9_column(tau_target=2.0/3.0, T_target=None):
+    """ATLAS9's column mass m (RHOX, g/cm^2) above tau_target, or above
+    the level of temperature T_target, and the column's mass-weighted
+    MEAN opacity tau_R/m.  Added at step 5 for CHECK 2.
+
+    tau_R = int_0^m kappa_R dm' exactly, so tau_R/m is the mean of kappa_R
+    over the column above the level, whatever kappa_R does inside it.
+    This is the quantity (6.1) infers from Module 6's numbers, because
+    rho H = P/g = m.  Interpolation is linear in log tau_R, as in
+    atlas9_photosphere().
+    """
+    tau, T, P, rho, kR, xne, rhox = atlas9_profile()
+    if T_target is None:
+        x, xs = np.log(tau_target), np.log(tau)
+    else:
+        x, xs = T_target, T
+    m = np.exp(np.interp(x, xs, np.log(rhox)))
+    t = np.exp(np.interp(x, xs, np.log(tau)))
+    return m, t/m
+
+
+def atlas9_height_between(tau_lo, tau_hi, n=4001):
+    """Geometric thickness, cm, of the ATLAS9 layer between two Rosseland
+    optical depths: dz = dm/rho, integrated on a fine grid in log tau_R.
+    Added at step 5 to price the band the draft called "the layer".
+    """
+    tau, T, P, rho, kR, xne, rhox = atlas9_profile()
+    lt = np.linspace(np.log(tau_lo), np.log(tau_hi), n)
+    m = np.exp(np.interp(lt, np.log(tau), np.log(rhox)))
+    r = np.exp(np.interp(lt, np.log(tau), np.log(rho)))
+    return float(np.sum(0.5*(1.0/r[1:] + 1.0/r[:-1])*np.diff(m)))
 
 
 def grey_eddington_T(tau, Teff):
@@ -673,7 +714,7 @@ def eddington_ratio_of_a_star(M, L, kappa):
 def main():
     P = print
     P('=' * 72)
-    P('MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 4 OF SIX.')
+    P('MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 5 OF SIX.')
     P('Gate D is .ignore/m13-gate-d.md.  Every published value below was')
     P('read at step 2; the record is')
     P('.ignore/m13-source-verification.md.  Every comparison against a')
@@ -941,22 +982,24 @@ def main():
     P('')
     P('PART C.  Optical depth and the photosphere')
     P('-' * 72)
-    P('  Module 6 computed the solar photosphere from CONVECTION and never')
-    P('  wrote an opacity.  Demanding tau = 2/3 over one scale height')
-    P('  turns its two numbers into one.')
+    P('  Module 6 computed H and rho at the photosphere from four inputs,')
+    P('  one a pressure borrowed from a model atmosphere (module06.html:490),')
+    P('  and never wrote an opacity.  rho H = P/g is the column mass above')
+    P('  that level, so demanding tau = 2/3 gives the column MEAN opacity.')
     P('    H   = %.4e cm   (module06.html:496)' % M6_PHOT_H)
     P('    rho = %.4e g/cm^3 (module06.html:497)' % M6_PHOT_RHO)
     kap_inferred = opacity_from_optical_depth(M6_PHOT_TAU, M6_PHOT_RHO,
                                               M6_PHOT_H)
-    P('    kappa inferred at tau = 2/3 over one H = %.5f cm^2/g'
+    P('    column-mean kappa above tau = 2/3, (2/3)/(rho H) = %.5f cm^2/g'
       % kap_inferred)
     P('    electron scattering at X = %.4f would be %.5f cm^2/g,'
       % (X_H, kap_solar))
-    P('    which is %.2f times larger.  The photosphere is NOT'
+    P('    which is %.2f times larger.  For fully ionised gas every'
       % (kap_solar/kap_inferred))
-    P('    electron-scattering dominated, and this is the arithmetic')
-    P('    that says so: it is H-minus, and H-minus is atomic physics')
-    P('    this book does not do.')
+    P('    kappa_nu >= kappa_es, so kappa_R >= kappa_es is a FLOOR, and a')
+    P('    column mean below the floor means the column is NOT fully')
+    P('    ionised.  What fills the opacity is H-minus, by the standard')
+    P('    attribution, and H-minus is atomic physics this book does not do.')
     assert kap_inferred < kap_solar, \
         'the inferred photospheric opacity must be below electron scattering'
 
@@ -980,17 +1023,36 @@ def main():
     assert abs(hs - 1.0) < 0.05, 'ATLAS9 file does not satisfy P = g m'
     P('    Module 6\'s rho / ATLAS9 rho at tau_R = 2/3 = %.4f'
       % (M6_PHOT_RHO/rhoa))
-    P('    ATLAS9 kappa_R / inferred kappa: %.3f at tau_R = 2/3, %.3f at'
-      % (ka/kap_inferred, kb_/kap_inferred))
-    P('    T = Teff.  CHECK 2, THE ANCHOR: the one-scale-height inference')
-    P('    is LOW by a factor %.2f to %.2f.  It assumes kappa constant over'
+    # CHECK 2, re-ruled at step 5 (m13-gate-d.md addendum).  Step 4
+    # compared the column mean (6.1) with ATLAS9's LOCAL kappa_R at the
+    # foot of the column and asserted that ratio exceeded 2.  That pair
+    # is two different quantities.  The like-for-like target is ATLAS9's
+    # own column mean, and the tolerance is the spread of the inputs,
+    # recomputed for this pair.
+    m_a, cm_a = atlas9_column(2.0/3.0)
+    m_b, cm_b = atlas9_column(T_target=M6_TEFF)
+    r_a, r_b = cm_a/kap_inferred, cm_b/kap_inferred
+    spread = (M6_PHOT_RHO/rhoa)*(cm_a/cm_b)
+    P('    ATLAS9 column mass above tau_R = 2/3   = %.5f g/cm^2' % m_a)
+    P('    ATLAS9 column mass above T = %.0f K    = %.5f g/cm^2'
+      % (M6_TEFF, m_b))
+    P('    ATLAS9 column mean tau_R/m, tau_R = 2/3 = %.5f cm^2/g' % cm_a)
+    P('    ATLAS9 column mean tau_R/m, T = %.0f K  = %.5f cm^2/g'
+      % (M6_TEFF, cm_b))
+    P('    column mean / inferred: %.4f at tau_R = 2/3, %.4f at T = Teff'
+      % (r_a, r_b))
+    P('    column-mean ratio of the two levels   = %.4f' % (cm_a/cm_b))
+    P('    TOLERANCE: rho ratio times level ratio = %.4f' % spread)
+    P('    CHECK 2, THE ANCHOR.  VERDICT (Gate D addendum): CONFIRMED as')
+    P('    a column mean, low by %.4f to %.4f, inside %.4f.'
+      % (r_b, r_a, spread))
+    P('    Read as a LOCAL opacity it is low by %.3f to %.3f: local'
       % (kb_/kap_inferred, ka/kap_inferred))
-    P('    the column; kappa_R in the file rises from %.3f to %.3f between'
-      % (kb_, atlas9_photosphere(1.0)[3]))
-    P('    tau_R = %.3f and 1.  VERDICT (Gate D): REFUTED as a digit.'
-      % taub)
-    assert kb_/kap_inferred > 2.0 and ka/kap_inferred > 2.0, \
-        'CHECK 2 is REFUTED only while the miss exceeds a factor 2'
+    P('    kappa_R at the foot over the column mean, which measures how')
+    P('    fast kappa_R rises with depth, not an error in the inference.')
+    assert 1.0/spread < r_b < spread and 1.0/spread < r_a < spread, \
+        'CHECK 2 is CONFIRMED only while the column means agree within ' \
+        'the input spread'
 
     lph = photon_mean_free_path(kap_inferred, M6_PHOT_RHO)
     P('')
@@ -1035,10 +1097,10 @@ def main():
     P('    adiabatic nor isothermal.  module04.html:563 predicted exactly')
     P('    this in print -- "fails near the photosphere where radiation')
     P('    carries heat out of a compression within a period" -- and')
-    P('    %.4f is that failure AT THE INFERRED OPACITY OF PART C,' % par)
-    P('    which step 2 found low; the ATLAS9 values follow.')
-    P('    *** chi above carries the INFERRED opacity of PART C, which')
-    P('    *** step 2 found LOW against ATLAS9.  With the ATLAS9 kappa_R')
+    P('    %.4f is that failure AT THE COLUMN-MEAN OPACITY OF PART C,' % par)
+    P('    used as if it were local; the ATLAS9 values follow.')
+    P('    *** chi above carries the COLUMN-MEAN opacity of PART C, and')
+    P('    *** (4.4) needs the LOCAL one.  With the ATLAS9 kappa_R')
     P('    *** and ATLAS9 rho at the same two levels (c_P and c held at')
     P('    *** Module 6\'s and Module 4\'s values):')
     pars = []
@@ -1051,8 +1113,10 @@ def main():
           % (lab, chi_l, par_l))
     P('    *** Both lie between %.4f and %.4f: below 1, and not << 1.'
       % (min(pars), max(pars)))
-    P('    *** CHECK 3 VERDICT (Gate D Q5): REFUTED.  The module prints')
-    P('    *** BOTH levels; %.4f above is the inferred-opacity value and'
+    P('    *** CHECK 3 VERDICT (Gate D addendum): the adiabatic closure is')
+    P('    *** REFUTED at the photosphere, and module04.html:429\'s own')
+    P('    *** prediction that it fails there is CONFIRMED.  The module')
+    P('    *** prints BOTH levels; %.4f above is the column-mean value and'
       % par)
     P('    *** is superseded, printed only to show what CHECK 2 moved. ***')
     assert 0.1 < min(pars) and max(pars) < 1.0, \
@@ -1113,9 +1177,11 @@ def main():
     gam_sun = eddington_ratio_of_a_star(Msun, Lsun, kap_solar)
     P('    L_sun/L_Edd(1 Msun, kappa_es at X = %.4f) = %.4e'
       % (X_H, gam_sun))
-    P('    i.e. radiation carries %.2e of the Sun\'s gravity.' % gam_sun)
-    P('    Module 3\'s (3.1) drops it, and this is the size of what it')
-    P('    dropped -- module03.html:795\'s debt, priced.')
+    P('    i.e. at the surface, for an opacity of kappa_es, the radiative')
+    P('    FORCE is %.2e of gravity.  This is NOT what module03.html:795'
+      % gam_sun)
+    P('    owes: Module 3\'s (3.2) drops radiation PRESSURE, 1 - beta,')
+    P('    priced in PART B at the centre and in PART M at tau_R = 2/3.')
 
     # ------------------------------------------------------------------
     P('')
@@ -1264,11 +1330,12 @@ def main():
     P('PART M.  Numbers the draft prints that earlier parts did not')
     P('-' * 72)
     k_one = atlas9_photosphere(1.0)[3]
-    P('  CHECK 2 spread of the two levels, kappa ratio   = %.4f'
+    P('  step 4 LOCAL pair, superseded: kappa_R level ratio = %.4f'
       % (ka/kb_))
-    P('  CHECK 2 input spread, rho ratio times level ratio = %.4f'
+    P('  step 4 LOCAL pair, superseded: input spread      = %.4f'
       % ((M6_PHOT_RHO/rhoa)*(ka/kb_)))
-    P('  CHECK 2 kappa_R rise over the averaged column   = %.4f'
+    P('  ATLAS9 kappa_R at tau_R = 1, cm^2/g            = %.4f' % k_one)
+    P('  kappa_R rise from T = 5772 K to tau_R = 1       = %.4f'
       % (k_one/kb_))
     tau_p, T_p, P_p, rho_p, kR_p, xne_p, _ = atlas9_profile()
     ne23 = np.exp(np.interp(np.log(2.0/3.0), np.log(tau_p), np.log(xne_p)))
@@ -1279,13 +1346,64 @@ def main():
       % (ka/kes_true))
     P('  fully ionised kappa_es over it                  = %.1f'
       % (kap_solar/kes_true))
-    P('    PART C said the inferred 0.15231 below the fully ionised')
-    P('    0.34966 shows the photosphere is not electron-scattering.')
-    P('    ATLAS9 kappa_R = %.4f is ABOVE 0.34966, so that argument does'
+    P('    PART C\'s floor argument stands (corrected at step 5; step 4')
+    P('    wrote here that it "does not survive CHECK 2", which read a')
+    P('    one-sided bound the wrong way).  kappa_es is a FLOOR on the')
+    P('    kappa_R of fully ionised gas.  Both column means lie below it:')
+    P('    inferred %.5f and ATLAS9 %.5f, against %.5f.  ATLAS9\'s LOCAL'
+      % (kap_inferred, cm_a, kap_solar))
+    P('    kappa_R = %.4f lies above the floor, which decides nothing.'
       % ka)
-    P('    not survive CHECK 2.  The reason is ionisation: with the')
-    P('    electrons ATLAS9 actually has, electron scattering is the')
-    P('    number above, and kappa_R exceeds it by the ratio above.')
+    P('    The electron density above says the same thing directly.')
+    assert cm_a < kap_solar and kap_inferred < kap_solar, \
+        'both column means must lie below the fully ionised floor'
+
+    # Step 5: the numbers the science-editor report computed in scratch.
+    # Each is printed here so that the page copies it from a run.
+    P('')
+    P('  STEP 5, CHECK 2 read as a column mean (m13-editor-report.md B1)')
+    P('    Module 6 inputs: P = %.4e dyn/cm^2, g = %.4e cm/s^2'
+      % (M6_PHOT_P, M6_PHOT_G_IAU))
+    P('    rho H from the printed rho and H, g/cm^2      = %.4f'
+      % (M6_PHOT_RHO*M6_PHOT_H))
+    P('    P/g from the inputs, g/cm^2                  = %.4f'
+      % (M6_PHOT_P/M6_PHOT_G_IAU))
+    P('    (2/3) g/P from the inputs, cm^2/g            = %.5f'
+      % (M6_PHOT_TAU*M6_PHOT_G_IAU/M6_PHOT_P))
+    P('    Module 6 column mass over ATLAS9 at tau_R = 2/3 = %.4f'
+      % (M6_PHOT_RHO*M6_PHOT_H/m_a))
+    P('    Module 6 input P over ATLAS9 P at tau_R = 2/3   = %.4f'
+      % (M6_PHOT_P/Pa))
+    g_a9 = 10.0**4.4377
+    P('    ATLAS9 gravity 10^4.4377, cm/s^2              = %.4e' % g_a9)
+    P('    Module 6 gravity over ATLAS9 gravity          = %.4f'
+      % (M6_PHOT_G_IAU/g_a9))
+    P('    rho H over P/g, the rounding of the printed rho, H = %.4f'
+      % (M6_PHOT_RHO*M6_PHOT_H/(M6_PHOT_P/M6_PHOT_G_IAU)))
+    k001 = atlas9_photosphere(0.01)[3]
+    P('    ATLAS9 kappa_R at tau_R = 0.01, cm^2/g        = %.4f' % k001)
+    P('    kappa_R rise from tau_R = 0.01 to 2/3           = %.2f'
+      % (ka/k001))
+    dz = atlas9_height_between(taub, 1.0)
+    P('    thickness of tau_R = %.3f to 1, km             = %.1f'
+      % (taub, dz/1.0e5))
+    P('    that thickness over Module 6\'s H              = %.2f'
+      % (dz/M6_PHOT_H))
+    P('    ATLAS9 kappa_R at 2/3 over kappa_es at X = %.4f = %.4f'
+      % (X_H, ka/kap_solar))
+    P('    L_sun/L_Edd with that kappa_R in place of kappa_es = %.3e'
+      % (eddington_ratio_of_a_star(Msun, Lsun, ka)))
+    P('    Hopf correction at tau = 0.01, per cent        = %.1f'
+      % (100.0*(1.0 - h001)))
+    rc_line = M3_RHO_C/prad_equals_pgas_density(M3_T_C, M3_MU)
+    ph_line = rhoa/prad_equals_pgas_density(Ta, M3_MU)
+    P('    Fig. 5, centre over the drawn line (mu = %.3f)  = %.1f'
+      % (M3_MU, rc_line))
+    P('    Fig. 5, centre above the drawn line, decades   = %.2f'
+      % np.log10(rc_line))
+    P('    Fig. 5, photosphere above the drawn line, decades = %.2f'
+      % np.log10(ph_line))
+    P('')
     P('  photon mean free path at tau_R = 2/3, ATLAS9, km = %.1f'
       % (photon_mean_free_path(ka, rhoa)/1.0e5))
     P('  P_rad/P at tau_R = 2/3, ATLAS9                  = %.4e'
