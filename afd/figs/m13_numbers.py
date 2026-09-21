@@ -548,7 +548,7 @@ def hopf_q(tau_out, tmax=30.0, n=3001):
     """The exact grey (Milne) solution's Hopf function q(tau).
 
     S = (3/4) F (tau + q) solves S = Lambda[S].  Because Lambda[tau] =
-    tau + E3(tau)/2, q obeys q = Lambda[q] + E3/2, iterated here with
+    tau + E3(tau)/2, q obeys q = Lambda[q] + E3/2, solved directly with
     Lambda integrated exactly over piecewise-constant cells and q held at
     q(inf) = 0.7104460 beyond tmax.  Its limits, q(0) = 1/sqrt(3) and
     q(inf), are the check.  Used only to show that the exact grey
@@ -1139,9 +1139,10 @@ def main():
     Ta23 = atlas9_photosphere(2.0/3.0)[0]
     P('    ATLAS9 at tau_R = 2/3 is %.1f K, %.2f per cent above Teff.'
       % (Ta23, 100.0*(Ta23/TEFF_A9 - 1.0)))
-    P('    The closure accounts for %.2f per cent of it; the rest is the'
+    P('    The closure accounts for %.2f per cent of it; the rest is what'
       % (100.0*shift))
-    P('    non-grey opacity the grey model leaves out.')
+    P('    the grey model leaves out.  This check does not separate')
+    P('    non-grey opacity from ATLAS9\'s convection (l/H = 1.25).')
     h001 = ((0.01 + q001)/(0.01 + 2.0/3.0))**0.25
     P('    At tau = 0.01 the other way round: Hopf multiplies grey T by')
     P('    %.4f, so grey/ATLAS9 becomes %.4f -- the closure is the error.'
