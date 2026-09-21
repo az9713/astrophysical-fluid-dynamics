@@ -211,7 +211,12 @@ def main():
         runnums.add(tok.split('e')[0].rstrip('0').rstrip('.'))
     for i, sol in enumerate(sols, 1):
         body = re.sub(r'<[^>]+>', '', sol)
-        for tok in re.findall(r'(?<![\w.])\d+\.\d{3,}', body):
+        # ANY decimal with four or more significant digits.  The first
+        # version took only three or more DECIMALS, and a mutation of
+        # 4853.7 to 4853.8 in C3's solution stayed green.
+        for tok in re.findall(r'(?<![\w.])\d+\.\d+', body):
+            if len(tok.replace('.', '').lstrip('0')) < 4:
+                continue
             here = tok in runnums or tok.rstrip('0').rstrip('.') in runnums
             (PASS if here else FAIL).append(
                 f'HTML problem {i}: {tok} '
