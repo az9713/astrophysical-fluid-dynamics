@@ -41,12 +41,19 @@ THE FOUR CHECKS, WITH THE VERDICTS NOT YET FIXED -- Gate D fixes them.
            it".  Module 1 SS6 supplies the transport coefficients, which
            module01.html:623 says in print is what Module 11 needs them for.
 
-  CHECK 2  ALPHA FROM AN OUTBURST.  The viscous time of a dwarf-nova disc
-           set equal to an observed outburst timescale gives a number for
-           alpha.  IT IS NOT INDEPENDENT of King, Pringle & Livio's range:
-           their 0.1-0.4 comes from disc-instability modelling of the same
-           observable.  The honest verdict is CONSISTENT at one order of
-           magnitude, not CONFIRMED.  Gate D rules on the wording.
+  CHECK 2  THE TEMPERATURE PROFILE, T_eff ~ R^-3/4.  STEP 2 REPLACED THE
+           CHECK THAT STOOD HERE.  Step 1 proposed inferring alpha from a
+           dwarf-nova outburst timescale and comparing it to King, Pringle
+           & Livio's range.  Reading their section 2.1 killed it: their own
+           eq. (2) is t_visc ~ R^2/nu, the SAME relation, so the comparison
+           tests arithmetic and not physics.  The arithmetic is kept in
+           PART D and is labelled in print as not a check.
+           What replaces it is viscosity-INDEPENDENT: the exponent -3/4
+           follows from energy conservation alone, with nu, alpha and Sigma
+           all cancelled, and their section 1 says it "is in reasonable
+           accord with both continuum spectra and eclipse mapping of
+           cataclysmic variables".  THE OBSERVATIONAL SIDE HAS NO ERROR
+           BAR in that review, so this confirms a shape and not a digit.
 
   CHECK 3  THE RADIATIVE EFFICIENCY.  Three numbers, not one: the Newtonian
            thin disc at the Schwarzschild innermost stable circular orbit
@@ -56,8 +63,10 @@ THE FOUR CHECKS, WITH THE VERDICTS NOT YET FIXED -- Gate D fixes them.
            values, which is a statement about spin.
 
   CHECK 4  ALPHA IS NOT A CONSTANT OF NATURE.  REFUTES the prescription read
-           as a law.  The same dimensionless number measured in dwarf novae
-           and in protoplanetary discs differs by more than two decades.
+           as a law.  Two gaps, both from ONE review: a factor 10 to 40
+           between fully-ionised and protostellar discs, and AT LEAST a
+           factor 5 between what observations of ionised discs need and
+           what MHD simulations of the Module 12 SS9 instability produce.
            King, Pringle & Livio's title asks exactly this question.
 
 A NOTATION WARNING, FROM .ignore/m11-promises.md.  The glyph ell already
@@ -97,6 +106,9 @@ Msun = GMsun/G          # g
 SPITZER_C = 3.0**1.5/(4.0*np.sqrt(np.pi))   # = 0.7329, Sarazin eq. 5.32
 MU_IONISED_H = 0.6      # mean molecular weight, fully ionised H + He
 MU_MOLECULAR = 2.34     # mean molecular weight, H2 + He, protoplanetary
+MU_H_ION = mp/mu_u      # = 1.00728, a proton measured against m_u.
+# THE VISCOSITY CARRIER, not the mixture.  Module 1's convention, and
+# Module 12's MU_H is the same quantity under the same name.
 
 # =========================================================================
 # PUBLISHED VALUES COMPARED AGAINST.  Each block names the paper, the table
@@ -167,9 +179,27 @@ SS73_ETA_KERR_MAX = 0.40        # their p. 339, "40%"          VERIFIED
 # "thin, fully-ionized discs".  Relabelled here.
 KPL07_ALPHA_LO = 0.1            # thin fully-ionised discs     VERIFIED
 KPL07_ALPHA_HI = 0.4            # thin fully-ionised discs     VERIFIED
-# Their section 3, the simulations, two values read in context:
-KPL07_SIM_LO = 0.004            # Hirose, Krolik & Stone       VERIFIED
-KPL07_SIM_HI = 0.02             # "a global average of 0.02"   VERIFIED
+# Their section 2.1, DWARF NOVAE SPECIFICALLY, which is a narrower
+# figure than the abstract's and is the one CHECK 2's arithmetic meets:
+# "All of these papers agree that alpha must lie in a fairly narrow
+# range alpha ~= 0.1 - 0.3", citing Schreiber et al. (2003, 2004) on SS
+# Cyg and VW Hyi, Cannizzo (2001a, 2001b) on VW Hyi, U Gem, SS Cyg and
+# WZ Sge, and Buat-Menard et al. (2001) on Z Cam.
+KPL07_DN_ALPHA_LO = 0.1         # their section 2.1            VERIFIED
+KPL07_DN_ALPHA_HI = 0.3         # their section 2.1            VERIFIED
+# STEP 2's FIRST PASS PICKED ITS OWN ENDPOINTS FOR THE SIMULATIONS,
+# 0.004 to 0.02.  THE AUTHORS STATE THE RANGE THEMSELVES, in their
+# section 5: "a large discrepancy between the values ... required to
+# model observations of fully ionized, time-dependent accretion discs
+# (Section 2: alpha ~ 0.1 - 0.4) and those which are generally obtained
+# from numerical MHD simulations WITHOUT INCLUDING A SUPERIMPOSED
+# MAGNETIC FIELD (Section 3: ALPHA <= 0.02)."
+# IT IS A BOUND AND IT POINTS DOWN.  Their section 4 adds that the
+# limitations of the simulations "would indeed tend to lead to
+# UNDERESTIMATING the value of alpha", so the true simulated alpha may
+# be larger and the gap smaller.  The module states the bound and the
+# direction, and never a midpoint.
+KPL07_SIM_MAX = 0.02            # their section 5, a BOUND     VERIFIED
 # Their section 2.3.2: "Estimates for alpha in protostellar (T Tauri)
 # discs, based on evolutionary lifetimes, are given by Hartmann et al.
 # (1998).  They give estimates of alpha ~= 0.01 at disc radii
@@ -499,16 +529,30 @@ def v_thermal(T, mu):
     return np.sqrt(8.0*kB*T/(np.pi*mu*mu_u))
 
 
-def molecular_viscosity(n, T, mu, lnL):
-    """nu_mol = (1/3) lambda v_th, the kinetic-theory kinematic viscosity.
+def molecular_viscosity(n, T, lnL, mu_carrier=None):
+    """nu_mol = mu_dyn/rho = (1/3) v_th lambda, MODULE 1's OWN FORMULA.
 
-    THE COEFFICIENT IS 1/3 AND IT IS A CONVENTION, not a measurement.
-    Chapman-Enskog for a Lorentz plasma gives a number near 0.4 rather
-    than 0.333, and Module 1 SS6 carries the exact coefficients.  CHECK 1
-    is worth twelve decades, so a factor of 1.2 changes nothing in it --
-    but the module must say that rather than hide it.
+    module01.html:363 is Module 1 Proposition 4, eq. (6.2):
+
+        mu ~= (1/3) rho v_th lambda,   kappa ~= (1/3) n k_B v_th lambda,
+
+    so the KINEMATIC viscosity is nu = mu/rho = (1/3) v_th lambda and the
+    density cancels.  The coefficient 1/3 is NOT a choice made here: it
+    is the book's, from the shipped page that module01.html:623 promises
+    this module.
+
+    THE THERMAL SPEED IS THE ION'S, NOT THE MIXTURE'S, and the first
+    draft used the mixture.  Viscosity in a hydrogen plasma is carried by
+    the ions: at equal temperature and comparable mean free path,
+    mu_i/mu_e = (rho_i/rho_e)(v_i/v_e) = (m_p/m_e) sqrt(m_e/m_p)
+              = sqrt(m_p/m_e) = 42.9,
+    so the electron contribution is 2.3 per cent and the momentum is
+    carried by protons.  Using mu = 0.6, the mean molecular weight of the
+    MIXTURE, overstates v_th by sqrt(1.00728/0.6) = 1.296 and nu with it.
     """
-    return lam_coulomb(n, T, lnL)*v_thermal(T, mu)/3.0
+    if mu_carrier is None:
+        mu_carrier = MU_H_ION
+    return lam_coulomb(n, T, lnL)*v_thermal(T, mu_carrier)/3.0
 
 
 def viscous_time(R, nu):
@@ -1050,8 +1094,9 @@ def main():
     dn = census['dwarf nova, outburst']
     lnL = lnLambda_e(dn['n0'], dn['T'])
     lam = lam_coulomb(dn['n0'], dn['T'], lnL)
-    vth = v_thermal(dn['T'], dn['mu'])
-    nu_mol = molecular_viscosity(dn['n0'], dn['T'], dn['mu'], lnL)
+    vth = v_thermal(dn['T'], MU_H_ION)
+    nu_mol = molecular_viscosity(dn['n0'], dn['T'], lnL)
+    nu_mol_mixture = molecular_viscosity(dn['n0'], dn['T'], lnL, dn['mu'])
     t_nu_mol = viscous_time(dn['R'], nu_mol)
     t_dyn = dynamical_time(dn['Om'])
     P(f'  dwarf-nova disc at R      = {dn["R"]:.3e} cm')
@@ -1059,8 +1104,16 @@ def main():
     P(f'    ln Lambda               = {lnL:.4f}')
     P(f'    Coulomb mean free path  = {lam:.4e} cm')
     P(f'      lambda/H              = {lam/dn["H"]:.4e}')
-    P(f'    mean thermal speed      = {vth/1e5:.4f} km/s')
-    P(f'    nu_mol = lambda v_th/3  = {nu_mol:.4f} cm^2 s^-1')
+    P(f'    mean thermal speed, IONS= {vth/1e5:.4f} km/s')
+    P(f'    nu_mol = v_th lambda/3  = {nu_mol:.4f} cm^2 s^-1')
+    P(f'      module01.html:363 eq. (6.2) is mu ~= (1/3) rho v_th lambda,')
+    P(f'      so nu = mu/rho = (1/3) v_th lambda and rho cancels.  The')
+    P(f'      1/3 is MODULE 1\'s coefficient and not a choice made here.')
+    P(f'      With the MIXTURE mu = {dn["mu"]} instead of the ion, nu would')
+    P(f'      be {nu_mol_mixture:.4f}, larger by '
+      f'{nu_mol_mixture/nu_mol:.4f}.  Viscosity is carried')
+    P(f'      by the ions: mu_i/mu_e = sqrt(m_p/m_e) = '
+      f'{np.sqrt(mp/me):.1f}.')
     P('')
     P(f'    t_dyn = 1/Omega         = {t_dyn:.4e} s '
       f'= {t_dyn/day:.4f} d')
@@ -1074,11 +1127,15 @@ def main():
     P(f'    t_nu(molecular)/t_observed = {gap:.4e}')
     P(f'    that is {np.log10(gap):.2f} DECADES.')
     P('    Molecular viscosity is not slow by a factor.  It is slow by')
-    P(f'    {np.log10(gap):.2f} decades, and no refinement of the transport')
-    P('    coefficient closes a gap of that size: the 1/3 in nu_mol is a')
-    P('    convention worth 20 per cent and ln Lambda is worth a factor')
-    P('    of two.  SOMETHING OTHER THAN COLLISIONS MOVES THE ANGULAR')
-    P('    MOMENTUM.')
+    P(f'    {np.log10(gap):.2f} decades, and nothing inside the transport')
+    P('    coefficient closes a gap of that size.  The two quantities')
+    P('    that could be argued about are priced here, not waved at:')
+    P(f'      using the mixture and not the ion          x '
+      f'{nu_mol_mixture/nu_mol:.4f}')
+    P(f'      doubling ln Lambda from {lnL:.2f} to {2*lnL:.2f}      x '
+      f'{0.5:.4f}')
+    P('    Together they are worth 0.35 of a decade against 12.01.')
+    P('    SOMETHING OTHER THAN COLLISIONS MOVES THE ANGULAR MOMENTUM.')
     alpha_needed = nu_mol/(dn['cT']*dn['H'])
     P(f'    alpha_equivalent of nu_mol = {alpha_needed:.4e}')
     P(f'    against the measured {KPL07_ALPHA_LO}-{KPL07_ALPHA_HI}: short')
@@ -1087,29 +1144,42 @@ def main():
 
     # ---------------------------------------------------------------- D
     P('')
-    P('PART D.  CHECK 2.  alpha from an outburst, and the three timescales')
+    P('PART D.  alpha from an outburst.  THIS IS NOT A CHECK')
     P('-'*74)
     alpha_inferred = alpha_from_viscous_time(
         dn['R'], T_OUTBURST_OBSERVED, dn['cT'], dn['H'])
-    P(f'  Setting t_nu = R^2/(alpha c_T H) equal to the observed')
-    P(f'  outburst timescale gives')
-    P(f'    alpha_inferred          = {alpha_inferred:.4f}')
-    P(f'    King, Pringle & Livio   = {KPL07_ALPHA_LO}-{KPL07_ALPHA_HI}'
-      f'   NOT YET VERIFIED')
+    P('  STEP 2 KILLED THIS AS A CHECK, AND THE PAPER IS WHY.  King,')
+    P('  Pringle & Livio section 2.1 writes their own eq. (2) as')
+    P('    t_visc ~ R^2/nu,')
+    P('  which is the SAME RELATION this file inverts, and they say in')
+    P('  the same paragraph that "the disc sizes are known from the')
+    P('  system properties", that the temperatures "are known from the')
+    P('  spectra thus determining H/R", and that "observation of the')
+    P('  evolution timescale of the outbursts gives a reasonably')
+    P('  well-determined estimate of the viscous timescale and hence of')
+    P('  alpha".  Running their method on a configuration and comparing')
+    P('  the answer to their answer tests ARITHMETIC, not physics.')
     P('')
-    P('  PUNCHLINE CHECK 2, AND IT IS NOT AN INDEPENDENT CONFIRMATION.')
-    P('  King, Pringle & Livio infer their range from disc-instability')
-    P('  modelling of the SAME observable, so agreement here tests the')
-    P('  arithmetic and the order of magnitude, not the physics.  The')
-    P('  honest verdict is CONSISTENT, and Gate D rules on the wording.')
-    if alpha_inferred > KPL07_ALPHA_HI:
-        P(f'    ratio to the top of their range = '
-          f'{alpha_inferred/KPL07_ALPHA_HI:.4f}, ABOVE it')
-    elif alpha_inferred < KPL07_ALPHA_LO:
-        P(f'    ratio to the bottom of their range = '
-          f'{alpha_inferred/KPL07_ALPHA_LO:.4f}, BELOW it')
+    P('  What it does show is that the module reproduces their method:')
+    P(f'    alpha from t_nu = R^2/(alpha c_T H)  = {alpha_inferred:.4f}')
+    P(f'    their section 2.1, dwarf novae       = '
+      f'{KPL07_DN_ALPHA_LO}-{KPL07_DN_ALPHA_HI}      VERIFIED')
+    P(f'    their abstract, all ionised discs    = '
+      f'{KPL07_ALPHA_LO}-{KPL07_ALPHA_HI}      VERIFIED')
+    if alpha_inferred > KPL07_DN_ALPHA_HI:
+        P(f'    above the top of their 2.1 range by  = '
+          f'{alpha_inferred/KPL07_DN_ALPHA_HI:.4f}')
+    elif alpha_inferred < KPL07_DN_ALPHA_LO:
+        P(f'    below the bottom of their 2.1 range  = '
+          f'{alpha_inferred/KPL07_DN_ALPHA_LO:.4f}')
     else:
-        P('    inside their range')
+        P('    inside their section 2.1 range')
+    P('  AND THE INPUTS ARE A CONFIGURATION.  No named dwarf nova was')
+    P('  fetched, so R, T, Sigma and the 5-day timescale are round')
+    P('  choices, and the agreement above is worth exactly what a round')
+    P('  choice is worth.  CHECK 2 IS NOW THE TEMPERATURE PROFILE OF')
+    P('  PART F, which is viscosity-INDEPENDENT and therefore tests')
+    P('  something this module does not put in by hand.')
     P('')
     P('  THE THREE TIMESCALES, at alpha = 0.2 and the dwarf-nova row:')
     a0 = 0.2
@@ -1167,6 +1237,30 @@ def main():
             continue
         P(f'  {x:>10.4g} {t_effective(Mdot_agn, M_AGN, R, R_in_agn):>12.4f} '
           f'{t_eff_index(Mdot_agn, M_AGN, R, R_in_agn):>15.5f}')
+    P('')
+    P('')
+    P('  PUNCHLINE CHECK 2, AND THE VERDICT IS NOT FIXED AT STEP 2.')
+    P('  THE EXPONENT -3/4 CONTAINS NO VISCOSITY.  It comes from')
+    P('  D(R) = (3 G M Mdot/8 pi R^3) f and sigma T^4 = D, and nu,')
+    P('  alpha and Sigma have all cancelled.  King, Pringle & Livio')
+    P('  section 1 say exactly that, and say what it is measured')
+    P('  against:')
+    P('    "the radial distribution of effective temperature across a')
+    P('     steady disc (T(R) ~ R^-3/4) IS INDEPENDENT OF THE VISCOSITY,')
+    P('     being just a statement of energy conservation, and is in')
+    P('     reasonable accord with both continuum spectra and eclipse')
+    P('     mapping of cataclysmic variables"')
+    idx_far = t_eff_index(Mdot_agn, M_AGN, 1.0e5*Rg_agn, R_in_agn)
+    P(f'    this module far from the edge        = {idx_far:.5f}')
+    P(f'    the prediction                       = '
+      f'{THIN_DISC_TEFF_INDEX:.5f}')
+    P(f'    difference                           = '
+      f'{abs(idx_far - THIN_DISC_TEFF_INDEX):.5f}')
+    P('  THE COMPARISON IS QUALITATIVE ON THE OBSERVATIONAL SIDE.  The')
+    P('  review says "in reasonable accord" and prints no exponent and')
+    P('  no error bar, so this CONFIRMS a shape and not a digit.  The')
+    P('  module must say so; a check whose data has no error bar cannot')
+    P('  be scored like Module 10\'s Podesta indices.')
     P('')
     P('  The index tends to -3/4 outward and is NOT -3/4 near the inner')
     P('  edge, where the bracket [1 - sqrt(R_in/R)] still bites.  The')
@@ -1428,8 +1522,10 @@ def main():
     P(f'    {"AGN variability (Starling+04)":<34} '
       f'{f"{KPL07_AGN_ALPHA_LO}-{KPL07_AGN_ALPHA_HI}":>14} '
       f'{"LOWER LIMITS":>14}')
-    P(f'    {"MHD simulations":<34} '
-      f'{f"{KPL07_SIM_LO}-{KPL07_SIM_HI}":>14} {"a range":>14}')
+    P(f'    {"dwarf novae (their 2.1)":<34} '
+      f'{f"{KPL07_DN_ALPHA_LO}-{KPL07_DN_ALPHA_HI}":>14} {"a range":>14}')
+    P(f'    {"MHD simulations, no imposed field":<34} '
+      f'{f"<= {KPL07_SIM_MAX}":>14} {"A BOUND":>14}')
     P('')
     P('  PUNCHLINE CHECK 4, AND THE VERDICT IS NOT FIXED AT STEP 2.')
     P('  TWO GAPS, AND THE SECOND IS THE ONE THE PAPER IS ABOUT.')
@@ -1441,17 +1537,23 @@ def main():
       f'{lo:.2f} to {hi:.2f} decades.')
     P('        The two classes differ in ionisation, so this gap has a')
     P('        candidate physical cause and is not a contradiction.')
-    slo = np.log10(KPL07_ALPHA_LO/KPL07_SIM_HI)
-    shi = np.log10(KPL07_ALPHA_HI/KPL07_SIM_LO)
     P(f'    (b) OBSERVATION AGAINST SIMULATION, on the SAME class of')
     P(f'        disc.  {KPL07_ALPHA_LO}-{KPL07_ALPHA_HI} observed against '
-      f'{KPL07_SIM_LO}-{KPL07_SIM_HI} simulated =')
-    P(f'        {slo:.2f} to {shi:.2f} decades, and the authors call it')
-    P('        "an order of magnitude smaller" in their own abstract.')
+      f'a simulated alpha <= {KPL07_SIM_MAX}:')
+    P(f'        AT LEAST {KPL07_ALPHA_LO/KPL07_SIM_MAX:.0f} and at least '
+      f'{np.log10(KPL07_ALPHA_LO/KPL07_SIM_MAX):.2f} decades, ONE-SIDED,')
+    P('        because their section 5 states the simulation side as a')
+    P('        BOUND and not a value.  Their own abstract calls it "an')
+    P('        order of magnitude smaller".')
+    P('        THE DIRECTION CUTS BOTH WAYS AND THE PAPER SAYS SO: their')
+    P('        section 4 notes that the limitations of the simulations')
+    P('        "would indeed tend to lead to UNDERESTIMATING the value of')
+    P('        alpha", so the gap is an upper estimate of a lower bound.')
     P('        THE SIMULATIONS ARE OF THE MAGNETOROTATIONAL INSTABILITY')
     P('        OF MODULE 12 SS9.  So the mechanism this book derives does')
-    P('        not, in the simulations that solve it, produce the alpha')
-    P('        the observations need.')
+    P('        not, in the simulations that solve it, reach the alpha the')
+    P('        observations need -- and the same authors say the')
+    P('        simulations are the side more likely to be wrong.')
     P('')
     P('    A BOUND HAS A DIRECTION.  Starling et al.\'s AGN row is a set')
     P('    of LOWER limits, so it cannot be read as an alpha near 0.02;')
