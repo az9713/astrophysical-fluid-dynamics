@@ -1,0 +1,88 @@
+{
+  "modules": [
+    {
+      "module": 1,
+      "prose_blocks": 107,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 2,
+      "prose_blocks": 98,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 3,
+      "prose_blocks": 98,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 4,
+      "prose_blocks": 89,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 5,
+      "prose_blocks": 103,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 6,
+      "prose_blocks": 143,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 7,
+      "prose_blocks": 114,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 8,
+      "prose_blocks": 142,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 9,
+      "prose_blocks": 150,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 10,
+      "prose_blocks": 155,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 11,
+      "prose_blocks": 74,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    },
+    {
+      "module": 12,
+      "prose_blocks": 134,
+      "long_sentence_flags": [],
+      "banned_rhetoric_hits": 0,
+      "missing_anchor_count": 0
+    }
+  ]
+}

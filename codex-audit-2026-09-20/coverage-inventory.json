@@ -1,0 +1,770 @@
+[
+  {
+    "file": "module01.html",
+    "lines": 812,
+    "words": 9578,
+    "blocks": 203,
+    "headings": [
+      [
+        92,
+        "Module 1 \u2014 Why a Fluid at All?"
+      ],
+      [
+        114,
+        "1. The problem: a fluid emptier than any vacuum ever built"
+      ],
+      [
+        132,
+        "2. What a fluid description actually claims"
+      ],
+      [
+        160,
+        "3. Collisions, and the local Maxwellian"
+      ],
+      [
+        191,
+        "4. The mean free path I \u2014 a gas of neutral atoms"
+      ],
+      [
+        250,
+        "5. The mean free path II \u2014 a gas of charges"
+      ],
+      [
+        338,
+        "6. The Knudsen number and the Chapman\u2013Enskog hierarchy"
+      ],
+      [
+        380,
+        "7. A census of astrophysical gases"
+      ],
+      [
+        543,
+        "8. Where the fluid picture fails, and what rescues it"
+      ],
+      [
+        615,
+        "9. What this model captures, and what it misses"
+      ],
+      [
+        672,
+        "10. Problems"
+      ],
+      [
+        739,
+        "Notation"
+      ],
+      [
+        764,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module02.html",
+    "lines": 870,
+    "words": 10951,
+    "blocks": 213,
+    "headings": [
+      [
+        92,
+        "Module 2 \u2014 Continuity, Euler, Navier\u2013Stokes, Energy"
+      ],
+      [
+        116,
+        "1. The problem: five fields, and a function of seven variables"
+      ],
+      [
+        134,
+        "2. The moments of a distribution function"
+      ],
+      [
+        176,
+        "3. Why there are exactly five exact equations"
+      ],
+      [
+        209,
+        "4. The general moment equation, and the gap it leaves"
+      ],
+      [
+        273,
+        "5. Mass: the continuity equation"
+      ],
+      [
+        296,
+        "6. Following the parcel: the Lagrangian derivative"
+      ],
+      [
+        366,
+        "7. Momentum: Cauchy, Euler, Navier\u2013Stokes"
+      ],
+      [
+        428,
+        "8. Energy, and the three forms it takes"
+      ],
+      [
+        489,
+        "9. The closure problem, and the licence to use Euler"
+      ],
+      [
+        525,
+        "10. The check: does a measured flow obey these equations?"
+      ],
+      [
+        677,
+        "11. What this model captures, and what it misses"
+      ],
+      [
+        725,
+        "12. Problems"
+      ],
+      [
+        805,
+        "Notation"
+      ],
+      [
+        833,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module03.html",
+    "lines": 953,
+    "words": 10483,
+    "blocks": 224,
+    "headings": [
+      [
+        92,
+        "Module 3 \u2014 Hydrostatic Equilibrium"
+      ],
+      [
+        116,
+        "1. The problem: a star that should fall in half an hour"
+      ],
+      [
+        136,
+        "2. The equation, and how well it must hold"
+      ],
+      [
+        184,
+        "3. The plane-parallel atmosphere and the scale height"
+      ],
+      [
+        227,
+        "4. The polytropic atmosphere: the terrestrial half"
+      ],
+      [
+        348,
+        "5. Why a polytrope: two indices fixed in advance"
+      ],
+      [
+        384,
+        "6. The Lane\u2013Emden equation"
+      ],
+      [
+        544,
+        "7. Properties of polytropes"
+      ],
+      [
+        585,
+        "8. What balance gives with no closure"
+      ],
+      [
+        618,
+        "9. The tabulated solar model"
+      ],
+      [
+        634,
+        "10. The checks"
+      ],
+      [
+        783,
+        "11. What this model captures, and what it misses"
+      ],
+      [
+        825,
+        "12. Problems"
+      ],
+      [
+        888,
+        "Notation"
+      ],
+      [
+        915,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module04.html",
+    "lines": 730,
+    "words": 10020,
+    "blocks": 182,
+    "headings": [
+      [
+        92,
+        "Module 4 \u2014 Sound Waves and Linear Perturbation Theory"
+      ],
+      [
+        113,
+        "1. The problem: a speed of sound low by 15.5 per cent, and a star that rings"
+      ],
+      [
+        131,
+        "2. Linear perturbation theory"
+      ],
+      [
+        168,
+        "3. Sound in a uniform gas"
+      ],
+      [
+        216,
+        "4. Sound in a stratified atmosphere: the acoustic cutoff"
+      ],
+      [
+        337,
+        "5. Standing waves and the large separation"
+      ],
+      [
+        389,
+        "6. The acoustic radius of the tabulated solar model"
+      ],
+      [
+        403,
+        "7. The solar checks"
+      ],
+      [
+        556,
+        "8. What this model captures, and what it misses"
+      ],
+      [
+        598,
+        "9. Problems"
+      ],
+      [
+        659,
+        "Notation"
+      ],
+      [
+        689,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module05.html",
+    "lines": 893,
+    "words": 10057,
+    "blocks": 183,
+    "headings": [
+      [
+        92,
+        "Module 5 \u2014 The Jeans Instability"
+      ],
+      [
+        113,
+        "1. The problem: a cloud that two criteria judge differently"
+      ],
+      [
+        123,
+        "2. Self-gravity and the isothermal closure"
+      ],
+      [
+        145,
+        "3. The Jeans instability"
+      ],
+      [
+        283,
+        "4. The Jeans swindle, and a background that has no swindle"
+      ],
+      [
+        335,
+        "5. A static equilibrium that exists: the isothermal sphere"
+      ],
+      [
+        512,
+        "6. Barnard 68 and the Bok globules"
+      ],
+      [
+        528,
+        "7. The checks"
+      ],
+      [
+        753,
+        "8. What this model captures, and what it misses"
+      ],
+      [
+        770,
+        "9. Problems"
+      ],
+      [
+        828,
+        "Notation"
+      ],
+      [
+        852,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module06.html",
+    "lines": 1103,
+    "words": 16623,
+    "blocks": 347,
+    "headings": [
+      [
+        92,
+        "Module 6 \u2014 Convection and Thermal Instability"
+      ],
+      [
+        116,
+        "1. Two fluids that will not sit still"
+      ],
+      [
+        130,
+        "2. The displaced parcel and the Schwarzschild criterion"
+      ],
+      [
+        196,
+        "3. The buoyancy frequency, and where the Sun's convection zone starts"
+      ],
+      [
+        348,
+        "4. Ledoux: what a composition gradient does"
+      ],
+      [
+        376,
+        "5. The collapse of $\\nabla_{\\rm ad}$ in a partially ionised gas"
+      ],
+      [
+        437,
+        "6. Mixing-length theory, and how superadiabatic the Sun must be"
+      ],
+      [
+        514,
+        "7. Check A: mixing-length theory against solar granulation"
+      ],
+      [
+        579,
+        "8. Thermal instability: the loss function and Field's criteria"
+      ],
+      [
+        651,
+        "9. The two-phase window"
+      ],
+      [
+        750,
+        "10. The anchor: Jenkins & Tripp (2011) against the window"
+      ],
+      [
+        909,
+        "11. What this model captures, and what it misses"
+      ],
+      [
+        922,
+        "12. Problems"
+      ],
+      [
+        1029,
+        "Notation"
+      ],
+      [
+        1057,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module07.html",
+    "lines": 1067,
+    "words": 16822,
+    "blocks": 298,
+    "headings": [
+      [
+        92,
+        "Module 7 \u2014 Rayleigh\u2013Taylor and Kelvin\u2013Helmholtz"
+      ],
+      [
+        115,
+        "1. One relation, two instabilities"
+      ],
+      [
+        131,
+        "2. The interface, and what is perturbed"
+      ],
+      [
+        151,
+        "3. The dispersion relation"
+      ],
+      [
+        209,
+        "4. Rayleigh\u2013Taylor in a glass of water"
+      ],
+      [
+        338,
+        "5. Rayleigh\u2013Taylor with no skin: the astrophysical case"
+      ],
+      [
+        382,
+        "6. Kelvin\u2013Helmholtz, and the two ways gravity stops it"
+      ],
+      [
+        422,
+        "7. The compressible limit, quoted not derived"
+      ],
+      [
+        455,
+        "8. After the linear theory: the mixing law, and the laboratory check"
+      ],
+      [
+        615,
+        "9. The anchor: Kelvin\u2013Helmholtz on the flank of a CME"
+      ],
+      [
+        866,
+        "10. What this model captures, and what it misses"
+      ],
+      [
+        883,
+        "11. Problems"
+      ],
+      [
+        978,
+        "Notation"
+      ],
+      [
+        1006,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module08.html",
+    "lines": 1167,
+    "words": 16412,
+    "blocks": 288,
+    "headings": [
+      [
+        96,
+        "8. Shocks and the Sedov\u2013Taylor blast wave"
+      ],
+      [
+        120,
+        "1. A fluid with no length"
+      ],
+      [
+        134,
+        "2. The jump conditions"
+      ],
+      [
+        191,
+        "3. What the jumps say: a ceiling, a direction, and an escape"
+      ],
+      [
+        340,
+        "4. The Sedov\u2013Taylor blast wave"
+      ],
+      [
+        552,
+        "5. The anchor: Trinity, 16 July 1945"
+      ],
+      [
+        634,
+        "6. The astrophysical check: Voyager 2 inside a shock"
+      ],
+      [
+        732,
+        "7. A supernova remnant through its phases"
+      ],
+      [
+        796,
+        "8. The debt from Module 7: Rayleigh\u2013Taylor at Tycho"
+      ],
+      [
+        962,
+        "9. What this model captures, and what it misses"
+      ],
+      [
+        980,
+        "10. Problems"
+      ],
+      [
+        1066,
+        "Notation"
+      ],
+      [
+        1092,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module09.html",
+    "lines": 1033,
+    "words": 17082,
+    "blocks": 294,
+    "headings": [
+      [
+        96,
+        "9. Bondi accretion and the Parker wind"
+      ],
+      [
+        120,
+        "1. One equation, two flows"
+      ],
+      [
+        158,
+        "2. Why a static corona is impossible"
+      ],
+      [
+        210,
+        "3. The critical point, and the six things a flow may do"
+      ],
+      [
+        326,
+        "4. The polytropic critical point, and the bound $\\gamma \\lt 3/2$"
+      ],
+      [
+        371,
+        "5. Bondi accretion: the same solution, run inward"
+      ],
+      [
+        418,
+        "6. The wind for the Sun, and the ceiling the model puts on itself"
+      ],
+      [
+        455,
+        "7. The anchor: the wind against Helios"
+      ],
+      [
+        668,
+        "8. The astrophysical check: Bondi accretion onto Sgr A*"
+      ],
+      [
+        839,
+        "9. What this model captures, and what it misses"
+      ],
+      [
+        858,
+        "10. Problems"
+      ],
+      [
+        924,
+        "Notation"
+      ],
+      [
+        950,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module10.html",
+    "lines": 1115,
+    "words": 17555,
+    "blocks": 332,
+    "headings": [
+      [
+        96,
+        "10. Turbulence"
+      ],
+      [
+        122,
+        "1. The nonlinear term, and the number that decides"
+      ],
+      [
+        156,
+        "2. Kolmogorov 1941, by dimensional analysis alone"
+      ],
+      [
+        235,
+        "3. The dissipation scale, and what a simulation would cost"
+      ],
+      [
+        297,
+        "4. The one exact result, and its minus sign"
+      ],
+      [
+        315,
+        "5. The terrestrial check: is there one Kolmogorov constant?"
+      ],
+      [
+        345,
+        "6. Four fluids, and the Knudsen number that disqualifies two"
+      ],
+      [
+        549,
+        "7. The anchor: the solar wind at 1 au"
+      ],
+      [
+        670,
+        "8. The cluster check: what \"static\" costs, measured"
+      ],
+      [
+        721,
+        "9. Supersonic turbulence, and the density it makes"
+      ],
+      [
+        846,
+        "10. The interstellar check: the size\u2013linewidth exponent"
+      ],
+      [
+        907,
+        "11. What this theory captures, and what it misses"
+      ],
+      [
+        926,
+        "12. Problems"
+      ],
+      [
+        998,
+        "Notation"
+      ],
+      [
+        1021,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module11.html",
+    "lines": 738,
+    "words": 11208,
+    "blocks": 205,
+    "headings": [
+      [
+        65,
+        "Accretion Discs"
+      ],
+      [
+        100,
+        "1. Gas with angular momentum cannot fall in"
+      ],
+      [
+        122,
+        "2. Disc kinematics, and the stability that is the problem"
+      ],
+      [
+        195,
+        "3. The anchor: the timescale gap"
+      ],
+      [
+        273,
+        "4. The viscous torque"
+      ],
+      [
+        285,
+        "5. How a disc spreads"
+      ],
+      [
+        304,
+        "6. The \u03b1 prescription, and what it is not"
+      ],
+      [
+        318,
+        "7. Vertical structure, and what \"thin\" means"
+      ],
+      [
+        347,
+        "8. The steady disc and its temperature"
+      ],
+      [
+        437,
+        "9. What a disc radiates, and the price of a Newtonian book"
+      ],
+      [
+        526,
+        "10. When a disc weighs too much"
+      ],
+      [
+        568,
+        "11. What supplies the stress, and how big \u03b1 is"
+      ],
+      [
+        653,
+        "12. What this theory captures, and what it misses"
+      ],
+      [
+        671,
+        "13. Problems"
+      ],
+      [
+        700,
+        "Notation"
+      ],
+      [
+        721,
+        "Sources"
+      ]
+    ]
+  },
+  {
+    "file": "module12.html",
+    "lines": 984,
+    "words": 17313,
+    "blocks": 321,
+    "headings": [
+      [
+        84,
+        "12. Magnetohydrodynamics"
+      ],
+      [
+        116,
+        "1. When is a fluid magnetised?"
+      ],
+      [
+        222,
+        "2. The induction equation, and why flux freezing is a number"
+      ],
+      [
+        278,
+        "3. Magnetic pressure and magnetic tension"
+      ],
+      [
+        307,
+        "4. Three wave speeds, and what one of them costs Module 7"
+      ],
+      [
+        360,
+        "5. The anchor: the Parker spiral"
+      ],
+      [
+        464,
+        "6. The Alfv\u00e9n surface, bracketed by two measurements"
+      ],
+      [
+        547,
+        "7. Magnetic support against collapse"
+      ],
+      [
+        595,
+        "8. Transport across a field, and the answer that is wrong by twenty-three decades"
+      ],
+      [
+        696,
+        "9. The magnetorotational instability"
+      ],
+      [
+        786,
+        "10. Anisotropy, critical balance, and Module 10 's debt"
+      ],
+      [
+        806,
+        "11. What this theory captures, and what it misses"
+      ],
+      [
+        831,
+        "12. Problems"
+      ],
+      [
+        921,
+        "Notation"
+      ],
+      [
+        946,
+        "Sources"
+      ]
+    ]
+  }
+]

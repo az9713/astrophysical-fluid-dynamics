@@ -1,0 +1,19 @@
+{
+  "checked_at_utc": "2026-09-21T04:52:05.573527+00:00",
+  "baseline_file_count": 217,
+  "unchanged_file_count": 216,
+  "changed_original_files": [
+    "HANDOFF.md"
+  ],
+  "missing_original_files": [],
+  "all_12_textbook_modules_unchanged": true,
+  "all_original_files_unchanged": false,
+  "baseline_head": "f93735fd035d4fd6e01376ad8415b61c54732709",
+  "head_now": "ff289c4c345a3dd83ebfdc7ef9c57384e3534515",
+  "additional_files_outside_audit_folder": [
+    ".ignore/m13-promises.md",
+    ".ignore/m13_prep_run.txt",
+    "afd/figs/m13_numbers.py"
+  ],
+  "note": "Codex audit writes were confined to codex-audit-2026-09-20. HANDOFF.md and checkout changes occurred outside those actions. Existing module10 and module12 working-copy changes were already in the baseline; their content hashes remain unchanged."
+}

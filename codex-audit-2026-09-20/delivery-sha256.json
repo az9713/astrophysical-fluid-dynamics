@@ -1,0 +1,9 @@
+{
+  "AUDIT_REPORT.html": "ef1b95ac525cdf9d36234233284ec5c3f44e7f10bfa1c46111c3fc3b3ce06740",
+  "AUDIT_REPORT.md": "9eed129e83e7003ccd2b47d7ddc2eeec87d55e01ae1cff1758fa506fff5ab4c1",
+  "findings.json": "ed58fbda9386d570e8fe7a3e06c957915f694e7d1023b6da709253c1b96489fb",
+  "independent-checks.json": "3a615b4594d52b55264938516457786916f607fff0c2a3e9a0d0f3ee775544a1",
+  "mechanical-checks.json": "1eca93511b7f8955fff906600681881a7c0ef22b7b586dc858db51d52ae9de15",
+  "integrity-verification.json": "359529543d516829bca999c8816723f3af5eb4cab1ac79a00059c09f7d109977",
+  "report-validation.json": "4a514c60eec15a4772df2969e66562f9c1cec922b41990028ad7794b7c55646e"
+}

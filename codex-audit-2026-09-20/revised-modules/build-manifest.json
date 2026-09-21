@@ -1,0 +1,293 @@
+{
+  "edition": "Codex revised copies",
+  "modules": [
+    {
+      "module": 1,
+      "source": "afd/module01.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module01.html",
+      "source_sha256": "0053d499a1511ffc24fd86065d9d4bd65dc9be251ec9397299a2d319d628c116",
+      "revised_sha256": "be648f2457c3c036e23d2662bb08f20aa8766feda4e075e1cb5dc784faa986fa",
+      "content_findings_applied": [
+        "C15",
+        "C16",
+        "C34",
+        "C08"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P02",
+        "P03",
+        "P04"
+      ],
+      "prose_edits_not_found_or_superseded": [
+        "P01"
+      ],
+      "dependent_repairs": []
+    },
+    {
+      "module": 2,
+      "source": "afd/module02.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module02.html",
+      "source_sha256": "e3645994e6b93229fdf26f5a7d6ec2ba96f0e8fd3e81d886bad91a7d5fbd3256",
+      "revised_sha256": "1598cc6ada2b7e90ea961b53c38b34d1034c3b57bc712b279c11f5540c97b459",
+      "content_findings_applied": [
+        "C29",
+        "C36",
+        "C07"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "prose_edits_not_found_or_superseded": [
+        "P08"
+      ],
+      "dependent_repairs": []
+    },
+    {
+      "module": 3,
+      "source": "afd/module03.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module03.html",
+      "source_sha256": "2fe7f35b52237e247c4e0468217d8fa3b91949f88b7edba3193eb27bcd63cee6",
+      "revised_sha256": "ff690502588f02790faa0bdc93fa6bb3b801f6918b54e70ae62239216967b1ff",
+      "content_findings_applied": [
+        "C09",
+        "C37"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P10",
+        "P11"
+      ],
+      "prose_edits_not_found_or_superseded": [
+        "P09",
+        "P12"
+      ],
+      "dependent_repairs": [
+        "hydrostatic result box"
+      ]
+    },
+    {
+      "module": 4,
+      "source": "afd/module04.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module04.html",
+      "source_sha256": "f6af36c2eb63ada009d57a8ecdfc0a35d02fc9fb0746d4f7ba8cbab85cbf97da",
+      "revised_sha256": "b92d396450c25c33094701fa2a824d47c89c524bfbe68691a4bd61107ca0172d",
+      "content_findings_applied": [
+        "C17"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P13",
+        "P14",
+        "P16"
+      ],
+      "prose_edits_not_found_or_superseded": [
+        "P15"
+      ],
+      "dependent_repairs": [
+        "sound-speed comparison wording"
+      ]
+    },
+    {
+      "module": 5,
+      "source": "afd/module05.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module05.html",
+      "source_sha256": "52481409ca04b5b8f031e361407d1e723188c3c5df14e785b63ba095287ab4f6",
+      "revised_sha256": "51042e2ad1079de7655a272492f945ad0e6b6bd8faed6bfc1289524a1dd5c1a2",
+      "content_findings_applied": [
+        "C14",
+        "C27",
+        "C35",
+        "C38"
+      ],
+      "prose_edits_applied_before_content_replacements": [],
+      "prose_edits_not_found_or_superseded": [
+        "P17",
+        "P18",
+        "P19",
+        "P20"
+      ],
+      "dependent_repairs": []
+    },
+    {
+      "module": 6,
+      "source": "afd/module06.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module06.html",
+      "source_sha256": "6d82b64cfa6eb49bebc2dab7276801c84d401f6b66d2797c88b38c7f0141184a",
+      "revised_sha256": "9356545aad562929ed26ae53652bf628cfa6302e184075676ef6e66a8f191510",
+      "content_findings_applied": [
+        "C10",
+        "C18",
+        "C19",
+        "C40"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P21",
+        "P22",
+        "P23",
+        "P24"
+      ],
+      "prose_edits_not_found_or_superseded": [],
+      "dependent_repairs": [
+        "effective-mu boundary claim"
+      ]
+    },
+    {
+      "module": 7,
+      "source": "afd/module07.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module07.html",
+      "source_sha256": "83e7da6181a763169abb1e80f73c69def566c4ceee6343563c01d42dcf37ebf0",
+      "revised_sha256": "f92df65e96b0db5a840acdb818d3d4c5f7ccc0106832297a4a22fd2408173ece",
+      "content_findings_applied": [
+        "C20",
+        "C31"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P25",
+        "P26",
+        "P27",
+        "P28"
+      ],
+      "prose_edits_not_found_or_superseded": [],
+      "dependent_repairs": [
+        "Module 8 Tycho dependency",
+        "Module 8 source-note dependency"
+      ]
+    },
+    {
+      "module": 8,
+      "source": "afd/module08.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module08.html",
+      "source_sha256": "8c4eb8877833684ab6d3e18c5fd7002f00d5b6be994bb904d687686abafa8274",
+      "revised_sha256": "53e9dc215cc47164d0991a8117a6026345d6db1eca60bdafa6a4320a6a651edd",
+      "content_findings_applied": [
+        "C21",
+        "C28",
+        "C03"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P31"
+      ],
+      "prose_edits_not_found_or_superseded": [
+        "P29",
+        "P30",
+        "P32"
+      ],
+      "dependent_repairs": [
+        "shock-figure TeX and prose",
+        "Tycho limits dependency"
+      ]
+    },
+    {
+      "module": 9,
+      "source": "afd/module09.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module09.html",
+      "source_sha256": "c7867c303a589319c4e17af2d86d68deee76c2da27ebcbcb6cb2f83e0f3935b2",
+      "revised_sha256": "0469a93ba8280ebe97e610eb4bb9e47f8df8ba3eb3e009f4fb1b9de984c686a8",
+      "content_findings_applied": [
+        "C01",
+        "C05",
+        "C22",
+        "C23"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P33",
+        "P34",
+        "P35",
+        "P36"
+      ],
+      "prose_edits_not_found_or_superseded": [],
+      "dependent_repairs": [
+        "Sgr A* opening summary",
+        "Sgr A* transition",
+        "lower-limit paragraph",
+        "Sgr A* figure caption",
+        "Sgr A* radial-scale caption",
+        "Bondi premise introduction",
+        "Bondi premise 3",
+        "Sgr A* exercise conclusion",
+        "Bondi-to-circularisation scale",
+        "Sgr A* limitations summary"
+      ]
+    },
+    {
+      "module": 10,
+      "source": "afd/module10.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module10.html",
+      "source_sha256": "dfac9473041fc64749d2a1945b8a9f5eafadfa961c5d1e047c4228cb14a36b09",
+      "revised_sha256": "70f3a977a1e037333d981f91c19debebae9dd419d538bca83df1242fc2fc875d",
+      "content_findings_applied": [
+        "C11",
+        "C24",
+        "C30",
+        "C39"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P37",
+        "P38",
+        "P39",
+        "P40"
+      ],
+      "prose_edits_not_found_or_superseded": [],
+      "dependent_repairs": [
+        "Venzmer fit-set dependency",
+        "log-density figure caption"
+      ]
+    },
+    {
+      "module": 11,
+      "source": "afd/module11.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module11.html",
+      "source_sha256": "f668cc32b68f27c620a5734f5206e67416dfefeb1217afba8865b40603fbd09d",
+      "revised_sha256": "796d86054d48706bedaee93dc7277e749264e3430ecd7e6d9598cd386ed1f201",
+      "content_findings_applied": [
+        "C06",
+        "C12",
+        "C25"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P41",
+        "P43",
+        "P44"
+      ],
+      "prose_edits_not_found_or_superseded": [
+        "P42"
+      ],
+      "dependent_repairs": [
+        "circularisation setup",
+        "disc-efficiency subsection",
+        "K2 interpretation"
+      ]
+    },
+    {
+      "module": 12,
+      "source": "afd/module12.html",
+      "destination": "codex-audit-2026-09-20/revised-modules/module12.html",
+      "source_sha256": "c355214a4d37d5fca297658eeee02f8ba0bbe4586d2416130f6f45fbd5386fae",
+      "revised_sha256": "08456e94b0406b1fd6ba71e3eb03a000eae51f9c45419354956fe088753e1378",
+      "content_findings_applied": [
+        "C02",
+        "C04",
+        "C13",
+        "C26",
+        "C32",
+        "C33"
+      ],
+      "prose_edits_applied_before_content_replacements": [
+        "P45",
+        "P46",
+        "P47",
+        "P48"
+      ],
+      "prose_edits_not_found_or_superseded": [],
+      "dependent_repairs": [
+        "removed misleading transport ladder",
+        "transport interpretation",
+        "D3 conductivity solution",
+        "D3 viscosity solution",
+        "K3 complete-turn count",
+        "gyro-phase result box"
+      ]
+    }
+  ],
+  "prose_rewrite": "paragraph-level pass; see prose-rewrite-manifest.json"
+}

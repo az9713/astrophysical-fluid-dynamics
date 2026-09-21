@@ -1,0 +1,295 @@
+92: Module 1 — Why a Fluid at All?
+93: The continuum condition for astrophysical gases: the mean free path, the Knudsen number, and the four systems in which the fluid picture fails outright.
+98: 1. The problem: a fluid emptier than any vacuum ever built
+99: 2. What a fluid description actually claims
+100: 3. Collisions, and the local Maxwellian
+101: 4. The mean free path I — a gas of neutral atoms
+102: 5. The mean free path II — a gas of charges
+103: 6. The Knudsen number and the Chapman–Enskog hierarchy
+104: 7. A census of astrophysical gases
+105: 8. Where the fluid picture fails, and what rescues it
+106: 9. What this model captures, and what it misses
+107: 10. Problems
+108: — Notation · Sources
+114: 1. The problem: a fluid emptier than any vacuum ever built
+116: Everything in this book rests on four equations — conservation of mass, of momentum, of energy, and an equation of state — applied to a substance treated as a continuum. Later modules use them to compute the radius of a supernova remnant (Module 8), the mass at which an interstellar cloud must collapse (Module 5), and the rate at which a black hole can swallow gas (Module 9). Before any of that, one question has to be settled, and it is not a formality.
+118: A continuum has a density at every point. Real gas does not: it is a finite number of particles with empty space between them. The fluid equations are an approximation whose validity has to be earned, and in astrophysics the gas is thin enough that earning it is not obvious.
+120: Here is the scale of the problem. A specialist vacuum laboratory can routinely pump a chamber down to about $10^{-13}$ torr. At room temperature that pressure corresponds to a number density
+124: where $P$ is the pressure, $T$ the absolute temperature, and $k_B$ Boltzmann's constant. The warm neutral interstellar medium — the gas that fills most of the volume of the Milky Way's disc — has a number density of roughly $0.5\ \mathrm{cm^{-3}}$. It is therefore about $6.4\times10^{3}$ times more rarefied than that laboratory vacuum. Even against the lowest reported laboratory pressures, near $10^{-15}$ torr and $32\ \mathrm{cm^{-3}}$, the interstellar medium is still 64 times emptier.
+128: So the object we are about to call a fluid is, by a wide margin, emptier than the emptiest thing anyone has ever built. And yet the fluid equations describe it well. The purpose of this module is to say exactly why, to produce the single number that decides the question, and to identify the systems where the answer comes out the other way.
+130: The logic runs in one direction and each step depends on the last. A fluid description is a claim that the velocity distribution of the particles is fixed by a handful of local numbers ( §2 ). Collisions are what make that claim true ( §3 ). How far a particle travels between collisions is the mean free path, computed for neutral gas in §4 and for ionised gas in §5 . Comparing that length to the size of the structure you want to resolve gives the Knudsen number, and the size of the Knudsen number decides which equations you are entitled to write down ( §6 ).
+132: 2. What a fluid description actually claims
+134: Start with the complete description and then say what the fluid description throws away.
+136: Definition 1 (distribution function). For a gas of identical particles of mass $m$, the distribution function $f(\mathbf{x},\mathbf{v},t)$ is defined so that
+$$f(\mathbf{x},\mathbf{v},t)\,d^3x\,d^3v$$
+is the number of particles that at time $t$ lie in the spatial volume $d^3x$ about position $\mathbf{x}$ and have velocities in the volume $d^3v$ about $\mathbf{v}$. Its dimensions are (number) $\times$ (length)$^{-3}$ $\times$ (velocity)$^{-3}$; in CGS units, $\mathrm{cm^{-6}\,s^{3}}$. Here $\mathbf{x}\in\mathbb{R}^3$ is a laboratory-frame position and $\mathbf{v}\in\mathbb{R}^3$ a particle velocity, and $f\ge 0$ everywhere.
+140: The distribution function carries everything there is to know about the gas short of tracking individual particles. Its evolution is governed by the Boltzmann equation,
+144: in which $\mathbf{a}$ is the acceleration produced by any smooth external force — gravity, a large-scale electric or magnetic field — and the right-hand side collects the effect of short-range encounters between particles. The three terms on the left say that $f$ is conserved along particle trajectories in the six-dimensional space $(\mathbf{x},\mathbf{v})$; the term on the right says that collisions move particles abruptly from one velocity to another and therefore break that conservation.
+146: Equation (2.1) is exact and unusable. It is a partial differential equation for a function of six variables plus time, and the collision term is an integral over the velocities of every possible collision partner. The fluid description is the bet that we never need it.
+148: Definition 2 (fluid, or continuum, description). A gas admits a fluid description when, to the accuracy required, $f$ is determined at every point by five local numbers: the number density
+$$ n(\mathbf{x},t) = \int f\,d^3v, $$
+the three components of the bulk velocity
+$$ \mathbf{u}(\mathbf{x},t) = \frac{1}{n}\int \mathbf{v}\,f\,d^3v, $$
+and the temperature $T(\mathbf{x},t)$, defined from the mean square random velocity by
+$$ \frac{3}{2}k_B T(\mathbf{x},t) = \frac{1}{n}\int \tfrac{1}{2}m\,|\mathbf{v}-\mathbf{u}|^2 f\,d^3v. $$
+Specifically, $f$ is taken to be the local Maxwellian built from those five numbers,
+$$ f_M(\mathbf{v}) \;=\; n\left(\frac{m}{2\pi k_B T}\right)^{3/2}\exp\!\left[-\frac{m|\mathbf{v}-\mathbf{u}|^2}{2k_B T}\right], \tag{2.2}$$
+plus a correction that is small in a sense made precise in §3 .
+158: The saving is enormous: a function of six variables collapses to five functions of three. But nothing so far explains why $f$ should be Maxwellian. That is the work of collisions.
+160: 3. Collisions, and the local Maxwellian
+162: Boltzmann's H -theorem states that the collision term in (2.1) drives $f$ towards the Maxwellian (2.2) and that the Maxwellian is the only distribution the collision term leaves alone. We take that result as given; what we need here is not the theorem but its rate , because a gas is only Maxwellian if the collisions get there before the flow carries the gas somewhere else.
+164: The cheapest honest model of the collision term is the relaxation, or BGK, approximation, due to Bhatnagar, Gross and Krook (1954):
+168: where $\tau$ is the collision time , the mean interval between collisions suffered by one particle. Equation (3.1) says only this: collisions push $f$ towards the local Maxwellian, and they do it on a timescale $\tau$. It is not exact — it replaces a complicated integral operator by a single relaxation rate — but it reproduces the scaling we need, and that scaling is the whole content of this section.
+170: Definition 3 (mean free path and collision time). The mean free path $\lambda$ is the average distance a particle travels between successive collisions. The collision time is $\tau = \lambda / v_{\rm th}$, where $v_{\rm th}=\sqrt{2k_BT/m}$ is the thermal speed. Both are local quantities: they depend on the density and temperature at the point in question.
+172: Proposition 1 (the departure from Maxwellian is first order in $\lambda/L$). Let a gas obey (2.1) with the collision term (3.1), let it be in a steady state with no external acceleration, and let all five of its macroscopic fields vary over a common length scale $L$, meaning $|\nabla \ln n| \sim |\nabla\ln T| \sim |\nabla\mathbf{u}|/v_{\rm th} \sim 1/L$. Then the fractional departure of $f$ from the local Maxwellian obeys
+$$\boxed{\;\frac{|f - f_M|}{f_M} \;\sim\; \frac{\lambda}{L}\;}\tag{3.2}$$
+177: Put the collision term (3.1) into the steady, force-free Boltzmann equation (2.1):
+$$ \mathbf{v}\cdot\nabla_{\mathbf{x}} f = -\frac{f-f_M}{\tau} \qquad\Longrightarrow\qquad f - f_M = -\,\tau\,\mathbf{v}\cdot\nabla_{\mathbf{x}} f. $$
+This is exact for the model. Now estimate the size of the right-hand side. To leading order $f\approx f_M$ on the right, so
+$$ f - f_M \;\approx\; -\,\tau\,\mathbf{v}\cdot\nabla_{\mathbf{x}} f_M. $$
+The Maxwellian $f_M$ depends on position only through $n$, $\mathbf{u}$ and $T$. Differentiating (2.2) gives three terms, $\nabla\ln n$, a term in $\nabla T$ carrying a factor $m|\mathbf{v}-\mathbf{u}|^2/2k_BT$, and a term in $\nabla\mathbf{u}$ carrying a factor $m(\mathbf{v}-\mathbf{u})/k_BT$. For a particle in the thermal bulk of the distribution both factors are of order one, so the hypothesis of the proposition makes all three terms of order $1/L$ and $|\nabla_{\mathbf{x}} f_M| \sim f_M/L$. (For a particle far out in the tail they are not of order one, which is the same weakness that §5.3 meets again in the Coulomb average.) A typical particle has $|\mathbf{v}|\sim v_{\rm th}$. Therefore
+$$ \frac{|f-f_M|}{f_M} \;\sim\; \frac{\tau\, v_{\rm th}}{L} \;=\; \frac{\lambda}{L}, $$
+using $\tau = \lambda/v_{\rm th}$ from Definition 3. ∎
+187: Proposition 1 is the hinge of the entire module, so it is worth saying in words what the algebra did. A particle arriving at a point carries the properties of the place where it last collided, one mean free path away. If the gas changes appreciably over that distance, the arriving particles are a mixture of populations from measurably different conditions, and their combined velocity distribution is not the Maxwellian of the point they have arrived at. The mismatch is proportional to how much the gas changes over one mean free path, which is $\lambda/L$. If $\lambda/L$ is small, every particle arriving at a point comes from somewhere effectively identical, and the local Maxwellian is exact for all practical purposes.
+189: Everything now reduces to computing $\lambda$, which is a different calculation for neutral gas and for ionised gas.
+191: 4. The mean free path I — a gas of neutral atoms
+193: Neutral atoms interact only when they nearly touch. That makes the calculation short.
+195: Definition 4 (collision cross-section). For two particles whose interaction has a finite range, the collision cross-section $\sigma$ is the area, measured perpendicular to the relative velocity, within which the centre of a target must lie for a collision to occur. For hard spheres of radius $a$, a collision happens when the centres approach within $d=2a$, so $\sigma = \pi d^2$. Its dimensions are those of an area; in CGS, $\mathrm{cm^2}$.
+197: Proposition 2 (hard-sphere mean free path). In a gas of number density $n$ whose particles collide with cross-section $\sigma$,
+$$\boxed{\;\lambda \;=\; \frac{1}{n\sigma}\;}\tag{4.1}$$
+up to a factor of order unity that accounts for the motion of the targets.
+201: Setup. In travelling a distance $\lambda$ the moving particle (orange) sweeps out a cylinder of cross-sectional area $\sigma=\pi d^2$. The targets whose centres fall inside the cylinder (teal) are exactly the ones it strikes; those outside (grey) are missed. Setting the expected number inside to one defines $\lambda$. Consider one particle moving through a stationary field of targets of number density $n$. In travelling a distance $\ell$ it sweeps out a cylinder of cross-sectional area $\sigma$ and volume $\sigma\ell$. A target is struck if and only if its centre lies inside that cylinder, as Fig. 1 shows, so the expected number of collisions in distance $\ell$ is $n\sigma\ell$. The mean free path is the distance at which that expectation reaches one:
+$$ n\sigma\lambda = 1 \qquad\Longrightarrow\qquad \lambda = \frac{1}{n\sigma}. $$
+The targets are not in fact stationary. Averaging over a Maxwellian distribution of target velocities replaces the particle speed by the mean relative speed, which is larger by $\sqrt{2}$, and gives $\lambda = 1/(\sqrt{2}\,n\sigma)$. We keep the simpler form, because the atomic cross-sections we are about to use are themselves uncertain by more than $41\%$. ∎
+230: Setup. In travelling a distance $\lambda$ the moving particle (orange) sweeps out a cylinder of cross-sectional area $\sigma=\pi d^2$. The targets whose centres fall inside the cylinder (teal) are exactly the ones it strikes; those outside (grey) are missed. Setting the expected number inside to one defines $\lambda$.
+236: 4.1 Worked case: the solar photosphere
+238: The photosphere is the layer of the Sun from which visible light escapes — conventionally, the surface at which the optical depth in the visible reaches $2/3$. There the gas pressure is about $1.2\times10^{5}\ \mathrm{dyn\,cm^{-2}}$, and the temperature is close to the Sun's effective temperature, $T_{\rm eff}=5772\ \mathrm{K}$. The second statement is not a coincidence but very nearly a definition: in a grey atmosphere the Eddington approximation gives $T^4(\tau) = \tfrac{3}{4}T_{\rm eff}^4(\tau+\tfrac{2}{3})$, so $T=T_{\rm eff}$ exactly at $\tau=2/3$, which is the surface we have just chosen. We do not need to look up the density; the ideal gas law gives it:
+244: Then (4.1) gives
+248: Sixty-six micrometres, in an object $6.957\times10^{10}\ \mathrm{cm}$ across. Section §6 turns that comparison into a number.
+250: 5. The mean free path II — a gas of charges
+252: Most astrophysical gas is ionised, and the argument of §4 breaks at the first step. The Coulomb force has no range: two charges interact at any separation, so there is no distance $d$ inside which a collision happens and outside which it does not. Worse, the naive cross-section diverges. We have to define what counts as a collision.
+254: 5.1 The distance of closest approach, and what counts as a collision
+256: Consider two particles of charge $Z_1e$ and $Z_2e$ with reduced mass $\mu = m_1m_2/(m_1+m_2)$, approaching with relative speed $v_{\rm rel}$ and impact parameter $b$ — the perpendicular distance between the incoming asymptote and the target. Classical two-body Coulomb scattering gives the deflection angle $\theta$ through
+260: The length $b_{90}$ is therefore the impact parameter that produces a $90^\circ$ deflection, which is why it carries that subscript. For a gas of like particles of charge $e$ and mass $m$ at temperature $T$, we have $\mu=m/2$, and the mean square relative speed of two independently Maxwellian particles is $\langle v_{\rm rel}^2\rangle = 2\langle v^2\rangle = 6k_BT/m$. Hence $\mu\langle v_{\rm rel}^2\rangle = 3k_BT$ and
+264: One step there deserves to be named rather than passed over. Equation (5.1) defines $b_{90}$ for a single pair with a definite relative speed; (5.2) substitutes the mean square relative speed of the whole distribution. Since $b_{90}\propto v_{\rm rel}^{-2}$, and the average of a reciprocal is not the reciprocal of an average, (5.2) is an approximation and not a consequence of (5.1). It is a good enough one to carry the scaling, and §5.3 measures exactly how much it costs: a factor of 2.05 in the final answer, which is why the numerical coefficient there is taken from the properly averaged calculation rather than from this one.
+266: At the temperature of the gas between galaxies, $T=10^8\ \mathrm{K}$, equation (5.2) gives $b_{90}=5.6\times10^{-12}\ \mathrm{cm}$, which is $1.8\times10^{3}$ times smaller than the $10^{-8}\ \mathrm{cm}$ scale of an atom. If only encounters closer than $b_{90}$ counted, the cross-section would be $\pi b_{90}^2 = 9.7\times10^{-23}\ \mathrm{cm^2}$ and ionised gas would essentially never collide. It does collide, and the reason, drawn in Fig. 2, is that the many distant, feeble encounters add up.
+292: A test charge (orange) passes a field charge (violet) at impact parameter $b$ and leaves deflected by a small angle $\theta \approx 2b_{90}/b$. Encounters at every $b$ from a lower cut-off $b_{\min}$ out to the Debye length $\lambda_D$ contribute equally per logarithmic interval; the logarithm of that ratio is the Coulomb logarithm of Definition 5. The dotted inner circle marks $b_{90}$, which is the lower cut-off only when it exceeds the quantum limit; for electrons in the intracluster medium it does not, and $b_{\min}$ is 31 times larger than the circle drawn. The radial scale is schematic throughout: $\lambda_D/b_{\min}$ for that plasma is $1.3\times10^{16}$, not the factor of six shown.
+294: 5.2 Why the answer contains a logarithm
+296: For $b \gg b_{90}$, equation (5.1) linearises to $\theta \approx 2b_{90}/b$. Single distant encounters are weak, but they are numerous, because the number of targets at impact parameters between $b$ and $b+db$ grows as $2\pi b\,db$. The deflections have random signs, so they do not add; their squares do. A particle moving at speed $v$ through targets of density $n$ accumulates mean square deflection at the rate
+300: The integral is $\ln(b_{\max}/b_{\min})$. Every decade of impact parameter contributes equally: the weakness of distant encounters is exactly cancelled by how many of them there are. This is why the Coulomb result is dominated not by close collisions but by the accumulated effect of many grazing ones, and why the limits of the integral must be supplied by physics outside the two-body problem.
+302: The upper limit is set by screening. In a plasma, a positive charge attracts electrons and repels ions until its field is neutralised beyond the Debye length
+306: where $n_e$ is the electron number density. Past $\lambda_D$ there is no field left to scatter off, so $b_{\max}=\lambda_D$. The lower limit is the larger of two lengths: the classical $b_{90}$, below which the linearisation fails, and the reduced de Broglie length $\hbar/(m v)$, below which the notion of a classical impact parameter fails outright, because the particle cannot be localised transversely to better than that. (The reduced de Broglie length is not the thermal de Broglie wavelength $h/\sqrt{2\pi m k_B T}$, which at $T=10^8$ K is $7.45\times10^{-10}\ \mathrm{cm}$, larger by a factor of 4.34; the two are easily confused, and the choice shifts $\ln\Lambda$ by 1.5.) Their ratio defines
+308: Definition 5 (Coulomb logarithm). $\displaystyle \ln\Lambda \;\equiv\; \ln\frac{b_{\max}}{b_{\min}} \;=\; \ln\frac{\lambda_D}{\max\!\left[\,b_{90},\;\hbar/(m_e v_e)\,\right]}$, with $v_e=\sqrt{3k_BT/m_e}$ the electron thermal speed. For astrophysical plasmas $\ln\Lambda$ lies between about 2 and 40, and because it is a logarithm it is nearly constant: a factor of ten in density changes it by about 1.
+310: Evaluate it for the intracluster medium, $n_e=10^{-3}\ \mathrm{cm^{-3}}$ and $T=10^8\ \mathrm{K}$. Equation (5.4) gives $\lambda_D = 2.18\times10^{6}\ \mathrm{cm}$, or 21.8 km. The classical $b_{90}$ is $5.57\times10^{-12}\ \mathrm{cm}$; the electron de Broglie length is $\hbar/(m_ev_e) = 1.72\times10^{-10}\ \mathrm{cm}$, which is 31 times larger and therefore the one that applies. Then
+314: Check. Sarazin (1988), eq. 5.33, gives $\ln\Lambda = 37.8$ for intracluster conditions. Our 37.1 differs by 2%, the residue of factor-of-two conventions in $b_{\min}$. The quantum limit matters: had we used the classical $b_{90}$, we would have obtained $\ln\Lambda=40.5$, which is wrong by 7%.
+316: 5.3 The Coulomb mean free path
+318: Proposition 3 (Coulomb mean free path). In a hydrogen plasma of electron density $n_e$ and temperature $T$, a thermal particle is deflected through a large angle after travelling
+$$\boxed{\;\lambda \;=\; C\,\frac{(k_BT)^2}{n_e e^4 \ln\Lambda}\;}\tag{5.6}$$
+with $C$ a dimensionless constant of order unity. The single-speed estimate of this section gives $C = 9/8\pi = 0.358$; the Maxwellian-averaged calculation of Spitzer (1962) gives $C = 3^{3/2}/(4\sqrt{\pi}) = 0.733$. The same expression holds for electrons and for protons, and for singly charged ions it gives the same distance for both.
+322: Define the deflection time $t_{\rm def}$ as the time for the accumulated mean square deflection to reach one radian squared. From (5.3), with the integral evaluated as $\ln\Lambda$,
+$$ \langle\theta^2\rangle = 8\pi n v\, b_{90}^2\,\ln\Lambda\; t \;=\; 1 \qquad\Longrightarrow\qquad t_{\rm def} = \frac{1}{8\pi n v\, b_{90}^2 \ln\Lambda}. $$
+The mean free path is the distance covered in that time, $\lambda = v\,t_{\rm def}$, and the speed cancels:
+$$ \lambda \;=\; \frac{1}{8\pi n\, b_{90}^2 \ln\Lambda}. $$
+Substituting $b_{90}=e^2/(3k_BT)$ from (5.2),
+$$ \lambda \;=\; \frac{9(k_BT)^2}{8\pi n e^4 \ln\Lambda}, $$
+which is (5.6) with $C = 9/8\pi = 0.358$. The estimate is crude in one identifiable way: it assigns every particle the same speed $v$, whereas $\lambda$ depends on speed as $v^4$ through $b_{90}^2 \propto v^{-4}$, so the fast tail of the Maxwellian contributes far more than a single-speed average allows. Carrying out the average properly (Spitzer 1962) raises the coefficient to $3^{3/2}/(4\sqrt{\pi}) = 0.733$, a factor of $2.05$. All numerical values quoted in this book use the Spitzer coefficient. ∎
+332: The mass-independence is worth a moment, because it is easy to misread. Neither $b_{90}$ nor $\lambda$ contains the particle mass: $b_{90}=e^2/3k_BT$ depends on the charge and the temperature alone. So at a common temperature an electron and a proton in the same plasma travel the same distance between large-angle deflections, even though the electron moves $\sqrt{m_p/m_e}=42.9$ times faster. What differs by that factor is the time , not the distance: the electron completes its 22 kpc in $1/43$ of the time the proton takes. For ions of charge $Ze$ the distance shortens as $Z^{-4}$, since $b_{90}\propto Z^2$ enters squared.
+334: Read the scaling before the numbers. The mean free path goes as $T^2/n$: hot, thin plasma is nearly collisionless, and cold, dense plasma is strongly collisional. The $T^2$ is the more surprising half. It comes from $b_{90}\propto T^{-1}$ squared — a fast particle spends less time near any given target and is deflected less — and it is steep enough that a factor of 10 in temperature changes the mean free path by 100.
+336: Check against a published value. For $n_e = 10^{-3}\ \mathrm{cm^{-3}}$, $T=10^8\ \mathrm{K}$ and $\ln\Lambda = 37.8$, equation (5.6) with the Spitzer coefficient gives $\lambda = 22.5\ \mathrm{kpc}$. Sarazin (1988), eq. 5.32, tabulates $\lambda_e = 23\ \mathrm{kpc}\,(T/10^8\,\mathrm{K})^2 (n_e/10^{-3}\,\mathrm{cm^{-3}})^{-1}$. The ratio is $0.978$. The crude coefficient would have given 11 kpc, low by a factor of two — enough to matter, not enough to change any conclusion in this module.
+338: 6. The Knudsen number and the Chapman–Enskog hierarchy
+340: Definition 6 (Knudsen number). $\displaystyle \mathrm{Kn} \;\equiv\; \frac{\lambda}{L}$, where $\lambda$ is the local mean free path and $L$ is the smallest length scale on which the problem requires the answer to be correct.
+342: The second half of that definition is not a technicality, and it is where most errors of judgement enter. The Knudsen number is a property of the question, not of the gas. The photospheric gas of §4.1 has one mean free path, 66 µm, but two Knudsen numbers. Measured against the solar radius it is $9.6\times10^{-14}$; measured against the pressure scale height of about 150 km, which is the scale on which convection organises itself and therefore the scale a model of granulation must resolve, it is $4.4\times10^{-10}$. Both are minute, so here the distinction changes nothing. In §7 we meet a case where it changes everything.
+344: Proposition 1 established that $f - f_M$ is of order $\mathrm{Kn}$. The systematic exploitation of that fact is the Chapman–Enskog expansion, which posits
+348: and takes moments of the Boltzmann equation order by order. Each order produces a different set of fluid equations.
+351: Order retained Equations obtained What they contain Truncation error Usable for
+352: $\mathrm{Kn}^0$ Euler Pressure only; no viscosity, no conduction. Entropy conserved along streamlines. $O(\mathrm{Kn})$ $\mathrm{Kn}\lesssim10^{-2}$
+353: $\mathrm{Kn}^1$ Navier–Stokes Viscous stress $\propto\mu\nabla\mathbf{u}$ and heat flux $\propto-\kappa\nabla T$, with $\mu$ and $\kappa$ computed from $\lambda$. $O(\mathrm{Kn}^2)$ $10^{-2}\lesssim\mathrm{Kn}\lesssim10^{-1}$
+354: $\mathrm{Kn}^2$ Burnett Higher gradient terms. Known to admit unphysical short-wavelength instabilities. $O(\mathrm{Kn}^3)$, but unstable rarely usable
+355: $\mathrm{Kn}\gtrsim10^{-1}$ none — the series fails No closed fluid description exists; the kinetic equation (2.1) must be solved. — —
+358: The thresholds in the last column are conventions, and it is worth saying where they come from rather than leaving them to look like measurements. Truncating (6.1) after the term of order $\mathrm{Kn}^{k}$ leaves a relative error of order $\mathrm{Kn}^{k+1}$, so demanding one per cent accuracy from the Euler equations demands $\mathrm{Kn}\lesssim10^{-2}$, and the same demand on Navier–Stokes admits $\mathrm{Kn}\lesssim10^{-1}$. Engineering practice in rarefied gas dynamics draws the same boundaries and adds a fourth regime above $\mathrm{Kn}\approx10$, where particles cross the whole system without meeting each other. This book does not use that last distinction, because the astrophysical question is only ever whether a fluid description exists at all.
+360: Modules 2 to 11 of this book use the Euler equations. That is the first row, and it is the right choice for most astrophysical problems — but only because the Knudsen numbers come out where they do, which is the subject of the next section. The transport coefficients in the second row are worth deriving now, because their scaling produces one of the more consequential results in the book.
+362: Proposition 4 (transport coefficients, and the Spitzer $T^{5/2}$ law). A gas of mass density $\rho$, thermal speed $v_{\rm th}$ and mean free path $\lambda$ has dynamic viscosity and thermal conductivity
+$$ \mu \;\simeq\; \tfrac{1}{3}\rho\, v_{\rm th}\lambda, \qquad \kappa \;\simeq\; \tfrac{1}{3}n k_B v_{\rm th}\lambda. \tag{6.2}$$
+For a fully ionised plasma, substituting the Coulomb mean free path (5.6) gives
+$$\boxed{\;\mu \;\propto\; \frac{T^{5/2}}{\ln\Lambda}, \qquad \kappa \;\propto\; \frac{T^{5/2}}{\ln\Lambda}\;}\tag{6.3}$$
+both independent of density.
+368: Take a shear flow $\mathbf{u}=u_x(z)\hat{\mathbf{x}}$ and consider the plane $z=z_0$. Particles crossing it downward last collided at about $z_0+\lambda$ and carry the $x$-momentum of that height, $m u_x(z_0+\lambda)$; those crossing upward carry $m u_x(z_0-\lambda)$. The one-sided flux of particles through the plane is taken as $\tfrac{1}{6}n v_{\rm th}$ in each direction, the factor $1/6$ arising because on average one third of the particles move along any one axis and half of those in each direction. That is the six-ray approximation, in which every particle travels along a coordinate axis; the exact one-sided flux of a Maxwellian is $\tfrac{1}{4}n\langle v\rangle$, larger by about a factor of $1.5$. The approximation is kept because it makes the mechanism visible and because the $\simeq$ in (6.2) claims no better. The net transport of $x$-momentum per unit area per unit time is therefore
+$$ \Pi_{xz} \;=\; \tfrac{1}{6}n v_{\rm th}\,m\left[u_x(z_0-\lambda) - u_x(z_0+\lambda)\right] \;\approx\; -\tfrac{1}{3}n m v_{\rm th}\lambda\,\frac{du_x}{dz}. $$
+Comparison with the definition $\Pi_{xz} = -\mu\, du_x/dz$ gives $\mu = \tfrac{1}{3}\rho v_{\rm th}\lambda$ with $\rho = nm$. Repeating the argument with thermal energy $\tfrac{3}{2}k_BT$ in place of momentum, and defining $\kappa$ by $q_z = -\kappa\,dT/dz$, gives the second expression in (6.2) to the same accuracy.
+
+Now substitute. Writing $\lambda$ from (5.6),
+$$ \mu \;\simeq\; \tfrac{1}{3}\,(n m)\,v_{\rm th}\,\frac{C (k_BT)^2}{n e^4\ln\Lambda} \;=\; \frac{C\,m\,v_{\rm th}(k_BT)^2}{3 e^4 \ln\Lambda}, $$
+in which the density has cancelled — the mean free path grows as $1/n$ exactly as fast as the number of momentum carriers grows as $n$. Since $v_{\rm th}\propto T^{1/2}$, the temperature dependence is $T^{1/2}\times T^2 = T^{5/2}$, which is (6.3). The same cancellation and the same powers apply to $\kappa$. ∎
+378: Two consequences are worth stating plainly. First, the density-independence of viscosity is not an artefact of the plasma case: it is Maxwell's result for any gas. He derived it in 1860, did not believe the experiments then available, and tested it himself with Katherine Maxwell in 1865–66, finding the viscosity of air constant over a wide range of pressure. Second, the $T^{5/2}$ law makes hot plasma a very good conductor of heat. Raising the temperature from $10^6$ to $10^8$ K raises $\kappa$ by $(100)^{5/2}=10^5$ from the power alone, or by $8.8\times10^{4}$ once the accompanying rise in $\ln\Lambda$ from 32.5 to 37.1 is included. This is why unsuppressed thermal conduction would erase the temperature structure observed in cluster cores within a fraction of the cluster's age, and it is the reason the question of what suppresses it is a live one. We return to it in Module 12, where magnetic fields provide the answer.
+380: 7. A census of astrophysical gases
+382: We can now place real systems. Fig. 3 shows the density–temperature plane for ionised gas, with contours of constant Coulomb mean free path from (5.6) and the principal astrophysical plasmas marked. The contours are lines of $T^2/n = \mathrm{constant}$, bent slightly by the variation of $\ln\Lambda$ across the plane.
+463: The density–temperature plane for ionised astrophysical gas, spanning 32 decades in density and five in temperature. Dashed contours mark constant Coulomb mean free path $\lambda$ computed from (5.6); dots mark real systems, each annotated with the Knudsen number obtained by dividing $\lambda$ by that system's own characteristic size. The evidence this figure supports is that $\lambda$ alone decides nothing: the solar corona and the hot interstellar medium sit eleven decades apart in density, $3\times10^{8}$ against $3\times10^{-3}\ \mathrm{cm^{-3}}$, yet their Knudsen numbers differ by only a factor of 2.8 — $2.5\times10^{-2}$ against $8.9\times10^{-3}$ — because their sizes differ by nearly as much as their mean free paths do. Only ionised systems are plotted: for the neutral gases of §4 the contours do not apply.
+466: Fig. 4 collapses the same information onto the axis that actually decides which equations may be used.
+522: Six systems, three ionised and three neutral, placed on the Knudsen axis against the validity ranges of §6 . They span 9.6 decades, from $4.4\times10^{-10}$ to $1.9$. The evidence this figure supports is the central claim of the module: astrophysical gas is almost always deep inside the Euler regime despite being extraordinarily rarefied, because $L$ is astronomical too — and the one system here that a spacecraft can visit directly, the solar wind, is the one that falls off the end.
+525: The table collects the numbers behind the two figures.
+528: System $n$ / cm$^{-3}$ $T$ / K $\lambda$ $L$ Kn Model
+529: Solar photosphere $1.5\times10^{17}$ 5772 66 µm 150 km $4.4\times10^{-10}$ Euler
+530: Room air (for scale) $2.5\times10^{19}$ 293 68 nm 3 m $2.3\times10^{-8}$ Euler
+531: Warm neutral ISM 0.5 8000 134 AU 100 pc $6.5\times10^{-6}$ Euler
+532: Intracluster medium, core $10^{-2}$ $3\times10^{7}$ 0.22 kpc 100 kpc $2.2\times10^{-3}$ Euler
+533: Intracluster medium, outskirts $10^{-4}$ $10^{8}$ 222 kpc 2 Mpc $1.1\times10^{-1}$ marginal
+534: Solar wind at 1 AU 5 $1.2\times10^{5}$ 1.9 AU 1 AU $1.9$ none
+539: Three readings of the table matter. First, the size of astrophysical systems buys back most of what their rarefaction costs, but not always all of it, and the two cases are worth separating. Room air has $\mathrm{Kn}=2.3\times10^{-8}$. The solar photosphere is 165 times more rarefied than room air and yet reaches $\mathrm{Kn}=4.4\times10^{-10}$, smaller by a factor of 51, because the scale it must resolve is 150 km rather than 3 m. The warm neutral interstellar medium does worse: its mean free path of 134 AU, set against 100 pc, gives $\mathrm{Kn}=6.5\times10^{-6}$, which is 286 times larger than room air's. There, rarefaction wins. The conclusion survives anyway, and that is the real point — $6.5\times10^{-6}$ still sits more than three decades below the $\mathrm{Kn}\approx10^{-2}$ ceiling of the Euler regime. The fluid description holds for interstellar gas not because that gas resembles air but because it has three decades of margin to spend.
+541: Second, the intracluster medium is where the approximation begins to strain, and it strains at the edges rather than the centre, because density falls outward faster than temperature does. Third, one row is different in kind.
+543: 8. Where the fluid picture fails, and what rescues it
+545: 8.1 The solar wind, and the magnetic rescue
+547: At 1 AU the solar wind has $\mathrm{Kn}\approx1.9$. By the hierarchy of §6 there should be no fluid description of it at all, and the situation is more extreme than $\mathrm{Kn}\approx2$ on its own suggests. Take the radial scalings of problem K1 , under which $\lambda(r) = 1.94\,r^{-2/3}$ AU with $r$ measured in AU, and integrate the collision rate along the outflow. The expected number of Coulomb collisions a proton suffers between the corona and Earth's orbit is
+$$ \int_0^{1}\frac{dr}{\lambda(r)} \;=\; \frac{1}{1.94}\int_0^1 r^{2/3}\,dr \;=\; \frac{3}{5\times1.94} \;=\; 0.31. $$
+Fewer than one proton in three arriving at Earth has collided even once since it left the Sun. And yet magnetohydrodynamic models of the solar wind reproduce its large-scale structure — the spiral field, the stream interaction regions, the propagation of coronal mass ejections — with considerable success. Something other than collisions is confining the particles.
+551: Proposition 5 (gyroradius). A particle of mass $m$, charge $Ze$ and speed $v_\perp$ perpendicular to a uniform magnetic field $\mathbf{B}$ moves on a circle of radius
+$$\boxed{\;r_g \;=\; \frac{m v_\perp c}{Z e B}\;}\tag{8.1}$$
+in Gaussian units, where $c$ is the speed of light. Its motion parallel to $\mathbf{B}$ is unaffected.
+555: The Lorentz force on the particle is $\mathbf{F} = (Ze/c)\,\mathbf{v}\times\mathbf{B}$. Decompose $\mathbf{v}$ into components parallel and perpendicular to $\mathbf{B}$. The parallel component contributes nothing to the cross product, so $\mathbf{F}$ has no component along $\mathbf{B}$ and the parallel motion is force-free. The perpendicular component gives a force of constant magnitude $Zev_\perp B/c$ directed perpendicular to $\mathbf{v}_\perp$ — that is, a centripetal force. Equating it to $mv_\perp^2/r$ and solving for $r$ gives (8.1). ∎
+559: Put the solar wind numbers in. The interplanetary field at 1 AU is about 5 nT, or $5\times10^{-5}$ G in Gaussian units. A proton at $T=1.2\times10^5$ K has thermal speed $v_{\rm th}=\sqrt{2k_BT/m_p}=4.454\times10^{6}\ \mathrm{cm\,s^{-1}}$. Equation (8.1) gives
+563: Against $L=1\ \mathrm{AU}=1.5\times10^{8}\ \mathrm{km}$, the ratio is $r_g/L = 6.2\times10^{-7}$. Transverse to the field the particles are confined not by collisions but by the field itself, and confined more tightly than collisions would have managed by the ratio $\lambda/r_g = 3.1\times10^{6}$. Fig. 5 shows what that confinement looks like, and what it leaves untouched. This is the rescue, and it is the reason magnetohydrodynamics works in regimes where ordinary hydrodynamics has no right to.
+581: The same particle, seen along and across the magnetic field. Across $\mathbf{B}$ its excursion is bounded permanently by the gyroradius, 93 km in the solar wind at 1 AU; along $\mathbf{B}$ nothing bounds it, and it free-streams a full mean free path of 1.9 AU, which is $3.1\times10^{6}$ gyroradii. The figure supports the claim that the magnetic rescue is one-dimensional: it makes the plasma fluid-like in two directions out of three.
+584: The rescue is partial, and the way it is partial is measurable. A magnetic field constrains motion across itself and does nothing to motion along itself. A magnetised collisionless plasma is therefore not an ordinary fluid with a scalar pressure $p$; it has two pressures, $p_\parallel$ along the field and $p_\perp$ across it, which relax towards each other only through collisions the plasma is not having. The resulting description is the Chew–Goldberger–Low (CGL) or double-adiabatic theory. Pressure anisotropy is routinely measured in the solar wind, and the anisotropy drives instabilities — firehose and mirror — that act as the plasma's substitute for collisions. Module 12 develops magnetohydrodynamics and returns to this point.
+586: 8.2 When the particles are stars, and when they are dark matter
+588: Two systems are routinely called fluids in casual speech and are not fluids under any reading of Definition 2.
+590: Stars in a galaxy. Take the solar neighbourhood: a stellar number density of about $0.1\ \mathrm{pc^{-3}}$, a velocity dispersion near $20\ \mathrm{km\,s^{-1}}$, and a geometric cross-section for physical contact of $\sigma=\pi(2R_\odot)^2 = 6.1\times10^{22}\ \mathrm{cm^2}$. Proposition 2 then gives a mean free path of $1.6\times10^{6}$ Gpc and a mean time between stellar collisions of $7.7\times10^{19}$ years, which is $5.5\times10^{9}$ Hubble times. Stars do not touch.
+592: They do, however, exchange energy at a distance through gravity, and the relevant question is whether those encounters accumulate into anything. The timescale on which they do is the two-body relaxation time. For a self-gravitating system of $N$ bodies with crossing time $t_{\rm cross}=R/v$, Binney and Tremaine (2008) give
+596: The $N/\ln N$ carries the same logic as the Coulomb logarithm of §5.2 , and for the same reason: gravity, like the Coulomb force, is long-ranged, so many weak encounters dominate and the sum over impact parameters produces a logarithm. Evaluating (8.3):
+599: System $N$ $R$ $v$ $t_{\rm cross}$ $t_{\rm relax}$ $t_{\rm relax}/t_{\rm Hubble}$
+600: Globular cluster $10^{5}$ 10 pc 5 km s$^{-1}$ $2.0\times10^{6}$ yr $1.7\times10^{9}$ yr 0.12
+601: Milky Way disc $10^{11}$ 10 kpc 200 km s$^{-1}$ $4.9\times10^{7}$ yr $1.9\times10^{16}$ yr $1.4\times10^{6}$
+602: Galaxy cluster (galaxies) $10^{3}$ 1 Mpc 1000 km s$^{-1}$ $9.8\times10^{8}$ yr $1.4\times10^{10}$ yr 1.0
+605: The three rows land in three different places, and the spread is the point. A galaxy is collisionless by a factor of a million: the stellar orbits it has today are the orbits it was born with, and no fluid description of them is admissible. A globular cluster relaxes in about an eighth of a Hubble time, so over its life it is collisional — which is why globular clusters undergo core collapse and mass segregation, processes that have no analogue in galaxies. The galaxies within a cluster sit almost exactly on the boundary.
+607: Dark matter. Here the constraint runs the other way: we do not know the cross-section, and its smallness is an observational result. The merging cluster 1E 0657-56, the Bullet Cluster, separates its collisional component (the X-ray-emitting intracluster gas, which shocked and lagged) from its collisionless component (the galaxies and the lensing mass, which passed through). Randall and collaborators (2008) turned that separation into an upper limit on the dark matter self-interaction cross-section per unit mass, $\sigma/m \lt 0.7\ \mathrm{cm^2\,g^{-1}}$ at 68% confidence. Since $\lambda = 1/(\rho\,\sigma/m)$ for a medium of mass density $\rho$, and a cluster of $10^{15}\,M_\odot$ within 1 Mpc has a mean density $\rho = M/(\tfrac{4}{3}\pi R^3) = 1.6\times10^{-26}\ \mathrm{g\,cm^{-3}}$, which we round to $2\times10^{-26}$, even the extreme allowed value gives
+611: so $\mathrm{Kn}\ge23$ against the megaparsec size of a cluster. The core is denser than that mean by about a factor of six, and taking $\rho=10^{-25}\ \mathrm{g\,cm^{-3}}$ there gives $\lambda\ge4.6$ Mpc and $\mathrm{Kn}\ge4.6$ — smaller, but still greater than one in the region where a collision would have been most likely. Dark matter is collisionless, and the Bullet Cluster measurement is essentially a direct measurement of that fact.
+613: All three systems — galaxies, dark matter, and the collisionless solar wind along $\mathbf{B}$ — are governed by the Boltzmann equation (2.1) with the right-hand side set to zero. That is the collisionless Boltzmann, or Vlasov, equation, and the discipline built on it is stellar dynamics rather than fluid dynamics. This book does not develop it. It is named here so that the boundary of what follows is explicit.
+615: 9. What this model captures, and what it misses
+617: The fluid description we have earned is a single-component, isotropic, local-thermodynamic-equilibrium continuum. Each of those words is an idealisation that later modules either repay or flag.
+620: Idealisation What it assumes Where it is repaid
+621: One fluid Electrons and ions share one temperature. See below — it fails behind cluster shocks.
+622: Isotropic pressure A single scalar $p$, no dependence on direction relative to $\mathbf{B}$. Module 12 (magnetohydrodynamics; CGL noted in §8.1 )
+623: Ideal (Euler) flow $\mu=\kappa=0$: no viscosity or conduction. §6 gives the coefficients; Module 11 needs them for accretion discs
+624: No self-gravity Gravity, if present, is externally imposed. Modules 3 and 5 (hydrostatic stars; the Jeans instability)
+625: No magnetic field The gas is unmagnetised or the field is dynamically negligible. Module 12
+626: No radiation Photons neither carry momentum nor dominate the energy budget. Module 13
+627: Non-relativistic $v \ll c$ and $k_BT \ll mc^2$. Not repaid in this book; noted where it binds
+630: The first row deserves more than a pointer, because it fails inside the very system we used to validate §5.3 . Electrons and protons at the same temperature carry very different momenta, and energy transfer between the two species is slow. Sarazin (1988) gives the equilibration times for intracluster conditions in the ratio $1 : 43 : 1870$ for electron–electron, proton–proton and proton–electron exchange respectively — the middle ratio being $\sqrt{m_p/m_e}=42.9$ and the last being close to $m_p/m_e = 1836$. At $T_m\approx10^8$ K and $n_e\approx10^{-3}\ \mathrm{cm^{-3}}$ the proton–electron equilibration time is about $6\times10^{8}$ years. A merger shock crossing a cluster takes of order $10^{9}$ years, so the gas behind such a shock is genuinely two-temperature: the protons are heated first and the electrons lag. Since X-ray observations measure the electron temperature, a single-fluid reading of the data underestimates the true thermal energy in exactly the regions where mergers are most violent.
+632: That is a fair summary of the position this module leaves us in. The fluid equations are licensed for almost every system in the table of §7 , the licence is quantitative and checkable, and the places where it lapses are identified rather than hidden. Module 2 writes the equations down.
+634: 9.1 Reproducing the numbers
+636: The script below reproduces the two comparisons against published values, the Coulomb logarithm of §5.2 and the intracluster mean free path of §5.3 . Every other plasma number in this module comes from the same four functions with different arguments. It has no dependencies beyond NumPy.
+638: Copy import numpy as np
+kB = 1.380649e-16          # erg/K
+e = 4.80320471e-10         # esu
+me = 9.1093837015e-28      # g
+hbar = 1.054571817e-27     # erg s
+kpc = 3.0856775814913673e21  # cm
+SPITZER = 3.0**1.5/(4.0*np.sqrt(np.pi))
+
+
+def debye(n, T):
+    return np.sqrt(kB*T/(4.0*np.pi*n*e*e))
+
+
+def b_min_e(T):
+    ve = np.sqrt(3.0*kB*T/me)
+    return max(e*e/(3.0*kB*T), hbar/(me*ve))
+
+
+def ln_lambda(n, T):
+    return np.log(debye(n, T)/b_min_e(T))
+
+
+def lam_coulomb(n, T, lnL=None):
+    lnL = ln_lambda(n, T) if lnL is None else lnL
+    return SPITZER*(kB*T)**2/(n*e**4*lnL)
+
+
+n, T = 1.0e-3, 1.0e8
+print("ln Lambda =", round(ln_lambda(n, T), 1), "(Sarazin 1988: 37.8)")
+lam = lam_coulomb(n, T, lnL=37.8)/kpc
+print("lambda =", round(lam, 1), "kpc (Sarazin 1988: 23 kpc)")
+print("ratio =", round(lam/23.0, 3))
+672: 10. Problems
+674: Jump to: Conceptual · Derivational · Computational
+679: Conceptual ↑ contents
+682: Solution
+682: Nothing about the gas changed; $L$ changed. The quoted figure uses $L=100$ pc, appropriate to a large cloud complex. The mean free path is 134 AU, so any structure whose interesting scale approaches that length has a Knudsen number of order unity. A concrete example is the transition layer at the edge of a cold neutral cloud, across which temperature falls from 8000 K to under 100 K; such interfaces are observed to be thin, and a model that must resolve a 100 AU interface has $\mathrm{Kn}\sim1$ and no fluid description of the interface itself. The bulk flow around the cloud remains perfectly fluid. The correct statement is that the Euler equations hold for interstellar problems whose resolution requirement exceeds a few thousand AU.
+686: Solution
+686: A hard sphere interacts over one length and one only, so there is a single scale and nothing to integrate over. The Coulomb force acts at every separation, and the strength of an encounter falls as $1/b$ while the number of encounters available at that separation rises as $b$. The two effects cancel in the mean-square deflection, so each logarithmic interval of impact parameter contributes the same amount, and summing over intervals from $b_{\min}$ to $b_{\max}$ produces the logarithm of their ratio.
+686: If $\lambda_D$ were infinite, the integral in (5.3) would diverge at its upper limit and the deflection rate would be unbounded — that is, a plasma would have zero mean free path, which is plainly false. Screening is what makes the Coulomb problem finite. The finiteness is supplied by the collective response of the plasma, not by the two-body problem, which is why $\ln\Lambda$ cannot be derived from Rutherford scattering alone.
+690: Solution
+690: It measures a Knudsen number, or equivalently places a lower bound on a mean free path. In the collision the gas, which has $\mathrm{Kn}\ll1$, behaved as a fluid: it shocked, dissipated kinetic energy and was left behind between the two subclusters. The galaxies and the lensing mass, having $\mathrm{Kn}\gg1$, passed through each other without interacting. The separation between the two components is therefore a direct measure of the difference in their collisionality, and converting the observed offset into a limit gives $\sigma/m \lt 0.7\ \mathrm{cm^2\,g^{-1}}$ (Randall et al. 2008), hence $\lambda\ge23$ Mpc and $\mathrm{Kn}\ge23$.
+690: The gas is essential because it is the control. Without a component known in advance to be collisional, the fact that the lensing mass passed through would carry no information: one would not know whether the collision had been violent enough to stop anything. The gas establishes that it was.
+693: Derivational ↑ contents
+696: Solution
+696: Let $\mathbf{v}_1,\mathbf{v}_2$ be independent and Maxwellian with the same $m$ and $T$, and put $\mathbf{v}_{\rm rel}=\mathbf{v}_1-\mathbf{v}_2$. Because the two are independent Gaussians in each Cartesian component, each component of $\mathbf{v}_{\rm rel}$ is Gaussian with variance $2(k_BT/m)$ — variances of independent variables add. So $\mathbf{v}_{\rm rel}$ is itself Maxwellian with the substitution $m \to m/2$, which is the reduced mass, as expected.
+696: The mean speed of a Maxwellian is $\langle v\rangle = \sqrt{8k_BT/\pi m}$. Applying it with $m\to m/2$ gives $\langle v_{\rm rel}\rangle = \sqrt{16 k_BT/\pi m} = \sqrt{2}\,\langle v\rangle$.
+696: The collision rate per particle is $n\sigma\langle v_{\rm rel}\rangle$, but the distance covered per unit time by the particle itself is $\langle v\rangle$, so
+$$\lambda = \frac{\langle v\rangle}{n\sigma\langle v_{\rm rel}\rangle} = \frac{1}{\sqrt{2}\,n\sigma}.$$
+The distinction between the two speeds is the whole content of the factor: use the relative speed for the rate, the particle's own speed for the distance.
+702: Solution
+702: For $b\gg b_{90}$ the right side of (5.1) is small, so $\tan(\theta/2)\approx\theta/2$ and $\theta\approx 2b_{90}/b$.
+702: In time $dt$ the particle sweeps an annulus of radius $b$, width $db$ and length $v\,dt$, of volume $2\pi b\,db\,v\,dt$. With target density $n$ the encounter rate in that annulus is $2\pi n v b\,db$.
+702: Deflections from independent encounters have random azimuth, so the mean vector deflection vanishes and the mean square adds:
+$$\frac{d\langle\theta^2\rangle}{dt} = \int \theta^2(b)\,2\pi n v b\,db = 2\pi n v\int \frac{4b_{90}^2}{b^2}\,b\,db = 8\pi n v b_{90}^2\int\frac{db}{b},$$
+which is (5.3). Substituting $b = e^{s}$ gives $db/b = ds$, so the integrand in $s$ is the constant $8\pi n v b_{90}^2$: every $e$-fold in impact parameter contributes equally. This is why the answer depends on the ratio $b_{\max}/b_{\min}$ only through its logarithm, and why an error of a factor of two in either limit changes $\ln\Lambda\approx37$ by less than 2%.
+708: Solution
+708: The conduction time over a length $L$ follows from the diffusion of heat: with thermal diffusivity $\chi = \kappa/(n k_B)\simeq \tfrac{1}{3}v_{\rm th}\lambda$, we have $t_{\rm cond}\sim L^2/\chi \sim 3L^2/(v_{\rm th}\lambda)$. The sound-crossing time is $t_{\rm s}\sim L/c_s$ with $c_s\propto v_{\rm th}$. Therefore
+$$\frac{t_{\rm cond}}{t_{\rm s}} \;\sim\; \frac{3L^2/(v_{\rm th}\lambda)}{L/v_{\rm th}} \;=\; \frac{3L}{\lambda} \;=\; 3\,\mathrm{Kn}^{-1}.$$
+So the ratio is just the inverse Knudsen number, and with $\lambda\propto T^2/n$ from (5.6),
+$$\frac{t_{\rm cond}}{t_{\rm s}} \;\propto\; \frac{nL}{T^{2}}.$$
+711: A cool core has high $n$, low $T$ and small $L$; an outskirt has low $n$, high $T$ and large $L$. Using the Knudsen numbers tabulated in §7 , the ratio $3\,\mathrm{Kn}^{-1}$ is $1.4\times10^{3}$ in the core and $27$ in the outskirts. Conduction is therefore far too slow to matter dynamically in a core over a sound-crossing time, but in the outskirts it is within a factor of thirty of being competitive — which is the same statement as $\mathrm{Kn}\approx0.1$ there, read in the time domain instead of the length domain.
+714: Computational ↑ contents
+717: Solution
+717: Write $r$ in AU. Then $n = 5r^{-2}$ and $T = 1.2\times10^5 r^{-4/3}$. From (5.6), $\lambda\propto T^2/n$, so
+$$\lambda(r) = \lambda(1)\cdot\frac{(r^{-4/3})^2}{r^{-2}} = \lambda(1)\,r^{-8/3+2} = \lambda(1)\,r^{-2/3},$$
+with $\lambda(1)=1.9$ AU. The Knudsen number against $L=r$ is
+$$\mathrm{Kn}(r) = \frac{1.9\,r^{-2/3}}{r} = 1.9\,r^{-5/3}.$$
+Setting this to one gives $r = 1.9^{3/5} = 1.49$ AU.
+721: Two readings. First, $\mathrm{Kn}$ decreases outward here, and the crossing lies just outside Earth's orbit: the wind at 1 AU is already at $\mathrm{Kn}=1.9$, so on this model the fluid description fails everywhere inside about 1.5 AU and recovers beyond it. That is an artefact worth naming — it follows from assuming $L=r$, which makes the available scale grow faster than the mean free path shrinks. Judged instead against a fixed structure, such as the 0.01 AU thickness of a stream interaction region, the wind is collisionless throughout. Second, the exponent $-5/3$ is shallow, so the crossing radius is insensitive to the inputs: doubling $\lambda(1)$ moves it only to 2.3 AU. The conclusion that the solar wind is not collisional at scales a spacecraft can resolve is robust; the precise crossing radius is not, and adiabatic cooling is itself a poor model, since the observed wind cools more slowly than $r^{-4/3}$ because it is heated in transit.
+725: Solution
+725: From (5.6) with the Spitzer coefficient, $\lambda = 0.733(k_BT)^2/(n_e e^4\ln\Lambda)$. At $T=5\times10^7$ K, $n_e=10^{-2}\ \mathrm{cm^{-3}}$ and $\ln\Lambda=37$ this evaluates to $\lambda_0 = 0.575$ kpc. Since $\lambda\propto n_e^{-1}$ at fixed temperature,
+$$\lambda(r) = 0.575\left[1+(r/100)^2\right]\ \mathrm{kpc}, \qquad \mathrm{Kn}(r) = \frac{0.575\left[1+(r/100)^2\right]}{r},$$
+with $r$ in kpc. Evaluating: $\mathrm{Kn} = 1.15\times10^{-2}$ at 100 kpc, $2.99\times10^{-2}$ at 500 kpc, $5.81\times10^{-2}$ at 1000 kpc, and $1.00\times10^{-1}$ at 1740 kpc. The threshold is crossed at $r\approx1.73$ Mpc, near the virial radius of a massive cluster.
+727: Note the shape of $\mathrm{Kn}(r)$: it falls from the very centre, reaches a minimum where $r = r_c$, and rises as $r$ beyond that, because $\lambda$ grows as $r^2$ while $L$ grows only as $r$. The outskirts are always the fragile region.
+727: On the resolution question the answer is the opposite of comfortable. At $r=1.73$ Mpc the mean free path is $\lambda = 0.575\times302 = 173$ kpc — seventeen times larger than the 10 kpc cell. The simulation therefore resolves, in detail, a range of scales on which the gas has no fluid description at all, and it solves the Euler equations on every one of them. Its cells at that radius are not small parcels of fluid; they are boxes containing particles that will not collide before they have crossed many boxes. Refining the mesh makes this worse, not better. Nothing is wrong with the arithmetic in such a simulation; what is wrong is the claim that its resolved structure in the outskirts represents gas dynamics.
+731: Solution
+731: The requirement $t_{\rm cond}/t_{\rm s}\ge100$ means $3/\mathrm{Kn}\ge100$, that is $\mathrm{Kn}\le0.03$, that is $\lambda \le 0.03\times50\ \mathrm{kpc} = 1.5\ \mathrm{kpc}$.
+731: Invert (5.6) for $T$:
+$$T = \left(\frac{\lambda\, n_e e^4 \ln\Lambda}{0.733\,k_B^2}\right)^{1/2}.$$
+With $\lambda = 1.5\times3.086\times10^{21} = 4.63\times10^{21}$ cm, $n_e=2\times10^{-2}$, $e^4 = 5.32\times10^{-38}$, $\ln\Lambda=36$ and $k_B=1.381\times10^{-16}$:
+numerator $= 4.63\times10^{21}\times2\times10^{-2}\times5.32\times10^{-38}\times36 = 1.77\times10^{-16}$;
+denominator $= 0.733\times1.907\times10^{-32} = 1.40\times10^{-32}$;
+ratio $=1.27\times10^{16}$, so $T = 1.13\times10^{8}$ K.
+736: Since real cool cores are at $2$–$4\times10^{7}$ K, well under this bound, the condition is comfortably satisfied and unsuppressed conduction is slow compared with sound crossing in a core. Note what this does not say: the relevant comparison for the cooling-flow problem is conduction against the radiative cooling time, not against the sound-crossing time, and the cooling time in a dense core is far longer than $t_{\rm s}$. Choosing the comparison timescale is the whole of the physics here; the arithmetic is the easy part.
+739: Notation
+742: Symbol Meaning Units (CGS) Introduced
+743: $f(\mathbf{x},\mathbf{v},t)$ distribution function cm$^{-6}$ s$^3$ Definition 1
+744: $f_M$ local Maxwellian cm$^{-6}$ s$^3$ (2.2)
+745: $n$, $n_e$ number density; electron number density cm$^{-3}$ Definition 2
+746: $\rho$ mass density, $\rho = nm$ g cm$^{-3}$ Proposition 4
+747: $\mathbf{u}$ bulk (fluid) velocity cm s$^{-1}$ Definition 2
+748: $v_{\rm th}$ thermal speed, $\sqrt{2k_BT/m}$ cm s$^{-1}$ Definition 3
+749: $T$ temperature K Definition 2
+750: $\tau$ collision time, $\lambda/v_{\rm th}$ s Definition 3
+751: $\lambda$ mean free path cm Definition 3
+752: $\sigma$ collision cross-section cm$^2$ Definition 4
+753: $b$, $b_{90}$ impact parameter; its $90^\circ$ value cm (5.1), (5.2)
+754: $\lambda_D$ Debye screening length cm (5.4)
+755: $\ln\Lambda$ Coulomb logarithm — Definition 5
+756: $\mathrm{Kn}$ Knudsen number, $\lambda/L$ — Definition 6
+757: $L$ smallest scale the problem must resolve cm Definition 6
+758: $\mu$, $\kappa$ dynamic viscosity; thermal conductivity g cm$^{-1}$ s$^{-1}$; erg cm$^{-1}$ s$^{-1}$ K$^{-1}$ (6.2)
+759: $r_g$ gyroradius cm (8.1)
+760: $t_{\rm relax}$ two-body relaxation time s (8.3)
+761: Book-wide note. In this module and in Module 2, $\mu$ is the dynamic viscosity. From Module 6 on, $\mu$ means the mean molecular weight throughout the book, as it already does in Modules 3, 4 and 5, and the dynamic viscosity is written $\eta$.
+764: Sources
+766: Numerical values compared against published results are identified in the text at the point of use. The comparisons made in this module are:
+769: Coulomb logarithm and mean free path in the intracluster medium. C. L. Sarazin, X-ray Emission from Clusters of Galaxies (1988), §5.4, eqs. 5.32–5.35, as served at NED Level 5 . Quoted: $\lambda_e = 23\ \mathrm{kpc}\,(T/10^8\,\mathrm{K})^2(n_e/10^{-3}\,\mathrm{cm^{-3}})^{-1}$; $\ln\Lambda=37.8$; equilibration-time ratios $1:43:1870$ and $t_{\rm eq}(p,e)\approx6\times10^{8}$ yr.
+770: Dark matter self-interaction limit. S. W. Randall et al., Constraints on the Self-Interaction Cross Section of Dark Matter from Numerical Simulations of the Merging Galaxy Cluster 1E 0657-56 , ApJ 679 , 1173 (2008), doi:10.1086/587859 . Quoted: $\sigma/m \lt 0.7\ \mathrm{cm^2\,g^{-1}}$ at 68% confidence.
+771: Solar wind conditions at 1 AU. Bimodal distribution of the solar wind at 1 AU , Astronomy & Astrophysics (2020), aa37307-19 . Quoted: proton density averages 1.9–8.8 cm$^{-3}$, proton temperature averages $4.8\times10^4$–$3.0\times10^5$ K.
+772: Two-body relaxation time. J. Binney and S. Tremaine, Galactic Dynamics , 2nd ed. (2008), eq. 1.38.
+773: Relaxation-time collision model. P. L. Bhatnagar, E. P. Gross and M. Krook, Phys. Rev. 94 , 511 (1954).
+774: Maxwellian-averaged Coulomb transport coefficients. L. Spitzer, Physics of Fully Ionized Gases , 2nd ed. (1962).
+775: The H -theorem , invoked but not proved in §3 . L. Boltzmann (1872); a modern statement and proof is in any kinetic-theory text, for instance Chapman and Cowling, The Mathematical Theory of Non-uniform Gases , 3rd ed. (1970), which is also the standard reference for the Chapman–Enskog expansion of §6 .
+776: Density-independence of viscosity. J. C. Maxwell, Bakerian Lecture, "On the viscosity or internal friction of air and other gases", Phil. Trans. R. Soc. 157 , 49 (1867); the prediction dates from 1860 and the experiment from 1865–66. Verified against secondary references only; the original paper is not in this repository.
+779: Values used as inputs rather than as checks carry a provenance note where they appear: the laboratory vacuum pressures of §1 , the photospheric pressure and neutral-hydrogen cross-section of §4.1 , and the representative solar-wind parameters of §7 . The cluster mean density used in (8.4) is derived in place from $10^{15}\,M_\odot$ within 1 Mpc rather than quoted.

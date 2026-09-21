@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="dark" name="color-scheme"/>
+<title>Codex revised copy — Module 1 — Why a Fluid at All? | Astrophysical Fluid Dynamics</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags: 'ams' },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+<style>
+  :root{
+    --bg:#0f172a; --box:#1e293b; --fg:#e2e8f0; --fg2:#cbd5e1;
+    --muted:#94a3b8; --accent:#fb923c; --accent2:#2dd4bf;
+    --rule:#334155; --rule2:#1e293b;
+  }
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{ max-width: 52rem; margin: 2.5rem auto; padding: 0 1.25rem 6rem;
+        font: 16px/1.7 Georgia, 'Times New Roman', serif; color:var(--fg);
+        background:var(--bg); counter-reset: fig; }
+  h1{ font-size: 1.9rem; line-height:1.2; margin:.2rem 0 .2rem; color:#f8fafc; }
+  h2{ font-size:1.35rem; margin:2.6rem 0 .6rem; border-bottom:2px solid var(--accent);
+      padding-bottom:.2rem; color:#f8fafc; }
+  h3{ font-size:1.08rem; margin:1.7rem 0 .4rem; color:var(--accent); }
+  h4{ font-size:1rem; margin:1.2rem 0 .3rem; color:var(--accent2); }
+  .sub{ color:var(--muted); font-style:italic; margin-top:0; }
+  a{ color:var(--accent2); }
+  code{ font-family: ui-monospace,'SFMono-Regular',Consolas,monospace; font-size:.92em;
+        background:#111c33; color:#e2e8f0; padding:.05rem .28rem; border-radius:3px;
+        border:1px solid var(--rule2); }
+  pre{ background:#0b1324; border:1px solid var(--rule); padding:.8rem 1rem; border-radius:5px;
+       overflow:auto; font-size:.84rem; line-height:1.45; color:#e2e8f0; }
+  pre code{ background:none; padding:0; border:none; }
+  .codewrap{ position:relative; }
+  .copybtn{ position:absolute; top:.5rem; right:.5rem; display:inline-flex; align-items:center; gap:.3rem;
+    font:600 .72rem/1 ui-monospace,Consolas,monospace; color:var(--muted);
+    background:var(--box); border:1px solid var(--rule); border-radius:5px; padding:.32rem .5rem; cursor:pointer; }
+  .copybtn:hover{ color:var(--accent); border-color:var(--accent); }
+  .copybtn.copied{ color:var(--accent2); border-color:var(--accent2); }
+  .copybtn svg{ width:13px; height:13px; }
+  .thm,.def,.lem,.prop{ background:var(--box); border-left:4px solid var(--accent);
+      padding:.6rem .9rem; margin:1rem 0; border-radius:0 4px 4px 0; }
+  .def{ border-left-color:var(--accent2); }
+  .thm b,.lem b,.prop b{ color:var(--accent); }
+  .def b{ color:var(--accent2); }
+  .proof{ border-left:2px solid var(--rule); padding-left:.9rem; margin:.8rem 0 1.2rem; color:var(--fg2); }
+  .proof::before{ content:"Proof."; font-style:italic; font-weight:bold; margin-right:.4rem; color:var(--muted); }
+  .qed{ float:right; color:var(--accent); }
+  table{ border-collapse:collapse; width:100%; margin:1rem 0; font-size:.95rem; }
+  th,td{ border:1px solid var(--rule); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+  th{ background:var(--box); color:#f8fafc; }
+  figure{ margin:1.6rem 0; text-align:center; counter-increment: fig; }
+  figcaption{ color:var(--muted); font-size:.9rem; font-style:italic; margin-top:.4rem; text-align:left; }
+  figcaption::before{ content:"Fig. " counter(fig) ". "; font-weight:bold; font-style:normal; color:var(--accent); }
+  .proof figure,.thm figure,.lem figure,.prop figure{ margin:.2rem auto .7rem; max-width:480px;
+      background:var(--bg); border:1px solid var(--rule); border-radius:5px; padding:.4rem; }
+  .proof figcaption,.thm figcaption,.lem figcaption,.prop figcaption{ font-size:.8rem; line-height:1.45; }
+  .setupfig{ display:block; }
+  .setupfig text{ paint-order:stroke; stroke:#0f172a; stroke-width:3px; stroke-linejoin:round; }
+  .setupfig text.onfill{ stroke:none; }
+  figure svg text{ font-family:"STIX Two Math",STIXGeneral,"Times New Roman",Georgia,serif; fill:#cbd5e1; }
+  figure svg text.v{ font-style:italic; }
+  figure svg text.vb{ font-weight:bold; }
+  .secref{ color:var(--accent); text-decoration:none; border-bottom:1px dotted #9a6a3a; }
+  .secref:hover{ border-bottom:1px solid var(--accent); }
+  .toc{ background:var(--box); padding:.8rem 1.2rem; border-radius:6px; font-size:.95rem; border:1px solid var(--rule); }
+  .toc ul{ list-style:none; padding-left:.3rem; margin:.3rem 0; }
+  .toc a{ color:var(--accent2); text-decoration:none; }
+  .toc a:hover{ text-decoration:underline; }
+  .small{ font-size:.88rem; color:var(--muted); }
+  hr{ border:none; border-top:1px solid var(--rule); margin:2.5rem 0; }
+  .keyresult{ background:#2a2410; border:1px solid #6b5a1f; padding:.5rem .9rem; border-radius:4px; color:#fde68a; }
+  .prov{ display:block; border-left:3px solid #c08a00; padding:.15rem .7rem;
+         margin:.5rem 0; font-size:.94em; color:var(--muted); }
+  .prov::before{ content:"provenance — "; font-variant:small-caps; letter-spacing:.04em; color:#d4a017; }
+  .warn{ display:block; border-left:3px solid #f87171; background:#2a1414; padding:.4rem .8rem;
+         margin:.8rem 0; font-size:.95em; color:#fecaca; border-radius:0 4px 4px 0; }
+  .prob{ background:var(--box); border:1px solid var(--rule); border-radius:5px;
+         padding:.6rem .9rem; margin:.9rem 0; }
+  .prob b{ color:var(--accent); }
+  details.sol{ margin-top:.5rem; }
+  details.sol summary{ cursor:pointer; color:var(--accent2); font-size:.9rem; }
+  details.sol > div{ border-top:1px solid var(--rule); margin-top:.5rem; padding-top:.5rem; color:var(--fg2); }
+</style>
+<meta content="Codex — OpenAI" name="author"/><style>
+  .codex-revision{background:#102a2b;border:1px solid #2dd4bf;border-left:5px solid #2dd4bf;
+    color:#d5fffa;padding:.75rem 1rem;margin:1rem 0 1.5rem;border-radius:5px;font: .9rem/1.55
+    ui-sans-serif,system-ui,sans-serif}
+  .codex-revision b{color:#5eead4}.codex-revision a{color:#fde68a}
+</style></head>
+<body>
+<h1>Module 1 — Why a Fluid at All?</h1>
+<p class="sub">The continuum condition for astrophysical gases: the mean free path, the Knudsen number, and the four systems in which the fluid picture fails outright.</p><aside class="codex-revision"><b>Codex textbook rewrite.</b> This separate edition incorporates the scientific audit and a paragraph-level prose revision. The original <a href="../../afd/module01.html">source module</a> remains unchanged. <a href="../AUDIT_REPORT.html">Editorial record.</a></aside>
+<div class="toc">
+<b>Contents</b>
+<ul>
+<li><b>1.</b> <a href="#origin">The problem: a fluid emptier than any vacuum ever built</a></li>
+<li><b>2.</b> <a href="#claim">What a fluid description actually claims</a></li>
+<li><b>3.</b> <a href="#lte">Collisions, and the local Maxwellian</a></li>
+<li><b>4.</b> <a href="#neutral">The mean free path I — a gas of neutral atoms</a></li>
+<li><b>5.</b> <a href="#coulomb">The mean free path II — a gas of charges</a></li>
+<li><b>6.</b> <a href="#knudsen">The Knudsen number and the Chapman–Enskog hierarchy</a></li>
+<li><b>7.</b> <a href="#census">A census of astrophysical gases</a></li>
+<li><b>8.</b> <a href="#fails">Where the fluid picture fails, and what rescues it</a></li>
+<li><b>9.</b> <a href="#limits">What this model captures, and what it misses</a></li>
+<li><b>10.</b> <a href="#problems">Problems</a></li>
+<li><b>—</b> <a href="#notation">Notation</a> · <a href="#sources">Sources</a></li>
+</ul>
+</div>
+<hr/>
+<h2 id="origin">1. The problem: a fluid emptier than any vacuum ever built</h2>
+<p>The fluid equations describe conservation of mass, momentum and energy, supplemented by an equation of state. Later modules use them to model stellar structure, interstellar collapse, blast waves and accretion. Before using those equations, however, we must establish when a dilute gas can be treated as a continuum.</p>
+<p>A continuum assigns a density and velocity to every point in space. A real gas consists of discrete particles separated by empty space. The continuum description is therefore an approximation, and its validity is especially important in the low densities common in astrophysics.</p>
+<p>Here is the scale of the problem. A specialist vacuum laboratory can routinely pump a chamber down to about $10^{-13}$ torr. At room temperature that pressure corresponds to a number density</p>
+
+$$ n \;=\; \frac{P}{k_B T} \;=\; \frac{10^{-13}\times 1333.22\ \mathrm{dyn\,cm^{-2}}}{(1.381\times10^{-16}\ \mathrm{erg\,K^{-1}})(300\ \mathrm{K})} \;=\; 3.2\times10^{3}\ \mathrm{cm^{-3}}, \tag{1.1}$$
+
+<p>where $P$ is the pressure, $T$ the absolute temperature, and $k_B$ Boltzmann's constant. The warm neutral interstellar medium — the gas that fills most of the volume of the Milky Way's disc — has a number density of roughly $0.5\ \mathrm{cm^{-3}}$. It is therefore about $6.4\times10^{3}$ times <em>more rarefied</em> than that laboratory vacuum. Even against the lowest reported laboratory pressures, near $10^{-15}$ torr and $32\ \mathrm{cm^{-3}}$, the interstellar medium is still 64 times emptier.</p>
+<span class="prov">Both vacuum figures are inputs, not results of this book. $10^{-13}$ torr is the pressure a dedicated extreme-high-vacuum chamber reaches routinely; $10^{-15}$ torr is at the bottom of the range reported for record measurements. Reported extreme-high-vacuum pressures below about $10^{-12}$ torr are themselves difficult to measure, because the gauge outgasses into the volume it is measuring. Treat both as order-of-magnitude anchors. The argument needs only that they exceed $0.5\ \mathrm{cm^{-3}}$, and the more conservative of them exceeds it by 64.</span>
+<p>The interstellar medium can be much more rarefied than the best laboratory vacua and still behave as a fluid on sufficiently large scales. The controlling quantity is the Knudsen number, the ratio of the mean free path to the macroscopic scale of interest. This module derives that ratio and identifies the regimes in which a fluid model fails.</p>
+<p>We begin with the particle distribution function and the information discarded by a fluid description. Collisions drive the local distribution toward equilibrium and define a mean free path. Comparing that path with the resolved macroscopic scale gives the Knudsen number, which determines whether continuum equations are appropriate.</p>
+<h2 id="claim">2. What a fluid description actually claims</h2>
+<p>Start with the complete description and then say what the fluid description throws away.</p>
+<div class="def"><b>Definition 1 (distribution function).</b> For a gas of identical particles of mass $m$, the <em>distribution function</em> $f(\mathbf{x},\mathbf{v},t)$ is defined so that
+$$f(\mathbf{x},\mathbf{v},t)\,d^3x\,d^3v$$
+is the number of particles that at time $t$ lie in the spatial volume $d^3x$ about position $\mathbf{x}$ and have velocities in the volume $d^3v$ about $\mathbf{v}$. Its dimensions are (number) $\times$ (length)$^{-3}$ $\times$ (velocity)$^{-3}$; in CGS units, $\mathrm{cm^{-6}\,s^{3}}$. Here $\mathbf{x}\in\mathbb{R}^3$ is a laboratory-frame position and $\mathbf{v}\in\mathbb{R}^3$ a particle velocity, and $f\ge 0$ everywhere.</div>
+<p>The distribution function carries everything there is to know about the gas short of tracking individual particles. Its evolution is governed by the Boltzmann equation,</p>
+
+$$ \frac{\partial f}{\partial t} \;+\; \mathbf{v}\cdot\nabla_{\mathbf{x}} f \;+\; \mathbf{a}\cdot\nabla_{\mathbf{v}} f \;=\; \left(\frac{\partial f}{\partial t}\right)_{\!\mathrm{coll}}, \tag{2.1}$$
+
+<p>in which $\mathbf{a}$ is the acceleration produced by any smooth external force — gravity, a large-scale electric or magnetic field — and the right-hand side collects the effect of short-range encounters between particles. The three terms on the left say that $f$ is conserved along particle trajectories in the six-dimensional space $(\mathbf{x},\mathbf{v})$. The term on the right says that collisions move particles abruptly from one velocity to another and therefore break that conservation.</p>
+<p>The Boltzmann equation describes the evolution of the one-particle distribution under a dilute-gas collision model. Its collision term assumes that the incoming particles' velocities are uncorrelated at the level required for this closure. The equation retains much more velocity-space information than a five-field fluid model, so solving it is generally more expensive. A fluid approximation is useful when the moments needed for the problem can be evolved with a justified closure.</p>
+<div class="def"><b>Definition 2 (fluid, or continuum, description).</b> A gas admits a <em>fluid description</em> when, to the accuracy required, $f$ is determined at every point by five local numbers: the number density
+$$ n(\mathbf{x},t) = \int f\,d^3v, $$
+the three components of the bulk velocity
+$$ \mathbf{u}(\mathbf{x},t) = \frac{1}{n}\int \mathbf{v}\,f\,d^3v, $$
+and the temperature $T(\mathbf{x},t)$, defined from the mean square random velocity by
+$$ \frac{3}{2}k_B T(\mathbf{x},t) = \frac{1}{n}\int \tfrac{1}{2}m\,|\mathbf{v}-\mathbf{u}|^2 f\,d^3v. $$
+Specifically, $f$ is taken to be the local Maxwellian built from those five numbers,
+$$ f_M(\mathbf{v}) \;=\; n\left(\frac{m}{2\pi k_B T}\right)^{3/2}\exp\!\left[-\frac{m|\mathbf{v}-\mathbf{u}|^2}{2k_B T}\right], \tag{2.2}$$
+plus a correction that is small in a sense made precise in <a class="secref" href="#lte">§3</a>.</div>
+<p>The saving is enormous: a function of six variables collapses to five functions of three. But nothing so far explains why $f$ should be Maxwellian. That is the work of collisions.</p>
+<h2 id="lte">3. Collisions, and the local Maxwellian</h2>
+<p>Boltzmann's <em>H</em>-theorem states that the collision term in (2.1) drives $f$ towards the Maxwellian (2.2) and that the Maxwellian is the only distribution the collision term leaves alone. We take that result as given; what we need here is not the theorem but its <em>rate</em>, because a gas is only Maxwellian if the collisions get there before the flow carries the gas somewhere else.</p>
+<p>The cheapest honest model of the collision term is the relaxation, or BGK, approximation, due to Bhatnagar, Gross and Krook (1954):</p>
+
+$$ \left(\frac{\partial f}{\partial t}\right)_{\!\mathrm{coll}} \;\simeq\; -\,\frac{f - f_M}{\tau}, \tag{3.1}$$
+
+<p>where $\tau$ is the <em>collision time</em>, the mean interval between collisions suffered by one particle. Equation (3.1) says only this: collisions push $f$ towards the local Maxwellian, and they do it on a timescale $\tau$. It is not exact — it replaces a complicated integral operator by a single relaxation rate. However, it reproduces the scaling we need, and that scaling is the whole content of this section.</p>
+<div class="def"><b>Definition 3 (mean free path and collision time).</b> The <em>mean free path</em> $\lambda$ is the average distance a particle travels between successive collisions. The <em>collision time</em> is $\tau = \lambda / v_{\rm th}$, where $v_{\rm th}=\sqrt{2k_BT/m}$ is the thermal speed. Both are local quantities: they depend on the density and temperature at the point in question.</div>
+<div class="prop"><b>Proposition 1 (the departure from Maxwellian is first order in $\lambda/L$).</b>
+Let a gas obey (2.1) with the collision term (3.1), let it be in a steady state with no external acceleration, and let all five of its macroscopic fields vary over a common length scale $L$, meaning $|\nabla \ln n| \sim |\nabla\ln T| \sim |\nabla\mathbf{u}|/v_{\rm th} \sim 1/L$. Then the fractional departure of $f$ from the local Maxwellian obeys
+$$\boxed{\;\frac{|f - f_M|}{f_M} \;\sim\; \frac{\lambda}{L}\;}\tag{3.2}$$
+</div>
+<div class="proof">
+Put the collision term (3.1) into the steady, force-free Boltzmann equation (2.1):
+$$ \mathbf{v}\cdot\nabla_{\mathbf{x}} f = -\frac{f-f_M}{\tau} \qquad\Longrightarrow\qquad f - f_M = -\,\tau\,\mathbf{v}\cdot\nabla_{\mathbf{x}} f. $$
+This is exact for the model. Now estimate the size of the right-hand side. To leading order $f\approx f_M$ on the right, so
+$$ f - f_M \;\approx\; -\,\tau\,\mathbf{v}\cdot\nabla_{\mathbf{x}} f_M. $$
+The Maxwellian $f_M$ depends on position only through $n$, $\mathbf{u}$ and $T$. Differentiating (2.2) gives three terms, $\nabla\ln n$, a term in $\nabla T$ carrying a factor $m|\mathbf{v}-\mathbf{u}|^2/2k_BT$, and a term in $\nabla\mathbf{u}$ carrying a factor $m(\mathbf{v}-\mathbf{u})/k_BT$. For a particle in the thermal bulk of the distribution both factors are of order one, so the hypothesis of the proposition makes all three terms of order $1/L$ and $|\nabla_{\mathbf{x}} f_M| \sim f_M/L$. (For a particle far out in the tail they are not of order one, which is the same weakness that <a class="secref" href="#lamC">§5.3</a> meets again in the Coulomb average.) A typical particle has $|\mathbf{v}|\sim v_{\rm th}$. Therefore
+$$ \frac{|f-f_M|}{f_M} \;\sim\; \frac{\tau\, v_{\rm th}}{L} \;=\; \frac{\lambda}{L}, $$
+using $\tau = \lambda/v_{\rm th}$ from Definition 3. <span class="qed">∎</span>
+</div>
+<p>Proposition 1 is the hinge of the entire module, so it is worth saying in words what the algebra did. A particle arriving at a point carries the properties of the place where it last collided, one mean free path away. If the gas changes appreciably over that distance, the arriving particles are a mixture of populations from measurably different conditions, and their combined velocity distribution is not the Maxwellian of the point they have arrived at. The mismatch is proportional to how much the gas changes over one mean free path, which is $\lambda/L$. If $\lambda/L$ is small, every particle arriving at a point comes from somewhere effectively identical, and the local Maxwellian is exact for all practical purposes.</p>
+<p>Everything now reduces to computing $\lambda$, which is a different calculation for neutral gas and for ionised gas.</p>
+<h2 id="neutral">4. The mean free path I — a gas of neutral atoms</h2>
+<p>Neutral atoms interact only when they nearly touch. That makes the calculation short.</p>
+<div class="def"><b>Definition 4 (collision cross-section).</b> For two particles whose interaction has a finite range, the <em>collision cross-section</em> $\sigma$ is the area, measured perpendicular to the relative velocity, within which the centre of a target must lie for a collision to occur. For hard spheres of radius $a$, a collision happens when the centres approach within $d=2a$, so $\sigma = \pi d^2$. Its dimensions are those of an area; in CGS, $\mathrm{cm^2}$.</div>
+<div class="prop"><b>Proposition 2 (hard-sphere mean free path).</b> In a gas of number density $n$ whose particles collide with cross-section $\sigma$,
+$$\boxed{\;\lambda \;=\; \frac{1}{n\sigma}\;}\tag{4.1}$$
+up to a factor of order unity that accounts for the motion of the targets.</div>
+<div class="proof">
+<figure><svg aria-label="a cylinder of radius d swept out by a moving particle; target centres inside it are the ones it hits" class="setupfig" role="img" viewbox="0 0 470 196" width="100%">
+<defs>
+<marker id="p2vel" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="3"><path d="M0,0 L7,3 L0,6 Z" fill="#fb923c"></path></marker>
+<marker id="p2up" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3"><path d="M0,0 L6,3 L0,6 Z" fill="#2dd4bf"></path></marker>
+<marker id="p2dn" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3"><path d="M6,0 L0,3 L6,6 Z" fill="#2dd4bf"></path></marker>
+<marker id="p2la" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"></path></marker>
+<marker id="p2lb" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3"><path d="M6,0 L0,3 L6,6 Z" fill="#94a3b8"></path></marker>
+</defs>
+<ellipse cx="80" cy="92" fill="none" rx="12" ry="38" stroke="#334155" stroke-dasharray="4 3" stroke-width="1.2"></ellipse>
+<ellipse cx="392" cy="92" fill="none" rx="12" ry="38" stroke="#334155" stroke-width="1.2"></ellipse>
+<line stroke="#334155" stroke-width="1.2" x1="80" x2="392" y1="54" y2="54"></line>
+<line stroke="#334155" stroke-width="1.2" x1="80" x2="392" y1="130" y2="130"></line>
+<line marker-end="url(#p2vel)" stroke="#fb923c" stroke-dasharray="6 4" stroke-width="1.3" x1="80" x2="386" y1="92" y2="92"></line>
+<circle cx="80" cy="92" fill="#fb923c" r="6" stroke="#0f172a" stroke-width="1"></circle>
+<circle cx="150" cy="70" fill="#2dd4bf" fill-opacity=".85" r="4"></circle>
+<circle cx="232" cy="115" fill="#2dd4bf" fill-opacity=".85" r="4"></circle>
+<circle cx="318" cy="78" fill="#2dd4bf" fill-opacity=".85" r="4"></circle>
+<circle cx="196" cy="24" fill="#475569" r="4"></circle>
+<circle cx="286" cy="165" fill="#475569" r="4"></circle>
+<circle cx="352" cy="18" fill="#475569" r="4"></circle>
+<circle cx="124" cy="160" fill="#475569" r="4"></circle>
+<line marker-end="url(#p2up)" stroke="#2dd4bf" stroke-width="1.2" x1="248" x2="248" y1="92" y2="56"></line>
+<text class="v" fill="#2dd4bf" font-size="12" x="254" y="72">d</text>
+<line marker-end="url(#p2la)" marker-start="url(#p2lb)" stroke="#94a3b8" stroke-width="1" x1="80" x2="392" y1="182" y2="182"></line>
+<text class="v" fill="#94a3b8" font-size="12" text-anchor="middle" x="236" y="176">λ</text>
+<text fill="#94a3b8" font-size="11" x="404" y="96">σ = π</text>
+<text class="v" fill="#94a3b8" font-size="11" x="432" y="96">d</text>
+<text fill="#94a3b8" font-size="9" x="439" y="91">2</text>
+</svg><figcaption><b>Setup.</b> In travelling a distance $\lambda$ the moving particle (orange) sweeps out a cylinder of cross-sectional area $\sigma=\pi d^2$. The targets whose centres fall inside the cylinder (teal) are exactly the ones it strikes. Those outside (grey) are missed. Setting the expected number inside to one defines $\lambda$.</figcaption></figure>
+Consider one particle moving through a stationary field of targets of number density $n$. In travelling a distance $\ell$ it sweeps out a cylinder of cross-sectional area $\sigma$ and volume $\sigma\ell$. A target is struck if and only if its centre lies inside that cylinder, as Fig. 1 shows, so the expected number of collisions in distance $\ell$ is $n\sigma\ell$. The mean free path is the distance at which that expectation reaches one:
+$$ n\sigma\lambda = 1 \qquad\Longrightarrow\qquad \lambda = \frac{1}{n\sigma}. $$
+The targets are not in fact stationary. Averaging over a Maxwellian distribution of target velocities replaces the particle speed by the mean relative speed, which is larger by $\sqrt{2}$, and gives $\lambda = 1/(\sqrt{2}\,n\sigma)$. We keep the simpler form, because the atomic cross-sections we are about to use are themselves uncertain by more than $41\%$. <span class="qed">∎</span>
+</div>
+<h3 id="phot">4.1 Worked case: the solar photosphere</h3>
+<p>The photosphere is the layer of the Sun from which visible light escapes — conventionally, the surface at which the optical depth in the visible reaches $2/3$. There the gas pressure is about $1.2\times10^{5}\ \mathrm{dyn\,cm^{-2}}$, and the temperature is close to the Sun's effective temperature, $T_{\rm eff}=5772\ \mathrm{K}$. The second statement is not a coincidence but very nearly a definition: in a grey atmosphere the Eddington approximation gives $T^4(\tau) = \tfrac{3}{4}T_{\rm eff}^4(\tau+\tfrac{2}{3})$, so $T=T_{\rm eff}$ exactly at $\tau=2/3$, which is the surface we have just chosen. We do not need to look up the density. The ideal gas law gives it:</p>
+
+$$ n \;=\; \frac{P}{k_B T} \;=\; \frac{1.2\times10^{5}}{(1.381\times10^{-16})(5772)} \;=\; 1.51\times10^{17}\ \mathrm{cm^{-3}}. \tag{4.2}$$
+
+<span class="prov">Two inputs here are quoted rather than derived. The photospheric gas pressure $1.2\times10^{5}\ \mathrm{dyn\,cm^{-2}}$ is a standard model-atmosphere value at $\tau=2/3$ and varies by tens of per cent between published models. The atomic cross-section for neutral hydrogen at photospheric temperatures is taken as $\sigma \approx 10^{-15}\ \mathrm{cm^2}$, an order-of-magnitude value consistent with a hard-sphere radius of a few Bohr radii, and is the weaker of the two: every photospheric number below inherits its uncertainty of roughly a factor of two. Neither affects any conclusion, because the Knudsen numbers that follow are smaller than one by nine orders of magnitude.</span>
+<p>Then (4.1) gives</p>
+
+$$ \lambda = \frac{1}{(1.51\times10^{17})(10^{-15})} = 6.6\times10^{-3}\ \mathrm{cm} = 66\ \mu\mathrm{m}. \tag{4.3}$$
+
+<p>The mean free path is about 66 micrometres, whereas the solar radius is $6.957\times10^{10}\ \mathrm{cm}$. Their ratio measures the separation between microscopic and stellar scales. Section <a class="secref" href="#knudsen">§6</a> turns that comparison into a number.</p>
+<h2 id="coulomb">5. The mean free path II — a gas of charges</h2>
+<p>Most astrophysical gas is ionised, and the argument of <a class="secref" href="#neutral">§4</a> breaks at the first step. The unscreened Coulomb force has no finite cutoff: two charges interact at every separation. Worse, the naive cross-section diverges. We have to define what counts as a collision.</p>
+<h3 id="b90">5.1 The distance of closest approach, and what counts as a collision</h3>
+<p>Consider two particles of charge $Z_1e$ and $Z_2e$ with reduced mass $\mu = m_1m_2/(m_1+m_2)$, approaching with relative speed $v_{\rm rel}$ and impact parameter $b$ — the perpendicular distance between the incoming asymptote and the target. Classical two-body Coulomb scattering gives the deflection angle $\theta$ through</p>
+
+$$ \tan\frac{\theta}{2} \;=\; \frac{b_{90}}{b}, \qquad b_{90} \;\equiv\; \frac{Z_1Z_2e^2}{\mu\,v_{\rm rel}^2}. \tag{5.1}$$
+
+<p>The length $b_{90}$ is therefore the impact parameter that produces a $90^\circ$ deflection, which is why it carries that subscript. For a gas of like particles of charge $e$ and mass $m$ at temperature $T$, we have $\mu=m/2$, and the mean square relative speed of two independently Maxwellian particles is $\langle v_{\rm rel}^2\rangle = 2\langle v^2\rangle = 6k_BT/m$. Hence $\mu\langle v_{\rm rel}^2\rangle = 3k_BT$ and</p>
+
+$$ b_{90} \;=\; \frac{e^2}{3k_BT}. \tag{5.2}$$
+
+<p>One step there deserves to be named rather than passed over. Equation (5.1) defines $b_{90}$ for a single pair with a definite relative speed; (5.2) substitutes the mean square relative speed of the whole distribution. Since $b_{90}\propto v_{\rm rel}^{-2}$, and the average of a reciprocal is not the reciprocal of an average, (5.2) is an approximation and not a consequence of (5.1). It is a good enough one to carry the scaling, and <a class="secref" href="#lamC">§5.3</a> measures exactly how much it costs: a factor of 2.05 in the final answer, which is why the numerical coefficient there is taken from the properly averaged calculation rather than from this one.</p>
+<p>At the temperature of the gas between galaxies, $T=10^8\ \mathrm{K}$, equation (5.2) gives $b_{90}=5.6\times10^{-12}\ \mathrm{cm}$, which is $1.8\times10^{3}$ times smaller than the $10^{-8}\ \mathrm{cm}$ scale of an atom. If only encounters closer than $b_{90}$ counted, the cross-section would be $\pi b_{90}^2 = 9.7\times10^{-23}\ \mathrm{cm^2}$ and ionised gas would essentially never collide. It does collide, and the reason, drawn in Fig. 2, is that the many distant, feeble encounters add up.</p>
+<figure><svg aria-label="a charge passing a field charge at impact parameter b, inside a Debye sphere, deflected by a small angle" class="setupfig" role="img" viewbox="20 46 450 202" width="100%">
+<defs>
+<marker id="p3in" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="3"><path d="M0,0 L7,3 L0,6 Z" fill="#fb923c"></path></marker>
+<marker id="p3b1" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3"><path d="M0,0 L6,3 L0,6 Z" fill="#2dd4bf"></path></marker>
+<marker id="p3b2" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3"><path d="M6,0 L0,3 L6,6 Z" fill="#2dd4bf"></path></marker>
+</defs>
+<circle cx="240" cy="150" fill="#2dd4bf" fill-opacity=".045" r="98" stroke="#2dd4bf" stroke-dasharray="6 5" stroke-opacity=".65" stroke-width="1"></circle>
+<circle cx="240" cy="150" fill="none" r="17" stroke="#a78bfa" stroke-dasharray="2 3" stroke-width="1"></circle>
+<circle cx="240" cy="150" fill="#a78bfa" r="6" stroke="#0f172a" stroke-width="1"></circle>
+<path d="M26,86 L222,86 Q240,86.5 258,89 L452,104" fill="none" marker-end="url(#p3in)" stroke="#fb923c" stroke-width="2"></path>
+<line stroke="#475569" stroke-dasharray="4 4" stroke-width="1" x1="26" x2="452" y1="86" y2="86"></line>
+<line marker-end="url(#p3b1)" marker-start="url(#p3b2)" stroke="#2dd4bf" stroke-width="1.2" x1="240" x2="240" y1="150" y2="88"></line>
+<text class="v" fill="#2dd4bf" font-size="12.5" x="247" y="122">b</text>
+<text fill="#a78bfa" font-size="10.5" x="262" y="163">b</text>
+<text fill="#a78bfa" font-size="8" x="271" y="167">90</text>
+<text fill="#2dd4bf" font-size="11.5" x="330" y="196">λ</text>
+<text fill="#2dd4bf" font-size="8.5" x="338" y="200">D</text>
+<line stroke="#2dd4bf" stroke-opacity=".6" stroke-width=".9" x1="240" x2="325" y1="150" y2="199"></line>
+<text class="v" fill="#94a3b8" font-size="11.5" x="392" y="82">θ</text>
+<text fill="#fb923c" font-size="11" x="34" y="74">incoming asymptote</text>
+<text fill="#94a3b8" font-size="11" x="26" y="228">beyond λ</text>
+<text fill="#94a3b8" font-size="8.5" x="66" y="232">D</text>
+<text fill="#94a3b8" font-size="11" x="78" y="228">the charge is screened, so no encounter</text>
+<text fill="#94a3b8" font-size="11" x="26" y="242">at larger separation contributes to the deflection</text>
+</svg><figcaption>A test charge (orange) passes a field charge (violet) at impact parameter $b$ and leaves deflected by a small angle $\theta \approx 2b_{90}/b$. Encounters at every $b$ from a lower cut-off $b_{\min}$ out to the Debye length $\lambda_D$ contribute equally per logarithmic interval. The logarithm of that ratio is the Coulomb logarithm of Definition 5. The dotted inner circle marks $b_{90}$, which is the lower cut-off only when it exceeds the quantum limit; for electrons in the intracluster medium it does not, and $b_{\min}$ is 31 times larger than the circle drawn. The radial scale is schematic throughout: $\lambda_D/b_{\min}$ for that plasma is $1.3\times10^{16}$, not the factor of six shown.</figcaption></figure>
+<h3 id="lnlam">5.2 Why the answer contains a logarithm</h3>
+<p>For $b \gg b_{90}$, equation (5.1) linearises to $\theta \approx 2b_{90}/b$. Single distant encounters are weak, but they are numerous, because the number of targets at impact parameters between $b$ and $b+db$ grows as $2\pi b\,db$. The deflections have random signs, so they do not add; their squares do. A particle moving at speed $v$ through targets of density $n$ accumulates mean square deflection at the rate</p>
+
+$$ \frac{d\langle\theta^2\rangle}{dt} \;=\; n v\int \theta^2(b)\,2\pi b\,db \;=\; n v\int \left(\frac{2b_{90}}{b}\right)^{\!2} 2\pi b\,db \;=\; 8\pi n v\, b_{90}^2 \int_{b_{\min}}^{b_{\max}}\frac{db}{b}. \tag{5.3}$$
+
+<p>The integral is $\ln(b_{\max}/b_{\min})$. Every decade of impact parameter contributes equally: the weakness of distant encounters is exactly cancelled by how many of them there are. This is why the Coulomb result is dominated not by close collisions but by the accumulated effect of many grazing ones, and why the limits of the integral must be supplied by physics outside the two-body problem.</p>
+<p>The upper limit is set by screening. In a plasma, a positive charge attracts electrons and repels ions until its field is neutralised beyond the <em>Debye length</em></p>
+
+$$ \lambda_D \;=\; \left(\frac{k_B T}{4\pi n_e e^2}\right)^{1/2}, \tag{5.4}$$
+
+<p>The lower cutoff is the larger of two scales. The classical scale $b_{90}$ marks the failure of the small-angle approximation. The reduced de Broglie length $\hbar/(mv)$ marks the failure of a classical impact parameter because the transverse position cannot be specified more accurately. This reduced wavelength differs from the thermal de Broglie wavelength $h/\sqrt{2\pi m k_BT}$.</p>
+<div class="def"><b>Definition 5 (Coulomb logarithm).</b> $\displaystyle \ln\Lambda \;\equiv\; \ln\frac{b_{\max}}{b_{\min}} \;=\; \ln\frac{\lambda_D}{\max\!\left[\,b_{90},\;\hbar/(m_e v_e)\,\right]}$, with $v_e=\sqrt{3k_BT/m_e}$ the electron thermal speed. For astrophysical plasmas $\ln\Lambda$ lies between about 2 and 40, and because it is a logarithm it is nearly constant: a factor of ten in density changes it by about 1.</div>
+<p>Evaluate it for the intracluster medium, $n_e=10^{-3}\ \mathrm{cm^{-3}}$ and $T=10^8\ \mathrm{K}$. Equation (5.4) gives $\lambda_D = 2.18\times10^{6}\ \mathrm{cm}$, or 21.8 km. The classical $b_{90}$ is $5.57\times10^{-12}\ \mathrm{cm}$. The electron de Broglie length is $\hbar/(m_ev_e) = 1.72\times10^{-10}\ \mathrm{cm}$, which is 31 times larger and therefore the one that applies. Then</p>
+
+$$ \ln\Lambda = \ln\frac{2.18\times10^{6}}{1.72\times10^{-10}} = \ln\left(1.27\times10^{16}\right) = 37.1. \tag{5.5}$$
+
+<div class="keyresult"><b>Check.</b> Sarazin (1988), eq. 5.33, gives $\ln\Lambda = 37.8$ for intracluster conditions. Our 37.1 differs by 2%, the residue of factor-of-two conventions in $b_{\min}$. The quantum limit matters: had we used the classical $b_{90}$, we would have obtained $\ln\Lambda=40.5$, which is wrong by 7%.</div>
+<h3 id="lamC">5.3 The Coulomb mean free path</h3>
+<div class="prop"><b>Proposition 3 (Coulomb mean free path).</b> In a hydrogen plasma of electron density $n_e$ and temperature $T$, a thermal particle is deflected through a large angle after travelling
+$$\boxed{\;\lambda \;=\; C\,\frac{(k_BT)^2}{n_e e^4 \ln\Lambda}\;}\tag{5.6}$$
+with $C$ a dimensionless constant of order unity. The single-speed estimate of this section gives $C = 9/8\pi = 0.358$. The Maxwellian-averaged calculation of Spitzer (1962) gives $C = 3^{3/2}/(4\sqrt{\pi}) = 0.733$. The same expression holds for electrons and for protons, and for singly charged ions it gives the same distance for both.</div>
+<div class="proof">
+Define the deflection time $t_{\rm def}$ as the time for the accumulated mean square deflection to reach one radian squared. From (5.3), with the integral evaluated as $\ln\Lambda$,
+$$ \langle\theta^2\rangle = 8\pi n v\, b_{90}^2\,\ln\Lambda\; t \;=\; 1 \qquad\Longrightarrow\qquad t_{\rm def} = \frac{1}{8\pi n v\, b_{90}^2 \ln\Lambda}. $$
+The mean free path is the distance covered in that time, $\lambda = v\,t_{\rm def}$, and the speed cancels:
+$$ \lambda \;=\; \frac{1}{8\pi n\, b_{90}^2 \ln\Lambda}. $$
+Substituting $b_{90}=e^2/(3k_BT)$ from (5.2),
+$$ \lambda \;=\; \frac{9(k_BT)^2}{8\pi n e^4 \ln\Lambda}, $$
+which is (5.6) with $C = 9/8\pi = 0.358$. The estimate is crude in one identifiable way: it assigns every particle the same speed $v$, whereas $\lambda$ depends on speed as $v^4$ through $b_{90}^2 \propto v^{-4}$, so the fast tail of the Maxwellian contributes far more than a single-speed average allows. Carrying out the average properly (Spitzer 1962) raises the coefficient to $3^{3/2}/(4\sqrt{\pi}) = 0.733$, a factor of $2.05$. All numerical values quoted in this book use the Spitzer coefficient. <span class="qed">∎</span>
+</div>
+<p>The mass-independence is worth a moment, because it is easy to misread. Neither $b_{90}$ nor $\lambda$ contains the particle mass: $b_{90}=e^2/3k_BT$ depends on the charge and the temperature alone. So at a common temperature an electron and a proton in the same plasma travel the <em>same distance</em> between large-angle deflections, even though the electron moves $\sqrt{m_p/m_e}=42.9$ times faster. What differs by that factor is the <em>time</em>, not the distance: the electron completes its 22 kpc in $1/43$ of the time the proton takes. For ions of charge $Ze$ the distance shortens as $Z^{-4}$, since $b_{90}\propto Z^2$ enters squared.</p>
+<p>Read the scaling before the numbers. The mean free path goes as $T^2/n$: hot, thin plasma is nearly collisionless, and cold, dense plasma is strongly collisional. The $T^2$ is the more surprising half. It comes from $b_{90}\propto T^{-1}$ squared — a fast particle spends less time near any given target and is deflected less. It is steep enough that a factor of 10 in temperature changes the mean free path by 100.</p>
+<div class="keyresult"><b>Check against a published value.</b> For $n_e = 10^{-3}\ \mathrm{cm^{-3}}$, $T=10^8\ \mathrm{K}$ and $\ln\Lambda = 37.8$, equation (5.6) with the Spitzer coefficient gives $\lambda = 22.5\ \mathrm{kpc}$. Sarazin (1988), eq. 5.32, tabulates $\lambda_e = 23\ \mathrm{kpc}\,(T/10^8\,\mathrm{K})^2 (n_e/10^{-3}\,\mathrm{cm^{-3}})^{-1}$. The ratio is $0.978$. The crude coefficient would have given 11 kpc, low by a factor of two — enough to matter, not enough to change any conclusion in this module.</div>
+<h2 id="knudsen">6. The Knudsen number and the Chapman–Enskog hierarchy</h2>
+<div class="def"><b>Definition 6 (Knudsen number).</b> $\displaystyle \mathrm{Kn} \;\equiv\; \frac{\lambda}{L}$, where $\lambda$ is the local mean free path and $L$ is the smallest length scale on which the problem requires the answer to be correct.</div>
+<p>The second half of that definition is not a technicality, and it is where most errors of judgement enter. The Knudsen number is a property of the question, not of the gas. The photospheric gas of <a class="secref" href="#phot">§4.1</a> has one mean free path, 66 µm, but two Knudsen numbers. Measured against the solar radius it is $9.6\times10^{-14}$; measured against the pressure scale height of about 150 km, which is the scale on which convection organises itself and therefore the scale a model of granulation must resolve, it is $4.4\times10^{-10}$. Both are minute, so here the distinction changes nothing. In <a class="secref" href="#census">§7</a> we meet a case where it changes everything.</p>
+<p>Proposition 1 established that $f - f_M$ is of order $\mathrm{Kn}$. The systematic exploitation of that fact is the Chapman–Enskog expansion, which posits</p>
+
+$$ f \;=\; f_M\left(1 + \mathrm{Kn}\,\phi_1 + \mathrm{Kn}^2\phi_2 + \cdots\right) \tag{6.1}$$
+
+<p>and takes moments of the Boltzmann equation order by order. Each order produces a different set of fluid equations.</p>
+<table>
+<tr><th>Order retained</th><th>Equations obtained</th><th>What they contain</th><th>Truncation error</th><th>Usable for</th></tr>
+<tr><td>$\mathrm{Kn}^0$</td><td>Euler</td><td>Pressure only; no viscosity, no conduction. Entropy conserved along streamlines.</td><td>$O(\mathrm{Kn})$</td><td>$\mathrm{Kn}\lesssim10^{-2}$</td></tr>
+<tr><td>$\mathrm{Kn}^1$</td><td>Navier–Stokes</td><td>Viscous stress $\propto\mu\nabla\mathbf{u}$ and heat flux $\propto-\kappa\nabla T$, with $\mu$ and $\kappa$ computed from $\lambda$.</td><td>$O(\mathrm{Kn}^2)$</td><td>$10^{-2}\lesssim\mathrm{Kn}\lesssim10^{-1}$</td></tr>
+<tr><td>$\mathrm{Kn}^2$</td><td>Burnett</td><td>Higher gradient terms. Known to admit unphysical short-wavelength instabilities.</td><td>$O(\mathrm{Kn}^3)$, but unstable</td><td>rarely usable</td></tr>
+<tr><td>$\mathrm{Kn}\gtrsim10^{-1}$</td><td>none — the series fails</td><td>When the collision length is comparable to the macroscopic scale, the local collisional closure used here is no longer controlled. A kinetic treatment or a separately justified moment closure is then needed. Small $\mathrm{Kn}$ supports a continuum approximation, but the inviscid limit requires an additional comparison: $\mathrm{Re}\gg1$ on the scales of interest. Heat transport, time dependence and boundary layers may impose further restrictions.</td><td>—</td><td>—</td></tr>
+</table>
+<p>The thresholds in the last column are conventions, and it is worth saying where they come from rather than leaving them to look like measurements. Truncating (6.1) after the term of order $\mathrm{Kn}^{k}$ leaves a relative error of order $\mathrm{Kn}^{k+1}$, so demanding one per cent accuracy from the Euler equations demands $\mathrm{Kn}\lesssim10^{-2}$, and the same demand on Navier–Stokes admits $\mathrm{Kn}\lesssim10^{-1}$. Engineering practice in rarefied gas dynamics draws the same boundaries and adds a fourth regime above $\mathrm{Kn}\approx10$, where particles cross the whole system without meeting each other. This book does not use that last distinction, because the astrophysical question is only ever whether a fluid description exists at all.</p>
+<p>Modules 2 to 11 of this book use the Euler equations. That is the first row, and it is the right choice for most astrophysical problems. However, only because the Knudsen numbers come out where they do, which is the subject of the next section. The transport coefficients in the second row are worth deriving now, because their scaling produces one of the more consequential results in the book.</p>
+<div class="prop"><b>Proposition 4 (transport coefficients, and the Spitzer $T^{5/2}$ law).</b> A gas of mass density $\rho$, thermal speed $v_{\rm th}$ and mean free path $\lambda$ has dynamic viscosity and thermal conductivity
+$$ \mu \;\simeq\; \tfrac{1}{3}\rho\, v_{\rm th}\lambda, \qquad \kappa \;\simeq\; \tfrac{1}{3}n k_B v_{\rm th}\lambda. \tag{6.2}$$
+For a fully ionised plasma, substituting the Coulomb mean free path (5.6) gives
+$$\boxed{\;\mu \;\propto\; \frac{T^{5/2}}{\ln\Lambda}, \qquad \kappa \;\propto\; \frac{T^{5/2}}{\ln\Lambda}\;}\tag{6.3}$$
+both independent of density.</div>
+<div class="proof">
+Take a shear flow $\mathbf{u}=u_x(z)\hat{\mathbf{x}}$ and consider the plane $z=z_0$. Particles crossing it downward last collided at about $z_0+\lambda$ and carry the $x$-momentum of that height, $m u_x(z_0+\lambda)$. Those crossing upward carry $m u_x(z_0-\lambda)$. The one-sided flux of particles through the plane is taken as $\tfrac{1}{6}n v_{\rm th}$ in each direction, the factor $1/6$ arising because on average one third of the particles move along any one axis and half of those in each direction. That is the six-ray approximation, in which every particle travels along a coordinate axis. The exact one-sided flux of a Maxwellian is $\tfrac{1}{4}n\langle v\rangle$, larger by about a factor of $1.5$. The approximation is kept because it makes the mechanism visible and because the $\simeq$ in (6.2) claims no better. The net transport of $x$-momentum per unit area per unit time is therefore
+$$ \Pi_{xz} \;=\; \tfrac{1}{6}n v_{\rm th}\,m\left[u_x(z_0-\lambda) - u_x(z_0+\lambda)\right] \;\approx\; -\tfrac{1}{3}n m v_{\rm th}\lambda\,\frac{du_x}{dz}. $$
+Comparison with the definition $\Pi_{xz} = -\mu\, du_x/dz$ gives $\mu = \tfrac{1}{3}\rho v_{\rm th}\lambda$ with $\rho = nm$. Repeating the argument with thermal energy $\tfrac{3}{2}k_BT$ in place of momentum, and defining $\kappa$ by $q_z = -\kappa\,dT/dz$, gives the second expression in (6.2) to the same accuracy.
+
+Now substitute. Writing $\lambda$ from (5.6),
+$$ \mu \;\simeq\; \tfrac{1}{3}\,(n m)\,v_{\rm th}\,\frac{C (k_BT)^2}{n e^4\ln\Lambda} \;=\; \frac{C\,m\,v_{\rm th}(k_BT)^2}{3 e^4 \ln\Lambda}, $$
+in which the density has cancelled — the mean free path grows as $1/n$ exactly as fast as the number of momentum carriers grows as $n$. Since $v_{\rm th}\propto T^{1/2}$, the temperature dependence is $T^{1/2}\times T^2 = T^{5/2}$, which is (6.3). The same cancellation and the same powers apply to $\kappa$. <span class="qed">∎</span>
+</div>
+<p>Two consequences are worth stating plainly. First, the density-independence of viscosity is not an artefact of the plasma case: it is Maxwell's result for any gas. He derived it in 1860, did not believe the experiments then available, and tested it himself with Katherine Maxwell in 1865–66, finding the viscosity of air constant over a wide range of pressure. Second, the $T^{5/2}$ law makes hot plasma a very good conductor of heat. Raising the temperature from $10^6$ to $10^8$ K raises $\kappa$ by $(100)^{5/2}=10^5$ from the power alone, or by $8.8\times10^{4}$ once the accompanying rise in $\ln\Lambda$ from 32.5 to 37.1 is included. This is why unsuppressed thermal conduction would erase the temperature structure observed in cluster cores within a fraction of the cluster's age, and it is the reason the question of what suppresses it is a live one. We return to it in Module 12, where magnetic fields provide the answer.</p>
+<h2 id="census">7. A census of astrophysical gases</h2>
+<p>We can now place real systems. Fig. 3 shows the density–temperature plane for ionised gas, with contours of constant Coulomb mean free path from (5.6) and the principal astrophysical plasmas marked. The contours are lines of $T^2/n = \mathrm{constant}$, bent slightly by the variation of $\ln\Lambda$ across the plane.</p>
+<figure>
+<!--FIG_PHASE-->
+<svg aria-label="density-temperature plane with contours of constant Coulomb mean free path" class="setupfig" role="img" viewbox="0 0 760 430" width="100%">
+<rect fill="#0b1324" height="304.0" stroke="#334155" stroke-width="1" width="622.0" x="78.0" y="46.0"></rect>
+<line stroke="#334155" stroke-width=".6" x1="97.4" x2="97.4" y1="46.0" y2="350.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="97.4" y="366">10⁻⁴</text>
+<line stroke="#334155" stroke-width=".6" x1="175.2" x2="175.2" y1="46.0" y2="350.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="175.2" y="366">10⁰</text>
+<line stroke="#334155" stroke-width=".6" x1="252.9" x2="252.9" y1="46.0" y2="350.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="252.9" y="366">10⁴</text>
+<line stroke="#334155" stroke-width=".6" x1="330.7" x2="330.7" y1="46.0" y2="350.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="330.7" y="366">10⁸</text>
+<line stroke="#334155" stroke-width=".6" x1="408.4" x2="408.4" y1="46.0" y2="350.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="408.4" y="366">10¹²</text>
+<line stroke="#334155" stroke-width=".6" x1="486.2" x2="486.2" y1="46.0" y2="350.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="486.2" y="366">10¹⁶</text>
+<line stroke="#334155" stroke-width=".6" x1="563.9" x2="563.9" y1="46.0" y2="350.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="563.9" y="366">10²⁰</text>
+<line stroke="#334155" stroke-width=".6" x1="641.7" x2="641.7" y1="46.0" y2="350.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="641.7" y="366">10²⁴</text>
+<line stroke="#334155" stroke-width=".6" x1="78.0" x2="700.0" y1="317.4" y2="317.4"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="70" y="321.4">10⁴</text>
+<line stroke="#334155" stroke-width=".6" x1="78.0" x2="700.0" y1="263.1" y2="263.1"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="70" y="267.1">10⁵</text>
+<line stroke="#334155" stroke-width=".6" x1="78.0" x2="700.0" y1="208.9" y2="208.9"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="70" y="212.9">10⁶</text>
+<line stroke="#334155" stroke-width=".6" x1="78.0" x2="700.0" y1="154.6" y2="154.6"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="70" y="158.6">10⁷</text>
+<line stroke="#334155" stroke-width=".6" x1="78.0" x2="700.0" y1="100.3" y2="100.3"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="70" y="104.3">10⁸</text>
+<line stroke="#334155" stroke-width=".6" x1="78.0" x2="700.0" y1="46.0" y2="46.0"></line>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="70" y="50.0">10⁹</text>
+<g>
+<polyline fill="none" points="568.2,350.0 572.1,344.6 575.9,339.2 579.8,333.8 583.7,328.4 587.6,322.9 591.4,317.5 595.3,312.1 599.2,306.7 603.1,301.3 606.9,295.9 610.8,290.5 614.7,285.1 618.6,279.7 622.4,274.3 626.3,268.8 630.2,263.4 634.1,258.0 637.9,252.6 641.8,247.2 645.7,241.8 649.6,236.4 653.4,231.0 657.3,225.6 661.2,220.1 665.1,214.7 668.9,209.3 672.8,203.9 676.7,198.5 680.6,193.1 684.4,187.7 688.3,182.3 692.2,176.9 696.1,171.5 699.9,166.0 699.9,166.0" stroke="#2dd4bf" stroke-dasharray="5 4" stroke-opacity=".75" stroke-width="1.3"></polyline>
+<text fill="#2dd4bf" font-size="10.5" text-anchor="end" x="695.0" y="160.0">1 Å</text>
+<polyline fill="none" points="395.0,350.0 398.7,344.6 402.5,339.2 406.2,333.8 410.0,328.4 413.7,322.9 417.5,317.5 421.3,312.1 425.0,306.7 428.8,301.3 432.6,295.9 436.3,290.5 440.1,285.1 443.9,279.7 447.6,274.3 451.4,268.8 455.2,263.4 459.0,258.0 462.9,252.6 466.8,247.2 470.6,241.8 474.5,236.4 478.4,231.0 482.3,225.6 486.1,220.1 490.0,214.7 493.9,209.3 497.8,203.9 501.6,198.5 505.5,193.1 509.4,187.7 513.3,182.3 517.1,176.9 521.0,171.5 524.9,166.0 528.8,160.6 532.6,155.2 536.5,149.8 540.4,144.4 544.3,139.0 548.1,133.6 552.0,128.2 555.9,122.8 559.8,117.4 563.6,111.9 567.5,106.5 571.4,101.1 575.3,95.7 579.1,90.3 583.0,84.9 586.9,79.5 590.8,74.1 594.6,68.7 598.5,63.2 602.4,57.8 606.3,52.4 610.1,47.0 610.9,46.0" stroke="#2dd4bf" stroke-dasharray="5 4" stroke-opacity=".75" stroke-width="1.3"></polyline>
+<text fill="#2dd4bf" font-size="10.5" text-anchor="start" x="615.9" y="60.0">1 cm</text>
+<polyline fill="none" points="129.8,350.0 133.7,344.6 137.5,339.2 141.3,333.8 145.2,328.4 149.0,322.9 152.8,317.5 156.7,312.1 160.5,306.7 164.3,301.3 168.2,295.9 172.0,290.5 175.8,285.1 179.7,279.7 183.5,274.3 187.4,268.8 191.2,263.4 195.1,258.0 198.9,252.6 202.8,247.2 206.7,241.8 210.5,236.4 214.4,231.0 218.3,225.6 222.2,220.1 226.0,214.7 229.9,209.3 233.8,203.9 237.7,198.5 241.5,193.1 245.4,187.7 249.3,182.3 253.2,176.9 257.0,171.5 260.9,166.0 264.8,160.6 268.7,155.2 272.5,149.8 276.4,144.4 280.3,139.0 284.2,133.6 288.0,128.2 291.9,122.8 295.8,117.4 299.7,111.9 303.5,106.5 307.4,101.1 311.3,95.7 315.2,90.3 319.0,84.9 322.9,79.5 326.8,74.1 330.7,68.7 334.5,63.2 338.4,57.8 342.3,52.4 346.2,47.0 346.9,46.0" stroke="#2dd4bf" stroke-dasharray="5 4" stroke-opacity=".75" stroke-width="1.3"></polyline>
+<text fill="#2dd4bf" font-size="10.5" text-anchor="start" x="351.9" y="60.0">1 AU</text>
+<polyline fill="none" points="78.1,274.6 82.0,269.2 85.8,263.8 89.7,258.4 93.6,252.9 97.4,247.5 101.3,242.1 105.2,236.7 109.1,231.3 112.9,225.9 116.8,220.5 120.7,215.1 124.6,209.7 128.4,204.3 132.3,198.8 136.2,193.4 140.1,188.0 143.9,182.6 147.8,177.2 151.7,171.8 155.5,166.4 159.4,161.0 163.3,155.6 167.2,150.2 171.0,144.7 174.9,139.3 178.8,133.9 182.7,128.5 186.5,123.1 190.4,117.7 194.3,112.3 198.2,106.9 202.0,101.5 205.9,96.0 209.8,90.6 213.7,85.2 217.5,79.8 221.4,74.4 225.3,69.0 229.2,63.6 233.0,58.2 236.9,52.8 240.8,47.4 241.8,46.0" stroke="#2dd4bf" stroke-dasharray="5 4" stroke-opacity=".75" stroke-width="1.3"></polyline>
+<text fill="#2dd4bf" font-size="10.5" text-anchor="start" x="246.8" y="60.0">1 pc</text>
+<polyline fill="none" points="78.2,109.2 82.1,103.8 85.9,98.4 89.8,93.0 93.7,87.6 97.5,82.2 101.4,76.8 105.3,71.4 109.2,66.0 113.0,60.5 116.9,55.1 120.8,49.7 123.5,46.0" stroke="#2dd4bf" stroke-dasharray="5 4" stroke-opacity=".75" stroke-width="1.3"></polyline>
+<text fill="#2dd4bf" font-size="10.5" text-anchor="start" x="128.5" y="60.0">1 Mpc</text>
+</g>
+<circle cx="680.6" cy="145.0" fill="#fb923c" r="4.2" stroke="#0f172a" stroke-width="1.2"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="end" x="670.6" y="145.0">solar centre</text>
+<text fill="#94a3b8" font-size="10" text-anchor="end" x="670.6" y="158.0">Kn ≈ 4.7×10⁻¹⁸</text>
+<circle cx="466.8" cy="263.1" fill="#fb923c" r="4.2" stroke="#0f172a" stroke-width="1.2"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="start" x="482.8" y="269.1">AGN inner disc</text>
+<text fill="#94a3b8" font-size="10" text-anchor="start" x="482.8" y="282.1">Kn ≈ 9.3×10⁻¹⁵</text>
+<circle cx="340.0" cy="192.5" fill="#fb923c" r="4.2" stroke="#0f172a" stroke-width="1.2"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="start" x="350.0" y="192.5">solar corona</text>
+<text fill="#94a3b8" font-size="10" text-anchor="start" x="350.0" y="205.5">Kn ≈ 2.5×10⁻²</text>
+<line stroke="#fb923c" stroke-opacity=".65" stroke-width=".9" x1="188.8" x2="219.8" y1="258.8" y2="267.8"></line>
+<circle cx="188.8" cy="258.8" fill="#fb923c" r="4.2" stroke="#0f172a" stroke-width="1.2"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="start" x="222.8" y="264.8">solar wind, 1 AU</text>
+<text fill="#94a3b8" font-size="10" text-anchor="start" x="222.8" y="277.8">Kn ≈ 1.9</text>
+<line stroke="#fb923c" stroke-opacity=".65" stroke-width=".9" x1="155.8" x2="180.8" y1="322.7" y2="325.7"></line>
+<circle cx="155.8" cy="322.7" fill="#fb923c" r="4.2" stroke="#0f172a" stroke-width="1.2"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="start" x="183.8" y="322.7">warm ionised ISM</text>
+<text fill="#94a3b8" font-size="10" text-anchor="start" x="183.8" y="335.7">Kn ≈ 2.3×10⁻⁸</text>
+<line stroke="#fb923c" stroke-opacity=".65" stroke-width=".9" x1="126.1" x2="259.1" y1="208.9" y2="211.9"></line>
+<circle cx="126.1" cy="208.9" fill="#fb923c" r="4.2" stroke="#0f172a" stroke-width="1.2"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="start" x="262.1" y="208.9">hot ISM</text>
+<text fill="#94a3b8" font-size="10" text-anchor="start" x="262.1" y="221.9">Kn ≈ 8.9×10⁻³</text>
+<line stroke="#fb923c" stroke-opacity=".65" stroke-width=".9" x1="136.3" x2="299.3" y1="128.7" y2="155.7"></line>
+<circle cx="136.3" cy="128.7" fill="#fb923c" r="4.2" stroke="#0f172a" stroke-width="1.2"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="start" x="302.3" y="152.7">ICM core</text>
+<text fill="#94a3b8" font-size="10" text-anchor="start" x="302.3" y="165.7">Kn ≈ 2.2×10⁻³</text>
+<line stroke="#fb923c" stroke-opacity=".65" stroke-width=".9" x1="97.4" x2="116.4" y1="100.3" y2="79.3"></line>
+<circle cx="97.4" cy="100.3" fill="#fb923c" r="4.2" stroke="#0f172a" stroke-width="1.2"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="start" x="119.4" y="76.3">ICM outskirts</text>
+<text fill="#94a3b8" font-size="10" text-anchor="start" x="119.4" y="89.3">Kn ≈ 0.11</text>
+<text fill="#cbd5e1" font-size="12.5" text-anchor="middle" x="389" y="388">electron number density <tspan font-style="italic">n</tspan><tspan baseline-shift="sub" font-size="9">e</tspan> / cm<tspan baseline-shift="super" font-size="9">−3</tspan></text>
+<text fill="#cbd5e1" font-size="12.5" text-anchor="middle" transform="rotate(-90 22 198)" x="22" y="198">temperature <tspan font-style="italic">T</tspan> / K</text>
+<text fill="#2dd4bf" font-size="11" x="78.0" y="412">dashed: contours of constant Coulomb mean free path λ</text>
+<text fill="#fb923c" font-size="11" x="78.0" y="428">dots: ionised astrophysical plasmas, annotated with their Knudsen number Kn = λ/L</text>
+</svg>
+<!--/FIG_PHASE-->
+<figcaption>A mean free path becomes meaningful only after comparison with a macroscopic scale. The solar corona and hot interstellar medium differ in density by eleven orders of magnitude, yet their Knudsen numbers differ by only a factor of $2.8$. Their system sizes compensate for much of the difference in mean free path.</figcaption>
+</figure>
+<p>Fig. 4 collapses the same information onto the axis that actually decides which equations may be used.</p>
+<figure>
+<!--FIG_LADDER-->
+<svg aria-label="logarithmic Knudsen number axis with astrophysical systems and fluid-model validity regimes" class="setupfig" role="img" viewbox="0 0 760 352" width="100%">
+<rect fill="#2dd4bf" fill-opacity="0.22" height="32" stroke="#2dd4bf" stroke-opacity="0.55" stroke-width="1" width="480.0" x="60.0" y="110"></rect>
+<rect fill="#a78bfa" fill-opacity="0.22" height="32" stroke="#a78bfa" stroke-opacity="0.55" stroke-width="1" width="40.0" x="540.0" y="110"></rect>
+<rect fill="#facc15" fill-opacity="0.22" height="32" stroke="#facc15" stroke-opacity="0.55" stroke-width="1" width="80.0" x="580.0" y="110"></rect>
+<rect fill="#f87171" fill-opacity="0.22" height="32" stroke="#f87171" stroke-opacity="0.55" stroke-width="1" width="40.0" x="660.0" y="110"></rect>
+<text fill="#2dd4bf" font-size="11.5" text-anchor="middle" x="300" y="131">Euler: ideal fluid</text>
+<rect fill="#a78bfa" fill-opacity="0.35" height="11" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="1" width="16" x="60" y="31"></rect>
+<text fill="#a78bfa" font-size="11" x="82" y="40">Navier–Stokes: first-order transport   <tspan fill="#94a3b8">(Kn = 10⁻²–10⁻¹)</tspan></text>
+<rect fill="#facc15" fill-opacity="0.35" height="11" stroke="#facc15" stroke-opacity="0.7" stroke-width="1" width="16" x="60" y="48"></rect>
+<text fill="#facc15" font-size="11" x="82" y="57">transition: no closed fluid closure   <tspan fill="#94a3b8">(Kn = 10⁻¹–10¹)</tspan></text>
+<rect fill="#f87171" fill-opacity="0.35" height="11" stroke="#f87171" stroke-opacity="0.7" stroke-width="1" width="16" x="60" y="65"></rect>
+<text fill="#f87171" font-size="11" x="82" y="74">free molecular   <tspan fill="#94a3b8">(Kn ≥ 10¹)</tspan></text>
+<line stroke="#94a3b8" stroke-width="1.6" x1="60.0" x2="700.0" y1="150.0" y2="150.0"></line>
+<line stroke="#94a3b8" stroke-width="1.2" x1="60.0" x2="60.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="60.0" y="168">10⁻¹⁴</text>
+<line stroke="#94a3b8" stroke-width="1.2" x1="140.0" x2="140.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="140.0" y="168">10⁻¹²</text>
+<line stroke="#94a3b8" stroke-width="1.2" x1="220.0" x2="220.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="220.0" y="168">10⁻¹⁰</text>
+<line stroke="#94a3b8" stroke-width="1.2" x1="300.0" x2="300.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="300.0" y="168">10⁻⁸</text>
+<line stroke="#94a3b8" stroke-width="1.2" x1="380.0" x2="380.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="380.0" y="168">10⁻⁶</text>
+<line stroke="#94a3b8" stroke-width="1.2" x1="460.0" x2="460.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="460.0" y="168">10⁻⁴</text>
+<line stroke="#94a3b8" stroke-width="1.2" x1="540.0" x2="540.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="540.0" y="168">10⁻²</text>
+<line stroke="#94a3b8" stroke-width="1.2" x1="620.0" x2="620.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="620.0" y="168">10⁰</text>
+<line stroke="#94a3b8" stroke-width="1.2" x1="700.0" x2="700.0" y1="145" y2="155"></line>
+<text fill="#94a3b8" font-size="10.5" text-anchor="middle" x="700.0" y="168">10²</text>
+<line stroke="#fb923c" stroke-opacity="0.8" stroke-width="1.1" x1="245.8" x2="245.8" y1="158" y2="194.0"></line>
+<circle cx="245.8" cy="150" fill="#fb923c" r="4" stroke="#0f172a" stroke-width="1"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="end" x="238.8" y="198.0">solar photosphere  <tspan fill="#94a3b8" font-size="9.5">λ = 66 µm, L = 150 km</tspan></text>
+<line stroke="#fb923c" stroke-opacity="0.8" stroke-width="1.1" x1="314.2" x2="314.2" y1="158" y2="218.0"></line>
+<circle cx="314.2" cy="150" fill="#fb923c" r="4" stroke="#0f172a" stroke-width="1"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="end" x="307.2" y="222.0">room air  <tspan fill="#94a3b8" font-size="9.5">λ = 68 nm, L = 3 m</tspan></text>
+<line stroke="#fb923c" stroke-opacity="0.8" stroke-width="1.1" x1="412.5" x2="412.5" y1="158" y2="242.0"></line>
+<circle cx="412.5" cy="150" fill="#fb923c" r="4" stroke="#0f172a" stroke-width="1"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="end" x="405.5" y="246.0">warm neutral ISM  <tspan fill="#94a3b8" font-size="9.5">λ = 134 AU, L = 100 pc</tspan></text>
+<line stroke="#fb923c" stroke-opacity="0.8" stroke-width="1.1" x1="513.7" x2="513.7" y1="158" y2="266.0"></line>
+<circle cx="513.7" cy="150" fill="#fb923c" r="4" stroke="#0f172a" stroke-width="1"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="end" x="506.7" y="270.0">intracluster medium, core  <tspan fill="#94a3b8" font-size="9.5">λ = 0.2 kpc, L = 100 kpc</tspan></text>
+<line stroke="#fb923c" stroke-opacity="0.8" stroke-width="1.1" x1="581.9" x2="581.9" y1="158" y2="290.0"></line>
+<circle cx="581.9" cy="150" fill="#fb923c" r="4" stroke="#0f172a" stroke-width="1"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="end" x="574.9" y="294.0">intracluster medium, outskirts  <tspan fill="#94a3b8" font-size="9.5">λ = 222 kpc, L = 2 Mpc</tspan></text>
+<line stroke="#fb923c" stroke-opacity="0.8" stroke-width="1.1" x1="631.5" x2="631.5" y1="158" y2="314.0"></line>
+<circle cx="631.5" cy="150" fill="#fb923c" r="4" stroke="#0f172a" stroke-width="1"></circle>
+<text fill="#f8fafc" font-size="11.5" text-anchor="end" x="624.5" y="318.0">solar wind at 1 AU  <tspan fill="#94a3b8" font-size="9.5">λ = 1.9 AU, L = 1 AU</tspan></text>
+<text fill="#cbd5e1" font-size="12.5" text-anchor="middle" x="380" y="340">Knudsen number Kn = λ / L</text>
+</svg>
+<!--/FIG_LADDER-->
+<figcaption>Most entries lie well inside the Euler regime even though their densities are extremely low, because their macroscopic scales are correspondingly large. The solar wind is the exception in this census: its mean free path is not small compared with the scale being resolved.</figcaption>
+</figure>
+<p>The table collects the numbers behind the two figures.</p>
+<table>
+<tr><th>System</th><th>$n$ / cm$^{-3}$</th><th>$T$ / K</th><th>$\lambda$</th><th>$L$</th><th>Kn</th><th>Model</th></tr>
+<tr><td>Solar photosphere</td><td>$1.5\times10^{17}$</td><td>5772</td><td>66 µm</td><td>150 km</td><td>$4.4\times10^{-10}$</td><td>Euler</td></tr>
+<tr><td>Room air (for scale)</td><td>$2.5\times10^{19}$</td><td>293</td><td>68 nm</td><td>3 m</td><td>$2.3\times10^{-8}$</td><td>Euler</td></tr>
+<tr><td>Warm neutral ISM</td><td>0.5</td><td>8000</td><td>134 AU</td><td>100 pc</td><td>$6.5\times10^{-6}$</td><td>Euler</td></tr>
+<tr><td>Intracluster medium, core</td><td>$10^{-2}$</td><td>$3\times10^{7}$</td><td>0.22 kpc</td><td>100 kpc</td><td>$2.2\times10^{-3}$</td><td>Euler</td></tr>
+<tr><td>Intracluster medium, outskirts</td><td>$10^{-4}$</td><td>$10^{8}$</td><td>222 kpc</td><td>2 Mpc</td><td>$1.1\times10^{-1}$</td><td>marginal</td></tr>
+<tr><td>Solar wind at 1 AU</td><td>5</td><td>$1.2\times10^{5}$</td><td>1.9 AU</td><td>1 AU</td><td>$1.9$</td><td>none</td></tr>
+</table>
+<span class="prov">Solar wind values are representative slow-wind conditions at 1 AU. Measured averages at 1 AU range over roughly 1.9–8.8 cm$^{-3}$ in proton density and $4.8\times10^4$–$3.0\times10^5$ K in proton temperature (Bimodal distribution of the solar wind at 1 AU, <em>A&amp;A</em> 2020), so the Knudsen number in the last row should be read as "of order unity", not as 1.9 to two figures.</span>
+<p>Three readings of the table matter. First, the size of astrophysical systems buys back most of what their rarefaction costs, but not always all of it, and the two cases are worth separating. Room air has $\mathrm{Kn}=2.3\times10^{-8}$. The solar photosphere is 165 times more rarefied than room air and yet reaches $\mathrm{Kn}=4.4\times10^{-10}$, smaller by a factor of 51, because the scale it must resolve is 150 km rather than 3 m. The warm neutral interstellar medium does worse: its mean free path of 134 AU, set against 100 pc, gives $\mathrm{Kn}=6.5\times10^{-6}$, which is 286 times <em>larger</em> than room air's. There, rarefaction wins. The conclusion survives anyway, and that is the real point — $6.5\times10^{-6}$ still sits more than three decades below the $\mathrm{Kn}\approx10^{-2}$ ceiling of the Euler regime. The fluid description holds for interstellar gas not because that gas resembles air but because it has three decades of margin to spend.</p>
+<p>Second, the intracluster medium is where the approximation begins to strain, and it strains at the edges rather than the centre, because density falls outward faster than temperature does. Third, one row is different in kind.</p>
+<h2 id="fails">8. Where the fluid picture fails, and what rescues it</h2>
+<h3 id="solarwind">8.1 The solar wind, and the magnetic rescue</h3><p>To estimate cumulative collisional relaxation, follow a plasma element from a specified starting radius $r_0$ to $r_1$. Its collisional age is $A_c=\int_{r_0}^{r_1}dr/[U(r)\tau_c(r)]$. If the convention is $\lambda=v_{\rm th}\tau_c$, this becomes $A_c=\int_{r_0}^{r_1}[v_{\rm th}(r)/U(r)]\;dr/\lambda(r)$. The result depends on the flow and temperature profiles and on the starting radius. Because Coulomb relaxation accumulates many small deflections, $A_c$ should not be interpreted here as a measured fraction of particles that have undergone a discrete collision.</p>
+<div class="prop"><b>Proposition 5 (gyroradius).</b> A particle of mass $m$, charge $Ze$ and speed $v_\perp$ perpendicular to a uniform magnetic field $\mathbf{B}$ moves on a circle of radius
+$$\boxed{\;r_g \;=\; \frac{m v_\perp c}{Z e B}\;}\tag{8.1}$$
+in Gaussian units, where $c$ is the speed of light. Its motion parallel to $\mathbf{B}$ is unaffected.</div>
+<div class="proof">
+The Lorentz force on the particle is $\mathbf{F} = (Ze/c)\,\mathbf{v}\times\mathbf{B}$. Decompose $\mathbf{v}$ into components parallel and perpendicular to $\mathbf{B}$. The parallel component contributes nothing to the cross product, so $\mathbf{F}$ has no component along $\mathbf{B}$ and the parallel motion is force-free. The perpendicular component gives a force of constant magnitude $Zev_\perp B/c$ directed perpendicular to $\mathbf{v}_\perp$ — that is, a centripetal force. Equating it to $mv_\perp^2/r$ and solving for $r$ gives (8.1). <span class="qed">∎</span>
+</div>
+<p>Put the solar wind numbers in. The interplanetary field at 1 AU is about 5 nT, or $5\times10^{-5}$ G in Gaussian units. A proton at $T=1.2\times10^5$ K has thermal speed $v_{\rm th}=\sqrt{2k_BT/m_p}=4.454\times10^{6}\ \mathrm{cm\,s^{-1}}$. Equation (8.1) gives</p>
+
+$$ r_g \;=\; \frac{(1.673\times10^{-24})(4.454\times10^{6})(2.998\times10^{10})}{(4.803\times10^{-10})(5\times10^{-5})} \;=\; 9.3\times10^{6}\ \mathrm{cm} \;=\; 93\ \mathrm{km}. \tag{8.2}$$
+
+<p>Against $L=1\ \mathrm{AU}=1.5\times10^{8}\ \mathrm{km}$, the ratio is $r_g/L = 6.2\times10^{-7}$. Transverse to the field the particles are confined not by collisions but by the field itself, and confined more tightly than collisions would have managed by the ratio $\lambda/r_g = 3.1\times10^{6}$. Fig. 5 shows what that confinement looks like, and what it leaves untouched. This is the rescue, and it is the reason magnetohydrodynamics works in regimes where ordinary hydrodynamics has no right to.</p>
+<figure>
+<!--FIG_GYRO-->
+<svg aria-label="a charged particle spiralling along a magnetic field line, bounded across the field and free along it" class="setupfig" role="img" viewbox="-10 -10 772 248" width="100%">
+<defs><marker id="m1gB" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="3"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"></path></marker><marker id="m1gR" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3"><path d="M0,0 L6,3 L0,6 Z" fill="#2dd4bf"></path></marker><marker id="m1gRb" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3"><path d="M6,0 L0,3 L6,6 Z" fill="#2dd4bf"></path></marker></defs>
+<line marker-end="url(#m1gB)" stroke="#94a3b8" stroke-width="1.6" x1="40" x2="722" y1="118.0" y2="118.0"></line>
+<text class="vb" fill="#94a3b8" font-size="13" x="46" y="108">B</text>
+<path d="M 92.00,118.00 L 93.66,122.32 L 95.32,126.56 L 96.98,130.67 L 98.64,134.57 L 100.31,138.21 L 101.97,141.51 L 103.63,144.44 L 105.29,146.94 L 106.95,148.97 L 108.61,150.50 L 110.27,151.51 L 111.93,151.97 L 113.59,151.88 L 115.26,151.24 L 116.92,150.07 L 118.58,148.38 L 120.24,146.20 L 121.90,143.56 L 123.56,140.50 L 125.22,137.08 L 126.88,133.36 L 128.54,129.38 L 130.21,125.22 L 131.87,120.95 L 133.53,116.63 L 135.19,112.32 L 136.85,108.11 L 138.51,104.07 L 140.17,100.24 L 141.83,96.70 L 143.49,93.51 L 145.16,90.72 L 146.82,88.36 L 148.48,86.49 L 150.14,85.12 L 151.80,84.29 L 153.46,84.00 L 155.12,84.26 L 156.78,85.07 L 158.44,86.41 L 160.11,88.26 L 161.77,90.60 L 163.43,93.37 L 165.09,96.55 L 166.75,100.07 L 168.41,103.88 L 170.07,107.92 L 171.73,112.12 L 173.39,116.42 L 175.06,120.75 L 176.72,125.03 L 178.38,129.19 L 180.04,133.18 L 181.70,136.92 L 183.36,140.35 L 185.02,143.42 L 186.68,146.08 L 188.34,148.29 L 190.01,150.00 L 191.67,151.20 L 193.33,151.86 L 194.99,151.98 L 196.65,151.54 L 198.31,150.56 L 199.97,149.05 L 201.63,147.05 L 203.29,144.57 L 204.96,141.66 L 206.62,138.37 L 208.28,134.75 L 209.94,130.86 L 211.60,126.76 L 213.26,122.52 L 214.92,118.20 L 216.58,113.89 L 218.24,109.63 L 219.91,105.52 L 221.57,101.61 L 223.23,97.96 L 224.89,94.63 L 226.55,91.69 L 228.21,89.17 L 229.87,87.11 L 231.53,85.56 L 233.19,84.53 L 234.86,84.04 L 236.52,84.10 L 238.18,84.71 L 239.84,85.86 L 241.50,87.53 L 243.16,89.69 L 244.82,92.31 L 246.48,95.35 L 248.14,98.75 L 249.81,102.46 L 251.47,106.43 L 253.13,110.58 L 254.79,114.85 L 256.45,119.17 L 258.11,123.48 L 259.77,127.69 L 261.43,131.75 L 263.09,135.59 L 264.76,139.14 L 266.42,142.35 L 268.08,145.16 L 269.74,147.54 L 271.40,149.44 L 273.06,150.83 L 274.72,151.69 L 276.38,152.00 L 278.04,151.76 L 279.71,150.98 L 281.37,149.66 L 283.03,147.83 L 284.69,145.52 L 286.35,142.77 L 288.01,139.61 L 289.67,136.10 L 291.33,132.30 L 292.99,128.27 L 294.66,124.08 L 296.32,119.78 L 297.98,115.46 L 299.64,111.17 L 301.30,107.00 L 302.96,103.00 L 304.62,99.25 L 306.28,95.80 L 307.94,92.71 L 309.61,90.03 L 311.27,87.80 L 312.93,86.07 L 314.59,84.84 L 316.25,84.16 L 317.91,84.02 L 319.57,84.43 L 321.23,85.38 L 322.89,86.86 L 324.56,88.85 L 326.22,91.31 L 327.88,94.19 L 329.54,97.47 L 331.20,101.08 L 332.86,104.96 L 334.52,109.05 L 336.18,113.28 L 337.84,117.59 L 339.51,121.91 L 341.17,126.17 L 342.83,130.29 L 344.49,134.22 L 346.15,137.88 L 347.81,141.22 L 349.47,144.18 L 351.13,146.73 L 352.79,148.80 L 354.46,150.38 L 356.12,151.43 L 357.78,151.95 L 359.44,151.91 L 361.10,151.33 L 362.76,150.20 L 364.42,148.56 L 366.08,146.42 L 367.74,143.82 L 369.41,140.80 L 371.07,137.42 L 372.73,133.72 L 374.39,129.76 L 376.05,125.62 L 377.71,121.35 L 379.37,117.03 L 381.03,112.72 L 382.69,108.50 L 384.36,104.44 L 386.02,100.59 L 387.68,97.02 L 389.34,93.80 L 391.00,90.96 L 392.66,88.56 L 394.32,86.64 L 395.98,85.23 L 397.64,84.34 L 399.31,84.00 L 400.97,84.21 L 402.63,84.97 L 404.29,86.26 L 405.95,88.07 L 407.61,90.36 L 409.27,93.09 L 410.93,96.23 L 412.59,99.73 L 414.26,103.51 L 415.92,107.53 L 417.58,111.73 L 419.24,116.02 L 420.90,120.34 L 422.56,124.63 L 424.22,128.81 L 425.88,132.81 L 427.54,136.58 L 429.21,140.04 L 430.87,143.15 L 432.53,145.85 L 434.19,148.10 L 435.85,149.86 L 437.51,151.11 L 439.17,151.82 L 440.83,151.99 L 442.49,151.60 L 444.16,150.67 L 445.82,149.22 L 447.48,147.25 L 449.14,144.82 L 450.80,141.95 L 452.46,138.69 L 454.12,135.10 L 455.78,131.23 L 457.44,127.15 L 459.11,122.92 L 460.77,118.61 L 462.43,114.29 L 464.09,110.03 L 465.75,105.90 L 467.41,101.96 L 469.07,98.29 L 470.73,94.93 L 472.39,91.95 L 474.06,89.38 L 475.72,87.28 L 477.38,85.68 L 479.04,84.60 L 480.70,84.06 L 482.36,84.07 L 484.02,84.63 L 485.68,85.73 L 487.34,87.35 L 489.01,89.47 L 490.67,92.05 L 492.33,95.05 L 493.99,98.42 L 495.65,102.10 L 497.31,106.05 L 498.97,110.18 L 500.63,114.45 L 502.29,118.77 L 503.96,123.08 L 505.62,127.30 L 507.28,131.38 L 508.94,135.24 L 510.60,138.82 L 512.26,142.06 L 513.92,144.92 L 515.58,147.34 L 517.24,149.28 L 518.91,150.72 L 520.57,151.63 L 522.23,151.99 L 523.89,151.81 L 525.55,151.08 L 527.21,149.81 L 528.87,148.03 L 530.53,145.76 L 532.19,143.04 L 533.86,139.92 L 535.52,136.44 L 537.18,132.67 L 538.84,128.66 L 540.50,124.47 L 542.16,120.18 L 543.82,115.86 L 545.48,111.57 L 547.14,107.38 L 548.81,103.37 L 550.47,99.59 L 552.13,96.11 L 553.79,92.99 L 555.45,90.27 L 557.11,87.99 L 558.77,86.21 L 560.43,84.93 L 562.09,84.20 L 563.76,84.01 L 565.42,84.37 L 567.08,85.27 L 568.74,86.70 L 570.40,88.64 L 572.06,91.06 L 573.72,93.91 L 575.38,97.15 L 577.04,100.72 L 578.71,104.58 L 580.37,108.66 L 582.03,112.88 L 583.69,117.19 L 585.35,121.51 L 587.01,125.78 L 588.67,129.91 L 590.33,133.86 L 591.99,137.55 L 593.66,140.92 L 595.32,143.92 L 596.98,146.51 L 598.64,148.63 L 600.30,150.25 L 601.96,151.36 L 603.62,151.92 L 605.28,151.94 L 606.94,151.41 L 608.61,150.33 L 610.27,148.73 L 611.93,146.64 L 613.59,144.08 L 615.25,141.10 L 616.91,137.75 L 618.57,134.08 L 620.23,130.14 L 621.89,126.01 L 623.56,121.76 L 625.22,117.44 L 626.88,113.12 L 628.54,108.89 L 630.20,104.81 L 631.86,100.94 L 633.52,97.34 L 635.18,94.08 L 636.84,91.21 L 638.51,88.77 L 640.17,86.80 L 641.83,85.34 L 643.49,84.40 L 645.15,84.01 L 646.81,84.17 L 648.47,84.88 L 650.13,86.12 L 651.79,87.88 L 653.46,90.12 L 655.12,92.82 L 656.78,95.92 L 658.44,99.39 L 660.10,103.15 L 661.76,107.15 L 663.42,111.33 L 665.08,115.61 L 666.74,119.94 L 668.41,124.23 L 670.07,128.42 L 671.73,132.45 L 673.39,136.24 L 675.05,139.73 L 676.71,142.88 L 678.37,145.62 L 680.03,147.91 L 681.69,149.72 L 683.36,151.02 L 685.02,151.78 L 686.68,152.00 L 688.34,151.66 L 690.00,150.78" fill="none" id="m1gpath" stroke="#fb923c" stroke-opacity="0.85" stroke-width="1.9"></path>
+<circle fill="#fb923c" r="5.5" stroke="#0f172a" stroke-width="1"><animatemotion dur="6s" repeatcount="indefinite" rotate="auto"><mpath href="#m1gpath"></mpath></animatemotion></circle>
+<line marker-end="url(#m1gR)" marker-start="url(#m1gRb)" stroke="#2dd4bf" stroke-width="1.2" x1="112.5" x2="112.5" y1="84.0" y2="152.0"></line>
+<text fill="#2dd4bf" font-size="12" text-anchor="middle" x="104.5" y="76.0">2<tspan font-style="italic">r</tspan><tspan baseline-shift="sub" font-size="9">g</tspan></text>
+<line stroke="#2dd4bf" stroke-dasharray="4 5" stroke-opacity=".5" stroke-width=".8" x1="40" x2="700" y1="84.0" y2="84.0"></line>
+<line stroke="#2dd4bf" stroke-dasharray="4 5" stroke-opacity=".5" stroke-width=".8" x1="40" x2="700" y1="152.0" y2="152.0"></line>
+<text fill="#2dd4bf" font-size="12.5" x="40" y="34">across the field: bounded forever by <tspan font-style="italic">r</tspan><tspan baseline-shift="sub" font-size="9">g</tspan> = 93 km, with or without collisions</text>
+<text fill="#fb923c" font-size="12.5" x="40" y="206">along the field: nothing bounds the motion — the particle free-streams a mean free path, 1.9 AU, which is 3.1×10⁶ gyroradii</text>
+</svg>
+<!--/FIG_GYRO-->
+<figcaption>The same particle, seen along and across the magnetic field. Across $\mathbf{B}$ its excursion is bounded permanently by the gyroradius, 93 km in the solar wind at 1 AU; along $\mathbf{B}$ nothing bounds it, and it free-streams a full mean free path of 1.9 AU, which is $3.1\times10^{6}$ gyroradii. Gyromotion restricts motion across a locally uniform field, while particles remain free to stream along it. These two directions therefore require different transport descriptions.</figcaption>
+</figure>
+<div class="warn"><b>The rescue is partial, and the way it is partial is measurable.</b> A magnetic field constrains motion across itself and does nothing to motion along itself. A magnetised collisionless plasma is therefore not an ordinary fluid with a scalar pressure $p$. It has two pressures, $p_\parallel$ along the field and $p_\perp$ across it, which relax towards each other only through collisions the plasma is not having. The resulting description is the Chew–Goldberger–Low (CGL) or double-adiabatic theory. Pressure anisotropy is routinely measured in the solar wind, and the anisotropy drives instabilities — firehose and mirror — that act as the plasma's substitute for collisions. Module 12 develops magnetohydrodynamics and returns to this point.</div>
+<h3 id="nostars">8.2 When the particles are stars, and when they are dark matter</h3>
+<p>Two systems are routinely called fluids in casual speech and are not fluids under any reading of Definition 2.</p>
+<p><b>Stars in a galaxy.</b> Take the solar neighbourhood: a stellar number density of about $0.1\ \mathrm{pc^{-3}}$, a velocity dispersion near $20\ \mathrm{km\,s^{-1}}$, and a geometric cross-section for physical contact of $\sigma=\pi(2R_\odot)^2 = 6.1\times10^{22}\ \mathrm{cm^2}$. Proposition 2 then gives a mean free path of $1.6\times10^{6}$ Gpc and a mean time between stellar collisions of $7.7\times10^{19}$ years, which is $5.5\times10^{9}$ Hubble times. Stars do not touch.</p>
+<p>They do, however, exchange energy at a distance through gravity, and the relevant question is whether those encounters accumulate into anything. The timescale on which they do is the two-body relaxation time. For a self-gravitating system of $N$ bodies with crossing time $t_{\rm cross}=R/v$, Binney and Tremaine (2008) give</p>
+
+$$ t_{\rm relax} \;\approx\; \frac{0.1\,N}{\ln N}\; t_{\rm cross}. \tag{8.3}$$
+
+<p>The $N/\ln N$ carries the same logic as the Coulomb logarithm of <a class="secref" href="#lnlam">§5.2</a>, and for the same reason: gravity, like the Coulomb force, is long-ranged, so many weak encounters dominate and the sum over impact parameters produces a logarithm. Evaluating (8.3):</p>
+<table>
+<tr><th>System</th><th>$N$</th><th>$R$</th><th>$v$</th><th>$t_{\rm cross}$</th><th>$t_{\rm relax}$</th><th>$t_{\rm relax}/t_{\rm Hubble}$</th></tr>
+<tr><td>Globular cluster</td><td>$10^{5}$</td><td>10 pc</td><td>5 km s$^{-1}$</td><td>$2.0\times10^{6}$ yr</td><td>$1.7\times10^{9}$ yr</td><td>0.12</td></tr>
+<tr><td>Milky Way disc</td><td>$10^{11}$</td><td>10 kpc</td><td>200 km s$^{-1}$</td><td>$4.9\times10^{7}$ yr</td><td>$1.9\times10^{16}$ yr</td><td>$1.4\times10^{6}$</td></tr>
+<tr><td>Galaxy cluster (galaxies)</td><td>$10^{3}$</td><td>1 Mpc</td><td>1000 km s$^{-1}$</td><td>$9.8\times10^{8}$ yr</td><td>$1.4\times10^{10}$ yr</td><td>1.0</td></tr>
+</table>
+<p>A very long two-body relaxation time means that discrete stellar encounters make little change over the age of the galaxy. The stars still move in the collective gravitational potential, which can evolve and alter their orbits. Collisionless dynamics therefore removes an important relaxation mechanism. It does not imply that the present orbital structure is identical to the initial one. A kinetic description retains the velocity distribution, while a moment description requires a suitable closure.</p>
+<p><b>Dark matter.</b> Here the constraint runs the other way: we do not know the cross-section, and its smallness is an observational result. The merging cluster 1E 0657-56, the Bullet Cluster, separates its collisional component (the X-ray-emitting intracluster gas, which shocked and lagged) from its collisionless component (the galaxies and the lensing mass, which passed through). Randall and collaborators (2008) turned that separation into an upper limit on the dark matter self-interaction cross-section per unit mass, $\sigma/m \lt 0.7\ \mathrm{cm^2\,g^{-1}}$ at 68% confidence. Since $\lambda = 1/(\rho\,\sigma/m)$ for a medium of mass density $\rho$, and a cluster of $10^{15}\,M_\odot$ within 1 Mpc has a mean density $\rho = M/(\tfrac{4}{3}\pi R^3) = 1.6\times10^{-26}\ \mathrm{g\,cm^{-3}}$, which we round to $2\times10^{-26}$, even the extreme allowed value gives</p>
+
+$$ \lambda \;=\; \frac{1}{(2\times10^{-26})(0.7)} \;=\; 7.1\times10^{25}\ \mathrm{cm} \;=\; 23\ \mathrm{Mpc}, \tag{8.4}$$
+
+<p>so $\mathrm{Kn}\ge23$ against the megaparsec size of a cluster. The core is denser than that mean by about a factor of six, and taking $\rho=10^{-25}\ \mathrm{g\,cm^{-3}}$ there gives $\lambda\ge4.6$ Mpc and $\mathrm{Kn}\ge4.6$ — smaller, but still greater than one in the region where a collision would have been most likely. Dark matter is collisionless, and the Bullet Cluster measurement is essentially a direct measurement of that fact.</p>
+<p>All three systems — galaxies, dark matter, and the collisionless solar wind along $\mathbf{B}$ — are governed by the Boltzmann equation (2.1) with the right-hand side set to zero. That is the collisionless Boltzmann, or Vlasov, equation, and the discipline built on it is stellar dynamics rather than fluid dynamics. This book does not develop it. It is named here so that the boundary of what follows is explicit.</p>
+<h2 id="limits">9. What this model captures, and what it misses</h2>
+<p>The fluid description we have earned is a single-component, isotropic, local-thermodynamic-equilibrium continuum. Each of those words is an idealisation that later modules either repay or flag.</p>
+<table>
+<tr><th>Idealisation</th><th>What it assumes</th><th>Where it is repaid</th></tr>
+<tr><td>One fluid</td><td>Electrons and ions share one temperature.</td><td>See below — it fails behind cluster shocks.</td></tr>
+<tr><td>Isotropic pressure</td><td>A single scalar $p$, no dependence on direction relative to $\mathbf{B}$.</td><td>Module 12 (magnetohydrodynamics; CGL noted in <a href="#solarwind">§8.1</a>)</td></tr>
+<tr><td>Ideal (Euler) flow</td><td>$\mu=\kappa=0$: no viscosity or conduction.</td><td><a class="secref" href="#knudsen">§6</a> gives the coefficients; Module 11 needs them for accretion discs</td></tr>
+<tr><td>No self-gravity</td><td>Gravity, if present, is externally imposed.</td><td>Modules 3 and 5 (hydrostatic stars. The Jeans instability)</td></tr>
+<tr><td>No magnetic field</td><td>The gas is unmagnetised or the field is dynamically negligible.</td><td>Module 12</td></tr>
+<tr><td>No radiation</td><td>Photons neither carry momentum nor dominate the energy budget.</td><td>Module 13</td></tr>
+<tr><td>Non-relativistic</td><td>$v \ll c$ and $k_BT \ll mc^2$.</td><td>Not repaid in this book; noted where it binds</td></tr>
+</table>
+<p>The first row deserves more than a pointer, because it fails inside the very system we used to validate <a class="secref" href="#lamC">§5.3</a>. Electrons and protons at the same temperature carry very different momenta, and energy transfer between the two species is slow. Sarazin (1988) gives the equilibration times for intracluster conditions in the ratio $1: 43: 1870$ for electron–electron, proton–proton and proton–electron exchange respectively — the middle ratio being $\sqrt{m_p/m_e}=42.9$ and the last being close to $m_p/m_e = 1836$. At $T_m\approx10^8$ K and $n_e\approx10^{-3}\ \mathrm{cm^{-3}}$ the proton–electron equilibration time is about $6\times10^{8}$ years. A merger shock crossing a cluster takes of order $10^{9}$ years, so the gas behind such a shock is genuinely two-temperature: the protons are heated first and the electrons lag. Since X-ray observations measure the <em>electron</em> temperature, a single-fluid reading of the data underestimates the true thermal energy in exactly the regions where mergers are most violent.</p>
+<p>That is a fair summary of the position this module leaves us in. The fluid equations are licensed for almost every system in the table of <a class="secref" href="#census">§7</a>, the licence is quantitative and checkable, and the places where it lapses are identified rather than hidden. Module 2 writes the equations down.</p>
+<h3 id="lab">9.1 Reproducing the numbers</h3>
+<p>The script below reproduces the two comparisons against published values, the Coulomb logarithm of <a class="secref" href="#lnlam">§5.2</a> and the intracluster mean free path of <a class="secref" href="#lamC">§5.3</a>. Every other plasma number in this module comes from the same four functions with different arguments. It has no dependencies beyond NumPy.</p>
+<div class="codewrap"><button aria-label="Copy code to clipboard" class="copybtn" onclick="copyCode(this)" type="button"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="13" rx="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>Copy</span></button><pre><code>import numpy as np
+kB = 1.380649e-16          # erg/K
+e = 4.80320471e-10         # esu
+me = 9.1093837015e-28      # g
+hbar = 1.054571817e-27     # erg s
+kpc = 3.0856775814913673e21  # cm
+SPITZER = 3.0**1.5/(4.0*np.sqrt(np.pi))
+
+
+def debye(n, T):
+    return np.sqrt(kB*T/(4.0*np.pi*n*e*e))
+
+
+def b_min_e(T):
+    ve = np.sqrt(3.0*kB*T/me)
+    return max(e*e/(3.0*kB*T), hbar/(me*ve))
+
+
+def ln_lambda(n, T):
+    return np.log(debye(n, T)/b_min_e(T))
+
+
+def lam_coulomb(n, T, lnL=None):
+    lnL = ln_lambda(n, T) if lnL is None else lnL
+    return SPITZER*(kB*T)**2/(n*e**4*lnL)
+
+
+n, T = 1.0e-3, 1.0e8
+print("ln Lambda =", round(ln_lambda(n, T), 1), "(Sarazin 1988: 37.8)")
+lam = lam_coulomb(n, T, lnL=37.8)/kpc
+print("lambda =", round(lam, 1), "kpc (Sarazin 1988: 23 kpc)")
+print("ratio =", round(lam/23.0, 3))
+</code></pre></div>
+<h2 id="problems">10. Problems</h2>
+<p class="small">Jump to:
+  <a href="#conceptual">Conceptual</a> ·
+  <a href="#derivational">Derivational</a> ·
+  <a href="#computational">Computational</a></p>
+<h3 id="conceptual">Conceptual <a class="small" href="#problems">↑ contents</a></h3>
+<div class="prob"><b>C1 — Two Knudsen numbers, one gas.</b> A colleague reports that the warm neutral interstellar medium has $\mathrm{Kn}=6.5\times10^{-6}$ and concludes that the Euler equations may be used for any interstellar problem. Give a specific interstellar structure for which that conclusion is wrong, and say what changed. <span class="small"><em>Probes: whether Definition 6 has been read as a statement about the gas or about the question. Draws on <a href="#knudsen">§6</a>.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>Nothing about the gas changed; $L$ changed. The quoted figure uses $L=100$ pc, appropriate to a large cloud complex. The mean free path is 134 AU, so any structure whose interesting scale approaches that length has a Knudsen number of order unity. A concrete example is the transition layer at the edge of a cold neutral cloud, across which temperature falls from 8000 K to under 100 K. Such interfaces are observed to be thin, and a model that must resolve a 100 AU interface has $\mathrm{Kn}\sim1$ and no fluid description of the interface itself. The bulk flow around the cloud remains perfectly fluid. The correct statement is that the Euler equations hold for interstellar problems whose resolution requirement exceeds a few thousand AU.</p></div></details>
+</div>
+<div class="prob"><b>C2 — Why a logarithm and not a number.</b> Explain, without algebra, why the Coulomb mean free path contains $\ln\Lambda$ whereas the hard-sphere mean free path contains no such factor. Then say what would change physically if the Debye screening length were infinite. <span class="small"><em>Probes: the structure of the argument in <a href="#lnlam">§5.2</a>, not its execution.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>A hard sphere interacts over one length and one only, so there is a single scale and nothing to integrate over. The Coulomb force acts at every separation, and the strength of an encounter falls as $1/b$ while the number of encounters available at that separation rises as $b$. The two effects cancel in the mean-square deflection, so each logarithmic interval of impact parameter contributes the same amount, and summing over intervals from $b_{\min}$ to $b_{\max}$ produces the logarithm of their ratio.</p><p>If $\lambda_D$ were infinite, the integral in (5.3) would diverge at its upper limit and the deflection rate would be unbounded — that is, a plasma would have zero mean free path, which is plainly false. Screening is what makes the Coulomb problem finite. The finiteness is supplied by the collective response of the plasma, not by the two-body problem, which is why $\ln\Lambda$ cannot be derived from Rutherford scattering alone.</p></div></details>
+</div>
+<div class="prob"><b>C3 — What the Bullet Cluster measures.</b> The Bullet Cluster is often described as evidence that dark matter exists. State instead what it measures about dark matter in the language of this module, and explain why the intracluster gas is essential to the argument rather than incidental. <span class="small"><em>Probes: <a href="#nostars">§8.2</a> and Definition 6.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>It measures a Knudsen number, or equivalently places a lower bound on a mean free path. In the collision the gas, which has $\mathrm{Kn}\ll1$, behaved as a fluid: it shocked, dissipated kinetic energy and was left behind between the two subclusters. The galaxies and the lensing mass, having $\mathrm{Kn}\gg1$, passed through each other without interacting. The <em>separation</em> between the two components is therefore a direct measure of the difference in their collisionality, and converting the observed offset into a limit gives $\sigma/m \lt 0.7\ \mathrm{cm^2\,g^{-1}}$ (Randall et al. 2008), hence $\lambda\ge23$ Mpc and $\mathrm{Kn}\ge23$.</p><p>The gas is essential because it is the control. Without a component known in advance to be collisional, the fact that the lensing mass passed through would carry no information: one would not know whether the collision had been violent enough to stop anything. The gas establishes that it was.</p></div></details>
+</div>
+<h3 id="derivational">Derivational <a class="small" href="#problems">↑ contents</a></h3>
+<div class="prob"><b>D1 — The $\sqrt{2}$ in the hard-sphere mean free path.</b> Proposition 2 assumed stationary targets. Show that for a Maxwellian gas of identical particles the mean relative speed exceeds the mean speed by exactly $\sqrt{2}$, and hence that $\lambda = 1/(\sqrt{2}\,n\sigma)$. <span class="small"><em>Probes: handling of the relative-velocity distribution. Draws on <a href="#neutral">§4</a>.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>Let $\mathbf{v}_1,\mathbf{v}_2$ be independent and Maxwellian with the same $m$ and $T$, and put $\mathbf{v}_{\rm rel}=\mathbf{v}_1-\mathbf{v}_2$. Because the two are independent Gaussians in each Cartesian component, each component of $\mathbf{v}_{\rm rel}$ is Gaussian with variance $2(k_BT/m)$ — variances of independent variables add. So $\mathbf{v}_{\rm rel}$ is itself Maxwellian with the substitution $m \to m/2$, which is the reduced mass, as expected.</p><p>The mean speed of a Maxwellian is $\langle v\rangle = \sqrt{8k_BT/\pi m}$. Applying it with $m\to m/2$ gives $\langle v_{\rm rel}\rangle = \sqrt{16 k_BT/\pi m} = \sqrt{2}\,\langle v\rangle$.</p><p>The collision rate per particle is $n\sigma\langle v_{\rm rel}\rangle$. However, the distance covered per unit time by the particle itself is $\langle v\rangle$, so
+$$\lambda = \frac{\langle v\rangle}{n\sigma\langle v_{\rm rel}\rangle} = \frac{1}{\sqrt{2}\,n\sigma}.$$
+The distinction between the two speeds is the whole content of the factor: use the relative speed for the rate, the particle's own speed for the distance.</p></div></details>
+</div>
+<div class="prob"><b>D2 — Small-angle scattering from the Rutherford formula.</b> Starting from (5.1), show that for $b\gg b_{90}$ the deflection is $\theta\approx2b_{90}/b$, and that the number of encounters with $b$ in $[b,b+db]$ per unit time is $2\pi n v b\,db$. Then obtain (5.3), and show explicitly that the contribution per logarithmic interval of $b$ is independent of $b$. <span class="small"><em>Probes: the step most textbooks assert. Draws on <a href="#lnlam">§5.2</a>.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>For $b\gg b_{90}$ the right side of (5.1) is small, so $\tan(\theta/2)\approx\theta/2$ and $\theta\approx 2b_{90}/b$.</p><p>In time $dt$ the particle sweeps an annulus of radius $b$, width $db$ and length $v\,dt$, of volume $2\pi b\,db\,v\,dt$. With target density $n$ the encounter rate in that annulus is $2\pi n v b\,db$.</p><p>Deflections from independent encounters have random azimuth, so the mean vector deflection vanishes and the mean square adds:
+$$\frac{d\langle\theta^2\rangle}{dt} = \int \theta^2(b)\,2\pi n v b\,db = 2\pi n v\int \frac{4b_{90}^2}{b^2}\,b\,db = 8\pi n v b_{90}^2\int\frac{db}{b},$$
+which is (5.3). Substituting $b = e^{s}$ gives $db/b = ds$, so the integrand in $s$ is the constant $8\pi n v b_{90}^2$: every $e$-fold in impact parameter contributes equally. This is why the answer depends on the ratio $b_{\max}/b_{\min}$ only through its logarithm, and why an error of a factor of two in either limit changes $\ln\Lambda\approx37$ by less than 2%.</p></div></details>
+</div>
+<div class="prob"><b>D3 — Why hot plasma conducts so well.</b> Using (6.2) and (5.6), show that the ratio of the thermal conduction timescale to the sound-crossing timescale over a length $L$ scales as $n L / T^{2}$, and state what that implies for a cluster core relative to a cluster outskirt. <span class="small"><em>Probes: combining two results and reading a scaling. Draws on <a href="#knudsen">§6</a>.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>The conduction time over a length $L$ follows from the diffusion of heat: with thermal diffusivity $\chi = \kappa/(n k_B)\simeq \tfrac{1}{3}v_{\rm th}\lambda$, we have $t_{\rm cond}\sim L^2/\chi \sim 3L^2/(v_{\rm th}\lambda)$. The sound-crossing time is $t_{\rm s}\sim L/c_s$ with $c_s\propto v_{\rm th}$. Therefore
+$$\frac{t_{\rm cond}}{t_{\rm s}} \;\sim\; \frac{3L^2/(v_{\rm th}\lambda)}{L/v_{\rm th}} \;=\; \frac{3L}{\lambda} \;=\; 3\,\mathrm{Kn}^{-1}.$$
+So the ratio is just the inverse Knudsen number, and with $\lambda\propto T^2/n$ from (5.6),
+$$\frac{t_{\rm cond}}{t_{\rm s}} \;\propto\; \frac{nL}{T^{2}}.$$</p><p>A cool core has high $n$, low $T$ and small $L$; an outskirt has low $n$, high $T$ and large $L$. Using the Knudsen numbers tabulated in <a href="#census">§7</a>, the ratio $3\,\mathrm{Kn}^{-1}$ is $1.4\times10^{3}$ in the core and $27$ in the outskirts. Conduction is therefore far too slow to matter dynamically in a core over a sound-crossing time, but in the outskirts it is within a factor of thirty of being competitive — which is the same statement as $\mathrm{Kn}\approx0.1$ there, read in the time domain instead of the length domain.</p></div></details>
+</div>
+<h3 id="computational">Computational <a class="small" href="#problems">↑ contents</a></h3>
+<div class="prob"><b>K1 — Where does the solar wind stop being a fluid?</b> The solar wind expands roughly radially at constant speed, so $n\propto r^{-2}$, and cools roughly as $T\propto r^{-4/3}$ for adiabatic spherical expansion of a monatomic gas. Taking $n=5\ \mathrm{cm^{-3}}$ and $T=1.2\times10^5$ K at $r=1$ AU and $L=r$, find the heliocentric distance at which $\mathrm{Kn}=1$. Treat $\ln\Lambda$ as constant at 26. <span class="small"><em>Probes: combining a scaling law with (5.6). Draws on <a href="#coulomb">§5</a> and <a href="#solarwind">§8.1</a>.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>Write $r$ in AU. Then $n = 5r^{-2}$ and $T = 1.2\times10^5 r^{-4/3}$. From (5.6), $\lambda\propto T^2/n$, so
+$$\lambda(r) = \lambda(1)\cdot\frac{(r^{-4/3})^2}{r^{-2}} = \lambda(1)\,r^{-8/3+2} = \lambda(1)\,r^{-2/3},$$
+with $\lambda(1)=1.9$ AU. The Knudsen number against $L=r$ is
+$$\mathrm{Kn}(r) = \frac{1.9\,r^{-2/3}}{r} = 1.9\,r^{-5/3}.$$
+Setting this to one gives $r = 1.9^{3/5} = 1.49$ AU.</p><p>Two readings. First, $\mathrm{Kn}$ <em>decreases</em> outward here, and the crossing lies just outside Earth's orbit: the wind at 1 AU is already at $\mathrm{Kn}=1.9$, so on this model the fluid description fails everywhere inside about 1.5 AU and recovers beyond it. That is an artefact worth naming — it follows from assuming $L=r$, which makes the available scale grow faster than the mean free path shrinks. Judged instead against a fixed structure, such as the 0.01 AU thickness of a stream interaction region, the wind is collisionless throughout. Second, the exponent $-5/3$ is shallow, so the crossing radius is insensitive to the inputs: doubling $\lambda(1)$ moves it only to 2.3 AU. The conclusion that the solar wind is not collisional at scales a spacecraft can resolve is robust. The precise crossing radius is not, and adiabatic cooling is itself a poor model, since the observed wind cools more slowly than $r^{-4/3}$ because it is heated in transit.</p></div></details>
+</div>
+<div class="prob"><b>K2 — The mean free path in a cluster, as a function of radius.</b> A galaxy cluster follows the standard $\beta$-model with $\beta=2/3$ and core radius $r_c=100$ kpc, so that $n_e(r) = 10^{-2}\left[1+(r/r_c)^2\right]^{-1}\ \mathrm{cm^{-3}}$, and is isothermal at $T = 5\times10^{7}$ K. Taking $L=r$ and $\ln\Lambda=37$, find the radius at which $\mathrm{Kn}$ first exceeds $10^{-1}$, and then decide whether a simulation using 10 kpc cells is entitled to the Euler equations there. <span class="small"><em>Probes: numerical evaluation plus the resolution question of Definition 6. Draws on <a href="#knudsen">§6</a> and <a href="#census">§7</a>.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>From (5.6) with the Spitzer coefficient, $\lambda = 0.733(k_BT)^2/(n_e e^4\ln\Lambda)$. At $T=5\times10^7$ K, $n_e=10^{-2}\ \mathrm{cm^{-3}}$ and $\ln\Lambda=37$ this evaluates to $\lambda_0 = 0.575$ kpc. Since $\lambda\propto n_e^{-1}$ at fixed temperature,
+$$\lambda(r) = 0.575\left[1+(r/100)^2\right]\ \mathrm{kpc}, \qquad \mathrm{Kn}(r) = \frac{0.575\left[1+(r/100)^2\right]}{r},$$
+with $r$ in kpc. Evaluating: $\mathrm{Kn} = 1.15\times10^{-2}$ at 100 kpc, $2.99\times10^{-2}$ at 500 kpc, $5.81\times10^{-2}$ at 1000 kpc, and $1.00\times10^{-1}$ at 1740 kpc. The threshold is crossed at $r\approx1.73$ Mpc, near the virial radius of a massive cluster.</p><p>Note the shape of $\mathrm{Kn}(r)$: it falls from the very centre, reaches a minimum where $r = r_c$, and rises as $r$ beyond that, because $\lambda$ grows as $r^2$ while $L$ grows only as $r$. The outskirts are always the fragile region.</p><p>On the resolution question the answer is the opposite of comfortable. At $r=1.73$ Mpc the mean free path is $\lambda = 0.575\times302 = 173$ kpc — seventeen times <em>larger</em> than the 10 kpc cell. The simulation therefore resolves, in detail, a range of scales on which the gas has no fluid description at all, and it solves the Euler equations on every one of them. Its cells at that radius are not small parcels of fluid. They are boxes containing particles that will not collide before they have crossed many boxes. Refining the mesh makes this worse, not better. Nothing is wrong with the arithmetic in such a simulation; what is wrong is the claim that its resolved structure in the outskirts represents gas dynamics.</p></div></details>
+</div>
+<div class="prob"><b>K3 — How cold must a cluster core be for conduction to be ignorable?</b> Using the result of D3, $t_{\rm cond}/t_{\rm s} = 3\,\mathrm{Kn}^{-1}$, and the requirement that conduction be at least 100 times slower than sound crossing, find the maximum temperature a 50 kpc cluster core of density $n_e=2\times10^{-2}\ \mathrm{cm^{-3}}$ may have. Take $\ln\Lambda=36$. <span class="small"><em>Probes: inverting a scaling to solve for a physical condition. Draws on <a href="#knudsen">§6</a>.</em></span>
+<details class="sol"><summary>Solution</summary><div><p>The requirement $t_{\rm cond}/t_{\rm s}\ge100$ means $3/\mathrm{Kn}\ge100$, that is $\mathrm{Kn}\le0.03$, that is $\lambda \le 0.03\times50\ \mathrm{kpc} = 1.5\ \mathrm{kpc}$.</p><p>Invert (5.6) for $T$:
+$$T = \left(\frac{\lambda\, n_e e^4 \ln\Lambda}{0.733\,k_B^2}\right)^{1/2}.$$
+With $\lambda = 1.5\times3.086\times10^{21} = 4.63\times10^{21}$ cm, $n_e=2\times10^{-2}$, $e^4 = 5.32\times10^{-38}$, $\ln\Lambda=36$ and $k_B=1.381\times10^{-16}$:
+numerator $= 4.63\times10^{21}\times2\times10^{-2}\times5.32\times10^{-38}\times36 = 1.77\times10^{-16}$;
+denominator $= 0.733\times1.907\times10^{-32} = 1.40\times10^{-32}$;
+ratio $=1.27\times10^{16}$, so $T = 1.13\times10^{8}$ K.</p><p>Since real cool cores are at $2$–$4\times10^{7}$ K, well under this bound, the condition is comfortably satisfied and unsuppressed conduction is slow compared with sound crossing in a core. Note what this does <em>not</em> say: the relevant comparison for the cooling-flow problem is conduction against the radiative cooling time, not against the sound-crossing time, and the cooling time in a dense core is far longer than $t_{\rm s}$. Choosing the comparison timescale is the whole of the physics here. The arithmetic is the easy part.</p></div></details>
+</div>
+<h2 id="notation">Notation</h2>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Units (CGS)</th><th>Introduced</th></tr>
+<tr><td>$f(\mathbf{x},\mathbf{v},t)$</td><td>distribution function</td><td>cm$^{-6}$ s$^3$</td><td>Definition 1</td></tr>
+<tr><td>$f_M$</td><td>local Maxwellian</td><td>cm$^{-6}$ s$^3$</td><td>(2.2)</td></tr>
+<tr><td>$n$, $n_e$</td><td>number density; electron number density</td><td>cm$^{-3}$</td><td>Definition 2</td></tr>
+<tr><td>$\rho$</td><td>mass density, $\rho = nm$</td><td>g cm$^{-3}$</td><td>Proposition 4</td></tr>
+<tr><td>$\mathbf{u}$</td><td>bulk (fluid) velocity</td><td>cm s$^{-1}$</td><td>Definition 2</td></tr>
+<tr><td>$v_{\rm th}$</td><td>thermal speed, $\sqrt{2k_BT/m}$</td><td>cm s$^{-1}$</td><td>Definition 3</td></tr>
+<tr><td>$T$</td><td>temperature</td><td>K</td><td>Definition 2</td></tr>
+<tr><td>$\tau$</td><td>collision time, $\lambda/v_{\rm th}$</td><td>s</td><td>Definition 3</td></tr>
+<tr><td>$\lambda$</td><td>mean free path</td><td>cm</td><td>Definition 3</td></tr>
+<tr><td>$\sigma$</td><td>collision cross-section</td><td>cm$^2$</td><td>Definition 4</td></tr>
+<tr><td>$b$, $b_{90}$</td><td>impact parameter; its $90^\circ$ value</td><td>cm</td><td>(5.1), (5.2)</td></tr>
+<tr><td>$\lambda_D$</td><td>Debye screening length</td><td>cm</td><td>(5.4)</td></tr>
+<tr><td>$\ln\Lambda$</td><td>Coulomb logarithm</td><td>—</td><td>Definition 5</td></tr>
+<tr><td>$\mathrm{Kn}$</td><td>Knudsen number, $\lambda/L$</td><td>—</td><td>Definition 6</td></tr>
+<tr><td>$L$</td><td>smallest scale the problem must resolve</td><td>cm</td><td>Definition 6</td></tr>
+<tr><td>$\mu$, $\kappa$</td><td>dynamic viscosity; thermal conductivity</td><td>g cm$^{-1}$ s$^{-1}$; erg cm$^{-1}$ s$^{-1}$ K$^{-1}$</td><td>(6.2)</td></tr>
+<tr><td>$r_g$</td><td>gyroradius</td><td>cm</td><td>(8.1)</td></tr>
+<tr><td>$t_{\rm relax}$</td><td>two-body relaxation time</td><td>s</td><td>(8.3)</td></tr>
+<tr><td class="small" colspan="4"><b>Book-wide note.</b> In this module and in Module 2, $\mu$ is the dynamic viscosity. From Module 6 on, $\mu$ means the mean molecular weight throughout the book, as it already does in Modules 3, 4 and 5, and the dynamic viscosity is written $\eta$.</td></tr>
+</table>
+<h2 id="sources">Sources</h2>
+<p class="small">Numerical values compared against published results are identified in the text at the point of use. The comparisons made in this module are:</p>
+<ul class="small">
+<li><b>Coulomb logarithm and mean free path in the intracluster medium.</b> C. L. Sarazin, <em>X-ray Emission from Clusters of Galaxies</em> (1988), §5.4, eqs. 5.32–5.35, as served at <a href="https://ned.ipac.caltech.edu/level5/March02/Sarazin/Sarazin5_4.html">NED Level 5</a>. Quoted: $\lambda_e = 23\ \mathrm{kpc}\,(T/10^8\,\mathrm{K})^2(n_e/10^{-3}\,\mathrm{cm^{-3}})^{-1}$; $\ln\Lambda=37.8$; equilibration-time ratios $1:43:1870$ and $t_{\rm eq}(p,e)\approx6\times10^{8}$ yr.</li>
+<li><b>Dark matter self-interaction limit.</b> S. W. Randall et al., <em>Constraints on the Self-Interaction Cross Section of Dark Matter from Numerical Simulations of the Merging Galaxy Cluster 1E 0657-56</em>, ApJ <b>679</b>, 1173 (2008), <a href="https://iopscience.iop.org/article/10.1086/587859">doi:10.1086/587859</a>. Quoted: $\sigma/m \lt 0.7\ \mathrm{cm^2\,g^{-1}}$ at 68% confidence.</li>
+<li><b>Solar wind conditions at 1 AU.</b> <em>Bimodal distribution of the solar wind at 1 AU</em>, Astronomy &amp; Astrophysics (2020), <a href="https://www.aanda.org/articles/aa/full_html/2020/03/aa37307-19/aa37307-19.html">aa37307-19</a>. Quoted: proton density averages 1.9–8.8 cm$^{-3}$, proton temperature averages $4.8\times10^4$–$3.0\times10^5$ K.</li>
+<li><b>Two-body relaxation time.</b> J. Binney and S. Tremaine, <em>Galactic Dynamics</em>, 2nd ed. (2008), eq. 1.38.</li>
+<li><b>Relaxation-time collision model.</b> P. L. Bhatnagar, E. P. Gross and M. Krook, <em>Phys. Rev.</em> <b>94</b>, 511 (1954).</li>
+<li><b>Maxwellian-averaged Coulomb transport coefficients.</b> L. Spitzer, <em>Physics of Fully Ionized Gases</em>, 2nd ed. (1962).</li>
+<li><b>The <em>H</em>-theorem</b>, invoked but not proved in <a href="#lte">§3</a>. L. Boltzmann (1872); a modern statement and proof is in any kinetic-theory text, for instance Chapman and Cowling, <em>The Mathematical Theory of Non-uniform Gases</em>, 3rd ed. (1970), which is also the standard reference for the Chapman–Enskog expansion of <a href="#knudsen">§6</a>.</li>
+<li><b>Density-independence of viscosity.</b> J. C. Maxwell, Bakerian Lecture, "On the viscosity or internal friction of air and other gases", <em>Phil. Trans. R. Soc.</em> <b>157</b>, 49 (1867). The prediction dates from 1860 and the experiment from 1865–66. <em>Verified against secondary references only. The original paper is not in this repository.</em></li>
+</ul>
+<p class="small">Values used as inputs rather than as checks carry a provenance note where they appear: the laboratory vacuum pressures of <a href="#origin">§1</a>, the photospheric pressure and neutral-hydrogen cross-section of <a href="#phot">§4.1</a>, and the representative solar-wind parameters of <a href="#census">§7</a>. The cluster mean density used in (8.4) is derived in place from $10^{15}\,M_\odot$ within 1 Mpc rather than quoted.</p>
+<script>
+function copyCode(btn){
+  var code = btn.parentElement.querySelector('code');
+  if(!code) return;
+  var text = code.textContent;
+  var done = function(){
+    var label = btn.querySelector('span'), prev = label.textContent;
+    btn.classList.add('copied'); label.textContent = 'Copied!';
+    setTimeout(function(){ btn.classList.remove('copied'); label.textContent = prev; }, 1500);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done, function(){});
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }catch(e){}
+    document.body.removeChild(ta);
+  }
+}
+(function(){
+  try{
+    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.querySelectorAll('svg').forEach(function(svg){
+        if(typeof svg.pauseAnimations === 'function') svg.pauseAnimations();
+      });
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

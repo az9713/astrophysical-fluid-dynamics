@@ -1,0 +1,1946 @@
+
+=== PDF PAGE 1 ===
+arXiv:astro-ph/0506205v3  3 Aug 2005
+Accepted for Publication in the Astronomical Journal
+Near Infrared Imaging Survey of Bok Globules: Density Structure
+Ryo Kandori
+Department of Astronomical Science, Graduate University for Advanced Studies (Sokendai),
+2-21-1 Osawa, Mitaka, Tokyo 181-8588, Japan; Present address: Optical and Infrared Astronomy
+Division, National Astronomical Observatory of Japan, 2-21-1 Osawa, Mitaka, Tokyo 181-8588,
+Japan (kandori@optik.mtk.nao.ac.jp)
+Yasushi Nakajima, Motohide Tamura, Ken’ichi Tatematsu
+National Astronomical Observatory of Japan, 2-21-1 Osawa, Mitaka, Tokyo 181-8588, Japan
+(yas@optik.mtk.nao.ac.jp, hide@optik.mtk.nao.ac.jp, k.tatematsu@nao.ac.jp)
+Yuri Aikawa
+Department of Earth and Planetary Sciences, Kobe University, Kobe 657-8501, Japan
+(aikawa@kobe-u.ac.jp)
+Takahiro Naoi
+Department of Earth and Planetary Science, The University of Tokyo, 7-3-1 Hongo, Bunkyo-ku,
+Tokyo 113-0033, Japan (naoi@subaru.naoj.org)
+Koji Sugitani
+Institute of Natural Sciences, Nagoya City University, Mizuho-ku, Nagoya 467-8501, Japan
+(sugitani@nsc.nagoya-cu.ac.jp)
+Hidehiko Nakaya
+Subaru Telescope, National Astronomical Observatory of Japan, 650 North A´ohoku Place, Hilo,
+HI 96720, USA (nakaya@subaru.naoj.org)
+Takahiro Nagayama, Tetsuya Nagata
+Department of Astronomy, Kyoto University, Kyoto 606-8502, Japan
+(nagayama@kusastro.kyoto-u.ac.jp, nagata@kusastro.kyoto-u.ac.jp)
+Mikio Kurita, Daisuke Kato, Chie Nagashima, and Shuji Sato
+Department of Astrophysics, Nagoya University, Chikusa-ku, Nagoya 464-8602, Japan
+(mikio@z.phys.nagoya-u.ac.jp, kato@z.phys.nagoya-u.ac.jp, chie@z.phys.nagoya-u.ac.jp,
+ssato@z.phys.nagoya-u.ac.jp)
+ABSTRACT
+
+
+=== PDF PAGE 2 ===
+– 2 –
+On the basis of near-infrared imaging observations, we derived visual extinction (AV )
+distribution toward ten Bok globules through measurements of both the color excess
+(EH−K) and the stellar density at J, H, and Ks (star count). Radial column density
+proﬁles for each globule were analyzed with the Bonnor-Ebert sphere model. Using
+the data of our ten globules and four globules in the literature, we investigated the
+stability of globules on the basis of ξmax, which characterizes the Bonnor-Ebert sphere
+as well as the stability of the equilibrium state against the gravitational collapse. We
+found that more than half of starless globules are located near the critical state (ξmax =
+6.5 ± 2).
+Thus, we suggest that a nearly critical Bonnor-Ebert sphere characterizes
+the typical density structure of starless globules.
+Remaining starless globules show
+clearly unstable states (ξmax > 10).
+Since unstable equilibrium states are not long
+maintained, we expect that these globules are on the way to gravitational collapse or
+that they are stabilized by non-thermal support. It was also found that all the star-
+forming globules show unstable solutions of ξmax > 10, which is consistent with the
+fact that they have started gravitational collapse. We investigated the evolution of a
+collapsing gas sphere whose initial condition is a nearly critical Bonnor-Ebert sphere.
+We found that the column density proﬁles of the collapsing sphere mimic those of
+the static Bonnor-Ebert spheres in unstable equilibrium.
+The collapsing gas sphere
+resembles marginally unstable Bonnor-Ebert spheres for a long time. We found that
+the frequency distribution of ξmax for the observed starless globules is consistent with
+that from model calculations of the collapsing sphere. In addition to the near-infrared
+observations, we carried out radio molecular line observations (C18O and N2H+) toward
+the same ten globules. We conﬁrmed that most of the globules are dominated by thermal
+support. The line width of each globule was used to estimate the cloud temperature
+including the contribution from turbulence, with which we estimated the distance to
+the globules from the Bonnor-Ebert model ﬁtting.
+Subject headings: ISM: clouds — dust, extinction — ISM: globules — stars: formation
+
+
+=== PDF PAGE 3 ===
+– 3 –
+1.
+Introduction
+Probing the physical evolution of dense cores toward the onset of star formation is of great
+importance in understanding the nature of the star formation process. The star formation process
+as well as the characteristics of forming stars are probably mostly determined by the properties of
+the nursing cores, such as size, mass, temperature, turbulence, and density structure, right before
+the gravitational collapse. In order to clarify the initial condition of star formation, it is important
+to provide a number of dense core samples with well deﬁned physical properties.
+Bok globules (i.e., isolated molecular cloud cores) are ideal sites for studying isolated star
+formation processes because of their simple shape and isolated geometry from neighboring clouds.
+These characteristics of globules enable us to model their internal structure (e.g., density). For
+these reasons, detailed observations of some well-known globules have been done.
+Alves et al.
+(2001) reported a high-resolution dust-extinction (AV ) study of the starless globule Barnard 68,
+based on near-infrared observations. They presented a radial column density proﬁle of the globule
+which is well ﬁtted by the Bonnor-Ebert sphere model (Bonnor 1956; Ebert 1955). Because the
+density structure is well determined, molecular abundances in Barnard 68 have been studied by
+comparing dust extinction with molecular distribution (Bergin et al. 2002; Hotzel et al. 2002a,
+2002b; Di Francesco et al. 2002; Lai et al. 2003).
+An unbiased survey of both starless and star-forming globules is important to provide essen-
+tial information on the evolution of density, velocity, and chemical structure of globules as well as
+their relative lifetime. Statistical studies of globules (dense cores) have been conducted based on
+the observations of thermal dust emission (e.g., Visser et al. 2001, 2002), dust extinction in the
+mid-infrared (Bacmann et al. 2000), molecular line emission (e.g., Launhardt et al. 1998; Caselli et
+al. 2002), and a combination of these (e.g., Tafalla et al. 2002; dust and molecular line emissions).
+However, no statistical studies of the density structure of globules based on the near-infrared ex-
+tinction have been carried out. Recently, the dust temperature gradient in cold starless cores (e.g.,
+Evans et al. 2001; Ward-Thompson, Andre, & Kirk 2002) has been pointed out, and this may
+systematically aﬀect the column density distribution derived by assuming a constant dust tem-
+perature. The measurements of extinction in the mid-infrared surface photometry (e.g., Bacmann
+et al. 2000) can also be aﬀected by dust temperature distributions, because both absorption and
+emission from the line-of-sight medium should be taken into account at these wavelengths. As a
+column density tracer, near-infrared extinction measurement is one of the most straightforward
+methods with no ambiguity caused by dust temperature distribution.
+Near-infrared extinction
+measurements can trace dust column densities at low-density outer regions of the globules, where
+(sub)millimeter dust emission is hard to detect.
+The aim of our near-infrared (J, H, and Ks) imaging survey of Bok globules is to reveal the
+evolution of radial density structures of globules from the starless to protostellar phases as well as to
+derive their fundamental physical parameters (e.g., size, temperature, mass, and external pressure)
+on the basis of the measurements of dust extinction. We investigated the radial AV distribution
+for each globule using the Bonnor-Ebert sphere model. The solutions of the Bonnor-Ebert sphere
+can be characterized by the dimensionless radial parameter ξmax, which describes the stability of
+the gas sphere against gravitational collapse, and the critical state is achieved at ξmax=6.5. By
+
+
+=== PDF PAGE 4 ===
+– 4 –
+combining our results for ten Bok globules with previous reports on four sources, we investigate the
+diﬀerence in physical properties, in particular the ξmax value, between the globules in the starless
+phase and those in the star-forming (protostellar or gravitational collase) phase, which is likely
+to be related to the diﬀerence in evolutionary stages of the globules. In order to investigate the
+velocity structure of globules, we observed the same globules using the 45 m radio telescope of
+Nobeyama Radio Observatory with the C18O (J = 1 →0) and/or N2H+ (J = 1 →0) molecular
+lines.
+The procedures of our observations and data reduction are described in § 2. The distribution
+of dust extinction (AV ) for each globule is obtained in order to derive the radial AV proﬁle and to
+ﬁt it by the Bonnor-Ebert sphere model (§ 3 and 4). We investigate the diﬀerence in the physical
+properties between the starless and star-forming globules and discuss implications for the evolution
+of globules in § 5. Our conclusions are summarized in § 6.
+2.
+Observations and Data Reduction
+2.1.
+Source Selection
+We observed ten Bok globules, CB 87, CB 110, CB 131, CB 134, CB 161, CB 184, CB 188,
+FeSt 1-457, Lynds 495, and Lynds 498. These were selected from a uniﬁed catalog of dark clouds
+(Dutra & Bica 2002; compilation of 21 dark cloud catalogs) with the following criteria: (1) globules
+whose angular sizes are less than ∼5′, (2) those having simple shapes (circular or elliptical), (3)
+those well isolated from neighboring clouds, (4) those located in the solar neighborhood (distance
+of less than ∼500 pc), and (5) those observable from both hemispheres. Our selection criteria of
+(1) to (4) are similar to those used in the CB catalog (Clemens & Barvainis 1988), which lists 248
+small, isolated, optically selected dark clouds. Typical angular size and ellipticity of dark clouds in
+the CB catalog are ∼3′ and ∼2, respectively (see, Figures 1 and 2 of Clemens & Barvainis 1988).
+In the CB catalog, the fraction of large (e.g., ≫5′) and/or highly elliptical (e.g., ellipticity ≫2)
+clouds with isolated geometry is small. The properties of the observed globules are summarized in
+Table 1. Column 1 lists the name of the globule, Columns 2 and 3 list the equatorial coordinates
+(J2000) of the center of the target ﬁeld. Column 4 gives the distance to the globule from the catalog
+(Dutra & Bica 2002). The distance to the nearby and compact globules is diﬃcult to determine.
+The lack of foreground stars toward globules makes spectro-photometric distance measurements
+impossible, and the distance estimation from LSR velocity (kinematic distance) is not reliable
+for nearby clouds.
+Thus, the listed distances are only values assumed by associating observed
+globules with neighboring larger molecular clouds whose distance is known. Column 5 represents
+the association of IRAS point sources within the optical boundary of each globule. We classiﬁed
+globules into starless and star-forming clouds based on the association of IRAS point sources∗. A
+∗Recently, a low luminosity protostar was discovered toward the globule Lynds 1014, which is known to accompany
+no IRAS point sources, using the Spitzer Space Telescope (Young et al. 2004). Though Spitzer data are useful to
+clarify whether globules contain protostars or not, Spitzer data is available only for one source, CB 131, among the
+“IRAS-less” globules in Table 1. We brieﬂy checked mid-infrared data of the Spitzer telescope toward CB 131 and
+found that there is no protostar candidates near the center of the globule. Though a source is located near the globule
+
+
+=== PDF PAGE 5 ===
+– 5 –
+Class I protostar (IRAS 19179+1129) is associated with CB 188 (Launhardt 1996; Yun & Clemens
+1992), whereas no evidence of star formation is shown for the other nine globules. For CB 184, a
+Class II source (IRAS 19116+1623) is located near the globule (Launhardt 1996), but its physical
+association with the globule is not known. Since star-forming activity is not taking place around the
+center of CB 184, we will treat CB 184 as a starless globule in this paper. The Bonnor-Ebert model
+ﬁtting studies of globules based on near-infrared extinction have been reported in four sources in
+the literature: Barnard 68 (Alves et al. 2001), Barnard 335 (Harvey et al. 2001), Coalsack Globule
+II (Lada et al. 2004; Racca et al. 2002), and Lynds 694-2 (Harvey et al. 2003). A Class 0 protostar
+(IRAS 19345+0727) is associated with Barnard 335. The other globules have no IRAS sources,
+while Lynds 694-2 shows strong evidence of gas inward motion (Lee, Myers, & Tafalla 1999, 2001;
+Lee, Myers, & Plume 2004). Thus, we will classify Lynds 694-2 as a star-forming globule in this
+paper. There are two recent reports on the density structure of Coalsack Globule II based on similar
+analyses. We mainly refer to the observations of Lada et al. (2004) because their near-infrared
+observations are more sensitive than those of Racca et al. (2002).
+2.2.
+Near-Infrared Data
+We carried out near-infrared (J, H, and Ks) imaging observations of Bok globules using the in-
+frared camera SIRIUS (Simultaneous three-color InfraRed Imager for Unbiased Surveys; Nagayama
+et al. 2003; Nagashima et al. 1999) on the 1.4 m telescope, IRSF (InfraRed Survey Facility), at
+the South African Astronomical Observatory (SAAO). Observations were made over two periods
+from 2002 July 30 to August 12 and from 2003 June 24 to July 14. SIRIUS has three 1024×1024
+pixel HgCdTe infrared detectors (HAWAII array), which enables us to take J, H, and Ks images
+simultaneously. IRSF/SIRIUS can image a large FOV of ∼7.′7×7.′7 with a scale of 0.′′45/pixel, and
+the limiting magnitudes (S/N=10) for a typical 10-minute exposure time reach 18.9, 18.3, and 17.3
+mag at J, H, and Ks, respectively. Thus, this survey is much deeper than previous extensive sur-
+veys (e.g., 2MASS, DENIS). For each globule, we performed a 15-minute integration with a set of
+dithered 20 s or 30 s exposures except CB 110 and FeSt 1-457, whose integration times are 45 and
+60 minutes, respectively. The dithered spatial interval was 30′′ or 40′′. Since the apparent diameter
+of each target globule is less than 5′, we covered its entire extent at one time. The typical seeing
+during the observations was 0.′′9−1.′′4 (FWHM), corresponding to 2−3 pixels. To correct detector
+ﬂatness and pixel-to-pixel variation, we obtained twilight ﬂat and dark frames at the beginning and
+end of the nights. We observed some sets of near-infrared standard stars listed by Persson et al.
+(1998) during the observations for photometric calibration.
+We processed the observed data in a standard way of near-infrared image reduction (i.e., dark
+subtraction, ﬂat-ﬁeld correction, and median sky subtraction) with the IRAF† (Image Reduction
+and Analysis Facility) and the IDL (Interactive Data Language, by Research Systems, Inc.) rou-
+tines. After subtraction of averaged dark frame, each object frame was divided by normalized ﬂat
+on the 24 µm image, it is not known whether the source is a protostar associated with CB 131.
+†IRAF is distributed by the National Optical Astronomy Observatories, which are operated by the Association of
+Universities for Research in Astronomy, Inc., under cooperative agreement with the National Science Foundation.
+
+
+=== PDF PAGE 6 ===
+– 6 –
+frames. For correcting thermal emission pattern and the fringe pattern from the atomospheric OH
+emission, we constructed a median sky frame to be subtracted from the object frame. Since all
+the observed targets are located in the very crowded ﬁeld of the Milky Way, we did not adopt
+the self-sky, with which the residual signal of (bright) stars cannot be excluded on the resulting
+self-sky frame. Therefore, we constructed the sky frame for each band by taking the median of
+dithered frames toward the diﬀerent several (four to eight) objects observed in the same night,
+which resulted in a sky frame with no stellar residuals. This “average” median sky does not re-
+ﬂect the actual sky for each object because the median was taken across several object frames.
+We compared the “average” median sky frame with the self-sky frame for each object in order to
+correct their diﬀerent sky levels, and the ﬁnal (level-matched) median sky frames were made for
+each object. Though the thermal emission pattern is adequately corrected in the ﬁnal median sky
+frames, the OH fringe pattern is time-averaged. We conﬁrmed that the eﬀect of the time-variation
+of the OH fringe pattern is within acceptable levels by checking the sky noise level of the ﬁnal
+combined object frames. After the sky subtraction and frame-registration, we combined all the
+dithered images for each object with a 3σ clipping. We show three-color (JHKs) composite images
+of globules in Figure 1.
+For the source detection and photometry, we applied the IRAF/DAOPHOT package (Stetson
+1987) to the images. We measured the instrumental magnitudes of the detected stars having a
+peak intensity greater than 4.0 σ noise level above the sky background by ﬁtting a point-spread
+function (PSF) and subtracting it from the image. We iteratively performed stellar detections and
+psf-ﬁtting photometries to the source-subtracted image in order to collect overlooked sources in
+the previous procedure. We manually checked the results of the photometries and removed some
+false detections by visual inspection. We summarize the results of stellar detection in Table 2. For
+calculating the plate solution, we matched the pixel coordinates of a number of detected stars with
+the celestial coordinates of their counterparts in the 2MASS point source catalog (Cutri et al. 2003)
+and obtained the transformation coeﬃcient using the IRAF/IMCOORDS package, which resulted
+in an acceptable positional error of less than 0.′′5 (rms). All the stars detected in our observations
+were cataloged separately with respect to the ﬁlters (JHKs). These stars of single-band detections
+were used to generate an extinction map at each band with a star count method. We applied the
+following equations for the color conversion from the IRSF to the standard CTIO/CIT photometric
+system:
+(J −H)CIT
+=
+0.980×(J −H)IRSF + 0.029
+for (J −H)IRSF ≥0.35,
+(1)
+(J −H)CIT
+=
+1.047×(J −H)IRSF
+for (J −H)IRSF < 0.35,
+(2)
+(H −K)CIT
+=
+0.912×(H −KS)IRSF
+(3)
+These were derived from measurements of red standard stars (see, Nakajima et al. 2004 for details).
+2.3.
+Molecular Line Data
+We have carried out molecular line observations toward ten globules using the 45 m radio
+telescope of Nobeyama Radio Observatory over four observing periods (2003 March 10-19, 2003
+April 8-10, 2004 January 9-12, and 2004 February 3-10). The observed objects are the same as those
+
+
+=== PDF PAGE 7 ===
+– 7 –
+observed by IRSF/SIRIUS. The receiver employed was the 25-element focal-plane array receiver
+BEARS consisting of double-sideband SIS mixers (Sunada et al. 2000). All the target globules in
+Table 1 are mapped in position-switching mode in C18O (J = 1 →0) at 109.782173 GHz (JPL
+catalog; see, http://spec.jpl.nasa.gov/) and/or N2H+ (J = 1 →0) at 93.1737767 GHz (Caselli,
+Myers & Thaddeus 1995) on a 13.′′7 grid spacing. The half-power beamwidth for each element
+beam was estimated to be ∼17.′′8 at 93 GHz and ∼15.′′1 at 109 GHz. The map coverage (∼4′×4′)
+is suﬃciently large compared with the extinction feature of globules. As a back end, we used a
+digital autocorrelator with a 37.8 kHz frequency resolution (∼0.12 kms−1 at 93 GHz, and ∼0.10
+kms−1 at 109 GHz). The intensity was calibrated using the standard chopper-wheel method, and
+is expressed in terms of the corrected antenna temperature T ∗
+A. To correct for the sideband ratio,
+we calibrated T ∗
+A using the intensity obtained with the single-sideband receiver S100. The scaling
+factor from T ∗
+A of BEARS to that of S100 for N2H+ (J = 1 →0) was measured by ourselves, and
+that for C18O (J = 1 →0) was provided by the observatory. A typical value of the scaling factor
+for each BEARS element was ∼1.5. We estimated the main beam eﬃciency of S100 at 93 and 109
+GHz to be 0.515 and 0.442, respectively, by interpolating values at 86, 100, and 115 GHz provided
+by the observatory. The pointing accuracy was typically better than 7′′ by observing SiO maser
+sources at 43 GHz every 1-1.5 hours during the observations.
+3.
+Derivation of AV and Molecular Line Parameters
+AV measurement is one of the most straightforward ways to probe the density structure of
+dark clouds. There are two standard ways to do extinction mapping; one is the star count method
+(e.g., Dickman 1978; Cambr´esy 1999; Dobashi et al. 2005) based on the measurements of the stellar
+density, and the other is the near-infrared color excess (NICE) method (Lada et al. 1994) based on
+measurements of the stellar color excess (e.g., EH−K). By considering the stellar density in H and
+Ks at the densest region of globules, we decided which method is better for each target globule. We
+analyzed CB 131, CB 134 and CB 188 with the star count method and analyzed the other globules
+with the NICE method.
+3.1.
+Star Count
+On the basis of the stars detected in the J, H, and Ks bands, we derived extinction maps (AJ,
+AH, and AKs) for CB 131, CB 134, and CB 188 using the star count method (see, e.g., Kandori et
+al. 2003). A logarithmic cumulative stellar density log N measured at the magnitude mλ,0 can be
+converted to extinction Aλ as
+Aλ (∆α, ∆δ, mλ,0) = mλ,0 −f −1 [log N(∆α, ∆δ, mλ,0)]
+(4)
+where ∆α and ∆δ are the oﬀset positions from the equatorial coordinate of image center, and
+f −1 is the inverse function of f = log Nref(mλ), which is the logarithmic cumulative luminosity
+function (i.e., Wolf diagram; Wolf 1923) constructed in the extinction-free reference ﬁeld (see Fig.
+2). Though f is often assumed to be linear as f = a+bmλ, we ﬁtted it with a 4th-order polynomial
+because the function shows a slightly curved shape.
+
+
+=== PDF PAGE 8 ===
+– 8 –
+To measure stellar density distribution, log N(∆α, ∆δ, mλ,0), we arranged circular cells (typi-
+cally ∼30′′ in diameter) separated by 9′′ intervals on each observed ﬁeld (∼7′×7′ area), and counted
+the number of stars falling in the cells up to the threshold magnitude mλ,0 (see Table 2 for the
+deﬁnition) which is well above the limiting magnitudes. The diameter of circular cells depends on
+the stellar density in each cloud ﬁeld. We smoothed the stellar density map with a Gaussian ﬁlter
+(FWHM=13.′′5) to reduce noise. In order to derive AJ, AH, and AKs, we numerically calculated
+f −1 in equation (4) after substituting the actually measured stellar density log N(∆α, ∆δ, mλ,0)
+into f −1. In the resulting extinction maps, AJ tends to be saturated at the densest region of the
+cloud, but suﬃciently reveals the diﬀuse extinction feature around the cloud, and AKs has the
+opposite tendency. In order to relieve saturation, we made a composite AV map by combining the
+AJ, AH, and AKs data with the following equation:
+AV
+=
+αRKsV AKs + (1 −α)RHV AH
+for AH ≥Amax
+H
+/2
+(5)
+AV
+=
+βRHV AH + (1 −β)RJV AJ
+for AH < Amax
+H
+/2
+(6)
+where α and β are the weighting parameters deﬁned as AH/Amax
+H
+and AH/(Amax
+H
+/2) where Amax
+H
+denotes the maximum value of AH in each analyzing ﬁeld. The RλV denotes the standard conversion
+factor from Aλ to AV in Rieke & Lebofsky (1985), which is 3.55 and 5.71 for J and H, respectively.
+For Ks, we assumed AV = 9.44AKs on the basis of equation (3) and the conversion factors in Rieke
+& Lebofsky (1985). These conversion factors depend on the assumption of dust optical properties,
+in particular RV . We discuss systematic uncertainties in the derivation of AV in the Appendix. The
+resulting AV maps for CB 131, CB 134, and CB 188 are shown in Figure 2. Typical uncertainty of
+AV in the reference ﬁeld (AV ∼0 mag) is estimated to be ∼0.9 mag.
+3.2.
+Near-Infrared Color Excess
+On the basis of the stars detected both in the H, and Ks bands, we derived extinction (AV )
+maps for CB 87, CB 110, CB 161, CB 184, FeSt 1-457, Lynds 495, and Lynds 498 using the NICE
+method. If we assume that the population of stars toward the observed ﬁeld is invariable, the mean
+stellar color in the reference ﬁeld < H −K >ref can be used as the zero point of color excess. The
+color excess distribution toward globules can be derived by subtracting < H −K >ref from the
+observed H −K of stars. Since the extent of each analyzed ﬁeld is relatively small (∼7′ × 7′), our
+assumption on invariant stellar population seems plausible. To measure color excess distribution,
+we arranged circular cells (∼30′′ diameter) spaced at 9′′ (the same alignment as used in the star
+count analysis) on each observed ﬁeld. We calculated the mean stellar color in each cell and derived
+their color excess as
+EH−K (∆α, ∆δ) =
+" N
+X
+i=1
+(H −K)i
+N
+#
+(∆α, ∆δ) −⟨H −K⟩ref,
+(7)
+where (H −K)i is the color index of the i-th star in a cell, and N is the number of stars falling in
+a cell. ⟨H −K⟩ref is the mean color of stars in the reference ﬁeld (see, Fig. 2). We converted the
+H−K color excess to AV using the reddening law of Rieke & Lebofsky (1985) as AV = 15.9×EH−K.
+We then smoothed the resulting AV map in the same manner as used in the star count analysis.
+
+
+=== PDF PAGE 9 ===
+– 9 –
+The resulting AV maps are shown in Figure 2. Typical uncertainty of AV in the reference ﬁeld
+(AV ∼0 mag) is estimated to be ∼0.6 mag.
+3.3.
+Molecular Line Parameters
+We derived the observed molecular line parameters, LSR velocity, line width, and optical depth,
+for each globule. We observed N2H+ (J = 1 →0) for FeSt 1-457 and C18O (J = 1 →0) for the
+other globules. We show the spectrum observed at the center of each globule in Figure 3. For the
+N2H+ spectrum ﬁtting we took into account their hyperﬁne structure and line optical depth eﬀect
+(using the same procedure as described in Tatematsu et al. 2004). The intrinsic relative intensity
+and rest frequency of hyperﬁne components are taken from Tin´e et al. (2000) and Caselli et al.
+(1995), respectively.
+The observed line width ∆Vobs of the globule ranges from ∼0.2 to ∼0.5 km s−1 (Table 3). The
+kinetic temperature Tk of low mass dense cores is known to be ∼10 K (e.g., Benson & Myers 1989).
+Thus, it is natural to attribute the excess in the observed line width with respect to the thermal
+line width (0.13 km s−1 for C18O and N2H+) to the contribution from non-thermal turbulence in
+globules. We estimated non-thermal line width ∆VNT of each globule by assuming that Tk is equal
+to 10 K. ∆VNT can be obtained from ∆V 2
+NT = ∆V 2
+obs −8ln2kTk/mobs, where mobs is the mass of
+the observed molecule. The thermal line width ∆VT = (8ln2kTk/m)1/2 for Tk = 10 K is 0.443 km
+s−1, where m is the mean molecular weight (2.33 amu). Derived line parameters are listed in Table
+3. We found that thermal line width for the mean molecular weight is larger than non-thermal
+line width for most of the observed globules. It is likely that observed globules are dominated by
+thermal support with smaller contribution from the non-thermal turbulence. The thermal and non-
+thermal components of the line width can be characterized by a temperature as Tk = ∆V 2
+Tm/k8ln2
+and TNT = ∆V 2
+NTm/k8ln2, respectively. We derived Teﬀ= Tk + TNT for each globule in Table 3
+as a cloud-supporting temperature which includes non-thermal contribution. In order to estimate
+the distance to the globules, we will use Teﬀin combination with the Bonnor-Ebert model ﬁtting
+of globules in §4.2.2. In this paper, we only use the information on molecular line width. Detailed
+studies such as comparison between dust extinction and molecular distribution will be reported in
+a subsequent paper.
+4.
+Density Structure
+4.1.
+Bonnor-Ebert Sphere Model
+In order to model the internal density structure of Bok globules, we used the Bonnor-Ebert
+sphere model (Bonnor 1956; Ebert 1955), which is a modiﬁed Lane-Emden equation describing a
+pressure-conﬁned, self-gravitating isothermal gas sphere in hydrostatic equilibrium. The density
+structure of a Bonnor-Ebert sphere can be obtained by solving the following equation:
+1
+ξ2
+d
+dξ
+
+ξ2 dφ
+dξ
+
+= e−φ
+(8)
+
+
+=== PDF PAGE 10 ===
+– 10 –
+where φ is the logarithmic density contrast, φ(ξ) = −ln(ρ/ρc); ρ and ρc are the volume density and
+central volume density, respectively. ξ is the dimensionless radial parameter, ξ = (r/Cs)√4πGρc;
+r, G, and Cs are the radius, gravitational constant, and isothermal sound speed, Cs = (kT/m)1/2,
+where k, T, and m are the Boltzmann constant, kinetic temperature, and mean mass of the molecule
+(2.33 amu), respectively. Under the standard boundary conditions, φ(0) = 0 (i.e., ρ = ρc at r = 0)
+and dφ(0)/dξ = 0 (i.e., dρ/dr = 0 at r = 0), equation (8) can be solved with numerical integration.
+If the gas sphere is conﬁned by external pressure Pext at the core boundary radius R, the solutions
+of the Bonnor-Ebert sphere can be characterized by the dimensionless radius ξmax = ξ(r = R) as
+ξmax = R
+Cs
+p
+4πGρc.
+(9)
+ξmax is a stability measure of the gas sphere against the gravitational collapse (Bonnor 1956; Ebert
+1955). Critical state is achieved at ξmax = 6.5 corresponding to the density contrast of ρc/ρR = 14.
+For a solution with ξmax > 6.5, the equilibrium state is unstable to the gravitational collapse. The
+Bonnor-Ebert sphere mass M and the external pressure Pext are calculated as
+M
+=
+4πα3ρcξ2
+max
+dφ
+dξ
+
+ξ=ξmax
+(10)
+Pext
+=
+Cs2ρce−φ(ξmax)
+(11)
+where α = Cs/(4πGρc)1/2.
+4.2.
+Bonnor-Ebert Model Fitting of Bok Globules
+4.2.1.
+Derivation of Column Density Proﬁle
+For a comparison of observational data (i.e., AV ) with a theoretical Bonnor-Ebert density
+distribution, radial AV proﬁles for each globule were constructed.
+We set annuli spaced at 9′′
+around the center of the core that is the AV intensity peak (see Table 4), and calculated averaged
+AV values at each annulus (see Figure 4). For apparently elliptical globules (CB 87, CB 161, and
+CB 184) we performed ellipse ﬁtting to the AV distribution, and “equivalent” radius, r =
+√
+ab,
+was substituted for radius where a and b are the respective semi-minor and semi-major axes of the
+ellipse for the cores. Fitted ellipticity and position angle for the globules are listed in Table 4. It
+is possible that the observed globules with circular projected shapes are actually pole-on prolate
+ellipsoids. In this case, the shape of the observed AV proﬁle should be steeper than that for the
+intrinsic shape. Since there is no eﬀective method for estimating how ellongated a globule is along
+the line of sight, we assumed that the line of sight length of globules is the same as the projected
+diameter.
+We manually masked extinction features likely to be unrelated to the globules (e.g., the other
+clouds on the same image, diﬀuse streaming feature; see Fig. 2), and masked regions were omitted in
+the circularly averaging procedure. Furthermore we recalibrated the relative zero point of extinction
+for the analyzed globules by subtracting background extinction (i.e., AV oﬀset value). The AV
+oﬀsets have been derived from averaging AV within the annulus of 150′′ to 200′′ radius, which is
+suﬃciently larger than the primary extinction feature of globules. Actually, the subtracted values
+
+
+=== PDF PAGE 11 ===
+– 11 –
+as AV oﬀset are small (typically ∼0.5 mag), and it solely depends on where we set the reference
+ﬁelds in the star count or color excess analysis. In order to convert AV to the H2 column density,
+we used the relationship between the optical color excess EB−V and the hydrogen column density,
+N(HI + H2)/EB−V = 5.8 × 1021 cm−2 mag−1 (Bohlin, Savage, & Drake 1978), where N(HI + H2)
+= N(HI)+2N(H2). This relationship is based on the UV absorption line measurements toward the
+stars of slightly obscured lines of sight (EB−V <∼0.5 mag). By assuming that (1) all hydrogen in the
+cloud is in a molecular form and that (2) the ratio of total-to-selective extinction RV (≡AV /EB−V )
+is equal to the standard ISM value of 3.1 (e.g., Whittet 1992), we obtained N(H2)/AV = 9.4× 1020
+cm−2 mag−1, and used it to derive the H2 column density. The resulting column density proﬁles
+are shown in Figure 4.
+4.2.2.
+Derivation of Model Parameters
+In order to produce Bonnor-Ebert model density proﬁles, we performed numerical integration
+of equation (8). Since the Bonnor-Ebert sphere is characterized by a single parameter ξmax (Eq.
+[9]), best-ﬁt ξmax for each globule can be determined by comparing model column density proﬁles
+with those obtained from observations. We integrated the model density proﬁle along the lines of
+sight on grids to calculate the column density proﬁle. In order to match the resolution between
+the model and the observed column density data, the model column density on the ∆α-∆δ plane
+was convolved with the beam used in the star count or color excess analysis (cylinder-shaped beam
+convolved with the Gaussian). In the χ2-procedure, the radial proﬁle was ﬁtted from the minimum
+radius (center) to the radius where the observed AV value reaches ∼1 mag (detection limit). In
+some cores (Lynds 495 and Lynds 498), deviation of observed proﬁles from the Bonnor-Ebert sphere
+is found at diﬀuse outskirts (AV <∼1 mag), which was excluded in the ﬁtting. The χ2-ﬁtting results
+are not sensitive to the selection of the maximum radius for ﬁtting part unless there is no signiﬁcant
+kink in the column density proﬁle.
+In Figure 4, we show the results of the Bonnor-Ebert ﬁt to the radial column density proﬁle
+of the globules. The dots and error bars represent the average N(H2) values at each annulus of 9′′
+intervals and the rms deviation of data points in each annulus, respectively. The solid line denotes
+the radial column density proﬁle of the best-ﬁt Bonnor-Ebert sphere which is convolved with beam
+used in the AV measurements. The dashed line denotes the Bonnor-Ebert model proﬁle before
+the convolution. In Table 4, we list the derived Bonnor-Ebert parameters for globules including
+previous reports on four sources (Barnard 68, Barnard 335, Coalsack Globule II, and Lynds 694-2).
+The error of each parameter in the table represents 1σ deviation in the χ2 density proﬁle ﬁtting.
+We discuss possible systematic uncertainties in the derivation of ξmax in the Appendix.
+Recently, Hotzel et al. (2002b) and Lai et al. (2003) presented detailed discussion on the
+relation between the physical parameters of the Bonnor-Ebert sphere. Substituting the relations of
+R = θRd ∝d and ρc ∝Nc(H2)θ−1
+R d−1 ∝d−1 into equation (9), we can obtain d−1T =constant (Lai
+et al. 2003). The distance d or temperature T of globules should be accurately determined from
+observations. Since there were no accurate methods for measuring distance to the starless, compact,
+and nearby (d <∼500 pc) globules except for the limited cases (e.g., interaction with HII region of
+known distance, existence of foreground stars toward them), the distances listed in Table 1 serve
+
+
+=== PDF PAGE 12 ===
+– 12 –
+as the ﬁrst reliable values. If we use the initially assumed distance dini, the necessary temperature
+for the Bonnor-Ebert sphere TBE can be determined. If we assume that Teﬀ(= Tk + TNT) from
+our molecular line observations (see §3.3) can approximate eﬀective supporting temperature of the
+cloud‡, the corrected distance to the globule, d = (Teﬀ/TBE)dini, can be determined. Finally we
+derived all the physical parameters of best-ﬁt Bonnor-Ebert spheres (e.g., radius, central density,
+and mass) for the above “distance-assumed” and “temperature-assumed” cases as listed in Table 5.
+We note that the “temperature-assumed” distance to the starless globule FeSt 1-457 is estimated
+to be ∼70 pc, which would make this globule one of the nearest dark clouds.
+5.
+Discussion: Stability and Evolution of Globules
+In this section, we discuss the internal structure and stability of globules by using the data of
+the ten globules from our observations and four from the literature.
+5.1.
+Physical Properties of Globules
+Though we have estimated physical properties of globules by assuming the Bonnor-Ebert
+model, there are actually other theoretical models (e.g., Shu 1977; Larson 1969; Penston 1969;
+McLaughlin & Pudritz 1997; Plummer 1911). Bacmann et al. (2000) presented that a Bonnor-
+Ebert-like model (a ﬁnite size sphere with inner uniform density region and ρ ∝r−2 outer envelope)
+ﬁts well with the column density proﬁle of globules obtained from mid-infrared 7 µm absorption
+measurements, but that a singular-isothermal-sphere (SIS) or singular logotrope sphere cannot
+reproduce the observed proﬁle well. By considering the resolution of our extinction maps (∼30′′)
+and possible geometric error of globules (e.g., deviation from spherical symmetry), it is not possible
+to make meaningful comparisons between the Bonnor-Ebert model and other Bonnor-Ebert-like
+models (see, e.g., Figure 2 in Harvey et al. 2003, which compares the Bonnor-Ebert model with a
+Plummer-like model). Here, we simply assume the Bonnor-Ebert model.
+As described in the previous section, the dimensionless radial parameter ξmax determines the
+shape of a Bonnor-Ebert density proﬁle as well as the stability of the equilibrium state against
+the gravitational collapse. We plot globules on the ξmax versus density contrast diagram in the
+upper panel of Figure 5. Since ξmax has one-to-one correspondence with density contrast, all the
+Bonnor-Ebert spheres are distributed along the solid curved line. We found that more than half
+of starless globules (7 out of 11 sources) are located near the critical state, ξmax = 6.5 ± 2. Thus,
+we suggest that a nearly critical Bonnor-Ebert sphere characterizes the typical density structure of
+starless globules. The remaining starless globules show clearly unstable states (ξmax > 10). When
+we divide starless globules into two groups with respect to the critical line (ξmax = 6.5), there
+are three stable starless globules and eight unstable starless globules.
+The majority of starless
+‡Theoretically, supporting force in a Bonnor-Ebert sphere is purely thermal pressure, but actual clouds also have
+non-thermal support, e.g., turbulence and magnetic ﬁelds, which are widely observed in molecular clouds (see, e.g.,
+Larson 2003). We assume that non-thermal support can be included in the model by replacing the isothermal sound
+speed Cs = (kTk/m)1/2 in equation (9) by the eﬀective sound speed Ceﬀ= (kTeﬀ/m)1/2.
+
+
+=== PDF PAGE 13 ===
+– 13 –
+globules is located in the unstable states (ξmax > 6.5) if the uncertainties in ξmax are not taken
+into account. We also found that all the star-forming globules have larger ξmax values (> 10) than
+that of the critical Bonnor-Ebert equilibrium state, which is consistent with the fact that they have
+started gravitational collapse. In the lower panel of Figure 5, we show the ﬁtting error in ξmax
+for each globule. Filled gray circles denote the ﬁtting results for some globules with considerable
+features of ambient extinction if the masked region on the AV map (see Fig 2) is included in the
+derivation of the column density proﬁle. In addition to the ξmax diagram in Figure 5, we made
+histograms of logarithmic density contrast for starless and star-forming globules (Figure 6). Similar
+characteristics as descrived above can also be seen in the histograms.
+To see the relationships between derived physical properties of globules in Tables 4 and 5, we
+made correlation diagrams between density contrast and the other physical parameters of globules
+in Figure 7. We consider that the horizontal axis (density contrast) represents the evolutionary
+states of globules, because globules should evolve toward higher central condensation to form stars.
+We can see from panels (e) and (f) in the ﬁgure that temperature Teﬀand external pressure Pext
+of globules appear roughly constant regardless of the density contrast. If we assume constant Teﬀ
+and Pext, the Bonnor-Ebert model parameters for each density contrast value can be constrained.
+The broken line in each panel is the relationship for the Bonnor-Ebert spheres with a constant Teﬀ
+of 13.2 K and Pext of 5.3 × 104 K cm−3, which are the median values for the globule samples. The
+value of Pext is larger than the previously reported ISM pressure in the solar vicinity of ∼1.8× 104
+K cm−3 (McKee 1999).
+The overall trend in the data point distributions in Figure 7 can be approximated by Bonnor-
+Ebert spheres with a constant “eﬀective” temperature and a constant external pressure.
+The
+relations for the radius and mass (panels [c] and [d]) remain roughly constant against the density
+contrast, suggesting that these quantities are not sensitive to the evolutionary states of globules.
+This result agrees with the N2H+ observations of molecular cloud cores in Taurus (Tatematsu et
+al. 2004), in which there is no remarkable diﬀerence in core radius and mass between starless cores
+and cores with stars. Since the density at core boundary is derived from Pext/Teﬀ, the density
+at core center nc is directly obtained for each density contrast value and shows a proportional
+relationship against the density contrast as shown in panel (b). Accordingly, the density contrast
+and AV show positive correlation. The data points in panel (a) are located slightly lower than
+the broken line because of a beam dilution eﬀect in the AV measurements with ∼30′′ resolution.
+For molecular cloud cores located in regions of higher pressure (e.g., dark cloud complex) than in
+the solar vicinity, the Bonnor-Ebert relationship in panels (a) and (b) should be shifted upward
+corresponding to the larger value of Pext/Teﬀ. We can see from panel (a) that the density contrast
+value is simply estimated from the AV (column density) measurements under the assumption of
+the Bonnor-Ebert sphere with a constant Teﬀand Pext.
+5.2.
+On the Selection Bias of the Globule Samples
+Here we brieﬂy consider the selection bias in our globule samples. The peak AV values for our
+observed globules range from ∼6.5 to 41 mag. We selected globules that were opaque at optical
+wavelengths, i.e., with few stars in the background of the cloud on the Digitized Sky Survey image.
+
+
+=== PDF PAGE 14 ===
+– 14 –
+These sources are expected to have AV greater than at least 5 mag, and expected to be sites of
+future star formation, i.e., so-called “dense cores”. The lower limit of the peak AV for the globules
+may be determined by the criterion in our target selection. Thus, it is possible that the diﬀuse cores
+of low column densities are not included in our globule sample as in the case of previous studies on
+dense cores (e.g., Visser et al. 2002; Lee & Myers 1999; Jijina et al. 1999). We note that the lower
+limit AV of ∼5 mag corresponds to a low density contrast of ∼3 if we assume a constant Teﬀand
+Pext used in the previous section. The density contrast value is much less than the critical value of
+14.
+5.3.
+Implications for the Stability of Globules
+It is interesting that there are starless globules showing larger density contrast than that of the
+maximum value (∼14) for stable Bonnor-Ebert spheres (see § 5.1), because unstable equilibrium
+states should not last long without any extra stabilizing force such as magnetic pressure and/or
+turbulent pressure (e.g., McKee & Holliman 1999). Since unstable equilibrium states cannot last
+long, the globules of large density contrast should not exactly be the Bonnor-Ebert sphere even
+if they mimic the Bonnor-Ebert density proﬁle. Similar results have also been reported from the
+mid-infrared extinction study of starless dense cores (density contrasts are generally ∼10−80; see
+Table 3 of Bacmann et al. 2000). If we consider a simple case in which the non-thermal pressure
+components have the same radial dependence as the thermal pressure, the theoretical Bonnor-Ebert
+model can be modiﬁed by replacing its kinetic temperature term with Teﬀas described in § 4.2.2.
+In this case, the shape of the Bonnor-Ebert density proﬁle as well as the stability criteria (i.e., the
+value of ξmax or maximum density contrast) hold unchanged compared with the purely thermally
+supported case. This modiﬁcation cannot provide a realistic explanation for the stability of the
+large density contrast globules, suggesting either that they are already collapsing toward higher
+central condensation as discussed in § 5.5, or that the stabilizing mechanisms accounting for their
+large density contrast are more complex. The Bonnor-Ebert assumption for the globules is not
+valid in these cases. We note that our result is in marked contrast to one in which most of the
+clumps observed at 850 µm dust emission in the Orion B molecular cloud complex are in stable
+equilibrium based on the Bonnor-Ebert analysis (Johnstone et al. 2001).
+A non-isentropic multi-pressure polytrope model (McKee & Holliman 1999) may provide suc-
+cessful interpretation allowing larger density contrast than that of the critical Bonnor-Ebert sphere.
+Curry & McKee (2000) developed a composite polytrope model which also allows large density con-
+trast. These two models provide a stable equilibrium solution of arbitrarily large density contrast
+by adjusting the contributions from the non-thermal pressure components, i.e., turbulent and mag-
+netic pressure. Galli et al. (2002) studied the eﬀects of the interstellar radiation ﬁeld (ISRF) on the
+cloud stability. They reported that a cloud’s maximum density contrast increases with increasing
+intensity of the ISRF if the stabilizing eﬀect of external heating of the cloud as well as produced
+temperature gradient are considered. These models are possible alternatives to the Bonnor-Ebert
+sphere providing larger value of maximum density contrast (> 14). The shape of their density
+proﬁles have characteristics similar to those of the Bonnor-Ebert sphere (see, Fig. 3 and 4 in Galli
+et al. 2002, Fig. 10 in McKee & Holliman 1999), that is a ﬂat inner region surrounded by steeper
+
+
+=== PDF PAGE 15 ===
+– 15 –
+envelope decreasing with power-law, in particular ρ ∝r−α where α ∼2.
+It seems diﬃcult to
+distinguish them only from the observed shape of the density proﬁle. In other words, each model
+should provide similar density proﬁles and corresponding density contrast values for the same ob-
+servational dataset. Detailed observations of velocity and temperature structure of dense cores are
+needed to determine the most realistic model.
+Major diﬀerences among the models discussed above are the supporting mechanisms of the
+cloud and the stability criterion, i.e. the value of the critical density contrast. The actual density
+contrast value for globules can be obtained through the Bonnor-Ebert ﬁt (see Table 4), but its
+critical value is not always known (i.e., model dependent). Initial density structure of globules
+right before the collapse can be determined if we constrain the value of its critical density contrast.
+Initial density conditions for star formation will provide a good starting point for the theoretical
+calculations. For example, given initial density proﬁle of a globule, time evolution of mass accretion
+rate can be calculated (e.g. Whitworth & Ward-Thompson, 2001), which is an important parameter
+for constraining the mass of a newly formed star.
+In order to estimate the value of critical density contrast from observations, it should be worth
+investigating the frequency distribution of density contrast for a number of starless globules. Since
+unstable equilibrium states should not be long sustainable, we expect that the detection probability
+for stable globules is much higher than that for unstable ones. Thus, it is likely that the frequency
+distribution of density contrast shows a sharp decrease toward larger density contrasts at a certain
+bin, which should correspond to the density contrast critical for collapse. Though the number of
+our samples (11 sources) is not large, we present the histogram of density contrast for the starless
+globules in Figure 6. The density contrast of the starless globules is mostly populated near the
+critical Bonnor-Ebert sphere and decreases toward the larger density contrast, suggesting that the
+actual critical density contrast of globules is not very diﬀerent from that for the Bonnor-Ebert
+sphere. A statistical study with a larger number of samples is our future plan.
+5.4.
+Starless Globules with Stable Bonnor-Ebert Solutions
+In Table 4, three out of fourteen globules are ﬁtted as a stable equilibrium state of the Bonnor-
+Ebert sphere. If they are truly stable, how can stable globules form stars? Stable globules might
+increase their density contrast quasi-statically toward the onset of dynamical collapse with gradually
+increasing external pressure (e.g., Hennebelle et al. 2003) and/or with decreasing internal turbulent
+pressure (Nakano 1998). For the case of rapid increase of external pressure, core collapse triggered
+by a compression wave should be taken into account (e.g., Hennebelle et al. 2003, 2004; Motoyama
+et al. 2004). Our observations of globules, however, show neither systematic decrease in Teﬀnor
+increase in Pext (panels e and f of Fig. 7) toward larger density contrast. It seems that non-thermal
+turbulence is already mostly dissipated even in the stable globules. Though there is only small
+room for the dissipation of turbulence, a slight decrease of turbulence may initiate the collapse of
+stable globules as suggested by Nakano (1998). The decrease of Teﬀ(i.e., line widths) necessary for
+stable globules to start gravitational collapse is small. This is consistent with the result that there
+is no apparent tendensity of systematic decrease in Teﬀagainst density contrast (panel e of Fig.
+7). In the star forming regions where non-thermal motions are more prominent than globules, e.g.,
+
+
+=== PDF PAGE 16 ===
+– 16 –
+GMCs, the dissipation of turbulence in dense cores is reported through the virial analysis (e.g.,
+OMC-2/3 region in Orion: Aso et al. 2000).
+Since possible evolutionary processes of stable globules are expected not to be dynamical, their
+lifetime should be long compared with unstable ones. However, in our starless globule samples,
+the fraction of stable globules (density contrast is less than 14) is small (3 out of 11 sources). The
+observed starless globules are mostly populated near the critical Bonnor-Ebert sphere, and decreases
+toward the smaller density contrast (Figure 6). This result is inconsistent with an idea that all of
+nearly critical globules originated from stable low-density-contrast globules; if the idea is the case,
+the number of the observed low-density-contrast globules should be larger than or comparable with
+that of the nearly critical ones. Thus, it is most likely that most of the nearly critical globules
+which we observed are not evolved from stable globules. The origin of nearly critical globules can
+be related to the formation mechanism of globules. Further studies on this subject are desirable.
+5.5.
+Slow Collapse of A Nearly Critical Bonnor-Ebert Sphere
+After gravitational collapse begins, globules evolve toward higher central condensation.
+If
+we assume an extreme case in which all the globules ﬁtted as unstable Bonnor-Ebert equilibrium
+states are already collapsing, the diﬀerence in ξmax is attributed to diﬀerent evolutionary stages of
+globules. Since the Bonnor-Ebert spheres provide a good ﬁt to starless globules, it is meaningful to
+consider the gravitational collapse of the Bonnor-Ebert sphere (e.g., Foster & Chevalier 1993; Ogino,
+Tomisaka, & Nakamura 1999). We expect that the critical Bonnor-Ebert sphere can approximate
+the initial condition of collapse, because a large fraction of the starless globules are located near
+the critical state, ξmax = 6.5 ± 2, as shown in § 5.1.
+In order to make quantitative comparisons of the density structures between our observations
+and a collapsing gas sphere starting from a nearly critical Bonnor-Ebert sphere, we used the result
+of theoretical calculations from Aikawa et al. (2005). In their calculation, the central density nc(H)
+and kinetic temperature T of the critical Bonnor-Ebert sphere were set as nc(H) = 2 × 104 cm−3
+and T = 10 K, respectively. No cloud rotation, magnetic ﬁelds, or non-thermal turbulence were
+considered, and a ﬁxed boundary condition of zero velocity was adopted at the outermost radius of
+R = 0.2 pc, which is slightly larger than the critical radius of an equilibrium sphere (see, Aikawa et
+al. 2005). We note that the initial condition parameters of nc(H), T, and R, are consistent with the
+observed physical properties of globules around ξmax = 6.5 (see, Table 4 and 5). The initial density
+distribution was multiplied by a constant factor α of 1.1 in order to initiate collapse. The slight
+density enhancement of α = 1.1 is preferable to approximate the collapse from a nearly critical
+Bonnor-Ebert sphere. The time scale of the collapse is several times the free-fall time, ∼1.2 × 106
+yr (∼4× tﬀ), which is comparable with the observational lifetime of starless dense cores (∼106 yr;
+e.g., Visser et al. 2002; Lee & Myers 1999).
+Figure 8 shows the evolution of a radial column density proﬁle of the collapsing sphere for the
+case of α = 1.1 described above. The gray solid line denotes initial column density proﬁle (t = 0
+yr), and the black solid, dotted, and broken lines denote density proﬁle at speciﬁc times of 4.4×105,
+8.9×105, and 1.1×106 yr, respectively. We found that the column density proﬁles of the collapsing
+
+
+=== PDF PAGE 17 ===
+– 17 –
+sphere are well ﬁtted with the static Bonnor-Ebert spheres (equilibrium solutions) in the range of
+ξmax < 25 within the relative diﬀerence of 2%. The plus symbols show the best-ﬁtting result for
+each collapsing proﬁle with the Bonnor-Ebert sphere, which are labeled with corresponding ξmax
+values; for example, the density proﬁle of the collapsing sphere at 4.4 × 105 yr mimics the unstable
+Bonnor-Ebert sphere of ξmax = 7.6. This result suggests that observed starless globules with large
+density contrasts are gravitationally collapsing objects. Figure 9 shows the relationship between
+ξmax versus density contrast. The solid line is for the Bonnor-Ebert sphere, and the dotted line
+is for the collapsing sphere which plots the best-ﬁtting ξmax values against the density contrast of
+the collapsing sphere. The plus symbols denote the elapsed time of the collapsing sphere at 10%
+intervals of the total collapse time. Since the free-fall time scale increases with decreasing density, a
+collapsing gas sphere starting from a nearly critical Bonnor-Ebert sphere should mimic marginally
+unstable Bonnor-Ebert spheres for a long time. Thus, this is qualitatively consistent with the fact
+that the ξmax for the starless globules is mostly populated near the critical state (7 out of 11 sources)
+and the remaining starless globules show clearly unstable states (ξmax > 10; 4 out of 11 sources)
+as shown in § 5.1. From the model prediction, we note that 50% of collapsing globules should be
+located in ξmax = 6.5 −8.5, and the rest of the globules should have ξmax larger than 8.5. The
+fraction is consistent with our result that half of the starless globules with ξmax > 6.5 are located
+in ξmax = 6.5 −8.5 (4 out of 8 sources, see Fig. 5). In Figure 10, we demonstrate the histogram
+of logarithmic density contrast for starless globules (the same as Figure 6) and the time evolution
+of the model collapsing sphere (solid line with dots). Each dot represents the residence time of a
+collapsing sphere measured at 0.2 intervals in the logarithmic density contrast. The histogram of
+the observed globule in the unstable region is consistent with that from model calculations of a
+collapsing sphere.
+As discussed above, the density structure of the observed globules can be explained in terms
+of the slow collapse of a nearly critical Bonnor-Ebert sphere. The anticipated inward velocity from
+the model calculation remains subsonic§ for a long time; the peak inward velocity is less than ∼0.1
+km s−1 for ∼106 yr, which is ∼80% of the total collapse time (see, Fig. 1 of Aikawa et al. 2005).
+Previous reports on the observations of CS (J = 2 →1) (blue) asymmetry proﬁle, indicative of
+gravitational collapse in dense cores, show that infall candidates constitute 25 % of the starless core
+samples (Lee, Myers, & Tafalla 1999). It is possible that the rest of the starless cores have a slow
+collapse motion which is hard to detect. Radio molecular line observations of infall asymmetry
+proﬁles with suﬃciently high velocity resolution (e.g. ∼0.01 km s−1) are necessary to conﬁrm
+the scenario of slowly collapsing globules. Among the starless globules in Figure 5, the gas inward
+velocity for Lynds 694-2 (ξmax = 25±3) was measured as 0.05−0.07 km s−1 (Lee, Myers, & Tafalla
+2001; Lee, Myers & Plume 2004), which is consistent with the prediction from the collapse model
+(α = 1.1).
+§In § 4.2.2, we have estimated distance to the globules using Teﬀfrom radio molecular line observations as shown
+in Table 3. A collapsing motion in the globules should contribute to the derivation of Teﬀif the motion is large
+enough compared with the observed molecular line width. Since predicted inward velocity from the model is small,
+it is likely that the contribution of collapsing motion to the derived distance is negligible.
+
+
+=== PDF PAGE 18 ===
+– 18 –
+6.
+Summary
+We have carried out a near-infrared (J, H, and Ks) imaging survey of ten Bok globules using
+the infrared camera SIRIUS on the IRSF 1.4 m telescope in South Africa. AV distributions for
+the ten globules were derived through measurements of the H −K color excess or the stellar
+density at J, H, and Ks (star count).
+The radial column density proﬁle for each globule was
+analyzed using the Bonnor-Ebert sphere model, which well ﬁts the proﬁle within observational
+uncertainties, and physical properties of globules, e.g., size, central density, temperature, mass,
+external pressure, and center-to-edge density contrast, were derived.
+The dimensionless radial
+parameter ξmax determines the shape of a Bonnor-Ebert density proﬁle as well as the stability of
+the equilibrium state, e.g., the solution of ξmax > 6.5 is unstable to the gravitational collapse. We
+investigated the stability of globules on the basis of ξmax for ten globules from our observations and
+four globules in the literature. In addition to the near-infrared imaging, we have carried out radio
+molecular line observations toward the same ten Bok globules using the 25-element focal-plane SIS
+receiver BEARS on the 45 m telescope of Nobeyama Radio Observatory (NRO). We measured line
+width of the globules for independent measurements of the “eﬀective” temperature including the
+contribution of turbulence. It was conﬁrmed that most of the globules are dominated by thermal
+support. Since the distance-dependent parameters of the Bonnor-Ebert sphere were derived using
+the initially assumed distance to the globules, derived best-ﬁtting temperature was aﬀected by the
+distance assumption. We constrained the distance to the globules by comparing the temperature
+from the molecular line width with the temperature from the Bonnor-Ebert ﬁtting, and rescaled
+distance-dependent physical quantities of globules.
+(1) We found that more than half of the starless globules (7 out of 11 sources) are located
+near the critical state, ξmax = 6.5 ± 2.
+Thus, we suggest that a nearly critical Bonnor-Ebert
+sphere characterizes the typical density structure of starless globules, and it approximates the
+initial condition of gravitational collapse.
+(2) We found that four out of eleven starless globules show clearly unstable states (ξmax > 10).
+Since unstable equilibrium states should not be long sustained, we expect that they are already
+collapsing toward higher central condensation or that extra force (e.g., magnetic and/or turbulent
+pressure) accounting for large ξmax stabilizes the globules. It was also found that all three star-
+forming globules have unstable solutions of ξmax > 10, which is consistent with the fact that they
+have started gravitational collapse.
+(3) We investigated the collapse of the Bonnor-Ebert sphere from a nearly critical state using
+the model calculation of Aikawa et al.
+(2005), and found that the column density proﬁles of
+the collapsing sphere mimic those of static Bonnor-Ebert spheres (unstable equilibrium solutions).
+By relating ξmax to the collapsing sphere at a speciﬁc time, the evolutionary state of globules
+can be interpreted, and the detection probability of each ξmax value can be predicted from the
+model calculation. Since the evolutionary timescale decreases with increasing density, the collapsing
+sphere resembles a marginally unstable Bonnor-Ebert sphere for a long time. It was found that the
+frequency distribution of ξmax for the observed starless globules is consistent with that from model
+calculations of the collapsing sphere.
+
+
+=== PDF PAGE 19 ===
+– 19 –
+Acknowledgements
+We are grateful to Masao Saito and Koji Tomisaka for their helpful comments and suggestions.
+Thanks are due to the staﬀat SAAO and NRO for their kind support during the observations. We
+also thank Doug Johnstone, the referee of this paper, for useful comments on the manuscript. The
+IRSF/SIRIUS project was initiated and supported by Nagoya University, National Astronomical
+Observatory of Japan, and University of Tokyo in collaboration with South African Astronomical
+Observatory under a ﬁnancial support of Grant-in-Aid for Scientiﬁc Research on Priority Area (A)
+No. 10147207 and No. 10147214, and Grant-in-Aid No. 13573001 of the Ministry of Education,
+Culture, Sports, Science, and Technology of Japan. M. T. acknowledges support by the Grant-
+in-Aid (No.
+12309010, 16340061, 16077204).
+Y. A. is supported by Grant-in-Aid for Scientiﬁc
+Research (No. 14740130, 16036205) and “The 21st Century COE Program of Origin and Evolution
+of Planetary Systems” of the Ministry of Education, Culture, Sports, Science and Technology of
+Japan (MEXT).
+Appendix A: Possible Systematic Uncertainties in ξmax
+Here we discuss the ambiguity of derived column density (AV ), which leads to the systematic
+uncertainties in ξmax. In order to evaluate the dependence of the conversion factor, AV /EH−K
+and AV /Aλ (λ = J, H, and K), on the ratio of total-to-selective extinction RV , we used the RV -
+dependent extinction law empirically derived by Cardelli et al. (1989). Though it is well established
+that RV has a uniform value of ∼3.1 in the ISM (e.g., Whittet 1992), there are some observational
+reports on higher RV values up to ∼6 in dense molecular clouds (e.g., Kandori et al. 2003, and
+references therein). The empirical extinction law for RV = 6 gives the conversion factors smaller
+∼20 % than those for the case of RV = 3.1, which we adopted in the analysis (§3.1 and §3.2).
+Note that the extinction law gives slightly diﬀerent conversion factors compared with Rieke &
+Lebofsky (1985) as shown in Table 3 of Cardelli et al. (1989). This possible systematic uncertainty
+as well as the uncertainty of the gas-to-dust ratio can be included in the derivation of N(H2). We
+have converted AV to H2 column density using the relationship N(H2)/AV = 9.4 × 1020 cm−2
+mag−1 derived from Bohlin, Savage, & Drake (1978). Similar relationships were obtained from
+the X-ray absorption studies toward SNRs with high dynamic range (AV <∼30 mag) as NH/AV =
+1.8 −2.2 × 1021cm−2mag−1 (Gorenstein 1975; Ryter et al. 1975; Ryter 1996; Predehl & Schmitt
+1995). Thus, the conversion coeﬃcient is likely to be determined within ∼20 % error. It can be
+seen from the panel (a) of Figure 7 that AV is roughly correlated with about 1/2th power of density
+contrast for the Bonnor-Ebert spheres. Thus, for the case that AV is systematically changed by
+a factor β, the value of density contrast varies by β1.5 accordingly. Since ξmax is proportional to
+√ρc, corresponding ξmax value is expected to vary by β0.75. If we assume that derived AV for
+each globule is overestimated by 20 %, ξmax is overestimated by ∼15 %. This is comparable to
+the uncertainty in ξmax derived from the χ2 ﬁtting, and this modiﬁcation should not signiﬁcantly
+change our conclusions on the density structure of globules.
+REFERENCES
+Aikawa, Y., Herbst, E., Roberts, H., & Caselli, P., 2005, ApJ, 620, 330
+
+
+=== PDF PAGE 20 ===
+– 20 –
+Alves, J. F., Lada, C. J., & Lada E. A., 2001, Nature, 409, 159
+Aso, Y., Tatematsu, K., Sekimoto, Y., Nakano, T., Umemoto, T., Koyama, K., & Yamamoto, S.,
+ApJS, 131, 465
+Bacmann, A., Andr´e, P., Puget, J. -L., Abergel, A., Bontemps, S., & Ward-Thompson, D., 2000,
+A&A, 361, 555
+Benson, P. J., & Myers, P. C., 1989, ApJS, 71, 89
+Bergin, E. A., Alves, J., Huard, T., & Lada, C. J., 2002, ApJ, 570, L101
+Bohlin, R. C., Savage, B. D., & Drake, J. F., 1978, ApJ, 224, 132
+Bonnor, W. B., 1956, MNRAS, 116, 351
+Cambr´esy, L. 1999, A&A, 345, 965
+Cardelli, J. A., Clayton, G. C., & Mathis, J. S. 1989, ApJ, 345, 245
+Caselli, P., Myers, P. C., & Thaddeus, P., 1995, ApJ, 455, L77
+Caselli, P., Benson, P. J., Myers, P. C., & Tafalla, M., 2002, ApJ, 572, 238
+Clemens, D. P., & Barvainis, R., 1988, ApJS, 68, 257
+Curry, C. L., 2000, ApJ, 541, 831
+Cutri, R. M., Skrutskie, M. F., van Dyk, S., Beichman, C. A., Carpenter, J. M., Chester, T.,
+Cambr´esy, L., Evans, T., Fowler, J., Gizis, J., Howard, E., Huchra, J., Jarrett, T., Kopan, E.
+L., Kirkpatrick, J. D., Light, R. M., Marsh, K. A., McCallon, H., Schneider, S., Stiening, R.,
+Sykes, M., Weinberg, M., Wheaton, W. A., Wheelock, S., & Zacarias, N., 2003, CDS/ADC
+Collection of Electronic Catalogues, 2246
+Dame, T. M., Ungerechts, H., Cohen, R. S., De Geus, E. J., Grenier I. A., May, J., Murphy, D. C.,
+Nyman, L. -˚A, & Thaddeus, P., 1987, ApJ, 322, 706
+Di Francesco, J., Hogerheijde, M. R., Welch, W. J., & Bergin, E. A., 2002, AJ, 124, 2749
+Dickman, R. L. 1978, AJ, 83, 363
+Dobashi, K., Uehara, H., Kandori, R., Sakurai, T., Kaiden, M., Umemoto, T., & Sato, F., 2005,
+PASJ, 57, 1
+Dutra, C. M. & Bica, E., 2002, A&A, 383, 631
+Ebert, R., 1955, Zs. Ap., 37, 217
+Evans, N. J., II, Rawlings, J. M. C., Shirley, Y., & Mundy, L. G., 2001, ApJ, 557, 193
+Foster, P. N. & Chevalier, R. A., 1993, ApJ, 416, 303
+Fuller, G. A. & Myers, P. C., 1992, ApJ, 384, 523
+
+
+=== PDF PAGE 21 ===
+– 21 –
+Galli, D., Walmsley, M., & Gon¸calves, J., 2002, A&A, 394, 275
+Gorenstein, P., 1975, ApJ, 198, 95
+Harvey, D. W. A., Wilner, D. J., Lada, C. J., Myers, P. C., Alves, J. F., & Chen, H., 2001, ApJ,
+563, 903
+Harvey, D. W. A., Wilner, D. J., Lada, C. J., Myers, P. C., & Alves, J. F., 2003, ApJ, 598, 1112
+Hennebelle, P., Whitworth, A. P., Gladwin, P. P., & Andr´e, P., 2003, MNRAS, 340, 870
+Hennebelle, P., Whitworth, A. P., Cha, S. -H., & Goodwin, S. P., 2004, MNRAS, 348, 687
+Hotzel, S., Harju, J., & Juvela, M., 2002a, A&A, 395, L5
+Hotzel, S., Harju, J., Juvela, M., Mattila, K., & Haikala, L. K., 2002b, A&A, 391, 275
+Hotzel, S., Harju, J., Lemke, D., Mattila, K., & Walmsley, C. M., 2001, A&A, 372, 302
+Huard, T. L., Sandell, G., & Weintraub, D. A., 1999, ApJ, 526, 833
+Jijina, J., Myers, P. C., & Adams, F. C., 1999, ApJS, 125, 161
+Johnstone, D., Fich, M., Mitchell, G. F., & Moriarty-Schieven, G., 2001, ApJ, 559, 307
+Kandori, R., Dobashi, K., Uehara, H., Sato, F., & Yanagisawa, K., 2003, AJ, 126, 1888
+Lada, C. J., Huard, T. L., Crews, L. J., & Alves, J. F., 2004, ApJ, 610, 303
+Lada, C. J., Lada, E. A., Clemens, D. P., & Bally, J. 1994, ApJ, 429, 694
+Lai, S., Velusamy, T., Langer, W. D., & Kuiper, T. B. H., 2003, AJ, 126, 311
+Larson, R. B., 1969, MNRAS, 145, 271
+Larson, R. B., 2003, Reports on Progress in Physics, 66, 1651
+Launhardt, R., 1996, Ph.D. Thesis,
+Launhardt, R. & Henning, T., 1997, A&A, 326, 329
+Launhardt, R., Evans, N. J., II, Wang, Y., Clemens, D. P., Henning, T., & Yun, J. L., 1998, 119,
+59
+Lee, C. W. & Myers, P. C., 1999, ApJS, 123, 233
+Lee, C. W., Myers, P. C., & Tafalla, M., 1999, ApJ, 526, 788
+Lee, C. W., Myers, P. C., & Tafalla, M., 2001, ApJS, 136, 703
+Lee, C. W., Myers, P. C., & Plume, R., 2004, ApJS, 153, 523
+Leung, C. M., Kutner, M. L., & Mead, K. N., 1982, ApJ, 262, 583
+
+
+=== PDF PAGE 22 ===
+– 22 –
+McLaughlin, D. E. & Pudritz, R. E., 1997, ApJ, 476, 750
+McKee, C. F., 1999, in The origin of stars and planetary systems, ed. Lada, C. J. & Kylaﬁs, N. D.
+(Kluwer, NATO Sci. Ser. 540), 29
+McKee, C. F., & Holliman, J. H., II., 1999, ApJ, 522, 313
+Motoyama, K., & Yoshida, T., 2003, MNRAS, 344, 461
+Nakano, T., 1998, ApJ, 494, 587
+Nagashima, C., Nagayama, T., Nakajima, Y., Tamura, M., Sugitani, K., Nagata, T., Hirao,
+T., Nakaya, H., Yanagisawa, K., & Sato, S., 1999, in Proc. Star Formation 1999, ed. T.
+Nakamoto, & Nobeyama Radio Observatory, 397
+Nagayama, T., Nagashima, C., Nakajima, Y., Nagata, T., Sato, S., Nakaya, H., Yamamuro, T.,
+Sugitani, K., & Tamura, M., 2003, Proc. SPIE, 4841, 459
+Nakajima, Y., Kato, D., Nagata, T., Tamura, M., Sato, S., Sugitani, K., Nagashima, C., Nagayama,
+T., Iwata, I., Ita, Y., Tanabe, T., Kurita, M., Nakaya, H., & Baba, D., AJ, In press
+Ogino, S., Tomisaka, K., & Nakamura, F., 1999, PASJ, 51, 637
+Penston, M. V., 1969, MNRAS, 144, 425
+Persson, S. E., Murphy, D. C., Krzeminski, W., Roth, M., & Rieke, M. J., 1998, AJ, 116, 2475
+Plummer, H. C., 1911, MNRAS, 71, 460
+Predehl, P. & Schmitt, J. H. M. M., 1995, A&A, 293, 889
+Racca, G., G´omez, M., & Kenyon, S. J., 2002, AJ, 124, 2178
+Rieke, G. H. & Lebofsky, M. J., 1985, ApJ, 288, 618
+Ryter, C., Cesarsky, C. J., & Audouze, J., 1975, ApJ, 198, 103
+Ryter, C. E., 1996, Ap&SS, 236, 285
+Schneider, S. & Elmegreen, B. G., 1979, ApJS, 41, 87
+Shu, F. H., 1977, ApJ, 214, 488
+Stetson, P. B. 1987, PASP, 99, 191
+Straizys, V., Cernis, K., & Bartasiute, S., 1996, Baltic Astronomy, 5, 125
+Sunada, K., Yamaguchi, C., Nakai, N., Sorai, K., Okumura, S., & Ukita, N., 2000, Proc. SPIE,
+4015, 237
+Tafalla, M., Myers, P. C., Caselli, P., Walmsley, C. M., & Comito, C. 2002, ApJ, 569, 815
+Tatematsu, K., Umemoto, T., Kandori, R., & Sekimoto, Y., 2004, ApJ, 606, 333
+
+
+=== PDF PAGE 23 ===
+– 23 –
+Tin´e, S., Roueﬀ, E., Falgarone, E., Gerin, M., & Pineau des Forˆets, G., 2000, A&A, 356, 1039
+Visser, A. E., Richer, J. S., & Chandler, C. J., 2001, MNRAS, 323, 257
+Visser, A. E., Richer, J. S., & Chandler, C. J., 2002, AJ, 124, 2756
+Ward-Thompson, D., Andr´e, P., & Kirk, J. M., 2002, MNRAS, 329, 257
+Whittet, D. C. B. 1992, in Dust in the Galactic Environment (NY: Inst. Phys.)
+Whitworth, A. P., & Ward-Thompson, D., 2001, ApJ, 547, 317
+Wolf, M. 1923, Astron. Nachr., 219, 109
+Young, C. H. et al., 2004, ApJS, 154, 396
+Yun, J. L. & Clemens, D. P., 1992, ApJ, 385, 21
+This preprint was prepared with the AAS LATEX macros v5.0.
+
+
+=== PDF PAGE 24 ===
+– 24 –
+Table 1: Source list
+Name
+R.A. (J2000)a Dec. (J2000)a Distance
+IRASb Other name
+Referencec
+(h m s)
+(◦′ ′′)
+(pc)
+CB 87
+17 25 05
+−24 07 19
+160
+No
+Barnard 74, Lynds 81
+1,2
+CB 110
+18 05 55
+−18 25 10
+180
+No
+Lynds 307
+1,3,4
+CB 131
+19 17 00
+−18 01 52
+180
+No
+Barnard 93, Lynds 328
+1,3,4
+CB 134
+18 22 45
+−01 42 40
+260
+No
+1,5,A
+CB 161
+18 53 56
+−07 26 29
+400
+No
+Barnard 118, Lynds 509
+1,6
+CB 184
+19 31 52
++16 27 14
+300
+Nod
+Lynds 709
+1,3,4
+CB 188
+19 20 16
++11 36 15
+300
+Yese
+Lynds 673-1
+1,3,4
+FeSt 1-457
+17 35 45
+−25 33 11
+160
+No
+1,3,4,B
+Lynds 495
+18 38 58
+−06 44 00
+200
+No
+1,7,C
+Lynds 498
+18 40 11
+−06 40 45
+200
+No
+1,7,C
+aPosition of ﬁeld center for each near-infrared image.
+bExistence of IRAS point sources within optical boundary of each core.
+c(1) Dutra & Bica (2002); (2) Huard, Sandell & Weintraub (1999); (3) Launhardt & Henning (1997); (4) Dame et al. (1987); (5) Straizys, Cernis, & Bartasiute
+(1996); (6) Leung, Kutner, & Mead (1982); (7) Schneider, & Elmegreen (1979); (A) Assumed to have the same distance as Serpens molecular cloud; (B) Assumed
+to have the same distance as Barnard 83; (C) Assumed to have the same distance as GF 5 dark cloud ﬁlament.
+dIRAS 19116+1623 (Class II located near core boundary): Launhardt (1996)
+eIRAS 19179+1129 (Class I with outﬂow): Launhardt (1996), Yun, & Clemens (1992)
+
+
+=== PDF PAGE 25 ===
+– 25 –
+Table 2: Results of stellar detection
+Field
+Limiting mag.a
+Threshold mag.b
+Detected number of starsc
+J
+H
+Ks
+J
+H
+Ks
+J
+H
+Ks
+H and Ks
+CB 87
+18.9
+18.4
+17.5
+18.5
+17.8
+17.1
+8107
+10588
+6510
+7609
+CB 110
+18.8
+17.9
+17.1
+18.1
+17.2
+16.4
+12471
+14220
+12340
+12119
+CB 131
+19.1
+18.6
+17.5
+18.1
+17.4
+16.8
+6678
+10760
+111868
+9890
+CB 134
+19.5
+19.2
+17.9
+18.9
+18.5
+17.5
+5631
+7530
+4530
+5510
+CB 161
+18.5
+18.3
+17.3
+18.0
+17.7
+16.9
+6431
+8406
+5330
+6044
+CB 184
+18.8
+18.1
+17.3
+18.3
+17.8
+17.1
+5235
+6056
+4241
+4673
+CB 188
+18.9
+18.3
+17.4
+18.4
+17.6
+17.0
+6743
+8963
+7372
+7669
+FeSt 1-457
+19.0
+18.2
+17.4
+18.6
+17.2
+16.8
+9261
+10614
+10444
+9240
+Lynds 495
+19.1
+18.0
+16.6
+18.4
+17.2
+15.9
+10764
+13404
+10510
+10760
+Lynds 498
+18.7
+17.6
+16.7
+17.7
+16.8
+16.0
+13826
+13696
+12064
+11673
+aLimiting magnitude is deﬁned by the magnitudes whose photometric error is equal to 0.1 mag.
+bThreshold magnitude is deﬁned by the peak value of the histogram distribution of magnitudes for detected stars whose magnitude errors are less than 0.1 mag.
+cThe ﬁrst three columns show the number of stars detected on the J, H, or Ks images (single band detection) whose photometric error is less than threshold
+magnitudes. The last column shows the number of stars detected both on the H and Ks images whose photometric errors,
+p
+δH2 + δK2
+S, are less than 0.15 mag.
+
+
+=== PDF PAGE 26 ===
+– 26 –
+Table 3: Molecular line parameters of globules
+Name
+VLSR
+∆V a
+∆VNTb
+Teﬀc
+τ d
+Texe
+Molecular Line
+(km s−1)
+(km s−1)
+(km s−1)
+(K)
+(K)
+CB 87f
+4.73±0.02
+0.21±0.04
+0.17±0.05
+11.4±0.8
+0.55±0.12
+10
+C18O (J = 1 −0)
+4.73±0.01
+0.25±0.02
+0.22±0.03
+12.4±0.6
+0.38±0.04
+10
+CB 110
+5.94±0.02
+0.50±0.04
+0.48±0.04
+21.8±2.2
+0.62±0.06
+10
+C18O (J = 1 −0)
+5.91±0.01
+0.45±0.02
+0.43±0.02
+19.3±1.0
+0.47±0.02
+10
+CB 131
+6.66±0.01
+0.56±0.02
+0.55±0.02
+25.1±1.3
+0.58±0.03
+10
+C18O (J = 1 −0)
+6.65±0.01
+0.57±0.02
+0.56±0.02
+25.8±1.1
+0.56±0.02
+10
+CB 134
+8.56±0.01
+0.28±0.02
+0.25±0.02
+13.2±0.6
+0.94±0.10
+10
+C18O (J = 1 −0)
+8.562±0.004
+0.24±0.01
+0.20±0.01
+12.1±0.2
+0.81±0.04
+10
+CB 161
+12.48±0.01
+0.25±0.02
+0.22±0.02
+12.5±0.6
+0.61±0.06
+10
+C18O (J = 1 −0)
+12.47±0.01
+0.27±0.01
+0.24±0.02
+13.0±0.4
+0.44±0.02
+10
+CB 184
+6.10±0.01
+0.35±0.02
+0.33±0.02
+15.5±0.6
+1.01±0.08
+10
+C18O (J = 1 −0)
+6.096±0.005
+0.35±0.01
+0.33±0.01
+15.5±0.4
+0.88±0.04
+10
+CB 188
+6.98±0.01
+0.44±0.03
+0.42±0.03
+19.0±1.3
+0.54±0.04
+10
+C18O (J = 1 −0)
+6.92±0.01
+0.52±0.02
+0.50±0.02
+22.9±1.2
+0.37±0.02
+10
+FeSt 1-457
+5.820±0.003
+0.182±0.006
+0.132±0.009
+10.9±0.1
+9.56±1.29
+6.25±0.21
+N2H+ (J = 1 −0)
+5.824±0.002
+0.175±0.004
+0.122±0.005
+10.8±0.1
+11.48±0.86
+5.80±0.09
+Lynds 495
+12.18±0.10
+0.26±0.02
+0.22±0.02
+12.6±0.6
+0.60±0.06
+10
+C18O (J = 1 −0)
+12.18±0.01
+0.26±0.01
+0.23±0.02
+12.7±0.4
+0.54±0.03
+10
+Lynds 498
+12.51±0.01
+0.18±0.03
+0.14±0.04
+11.0±0.6
+0.41±0.07
+10
+C18O (J = 1 −0)
+12.48±0.01
+0.29±0.02
+0.27±0.03
+13.6±0.7
+0.31±0.02
+10
+aObserved FWHM line width.
+bNon-thermal line width. We assumed thermal line width ∆VT is equal to 0.443 km s−1 (Tk = 10 K).
+cTemperature including non-thermal (turbulent) contribution (Teﬀ= Tk + TNT).
+dPeak optical depth. The value for FeSt 1-457 is the sum of the peak optical depths of the seven hyperﬁne components.
+eWe assumed the excitation temperature for the C18O spectra to be 10 K.
+fThe ﬁrst row refers to the values from the spectrum toward the center of each globule, and the second row refers to the values from the composite spectrum of the
+central nine positions. The error represents 1σ error in the line proﬁle ﬁtting.
+
+
+=== PDF PAGE 27 ===
+– 27 –
+Table 4: Physical properties of globules I
+Name
+R.A. (J2000)a Dec. (J2000)a
+θR
+ξmax
+nc/nedgeb
+AV c
+ed
+P.A.d
+rﬁte
+χ2
+Stabilityf
+Referenceg
+(h m s)
+(◦′ ′′)
+(′′)
+(mag)
+(◦)
+(′′)
+CB 87
+17 24 58.1
+−24 06 49
+87.5±2.6
+5.1±0.4
+8.1
+6.6
+0.52
+120
+<110
+3.19
+Stable
+A
+CB 110
+18 05 54.7
+−18 25 02
+61.1±3.1
+14.0±3.0
+94.3
+19.7
+—–
+—–
+<70
+1.17
+Unstable
+A
+CB 131
+18 17 00.5
+−18 02 05
+103±7.4
+16.3±5.1
+139
+32.9
+—–
+—–
+<150
+3.22
+Unstable
+A
+CB 134
+18 22 46.3
+−01 42 50
+59.6±4.3
+18.5±4.9
+187
+26.8
+—–
+—–
+<55
+0.44
+Unstable
+A
+CB 161
+18 53 56.0
+−07 26 07
+62.5±6.9
+8.1±1.4
+25.1
+13.0
+0.72
+125
+<50
+0.11
+Unstable
+A
+CB 184
+19 13 51.7
++16 27 27
+112±20
+8.1±1.6
+24.9
+11.2
+0.68
+0
+<75
+0.15
+Unstable
+A
+CB 188
+19 20 15.7
++11 36 07
+127±19
+16.0±2.9
+132
+27.2
+—–
+—–
+<100
+5.17
+Unstable
+A
+FeSt 1-457
+17 35 47.5
+−25 32 59
+144±11
+12.6±2.0
+74.5
+41.0
+—–
+—–
+<140
+1.41
+Unstable
+A
+Lynds 495
+18 38 57.4
+−06 44 06
+75.0±7.8
+7.2±1.4
+18.6
+12.7
+—–
+—–
+<65
+0.14
+Unstable
+A
+Lynds 498
+18 40 10.5
+−06 40 43
+75.0±3.0
+4.7±0.4
+6.63
+10.9
+—–
+—–
+<70
+0.84
+Stable
+A
+Barnard 68
+——–
+——–
+100
+6.9±0.2
+16.6
+—–
+—–
+—–
+—–
+—–
+Unstable
+B
+Barnard 335
+19 37 00.9
++07 34 10.0
+125
+12.5±2.6
+73.1
+—–
+—–
+—–
+<100
+2.93
+Unstable
+C
+Coalsack
+12 31 38.6
+−63 43 42.5
+290
+5.8
+10.9
+11.5
+—–
+—–
+55−400
+—–
+Stable
+D
+——–
+——–
+140
+7.0±0.3
+17.2
+23.0
+—–
+—–
+—–
+—–
+Unstable
+E
+Lynds 694-2
+19 41 04.4
++10 57 00.9
+54
+25±3
+364
+—–
+—–
+—–
+<83
+1.12
+Unstable
+F
+aPosition of core center (centroid of AV distribution).
+bCenter-to-edge density contrast determined from ξmax value.
+cAV at core center.
+dFitted ellipticity and position angle.
+eProﬁle ﬁtting region in the Bonnor-Ebert ﬁt.
+fStability of equilibrium state of the Bonnor-Ebert sphere.
+g (A) This work; (B) Alves et al. (2001); (C) Harvey et al. (2001); (D) Lada et al. (2004); (E) Racca et al. (2002); (F) Harvey et al. (2003)
+
+
+=== PDF PAGE 28 ===
+– 28 –
+Table 5: Physical properties of globules II
+Name
+T a
+Db
+Rc
+ncc
+Mc
+Pextc
+Referenced
+(K)
+(pc)
+(AU)
+(cm−3)
+(M⊙)
+(K cm−3)
+CB87
+6.0±0.4
+160
+(1.40±0.04)×104
+(3.2±0.4)×104
+0.76±0.07
+(2.9±0.4)×104
+A
+11.4
+304
+(2.66±0.08)×104
+(1.7±0.2)×104
+2.73±0.24
+(2.9±0.4)×104
+A
+CB 110
+7.0±0.4
+180
+(1.10±0.06)×104
+(4.5±1.7)×105
+0.74±0.17
+(4.0±0.9)×104
+A
+21.8
+561
+(3.43±0.18)×104
+(1.5±0.6)×105
+7.21±1.64
+(4.0±0.9)×104
+A
+CB 131
+14.0±0.8
+180
+(1.85±0.13)×104
+(4.4±2.3)×105
+2.43±0.73
+(5.3±1.5)×104
+A
+25.1
+323
+(3.32±0.24)×104
+(2.5±1.3)×105
+7.83±2.35
+(5.3±1.5)×104
+A
+CB 134
+13.0±0.8
+260
+(1.55±0.11)×104
+(7.6±3.4)×105
+1.85±0.50
+(6.3±1.7)×104
+A
+13.2
+264
+(1.57±0.11)×104
+(7.5±3.3)×105
+1.91±0.52
+(6.3±1.7)×104
+A
+CB 161
+14.0±1.1
+400
+(2.50±0.28)×104
+(6.1±1.4)×104
+3.51±0.90
+(4.0±1.5)×104
+A
+12.5
+357
+(2.23±0.25)×104
+(7.0±1.6)×104
+2.79±0.72
+(4.0±1.5)×104
+A
+CB 184
+14.0±1.0
+300
+(3.35±0.61)×104
+(3.4±0.5)×104
+4.70±1.76
+(2.2±1.6)×104
+A
+15.5
+332
+(3.71±0.67)×104
+(3.0±0.4)×104
+5.76±2.17
+(2.2±1.6)×104
+A
+CB 188
+18.0±1.1
+300
+(3.80±0.57)×104
+(1.3±0.3)×105
+6.45±2.05
+(2.1±1.1)×104
+A
+19.0
+317
+(4.01±0.60)×104
+(1.2±0.2)×105
+7.19±2.28
+(2.1±1.1)×104
+A
+FeSt 1-457
+24.0±1.7
+160
+(2.30±0.18)×104
+(2.9±0.8)×105
+5.41±1.13
+(1.1±0.3)×105
+A
+10.9
+73
+(1.04±0.08)×104
+(6.5±1.7)×105
+1.12±0.23
+(1.1±0.3)×105
+A
+Lynds 495
+8.0±0.7
+200
+(1.50±0.16)×104
+(7.6±2.1)×104
+1.19±0.31
+(3.9±1.4)×104
+A
+12.6
+315
+(2.36±0.25)×104
+(4.8±1.4)×104
+2.95±0.77
+(3.9±1.4)×104
+A
+Lynds 498
+11.0±0.9
+200
+(1.50±0.06)×104
+(4.3±0.5)×104
+1.42±0.16
+(8.5±1.7)×104
+A
+11.0
+200
+(1.50±0.06)×104
+(4.3±0.5)×104
+1.42±0.16
+(8.5±1.7)×104
+A
+Barnard 68
+16
+125
+1.25×104
+——–
+2.10
+1.8×105
+B
+10±1.2
+85
+0.85×104
+——–
+0.90
+1.7×105
+G
+Barnard 335
+——–
+250
+3.125×104
+3.0×104
+14.0
+——–
+C
+Coalsack
+19
+150
+4.35×104
+1.8×104
+6.1±0.5
+——–
+D
+15
+180
+2.52×104
+5.4×104
+4.50
+6.5×104
+E
+Lynds 694-2
+——–
+250
+1.35×104
+3.1×105
+3.00
+1.1×105
+F
+aFirst row: value from the Bonnor-Ebert ﬁt using assumed distance to the globules (see Table 1), Second row: value
+from molecular line observations (Teﬀ; see, Table 3).
+b First row: same value as listed in Table 1, Second row: calibrated value by using Teﬀto scale the ﬁtted Bonnor-Ebert
+model parameters (see, §4.2.2).
+c The values in the ﬁrst and second rows are derived using the distances listed in the third column.
+d (A) This work; (B)-(F) Same references as those in Table 4; (G) Hotzel et al. (2002a).
+
+
+=== PDF PAGE 29 ===
+– 29 –
+Fig. 1.— J, H, and Ks three-color composite images for ten Bok globules (J: blue, H: green, Ks:
+red). Each image size is 930×930 pixel (∼7 arcminutes). North is up, and east is toward the left.
+
+
+=== PDF PAGE 30 ===
+– 30 –
+Fig. 2.— AV distribution for Bok globules. The area enclosed by the broken line is the reference
+ﬁeld expected to be free from dust extinction, and the area enclosed by the dotted line is the masked
+region which is excluded in the derivation of the radial AV proﬁle.
+
+
+=== PDF PAGE 31 ===
+– 31 –
+Fig. 2.— continued.
+
+
+=== PDF PAGE 32 ===
+– 32 –
+Fig. 3.— Line proﬁles toward the center of ten globules (N2H+ for FeSt 1-457, C18O for the other
+globules). The gray solid line denotes ﬁtting result of each spectrum.
+
+
+=== PDF PAGE 33 ===
+– 33 –
+Fig. 4.— Radial column density proﬁle and the Bonnor-Ebert model ﬁt for the ten Bok globules.
+The dots and error bars represent the average N(H2) values at each annulus arranged at intervals
+of 9′′ and the rms dispersion of data points in each annulus, respectively. The solid line denotes
+the best-ﬁt Bonnor-Ebert proﬁle which is convolved to the observing resolution (typically ∼30′′)
+with the same beam as used in the AV measurements. The dashed line denotes the Bonnor-Ebert
+proﬁle before the convolution. The gray dot-dashed line denotes the 1 σ deviation of the column
+density measured in the reference ﬁeld.
+
+
+=== PDF PAGE 34 ===
+– 34 –
+Fig. 4.— continued.
+
+
+=== PDF PAGE 35 ===
+– 35 –
+Fig.
+5.— The solid line shows the relation between ξmax and density contrast (center-to-edge
+density ratio). The location of our 10 globules and previously reported 4 globules (Barnard 335,
+Harvey et al. 2001; Barnard 68, Alves et al. 2001; Coalsack Globule II, Racca et al. 2002; Lada et
+al. 2004; Lynds 694-2, Harvey et al. 2003) are shown in the ﬁgure. Filled and open black circles
+denote starless and star-forming globules, respectively. Filled gray circles denote the ﬁtting results
+when the masked region on the AV map (see Fig. 2) is included in the derivation of the column
+density proﬁle. The vertical dashed line denotes critical state of ξmax= 6.5. In the lower panel of
+the ﬁgure, horizontal error bars denote 1σ error in the χ2 density proﬁle ﬁtting.
+
+
+=== PDF PAGE 36 ===
+– 36 –
+Fig. 6.— Histograms of logarithmic density contrast for starless and star-forming globules. The
+vertical broken line denotes the density contrast of the critical Bonnor-Ebert sphere.
+
+
+=== PDF PAGE 37 ===
+– 37 –
+Fig. 7.— Correlations between density contrast and the other physical parameters. The panels of
+(a) to (f) show the correlation diagrams for AV , central density, radius, mass, temperature, and
+external pressure, respectively. Filled and open circles denote starless and star-forming globules,
+respectively. The vertical gray line denotes the density contrast of the critical Bonnor-Ebert sphere.
+The plotted data points are the physical quantities after distance-correction (see, §4.2.2, Table 5).
+The physical quantities without distance-correction are shown as the symbol “−” in each panel. The
+broken lines represent the relationships for the Bonnor-Ebert spheres with a constant temperature
+Teﬀof 13.2 K and Pext of 5.3 × 104 K cm−3.
+
+
+=== PDF PAGE 38 ===
+– 38 –
+Fig. 8.— Radial column density distribution of a collapsing gas sphere at some speciﬁc times (black
+solid, dotted, and broken line) started from the initial condition of a nearly critical Bonnor-Ebert
+density structure (gray solid line). Dotted and broken lines are shifted by 5 and 10 (1021 cm−2) in
+the ﬁgure, respectively. Best-ﬁt solution of the Bonnor-Ebert sphere for each line is also plotted as
+plus symbol.
+
+
+=== PDF PAGE 39 ===
+– 39 –
+Fig. 9.— The solid line shows the relation between ξmax and density contrast for the Bonnor-Ebert
+sphere (same as Fig. 5). The dotted line denotes the similar relation for a collapsing sphere starting
+from a nearly critical Bonnor-Ebert sphere (α = 1.1 model; Aikawa et al. 2004); the column density
+proﬁles of the collapsing sphere were ﬁtted with static Bonnor-Ebert sphere solutions, and the best-
+ﬁt ξmax values are plotted against the density contrast values of the collapsing sphere. The plus
+symbols denote the elapsed times from the onset of collapse at 10% intervals of the total collapse
+time (tcol).
+
+
+=== PDF PAGE 40 ===
+– 40 –
+Fig. 10.— The histogram of the logarithmic density contrast for starless globules (the same as
+Figure 6). The solid line with dots shows the time evolution of the model collapsing sphere; each
+dot represents the residence time of a collapsing sphere measured at 0.2 intervals in the logarithmic
+density contrast. The vertical axis on the right side shows the percentage of the residence time
+with respect to the total collapse time.

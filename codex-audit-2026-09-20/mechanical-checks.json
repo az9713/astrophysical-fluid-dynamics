@@ -1,0 +1,199 @@
+{
+  "bare_carriage_returns": [],
+  "broken_local_links": [
+    {
+      "file": "module09.html",
+      "line": 847,
+      "href": "module13.html",
+      "reason": "file absent"
+    },
+    {
+      "file": "module09.html",
+      "line": 914,
+      "href": "module13.html",
+      "reason": "file absent"
+    },
+    {
+      "file": "module09.html",
+      "line": 915,
+      "href": "module13.html",
+      "reason": "file absent"
+    },
+    {
+      "file": "module09.html",
+      "line": 944,
+      "href": "module13.html",
+      "reason": "file absent"
+    },
+    {
+      "file": "module10.html",
+      "line": 285,
+      "href": "module14.html",
+      "reason": "file absent"
+    },
+    {
+      "file": "module10.html",
+      "line": 918,
+      "href": "module14.html",
+      "reason": "file absent"
+    },
+    {
+      "file": "module11.html",
+      "line": 666,
+      "href": "module13.html",
+      "reason": "file absent"
+    },
+    {
+      "file": "module12.html",
+      "line": 112,
+      "href": "module02.html#boltzmann",
+      "reason": "anchor absent"
+    }
+  ],
+  "rhetorical_counts": {
+    "module01.html": {
+      "refuted": 0,
+      "confirmed": 0,
+      "owes": 0,
+      "owed": 0,
+      "debt": 0,
+      "paid": 0,
+      "shipped": 0,
+      "nothing else": 0,
+      "by construction": 0,
+      "not fetched": 0
+    },
+    "module02.html": {
+      "refuted": 0,
+      "confirmed": 2,
+      "owes": 0,
+      "owed": 0,
+      "debt": 0,
+      "paid": 0,
+      "shipped": 0,
+      "nothing else": 4,
+      "by construction": 1,
+      "not fetched": 0
+    },
+    "module03.html": {
+      "refuted": 4,
+      "confirmed": 3,
+      "owes": 0,
+      "owed": 0,
+      "debt": 0,
+      "paid": 0,
+      "shipped": 0,
+      "nothing else": 0,
+      "by construction": 2,
+      "not fetched": 0
+    },
+    "module04.html": {
+      "refuted": 5,
+      "confirmed": 2,
+      "owes": 0,
+      "owed": 0,
+      "debt": 0,
+      "paid": 0,
+      "shipped": 0,
+      "nothing else": 0,
+      "by construction": 0,
+      "not fetched": 0
+    },
+    "module05.html": {
+      "refuted": 5,
+      "confirmed": 0,
+      "owes": 0,
+      "owed": 0,
+      "debt": 0,
+      "paid": 0,
+      "shipped": 0,
+      "nothing else": 0,
+      "by construction": 0,
+      "not fetched": 0
+    },
+    "module06.html": {
+      "refuted": 5,
+      "confirmed": 4,
+      "owes": 0,
+      "owed": 0,
+      "debt": 1,
+      "paid": 2,
+      "shipped": 0,
+      "nothing else": 2,
+      "by construction": 0,
+      "not fetched": 0
+    },
+    "module07.html": {
+      "refuted": 7,
+      "confirmed": 6,
+      "owes": 0,
+      "owed": 0,
+      "debt": 0,
+      "paid": 2,
+      "shipped": 0,
+      "nothing else": 1,
+      "by construction": 0,
+      "not fetched": 0
+    },
+    "module08.html": {
+      "refuted": 15,
+      "confirmed": 6,
+      "owes": 0,
+      "owed": 0,
+      "debt": 4,
+      "paid": 1,
+      "shipped": 0,
+      "nothing else": 2,
+      "by construction": 0,
+      "not fetched": 0
+    },
+    "module09.html": {
+      "refuted": 8,
+      "confirmed": 5,
+      "owes": 0,
+      "owed": 0,
+      "debt": 0,
+      "paid": 0,
+      "shipped": 0,
+      "nothing else": 1,
+      "by construction": 1,
+      "not fetched": 1
+    },
+    "module10.html": {
+      "refuted": 2,
+      "confirmed": 12,
+      "owes": 0,
+      "owed": 0,
+      "debt": 1,
+      "paid": 0,
+      "shipped": 0,
+      "nothing else": 6,
+      "by construction": 2,
+      "not fetched": 0
+    },
+    "module11.html": {
+      "refuted": 4,
+      "confirmed": 3,
+      "owes": 1,
+      "owed": 0,
+      "debt": 0,
+      "paid": 0,
+      "shipped": 3,
+      "nothing else": 5,
+      "by construction": 0,
+      "not fetched": 1
+    },
+    "module12.html": {
+      "refuted": 6,
+      "confirmed": 13,
+      "owes": 0,
+      "owed": 1,
+      "debt": 5,
+      "paid": 0,
+      "shipped": 4,
+      "nothing else": 3,
+      "by construction": 2,
+      "not fetched": 4
+    }
+  }
+}

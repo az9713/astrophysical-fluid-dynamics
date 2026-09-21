@@ -1,0 +1,4 @@
+ M afd/module10.html
+ M afd/module12.html
+?? afd-stem-textbook-runbook.html
+?? codex-audit-2026-09-20/

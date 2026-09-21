@@ -1,0 +1,346 @@
+92: Module 2 — Continuity, Euler, Navier–Stokes, Energy
+93: Taking moments of the Boltzmann equation: how six dimensions become four, why the procedure never closes on its own, and a measured flow that tests the first equation to two per cent while breaking the third by forty.
+98: 1. The problem: five fields, and a function of seven variables
+99: 2. The moments of a distribution function
+100: 3. Why there are exactly five exact equations
+101: 4. The general moment equation, and the gap it leaves
+102: 5. Mass: the continuity equation
+103: 6. Following the parcel: the Lagrangian derivative
+104: 7. Momentum: Cauchy, Euler, Navier–Stokes
+105: 8. Energy, and the three forms it takes
+106: 9. The closure problem, and the licence to use Euler
+107: 10. The check: does a measured flow obey these equations?
+108: 11. What this model captures, and what it misses
+109: 12. Problems
+110: — Notation · Sources
+116: 1. The problem: five fields, and a function of seven variables
+118: Module 1 ended by licensing the fluid description. It established that in almost every astrophysical gas the mean free path is very much shorter than the structure of interest, that collisions therefore hold the local velocity distribution close to a Maxwellian, and that the fraction by which the true distribution departs from that Maxwellian is of order the Knudsen number. It closed with the sentence: Module 2 writes the equations down. This module does that.
+120: The starting point is the object Module 1 introduced but never solved for. A gas of identical particles of mass $m$ is described completely by its distribution function $f(\mathbf{x},\mathbf{v},t)$, which obeys the Boltzmann equation, equation (2.1) of Module 1:
+124: Here $\mathbf{x}$ is position, $\mathbf{v}$ is particle velocity, $t$ is time, and $\mathbf{a}$ is the acceleration produced by any smooth external force, gravity in most of this book. The right-hand side is the collision term, which we will write $C[f]$ from now on.
+126: This is a complete description and it is almost useless. The unknown $f$ is a function of seven independent variables — three of position, three of velocity, one of time — and the collision term is a five-fold integral over the velocities of colliding pairs. Nobody solves (1.1) for a star.
+128: What we want instead is a description in terms of quantities a telescope could in principle measure: a mass density $\rho(\mathbf{x},t)$, a bulk velocity $\mathbf{u}(\mathbf{x},t)$ with three components, and a temperature $T(\mathbf{x},t)$. That is five scalar fields over four variables rather than one field over seven. The reduction is enormous, and it is not free.
+130: The procedure that performs it is called taking moments . Multiply (1.1) by a function of velocity and integrate over all velocities; what survives is an equation among the reduced fields. Doing this with the three quantities that a collision cannot change produces exactly the four equations this module is named after. The cost appears immediately and never goes away: each moment equation contains the next moment , so the set of equations is never closed by itself. Closing it requires an extra assumption, and the quality of that assumption is what separates the Euler equations from the Navier–Stokes equations.
+132: The route is as follows. §2 defines the moments and the fields they produce. §3 proves that exactly five of them obey exact equations, and explains why there are five and not six. §4 derives the general moment equation and exhibits the gap. §5 to §8 work out the three cases: mass, momentum and energy. §9 closes the system and states what licence we have to do so. §10 takes the first of the resulting equations to a measured astronomical flow and checks it.
+134: 2. The moments of a distribution function
+136: Every fluid variable in this book is an average over the local velocity distribution. This section defines them once, with their units, so that no later equation contains an undefined symbol.
+138: Definition 1 (distribution function). $f(\mathbf{x},\mathbf{v},t)\,d^3x\,d^3v$ is the number of particles at time $t$ occupying the volume $d^3x$ about $\mathbf{x}$ and the velocity-space volume $d^3v$ about $\mathbf{v}$. Its units are $\mathrm{cm^{-6}\,s^{3}}$, and it is non-negative.
+140: Definition 2 (velocity average). For any function $\psi(\mathbf{x},\mathbf{v},t)$, the local average is
+$$ \langle \psi\rangle(\mathbf{x},t) \;\equiv\; \frac{1}{n(\mathbf{x},t)}\int \psi\, f\, d^3v, \qquad n(\mathbf{x},t) \;\equiv\; \int f\, d^3v, \tag{2.1}$$
+in which $n$ is the number density in $\mathrm{cm^{-3}}$ and the integral runs over all of velocity space. The mass density is $\rho \equiv m n$, in $\mathrm{g\,cm^{-3}}$.
+144: The first moment of the velocity itself defines the flow field.
+146: Definition 3 (bulk velocity and peculiar velocity). The bulk velocity is $\mathbf{u} \equiv \langle\mathbf{v}\rangle$, in $\mathrm{cm\,s^{-1}}$. The peculiar velocity of a particle is its departure from the local bulk motion,
+$$ \mathbf{w} \;\equiv\; \mathbf{v}-\mathbf{u}(\mathbf{x},t), \qquad\text{so that}\qquad \langle\mathbf{w}\rangle \;=\; \mathbf{0} \tag{2.2}$$
+identically, by the definition of $\mathbf{u}$.
+150: The distinction between $\mathbf{v}$ and $\mathbf{w}$ is the single most important bookkeeping step in this module. A particle's velocity contains the motion of the gas as a whole plus a random part. Bulk motion carries momentum and kinetic energy from place to place; random motion is what we call pressure and heat. Every fluid equation below is what appears after those two contributions have been separated.
+152: Definition 4 (pressure tensor and scalar pressure). The pressure tensor is the flux of peculiar momentum carried by peculiar motion,
+$$ P_{ij} \;\equiv\; \rho\,\langle w_i w_j\rangle \;=\; m\int w_i w_j\, f\, d^3v, \tag{2.3}$$
+in $\mathrm{dyn\,cm^{-2}}$. It is symmetric, $P_{ij}=P_{ji}$, because $w_iw_j = w_jw_i$. The scalar pressure is one third of its trace,
+$$ p \;\equiv\; \tfrac{1}{3}P_{ii} \;=\; \tfrac{1}{3}\rho\,\langle |\mathbf{w}|^2\rangle, \tag{2.4}$$
+with the repeated index summed, and the kinetic temperature is defined by $p \equiv n k_B T$.
+158: Definition 5 (heat flux). The heat flux is the flux of peculiar kinetic energy carried by peculiar motion,
+$$ \mathbf{q} \;\equiv\; \tfrac{1}{2}\rho\,\langle |\mathbf{w}|^2\,\mathbf{w}\rangle \;=\; \tfrac{1}{2}m\int |\mathbf{w}|^2\,\mathbf{w}\, f\, d^3v, \tag{2.5}$$
+in $\mathrm{erg\,cm^{-2}\,s^{-1}}$.
+162: Two remarks make the later algebra shorter. First, $P_{ij}$ and $\mathbf{q}$ are defined for any $f$, not only a Maxwellian; nothing so far assumes the gas is near equilibrium. Second, if $f$ is the local Maxwellian $f_M$ of Module 1, equation (2.2), then $P_{ij}=p\,\delta_{ij}$ and $\mathbf{q}=\mathbf{0}$ exactly. Both follow from $f_M$ depending on $\mathbf{w}$ only through $|\mathbf{w}|$, but they need two different steps and it is worth separating them. The off-diagonal components of (2.3) vanish because for $i\neq j$ the integrand $w_iw_jf_M(|\mathbf{w}|)$ changes sign under $w_i\to-w_i$ while nothing else in the integral does, so the integral equals its own negative; the heat flux vanishes for the same reason, its integrand in (2.5) changing sign under $\mathbf{w}\to-\mathbf{w}$. The three diagonal components need a different argument, because $w_i^2$ is even and oddness says nothing about it. There the relevant fact is that relabelling the coordinate axes leaves an integral over $f_M(|\mathbf{w}|)$ unchanged, so $\langle w_1^2\rangle=\langle w_2^2\rangle=\langle w_3^2\rangle$; each is therefore $\tfrac{1}{3}\langle|\mathbf{w}|^2\rangle$, which is $p/\rho$ by (2.4). The two steps together give $P_{ij}=p\,\delta_{ij}$. This is the fact §9 will lean on.
+164: One identity is used repeatedly and is worth recording now.
+166: Proposition 1 (equipartition identity). For any distribution function whatsoever,
+$$ \tfrac{1}{2}\rho\,\langle|\mathbf{w}|^2\rangle \;=\; \tfrac{3}{2}p, \tag{2.6}$$
+so the specific internal energy $e \equiv \tfrac{1}{2}\langle|\mathbf{w}|^2\rangle$ satisfies $\rho e = \tfrac{3}{2}p$.
+170: By (2.4), $p=\tfrac{1}{3}\rho\langle|\mathbf{w}|^2\rangle$, so $\rho\langle|\mathbf{w}|^2\rangle = 3p$ and half of it is $\tfrac{3}{2}p$. The result is an identity, not a thermodynamic statement: it follows from the definition of $p$ as one third of the trace of $P_{ij}$ and holds however far $f$ is from equilibrium. What is a physical assumption is the identification $p = nk_BT$ with a thermodynamic temperature, which requires the gas to be close enough to a Maxwellian for the concept to mean anything. Module 1 quantified "close enough" as $\mathrm{Kn}\ll 1$. ∎
+174: For a monatomic gas, (2.6) is the statement that the internal energy per particle is $\tfrac{3}{2}k_BT$, one half of $k_BT$ for each of the three translational degrees of freedom. Writing it as $\rho e = p/(\gamma-1)$ with $\gamma=5/3$ is the same statement; §8 uses that form.
+176: 3. Why there are exactly five exact equations
+178: The moment procedure can be applied with any function $\psi(\mathbf{v})$. It produces an exact equation — one with no residual collision term to model — only for the special functions that a collision leaves unchanged. There are exactly five of them, and that is why there are exactly five conservation laws.
+180: Definition 6 (collision invariant). A function $\psi(\mathbf{v})$ is a collision invariant if, for every binary elastic collision taking a pair of velocities $(\mathbf{v},\mathbf{v}_1)$ to $(\mathbf{v}',\mathbf{v}_1')$,
+$$ \psi(\mathbf{v}) + \psi(\mathbf{v}_1) \;=\; \psi(\mathbf{v}') + \psi(\mathbf{v}_1'). \tag{3.1}$$
+183: Proposition 2 (the collision term is blind to its invariants). If $\psi$ satisfies (3.1), then for every $f$
+$$ \int \psi(\mathbf{v})\, C[f]\, d^3v \;=\; 0. \tag{3.2}$$
+The collision invariants of a simple gas of structureless particles are exactly the five functions
+$$ \psi \;\in\; \{\,1,\;\; m v_x,\;\; m v_y,\;\; m v_z,\;\; \tfrac{1}{2}m|\mathbf{v}|^2\,\}, \tag{3.3}$$
+and every other invariant is a linear combination of these.
+189: Write the Boltzmann collision term in its standard bilinear form,
+$$ C[f] \;=\; \int\!\!\int \left(f'f_1' - f f_1\right) g\, \sigma(g,\Omega)\, d\Omega\, d^3v_1, $$
+in which $f\equiv f(\mathbf{v})$, $f_1\equiv f(\mathbf{v}_1)$, $f'\equiv f(\mathbf{v}')$, $f_1'\equiv f(\mathbf{v}_1')$, $g=|\mathbf{v}-\mathbf{v}_1|$ is the relative speed, and $\sigma$ is the differential cross-section.
+
+Multiply by $\psi(\mathbf{v})$ and integrate over $\mathbf{v}$. Two transformations of the integration variables leave the measure $g\,\sigma\,d\Omega\,d^3v\,d^3v_1$ unchanged. Call the first $A$: swap the labels of the two incoming particles, $\mathbf{v}\leftrightarrow\mathbf{v}_1$, and correspondingly $\mathbf{v}'\leftrightarrow\mathbf{v}_1'$. It is a relabelling of a symmetric double integral and needs no physical input. Call the second $B$: replace each collision by its time reverse, $(\mathbf{v},\mathbf{v}_1)\leftrightarrow(\mathbf{v}',\mathbf{v}_1')$. This one does need physical input. It leaves the measure unchanged because elastic collisions are reversible and the Jacobian of the transformation is unity, the property called microscopic reversibility , which is an assumption about the interaction and not a mathematical identity.
+
+Each of $A$ and $B$ is its own inverse, so the two generate a group of exactly four transformations: the identity, $A$, $B$, and $AB$. The integral is unchanged by every one of them, so it equals the average of its four images. That average is where the factor $\tfrac{1}{4}$ comes from:
+
+$$ \int \psi\, C[f]\, d^3v \;=\; \tfrac{1}{4}\int\!\!\int\!\!\int \left(\psi+\psi_1-\psi'-\psi_1'\right)\left(f'f_1'-ff_1\right) g\,\sigma\, d\Omega\, d^3v_1\, d^3v. $$
+
+The first bracket vanishes identically when $\psi$ obeys (3.1), so the whole integral vanishes. That proves (3.2).
+
+For the converse — that (3.3) exhausts the invariants — note that an elastic collision between structureless particles of equal mass conserves exactly the number of particles, the total momentum and the total kinetic energy, and nothing else. Any $\psi$ obeying (3.1) for all collision geometries is therefore a linear combination of $1$, the three components of $m\mathbf{v}$, and $\tfrac{1}{2}m|\mathbf{v}|^2$. The full proof of this last step is Boltzmann's, and is a functional-equation argument; we take it as given. ∎
+205: The consequence is worth stating plainly, because it is the structural reason this book has four equations and not five or three. The number of exact fluid conservation laws equals the number of collision invariants. There are five, so there are five: one scalar mass equation, three components of a momentum equation, and one energy equation. Had the particles possessed internal degrees of freedom that collisions could excite, the energy invariant would change form and the adiabatic index would change with it. Had collisions been able to destroy particles, there would be no mass equation.
+207: Choosing any other $\psi$ — the pressure tensor's $\psi = m w_iw_j$, for example — produces an equation with a surviving collision term on the right. Such an equation is not wrong, and Chapman–Enskog theory uses exactly that kind of equation to compute the viscosity. But it is not a conservation law, and it cannot be written down without modelling the collisions.
+209: 4. The general moment equation, and the gap it leaves
+211: We now perform the moment operation once, in general, and read off the structure of the result. Everything in §5 to §8 is a special case.
+213: Proposition 3 (Maxwell's equation of transfer). Let $\psi(\mathbf{v})$ depend on velocity alone and be a collision invariant. Suppose the acceleration field satisfies $\nabla_{\mathbf{v}}\cdot\mathbf{a}=0$ and $f\to 0$ faster than any power of $|\mathbf{v}|$ as $|\mathbf{v}|\to\infty$. Then
+$$ \frac{\partial}{\partial t}\Big(n\langle\psi\rangle\Big) \;+\; \nabla\cdot\Big(n\langle\mathbf{v}\,\psi\rangle\Big) \;=\; n\,\big\langle \mathbf{a}\cdot\nabla_{\mathbf{v}}\psi\big\rangle. \tag{4.1}$$
+216: Multiply the Boltzmann equation (1.1) by $\psi(\mathbf{v})$ and integrate over all velocities, taking the three terms on the left in turn.
+
+The first term. Because $\psi$ does not depend on $t$, the time derivative passes outside the velocity integral:
+$$ \int \psi\,\frac{\partial f}{\partial t}\, d^3v \;=\; \frac{\partial}{\partial t}\int \psi f\, d^3v \;=\; \frac{\partial}{\partial t}\big(n\langle\psi\rangle\big). $$
+
+The second term. Because $\psi$ and $\mathbf{v}$ do not depend on $\mathbf{x}$, and because $\mathbf{x}$ and $\mathbf{v}$ are independent coordinates of phase space, the spatial divergence passes outside as well:
+$$ \int \psi\,\mathbf{v}\cdot\nabla_{\mathbf{x}}f\, d^3v \;=\; \nabla\cdot\int \psi\,\mathbf{v} f\, d^3v \;=\; \nabla\cdot\big(n\langle\mathbf{v}\psi\rangle\big). $$
+
+The third term is the one that does work. Integrate by parts in velocity space:
+$$ \int \psi\,\mathbf{a}\cdot\nabla_{\mathbf{v}}f\, d^3v \;=\; \int \nabla_{\mathbf{v}}\cdot\big(\psi\,\mathbf{a}\,f\big)\, d^3v \;-\; \int f\,\nabla_{\mathbf{v}}\cdot\big(\psi\,\mathbf{a}\big)\, d^3v. $$
+The first integral on the right is the divergence of a vector field over the whole of velocity space, and by the divergence theorem equals a surface integral at $|\mathbf{v}|\to\infty$, which vanishes because $f$ decays faster than any power. In the second integral, $\nabla_{\mathbf{v}}\cdot(\psi\mathbf{a}) = \psi\,\nabla_{\mathbf{v}}\cdot\mathbf{a} + \mathbf{a}\cdot\nabla_{\mathbf{v}}\psi$, and the first piece vanishes by hypothesis. So the third term equals $-n\langle\mathbf{a}\cdot\nabla_{\mathbf{v}}\psi\rangle$, and moving it to the right-hand side gives the sign in (4.1).
+
+The right-hand side of (1.1) contributes $\int\psi\,C[f]\,d^3v$, which is zero by Proposition 2. ∎
+232: The hypothesis $\nabla_{\mathbf{v}}\cdot\mathbf{a}=0$ deserves a note, because it is the reason this derivation covers the two forces that matter in this book. For gravity, $\mathbf{a}=\mathbf{g}(\mathbf{x})$ does not depend on $\mathbf{v}$ at all, so its velocity divergence is trivially zero. For the Lorentz force on a charge, $\mathbf{a} = (q/mc)\,\mathbf{v}\times\mathbf{B}$ does depend on $\mathbf{v}$, but $\nabla_{\mathbf{v}}\cdot(\mathbf{v}\times\mathbf{B}) = 0$ because the $i$th component of $\mathbf{v}\times\mathbf{B}$ contains no $v_i$. Magnetohydrodynamics, in Module 12, therefore inherits (4.1) unchanged.
+234: Now read the structure of (4.1). The storage term holds $\langle\psi\rangle$. The flux term holds $\langle\mathbf{v}\psi\rangle$, which contains one further power of velocity . Choose $\psi=m$ and the flux term produces $\mathbf{u}$; choose $\psi=m\mathbf{v}$ and the flux term produces $\langle\mathbf{v}\mathbf{v}\rangle$, from which the pressure tensor emerges; choose $\psi=\tfrac{1}{2}m|\mathbf{v}|^2$ and the flux term produces a third moment, from which the heat flux emerges. Each equation reaches up into the next rung, for ever. Fig. 1 shows the ladder.
+270: The moment hierarchy. Taking the moment of the Boltzmann equation with weight $\psi$ produces an equation whose storage term is the average of $\psi$ and whose flux term is the average of $\mathbf{v}\psi$ — one power of velocity higher. Mass needs the velocity, momentum needs the pressure tensor, energy needs the heat flux, and the pattern does not stop. No finite subset of these equations is closed, which is why a closure assumption is unavoidable rather than merely convenient.
+273: 5. Mass: the continuity equation
+275: Take $\psi = m$, a constant. It is the first entry of (3.3), so Proposition 3 applies.
+277: Proposition 4 (continuity). For any gas obeying (1.1), whether or not it is close to equilibrium,
+$$ \frac{\partial \rho}{\partial t} \;+\; \nabla\cdot\big(\rho\mathbf{u}\big) \;=\; 0. \tag{5.1}$$
+280: With $\psi=m$: the storage term is $n\langle m\rangle = mn = \rho$; the flux term is $n\langle m\mathbf{v}\rangle = mn\langle\mathbf{v}\rangle = \rho\mathbf{u}$ by Definition 3; and the source term is $n\langle\mathbf{a}\cdot\nabla_{\mathbf{v}}m\rangle=0$ because $m$ is a constant, so its velocity gradient vanishes. Substituting into (4.1) gives (5.1). ∎
+284: Three features of this result are worth naming, because they do not survive into the later equations.
+286: First, no approximation was made. Equation (5.1) contains no closure assumption, no expansion in the Knudsen number, and no appeal to a Maxwellian. It is a consequence of counting particles and of the fact that collisions do not create or destroy them. A collisionless plasma obeys it; so does a galaxy, with "density" meaning the mass density of stars. This is why §10 can use it as a sharp test: a measured departure from (5.1) would mean the measurement is wrong, or that mass is entering the flow from outside it, and nothing else.
+288: Second, the equation is exact but not closed. It relates two unknowns, $\rho$ and $\mathbf{u}$, and supplies one equation. The momentum equation is needed to determine $\mathbf{u}$.
+290: Third, its structure is the standard form of every conservation law: a rate of change of a stored density, plus the divergence of its flux, equals zero. Integrating (5.1) over a fixed volume $V$ with surface $S$ and applying the divergence theorem gives the statement in its original form,
+294: the mass inside a fixed region changes only by flowing through its boundary.
+296: 6. Following the parcel: the Lagrangian derivative
+298: Equation (5.1) is written in the frame of a fixed observer: $\partial\rho/\partial t$ is the rate of change of density at a fixed point in space. That is the Eulerian description. There is a second, equally natural choice — follow a particular parcel of fluid and ask how its properties change as it moves. That is the Lagrangian description, and the equations become substantially easier to interpret in it.
+300: Definition 7 (Lagrangian derivative). The Lagrangian, material, or convective derivative of a field $\phi(\mathbf{x},t)$ is
+$$ \frac{D\phi}{Dt} \;\equiv\; \frac{\partial \phi}{\partial t} \;+\; \big(\mathbf{u}\cdot\nabla\big)\phi. \tag{6.1}$$
+It is the rate of change of $\phi$ measured by an observer carried along with the fluid at velocity $\mathbf{u}$.
+304: The justification is the chain rule. Let $\mathbf{X}(t)$ be the path of a parcel, so $d\mathbf{X}/dt = \mathbf{u}(\mathbf{X}(t),t)$. Then the value of $\phi$ experienced by that parcel is $\phi(\mathbf{X}(t),t)$, and
+308: which is (6.1). The two terms have different physical meanings and it is worth keeping them apart. The first is genuine local change — the gas at this point is getting denser. The second is advection — the gas at this point is not changing, but a denser parcel has arrived from upstream. Fig. 2 shows the distinction with a single flow.
+343: Eulerian against Lagrangian. The flow is steady, so a probe pinned at a fixed point records no change at all: $\partial\rho/\partial t=0$. A parcel carried by the same flow is compressed as it moves into the denser region, so it records $D\rho/Dt=(\mathbf{u}\cdot\nabla)\rho\neq 0$. Neither reading is wrong; they answer different questions. The momentum equation needs the parcel's answer, because Newton's second law applies to a body, not to a point in space.
+346: Rewriting continuity in this language exposes its meaning.
+348: Proposition 5 (continuity in Lagrangian form). Equation (5.1) is equivalent to
+$$ \frac{D\rho}{Dt} \;=\; -\rho\,\nabla\cdot\mathbf{u}. \tag{6.3}$$
+A flow is called incompressible when $D\rho/Dt=0$, which by (6.3) holds if and only if $\nabla\cdot\mathbf{u}=0$.
+352: Expand the divergence in (5.1) by the product rule: $\nabla\cdot(\rho\mathbf{u}) = \mathbf{u}\cdot\nabla\rho + \rho\,\nabla\cdot\mathbf{u}$. Then
+$$ 0 \;=\; \frac{\partial\rho}{\partial t} + \mathbf{u}\cdot\nabla\rho + \rho\,\nabla\cdot\mathbf{u} \;=\; \frac{D\rho}{Dt} + \rho\,\nabla\cdot\mathbf{u} $$
+by Definition 7, which rearranges to (6.3). Since $\rho\gt 0$ for any real gas, $D\rho/Dt=0$ and $\nabla\cdot\mathbf{u}=0$ imply one another. ∎
+358: Equation (6.3) says that a parcel's density changes only when the flow converges or diverges around it, at a fractional rate equal to $-\nabla\cdot\mathbf{u}$. This is the correct reading of $\nabla\cdot\mathbf{u}$: it is the fractional rate at which a comoving volume element expands,
+362: which follows from (6.3) and the constancy of the parcel's mass $\rho\,\delta V$.
+364: Incompressible does not mean uniform. The condition is $D\rho/Dt = 0$, not $\nabla\rho = 0$. A stratified atmosphere in which every parcel keeps its own density while the density varies strongly with height is incompressible in this sense and not uniform in any sense. The confusion matters in Module 6, where convection is driven by exactly such a stratification. Note also that incompressibility is a statement about the flow , not about the substance : the same gas is compressible in a shock and effectively incompressible in a slow subsonic eddy, and the dividing line is the Mach number, which Module 4 derives.
+366: 7. Momentum: Cauchy, Euler, Navier–Stokes
+368: Take $\psi = m v_i$, the second entry of (3.3). This is where the separation of bulk from peculiar velocity does its work.
+370: Proposition 6 (the momentum equation, in conservative and Lagrangian form). For any gas obeying (1.1) under a gravitational acceleration $\mathbf{g}(\mathbf{x},t)$,
+$$ \frac{\partial}{\partial t}\big(\rho u_i\big) \;+\; \frac{\partial}{\partial x_j}\Big(\rho u_i u_j + P_{ij}\Big) \;=\; \rho g_i, \tag{7.1}$$
+and, after using continuity, equivalently
+$$ \rho\,\frac{D u_i}{Dt} \;=\; -\frac{\partial P_{ij}}{\partial x_j} \;+\; \rho g_i. \tag{7.2}$$
+Equation (7.2) is the Cauchy momentum equation. Like continuity, it is exact: no closure has yet been assumed.
+376: With $\psi = mv_i$, the storage term of (4.1) is $n\langle mv_i\rangle = \rho u_i$. The flux term is $n\langle m v_i v_j\rangle = \rho\langle v_iv_j\rangle$. Substituting $\mathbf{v}=\mathbf{u}+\mathbf{w}$ and expanding,
+$$ \langle v_iv_j\rangle \;=\; \langle (u_i+w_i)(u_j+w_j)\rangle \;=\; u_iu_j \;+\; u_i\langle w_j\rangle \;+\; u_j\langle w_i\rangle \;+\; \langle w_iw_j\rangle \;=\; u_iu_j + \langle w_iw_j\rangle, $$
+because $\mathbf{u}$ is not a random variable and may be taken outside the average, and because $\langle\mathbf{w}\rangle=\mathbf{0}$ by (2.2) kills the two cross terms. Multiplying by $\rho$ and using Definition 4 gives $\rho\langle v_iv_j\rangle = \rho u_iu_j + P_{ij}$, which is the flux in (7.1).
+
+The source term is $n\langle \mathbf{a}\cdot\nabla_{\mathbf{v}}(mv_i)\rangle$. Since $\nabla_{\mathbf{v}}(mv_i)$ is $m$ times the unit vector $\hat{\mathbf{e}}_i$, this equals $n m\langle a_i\rangle = \rho g_i$ for an acceleration independent of velocity. That establishes (7.1).
+
+For (7.2), expand the left-hand side of (7.1) and subtract $u_i$ times continuity (5.1):
+$$ \rho\frac{\partial u_i}{\partial t} + u_i\frac{\partial\rho}{\partial t} + \rho u_j\frac{\partial u_i}{\partial x_j} + u_i\frac{\partial(\rho u_j)}{\partial x_j} + \frac{\partial P_{ij}}{\partial x_j} \;=\; \rho g_i. $$
+The second and fourth terms are $u_i$ times the left side of (5.1) and therefore cancel, leaving $\rho(\partial_t u_i + u_j\partial_j u_i) = \rho\,Du_i/Dt$ on the left. ∎
+388: Equation (7.2) is Newton's second law for a fluid parcel, and it reads that way: mass per unit volume times acceleration following the parcel equals the surface force per unit volume, $-\partial_j P_{ij}$, plus the body force per unit volume, $\rho g_i$. It is the reason §6 was needed. Newton's law applies to a body; $D/Dt$ is what converts a statement about a body into a statement about a field.
+390: The equation is still not usable, because $P_{ij}$ is six unknown functions and we have no equation for them. This is the closure gap of Fig. 1, arrived at concretely. Two closures are standard.
+392: 7.1 Zeroth order in the Knudsen number: the Euler equation
+394: If the distribution is exactly the local Maxwellian, $P_{ij}=p\,\delta_{ij}$, as noted after Definition 5. Module 1 showed that the departure from the local Maxwellian is of order $\mathrm{Kn}=\lambda/L$; so setting $P_{ij}=p\,\delta_{ij}$ is the leading term of an expansion in $\mathrm{Kn}$, correct up to a fractional error of that size.
+396: Proposition 7 (Euler's equation). With the zeroth-order closure $P_{ij}=p\,\delta_{ij}$, equation (7.2) becomes
+$$ \boxed{\;\rho\,\frac{D\mathbf{u}}{Dt} \;=\; \rho\left[\frac{\partial\mathbf{u}}{\partial t} + (\mathbf{u}\cdot\nabla)\mathbf{u}\right] \;=\; -\nabla p \;+\; \rho\,\mathbf{g}\;} \tag{7.3}$$
+with a fractional error of order $\mathrm{Kn}$.
+400: Substitute $P_{ij}=p\,\delta_{ij}$ into (7.2). The divergence of the pressure tensor becomes
+$$ \frac{\partial P_{ij}}{\partial x_j} \;=\; \frac{\partial}{\partial x_j}\big(p\,\delta_{ij}\big) \;=\; \frac{\partial p}{\partial x_i}, $$
+since $\delta_{ij}$ is constant and the sum over $j$ selects $j=i$. Writing the result in vector form gives (7.3), and expanding $D/Dt$ by Definition 7 gives the bracketed form. The error statement rests on a result already in hand, not on anything below. Module 1's Proposition 1 established that the departure of $f$ from the local Maxwellian is first order in $\mathrm{Kn}$. Since $P_{ij}$ is linear in $f$ by (2.3), and since the Maxwellian part of $f$ contributes exactly $p\,\delta_{ij}$ by the argument following Definition 5, what has been discarded is of order $\mathrm{Kn}$ relative to $p$. §7.2 identifies the discarded part as the viscous stress, and §9 puts numbers on it. ∎
+406: Equation (7.3) is the single most used equation in this book. Modules 3 to 11 are, with few exceptions, applications of it under different geometries and different force terms.
+408: 7.2 First order in the Knudsen number: the Navier–Stokes equation
+410: Retaining the first-order term produces a viscous stress. Module 1 computed the transport coefficient in its Proposition 4; here we give the tensor it multiplies.
+412: Proposition 8 (Navier–Stokes equation). At first order in $\mathrm{Kn}$ the pressure tensor takes the form
+$$ P_{ij} \;=\; p\,\delta_{ij} \;-\; \sigma_{ij}, \qquad \sigma_{ij} \;=\; \mu\left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} - \frac{2}{3}\,\delta_{ij}\,\nabla\cdot\mathbf{u}\right) \;+\; \zeta\,\delta_{ij}\,\nabla\cdot\mathbf{u}, \tag{7.4}$$
+in which $\mu$ is the dynamic viscosity of Module 1, equation (6.2), and $\zeta$ is the bulk viscosity, which vanishes for a monatomic gas. Equation (7.2) then becomes
+$$ \rho\,\frac{D\mathbf{u}}{Dt} \;=\; -\nabla p \;+\; \mu\nabla^2\mathbf{u} \;+\; \left(\zeta+\tfrac{1}{3}\mu\right)\nabla\big(\nabla\cdot\mathbf{u}\big) \;+\; \rho\,\mathbf{g}, \tag{7.5}$$
+for spatially uniform $\mu$ and $\zeta$.
+418: The form of (7.4) is fixed by three requirements rather than derived here from the collision integral. The stress must be symmetric, because $P_{ij}$ is. It must be a linear function of the velocity gradient, because a first-order expansion in $\mathrm{Kn}$ is by construction linear in gradients. And it must be isotropic, because a gas has no preferred direction; the most general isotropic linear relation between two symmetric tensors has exactly two independent coefficients. Splitting the velocity gradient into its trace-free and trace parts assigns one coefficient to each: $\mu$ multiplies the trace-free rate of strain, $\zeta$ multiplies the isotropic expansion. The value of $\mu$ is what Chapman–Enskog theory computes, and Module 1's Proposition 4 estimated it as $\mu\simeq\tfrac{1}{3}\rho v_{\rm th}\lambda$. That $\zeta=0$ for a monatomic gas follows from the fact that isotropic compression changes only the translational energy, which is already in $p$; a gas with internal degrees of freedom, which relax more slowly, has $\zeta\neq 0$.
+
+To obtain (7.5), take the divergence of (7.4) with $\mu,\zeta$ constant:
+$$ \frac{\partial \sigma_{ij}}{\partial x_j} \;=\; \mu\left(\nabla^2 u_i + \frac{\partial}{\partial x_i}\nabla\cdot\mathbf{u} - \frac{2}{3}\frac{\partial}{\partial x_i}\nabla\cdot\mathbf{u}\right) + \zeta\,\frac{\partial}{\partial x_i}\nabla\cdot\mathbf{u}, $$
+using $\partial_j\partial_j u_i = \nabla^2u_i$ and $\partial_j\partial_iu_j = \partial_i(\nabla\cdot\mathbf{u})$. Collecting the two gradient-of-divergence terms gives the coefficient $\zeta+\tfrac{1}{3}\mu$, and substituting $-\partial_jP_{ij} = -\partial_ip + \partial_j\sigma_{ij}$ into (7.2) gives (7.5). ∎
+426: For an incompressible flow, $\nabla\cdot\mathbf{u}=0$ by Proposition 5, the third term of (7.5) drops out, and the equation reduces to the form in which it is usually met. §9 gives the number that decides whether the viscous term is worth keeping at all.
+428: 8. Energy, and the three forms it takes
+430: Take $\psi = \tfrac{1}{2}m|\mathbf{v}|^2$, the last entry of (3.3). The same decomposition into bulk and peculiar parts now separates kinetic energy from internal energy.
+432: Proposition 9 (total energy equation). Let $e \equiv \tfrac{1}{2}\langle|\mathbf{w}|^2\rangle$ be the specific internal energy, so that $\rho e = \tfrac{3}{2}p$ by Proposition 1. Then
+$$ \frac{\partial}{\partial t}\left[\rho\left(\tfrac{1}{2}|\mathbf{u}|^2 + e\right)\right] \;+\; \nabla\cdot\left[\rho\mathbf{u}\left(\tfrac{1}{2}|\mathbf{u}|^2 + e\right) + \mathsf{P}\cdot\mathbf{u} + \mathbf{q}\right] \;=\; \rho\,\mathbf{u}\cdot\mathbf{g}, \tag{8.1}$$
+in which $(\mathsf{P}\cdot\mathbf{u})_j = P_{jk}u_k$.
+436: With $\psi=\tfrac{1}{2}m|\mathbf{v}|^2$, the storage term is $\tfrac{1}{2}\rho\langle|\mathbf{v}|^2\rangle$. Substituting $\mathbf{v}=\mathbf{u}+\mathbf{w}$,
+$$ \langle|\mathbf{v}|^2\rangle \;=\; |\mathbf{u}|^2 + 2\,\mathbf{u}\cdot\langle\mathbf{w}\rangle + \langle|\mathbf{w}|^2\rangle \;=\; |\mathbf{u}|^2 + 2e, $$
+again because $\langle\mathbf{w}\rangle=\mathbf{0}$, so the storage term is $\rho(\tfrac{1}{2}|\mathbf{u}|^2+e)$.
+
+The flux term is $\tfrac{1}{2}\rho\langle |\mathbf{v}|^2 v_j\rangle$. Expanding the same way and dropping every term containing a single factor of $\mathbf{w}$ inside an average,
+$$ \tfrac{1}{2}\langle|\mathbf{v}|^2v_j\rangle \;=\; \tfrac{1}{2}|\mathbf{u}|^2u_j \;+\; e\,u_j \;+\; u_k\langle w_jw_k\rangle \;+\; \tfrac{1}{2}\langle|\mathbf{w}|^2w_j\rangle. $$
+Multiplying by $\rho$ identifies the four pieces in order: the flux of bulk kinetic energy, the advection of internal energy, the work done by the pressure tensor $P_{jk}u_k$, and the heat flux $q_j$ of Definition 5.
+
+The source term is $n\langle\mathbf{a}\cdot\nabla_{\mathbf{v}}(\tfrac{1}{2}m|\mathbf{v}|^2)\rangle = n\langle m\,\mathbf{a}\cdot\mathbf{v}\rangle = \rho\,\mathbf{g}\cdot\mathbf{u}$ for a velocity-independent $\mathbf{a}=\mathbf{g}$. Substituting all three into (4.1) gives (8.1). ∎
+448: Equation (8.1) conserves total energy, but it mixes two physically different things, and for most purposes the internal energy alone is wanted. Subtracting the bulk kinetic energy gives the second form.
+450: Proposition 10 (internal energy equation). Equation (8.1), combined with continuity and the momentum equation, is equivalent to
+$$ \rho\,\frac{De}{Dt} \;=\; -p\,\nabla\cdot\mathbf{u} \;+\; \sigma_{ij}\frac{\partial u_i}{\partial x_j} \;-\; \nabla\cdot\mathbf{q}. \tag{8.2}$$
+453: Form the kinetic-energy equation by taking the dot product of the Cauchy equation (7.2) with $\mathbf{u}$:
+$$ \rho\,\frac{D}{Dt}\left(\tfrac{1}{2}|\mathbf{u}|^2\right) \;=\; -u_i\frac{\partial P_{ij}}{\partial x_j} \;+\; \rho\,\mathbf{u}\cdot\mathbf{g}. $$
+Rewrite (8.1) in Lagrangian form using continuity, which converts $\partial_t(\rho\Phi)+\nabla\cdot(\rho\mathbf{u}\Phi)$ into $\rho\,D\Phi/Dt$ for any $\Phi$; with $\Phi=\tfrac{1}{2}|\mathbf{u}|^2+e$ this gives
+$$ \rho\,\frac{D}{Dt}\left(\tfrac{1}{2}|\mathbf{u}|^2+e\right) \;=\; -\frac{\partial}{\partial x_j}\big(P_{jk}u_k\big) \;-\; \nabla\cdot\mathbf{q} \;+\; \rho\,\mathbf{u}\cdot\mathbf{g}. $$
+Subtract the kinetic-energy equation from this. The gravitational terms cancel. The two stress terms combine as
+$$ -\frac{\partial}{\partial x_j}\big(P_{jk}u_k\big) + u_k\frac{\partial P_{kj}}{\partial x_j} \;=\; -P_{jk}\frac{\partial u_k}{\partial x_j}, $$
+using the symmetry of $P$. Finally substitute $P_{jk}=p\,\delta_{jk}-\sigma_{jk}$ from (7.4): the isotropic part gives $-p\,\partial_ku_k = -p\,\nabla\cdot\mathbf{u}$ and the viscous part gives $+\sigma_{jk}\partial_ku_j$, which is the second term of (8.2) after relabelling. ∎
+463: Each term of (8.2) has a name and a sign that can be checked. The first is $p\,dV$ work: a parcel that expands, $\nabla\cdot\mathbf{u}\gt 0$, loses internal energy. The second is viscous dissipation, which is non-negative and converts bulk kinetic energy irreversibly into heat. The third is conduction, which redistributes heat without creating it. Setting the last two to zero — the Euler closure of $\sigma_{ij}=0$ and $\mathbf{q}=\mathbf{0}$ — leaves a parcel whose internal energy changes only by doing work, which is the definition of adiabatic. That gives the third and most used form.
+465: Proposition 11 (adiabatic form). For an ideal monatomic gas with $\rho e = p/(\gamma-1)$ and $\gamma=5/3$, under the Euler closure $\sigma_{ij}=0$ and $\mathbf{q}=\mathbf{0}$, equation (8.2) is equivalent to
+$$ \boxed{\;\frac{D}{Dt}\left(\frac{p}{\rho^{\gamma}}\right) \;=\; 0\;} \tag{8.3}$$
+— each fluid parcel conserves its own entropy, though different parcels may carry different values.
+469: With $\sigma_{ij}=0$ and $\mathbf{q}=\mathbf{0}$, equation (8.2) is $\rho\,De/Dt = -p\,\nabla\cdot\mathbf{u}$. Use Proposition 5 to replace the divergence, $\nabla\cdot\mathbf{u} = -\rho^{-1}D\rho/Dt$, giving
+$$ \rho\,\frac{De}{Dt} \;=\; \frac{p}{\rho}\frac{D\rho}{Dt}. $$
+Now substitute $e = p/[(\gamma-1)\rho]$ and differentiate the quotient:
+$$ \frac{De}{Dt} \;=\; \frac{1}{\gamma-1}\left(\frac{1}{\rho}\frac{Dp}{Dt} - \frac{p}{\rho^2}\frac{D\rho}{Dt}\right). $$
+Multiplying by $\rho$ and equating to the right-hand side above,
+$$ \frac{1}{\gamma-1}\left(\frac{Dp}{Dt} - \frac{p}{\rho}\frac{D\rho}{Dt}\right) \;=\; \frac{p}{\rho}\frac{D\rho}{Dt} \quad\Longrightarrow\quad \frac{Dp}{Dt} \;=\; \frac{\gamma p}{\rho}\frac{D\rho}{Dt}. $$
+Finally, apply $D/Dt$ to $p\rho^{-\gamma}$ directly:
+$$ \frac{D}{Dt}\left(\frac{p}{\rho^\gamma}\right) \;=\; \frac{1}{\rho^\gamma}\frac{Dp}{Dt} - \frac{\gamma p}{\rho^{\gamma+1}}\frac{D\rho}{Dt} \;=\; \frac{1}{\rho^\gamma}\left(\frac{Dp}{Dt} - \frac{\gamma p}{\rho}\frac{D\rho}{Dt}\right) \;=\; 0 $$
+by the relation just obtained. ∎
+481: Equation (8.3) is not the statement that the entropy is the same everywhere. It is the statement that each parcel carries its entropy with it unchanged. A flow in which every parcel happens to carry the same value is called isentropic, and then $p\rho^{-\gamma}$ is a single constant for the whole flow; that stronger condition is assumed in Modules 3 and 4 and must be justified separately each time. §10 shows a real flow in which (8.3) fails outright while (5.1) holds.
+483: With Propositions 4, 7 and 11 we have the closed set this book uses:
+487: Five equations — one scalar, one vector, one scalar — for five unknowns $\rho$, $\mathbf{u}$, $p$, with the equation of state supplying $T$ afterwards. Here $\mu_{\rm m}$ is the mean molecular weight, the mean mass per particle in units of the proton mass, equal to $0.6$ for a fully ionised gas of cosmic composition. The subscript is not decoration. The bare $\mu$ is the dynamic viscosity of (7.4), and the two quantities share a letter by historical accident across this whole field. This book writes $\mu$ for viscosity and $\mu_{\rm m}$ for mean molecular weight everywhere, and the Notation table carries both.
+489: 9. The closure problem, and the licence to use Euler
+491: The system (8.4) was obtained by cutting the hierarchy of Fig. 1 at the first rung, setting $P_{ij}=p\,\delta_{ij}$ and $\mathbf{q}=\mathbf{0}$. That cut is an assumption, and Module 1 supplies the number that says when it is safe.
+493: The Chapman–Enskog expansion writes $f = f_M(1 + \phi_1 + \phi_2 + \dots)$ with $\phi_k = O(\mathrm{Kn}^k)$. At zeroth order $P_{ij}=p\,\delta_{ij}$ and $\mathbf{q}=\mathbf{0}$ exactly, and the fluid equations are Euler's. At first order the corrections are the viscous stress and Fourier conduction, and the equations are Navier–Stokes. So the fractional error committed by using Euler rather than Navier–Stokes is of order $\mathrm{Kn}$, the same number Module 1 tabulated for every astrophysical gas.
+495: There is a second, equivalent way to say this, in terms of a number an engineer would recognise.
+497: Proposition 12 (the Reynolds number is fixed by the Knudsen and Mach numbers). Define the Reynolds number $\mathrm{Re}\equiv \rho u L/\mu$, the thermal Mach number $\mathrm{Ma}_{\rm th}\equiv u/v_{\rm th}$ with $v_{\rm th}=\sqrt{2k_BT/m}$, and the Knudsen number $\mathrm{Kn}\equiv\lambda/L$. Then, with Module 1's estimate $\mu\simeq\tfrac{1}{3}\rho v_{\rm th}\lambda$,
+$$ \mathrm{Re} \;\simeq\; \frac{3\,\mathrm{Ma}_{\rm th}}{\mathrm{Kn}}. \tag{9.1}$$
+The density cancels, so the Reynolds number of a gas depends on its temperature, speed and size but not on how much of it there is.
+501: Substitute Module 1's equation (6.2), $\mu = \tfrac{1}{3}\rho v_{\rm th}\lambda$, into the definition:
+$$ \mathrm{Re} \;=\; \frac{\rho u L}{\tfrac{1}{3}\rho v_{\rm th}\lambda} \;=\; 3\,\frac{u}{v_{\rm th}}\,\frac{L}{\lambda} \;=\; \frac{3\,\mathrm{Ma}_{\rm th}}{\mathrm{Kn}}, $$
+the factor $\rho$ cancelling between numerator and denominator. The cancellation is the density-independence of viscosity established in Module 1: $\lambda\propto 1/n$ falls exactly as fast as the number of momentum carriers $n$ rises. ∎
+507: The Reynolds number is worth having here because it is exactly the ratio that the Euler closure discards. Estimating each term of (7.5) by the length scale on which it varies, the inertial term $\rho(\mathbf{u}\cdot\nabla)\mathbf{u}$ is of order $\rho u^2/L$ and the viscous term $\mu\nabla^2\mathbf{u}$ is of order $\mu u/L^2$, so
+$$ \frac{\big|\mu\nabla^2\mathbf{u}\big|}{\big|\rho(\mathbf{u}\cdot\nabla)\mathbf{u}\big|} \;\sim\; \frac{\mu u/L^2}{\rho u^2/L} \;=\; \frac{\mu}{\rho u L} \;=\; \frac{1}{\mathrm{Re}}. \tag{9.2}$$
+Equation (9.1) therefore converts Module 1's Knudsen census directly into a statement about which term may be dropped. The table applies (9.1) to four systems, using for each the same density, temperature and length that Module 1's census used, and its own mean free path — Coulomb for the ionised cases, hard-sphere for the neutral warm interstellar medium.
+512: System $\mathrm{Kn}=\lambda/L$ $\mathrm{Ma}_{\rm th}=u/v_{\rm th}$ $\mathrm{Re}$ viscous / inertial $\sim 1/\mathrm{Re}$
+513: Solar convection zone $1.6\times10^{-16}$ $5.5\times10^{-4}$ $1.0\times10^{13}$ $9.8\times10^{-14}$
+514: Warm interstellar medium $6.5\times10^{-6}$ $0.87$ $4.0\times10^{5}$ $2.5\times10^{-6}$
+515: Intracluster medium, cluster core $2.2\times10^{-3}$ $0.43$ $580$ $1.7\times10^{-3}$
+516: Solar wind at 1 AU $1.9$ $9.2$ $14$ $7.0\times10^{-2}$
+519: The first two rows carry the argument for most of this book: the viscous term is smaller than the inertial term by ten or more orders of magnitude, and dropping it is not an approximation anyone need worry about. Modules 3 to 11 accordingly use the Euler equations (8.4), as Module 1 promised they would.
+521: The last two rows are the interesting ones and both were anticipated in Module 1. The intracluster medium has $\mathrm{Re}\approx 600$, which is not large; if the Spitzer viscosity of Module 1's Proposition 4 acted unsuppressed, the intracluster medium would be a nearly laminar fluid rather than the turbulent one that observations of cluster cores indicate. This is the same tension as the thermal-conduction problem Module 1 raised, it has the same suspected resolution — magnetic suppression of transport across field lines — and Module 12 treats both together. The solar wind at 1 AU has $\mathrm{Kn}\approx 1.9$, so the Chapman–Enskog expansion is not merely inaccurate there, it does not converge; neither Euler nor Navier–Stokes is licensed by this argument. Module 1, §8.1, gave the reason a fluid description nonetheless works for the solar wind: the proton gyroradius, not the mean free path, sets the scale across the magnetic field.
+525: 10. The check: does a measured flow obey these equations?
+527: The equations are written. The question this section asks is whether a real astronomical flow obeys them, and it is worth being careful about what would count as an answer. Testing a closure is hard, because a closure is an approximation and disagreement can always be blamed on the approximation. Testing a conservation law is clean, because it has no free parameter: it predicts an exact number.
+529: The solar wind supplies the test. It is the only astrophysical flow whose density and speed have been measured in situ at many heliocentric distances by instruments flying through it, so the radial dependence is a measurement rather than an inference.
+531: 10.1 What continuity predicts, with no adjustable constant
+533: Proposition 13 (steady spherical outflow). Let a flow be steady, $\partial/\partial t = 0$, and spherically symmetric with radial velocity $v(r)$ and density $\rho(r)$. Then continuity (5.1) requires
+$$ 4\pi r^2 \rho(r)\, v(r) \;=\; \dot M \;=\; \text{constant}, \tag{10.1}$$
+and if, over some range of radius, $n\propto r^{-\alpha}$ and $v\propto r^{+\beta}$ with constant exponents, then
+$$ \boxed{\;\alpha - \beta \;=\; 2\;} \tag{10.2}$$
+exactly.
+539: In spherical coordinates the divergence of a purely radial vector field $\mathbf{A}=A(r)\hat{\mathbf{r}}$ is $r^{-2}\,d(r^2A)/dr$. With $\partial\rho/\partial t=0$, equation (5.1) reduces to
+$$ \frac{1}{r^2}\frac{d}{dr}\Big(r^2\rho v\Big) \;=\; 0 \quad\Longrightarrow\quad r^2\rho v \;=\; \text{constant}, $$
+and multiplying by $4\pi$ names the constant $\dot M$, the mass crossing every sphere per unit time. For (10.2), substitute the power laws. With $\rho = mn \propto r^{-\alpha}$ and $v\propto r^{\beta}$,
+$$ r^2\rho v \;\propto\; r^{\,2-\alpha+\beta}, $$
+which is independent of $r$ if and only if the exponent vanishes, that is $\alpha-\beta=2$. ∎
+547: Equation (10.2) is the ideal test object. It contains no coefficient to be fitted, no cross-section, no efficiency factor and no calibration. Two exponents are measured independently and their difference is predicted to be an integer.
+549: 10.2 The measurement
+551: Venzmer and Bothmer (2018) fitted power laws in heliocentric distance to the combined data of Helios 1 and Helios 2, two spacecraft that repeatedly traversed the range $0.29$ to $0.98$ AU through the late 1970s and early 1980s. Their equation (10) is $x(r)=d\,r^{e}$ with $r$ in AU, and their Table 3 reports $d$ and $e$ separately for the mean and for the median of each parameter's distribution. The relevant entries are
+554: Quantity Mean fit, 1 AU value $d$ Mean exponent $e$ Median fit, 1 AU value $d$ Median exponent $e$
+555: Proton density $n$ $7.57\pm0.30\ \mathrm{cm^{-3}}$ $-2.010\pm0.038$ $5.61\pm0.27\ \mathrm{cm^{-3}}$ $-2.093\pm0.046$
+556: Proton speed $v$ $435.6\pm2.4\ \mathrm{km\,s^{-1}}$ $+0.049\pm0.010$ $410.7\pm2.8\ \mathrm{km\,s^{-1}}$ $+0.058\pm0.013$
+557: Proton temperature $T$ $(9.67\pm0.21)\times10^{4}\ \mathrm{K}$ $-0.792\pm0.028$ $(7.14\pm0.23)\times10^{4}\ \mathrm{K}$ $-0.913\pm0.039$
+560: The critical property of this table, for our purposes, is that the density exponent and the speed exponent were fitted separately , each to its own parameter's distribution. No continuity constraint was imposed on the fitting. Whatever $\alpha-\beta$ comes out to be, it was not put in.
+562: One step in the argument has to be made explicit before the comparison means anything, because it is the only place where an extra assumption enters. Proposition 13 governs a single steady stream. The fitted exponents describe the mean, or the median, of a distribution of measurements at each radius, and the solar wind at any radius is a mixture of streams — the slow wind dense and the fast wind tenuous, so that $n$ and $v$ are anticorrelated across the sample. Continuity constrains the mean of the product, $\langle nv\rangle$, while the table supplies the exponents of $\langle n\rangle$ and $\langle v\rangle$ separately. The two agree if the mixture is radially self-similar over the observed range: each stream obeying the same pair of exponents, and the relative weights of the streams not changing with distance. Under that condition the mixture inherits the exponents of its components, and $\alpha-\beta=2$ carries across to the fitted quantities.
+564: The condition is an idealisation and the size of its violation is measurable. Fast wind overtakes slow wind as both move outward, and the resulting interaction regions redistribute mass and momentum between streams, so the mixture is not exactly self-similar. That is the dominant contributor to the $\pm4$ to $5$ per cent residual in Fig. 3, and it is the right way to read that residual: not as measurement error, and not as a defect in (5.1), but as a measurement of how far the real wind departs from the single-stream idealisation the theorem describes. Note that the anticorrelation between $n$ and $v$ affects the amplitude more than the exponents, since $\langle nv\rangle$ and $\langle n\rangle\langle v\rangle$ differ by a covariance that scales with radius the same way the product does. That is one further reason to treat §10.4 as a calibration rather than a test.
+566: 10.3 The comparison
+568: Taking the mean fits, $\alpha = 2.010$ and $\beta=0.049$, so $\alpha-\beta = 1.961$. Taking the median fits, $\alpha=2.093$ and $\beta=0.058$, so $\alpha-\beta = 2.035$. Fig. 3 shows both against the prediction.
+570: Check against a published measurement. Continuity requires $\alpha-\beta=2$ exactly. The Helios mean fits give $1.961$, a ratio to the prediction of $0.980$; the median fits give $2.035$, a ratio of $1.018$. The two bracket the predicted value and their midpoint is $1.998$. Propagating the formal fit errors of Venzmer & Bothmer (2018), Table 3, the mean fits sit $0.99\sigma$ from 2 and the median fits $0.73\sigma$; propagating instead the year-to-year scatter of the exponents from their Fig. 9, a more honest uncertainty, the departures fall to $0.53\sigma$ and $0.48\sigma$. Continuity is confirmed at the two per cent level over a factor of $3.4$ in heliocentric distance.
+640: The continuity test. Upper panel: the measured exponent difference $\alpha-\beta$ for the mean and median Helios fits, with the formal fit uncertainty as the thick bar and the larger year-to-year scatter of the exponents as the pale bar, against the value $2$ that Proposition 13 requires exactly. Both fits agree with the prediction within one standard deviation and they bracket it. Lower panel: the same fits expressed as the mass flux $4\pi r^2\rho v$, divided by its value at 1 AU. A flow obeying (10.1) would trace the flat line. The mean fit drifts upward by $4.9$ per cent across the observed range and the median fit downward by $4.2$ per cent, both inside the $\pm 5$ per cent band. The residual is a measurement of how far the real wind departs from being steady and spherical, not of any failure of the equation.
+643: The lower panel of Fig. 3 restates the same result as a physical quantity. The mass flux implied by the mean fits rises by $4.9$ per cent between $0.29$ and $0.98$ AU, and that implied by the median fits falls by $4.2$ per cent. The disagreement between the two is itself informative: the mean of a lognormal distribution exceeds its median, and the density distribution is more skewed than the speed distribution, so mean and median fits weight the dense slow wind differently. The true answer lies between them, which is where the prediction is.
+645: 10.4 A secondary check: the solar mass loss rate
+647: The same fits give the constant in (10.1). Using the median 1 AU values, $n = 5.61\ \mathrm{cm^{-3}}$ and $v=410.7\ \mathrm{km\,s^{-1}}$, and counting protons only,
+651: Check against a published value. Verscharen, Bale & Velli (2021), MNRAS 506 , 4993, quote $4\pi r^2 U_r N M \approx 10^{12}\ \mathrm{g\,s^{-1}}$ for the ecliptic solar wind at solar minimum. Our (10.3) gives $1.08\times10^{12}\ \mathrm{g\,s^{-1}}$, a ratio of $1.08$. Including helium at four per cent by number raises the figure to $1.26\times10^{12}\ \mathrm{g\,s^{-1}}$. The mean rather than median fits would give $1.55\times10^{12}\ \mathrm{g\,s^{-1}}$.
+653: This second check is weaker than the first and the difference is worth naming, because it is the difference between two kinds of evidence. Equation (10.2) compares a measured exponent with an exact integer that the equation predicts and nothing else could have produced. Equation (10.3) compares one number against another number of the same kind, derived from overlapping data; agreement confirms that neither calculation contains a gross error, but it does not test the equation, because any flux at all could have been accommodated by a different $\dot M$. Treat (10.3) as a calibration, and (10.2) as the result.
+655: In more familiar units, (10.3) is $1.72\times10^{-14}\,M_\odot\,\mathrm{yr^{-1}}$. Sustained for the Sun's present age of $4.6$ Gyr, that removes $7.9\times10^{-5}\,M_\odot$, eight parts in $10^{5}$ of the Sun's mass. The solar wind is dynamically important for the heliosphere and irrelevant to the Sun's own evolution.
+657: 10.5 The same data breaks the energy equation
+659: A test that only ever confirms is not much of a test. The third column of the Helios table gives a way to check that this one can also fail, using the same data, the same paper and the same method.
+661: Proposition 11 says that under the Euler closure each parcel conserves $p\rho^{-\gamma}$. For an ideal gas, $T\propto p/\rho$, so adiabatic expansion gives $T\propto\rho^{\gamma-1}$. With $\rho\propto r^{-\alpha}$, the temperature must then fall as
+665: The mean fits have $\alpha = 2.010$, so (10.4) predicts a temperature exponent of $-1.340$. The measured mean exponent is $-0.792\pm0.028$.
+667: The adiabatic closure fails here, and by a wide margin. Measured $-0.792$ against predicted $-1.340$: the ratio is $0.591$, so $40.9$ per cent of the adiabatic cooling is not happening. The formal significance is $19.6\sigma$. The median fits give $-0.913$ against a predicted $-1.395$, a ratio of $0.654$ and a departure of $12.4\sigma$. The solar wind is heated as it expands, at a rate sufficient to cancel two fifths of its adiabatic cooling; What does the heating is a separate question, and this module does not answer it: the measurement above establishes that the cooling is slower than adiabatic, not why. The explanation usually given is the dissipation of a turbulent cascade. That attribution is quoted from the field at large and is not checked here — no source in this book's ledger has been read for it, and it should be treated as unverified until Module 10 takes it up. Whatever the mechanism, it lies outside the equations of this module, because (8.2) was closed by setting every heating term to zero.
+669: A reader who took §9 seriously should now object, and the objection is worth answering because it strengthens the conclusion. Section 9 said that at $\mathrm{Kn}\approx1.9$ the Chapman–Enskog expansion does not converge and that neither Euler nor Navier–Stokes is licensed in the solar wind. The adiabatic closure is the Euler closure. Its failure here is therefore not a surprise: it is what this module predicted, from inside its own argument, one section earlier. The measurement confirms the prediction rather than contradicting it.
+671: That also limits what the measurement can be said to show. Equation (8.2) was reduced to the adiabatic form (8.3) by dropping three separate things: the viscous heating $\sigma_{ij}\partial_ju_i$, the conduction term $-\nabla\cdot\mathbf{q}$, and any external heating source, which (8.2) does not contain at all. A single measured temperature exponent constrains their sum and cannot separate them. At $\mathrm{Kn}\approx2$ the heat flux is certainly not small, so conduction alone could in principle account for part of the shortfall. The attribution of the remainder to in-situ turbulent heating is the field's, not this module's, and as noted above it is unverified here. What is established by these data is narrower and still worth having: the adiabatic closure is excluded, at $19.6\sigma$ for the mean fits.
+673: This is the most useful result in the section and it is a negative one. Continuity, an exact consequence of a collision invariant, is verified to two per cent. The adiabatic energy equation, which is not exact but a closure that assumes no heating and no conduction, is wrong by forty per cent at nearly twenty standard deviations. The test is sharp enough to tell the two apart. That distinction — between the equations that follow from counting and the equations that follow from an assumption about the microphysics — is what this module was for, and any reader who takes only one thing from it should take that.
+677: 11. What this model captures, and what it misses
+679: The four equations (8.4) are an idealisation and this section names the idealisations one at a time, with the module that repays each.
+682: Idealisation made here What it costs Where it is repaid
+683: $P_{ij}=p\,\delta_{ij}$: pressure is isotropic and there is no viscosity A fractional error of order $\mathrm{Kn}$. Harmless where $\mathrm{Kn}\lt10^{-3}$; fatal in the solar wind, where $\mathrm{Kn}\approx1.9$ and the pressure is measurably anisotropic Navier–Stokes here, §7.2 ; the magnetised anisotropic case in Module 12
+684: $\mathbf{q}=\mathbf{0}$: no heat conduction Erases thermal conduction, which Module 1 showed scales as $T^{5/2}$ and is therefore enormous in hot plasma Module 6 for thermal instability; Module 12 for magnetic suppression
+685: No heating or cooling source in (8.2) The failure documented in §10.5 : the real solar wind is heated and cools far more slowly than adiabatically Module 6 (radiative cooling), Module 10 (turbulent dissipation), Module 13 (radiation)
+686: A single fluid with one temperature Ions and electrons in a hot plasma equilibrate slowly — Module 1 gave $t_{\rm eq}(p,e)\approx6\times10^{8}$ yr for the intracluster medium — so a single $T$ is often wrong Module 12; two-temperature accretion flows in Module 11
+687: No magnetic field: $\mathbf{a}=\mathbf{g}$ alone Omits magnetic pressure and tension, and the flux-freezing constraint. Proposition 3 was proved in a form that admits the Lorentz force, so nothing here needs redoing Module 12
+688: $\gamma=5/3$, monatomic and non-relativistic Wrong for molecular gas, for a partially ionised gas where ionisation absorbs energy, and for radiation-dominated interiors where $\gamma\to4/3$ Module 13
+689: Gravity as an externally prescribed $\mathbf{g}$ The gas is not allowed to be the source of its own gravity, which forbids self-gravitating collapse Module 5, which couples in Poisson's equation
+692: One structural limitation is worth separating from the list, because no later module repairs it. The moment hierarchy of Fig. 1 does not close, and there is no choice of closure that is correct in general. Chapman–Enskog produces an asymptotic expansion in $\mathrm{Kn}$, and an asymptotic expansion is not a convergent one: truncating at second order gives the Burnett equations, which are not uniformly better than Navier–Stokes and can be unstable. Where $\mathrm{Kn}$ is of order unity there is no fluid model at all, only the Boltzmann equation itself or a direct simulation of particles. The solar wind sits there, and the reason the fluid picture survives in it is not that the expansion converges but that a magnetic field supplies a shorter transverse length scale, as Module 1 §8.1 set out.
+694: 11.1 Reproducing the numbers
+696: Every number quoted in this module is produced by figs/m02_numbers.py and every figure by figs/m02_build_figs.py . The anchor comparison is the following, which needs nothing but the four fitted exponents.
+698: Copy """Continuity from two independently fitted exponents.
+
+Venzmer & Bothmer (2018), A&A 611, A36, Table 3, Helios 1+2,
+0.29-0.98 au.  n ~ r^-alpha and v ~ r^+beta were fitted
+separately; steady spherical continuity demands alpha - beta = 2.
+"""
+import numpy as np
+FITS = {  # (alpha, sigma_alpha, beta, sigma_beta)
+    "mean": (2.010, 0.038, 0.049, 0.010),
+    "median": (2.093, 0.046, 0.058, 0.013),
+}
+SPAN = 0.98/0.29
+for name, (a, sa, b, sb) in FITS.items():
+    diff = a-b
+    sigma = np.hypot(sa, sb)
+    drift = SPAN**(2.0-diff)-1.0
+    print(f"{name:>7s}: alpha-beta = {diff:.3f} +/- {sigma:.3f}"
+          f"   ratio to 2 = {diff/2:.3f}"
+          f"   flux drift = {drift*100:+.1f}%")
+assert abs(0.5*(2.010-0.049+2.093-0.058)/2-1.0) < 0.002
+723: Running it prints $\alpha-\beta=1.961\pm0.039$ for the mean fits and $2.035\pm0.048$ for the median fits, with mass-flux drifts of $+4.9$ and $-4.2$ per cent. The assertion checks that the midpoint of the two agrees with the predicted value of 2 to better than two parts in a thousand.
+725: 12. Problems
+727: Solutions are given for every problem. Each numerical answer is verified by figs/m02_problems_check.py .
+729: Conceptual ↑ contents
+732: Solution
+737: Solution
+742: Solution
+747: Solution
+751: Derivational ↑ contents
+754: Solution
+761: Solution
+768: Solution
+773: Solution
+779: Computational ↑ contents
+782: Solution
+787: Solution
+794: Solution
+801: Solution
+805: Notation
+808: Symbol Meaning Units (CGS) First used
+809: $f(\mathbf{x},\mathbf{v},t)$ distribution function $\mathrm{cm^{-6}\,s^{3}}$ Definition 1
+810: $C[f]$ collision term of the Boltzmann equation $\mathrm{cm^{-6}\,s^{2}}$ (1.1)
+811: $\psi(\mathbf{v})$ weight function in a moment; a collision invariant where exact varies Definition 6
+812: $\langle\cdot\rangle$ local average over the velocity distribution — (2.1)
+813: $n$, $\rho=mn$ number density, mass density $\mathrm{cm^{-3}}$, $\mathrm{g\,cm^{-3}}$ (2.1)
+814: $\mathbf{u}=\langle\mathbf{v}\rangle$ bulk velocity $\mathrm{cm\,s^{-1}}$ Definition 3
+815: $\mathbf{w}=\mathbf{v}-\mathbf{u}$ peculiar velocity, $\langle\mathbf{w}\rangle=\mathbf{0}$ $\mathrm{cm\,s^{-1}}$ (2.2)
+816: $P_{ij}=\rho\langle w_iw_j\rangle$ pressure tensor $\mathrm{dyn\,cm^{-2}}$ (2.3)
+817: $p=\tfrac{1}{3}P_{ii}$ scalar pressure; $p\equiv nk_BT$ defines $T$ $\mathrm{dyn\,cm^{-2}}$ (2.4)
+818: $\mathbf{q}$ heat flux $\mathrm{erg\,cm^{-2}\,s^{-1}}$ (2.5)
+819: $e=\tfrac{1}{2}\langle|\mathbf{w}|^2\rangle$ specific internal energy; $\rho e=\tfrac{3}{2}p$ $\mathrm{erg\,g^{-1}}$ Proposition 1
+820: $D/Dt$ Lagrangian derivative, $\partial_t + \mathbf{u}\cdot\nabla$ $\mathrm{s^{-1}}$ Definition 7
+821: $\sigma_{ij}$ viscous stress tensor $\mathrm{dyn\,cm^{-2}}$ (7.4)
+822: $\mu$, $\zeta$ dynamic viscosity, bulk viscosity $\mathrm{g\,cm^{-1}\,s^{-1}}$ (7.4)
+823: $\gamma$ adiabatic index, $5/3$ for a monatomic gas — Proposition 11
+824: $\mu_{\rm m}$ mean molecular weight, $0.6$ if fully ionised — (8.4)
+825: $\mathrm{Kn}=\lambda/L$ Knudsen number, from Module 1 — Proposition 12
+826: $\mathrm{Ma}_{\rm th}=u/v_{\rm th}$ thermal Mach number, $v_{\rm th}=\sqrt{2k_BT/m}$ — Proposition 12
+827: $\mathrm{Re}=\rho uL/\mu$ Reynolds number — Proposition 12
+828: $\dot M$ mass flux through a sphere, $4\pi r^2\rho v$ $\mathrm{g\,s^{-1}}$ (10.1)
+829: $\alpha$, $\beta$, $\tau$ radial exponents: $n\propto r^{-\alpha}$, $v\propto r^{\beta}$, $T\propto r^{-\tau}$ — (10.2)
+830: Book-wide note. In this module and in Module 1, bare $\mu$ is the dynamic viscosity and the mean molecular weight carries the subscript, $\mu_{\rm m}$. From Module 6 on, bare $\mu$ means the mean molecular weight throughout the book, as it already does in Modules 3, 4 and 5, and the dynamic viscosity is written $\eta$. This module measures $\mu_{\rm m}$ against the proton mass; Modules 3, 4 and 5 measure $\mu$ against the atomic mass unit $m_u$, which is smaller by $0.73$ per cent.
+833: Sources
+835: Every published value this module compares against, with what was taken from it.
+838: Radial power-law fits to the solar wind. M. S. Venzmer and V. Bothmer, Solar-wind predictions for the Parker Solar Probe orbit. Near-Sun extrapolations derived from an empirical solar-wind model based on Helios and OMNI observations , Astronomy & Astrophysics 611 , A36 (2018), arXiv:1711.07534 . Quoted: equation (10), $x(r)=d\,r^{e}$, and Table 3 for the combined Helios 1 and 2 data over $0.29$–$0.98$ AU — density $7.57(30)\,r^{-2.010(38)}\ \mathrm{cm^{-3}}$ and $5.61(27)\,r^{-2.093(46)}\ \mathrm{cm^{-3}}$; velocity $435.6(24)\,r^{+0.049(10)}$ and $410.7(28)\,r^{+0.058(13)}\ \mathrm{km\,s^{-1}}$; temperature $9.67(21)\times10^{4}\,r^{-0.792(28)}$ and $7.14(23)\times10^{4}\,r^{-0.913(39)}$ K, mean and median respectively. The year-to-year exponent scatter used as the second error bar is from their Fig. 9 and Table 3: $0.072$ for density, $0.012$ for velocity, $0.050$ for temperature.
+839: Solar wind mass flux. D. Verscharen, S. D. Bale and M. Velli, Flux conservation, radial scalings, Mach numbers, and critical distances in the solar wind: magnetohydrodynamics and Ulysses observations , Monthly Notices of the Royal Astronomical Society 506 (4), 4993–5004 (2021), journal page . The author list, title, volume, issue, pages and year were read from the journal page. The DOI string was not read from it and is therefore not quoted. Quoted: $4\pi r^2 U_r N M \approx 10^{12}\ \mathrm{g\,s^{-1}}$ at 1 AU in the ecliptic at solar minimum, and the statement that the radial mass flux per steradian is constant with heliocentric distance.
+840: Mean free paths, transport coefficients and the Knudsen census. Module 1 of this book, equations (4.1), (5.6), (6.2) and (6.3), and its §7 census. The intracluster figure there was itself checked against Sarazin (1988), §5.4.
+841: The moment method and the Chapman–Enskog closure. Standard and not re-derived from the original sources here: Maxwell's equation of transfer is Proposition 3, and the ordering $P_{ij}=p\delta_{ij}+O(\mathrm{Kn})$, $\mathbf{q}=O(\mathrm{Kn})$ is quoted from Chapman–Enskog theory rather than derived. Proposition 8 states the form of the viscous stress from symmetry and isotropy and does not compute $\mu$ from the collision integral; Module 1's Proposition 4 gives the order-of-magnitude estimate that is used numerically.
+842: Boltzmann's theorem on collision invariants. The claim in Proposition 2 that $\{1, m\mathbf{v}, \tfrac{1}{2}m|\mathbf{v}|^2\}$ exhausts the collision invariants is quoted, not proved; the proof is a functional-equation argument found in standard kinetic theory texts.
+846: Module 2 of Astrophysical Fluid Dynamics . Previous: Module 1 — Why a Fluid at All?

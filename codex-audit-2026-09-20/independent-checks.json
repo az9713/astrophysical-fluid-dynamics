@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Reynolds number retains density dependence",
+    "explanation": "For neutral hard spheres, lambda=1/(sqrt(2)*n*sigma), so Re=3*U*L*sqrt(2)*n*sigma/v_th.",
+    "values": {
+      "Re_after_doubling_n_over_before": 2,
+      "Re_for_Ma_1e_6_Kn_1e_4_using_book_scaling": 0.03
+    }
+  },
+  {
+    "name": "Solar oscillation counterexample to a luminosity bound",
+    "explanation": "Illustrative sinusoidal displacement, not a measured solar amplitude. Oscillatory acceleration need not imply secular contraction power.",
+    "values": {
+      "amplitude_cm": 100,
+      "period_s": 300,
+      "acceleration_over_surface_g": 1.5997413730593007e-06
+    }
+  },
+  {
+    "name": "Buoyancy period consistency",
+    "explanation": "Table 1 labels its microhertz entries N/(2*pi). The Ledoux entry is larger than the Schwarzschild maximum used for the universal period claim.",
+    "values": {
+      "Schwarzschild_period_minutes": 38.754282348199474,
+      "Ledoux_table_entry_period_minutes": 36.72366178976438
+    }
+  },
+  {
+    "name": "Time-dependent Rayleigh-Taylor acceleration",
+    "explanation": "For R=C*t^m, g=m*(1-m)*C*t^(m-2). Applying the earlier chapter's Read-type integral h=alpha*A*(integral sqrt(g) dt)^2 from zero gives h/R=4*alpha*A*(1-m)/m. This is a counterexample to the claimed substitution/bound, not a validated supernova-shell model.",
+    "values": {
+      "m": 0.5,
+      "alpha": 0.038,
+      "A": 1.0,
+      "Rcd_over_Rbw": 0.77,
+      "instantaneous_substitution_h_over_Rbw": 0.007315,
+      "integral_scaling_h_over_Rbw": 0.11704,
+      "ratio": 16.0
+    }
+  },
+  {
+    "name": "Lower bound logic",
+    "explanation": "A predicted accretion rate above a lower limit satisfies that inequality.",
+    "values": {
+      "prediction": 8.02e-06,
+      "lower_limit": 2e-08,
+      "ratio": 400.99999999999994,
+      "satisfies_lower_limit": true
+    }
+  },
+  {
+    "name": "Lognormal density mode",
+    "explanation": "For s=ln(x) Gaussian with mean -sigma_s^2/2 and variance sigma_s^2=ln(1+b^2*M^2), median(x)=exp(-sigma_s^2/2), mode(x)=exp(-3*sigma_s^2/2).",
+    "values": {
+      "M": 10,
+      "b": 1,
+      "median": 0.09950371902099892,
+      "density_mode": 0.0009851853368415735,
+      "ratio_median_to_mode": 101
+    }
+  },
+  {
+    "name": "Circularisation is not a ballistic turning radius",
+    "explanation": "For a parabolic orbit E=0, l^2/(2*R_p^2)-GM/R_p=0, so R_p=l^2/(2*GM)=R_circ/2.",
+    "values": {
+      "R_pericentre_over_R_circ": 0.5
+    }
+  },
+  {
+    "name": "MRI viscosity parameter inequality",
+    "explanation": "If alpha_obs>=0.1 and 0<alpha_sim<=0.02, the ratio is >=5, not <=5.",
+    "values": {
+      "minimum_ratio": 5.0,
+      "example_smaller_simulation_alpha": 0.005,
+      "corresponding_ratio": 20.0
+    }
+  },
+  {
+    "name": "Plasma beta does not locate the Alfven surface",
+    "explanation": "M_A^2=(gamma*beta/2)*M_s^2. At M_A=1, beta=2/(gamma*M_s^2).",
+    "values": {
+      "gamma": 1.6666666666666667,
+      "sonic_Mach_number": 10,
+      "beta_at_Alfven_surface": 0.011999999999999999
+    }
+  },
+  {
+    "name": "A viscosity upper bound does not exclude a smaller coefficient",
+    "explanation": "A coefficient 1/5.941e25 is below 1e-3; the paper's one-sided constraint does not establish the manuscript's claimed lower bound.",
+    "values": {
+      "classical_perpendicular_ratio": 1.68321831341525e-26,
+      "satisfies_upper_bound_1e_3": true
+    }
+  },
+  {
+    "name": "M11 radial decades",
+    "explanation": "Using Module 9's Bondi radius 197000 r_s and circularisation radius 100 r_s.",
+    "values": {
+      "ratio": 1970.0,
+      "decades": 3.294466226161593
+    }
+  },
+  {
+    "name": "Gyrophase versus orbit count",
+    "explanation": "When omega is an angular frequency, the complete-orbit count in time tau is omega*tau/(2*pi).",
+    "values": {
+      "omega_tau": 4308700000000.0,
+      "complete_orbits": 685750903300.0494
+    }
+  }
+]

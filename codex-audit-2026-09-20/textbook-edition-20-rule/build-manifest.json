@@ -1,0 +1,86 @@
+{
+  "edition": "Astrophysical Fluid Dynamics — 20-rule textbook edition",
+  "prepared_by": "Codex (OpenAI), GPT-6",
+  "date": "2026-09-21",
+  "source_baseline": "../revised-modules",
+  "preservation": {
+    "original_afd_modules_unchanged": true,
+    "earlier_revised_modules_unchanged": true,
+    "displayed_mathematics_exact": true,
+    "anchors_preserved": true,
+    "scripts_and_styles_exact": true,
+    "figures_preserved": true,
+    "table_structure_preserved": true
+  },
+  "editorial": {
+    "standard": "EDITORIAL_STANDARD.md",
+    "certification": "certification-report.json",
+    "production_narration_hits": 0,
+    "synthetic_rhetoric_hits": 0,
+    "repeated_verdict_rhetoric_hits": 0,
+    "sentences_over_50_words": 0,
+    "sentences_36_to_50_words_reviewed": 119
+  },
+  "modules": [
+    {
+      "module": 1,
+      "file": "module01.html",
+      "sha256": "45c2e54a7b777a03b47b591b9a2bdb870a4764a1a2876c317abac892e59049b0"
+    },
+    {
+      "module": 2,
+      "file": "module02.html",
+      "sha256": "a01840fd787e1c3ad7a3a4826964537387c971048fe8023e5c930f1ce5c704db"
+    },
+    {
+      "module": 3,
+      "file": "module03.html",
+      "sha256": "d37e4a776dfa5c65c4874b1147e7a579d0b3ca1b731c321f521f97220f5f69e0"
+    },
+    {
+      "module": 4,
+      "file": "module04.html",
+      "sha256": "5a87510c6b98bf4e1a0ac9aefa66c4447d74449fff90c39a045f4b1185b84e89"
+    },
+    {
+      "module": 5,
+      "file": "module05.html",
+      "sha256": "f56258acbea5b36c6dd275791cedb536d728e3ca68f1f9ba08e239c3d3ba7546"
+    },
+    {
+      "module": 6,
+      "file": "module06.html",
+      "sha256": "d5d1a1279a6786d77cbcf9fdceed017685921bf26ab2ab2cff71aa8729d86261"
+    },
+    {
+      "module": 7,
+      "file": "module07.html",
+      "sha256": "cc8cbe11c7fb1b8b3000a14b010a6bdc237752bc830fd0ce6c3fb988e2638b34"
+    },
+    {
+      "module": 8,
+      "file": "module08.html",
+      "sha256": "a6c2f2fb382c96f96521949f0530617b47b73313182647b87600b7e9b55f5c7d"
+    },
+    {
+      "module": 9,
+      "file": "module09.html",
+      "sha256": "b5f73b63c00c0e317a31ee49ebd4d627598c3bdbb8e839839b876ebb6facac99"
+    },
+    {
+      "module": 10,
+      "file": "module10.html",
+      "sha256": "813c9cf7b6d5a4a7b7d393148065d91c0b9d6ab71f8e65c246e986c1aa3759d2"
+    },
+    {
+      "module": 11,
+      "file": "module11.html",
+      "sha256": "664d54c2d44370c1240ab57b7306c8fd55016cad8bc0511f7c3b07149ba5ef4f"
+    },
+    {
+      "module": 12,
+      "file": "module12.html",
+      "sha256": "454ce5b4735c864780d8957a2b56cfba344bdc3cff4b491ffa2d3a74e849e7fd"
+    }
+  ]
+}

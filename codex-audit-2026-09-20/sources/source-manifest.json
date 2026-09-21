@@ -1,0 +1,68 @@
+[
+  {
+    "id": "marrone2007",
+    "url": "https://arxiv.org/pdf/astro-ph/0611791",
+    "pages": 5,
+    "sha256": "741c737b949282e5a82c3c2cbfe40864f40d0a8c39f6bcf38bafd1450721eee8",
+    "status": "downloaded; relevant passages inspected; not a full-paper audit",
+    "inspected_pdf_pages": [
+      4
+    ]
+  },
+  {
+    "id": "zhuravleva2019",
+    "url": "https://arxiv.org/pdf/1906.06346",
+    "pages": 23,
+    "sha256": "aba9562dd870fca6dc20f853a034a2e5de0082b5f2b31d2206841c9f36aa4d37",
+    "status": "downloaded; relevant passages inspected; not a full-paper audit",
+    "inspected_pdf_pages": [
+      1,
+      4,
+      5,
+      12
+    ]
+  },
+  {
+    "id": "kandori2005",
+    "url": "https://arxiv.org/pdf/astro-ph/0506205",
+    "pages": 40,
+    "sha256": "c95ca4eaab53b1dfa31ff638cbdbef1469dcc6b021511ab812e9ad08ee1506e3",
+    "status": "downloaded; relevant passages inspected; not a full-paper audit",
+    "inspected_pdf_pages": [
+      4,
+      5
+    ]
+  },
+  {
+    "id": "troland2008",
+    "url": "https://arxiv.org/pdf/0802.2253",
+    "pages": 23,
+    "sha256": "5a37fc243d4aa410448099b2dda70cf11979bea0bb0815b6abf96ce06663479c",
+    "status": "downloaded; relevant passages inspected; not a full-paper audit",
+    "inspected_pdf_pages": [
+      2,
+      3
+    ]
+  },
+  {
+    "id": "king2007",
+    "url": "https://arxiv.org/pdf/astro-ph/0701803",
+    "pages": 8,
+    "sha256": "affc170da67368e63008f0d95bb30ec6a615c9db2661b212f869d5d662025a55",
+    "status": "downloaded; relevant passages inspected; not a full-paper audit",
+    "inspected_pdf_pages": [
+      4,
+      6
+    ]
+  },
+  {
+    "id": "venzheimer2018",
+    "url": "https://arxiv.org/pdf/1711.07534",
+    "pages": 14,
+    "sha256": "b6fdbc445db960381635e1101000637975d31eef4f7cae21845a51cdd2ff25e2",
+    "status": "downloaded; relevant passages inspected; not a full-paper audit",
+    "inspected_pdf_pages": [
+      8
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "report_findings": 40,
+  "prose_edits": 48,
+  "duplicate_ids": 0,
+  "broken_report_links": [],
+  "mathjax_error_count": 0,
+  "mathjax_container_count": 111,
+  "filter_checks": "passed",
+  "mobile_horizontal_overflow": false,
+  "javascript_errors": [],
+  "report_sha256": "f15fe590f72b308e7ef05f782248179bcc66c85496ebfa1fe2f878434712b20e"
+}

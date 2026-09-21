@@ -1,0 +1,1563 @@
+
+=== PDF PAGE 1 ===
+arXiv:0802.2253v1  [astro-ph]  15 Feb 2008
+Magnetic Fields in Dark Cloud Cores: Arecibo OH Zeeman
+Observations
+Thomas H. Troland
+Physics and Astronomy Department, University of Kentucky, Lexington, KY 40502
+troland@pa.uky.edu
+and
+Richard M. Crutcher
+Astronomy Department, University of Illinois, Urbana, IL 61801
+crutcher@uiuc.edu
+ABSTRACT
+We have carried out an extensive survey of magnetic ﬁeld strengths toward
+dark cloud cores in order to test models of star formation: ambipolar-diﬀusion
+driven or turbulence driven.
+The survey involved ∼500 hours of observing
+with the Arecibo telescope in order to make sensitive OH Zeeman observations
+toward 34 dark cloud cores. Nine new probable detections were achieved at the
+2.5-sigma level; the certainty of the detections varies from solid to marginal, so we
+discuss each probable detection separately. However, our analysis includes all the
+measurements and does not depend on whether each position has a detection or
+just a sensitive measurement. Rather, the analysis establishes mean (or median)
+values over the set of observed cores for relevant astrophysical quantities. The
+results are that the mass-to-ﬂux ratio is supercritical by ∼2, and that the ratio
+of turbulent to magnetic energies is also ∼2. These results are compatible with
+both models of star formation.
+However, these OH Zeeman observations do
+establish for the ﬁrst time on a statistically sound basis the energetic importance
+of magnetic ﬁelds in dark cloud cores at densities of order 103−4 cm−3, and they
+lay the foundation for further observations that could provide a more deﬁnitive
+test.
+Subject headings: Stars: formation — ISM: magnetic ﬁelds — polarization
+
+
+=== PDF PAGE 2 ===
+– 2 –
+1.
+Introduction
+It has become increasingly clear that cosmic magnetic ﬁelds are pervasive, ubiquitous,
+and likely important in the properties and evolution of almost everything in the Universe,
+from planets to quasars (Wielebinski & Beck 2005). However, the role played by magnetic
+ﬁelds in star formation has remained uncertain. One extreme of the theories of star formation
+is that magnetic ﬁelds control the formation and evolution of the molecular clouds from
+which stars form, including the formation of cores and their gravitational collapse to form
+protostars. Detailed theoretical work has been carried out by a number of groups. Shu et al.
+(1999), McKee (1999), and Mouschovas & Ciolek (1999) have reviewed and summarized the
+state of this theory. The fundamental principle is that clouds are formed with subcritical
+masses, M < MΦ, where MΦ = Φ/2π
+√
+G, Φ is the magnetic ﬂux, and the expression for
+MΦ is from Nakano & Nakamura (1978). The magnetic ﬁeld is frozen only into the ionized
+gas and dust; neutral gas and dust contract gravitationally through the ﬁeld and the ions,
+accumulating mass (but not ﬂux) in the cloud cores. This process is known as ambipolar
+diﬀusion.
+When the core mass reaches and exceeds MΦ, the core becomes supercritical
+(M > MΦ), collapses, and forms stars. The magnetic ﬂux mostly remains behind in the
+envelope. Because the ambipolar diﬀusion time scale for the formation of cores is fairly long
+(≥107 yr), molecular clouds would have long lifetimes, although observable “starless” core
+lifetimes would be short, ∼106 yr (Tassis & Mouschovias 2004).
+This ambipolar-diﬀusion driven model for star formation was the standard for many
+years, but doubt of its validity was raised by eﬀorts to determine molecular cloud and core
+lifetimes. Beichman et al. (1986) used the number of molecular cores detected at various
+densities to determine typical statistical timescales for evolutionary sequences. Then the
+ratio of the number of molecular cores with T Tauri stars to the number of starless cores,
+together with typical T Tauri star lifetimes, led to an estimate of the lifetimes of starless cores.
+The result was a few times 106 yr. This early estimate was reﬁned by Lee & Myers (1999) to
+∼0.3 −1.6 × 106 yr. Later workers (Kirk et al. 2005; Kandori et al. 2005) inferred similarly
+short core lifetimes.
+This led to a new theory – that molecular clouds are intermittent
+phenomena, with short (∼106 yr) lifetimes. In this theory clouds form at the intersection
+of turbulent supersonic ﬂows in the interstellar medium. Generally, clouds do not become
+gravitationally bound, and they dissipate. Star formation occurs only in the small fraction of
+the molecular gas that is suﬃciently dense to be self-gravitating (Elmegreen 2000). Magnetic
+ﬁelds may be present in this theory, but they are too weak to be energetically important. The
+role of turbulence in the energetics of the interstellar medium has been a very active area.
+Elmegreen & Scalo (2004) have written an excellent review of interstellar turbulence, and
+MacLow & Klessen (2004) have extensively reviewed arguments that supersonic turbulence
+controls star formation.
+
+
+=== PDF PAGE 3 ===
+– 3 –
+Although the cloud lifetime estimates may seem to have doomed the strong magnetic
+ﬁeld, quasi-static picture, that is not the case.
+First, cloud lifetimes seem to be longer
+than the free-fall time by a factor 2-5. Although supersonic turbulence may in principle
+provide support against collapse and lengthen cloud lifetimes, simulations have shown that
+such supersonic turbulence will damp on roughly a free-fall time scale (MacLow et al. 1998;
+Ostriker et al. 1999). Something else, perhaps magnetic pressure, is slowing the collapse.
+Moreover, Tassis & Mouschovias (2004) have argued that the long cloud lifetimes that are
+quoted for the strong magnetic ﬁeld model are for the entire lifetime from molecular cloud
+formation at density ∼102 cm−3 to protostar formation, and that most of that time is spent
+in increasing densities to the values where cores can be identiﬁed observationally, ∼104
+cm−3. Once dense cores form, they argue that cores are magnetically critical to slightly
+supercritical, and that the core lifetimes in this model are ∼106 yr, in agreement with
+observations.
+Hence, the evidence for cloud and core lifetimes does not provide a conclusive test.
+Because core lifetimes appear to be several times longer than free-fall times, there is evidence
+for a support mechanism in cores. However, this does not prove that magnetic ﬁelds provide
+that support. Moreover, the lifetime numbers are somewhat uncertain, due to the statistical
+nature of the arguments and the chain of reasoning from T Tauri star lifetimes to ages of
+cores at diﬀerent densities. Finally, the core lifetime estimates do not address directly the
+timescale of the formation of dense cores from much lower density gas.
+The direct approach to resolving this uncertainly in the process by which stars form
+is to measure magnetic ﬁeld strengths in molecular clouds in order to see whether they are
+weak (supercritical) or strong (subcritical). The crucial parameter is the ratio of the mass
+to the magnetic ﬂux, M/Φ, which is of course closely related to MΦ. If M/Φ is observed to
+be supercritical, particularly at lower densities, the magnetic support model is not viable.
+On the other hand, if it is observed to be subcritical, magnetic ﬁelds would be too strong
+for the intermittent, turbulent theory to hold. The M/Φ parameter provides in principle a
+direct, simple, and deﬁnitive test to discriminate between the two theories of star formation.
+Of course, much work has been done to measure M/Φ in molecular clouds. Crutcher
+(1999) summarized the data available to that time, and concluded that M/Φ was approx-
+imately critical to slightly supercritical in molecular clouds. Bourke et al. (2001) extended
+the OH Zeeman work to the southern hemisphere with the Parkes telescope and added one
+and perhaps two new detections; they found results for M/Φ that essentially agreed with the
+Crutcher (1999) conclusion. Crutcher (2007) has updated the discussion. However, the ex-
+tant observations have a major deﬁciency – a very small number of measurements of magnetic
+ﬁeld strengths have been made in dark cloud cores – the sites of low-mass star formation.
+
+
+=== PDF PAGE 4 ===
+– 4 –
+Goodman et al. (1989) detected the OH Zeeman eﬀect toward B1 with the Arecibo telescope.
+Crutcher et al. (1993) carried out a major and very sensitive OH Zeeman survey with the
+NRAO 43-m telescope toward 12 dark cloud cores, but they were only able to conﬁrm the
+B1 detection and to obtain a possible detection toward ρ Oph. The large 18′ beam of the
+43-m telescope meant that cores were not isolated; rather, the beam was ﬁlled by the cloud
+envelopes surrounding the cores. The 3′ beam of the Arecibo telescope used for the survey
+reported here is well matched to the sizes of dark cloud cores at distances of a few 100 pc.
+And in the early stages of the OH Zeeman survey reported here, Crutcher & Troland (2000)
+detected the OH Zeeman eﬀect toward L1544. Hence, there are almost no measurements of
+magnetic ﬁeld strengths in dark cloud cores.
+In this paper we report the full results of an extensive (∼500 hours of telescope time)
+survey of the OH Zeeman eﬀect toward dark cloud cores with the Arecibo telescope. In
+§2 we describe how the target cores were selected and the details of the observations. In
+§3 we present the results, including the inferred column densities, line-of-sight magnetic
+ﬁeld strengths, and mass-to-ﬂux ratios. In §4 we discuss these results, and in §5 present
+conclusions.
+2.
+Observations
+2.1.
+The Zeeman Eﬀect
+Crutcher (2007) reviewed the various techniques and results for studying magnetic ﬁelds
+in molecular clouds. Of these techniques, the Zeeman eﬀect provides the only direct method
+for measuring magnetic ﬁeld strengths in molecular clouds. In general, only those species
+with an unpaired electron will have a strong Zeeman splitting. This has limited detections
+to the the 21-cm line of H I, the 18-cm, 6-cm, 5-cm, and 2-cm Λ-doublet lines of OH, and
+the 3-mm N=1→0 lines of CN. The sole exception is the 1.3-cm H2O maser line, due to very
+strong line strengths and strong ﬁelds in H2O maser regions.
+Except for some OH masers, the Zeeman splitting is a small fraction of the line width,
+and only the Stokes V spectra can be detected (Crutcher et al. 1993); these spectra reveal
+the sign (i.e., direction) and magnitude of the line-of-sight component Blos. By least-squares
+ﬁtting the frequency derivative of the Stokes parameter I(ν) spectrum dI(ν)/dν to the
+observed V (ν) spectrum, Blos may be inferred (Crutcher et al. 1993).
+
+
+=== PDF PAGE 5 ===
+– 5 –
+2.2.
+Selection of Targets
+Targets were selected from among molecular cores known to exist within the Arecibo
+declination range. Most targets fall into the Galactic anti-center direction (RA ≈03h – 07h);
+a few lie in the Galactic center direction (RA ≈19h – 21h). To identify suitable cores, we ﬁrst
+examined CO survey data (Dame et al. 2001) to identify nearby molecular cloud complexes
+observable from Arecibo. For each of these complexes, we then consulted detailed CO and
+NH3 maps of molecular cores to identify speciﬁc targets. For example, in the anti-center
+region, the L1457 cloud has been mapped in CO by Zimmermann & Ungerechts (1990) and
+by Moriarty-Schieven et al. (1997).
+The Perseus cloud has been surveyed for NH3 cores
+by Ladd et al. (1994). Onishi et al. (1996, 1998) have identiﬁed and described a complete
+sample of 40 cores in the TMC based upon C18O observations. The Mon OB1 region has
+been surveyed in CO by Oliver et al. (1996). And the Rosette Nebula cloud was studied in
+CO by Schneider et al. (1998).
+Prior to Zeeman observations, we conducted a short survey of OH line strengths to-
+ward the principal cores in each cloud complex. We found that most cores in the Galactic
+center direction have relatively weak OH emission lines, owing, very likely, to the Galactic
+background continuum emission that is comparable to the excitation temperatures of the
+OH transitions. The ﬁnal list of targets consisted of molecular cores for which the OH lines
+were relatively strong (since sensitivity to Blos ∝line strength); promising cores had to be
+deleted from the list due to lack of suﬃcient observing time. We did not want to spend very
+long times observing weak lines, for that would mean our survey would have few clouds. A
+sensitivity calculator such as that of Troland (1990) allows one to estimate the observing
+time required to reach a given sensitivity. The actual sensitivity achieved varied due to vari-
+ations in line strength, line width, and available telescope time. Most targets are in nearby
+molecular clouds (e.g Perseus and Taurus) for which the Arecibo beam samples a relatively
+small linear scale (e.g. ≈0.2 pc for a cloud at 200 pc). A few targets (e.g. the Rosette
+Nebula cloud) are more distant, but they add diversity to the sample since they are part of
+massive star-forming regions.
+2.3.
+Observations
+Simultaneous observations of the 1665 and 1667 MHz OH lines were carried out in
+the manner described by Crutcher & Troland (2000). Very brieﬂy, we used the single-pixel
+L-band wide receiver with native linear polarizations. A hybrid circuit immediately after
+the two HEMT receivers added ±90◦of phase shift to the two linearly-polarized outputs to
+convert them into orthogonal circular polarizations. Typical system temperatures were 30-
+
+
+=== PDF PAGE 6 ===
+– 6 –
+40 K. Spectra were obtained with the “interim” correlator sampling 2048 spectral channels
+over a bandwidth of approximately 390 kHz, leading to a channel spacing of about 0.034 km
+s−1. Spectra were Hanning smoothed to produce a ﬁnal spectral resolution of two channels.
+Data analysis followed our usual procedures for Arecibo OH Zeeman observations.
+We
+constructed Stokes I and V proﬁles from the sum and diﬀerence, respectively, of the line
+proﬁles in orthogonal circular polarizations. Then we least-squares ﬁtted to each V proﬁle
+a function deﬁned by the sum of a constant times the I proﬁle plus another constant times
+the derivative of the I proﬁle. The ﬁrst constant is a measure of gain diﬀerences between
+the two circular polarizations; this constant was found to be negligible for all sources. The
+second constant is proportional to the line-of-sight magnetic ﬁeld component Blos. Finally,
+we computed a weighted average of Blos as derived independently from the two OH emission
+lines. The full survey results are given in tables 1 and 2. Figure 1 shows the Stokes I and V
+spectra for the 9 positions with a Zeeman signal > 2.5σ, and ﬁgure 2 shows all of the inferred
+results for Blos from the Arecibo survey plotted against N(H2). Six of the nine positions in
+ﬁgure 1 have solid Zeeman detections. In order of increasing marginality of detection for the
+remaining probable detections, there are B217-2, B5, and L1457Sn. See detailed discussion
+below and in the appendix.
+We carried out several tests to establish the reliability of the Arecibo system for Zeeman
+observations. For one, we established the sense of circular polarization with two helical test
+antennas of known circular polarization sense, as described by Crutcher & Troland (2000).
+We also observed the highly circularly polarized masers in W49 and compared the Stokes
+V proﬁle with those in the previous literature. Over the duration of the project, we often
+observed the weak but highly circularly polarized OH maser in S247 to establish that no
+signiﬁcant change in circular polarization response had occurred. Finally, as also described by
+Crutcher & Troland (2000), we estimated beam squint via continuum polarization mapping
+observations of an unresolved continuum source. These data establish that the diﬀerence in
+pointing between the right and left circularly polarized beams (i.e. the beam squint) was of
+order 1′′, less than 1% of the approximate 3′ FWHM beamwidth of the Arecibo telescope at
+1666 MHz.
+In addition to the Zeeman observations of molecular cores, we mapped OH line strengths
+in the vicinities of the Zeeman positions. These mapping observations serve two purposes.
+For one, they allow us to determine the sizes of the cores on the plane of the sky, from which
+core volume densities and masses may be estimated (tables 1 & 2). Our crude OH maps
+were supplemented by C18O maps from the literature. We used volume density n(H2) =
+N(H2)/2r and mass M = πr2N(H2)2.8mH to estimate these parameters, where r is the
+cloud radius and the factor 2.8 includes a 10% He abundance and mH is the mass of an H
+atom. Also, the mapping observations permit us to establish upper limits for each core upon
+
+
+=== PDF PAGE 7 ===
+– 7 –
+the instrumental eﬀects of beam squint. For this latter purpose, we used mapping positions
+oﬀset approximately 3′ (one beamwidth) north, south, east and west from each Zeeman
+position. From 1667 MHz proﬁles at these oﬀset positions, we estimated the magnitude and
+direction of the linear velocity gradient in the OH emission at the Zeeman position. Then we
+computed the expected instrumental magnetic ﬁeld from a beam squint of 1′′ if the position
+angle of the beam squint exactly matches the position angle of the velocity gradient on the
+sky. We feel this procedure oﬀers a realistic upper limit to the instrumental Zeeman eﬀect,
+even if the actual beam squint is, in practice, slightly higher than 1′′. (Heiles (1999) reports
+beam squints of typically 1.3′′ at 1420.4 MHz; Crutcher & Troland (2000) report a 1666
+MHz beam squint of 1.2′′ ± 0.2′′). The actual velocity gradient is unlikely to be aligned with
+the telescope beam squint, especially since the beam squint position angle is nearly ﬁxed
+in azimuth (Heiles et al. 2001). Therefore, the beam squint will rotate on the sky as the
+parallactic angle of the source changes during a Zeeman source observation. As a result, the
+eﬀective beam squint over a several hour Zeeman observation will be signiﬁcantly less than
+the actual beam squint.
+Estimates of upper limits to instrumental eﬀects (see above) suggest that the magnetic
+ﬁeld detections reported here are reliable. The upper limits to instrumental eﬀects have an
+average value of 2.4 µG for all of our Zeeman positions. The highest instrumental ﬁeld is
+5.4 µG at position Ros4, for which σ(B) is 9.8 µG. Of the sources listed in table 2, nine
+have magnetic ﬁelds with S/N > 2.5. These sources are likely to be Zeeman detections
+on statistical grounds alone (see §3). In none of these sources is the upper limit to the
+instrumental magnetic ﬁeld more than 25% of the derived ﬁeld value (table 2, column 4),
+for most sources it is less. We conclude that the magnetic ﬁeld detections (i.e., S/N > 2.5)
+are quite unlikely to result from instrumental eﬀects associated with beam squint. More-
+over, non-detections but sensitive measurements are unlikely to be signiﬁcantly aﬀected by
+instrumental eﬀects. Note that Heiles et al. (2001) report that beam squint is the principal
+contributor to instrumental circular polarization with the Arecibo L-band wide receiver.
+3.
+Results
+3.1.
+Measurements versus Detections of Blos
+Although the astrophysical analysis we will report on below uses each of the 34 measure-
+ments of Blos without directly considering whether each measurement is a detection or not,
+it is of interest to consider which of the 34 measurements should be regarded as detections.
+Since detections are not produced by instrumental eﬀects (§2), there are two statistical cri-
+teria and a third subjective criterion: (1) that |Blos|/σBlos be greater than an appropriate
+
+
+=== PDF PAGE 8 ===
+– 8 –
+number, (2) that the 1665 and 1667 MHz lines yield the same result for Blos within the
+measurement uncertainties, and (3) that a plot of Stokes V looks consistent with detection
+of the Zeeman eﬀect.
+For criterion (1), we set |Blos|/σBlos > 2.5, the level at which there are probably no
+false detections for a sample size of 34. The normal probability function says that for a
+normal error distribution, the fraction of the measurements that should be 2.5σ or more
+from the “real” value is 0.0124. In our case, we have 34 positions at which we measured
+Blos; 0.0124 × 34 = 0.4. So a criterion of 2.5σ with a sample of 34 means we would claim 0.4
+false detections. Based on this criterion alone, there are 9 detections; the probability is that
+there are no false detections, but it is possible (less than 50% probability) that there is 1.
+For criterion (2), we set ∆B/σ∆B < 1.9, where ∆B = |Blos(1665) −Blos(1667)|. The
+normal probability function says that the fraction of the ∆B that should be 1.9σ or more
+from zero is 0.057, and with 9 possible detections, this criterion would yield 0.057 × 9 = 0.5
+possible false positives. The largest ∆B/σ∆B in table 2 is 1.7. Hence, all 9 possible detections
+meet this consistency criterion.
+Finally, there is the subjective criterion (3). Figure 1 shows Stokes I and V plots of
+each of the 9 probable detections. For these plots we have combined the 1665 and 1667 MHz
+results, weighted by the inverse square uncertainties in Blos for each transition. The Stokes I
+spectra are the weighted sum of TA(1665) and TA(1667); these are then the Stokes I spectra
+that would have been observed if there were a single OH line rather than two. The Stokes
+V spectra are the observed Stokes V spectra for such a single line. This combination gives
+the appropriate spectra for judging the signiﬁcance of each probable detection.
+Although 9 positions pass our criteria for detection, clearly some are more solid than
+others. We discuss each of the 9 possible detections in the appendix with respect to the
+likelihood that each is or is not a detection. Again, however, note that our analysis does not
+depend on whether a particular position does or does not have a detected Zeeman signal.
+3.2.
+Estimating Btotal and M/Φ from Blos
+Following Crutcher (1999), we deﬁne
+λ ≡(M/Φ)observed/(M/Φ)critical,
+(1)
+where (M/Φ)observed is the observed mass to ﬂux ratio inferred from the ratio of N(H2) to B
+and (M/Φ)critical is the theoretically determined critical mass to ﬂux ratio (Nakano & Nakamura
+1978).
+
+
+=== PDF PAGE 9 ===
+– 9 –
+Then
+λ = 7.6 × 10−21N(H2)/Blos,
+(2)
+where N(H2) is the column density of H2 in cm−2 and Blos is the line-of-sight magnetic ﬁeld
+strength in µG.
+It must be kept in mind that all of the Blos results are lower limits to the total magnetic
+ﬁeld strength. It is possible to correct statistically for the fact that only one component
+of B is measured, i.e., Blos = |B| cos θ. For a large number of clouds with the same total
+ﬁeld strength for which the angle θ between B and the observed line of sight is randomly
+distributed,
+Blos =
+R π/2
+0
+|B| cos θ sin θdθ
+R π/2
+0
+sin θdθ
+= 1
+2|B|.
+(3)
+If B is strong, clouds will have a disk morphology with B along the minor axis (cf,
+Mouschovas & Ciolek (1999)). To properly measure λ, one needs B and N along a ﬂux
+tube, i.e., parallel to the minor axis. Then, as noted by Crutcher (1999), the path length
+through a disk will be too long by 1/ cos θ and N will be overestimated, while |B| will be
+underestimated by cos θ. Statistically,
+M/Φ =
+R π/2
+0
+(M/Φ)obs cos2 θ sin θdθ
+R π/2
+0
+sin θdθ
+= 1
+3(M/Φ)obs.
+(4)
+3.3.
+Other Physical Parameters
+We infer N(H2) toward each core from the OH data. The column density of OH is
+derived assuming the lines are optically thin (Crutcher 1979): N(OH) = a × T × ∆V × 1014
+cm−2 K−1 km s−1, where T is the peak line antenna temperature, ∆V is the full-width-at-
+half-maximum intensity of the line, a = 8.49 for the 1665 MHz line and 4.71 for the 1667 MHz
+line. The coeﬃcients include the beam eﬃciency of the telescope, ηB ≈0.5. The N(OH) in
+table 1 are the average results from the two lines. Then N(H2) = N(OH)/8×10−8 (Crutcher
+1979).
+A comparison of the total masses estimated from N(OH) and r (which we designate
+as MOH) with the virial masses (Mvirial) may be instructive. The means for all 34 cores
+are MOH = 58 M⊙and Mvirial = 74 M⊙; the respective medians are MOH = 16 M⊙and
+Mvirial = 29 M⊙. Considering the mean values, the ratio MOH/Mvirial = rN(OH)/∆V 2X =
+0.78, where X is the OH/H abundance ratio. The mean mass ratio would be 1 if any one
+of the following were true: r larger by 1.3, N(OH) larger by 1.3, ∆V smaller by 0.88, or
+
+
+=== PDF PAGE 10 ===
+– 10 –
+OH/H = 6 × 10−8. Any or some combination of all of these is possible. The r we use may
+not be the relevant r, both because of the way OH samples the gas and the geometrical
+assumption (§2.3) made in going from N and r to MOH. N(OH) could be larger if the lines
+were slightly saturated rather than being optically thin as assumed. The relevant ∆V for the
+virial mass may be diﬀerent from that given by OH, again because of how OH samples the H2
+gas distribution. And the value of OH/H may be diﬀerent from the Crutcher (1979) result.
+Moreover, the virial mass calculation assumes virial equilibrium between gravity and kinetic
+motions, which may not be correct. The cores may not be in equilibrium, and the support
+provided by the magnetic ﬁeld is not included. However, rather than attempting to discuss
+these points, we prefer to emphasize that the agreement in the two methods of determining
+mass is quite good; our estimates for astrophysical quantities such as the mass-to-ﬂux ratio
+and the Alfv`enic Mach number are therefore unlikely to be dominated by systematic errors
+in column and volume densities.
+Because we can only measure one component of the magnetic vector B, it will be
+necessary to consider the mean or median values of the mass-to-ﬂux ratio, ratio of turbulent-
+to-magnetic energy, and the Alfv`enic Mach number for the ensemble of dark cloud cores we
+observed. The values for the parameters that go into calculating these quantities are the
+following mean and median values, respectively: ∆v = 0.71, 0.71 km s−1, Blos = 8.2, 5.8 µG,
+r = 0.31, 0.29 pc, N21(H2) = 4.5, 4.0 cm−2, and n(H2) = 3200, 1800 cm−3. These values will
+be used in the discussion below.
+4.
+Discussion
+An important motivation for this Zeeman eﬀect survey was to better deﬁne the key
+processes responsible for star formation, in particular, the role of the magnetic ﬁeld. The role
+of the magnetic ﬁeld in star formation, in turn, depends upon the ratio of magnetic energy
+in star forming (i.e. self-gravitating) clouds to other relevant energies. These energies are
+the gravitational energy of the cloud and the energy of internal motions. Since star forming
+clouds are, in general, not rotating nor collapsing, the energy of internal motions is presumed
+to reside in macroscopic motions usually referred to as turbulence and measured by the line
+widths of molecular spectral lines. The parameter λ, described in §3.2, is a measure of the
+ratio of gravitational to magnetic energies in the cloud. The ratio of turbulent to magnetic
+energies is given by βturb = 4πFρσ2/B2, where ρ is the density, σ is the 1-D turbulent
+velocity dispersion, B is the total magnetic ﬁeld strength, and F=3 for 3D turbulence. Then
+βturb = 0.32n(H2)[∆V 2 −0.027]/3B2
+los, where n(H2) is in cm−3, ∆V is the FWHM in km
+s−1, the line-of-sight ﬁeld strength Blos is in µG, and 0.027 removes the thermal contribution
+
+
+=== PDF PAGE 11 ===
+– 11 –
+to the observed line widths for an assumed kinetic temperature of 10 K.
+Values for these key ratios (λ and βturb) are not meaningful for individual clouds since
+we cannot measure the total ﬁeld strength, only Blos. It is for just this reason that a survey
+of many clouds is necessary to adequately characterize the role of the magnetic ﬁeld in these
+objects. Therefore, we use the data from the present survey to estimate mean and median
+values for the magnetic ﬁeld strength and for λ and βturb over the ensemble of clouds observed
+for this survey.
+In order to proceed with the estimation of average quantities, we make the assumption
+that the angle between the line of sight and the magnetic ﬁeld is randomly distributed
+among our 34 positions. For this assumption, the probability density function for Blos is
+ﬂat between 0 and the total strength |B| (Heiles & Troland 2005). That is, the observed
+Blos are assumed to diﬀer from a single total ﬁeld strength for the sample of cores only
+by geometrical projection. We can then calculate the weighted mean Blos and therefore λ,
+where the weighting is by the inverse square uncertainties in Blos; the uncertainty in λ is
+dominated by the measurement uncertainties in Blos rather than in N(OH). The result
+is Blos = 8.2 ± 2.2 µG and λ ≈4.2; this is shown as a solid line in ﬁgure 2. If median
+values are used instead, we ﬁnd the median value of the mass-to-ﬂux ratio λ1/2 ≈5.2.
+All measurements, detections and non-detections, are included in the weighted mean and
+median. Thus, it makes no diﬀerence for these calculations whether a given position has a
+detected Blos; what matters is each measured value and its uncertainty. Our result for the
+total mean ﬁeld strength (equation 3) is then |B| = 16.4 µG. The above value for λ is then
+systematically too large due to geometrical eﬀects. The minimum correction is a factor of
+1/2 due to the correction for only measuring Blos. For a disk morphology, the correction is
+1/3 (equation 4). Hence, the geometry corrected λc ≈1.4 −2.1; λ1/2,c = 1.7 −2.6. Finally,
+βturb = 2.4 and βturb,1/2 = 2.7. The related Alfv`enic Mach numbers are M A = 1.4 and
+MA,1/2 = 1.5.
+Also plotted in ﬁgure 2 as a dotted line is the critical mass-to-ﬂux ratio. Although
+we measure only the line-of-sight component of the magnetic ﬁeld, one might expect the
+magnetic ﬁeld to point approximately along the line of sight in a few cases. If there were a
+subcritical core in our sample and the ﬁeld pointed along the line of sight, its plotted value
+would lie above this critical line.
+What conclusion can we draw from the estimated value of λc or λ1/2,c?
+The cores
+of molecular clouds (sampled at a typical density of a few times 103 cm−3) appear to be
+slightly supercritical by about a factor of 2. Therefore, on average the gravitational energies
+somewhat exceed magnetic energies in these clouds, although the uncertainties in the results
+do not rule out a critical mass-to-ﬂux ratio. Had the estimated value of λc been signiﬁcantly
+
+
+=== PDF PAGE 12 ===
+– 12 –
+higher than 2, we could have ruled out the ambipolar diﬀusion model of star formation
+since magnetic ﬁelds, in this circumstance, would be energetically insigniﬁcant. Likewise,
+had the estimated value of λc been less than unity, we could have ruled out the turbulent-
+driven model owing to the strong inﬂuence of magnetic ﬁelds on molecular cores.
+As it
+is, the estimated value of λc is consistent with both extreme-case models. The ambipolar
+diﬀusion model predicts that cores are formed in subcritical clouds, but by the time cores
+with n(H2) ∼104 cm−3 have formed by the action of ambipolar diﬀusion, they are critical
+to slightly supercritical. The turbulence driven (i.e. weak magnetic ﬁeld) model forms cores
+by turbulent compression. Although these models have the envelopes and regions between
+cores highly supercritical, many cores may be only slightly supercritical. Hence, although
+the observations have shown that magnetic ﬁelds are suﬃciently strong that they cannot
+be ignored, the very hard-won observational results cannot rule out either model of star
+formation.
+What conclusion can we draw from βturb = 2.4? Obviously, this value suggests that
+turbulent energy exceeds magnetic energy, just as gravitational energy exceeds magnetic
+energy (although not overwhelmingly in either case). So the cloud cores sampled in this
+project, on average, are slightly out of equipartition between turbulent and magnetic energies.
+Note that βturb is related to the Alfv`enic Mach number by the relation M2
+A ≈βturb. Therefore,
+we infer a mean value M A ≈1.6. That is, internal motions are on average mildly super-
+Alfv`enic in these cores. If turbulent energy exceeds magnetic energy by a factor of a few, (and
+the cores are not collapsing), then the cores are in approximate virial equilibrium between
+internal motions and gravitation, with magnetic support of lesser signiﬁcance. The average
+ratio of mass to virial mass in table 2 is 0.8, a value close to unity and consistent with this
+conclusion.
+A concern that sometimes arises regarding Zeeman eﬀect observations (and the conclu-
+sions drawn there from) involves tangling of the magnetic ﬁeld on scales smaller than the
+beam. Field tangling, of course, can reduce the beam averaged value of Blos; a ﬁeld reversal
+within the beam can conceivably reduce the value to 0. Although the Arecibo beam is small
+compared to beam sizes used for some other Zeeman eﬀect projects, ﬁeld tangling can still
+exist, in principle, on scales smaller than any beam. Nonetheless, we do not believe that
+ﬁeld tangling on scales smaller than the Arecibo beam has signiﬁcantly aﬀected this project,
+nor the conclusions we draw from it. For one, higher spatial resolution studies of magnetic
+ﬁelds in molecular cores show little sign of ﬁeld tangling. These studies rely upon linear
+polarization of dust emission to map the morphology of the ﬁeld in the plane of the sky. For
+example, Ward-Thompson et al. (2000) mapped linear polarization in L1544 (also included
+in this project), L183 and L43 at 14′′ spatial resolution. They ﬁnd a high degree of order
+in the ﬁeld.
+Likewise, Girart, Rao, & Marrone (2007) ﬁnd a high degree of order in the
+
+
+=== PDF PAGE 13 ===
+– 13 –
+ﬁeld of NGC 1333 IRAS 4A at 1.5′′ spatial resolution. Another consideration regarding ﬁeld
+tangling is the fact that the value of λ is related to the net magnetic ﬂux through a cloud.
+To ﬁrst approximation, at least, the beam-averaged value of Blos is a measure of just that
+quantity (for a single ﬁeld component), regardless of any small-scale ﬁeld irregularities that
+may exist on scales smaller than the beam. Finally, the data from this project suggest that
+the observed ﬁeld strengths are suﬃcient to be energetically important (although not domi-
+nant) in the molecular cores. Therefore, the observed ﬁeld strengths are suﬃcient to impose
+a reasonable degree of order on the ﬁeld. If the observed ﬁeld strengths are signiﬁcantly
+lower than the actual ﬁeld strengths, owing to tangling, then the actual magnetic ﬁeld must
+be even more energetically important. In such a case, ﬁeld tangling is even less probable.
+That is, the hypothesis that ﬁeld strengths in molecular cores are higher than implied by
+this project, owing to tangling, leads to a conclusion that contradicts the hypothesis itself.
+5.
+Conclusions and future directions
+This project had the potential to distinguish between the two extreme models, ambipo-
+lar diﬀusion versus turbulence driven star formation. However, the result for λc lies in a
+range compatible with both models since the molecular cores surveyed appear to be slightly
+magnetically supercritical. That is, gravitational energy appears to dominate magnetic en-
+ergy by a small factor. Also, the estimated value of βturb ≈2.4 is such that turbulent energy
+in the cores appears to dominate magnetic energy, again, by a rather modest factor. To
+zeroth order, at least, gravitational, magnetic and turbulent energies in these cores appear
+to be comparable. Once again, nature appears to have held her cards regarding magnetic
+eﬀects on star formation close to her chest! At the same time, the OH Zeeman observations
+reported here are of considerable value since they do establish for the ﬁrst time on a statisti-
+cally sound basis the energetic importance of magnetic ﬁelds in dark cloud cores at densities
+of order 103−4 cm−3.
+What future observations might help to distinguish between the two extreme models
+of star formation? Further Arecibo observations like the ones reported here are unlikely
+to settle the issue, especially given the observing time that would be required to improve
+signiﬁcantly these results. Instead, there are at least two types of Zeeman eﬀect observations
+that have the potential to do so. One type of observation targets magnetic ﬁeld strengths
+in the envelopes of clouds, not in their cores. The ambipolar diﬀusion-driven model of star
+formation predicts that these envelope or inter-core regions must be magnetically subcritical
+(λ < 1). The turbulence-driven model predicts that the same regions must be magnetically
+supercritical. Zeeman eﬀect measurements of OH emission lines in the inter-core regions
+
+
+=== PDF PAGE 14 ===
+– 14 –
+of molecular cores would be very diﬃcult owing to the weakness of the OH emission there.
+However, OH absorption lines against extra-galactic continuum sources have the potential to
+probe the ﬁeld along random lines of sight through the clouds. Only the Arecibo telescope
+has the ability to perform this experiment since its large collecting area ensures an adequate
+number of background continuum sources to make the observations meaningful. Another
+approach to distinguishing between the two models of star formation is to measure diﬀerential
+mass-to-ﬂux ratios, that is, to measure λ in cloud cores relative to λ in the envelopes of the
+same clouds. The ambipolar diﬀusion model predicts that λ is greater in the cores than
+in the envelopes, owing to the ambipolar diﬀusion process itself (see §1). The turbulence
+driven model predicts the opposite, namely, that λ decreases with increasing density (Dib
+2006). Therefore, it should be possible to distinguish between the two models by measuring
+λ in the core and envelope of the same cloud. The OH Zeeman eﬀect oﬀers an opportunity
+to make such measurements. This approach has the advantage of eliminating geometrical
+eﬀects associated with the measurement of Blos, since, to ﬁrst approximation, the angle
+between the ﬁeld and the line-of sight should be the same in both core and envelope of the
+same cloud. We are currently pursuing both approaches (OH absorption and diﬀerential
+λ measurements) in an attempt to better distinguish between the alternate models of star
+formation.
+We thank the Arecibo Observatory for the generous allocation of observing time, which
+allowed this project to be carried out, and the observatory staﬀfor help in making the
+observations successful. This research was partially supported by NSF grants AST 0205810,
+0307642, and 0606822.
+A.
+Discussion of possible detected Zeeman signals
+L1457S: The line has a single strong peak and an extended wing to positive velocities.
+The Stokes V spectrum shows that the Zeeman signal is clearly detected from the strong
+peak.
+L1457Sn: This short integration was obtained 3′ north of the L1457N position to look
+for spatial variation in Blos. The line proﬁle is qualitatively similar to that toward L1457S.
+Although the ﬁtting process reported a marginally stronger ﬁeld at this position than at the
+L1457S position, the noise level in the Stokes V data was too high to see the Zeeman signal.
+In order to enhance its visibility, the observed Stokes V spectrum was boxcar smoothed
+by 5 channels; that is the spectrum that is shown. The displayed ﬁt line has also boxcar
+smoothed. Since the integration time at this position is only about 1/9th that toward L1457S,
+
+
+=== PDF PAGE 15 ===
+– 15 –
+this smoothing still has a higher channel-to-channel noise level than the unsmoothed L1457S
+Stokes V spectrum. Yet there is still not a clear Zeeman signal in the observed Stokes V
+spectrum. The ﬁt seems to be responding to the 8 of 9 channels that are negative to the
+negative velocity side of the line peak and the 2 positive channels to the high velocity side.
+Nonetheless, we regard L1457Sn as having failed the subjective criterion (3) test. On the
+other hand, this position is only 1 FWHM beam away from the L1457S position; the Blos at
+the two positions have the same sign (ﬁeld direction) and consistent magnitude. In spite of
+failing criterion (3), we still regard the measurement toward L1457Sn as being more likely a
+detection than not, although a rather marginal one.
+L1448CO: The line proﬁle is clearly asymmetric, suggesting that there are multiple
+velocity components.
+The ﬁt responds most strongly to the steeper slope on the lower
+velocity side of the line and the negative feature in Stokes V. The observed Stokes V appears
+to have a corresponding positive feature just to the positive velocity side of the peak, but
+the dI/dν ﬁt does not ﬁt this feature well, due to the smaller slope of the observed Stokes
+I spectrum at these velocities that appears to be caused by a weaker additional velocity
+component at these velocities. The detected Blos is conﬁned to a narrow velocity component
+that has only its more negative side (apparently) unaﬀected by line component blending.
+L1448COe: Observing this position, that is 3′ east of the L1448CO position, was again
+an attempt to look for small-scale structure in Blos. Here, unlike L1456Sn, there is a clear
+detection of the Zeeman signal. The Stokes I line proﬁle shape is somewhat diﬀerent from
+that at the L1448CO position, being at slightly more positive peak velocity and lacking the
+steep slope on the more negative velocity side. The close agreement in Blos between the
+two positions suggests that in spite of the diﬀerence in the Stokes I proﬁle, there is little
+diﬀerence in Blos.
+B5: B5 has an apparently simple, single line proﬁle. The Zeeman signal in the Stokes V
+spectrum is not unambiguous, but is consistent with the marginal detection given by the ﬁt.
+Although this source passes our three tests, the detection should be regarded as marginal or
+probable rather than certain.
+B217-2: The Stokes I proﬁle is fairly simple, although there is wide, weak plateau
+emission that does not, however, interfere with the Zeeman signal, which appears clear and
+unambiguous. The less than 2σ detection of the Zeeman eﬀect in the 1665 MHz line could
+lead to this being considered a marginal detection, although it fully meets our three detection
+criteria.
+TMC1: There is clearly a complex proﬁle, with at least three strong narrow components.
+Only the lowest velocity component has a clear Zeeman signal, at least on the low velocity
+
+
+=== PDF PAGE 16 ===
+– 16 –
+side. The higher velocity side is confused with the middle velocity component, and there
+is no Zeeman signal from the higher velocity line components. This does not necessarily
+mean there is only a very week ﬁeld in these components; blending may obscure the Stokes
+V Zeeman signatures from these components.
+L1544: This starless core has a fairly simple line proﬁle and an unambiguous Zeeman
+signal in the Stokes V spectrum.
+L Ori1: This position clearly has at least two velocity components, with the unambigu-
+ous Zeeman signal coming from the stronger, more positive velocity one.
+REFERENCES
+Beichman, C.A., Myers, P.C., Emerson, J.P., Harris, S., Mathieu, R., Benson, P.J., & Jen-
+nings, R.E. 1986, ApJ 307, 337
+Bourke, T. L., Myers, P. C., Robinson, G., & Hyland, A. R. 2001, ApJ 554, 916
+Crutcher, R. M. 1979, ApJ, 234, 881
+Crutcher, R. M., Troland, T. H., Goodman, A. A., Heiles, C., Kaz`es, I., & Myers, P. C.
+1993, ApJ, 407, 175
+Crutcher, R. M. 1999, ApJ, 520, 706
+Crutcher, R. M. & Troland, T. H. 2000, ApJ, 537, L139
+Crutcher, R. M. 2007, in Sky Polarisation at Far-Infrared to Radio Wavelengths: The Galac-
+tic Screen before the Cosmic Microwave Background, M.-A. Miville-Deschˆenes & F.
+Boulanger (eds), EAS Publication Series, volume 23, 37
+Dame, T. M., Hartmann, D., & Thaddeus, P. 2001, ApJ, 547, 792
+Dib, S. 2006, private communication
+Elmegreen, B. G. 2000, ApJ, 530, 277
+Elmegreen, B.G. & Scalo, J. 2004, ARAAp 42, p. 211-273
+Goodman, A.A., Crutcher, R.M., Heiles, C., Myers, P.C. & Troland, T.H. 1989, ApJ 338, p.
+L61-L64
+Girart, J. M., Rao, R., & Marrone, D. P. 2007, Science 313, 812
+
+
+=== PDF PAGE 17 ===
+– 17 –
+Heiles. C. 1999, Arecibo observatory Technical Memo 99-02
+Heiles, C., Perillat, P., Nolan, M., Lorimer, D., Bhat, R., Ghosh, T., Howell, E., Lewis, M.,
+O’Neil, K., Salter, C., & Stanimirovic, S. 2001, PASP, 113, 1247
+Heiles, C. & Troland, T. H. 2005, ApJ, 624, 773
+Kandori, R. & 13 coauthors, 2005, AJ 130, p. 2166-2184
+Kirk, J. M., Ward-Thompson, D., & Andr´e, P. 2005, MNRAS 360, p. 1506-1526
+Ladd, E. F., Myers, P. C., & Goodman, A. A. 1994, ApJ, 433, 117
+Lee, C.W. & Myers, P.C. 1999, Catalog of Optically Selected Cores, VizieR Online Data
+Catalog, vol. 212
+MacLow, M.-M., Klessen, R.S., Burkert, A., & Smith, M.D. 1998, Phys. Rev. Lettr. 80, p.
+2754-2757
+MacLow M.-M. & Klessen R. S. 2004, Rev. Mod. Phys., 76, 125
+McKee, C.F. 1999, in The Origin of Stars and Planetary Systems, Ed. Charles J. Lada &
+Nikolaos D. Kylaﬁs, Kluwer Academic Publishers, p. 29-66
+Moriarty-Schieven, G. H., Andersson, B-G, & Wannier, P. G. 1997, ApJ, 475, 642
+Mouschovias, T. Ch. & Ciolek, G. E. 1999, in The Origin of Stars and Planetary Systems,
+Ed. C. J. Lada & N. D. Kylaﬁs (Kluwer), p. 305
+Nakano, T. & Nakamura, T. 1978, PASJ, 30, 681
+Oliver, R. J., Masheder, M. R. W., & Thaddeus, P. 1996, A&A, 315, 578
+Onishi, T., Mizuno, A., Kawamura, A., Ogawa, H., & Fukui, Y. 1996, ApJ, 465, 815
+Onishi, T., Mizuno, A., Kawamura, A., Ogawa, H., & Fukui, Y. 1998, ApJ, 502, 296
+Ostriker, E., Gammie, C., & Stone, J. 1999, ApJ 513, p. 259-274
+Schneider, N., Stutzki, J., Winnewisser, G., & Block, D. 1998, A&A, 335, 1049
+Shu, F., Allen, A., Shang, H., Ostriker, E. C., & Li, Z.-Y. 1999, in The Origin of Stars and
+Planetary Systems, Ed. Charles J. Lada & Nikolaos D. Kylaﬁs, Kluwer Academic
+Publishers, p. 193-226
+
+
+=== PDF PAGE 18 ===
+– 18 –
+Tassis, K. & Mouschovias, T.Ch. 2004, ApJ 616, p. 283-287
+Troland, T. H. 1990, in Galactic and intergalactic magnetic ﬁelds; Proceedings of IAU Sym-
+posium 140, Ed. R. Beck, R. Wielebinski, & P. Kronberg, Kluwer Academic Publish-
+ers, p. 293-300
+Ward-Thompson, D., Kirk, J. M., Crutcher, R. M., Greaves, J. S., Holland, W. S., & Andr´e,
+P. 2000, ApJ 537, L135
+Wielebinski, R. & Beck, R. 2005, Cosmic Magnetic Fields, (Springer: Berlin, Heidelberg),
+2005
+Zimmermann, T., & Ungerechts, H. 1990, A&A, 238, 337
+This preprint was prepared with the AAS LATEX macros v5.2.
+
+
+=== PDF PAGE 19 ===
+– 19 –
+Table 1.
+Dark Cloud Core OH Results
+Name
+RAa
+Decb
+Dc
+rd
+τ e
+T1665
+T1667
+velf
+∆vg
+N21(H2)h
+n(H2)i
+L1457S
+02 56 05.9
+19 25 05
+300
+0.44
+49.3
+0.41
+0.65
+−5.2
+1.0
+4.1
+1500
+L1457Sn
+02 56 06.0
+19 28 05
+300
+0.44
+5.7
+0.38
+0.60
+−5.2
+1.4
+5.3
+2000
+L1448-CO
+03 25 30.5
+30 45 43
+300
+0.37
+28.1
+0.54
+0.99
+4.2
+0.93
+5.4
+2400
+L1448-COe
+03 25 44.6
+30 45 42
+300
+0.37
+31.4
+0.52
+0.90
+4.6
+0.89
+4.8
+2100
+L1455-CO
+03 27 40.1
+30 13 03
+300
+0.65
+21.2
+0.26
+0.53
+4.9
+1.5
+4.4
+1100
+N1333-8
+03 29 02.0
+31 13 33
+300
+0.46
+8.4
+0.30
+0.63
+7.8
+1.5
+5.2
+1800
+B5
+03 47 38.4
+32 52 43
+300
+0.45
+10.0
+0.63
+1.12
+10.1
+0.65
+4.3
+1600
+L1495(6)
+04 18 25.4
+28 24 29
+140
+0.25
+1.5
+1.25
+1.99
+8.1
+0.50
+6.2
+4100
+IRAM 04191
+04 21 57.0
+15 29 45
+140
+0.21
+14.8
+0.63
+0.95
+6.6
+0.63
+3.9
+3000
+B217-2
+04 28 08.6
+26 20 53
+140
+0.23
+12.8
+0.50
+0.86
+6.8
+0.47
+2.4
+1700
+L1521E
+04 32 20.0
+26 20 25
+140
+0.26
+11.1
+0.30
+0.56
+6.7
+0.71
+2.3
+1400
+L1521F
+04 28 39.8
+26 51 35
+140
+0.21
+4.9
+0.71
+1.16
+6.5
+0.46
+3.3
+2600
+L1524-2
+04 29 31.8
+26 59 59
+140
+0.40
+8.9
+0.72
+1.24
+6.4
+0.70
+5.2
+2100
+L1524-4
+04 30 05.7
+24 25 16
+140
+0.24
+6.3
+0.75
+1.30
+6.3
+0.49
+3.8
+2600
+L1551S2
+04 30 57.5
+18 15 35
+140
+0.18
+4.3
+0.63
+1.12
+6.6
+0.35
+2.3
+2100
+B18-5
+04 35 51.3
+24 09 21
+140
+0.18
+6.7
+0.57
+0.81
+5.8
+1.14
+6.2
+5600
+L1534
+04 39 34.8
+25 41 47
+140
+0.26
+1.3
+1.21
+1.57
+6.3
+0.76
+8.4
+5200
+TMC1
+04 41 33.0
+25 44 44
+140
+0.31
+23.7
+0.78
+1.24
+5.7
+1.26
+9.8
+5100
+L1507A1
+04 42 38.6
+29 43 45
+140
+0.26
+6.3
+0.77
+1.23
+6.2
+0.39
+3.0
+1900
+CB23
+04 43 31.5
+29 39 11
+140
+0.21
+11.1
+0.53
+0.86
+6.1
+0.36
+1.9
+1500
+L1544
+05 04 16.6
+25 10 48
+140
+0.12
+15.5
+1.04
+1.58
+7.2
+0.48
+4.9
+6600
+L Ori1
+05 31 38.3
+12 33 06
+400
+0.79
+32.2
+0.40
+0.55
+10.2
+0.99
+3.7
+800
+Ros4
+06 34 36.9
+04 12 37
+1600
+2.4
+9.9
+0.19
+0.45
+12.6
+1.51
+3.5
+200
+Mon16W
+06 40 47.4
+09 33 15
+950
+1.5
+17.3
+0.53
+0.75
+5.7
+1.55
+7.8
+800
+Mon16
+06 41 03.5
+09 33 13
+950
+1.3
+5.6
+0.38
+0.78
+6.1
+2.0
+8.6
+1100
+Mon16N
+06 41 03.6
+09 37 13
+950
+1.6
+21.5
+0.41
+0.89
+5.5
+1.82
+8.7
+900
+L723
+19 17 53.9
+19 12 19
+300
+0.46
+7.3
+0.34
+0.55
+11.0
+1.05
+3.6
+1300
+L771
+19 20 49.5
+23 29 57
+400
+0.34
+6.8
+0.42
+0.68
+10.9
+0.47
+2.0
+900
+L774w
+19 22 37.1
+23 25 10
+200
+0.21
+2.7
+0.38
+0.62
+11.0
+0.63
+2.4
+1900
+L774
+19 22 51.6
+23 25 11
+200
+0.21
+10.7
+0.49
+0.80
+11.0
+0.63
+3.1
+2400
+L663
+19 36 57.7
+07 34 17
+250
+0.15
+1.7
+0.45
+0.83
+8.3
+0.32
+1.5
+1700
+L694n
+19 41 07.1
+10 58 08
+250
+0.34
+6.7
+0.63
+1.00
+9.6
+0.43
+2.7
+1300
+L694s
+19 41 07.2
+10 51 28
+250
+0.34
+5.3
+0.49
+0.82
+9.4
+0.44
+2.2
+1100
+L810
+19 45 24.0
+27 51 01
+2000
+0.87
+6.5
+0.18
+0.68
+15.7
+1.45
+4.3
+800
+aJ2000: hr min sec
+bJ2000: ◦′ ′′
+
+
+=== PDF PAGE 20 ===
+– 20 –
+cDistance, pc
+dmean cloud radius to OH half-power point, pc
+ehours of integration time
+fVLSR, km s−1
+gfull-width at half-maximum, km s−1
+hH2 column density, H2 × 1021 cm−2
+iH2 volume density, H2 cm−3
+
+
+=== PDF PAGE 21 ===
+– 21 –
+Table 2.
+Dark Cloud Core Zeeman Results
+Name
+Blos(1665)a
+Blos(1667)a
+Blosa
+|Blos|
+σBlos
+∆B
+σ∆B
+MOHb
+Mvirialb
+L1457S
+−13.9 ± 4.7
+−11.3 ± 6.4
+−13.0 ± 3.8
+3.4
+0.3
+53
+111
+L1457Sn
+−12.8 ± 10.2
+−37.7 ± 14.2
+−21.3 ± 8.3
+2.6
+1.4
+69
+217
+L1448-CO
+−25.1 ± 4.6
+−27.6 ± 6.2
+−26.0 ± 3.7
+7.0
+0.3
+50
+81
+L1448-COe
+−23.4 ± 4.3
+−16.4 ± 5.3
+−20.6 ± 3.4
+6.1
+1.0
+44
+74
+L1455-CO
+−13.9 ± 7.7
+−3.1 ± 8.1
+−8.8 ± 5.6
+1.6
+1.0
+130
+370
+N1333-8
+−0.0 ± 10.4
+−9.2 ± 12.0
+−4.0 ± 7.8
+0.5
+0.6
+74
+260
+B5
+−18.1 ± 6.0
+−4.0 ± 5.8
+−10.8 ± 4.2
+2.6
+1.7
+59
+48
+L1495(6)
+7.9 ± 6.8
+−18.9 ± 7.0
+−5.1 ± 5.1
+1.0
+2.7
+26
+16
+IRAM 04191
+2.2 ± 4.6
+4.8 ± 5.5
+3.3 ± 3.5
+0.9
+0.4
+12
+21
+B217-2
+7.0 ± 5.4
+19.3 ± 5.1
+13.5 ± 3.7
+3.6
+1.7
+8.7
+13
+L1521E
+−0.6 ± 7.3
+11.4 ± 7.0
+5.7 ± 5.1
+1.1
+1.2
+11
+33
+L1521F
+1.2 ± 5.0
+−5.9 ± 6.6
+−1.4 ± 4.0
+0.4
+0.9
+9.8
+11
+L1524-2
+−11.9 ± 5.5
+0.3 ± 5.2
+−5.4 ± 3.8
+1.4
+1.6
+56
+49
+L1524-4
+−0.5 ± 4.5
+−2.6 ± 6.3
+−1.2 ± 3.6
+0.3
+0.3
+15
+15
+L1551S2
+9.4 ± 5.7
+2.6 ± 5.8
+6.1 ± 4.1
+1.5
+0.8
+5.1
+5.6
+B18-5
+1.5 ± 6.3
+−14.2 ± 9.2
+−3.6 ± 5.2
+0.7
+1.4
+13
+59
+L1534
+3.9 ± 9.2
+−3.5 ± 12.2
+1.2 ± 7.4
+0.2
+0.5
+38
+38
+TMC1
+10.7 ± 3.0
+7.1 ± 3.4
+9.1 ± 2.2
+4.1
+0.8
+64
+120
+L1507A1
+7.2 ± 6.3
+−5.6 ± 5.2
+−0.3 ± 4.0
+0.1
+1.6
+14
+10
+CB23
+−9.5 ± 5.7
+−4.8 ± 4.7
+−6.7 ± 3.6
+1.9
+0.6
+5.7
+6.9
+L1544
+10.8 ± 2.4
+10.8 ± 2.6
+10.8 ± 1.7
+6.4
+0.0
+4.7
+7.0
+L Ori1
+−18.1 ± 5.4
+−8.3 ± 8.1
+−15.0 ± 4.5
+3.3
+1.0
+160
+200
+Ros4
+−7.9 ± 10.9
+10.8 ± 23
+−4.4 ± 9.8
+0.4
+0.7
+1400
+1400
+Mon16W
+15.2 ± 14.1
+3.2 ± 9.9
+7.2 ± 8.1
+0.9
+0.7
+1200
+900
+Mon16
+17.8 ± 41
+73.4 ± 33
+51.3 ± 26.0
+2.0
+1.1
+1000
+1300
+Mon16N
+−1.6 ± 9.8
+9.8 ± 9.7
+4.2 ± 6.9
+0.6
+0.8
+1500
+1300
+L723
+11.9 ± 7.6
+−7.1 ± 8.1
+3.0 ± 5.5
+0.5
+1.7
+51
+130
+L771
+−0.9 ± 5.0
+−2.4 ± 5.5
+−1.6 ± 3.7
+0.4
+0.2
+16
+19
+L774w
+−7.0 ± 7.9
+−12.3 ± 9.9
+−9.1 ± 6.2
+1.5
+0.4
+7.2
+21
+L774
+−2.2 ± 4.1
+−10.6 ± 4.6
+−5.9 ± 3.1
+1.9
+1.4
+9.3
+21
+L663
+10.6 ± 7.4
+−6.0 ± 8.4
+3.4 ± 5.5
+0.6
+1.5
+2.3
+3.9
+L694n
+5.0 ± 3.5
+1.3 ± 4.7
+3.7 ± 2.8
+1.3
+0.6
+21
+16
+L694s
+3.6 ± 5.4
+−0.3 ± 5.9
+1.8 ± 4.0
+0.5
+0.5
+17
+17
+L810
+5.6 ± 14.0
+10.7 ± 11.0
+8.6 ± 8.8
+1.0
+0.3
+220
+460
+aine of sight magnetic ﬁeld, µG
+bMass, M⊙
+
+
+=== PDF PAGE 22 ===
+– 22 –
+3
+4
+5
+6
+7
+-0.3
+0
+0.3
+0.6
+Stokes V & I (K)
+L1448COe
+2
+3
+4
+5
+6
+7
+8
+-0.6
+-0.3
+0
+0.3
+0.6
+L1448CO
+-8
+-7
+-6
+-5
+-4
+-3
+-2
+-0.4
+-0.2
+0
+0.2
+0.4
+L1457Sn
+-8
+-7
+-6
+-5
+-4
+-3
+-2
+-0.4
+-0.2
+0
+0.2
+0.4
+Stokes V & I (K)
+L1457S
+8
+9
+10
+11
+12
+-0.3
+0
+0.3
+0.6
+0.9
+B5
+4
+5
+6
+7
+8
+9
+-0.3
+0
+0.3
+0.6
+B217-2
+4
+5
+6
+7
+8
+9
+-0.3
+0
+0.3
+0.6
+0.9
+LSR Velocity (km/s)
+Stokes V & I (K)
+TMC1
+5
+6
+7
+8
+9
+10
+-0.4
+0
+0.4
+0.8
+1.2
+LSR Velocity (km/s)
+L1544
+7
+8
+9
+10
+11
+12
+-0.4
+-0.2
+0
+0.2
+0.4
+LSR Velocity (km/s)
+L Ori1
+Fig. 1.— Arecibo Stokes I and V spectra for the 9 probable detection positions in the survey.
+Observed data are histogram plots; ﬁts to Stokes V are the dark lines. These are weighted
+means of the 1665 and 1667 results. The Stokes V spectra have been scaled up and shifted
+by -0.3 K for display purposes.
+
+
+=== PDF PAGE 23 ===
+– 23 –
+0
+2
+4
+6
+8
+10
+0
+10
+20
+30
+40
+50
+60
+N21 (H2/cm2)
+|Blos |( G)
+Fig. 2.— Results for Blos from the Arecibo dark cloud survey plotted against the H2 column
+density (N21 = 10−21N). The 9 probable detections (see text) are plotted as ﬁlled circles,
+while non-detections are plotted as open circles. Error bars are 1σ. The solid line is the
+weighted mean value for the mass to ﬂux ratio with respect to critical inferred from the
+Zeeman Blos data with no geometrical correction; λ ≈4.8±0.4. After geometrical corrections
+(see text), λc ≈2, or slightly supercritical. The dashed line is the critical mass to ﬂux ratio.

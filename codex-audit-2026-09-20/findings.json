@@ -1,0 +1,910 @@
+{
+  "content": [
+    {
+      "id": "C01",
+      "module": 9,
+      "line": 749,
+      "quote": "That second comparison is what the refutation rests on",
+      "context": "Check 10 — REFUTED, and one leg of it is soft. The Bondi rate exceeds Marrone et al.'s upper limits by a factor of $\\mathbf{40}$ at $\\sim30\\,r_S$ and $160$ at $\\sim100\\,r_S$ — but only for a near-equipartition field ; at $\\epsilon = 3$ per cent of equipartition their own $\\epsilon^{-2/3}$ scaling turns the $40$ into $\\mathbf{4}$, and a reversed field voids the upper limits entirely. Against their lower limits, which they state carry no such caveat and which they give as the ranges $1$–$2\\times10^{-8}$ and $2$–$4\\times10^{-9}$, the excess is a factor $\\mathbf{401}$ to $\\mathbf{4011}$ — and at least $\\mathbf{401}$ on the reading kindest to the model. That second comparison is what the refutation rests on, and it is independent of everything the first one assumes.",
+      "title": "A lower bound is used backwards to reject Bondi accretion",
+      "why": "The predicted rate exceeds an observational LOWER limit. That satisfies the inequality; it does not violate it. The factor 401 is arithmetically correct and logically irrelevant to the claimed rejection. The source explicitly discusses problems for very LOW accretion rates. The error is repeated in the narrative, verdict and figure interpretation. The conditional upper limits can constrain a model, but the lower limits cannot rescue an upper-limit argument whose assumptions have been relaxed.",
+      "replacement": "<div class=\"keyresult\"><b>Check 10 — a conditional constraint on the inward mass flux.</b> The Bondi estimate exceeds the quoted Faraday-rotation upper limits under the magnetic-field assumptions used to obtain them. Those assumptions must accompany the comparison. The lower limits impose a different requirement: the accretion rate must be large enough to produce the observed rotation measure. Our Bondi estimate satisfies those lower limits, so they provide no evidence against it. A claim that the inflow is reduced between the Bondi radius and the inner flow therefore requires an applicable upper limit or another independent constraint.</div>",
+      "severity": "Blocking",
+      "basis": "Marrone et al. (2007), downloaded PDF p. 4, paragraph beginning “Our RM”; independent inequality check.",
+      "standard": "Precise statement; valid inference from concrete evidence"
+    },
+    {
+      "id": "C02",
+      "module": 12,
+      "line": 690,
+      "quote": "The classical factor is larger than the measured one",
+      "context": "Refuted. Braginskii's classical viscous suppression factor is $\\mathbf{5.941\\times10^{25}}$. Zhuravleva et al. (2019) bound the measured suppression of the Coma cluster's effective viscosity at $\\sim10$ to $\\sim1000$. The classical factor is larger than the measured one by between $\\mathbf{22.8}$ and $\\mathbf{24.8}$ decades. Both decade figures are printed rather than rounded into a phrase , because a phrase cannot be checked and the phrase this one replaced read \"twenty-odd\".",
+      "title": "A viscosity upper bound becomes a fictitious measured interval",
+      "why": "The chapter acknowledges a one-sided bound in the caption, then treats suppression factors of roughly 10–1000 as the endpoints of a measured interval. For the cited Prandtl-number cases, the source constrains effective viscosity to be small: a still smaller value is not excluded by that inequality. Also, a local perpendicular component of a transport tensor is not directly the same quantity as an effective scalar viscosity inferred from cluster fluctuations. Neither the stated 22.8–24.8-decade discrepancy nor the claimed refutation follows. This is the same category of inference error as C01.",
+      "replacement": "<div class=\"keyresult\"><b>Check 4 — strong particle magnetisation, with effective transport unresolved.</b> The large value of $\\omega_i\\tau_i$ places the ions in the strongly magnetised regime. Braginskii's local perpendicular viscosity is correspondingly much smaller than the parallel coefficient. Zhuravleva et al. constrain an effective viscosity from cluster fluctuations; for the cases discussed here, their result is an upper bound on that viscosity, not a lower bound. A coefficient below the bound is not excluded. Moreover, relating a local anisotropic coefficient to the inferred effective viscosity requires a model of field geometry and the motions being measured. The present calculation supplies no such model and therefore does not test, or refute, the classical perpendicular coefficient.</div>",
+      "severity": "Blocking",
+      "basis": "Zhuravleva et al. (2019), downloaded PDF pp. 4–5 and p. 12; independent inequality check.",
+      "standard": "Precise statement; evidence interpretation; limits"
+    },
+    {
+      "id": "C03",
+      "module": 8,
+      "line": 833,
+      "quote": "Putting the second into the first is the whole of this section",
+      "context": "Module 7 measured a mixing law, $h = \\alpha A g t^2$, for a plane interface under a constant acceleration, and derived $g = m(1-m)R/t^2$ for a shell whose radius follows $R \\propto t^m$. Putting the second into the first is the whole of this section's theory.",
+      "title": "The supernova mixing-width bound substitutes variable acceleration into a constant-acceleration law",
+      "why": "The chapter correctly identifies h = α A g t² as a constant-acceleration relation, then inserts an instantaneous g(t). An accumulated displacement cannot generally be obtained this way. Using the Read-type history dependence introduced in Module 7, h = α A [∫√g dt]², and R = C t^m gives h/R = 4αA(1−m)/m when the idealised history begins at zero. This is not αAm(1−m). At m = 1/2 the two differ by a factor 16. A finite onset time changes the result again. This calculation is a counterexample to the asserted bound, not a replacement validated model of a curved, expanding shell. Proposition 9 and its headline refutation need to be withdrawn pending an appropriate model.",
+      "replacement": "<p>The planar relation $h=\\alpha Agt^2$ assumes constant acceleration. The shell acceleration $g(t)=m(1-m)Ct^{m-2}$ is time dependent, so inserting its instantaneous value into that relation does not establish a mixing-width bound. For comparison, applying the history-dependent prescription $h=\\alpha A[\\int_{t_0}^{t}\\sqrt{g(t')}\\,dt']^2$ gives</p>\n<p>$$\\frac{h}{R}=\\frac{4\\alpha A(1-m)}{m}\\left[1-\\left(\\frac{t_0}{t}\\right)^{m/2}\\right]^2,\\qquad 0\\lt m\\lt 1.$$</p>\n<p>This expression still neglects curvature, expansion effects on the mixing layer and the evolution of its density contrast. It demonstrates why the acceleration history matters; it does not supply a tested supernova-shell law. The observed width cannot be used to reject the planar model through the proposed instantaneous-acceleration bound.</p>",
+      "severity": "Blocking",
+      "basis": "Module 7 Read-integral prescription; independent integration and numerical counterexample in independent-checks.json.",
+      "standard": "Proof; hypotheses; limit case"
+    },
+    {
+      "id": "C04",
+      "module": 12,
+      "line": 549,
+      "quote": "Below it no field strength is enough; above it the cloud is held",
+      "context": "Module 5 §8 is owed this: magnetic pressure and tension add support against collapse, and the statement that results is not an extra pressure term but a critical mass-to-flux ratio . Below it no field strength is enough; above it the cloud is held for as long as the flux stays with the gas.",
+      "title": "The magnetic critical mass-to-flux interpretation is reversed",
+      "why": "At fixed geometry the subcritical side has relatively more magnetic support; the supercritical side has too much mass per unit flux for magnetic support alone. The later proposition and discussion have the intended direction, so the opening directly contradicts what follows. Even on the subcritical side, “held” needs the qualification that gas can still move along field lines and that non-ideal processes can change the flux-to-mass relation.",
+      "replacement": "<p>Magnetic support is characterised by a critical mass-to-flux ratio. A cloud below the critical ratio is magnetically subcritical: in the idealised geometry, magnetic stresses can oppose collapse across the field. A cloud above it is supercritical: the field cannot prevent gravitational collapse by itself. Flux freezing preserves the ratio for a material flux tube, whereas processes such as ambipolar diffusion can change it. The numerical critical coefficient depends on the cloud geometry.</p>",
+      "severity": "Blocking",
+      "basis": "Troland & Crutcher (2008), downloaded PDF p. 2 and p. 3; manuscript Proposition 7.",
+      "standard": "Precise statement; limit case"
+    },
+    {
+      "id": "C05",
+      "module": 9,
+      "line": 757,
+      "quote": "both readings refute the model as stated",
+      "context": "Check 11 — REFUTED, independently of the magnetic field. A geometrically thin accretion disc radiates with $\\eta_{\\rm rad} \\approx 0.1$. The implied $\\eta_{\\rm rad} \\approx 4\\times10^{-9}$ is smaller by a factor of $\\mathbf{2\\times10^{7}}$. Either the gas is not accreting at the Bondi rate, or it is accreting and radiating almost nothing — and both readings refute the model as stated, because the model assumes radiation is dynamically unimportant and that the mass arrives.",
+      "title": "The luminosity test compares unlike efficiencies and contradicts the assumed energy model",
+      "why": "The numerator used here is a 2–10 keV luminosity. The standard thin-disc efficiency is bolometric. Dividing the band luminosity by a Bondi supply rate gives a band-specific apparent efficiency referenced to the outer supply, not a measured radiative efficiency of the material reaching the black hole. More fundamentally, adiabatic Bondi accretion does not assume a thin-disc efficiency of 0.1. Radiating little is compatible with radiation being dynamically unimportant. Module 11 §9 carries this invalid comparison forward rather than correcting it.",
+      "replacement": "<div class=\"keyresult\"><b>Check 11 — a low X-ray luminosity relative to the outer gas supply.</b> The ratio $L_{2-10\\,{\\rm keV}}/(\\dot M_{\\rm B}c^2)$ is approximately $4\\times10^{-9}$ for the inputs used here. It is an X-ray-band luminosity divided by the rest-mass power associated with the Bondi supply estimate. It is not a bolometric radiative efficiency, and the actual inward mass flux may differ from $\\dot M_{\\rm B}$. Comparison with a thin-disc efficiency therefore requires both a bolometric luminosity and an estimate of the mass reaching the emitting region. The low band luminosity alone does not refute an adiabatic Bondi model.</div>",
+      "severity": "Blocking",
+      "basis": "The manuscript’s own luminosity-band definition and model assumptions; dimensional and model-consistency analysis.",
+      "standard": "Precise definition; valid comparison; limits"
+    },
+    {
+      "id": "C06",
+      "module": 11,
+      "line": 106,
+      "quote": "Inside $R_{\\rm circ}$ the gas cannot go",
+      "context": "Inside $R_{\\rm circ}$ the gas cannot go without losing angular momentum. It does not stop moving — it orbits. What was a radial infall becomes a disc, and the question changes from what holds the gas up? to what lets it down?",
+      "title": "Circularisation radius is mistaken for a ballistic stopping radius",
+      "why": "The force-balance radius l²/(GM) is the radius of a circular orbit with that angular momentum. It is not the pericentre of a parcel arriving on a parabolic orbit. For zero orbital energy, solving l²/(2R²)−GM/R=0 gives R_p = l²/(2GM) = R_circ/2. Gas can pass inside R_circ without first losing angular momentum; dissipation of orbital energy permits circularisation. Angular-momentum transport is then needed for sustained inward motion through approximately circular orbits.",
+      "replacement": "<p>The radius $R_{\\rm circ}=\\ell^2/(GM)$ is the radius of a circular orbit with specific angular momentum $\\ell$. It is not a hard inner limit to ballistic infall: a zero-energy orbit with the same $\\ell$ has pericentre $R_{\\rm p}=\\ell^2/(2GM)$. Gas can circularise near $R_{\\rm circ}$ by dissipating orbital energy. Once it forms an approximately Keplerian disc, further inward motion through nearly circular orbits requires angular-momentum transport.</p>",
+      "severity": "Blocking",
+      "basis": "Independent effective-potential calculation in independent-checks.json.",
+      "standard": "Precise definition; proof; counterexample"
+    },
+    {
+      "id": "C07",
+      "module": 2,
+      "line": 499,
+      "quote": "The density cancels",
+      "context": "The density cancels, so the Reynolds number of a gas depends on its temperature, speed and size but not on how much of it there is.",
+      "title": "The Reynolds-number interpretation ignores the density inside the mean free path",
+      "why": "An explicit factor of ρ cancels when the kinetic viscosity estimate is substituted. Density dependence does not disappear: for a neutral gas λ = 1/(√2 nσ), so Re is proportional to n at fixed speed, temperature, cross-section and system size. For a Coulomb plasma the collision length also depends on density. The formula Re ≈ 3 Ma_th/Kn is useful; its stated physical interpretation is wrong.",
+      "replacement": "<p>The explicit factor of $\\rho$ cancels on substituting the kinetic estimate of viscosity, giving $\\mathrm{Re}\\simeq3\\mathrm{Ma}_{\\rm th}/\\mathrm{Kn}$. The density still enters through $\\lambda$. For neutral hard-sphere collisions, $\\lambda=(\\sqrt{2}n\\sigma)^{-1}$, so $\\mathrm{Re}\\propto n$ when $u$, $L$, $T$ and $\\sigma$ are fixed. The formula relates three dimensionless measures of the same gas; it does not make the Reynolds number independent of density.</p>",
+      "severity": "Major",
+      "basis": "Module 1 mean-free-path formula; independent substitution.",
+      "standard": "Precise statement; physical interpretation"
+    },
+    {
+      "id": "C08",
+      "module": 1,
+      "line": 549,
+      "quote": "Fewer than one proton in three",
+      "context": "Fewer than one proton in three arriving at Earth has collided even once since it left the Sun. And yet magnetohydrodynamic models of the solar wind reproduce its large-scale structure — the spiral field, the stream interaction regions, the propagation of coronal mass ejections — with considerable success. Something other than collisions is confining the particles.",
+      "title": "The solar-wind collision count uses spatial optical depth instead of collisional age",
+      "why": "The bulk plasma travels outward at U(r), whereas λ is formed from a thermal speed and a relaxation time. The relevant accumulated relaxation measure is ∫dt/τ = ∫dr/[Uτ] = ∫(v_th/U)dr/λ. Omitting v_th/U changes the quantity. Extending a fitted outer-wind power law to r=0 is also unsupported. Finally, a Coulomb deflection time describes accumulated small-angle scattering, not a Poisson count of discrete binary encounters. The claimed fraction of protons with no collision is not established.",
+      "replacement": "<p>To estimate cumulative collisional relaxation, follow a plasma element from a specified starting radius $r_0$ to $r_1$. Its collisional age is $A_c=\\int_{r_0}^{r_1}dr/[U(r)\\tau_c(r)]$. If the convention is $\\lambda=v_{\\rm th}\\tau_c$, this becomes $A_c=\\int_{r_0}^{r_1}[v_{\\rm th}(r)/U(r)]\\;dr/\\lambda(r)$. The result depends on the flow and temperature profiles and on the starting radius. Because Coulomb relaxation accumulates many small deflections, $A_c$ should not be interpreted here as a measured fraction of particles that have undergone a discrete collision.</p>",
+      "severity": "Major",
+      "basis": "Verscharen et al., Living Reviews in Solar Physics (2019), equation 133; manuscript collision-time convention.",
+      "standard": "Definition; proof; concrete interpretation"
+    },
+    {
+      "id": "C09",
+      "module": 3,
+      "line": 178,
+      "quote": "It is forced by the observed luminosity",
+      "context": "Note the direction of this argument. The small imbalance is not assumed in order to simplify the equations. It is forced by the observed luminosity. By (2.5), an imbalance larger than about $10^{-24}$ means contraction on a timescale $t$ shorter than $t_{\\rm KH}$. Such a contraction releases gravitational energy of order $GM^2/R$ in time $t$, a power $GM^2/(Rt)$ larger than $L$ by the factor $t_{\\rm KH}/t$ from (1.2). By the virial argument of §8 , half of that energy must leave the star, and the observed luminosity does not carry it. Setting $\\mathbf{u}=\\mathbf{0}$ in (2.1) discards a term of that relative size.",
+      "title": "Solar luminosity does not bound all departures from hydrostatic balance at 10⁻²⁴",
+      "why": "The argument assumes a particular slowly evolving contraction with a secular gravitational-energy release. It cannot exclude oscillatory accelerations or convection, whose work need not accumulate in the assumed way. A purely illustrative displacement of 1 m with a 300 s period has acceleration/g ≈ 1.6×10⁻⁶ at the surface, already eighteen orders larger, without implying sustained contraction. This is a logical counterexample, not a claim about a measured solar amplitude. Hydrostatic balance remains an excellent mean-structure approximation; the proposed observational precision does not follow.",
+      "replacement": "<p>For a star evolving through approximately hydrostatic states on a timescale $t_{\\rm evol}$, a characteristic secular acceleration is $R/t_{\\rm evol}^2$. Its ratio to gravity is of order $(t_{\\rm dyn}/t_{\\rm evol})^2$. Taking a thermal evolution timescale therefore motivates a small secular acceleration. This estimate does not bound oscillatory or convective accelerations and is not a luminosity-derived error bar on hydrostatic balance. We use hydrostatic equilibrium to model the mean stellar structure, while treating motions and their timescales separately.</p>",
+      "severity": "Major",
+      "basis": "Independent counterexample; inspection of the assumptions in §2 and §8.",
+      "standard": "Hypotheses; proof; scope"
+    },
+    {
+      "id": "C10",
+      "module": 6,
+      "line": 367,
+      "quote": "the table's own, $\\mu = \\rho k_BT/(P\\,m_u)$",
+      "context": "Table 1's $\\nabla_\\mu$ column shows the Sun's. The $\\mu$ used there is the table's own, $\\mu = \\rho k_BT/(P\\,m_u)$, so no ionisation assumption enters. The share of $N^2$ contributed by the Ledoux term is $+84.05$ per cent at $0.050\\,R$ ($\\mu = 0.77684$, $\\nabla_\\mu = +0.37196$), $+74.96$ per cent at $0.100\\,R$ ($\\mu = 0.69264$, $\\nabla_\\mu = +0.22043$), $+50.74$ per cent at $0.150\\,R$, $+16.53$ per cent at $0.200\\,R$, $+3.07$ per cent at $0.251\\,R$, $+1.37$ per cent at $0.302\\,R$, $+0.67$ per cent at $0.400\\,R$ and $+0.87$ per cent at $0.598\\,R$. The gradient left by hydrogen burning is large where it exists and dies away outside the burning core.",
+      "title": "An effective equation-of-state parameter is used as a conserved composition variable",
+      "why": "The Ledoux proof assumes the parcel retains its composition. The inferred μ_eff = ρkBT/(Pm_u) can vary because of ionisation and non-ideal equation-of-state effects, not only composition. The chapter itself warns at line 371 not to feed the outer gradient into Proposition 3, yet uses it to move the boundary to 0.7306 R and calls the displacement an upper bound without proof. Similarly a measured background ∇ plateau is not by itself a measurement of the thermodynamic derivative ∇ad. This undermines the claimed precision of the solar stability calculation.",
+      "replacement": "<p>The quantity $\\mu_{\\rm eff}=\\rho k_BT/(Pm_u)$ inferred from this table is an equation-of-state diagnostic. Its gradient cannot automatically be identified with a composition gradient carried unchanged by a displaced parcel. A consistent buoyancy calculation uses the model's thermodynamic derivatives; for hydrostatic stratification one may write $N^2=g[(1/\\Gamma_1)d\\ln P/dr-d\\ln\\rho/dr]$, with $\\Gamma_1$ evaluated for an adiabatic displacement at fixed composition. Alternatively, the Ledoux form requires actual composition variables and the corresponding equation-of-state derivatives. The effective-$\\mu$ calculation is illustrative and does not establish a precise shift, or an upper bound on the shift, of the convection-zone boundary.</p>",
+      "severity": "Major",
+      "basis": "Current Table 1, Proposition 3 and its explicit caveat; thermodynamic definition of Γ₁.",
+      "standard": "Defined terms; consistent hypotheses; valid numerical interpretation"
+    },
+    {
+      "id": "C11",
+      "module": 10,
+      "line": 770,
+      "quote": "most probable $\\rho/\\langle\\rho\\rangle$",
+      "context": "$\\mathcal{M}$ $b$ $\\sigma_s$ $\\sigma_\\rho/\\langle\\rho\\rangle = b\\mathcal{M}$ $s_0$ most probable $\\rho/\\langle\\rho\\rangle$",
+      "title": "The density table confuses a lognormal median with its mode",
+      "why": "The last column is exp(s₀), the median of x=ρ/⟨ρ⟩ and the value corresponding to the mode of s=ln x. The mode of the density PDF p(x) is exp(s₀−σ_s²). The Jacobian p(x)=p_s(ln x)/x matters. For Mach 10 and b=1, the displayed 0.0995 is the median; the density mode is about 0.000985. The simplest repair is to relabel the column, preserve the computed values, and explain the distinction.",
+      "replacement": "<p>Because $s=\\ln x$ is Gaussian with mean $s_0=-\\sigma_s^2/2$, the median density ratio is $x_{\\rm med}=e^{s_0}$. The density probability distribution is $p_x(x)=p_s(\\ln x)/x$, whose maximum occurs at $x_{\\rm mode}=e^{s_0-\\sigma_s^2}$. The final column below lists the <b>median</b> density ratio, not the mode of the density distribution. At $\\mathcal M=10$ and $b=1$, these are approximately $0.0995$ and $0.000985$, respectively.</p>\n<p><b>Replacement table heading:</b> median $\\rho/\\langle\\rho\\rangle$.</p>",
+      "severity": "Major",
+      "basis": "Independent change-of-variables derivation and calculation.",
+      "standard": "Defined terms; proof; numerical interpretation"
+    },
+    {
+      "id": "C12",
+      "module": 11,
+      "line": 649,
+      "quote": "the true gap may be smaller than $5$ and cannot be larger",
+      "context": "Gap (b) is the one the review is about, and it is uncomfortable for this book specifically. The simulations are of the magnetorotational instability that Module 12 §9 derives. The mechanism this book builds does not, in the calculations that solve it directly, reach the $\\alpha$ that observations require. Two things keep that from being a refutation of the mechanism. The authors' Sect. 4 notes that the limitations of the simulations — restricted box sizes, boundary conditions, and above all the suppression of any globally imposed field — \"would indeed tend to lead to underestimating the value of $\\alpha$\", so the side more likely to be wrong is the theoretical one. And the bound points down, so the true gap may be smaller than $5$ and cannot be larger than stated from that side alone.",
+      "title": "The simulation-to-observation inequality is reversed",
+      "why": "The quoted simulation result is α_sim ≲ 0.02, and the observational range begins around 0.1. For those reported values the ratio is at least 5, and can be larger if α_sim is smaller. It is a separate physical possibility that more complete simulations would increase α. The prose confuses that possibility with the direction of the numerical bound.",
+      "replacement": "<p>For the quoted comparison, $\\alpha_{\\rm obs}\\gtrsim0.1$ and $\\alpha_{\\rm sim}\\lesssim0.02$ imply $\\alpha_{\\rm obs}/\\alpha_{\\rm sim}\\gtrsim5$. Smaller simulated values increase this ratio. The authors also discuss limitations that may cause the simulations to underestimate the physical stress. Addressing those limitations could reduce the discrepancy, but that possibility does not reverse the inequality for the results being compared.</p>",
+      "severity": "Major",
+      "basis": "King, Pringle & Livio (2007), downloaded PDF pp. 4 and 6; independent inequality check.",
+      "standard": "Precise statement; inference"
+    },
+    {
+      "id": "C13",
+      "module": 12,
+      "line": 202,
+      "quote": "which is the physical reason §6 has a surface to find",
+      "context": "The two pressures of Definition 1, for the five census rows, on logarithmic axes spanning twenty decades. The dashed diagonal is $\\beta = 1$; the two faint diagonals are $\\beta = 100$ and $\\beta = 0.01$. The active-region corona and the molecular cloud have the same $\\beta$ to four figures — both $0.0347$, because $B^2/nT$ happens to agree — and therefore sit on the same diagonal while lying $12.0$ decades apart in absolute pressure. A figure that plotted $\\beta$ alone could not show that. The solar wind sits $0.079$ of a decade from $\\beta = 1$, which is the physical reason §6 has a surface to find.",
+      "title": "Plasma beta is conflated with the Alfvén Mach number",
+      "why": "Beta compares thermal and magnetic pressure. An Alfvén surface is defined by the relevant flow speed matching the Alfvén speed, not by beta crossing unity. For the simple speed definitions used here, M_A²=(γβ/2)M_s². At M_A=1 and M_s=10, beta is 0.012 for γ=5/3. A pressure-only census lacking a bulk-flow speed cannot locate the surface. Likewise “the gas drags the field” requires an induction/transport argument, not beta alone.",
+      "replacement": "<p>The pressure diagram compares thermal and magnetic stresses through $\\beta$. It does not locate the Alfvén surface, which depends on the flow speed. With $M_s=U/c_s$ and $M_A=U/v_A$, the definitions give $M_A^2=(\\gamma\\beta/2)M_s^2$. Thus $M_A=1$ need not occur at $\\beta=1$. Section 6 uses the wind speed and magnetic field to examine that separate transition.</p>",
+      "severity": "Major",
+      "basis": "Independent substitution of the chapter’s definitions.",
+      "standard": "Defined terms; concrete interpretation"
+    },
+    {
+      "id": "C14",
+      "module": 5,
+      "line": 534,
+      "quote": "Lynds 694-2, which contains a star",
+      "context": "Fig. 3 places every row of Kandori's Table 4 against $\\xi_{\\rm crit} = 6.4508$. Twelve of the fifteen rows lie above it. Counting globules rather than rows, and only those without an embedded star, Kandori et al. write: \"there are three stable starless globules and eight unstable starless globules.\" Barnard 68 lies $(6.9 - 6.4508)/0.2 = 2.25$ standard deviations above the critical value. Lynds 694-2, which contains a star, lies $6.18$ standard deviations above. The two rows below by a significant margin are CB 87, at $3.38$ standard deviations, and Lynds 498, at $4.38$. The Coalsack's two rows give opposite verdicts ($5.8$ and $7.0$); Kandori's count of three stable globules includes it as stable.",
+      "title": "The cited source does not say that L694-2 contains a star",
+      "why": "Kandori et al. distinguish Barnard 335, with a Class 0 source, from other listed globules without IRAS sources. They classify L694-2 as “star-forming” because it shows inward gas motion. The manuscript silently converts that classification into an embedded-star detection. This finding concerns what the cited paper supports, not a claim that no later observation could change the object’s classification.",
+      "replacement": "<p>Kandori et al. place Lynds 694-2 in their star-forming category because of evidence for inward gas motion. That classification should not be restated as a detection of an embedded star: their discussion distinguishes it from Barnard 335, which has an identified Class 0 source. The quoted Bonnor–Ebert fit can still be compared with the critical dimensionless radius, subject to the equilibrium model's assumptions.</p>",
+      "severity": "Major",
+      "basis": "Kandori et al. (2005), downloaded PDF p. 5, §2.1.",
+      "standard": "Concrete source attribution; precise statement"
+    },
+    {
+      "id": "C15",
+      "module": 1,
+      "line": 146,
+      "quote": "Equation (2.1) is exact and unusable",
+      "context": "Equation (2.1) is exact and unusable. It is a partial differential equation for a function of six variables plus time, and the collision term is an integral over the velocities of every possible collision partner. The fluid description is the bet that we never need it.",
+      "title": "The foundational kinetic model is called exact, then dismissed",
+      "why": "The Boltzmann equation with the stated binary collision closure is already a model, with dilute-gas and molecular-chaos assumptions. It does not retain all particle correlations. “Unusable” also contradicts the book’s later recommendation to solve kinetic equations where fluid closures fail. A capable reader needs to understand what is approximated at each level, not to accept a false exact-model versus usable-model dichotomy.",
+      "replacement": "<p>The Boltzmann equation describes the evolution of the one-particle distribution under a dilute-gas collision model. Its collision term assumes that the incoming particles' velocities are uncorrelated at the level required for this closure. The equation retains much more velocity-space information than a five-field fluid model, so solving it is generally more expensive. A fluid approximation is useful when the moments needed for the problem can be evolved with a justified closure.</p>",
+      "severity": "Major",
+      "basis": "Current equation and surrounding definitions; MIT OCW 2.57 lecture notes, Boltzmann-equation assumptions.",
+      "standard": "Precise statement; model hypotheses"
+    },
+    {
+      "id": "C16",
+      "module": 1,
+      "line": 355,
+      "quote": "No closed fluid description exists",
+      "context": "$\\mathrm{Kn}\\gtrsim10^{-1}$ none — the series fails No closed fluid description exists; the kinetic equation (2.1) must be solved. — —",
+      "title": "Failure of a collisional closure is overstated as failure of every fluid description",
+      "why": "A large Knudsen number invalidates the local collisional Chapman–Enskog argument being used. It does not prove that no useful moment closure exists. The book later discusses magnetised, anisotropic and collisionless cases. Conversely, a small Knudsen number does not by itself justify dropping viscosity: the relevant force ratio is set by Re. Using the book’s relation, Kn=10⁻⁴ and Ma_th=10⁻⁶ gives Re≈0.03, a continuum flow dominated by viscosity.",
+      "replacement": "<p>When the collision length is comparable to the macroscopic scale, the local collisional closure used here is no longer controlled. A kinetic treatment or a separately justified moment closure is then needed. Small $\\mathrm{Kn}$ supports a continuum approximation, but the inviscid limit requires an additional comparison: $\\mathrm{Re}\\gg1$ on the scales of interest. Heat transport, time dependence and boundary layers may impose further restrictions.</p>",
+      "severity": "Major",
+      "basis": "Cross-check with Module 2 Proposition 12 and later magnetic closures; numerical counterexample.",
+      "standard": "Hypotheses; rescue or limit case"
+    },
+    {
+      "id": "C17",
+      "module": 4,
+      "line": 164,
+      "quote": "When the ratio approaches one, the wave steepens into a shock",
+      "context": "The dropped term $(\\mathbf{u}_1\\cdot\\nabla)\\mathbf{u}_1$ is the one that matters most. For a wave of speed $c$ and wavelength $\\lambda$, $\\partial\\mathbf{u}_1/\\partial t$ is of order $|\\mathbf{u}_1|c/\\lambda$ and $(\\mathbf{u}_1\\cdot\\nabla)\\mathbf{u}_1$ is of order $|\\mathbf{u}_1|^2/\\lambda$. Their ratio is $|\\mathbf{u}_1|/c$, the Mach number of the fluid motion. Linear theory is therefore the theory of motions whose speed is small compared with the sound speed. When the ratio approaches one, the wave steepens into a shock, which is the subject of Module 8.",
+      "title": "Small acoustic amplitude does not prevent shock formation over long propagation distances",
+      "why": "The local ratio of nonlinear to linear terms estimates the per-period error. Weak nonlinearity can accumulate: a compressive acoustic wave of velocity amplitude δu can steepen over a time of order 1/(kδu), even when δu/c_s≪1. Also, the statement identifies linear theory in general with subsonic motion, although this derivation is specifically a perturbation about a uniform acoustic background.",
+      "replacement": "<p>For these acoustic perturbations, the instantaneous ratio of the nonlinear advection term to the linear term is of order $|\\mathbf u_1|/c_s$. A small ratio justifies linear evolution over sufficiently short times. Nonlinear steepening can nevertheless accumulate over many periods: for a compressive wave the characteristic steepening time is of order $(k|\\mathbf u_1|)^{-1}$. Shock formation therefore does not require the perturbation velocity to first become comparable with the sound speed.</p>",
+      "severity": "Major",
+      "basis": "Independent timescale argument from the terms displayed in the chapter.",
+      "standard": "Hypotheses; limit case"
+    },
+    {
+      "id": "C18",
+      "module": 6,
+      "line": 126,
+      "quote": "It nevertheless convects every afternoon",
+      "context": "A terrestrial case sets the difficulty of the first question immediately. The International Standard Atmosphere fixes the tropospheric lapse rate at $6.50\\ \\mathrm{K\\,km^{-1}}$, against a dry adiabatic value $g/c_p = 9.761\\ \\mathrm{K\\,km^{-1}}$ for dry air. The ratio is $0.6659$, which makes the standard troposphere a polytrope of index $n = 4.2558$, with $\\nabla = 1/(n+1) = 0.19026$ against the diatomic adiabatic value $2/7 = 0.28571$. By the criterion of §2 the troposphere is stable, with $33$ per cent to spare. It nevertheless convects every afternoon. The resolution is that air is not dry: a saturated parcel releases about $2.5\\times10^{10}\\ \\mathrm{erg\\,g^{-1}}$ of latent heat as it rises and condenses, which warms it on the way up and lowers its effective lapse rate to $5$–$6\\ \\mathrm{K\\,km^{-1}}$, below the ambient $6.5$. Moist convection is unstable where dry convection is not. Problem C1 works this through.",
+      "title": "A standard atmosphere is treated as a universal weather profile",
+      "why": "The International Standard Atmosphere specifies a reference lapse rate, not every afternoon’s actual stratification. Dry convection can arise over a heated surface; moisture is not the only resolution of the comparison. The latent heat quoted is per gram of condensed water, not a fixed heat release per gram of the rising air parcel. The same over-attribution appears in Module 3’s explanation of the difference from the standard lapse rate.",
+      "replacement": "<p>The standard tropospheric lapse rate is smaller than the dry adiabatic lapse rate, so this reference profile is stable to unsaturated adiabatic displacements. An actual daytime boundary layer can have a different profile and may support dry convection above a heated surface. In saturated air, condensation releases latent heat and reduces the parcel's cooling rate; the moist stability criterion can then differ from the dry one. The released heat is the latent heat per unit mass of water multiplied by the amount of water condensed, not a fixed heat input per unit mass of air.</p>",
+      "severity": "Major",
+      "basis": "Definition of the reference profile; parcel thermodynamics; cross-check with Module 3.",
+      "standard": "Precise statement; defined quantities; scope"
+    },
+    {
+      "id": "C19",
+      "module": 6,
+      "line": 241,
+      "quote": "every solar g mode must have a period longer",
+      "context": "and the corresponding buoyancy period $2\\pi/N_{\\max}$ is $38.8$ minutes. The maximum lies inside that window because $N\\to0$ at the centre, where $g\\to0$, and again at the base of the convection zone. Since a gravity mode of the star is a standing pattern of the oscillation of Proposition 2, and no such oscillation can be faster than the local $N$, every solar g mode must have a period longer than $38.8$ minutes. The Sun's famous five-minute oscillations are therefore acoustic, as Module 4 treated them, and the two mode families cannot be confused by their periods. This is a prediction of the model read through Proposition 2, not a check: no measured g-mode period is compared against it here.",
+      "title": "A conditional Schwarzschild estimate is promoted to a universal solar-mode bound",
+      "why": "The 38.8 min estimate uses a maximum N/(2π)=430.06 μHz without the composition term. The same table gives a Ledoux value of 453.84 μHz, corresponding to 36.72 min. Even taking the table at face value, the stronger universal bound does not follow. This does not prove an observed solar mode below 38.8 min; it identifies an inconsistent inference. The general gravity-wave frequency constraint also needs a specified oscillation model.",
+      "replacement": "<p>In the composition-free approximation used for this estimate, the maximum buoyancy frequency corresponds to a period of about $38.8$ minutes. This is a characteristic lower-period scale for gravity waves within that approximation. It is not a universal lower bound for solar gravity modes: composition changes the buoyancy frequency, as the last column of Table 1 already shows. Quantitative mode periods require a consistent stratification and the stellar oscillation boundary-value problem.</p>",
+      "severity": "Major",
+      "basis": "Current Table 1 and §3.1; independent reciprocal-frequency calculation.",
+      "standard": "Hypotheses; consistency; limit case"
+    },
+    {
+      "id": "C20",
+      "module": 7,
+      "line": 119,
+      "quote": "a growth rate that depends on the wavelength of the disturbance",
+      "context": "This module asks the same question about a surface . Two fluids of different densities meet across a plane, and the properties jump rather than slide. That is not a special case of the earlier work: a jump is where a gradient's length scale goes to zero, and the earlier criteria, which compare one length against another, have nothing left to compare. A separate calculation is needed, and it produces something the earlier ones did not — a growth rate that depends on the wavelength of the disturbance, so the interface picks a scale.",
+      "title": "The interface introduction denies a result already derived in the Jeans chapter",
+      "why": "Module 5 explicitly derives a wavelength-dependent growth rate. Moreover, wavelength dependence does not automatically select a finite fastest-growing scale: ideal sharp-interface Rayleigh–Taylor growth without regularisation increases towards short wavelengths. The new ingredient is the interface boundary conditions, not the invention of wavelength-dependent stability.",
+      "replacement": "<p>We now examine perturbations of an interface between two fluids. As in the Jeans calculation, different wavelengths can grow at different rates. The new step is to match the perturbations on the two sides through the interface conditions. A preferred finite wavelength exists only when the relevant stabilising physics or finite interface structure supplies one; the ideal sharp-interface problem need not select such a scale.</p>",
+      "severity": "Major",
+      "basis": "Module 5 dispersion relation and Module 7 limiting cases.",
+      "standard": "Dependencies; precise statement; limits"
+    },
+    {
+      "id": "C21",
+      "module": 8,
+      "line": 124,
+      "quote": "Such a surface is a shock",
+      "context": "If the equations contain no length, nothing in them forbids a solution in which $\\rho$, $v$ and $p$ change by a finite amount across zero distance. Such a surface is a shock . The physical layer is of course not of zero thickness: Problem D2 works out that in sea-level air it is a few mean free paths, about $2\\times10^{-5}\\ \\mathrm{cm}$, which is $2\\times10^{8}$ times thinner than the Trinity fireball was one millisecond after detonation. Against every other length in the problem that is zero, and the idealisation is safe by eight orders of magnitude.",
+      "title": "A discontinuity is not necessarily a shock",
+      "why": "A contact discontinuity can have a density jump without the mass flux and irreversible compression characteristic of a shock. The definition should distinguish these before introducing Rankine–Hugoniot conditions, which apply more generally to conservation-law discontinuities.",
+      "replacement": "<p>The inviscid equations can admit discontinuities. A shock is a propagating discontinuity across which matter flows and, for an admissible compressive gas-dynamic shock, entropy increases. A contact discontinuity is different: the normal velocity and pressure are continuous in the ideal gas-dynamic case, while density and temperature may jump. The jump conditions follow from conservation; additional conditions determine which type of discontinuity they describe.</p>",
+      "severity": "Major",
+      "basis": "Conservation-law definitions and the later contact-discontinuity discussion.",
+      "standard": "Defined terms; limit case"
+    },
+    {
+      "id": "C22",
+      "module": 9,
+      "line": 124,
+      "quote": "Take the outward branch and it is E. N. Parker's solar wind",
+      "context": "The claim in the title is literal and is worth stating before any algebra. Write continuity and Euler for a steady, spherically symmetric flow. Eliminate the density. What is left is one ordinary differential equation for the speed $v(r)$, and that equation contains no information about which way the gas is going: $v$ enters it through $v^2$ and through $\\mathrm{d}\\ln v/\\mathrm{d}\\ln r$, and a solution with $v \\gt 0$ everywhere maps onto a solution with $v \\lt 0$ everywhere. Take the outward branch and it is E. N. Parker's solar wind, published in 1958. Take the inward branch and it is H. Bondi's spherical accretion flow, published in 1952. They are the same calculation. Fig. 1 is that sentence drawn.",
+      "title": "Velocity-sign symmetry is confused with selecting the physical wind and accretion branches",
+      "why": "For the same closure, reversing a signed velocity preserves the stationary equations, but it does not turn the physical Parker solution into the usual Bondi solution with its outer boundary conditions. In speed magnitude, the transonic wind is subsonic inside and supersonic outside; Bondi accretion has the opposite arrangement. The two pass through the critical point on different slopes. The chapter later describes the topology more carefully, but the opening teaches the wrong shortcut.",
+      "replacement": "<p>Steady spherical winds and accretion flows share the same critical-point structure when the same thermodynamic closure is used. Reversing the sign of a velocity preserves the stationary equations, but the physical solution also depends on its boundary conditions. The transonic wind is subsonic on the inner side of the critical point and supersonic outside it; the usual transonic accretion solution has the reverse arrangement. They follow different branches of the common equation.</p>",
+      "severity": "Major",
+      "basis": "Current phase portrait and asymptotic branch descriptions.",
+      "standard": "Precise statement; boundary conditions"
+    },
+    {
+      "id": "C23",
+      "module": 9,
+      "line": 305,
+      "quote": "a curve reaches $u = 1$ only when $C = -3$",
+      "context": "Level sets of $u^2-2\\ln u-4\\ln x-4/x = C$, with $u = v/c_T$ and $x = r/r_c$. Both sides of (3.3) have a single minimum — at $u = 1$ and at $x = 1$ — so a curve reaches $u = 1$ only when $C = -3$, and then only at $x = 1$. That one value of $C$ gives the two transonic solutions: the wind, which leaves a subsonic base and is supersonic at infinity, and the accretion solution, which does the reverse. $C \\gt -3$ gives the breeze and the supersonic-everywhere family, neither of which crosses the sonic line; $C \\lt -3$ gives the two double-valued families, which stop before reaching it at the edge of a forbidden band. The classification is drawn rather than asserted, and the families are named in words: Parker (1958) contains no Roman numbering.",
+      "title": "Reaching the sonic line is confused with crossing it smoothly",
+      "why": "For C<−3, the level sets reach u=1 at the endpoints bounding the forbidden radial interval. Their derivative is singular there; they do not form a smooth transonic flow. The minimum argument establishes the unique constant for a smooth critical crossing, not the absence of all other intersections with u=1.",
+      "replacement": "<p>A smooth transonic solution passes through both $u=1$ and $x=1$, which fixes $C=-3$. For $C\\lt -3$, branches can reach $u=1$ at other radii, but the differential equation is singular there and the branches do not continue as smooth transonic flows. The distinction is between touching the sonic line at a singular endpoint and crossing it regularly through the critical point.</p>",
+      "severity": "Major",
+      "basis": "Independent inspection of u²−2 ln u = 4 ln x+4/x+C and its extrema.",
+      "standard": "Proof; precise statement"
+    },
+    {
+      "id": "C24",
+      "module": 10,
+      "line": 126,
+      "quote": "energy is destroyed at a rate",
+      "context": "The distinction is the whole subject. Set $\\nu = 0$ exactly and the Euler equations conserve energy; there is nowhere for energy to go. Set $\\nu$ small and the flow develops structure on smaller and smaller scales until the scales are small enough for viscosity to act, and energy is destroyed at a rate that does not go to zero as $\\nu$ does. That is the anomaly at the centre of turbulence, and everything in this module is a consequence of taking it seriously.",
+      "title": "Viscous dissipation is described as destruction of energy",
+      "why": "Viscosity converts resolved kinetic energy into internal energy. The distinction matters in a textbook that previously derived a total-energy equation. The smooth incompressible Euler energy statement also needs that scope: weak solutions and compressible shocks complicate the limiting argument. The anomaly concerns a finite kinetic-energy dissipation rate as viscosity tends to zero.",
+      "replacement": "<p>For smooth incompressible Euler flow in a closed or periodic domain, kinetic energy is conserved. At small nonzero viscosity, the flow can transfer kinetic energy to increasingly small scales, where viscosity converts it into heat. The kinetic-energy dissipation rate may remain finite as viscosity tends to zero. This limiting behaviour is called the dissipation anomaly; it does not violate conservation of total energy.</p>",
+      "severity": "Major",
+      "basis": "Cross-check with the book’s energy balance; distinction between kinetic and total energy.",
+      "standard": "Defined quantity; hypotheses"
+    },
+    {
+      "id": "C25",
+      "module": 11,
+      "line": 94,
+      "quote": "A stable disc transports no angular momentum",
+      "context": "Module 12 then stated the difficulty in one line and left it. A Keplerian disc has $\\Omega \\propto R^{-3/2}$, so its specific angular momentum $\\ell = \\Omega R^2 \\propto R^{1/2}$ increases outward, which by the Rayleigh criterion makes it stable. A stable disc transports no angular momentum and therefore does not accrete. Module 12 assumed the shear $q = 3/2$ that this statement rests on, and said in print that deriving it needs a disc model, which is this module.",
+      "title": "Rayleigh stability is used to rule out every angular-momentum transport mechanism",
+      "why": "The Rayleigh criterion concerns centrifugal instability under particular inviscid, axisymmetric assumptions. It does not establish the absence of viscous, non-axisymmetric, magnetic or wind-driven transport. Module 12 repeats the overstatement. The useful result is that Keplerian rotation is not centrifugally unstable by this criterion; the transport problem remains to be solved.",
+      "replacement": "<p>Because specific angular momentum increases outward, a Keplerian disc satisfies the Rayleigh criterion for stability to axisymmetric centrifugal disturbances in the inviscid model. This removes one possible source of instability; it does not forbid angular-momentum transport. Viscous stresses, other instabilities, magnetic stresses and outflows require separate analysis. The next sections quantify the stress needed for accretion before examining candidate mechanisms.</p>",
+      "severity": "Major",
+      "basis": "Scope of the chapter’s Rayleigh derivation; later stress equations.",
+      "standard": "Hypotheses; limits"
+    },
+    {
+      "id": "C26",
+      "module": 12,
+      "line": 812,
+      "quote": "Single-fluid MHD has one temperature by construction",
+      "context": "One fluid, one temperature Ion and electron temperatures equilibrate in the intracluster medium on $t_{\\rm eq}(p,e)\\approx6\\times10^{8}$ yr ( Module 2 §11 ), which is not short compared with anything about a cluster Nobody. Single-fluid MHD has one temperature by construction , and this book contains no two-fluid module. Module 2 §11 's and Module 9 §9 's debts are declared unpaid here",
+      "title": "A chosen one-temperature closure is presented as the definition of single-fluid MHD",
+      "why": "A model with one bulk velocity can still evolve separate electron and ion internal energies. The distinction between a single bulk momentum equation and a one-temperature closure should not be erased. The book is entitled to omit two-temperature physics, but it should explain that this is its modelling choice.",
+      "replacement": "<p>This module uses a one-temperature closure in addition to a single bulk velocity. Those are separate assumptions: a single-fluid momentum description can be coupled to distinct electron and ion energy equations. We do not develop that extension here. Where electron–ion equilibration is slow, the one-temperature closure requires additional justification.</p>",
+      "severity": "Major",
+      "basis": "Model-variable distinction; current energy-equilibration discussion.",
+      "standard": "Definition; rescue or limit case"
+    },
+    {
+      "id": "C27",
+      "module": 5,
+      "line": 265,
+      "quote": "a straight line of slope $c_s^2$",
+      "context": "The Jeans dispersion relation (3.1). Left: $\\omega^2/4\\pi G\\rho_0$ against $(k/k_J)^2$ is a straight line of slope $c_s^2$ and intercept $-4\\pi G\\rho_0$; it is negative, and the medium unstable, for $k\\lt k_J$. Right: the growth rate (orange, $k\\lt k_J$) and the oscillation frequency (teal, $k\\gt k_J$), both in units of $(4\\pi G\\rho_0)^{1/2}$. The growth rate approaches $1$ as $k\\to0$; the dashed line at $0.5198$ is the inverse free-fall time, lower by the factor $\\pi\\sqrt{3/8} = 1.9238$ of (3.4). Both panels are dimensionless and apply to any density and temperature. For the $10$ K core at $n(\\mathrm{H_2}) = 10^4\\ \\mathrm{cm^{-3}}$ they read $\\lambda_J = 40177$ AU, $M_J = 2.66\\,M_\\odot$ and $t_{\\rm grow} = 1.60\\times10^{5}$ yr.",
+      "title": "The dimensionless Jeans-plot caption gives dimensional slope and intercept",
+      "why": "For y=ω²/(4πGρ₀) and x=(k/k_J)², the dispersion relation is y=x−1. The plotted slope is 1 and the intercept −1. The caption instead quotes the slope and intercept for dimensional ω² against k². This is a direct figure-reading error.",
+      "replacement": "<p>In the left panel, $y=\\omega^2/(4\\pi G\\rho_0)$ is plotted against $x=(k/k_J)^2$, so the dispersion relation is $y=x-1$. The dimensionless slope is $1$ and the intercept is $-1$. Negative $y$, corresponding to $k\\lt k_J$, gives gravitational growth rather than oscillation.</p>",
+      "severity": "Major",
+      "basis": "Independent nondimensionalisation of equation (3.1).",
+      "standard": "Concrete figure; units"
+    },
+    {
+      "id": "C28",
+      "module": 8,
+      "line": 591,
+      "quote": "A structured residual is a failed model, not a noisy measurement",
+      "context": "The three later block means fall monotonically. The step from the second block to the fourth is $0.0490$ in $\\tfrac52\\log_{10}R$, which is a factor $1.046$ in $R$ at fixed $t$ — 4.6 per cent. The standard errors of those two block means are $0.0056$ and $0.0037$, so the step is 7.3 times their combined error . A structured residual is a failed model, not a noisy measurement.",
+      "title": "The Trinity comparison assigns a formal rejection level without the full error model",
+      "why": "A systematic residual can arise from inadequate physics, calibration, correlated measurement error or data processing. The chapter itself acknowledges some of these possibilities nearby. The “REFUTED at 3.8σ” energy verdict divides a discrepancy by a quoted yield uncertainty without establishing the uncertainty of the film-based inference and its model inputs. That is a discrepancy expressed in units of one reported error, not a calibrated total significance.",
+      "replacement": "<p>The residuals show a systematic trend relative to the fitted similarity law. This warrants investigation of both the physical assumptions and the measurement process, including calibration and correlated errors. The inferred energy differs from the comparison yield by about $3.8$ times that yield's quoted uncertainty. Because the uncertainty of the film-based inference and its model inputs has not been included, this ratio should not be reported as a $3.8\\sigma$ rejection of the model.</p>",
+      "severity": "Major",
+      "basis": "Current §5 error discussion and stated uncertainty budget; statistical inference.",
+      "standard": "Evidence grade; limits"
+    },
+    {
+      "id": "C29",
+      "module": 2,
+      "line": 643,
+      "quote": "The true answer lies between them",
+      "context": "The lower panel of Fig. 3 restates the same result as a physical quantity. The mass flux implied by the mean fits rises by $4.9$ per cent between $0.29$ and $0.98$ AU, and that implied by the median fits falls by $4.2$ per cent. The disagreement between the two is itself informative: the mean of a lognormal distribution exceeds its median, and the density distribution is more skewed than the speed distribution, so mean and median fits weight the dense slow wind differently. The true answer lies between them, which is where the prediction is.",
+      "title": "Mean and median fits are treated as statistical bounds",
+      "why": "Separate fits to density and speed do not bracket their joint mass flux. The average of their product depends on covariance; even the product of their means is generally not the mean product. A median-product curve is not automatically a lower or upper bound. Conservation is a law of the flow, but testing a steady spherical reduction with ensemble statistics requires the corresponding averages and assumptions.",
+      "replacement": "<p>The mean-fit and median-fit constructions give different radial trends. Neither is automatically a bound on the physical mass flux. In particular, $\\langle\\rho u\\rangle=\\langle\\rho\\rangle\\langle u\\rangle+\\operatorname{Cov}(\\rho,u)$, so the density–speed covariance is needed to infer the mean flux. The comparison is a consistency check on these fitted summaries, not a proof that the true mass flux lies between them.</p>",
+      "severity": "Major",
+      "basis": "Independent identity for the mean of a product; current fit definitions.",
+      "standard": "Defined statistic; evidence interpretation"
+    },
+    {
+      "id": "C30",
+      "module": 10,
+      "line": 509,
+      "quote": "Venzmer & Bothmer median fits",
+      "context": "quantity Module 1 census Venzmer & Bothmer median fits ( Module 9 )",
+      "title": "Mean-fit solar-wind values are labelled median fits",
+      "why": "The cited Table 3 has separate mean and median columns. The values used here—7.57 cm⁻³, 9.67×10⁴ K, 6.05 nT and 435.6 km/s—come from the mean-fit column. Module 9 identifies that choice correctly. The labels in Module 10’s paragraph and table should match both the source and the calculation.",
+      "replacement": "<p>The comparison uses the <b>mean-fit</b> coefficients in Venzmer and Bothmer's Table 3, as does Module 9: $n=7.57 {\\rm cm^{-3}}$, $T=9.67\\times10^4 {\\rm K}$, $B=6.05 {\\rm nT}$ and $U=435.6 {\\rm km\\,s^{-1}}$ at 1 au. The median-fit coefficients describe a different statistical summary and are not the values in this column.</p>",
+      "severity": "Major",
+      "basis": "Venzmer & Bothmer (2018), downloaded PDF p. 8, Table 3.",
+      "standard": "Source fidelity; defined statistic"
+    },
+    {
+      "id": "C31",
+      "module": 7,
+      "line": 499,
+      "quote": "a layer still governed by its seed would not be linear in it at all",
+      "context": "What is confirmed is a functional form, not a number, and it is worth being exact about how far the evidence goes. The experiment fielded four initial conditions: a two-dimensional seed at $\\langle\\lambda\\rangle = 30\\ \\mu$m, the same with a thinner ablator, a three-dimensional seed at $30\\ \\mu$m, and a two-dimensional seed at $15\\ \\mu$m. Each gives a mix-width history in time. Plotted against the Read integral (8.3), each becomes linear at late times once the Richtmyer–Meshkov and decompression contributions are removed, and the slope of that line is $\\alpha_S + \\alpha_B$. Linearity in $x_{\\rm Read}$ is exactly (8.1); a layer still governed by its seed would not be linear in it at all.",
+      "title": "A scaling fit is said to prove loss of initial-condition dependence",
+      "why": "A linear late-time relation can have a coefficient or offset that still depends on the seed. Demonstrating the functional form therefore does not demonstrate universality or complete loss of initial-condition memory. The later discussion itself distinguishes the fitted coefficients.",
+      "replacement": "<p>Late-time linearity against the Read variable supports the proposed functional form over the measured interval. It does not by itself establish independence from the initial perturbation: the slope, offset or onset time may still depend on the seed. That stronger claim requires comparisons showing that the relevant fitted parameters converge across initial conditions.</p>",
+      "severity": "Major",
+      "basis": "Logical distinction between functional form and parameter universality; current experiment description.",
+      "standard": "Valid inference; limits"
+    },
+    {
+      "id": "C32",
+      "module": 12,
+      "line": 250,
+      "quote": "a good conductor through its size",
+      "context": "Equation (2.3) is the reason astrophysical plasmas are good conductors, and it is not the reason a reader expects. A large plasma is a good conductor through its size, not through its density. Two gases at the same temperature have the same resistivity whether one is a million times denser than the other; what differs is $L$, and $L$ enters $\\mathrm{R_m}$ linearly. The table makes the point, and its last column is (2.4) used as a self-check on the column above it.",
+      "title": "Large magnetic Reynolds number is confused with material conductivity",
+      "why": "System size changes the ratio of advection to diffusion, not the electrical conductivity of the material. Even in the idealised Spitzer regime, density cancellation is approximate because the Coulomb logarithm can change. The useful explanation is that large L can make magnetic diffusion slow on the dynamical timescale.",
+      "replacement": "<p>Large size can make magnetic diffusion slow relative to advection even when the material conductivity is finite. The relevant ratio is $\\mathrm{R_m}=UL/\\eta_{\\rm m}$, where $\\eta_{\\rm m}$ is magnetic diffusivity. Increasing $L$ increases $\\mathrm{R_m}$ at fixed $U$ and $\\eta_{\\rm m}$; it does not make the plasma intrinsically more conducting. In the classical fully ionised regime, the leading density dependence of the resistivity largely cancels, although the Coulomb logarithm retains a weaker dependence.</p>",
+      "severity": "Major",
+      "basis": "Definitions of conductivity, magnetic diffusivity and Rm in §2.",
+      "standard": "Defined terms; physical interpretation"
+    },
+    {
+      "id": "C33",
+      "module": 12,
+      "line": 619,
+      "quote": "the number of gyro-orbits a proton completes",
+      "context": "$\\lambda/r_g$, equivalently $\\omega_i\\tau_i$ with $\\tau = \\lambda/v_\\perp$ $5.1767\\times10^{12}$ a count : the number of gyro-orbits a proton completes between collisions, using Module 1 's Coulomb mean free path at $\\ln\\Lambda = 37.8$, $22.504$ kpc, which that module prints rounded to $22.5$",
+      "title": "Gyrophase is called a count of complete gyro-orbits",
+      "why": "The chapter correctly defines ωcτ as a phase in radians near the beginning, but later calls it a count of complete orbits. The count is ωcτ/(2π). Also λ/r_g=ωcτ only when the same velocity convention defines both lengths; the chapter’s later collision-time comparison exists precisely because its conventions differ. The huge magnetisation conclusion survives, but the stated meaning of the number does not.",
+      "replacement": "<p>The dimensionless quantity $\\omega_i\\tau_i$ is the gyro-phase accumulated in radians during one collision time. The number of complete gyro-orbits is $\\omega_i\\tau_i/(2\\pi)$. A length ratio $\\lambda/r_g$ equals $\\omega_i\\tau_i$ only when $\\lambda$ and $r_g$ use compatible velocity and collision-time conventions. Either measure is very large here, establishing strong particle magnetisation.</p>",
+      "severity": "Major",
+      "basis": "Current Definition 2 and transport-convention comparison; independent 2π conversion.",
+      "standard": "Defined quantity; notation"
+    },
+    {
+      "id": "C34",
+      "module": 1,
+      "line": 605,
+      "quote": "the stellar orbits it has today are the orbits it was born with",
+      "context": "The three rows land in three different places, and the spread is the point. A galaxy is collisionless by a factor of a million: the stellar orbits it has today are the orbits it was born with, and no fluid description of them is admissible. A globular cluster relaxes in about an eighth of a Hubble time, so over its life it is collisional — which is why globular clusters undergo core collapse and mass segregation, processes that have no analogue in galaxies. The galaxies within a cluster sit almost exactly on the boundary.",
+      "title": "Collisionless dynamics is described as unchanging orbits",
+      "why": "Negligible two-body relaxation does not freeze a galaxy’s mean potential or individual trajectories. Collective evolution and time-dependent gravitational fields can change orbital energies and angular momenta without close stellar encounters. The adjacent absolute denial of every fluid description also needs care: collisionless moment equations exist, although their closure is nontrivial.",
+      "replacement": "<p>A very long two-body relaxation time means that discrete stellar encounters make little change over the age of the galaxy. The stars still move in the collective gravitational potential, which can evolve and alter their orbits. Collisionless dynamics therefore removes an important relaxation mechanism; it does not imply that the present orbital structure is identical to the initial one. A kinetic description retains the velocity distribution, while a moment description requires a suitable closure.</p>",
+      "severity": "Major",
+      "basis": "Distinction between encounter relaxation and evolution in a collective potential.",
+      "standard": "Precise statement; limit case"
+    },
+    {
+      "id": "C35",
+      "module": 5,
+      "line": 115,
+      "quote": "Modules 2 to 4 treated gravity as a field imposed from outside",
+      "context": "Modules 2 to 4 treated gravity as a field imposed from outside. Module 2 listed that as an idealisation, because a gas that cannot be the source of its own gravity cannot collapse under it. Module 4 held gravity fixed while it perturbed the gas, and noted that the perturbation of gravity is decisive at long wavelengths. This module removes the restriction. The gas now makes its own gravitational field, and the question is when that field wins against the pressure of the gas.",
+      "title": "The book misstates its own dependency chain",
+      "why": "Module 3 already treats self-gravitating hydrostatic spheres through the Lane–Emden equation. Module 5 introduces perturbations of self-gravity, not self-gravity for the first time. A related stale statement in Module 4 says ionising-gas thermodynamics is not developed in the book, although Module 6 develops a Saha-based treatment. These are substantive navigation errors for a learner.",
+      "replacement": "<p>Module 3 treated self-gravity in hydrostatic equilibrium. Module 4 studied acoustic perturbations while keeping the gravitational field fixed. We now allow the density perturbation to generate a gravitational perturbation through Poisson's equation and ask when that feedback overcomes pressure support. The distinction is between an equilibrium gravitational field and the evolving field of the disturbance.</p>",
+      "severity": "Moderate",
+      "basis": "Direct cross-check of Modules 3, 4, 5 and 6.",
+      "standard": "Dependencies; precise statement"
+    },
+    {
+      "id": "C36",
+      "module": 2,
+      "line": 519,
+      "quote": "by ten or more orders of magnitude",
+      "context": "The first two rows carry the argument for most of this book: the viscous term is smaller than the inertial term by ten or more orders of magnitude, and dropping it is not an approximation anyone need worry about. Modules 3 to 11 accordingly use the Euler equations (8.4), as Module 1 promised they would.",
+      "title": "The prose overstates its own viscosity table",
+      "why": "The first two rows give inverse Reynolds numbers of about 9.8×10⁻¹⁴ and 2.5×10⁻⁶. The second is a suppression by roughly 5.6 orders, not ten or more. Both may support an inviscid large-scale approximation, but the sentence is numerically false and “not an approximation anyone need worry about” erases the scale and boundary-layer qualifications.",
+      "replacement": "<p>For the first two entries, the estimated viscous-to-inertial ratios are about $10^{-13}$ and $2.5\\times10^{-6}$ on the adopted macroscopic scales. These values support neglecting viscosity in the corresponding large-scale momentum balances. They do not exclude viscous effects at smaller scales or in boundary layers.</p>",
+      "severity": "Moderate",
+      "basis": "Current table; direct comparison of powers of ten.",
+      "standard": "Numbers; scope"
+    },
+    {
+      "id": "C37",
+      "module": 3,
+      "line": 437,
+      "quote": "therefore trusted to about",
+      "context": "The integrator in figs/m03_numbers.py is a fourth-order Runge–Kutta scheme started from (6.4) at $\\xi=10^{-5}$. On the three exact cases it returns $\\xi_1 = 2.449490$ for $n=0$ and $3.141593$ for $n=1$, both in ratio $1.000000$ to the exact values. It returns $\\theta_1'(\\xi_1) = -0.318310$ for $n=1$, in ratio $1.000000$. For $n=5$ it returns $\\theta(200) = 8.659914\\times10^{-3}$, in ratio $1.000000$ to (6.5), and $-\\xi^2\\theta' = 1.731856$ at $\\xi=200$, in ratio $0.999888$ to $\\sqrt3$. The largest departure is on $\\theta_0'(\\xi_1) = -0.816392$, in ratio $0.999871$ to the exact $-\\sqrt6/3$: the $n=0$ solution meets the surface at a finite slope, and the last step lands just past it. The integrator is therefore trusted to about $1.3\\times10^{-4}$ on the cases $n=3/2$ and $n=3$, which have no closed form.",
+      "title": "Analytic test cases are treated as an error bound for other polytropic indices",
+      "why": "Agreement for n=0,1,5 is valuable validation, but it does not establish the same error for n=3/2 or 3. Surface location and derivative extraction can have different numerical behaviour. The quoted accuracy should be demonstrated by convergence or an independent reference solution for the actual cases.",
+      "replacement": "<p>The analytic cases test the implementation and the surface-location procedure. Their errors do not by themselves bound the errors at $n=3/2$ and $n=3$. For those cases, numerical accuracy should be assessed by reducing the integration step and checking convergence of the first zero, its derivative and the derived mass coefficient. Until that check is supplied, the digits quoted here are computed values rather than an established error bound.</p>",
+      "severity": "Moderate",
+      "basis": "Scope of the reported numerical validation; no fresh integration run claimed.",
+      "standard": "Evidence grade; numerical limits"
+    },
+    {
+      "id": "C38",
+      "module": 5,
+      "line": 693,
+      "quote": "no mass statement about this cloud is better than that",
+      "context": "The mass itself is less certain than either ratio. From $P_{\\rm ext}$ and $\\xi_{\\max} = 6.9$, (5.4) gives $2.2496\\,M_\\odot$, $1.0712$ times the published value. From $R$ and $\\xi_{\\max}$, Proposition 7 gives $1.9839\\,M_\\odot$, a ratio of $0.9447$. The two routes differ by $13.4$ per cent, so the published row is not internally consistent at better than that, and no mass statement about this cloud is better than that. The critical mass at the published pressure is $M_{\\rm BE} = 2.2548\\,M_\\odot$. The mass of a sphere at $\\xi_{\\max} = 6.9$ is $0.9977$ of the maximum. A mass this close to $M_{\\rm BE}$ is compatible with both branches of Fig. 2; only the contrast separates them.",
+      "title": "A difference between two reconstructions becomes a universal uncertainty floor",
+      "why": "The 13.4% discrepancy is evidence that these inputs and modelling choices do not reproduce a unique mass. It is not a statistically calibrated uncertainty and cannot bound every possible mass determination of the cloud. The same precision inflation appears elsewhere when illustrative input values yield many displayed digits.",
+      "replacement": "<p>The two reconstructions differ by $13.4$ per cent. This is a consistency discrepancy between the adopted inputs and model relations, not a calibrated uncertainty on every mass estimate for the cloud. A mass uncertainty would require an error budget for the measurements, their covariance and the modelling assumptions. We retain both results to show the sensitivity of this reconstruction.</p>",
+      "severity": "Moderate",
+      "basis": "Difference between model consistency and inferential uncertainty.",
+      "standard": "Evidence grade; scope"
+    },
+    {
+      "id": "C39",
+      "module": 10,
+      "line": 715,
+      "quote": "Treating this cluster core as static costs about four per cent",
+      "context": "Check 3 — CONFIRMED: the price of one of Module 3 's idealisations. At $\\alpha = 4.15$ per cent, (8.4) gives a hydrostatic mass bias of $\\mathbf{3.98}$ per cent — and $\\mathbf{7.66}$ per cent if the large-scale shear the paper says could \"at most double\" the estimate does so. Treating this cluster core as static costs about four per cent of its mass, or about eight in the worst case the observers themselves allow. The idealisation is a good one, and now it is a good one with a number attached.",
+      "title": "A conditional mass-bias calculation is labelled an observational confirmation",
+      "why": "The proposition and proof correctly require a radially constant pressure ratio and explicitly discuss the missing derivative. The verdict then states the mass cost as an established property of the cluster. A dispersion and temperature from one annulus do not measure the pressure-ratio gradient or independently measure the mass bias. The caveat about not extending the result to r500 is valuable but does not supply the missing local assumption. This is a failure to carry a correct hypothesis into the headline, not a failure of the displayed theorem.",
+      "replacement": "<div class=\"keyresult\"><b>Conditional estimate of hydrostatic mass bias.</b> If the turbulent-to-thermal pressure ratio is constant with radius, the adopted ratio of $4.15$ per cent implies a mass underestimate of $3.98$ per cent. The measurement in one annulus does not establish that radial constancy. In general, $M=(1+\\alpha)M_{\\rm th}-[r^2P_{\\rm th}/(G\\rho)]\\,d\\alpha/dr$, so the bias also depends on the pressure-ratio gradient. The quoted percentage is therefore a conditional calculation, not an independently measured mass bias.</div>",
+      "severity": "Major",
+      "basis": "Current Proposition 7, its correct proof and the following verdict.",
+      "standard": "Hypotheses retained in conclusions; evidence grade"
+    },
+    {
+      "id": "C40",
+      "module": 6,
+      "line": 574,
+      "quote": "SURVIVES: the mixing-length velocity law itself",
+      "context": "The verdict, in this order. REFUTED: the proposition that convection carries the solar flux at $\\tau = 2/3$, which fails by a factor of $76$. SURVIVES: the mixing-length velocity law itself, to $25$ per cent, once it is asked a question it can answer.",
+      "title": "A partially reused observation is presented as a 25% test of a prediction",
+      "why": "The revised convective flux is built from the observed velocity and temperature contrast. That flux is then fed into the velocity law, whose output is compared with the same observed velocity. This is not a tautological identity—the velocity enters the prediction only to the one-third power—but it is not an independent velocity prediction either. The stated density, correlation and formation-height assumptions further condition the flux estimate. Calling the agreement a model survival to 25% overstates the test.",
+      "replacement": "<p>Using the observed velocity and inferred temperature contrast gives a conditional estimate of the convective flux. Substituting that flux into the mixing-length velocity relation returns $0.816\\ {\\rm km\\,s^{-1}}$, compared with the input velocity of $0.65\\ {\\rm km\\,s^{-1}}$. Because the observed velocity contributes to the flux used in this calculation, the comparison is a partial consistency check, not an independent prediction accurate to $25$ per cent. An independent test would require the flux to be determined without reusing the velocity being tested.</p>",
+      "severity": "Major",
+      "basis": "Current §7.3 Steps 2–3; dependency tracing of inputs and outputs.",
+      "standard": "Independence of concrete evidence; limits"
+    }
+  ],
+  "prose": [
+    {
+      "id": "P01",
+      "module": 1,
+      "line": 146,
+      "quote": "The fluid description is the bet that we never need it.",
+      "diagnosis": "A metaphor replaces the closure argument. Not a grammar error.",
+      "rewrite": "A fluid model evolves a few moments of the distribution instead of resolving its full velocity dependence. We must determine when those moments admit an adequate closure."
+    },
+    {
+      "id": "P02",
+      "module": 1,
+      "line": 252,
+      "quote": "The Coulomb force has no range",
+      "diagnosis": "Wrong idiom for the intended physical meaning.",
+      "rewrite": "The unscreened Coulomb force has no finite cutoff: two charges interact at every separation."
+    },
+    {
+      "id": "P03",
+      "module": 1,
+      "line": 248,
+      "quote": "Sixty-six micrometres, in an object",
+      "diagnosis": "Sentence fragment plus a radius described as a diameter.",
+      "rewrite": "The mean free path is about 66 micrometres, whereas the solar radius is 6.957 × 10¹⁰ cm. Their ratio measures the separation between microscopic and stellar scales."
+    },
+    {
+      "id": "P04",
+      "module": 1,
+      "line": 581,
+      "quote": "the magnetic rescue is one-dimensional",
+      "diagnosis": "The label contradicts the following “two directions out of three”; “rescue” hides the mechanism.",
+      "rewrite": "Gyromotion restricts motion across a locally uniform field, while particles remain free to stream along it. These two directions therefore require different transport descriptions."
+    },
+    {
+      "id": "P05",
+      "module": 2,
+      "line": 205,
+      "quote": "There are five, so there are five",
+      "diagnosis": "Tautological emphasis obscures what is being counted.",
+      "rewrite": "The five independent collision invariants yield five scalar conservation equations: one for mass, three for momentum and one for energy."
+    },
+    {
+      "id": "P06",
+      "module": 2,
+      "line": 308,
+      "quote": "the gas at this point is not changing, but a denser parcel has arrived",
+      "diagnosis": "The spatial and material viewpoints are mixed.",
+      "rewrite": "The local derivative measures change at a fixed position. The advective term accounts for the change experienced by a moving parcel as it crosses a spatial density gradient."
+    },
+    {
+      "id": "P07",
+      "module": 2,
+      "line": 487,
+      "quote": "The subscript is not decoration.",
+      "diagnosis": "Scolding aside; the promised global convention is contradicted later.",
+      "rewrite": "In this module, μ denotes dynamic viscosity and μₘ denotes mean molecular weight. The global notation table should identify the convention used in later modules."
+    },
+    {
+      "id": "P08",
+      "module": 2,
+      "line": 519,
+      "quote": "dropping it is not an approximation anyone need worry about",
+      "diagnosis": "An absolute reassurance suppresses the approximation’s domain.",
+      "rewrite": "Viscosity is negligible in this large-scale force balance; it may still matter on smaller scales and near boundaries."
+    },
+    {
+      "id": "P09",
+      "module": 3,
+      "line": 178,
+      "quote": "Note the direction of this argument.",
+      "diagnosis": "Stage direction delays the actual assumption.",
+      "rewrite": "This estimate concerns slow secular contraction; it does not bound oscillatory departures from hydrostatic equilibrium."
+    },
+    {
+      "id": "P10",
+      "module": 3,
+      "line": 630,
+      "quote": "Hold that number.",
+      "diagnosis": "Unnecessary instruction to the reader.",
+      "rewrite": "This pressure fraction tests the assumption that gas pressure dominates at the solar centre."
+    },
+    {
+      "id": "P11",
+      "module": 3,
+      "line": 340,
+      "quote": "The difference is the latent heat released",
+      "diagnosis": "Overconfident causal compression; the reference atmosphere is not a measured moist adiabat.",
+      "rewrite": "Latent heat can reduce the cooling rate of a saturated rising parcel. The standard atmospheric lapse rate, however, is a reference profile rather than the result of this parcel calculation alone."
+    },
+    {
+      "id": "P12",
+      "module": 3,
+      "line": 437,
+      "quote": "The integrator is therefore trusted",
+      "diagnosis": "Passive declaration of confidence instead of a stated validation limit.",
+      "rewrite": "The analytic cases support the implementation. The numerical cases still require a convergence check before an error estimate can be assigned."
+    },
+    {
+      "id": "P13",
+      "module": 4,
+      "line": 127,
+      "quote": "as the $331.45",
+      "diagnosis": "A stranded numerical value is made the grammatical subject of “tests”; name the measurement.",
+      "rewrite": "The solar frequency spacing tests the interior sound-speed profile, just as the measured speed of sound in air tests the thermodynamic closure for air."
+    },
+    {
+      "id": "P14",
+      "module": 4,
+      "line": 184,
+      "quote": "That is the whole of the disagreement between Newton and Laplace",
+      "diagnosis": "Grand historical verdict adds little and exceeds the specific derivation.",
+      "rewrite": "The two predictions differ because one uses an isothermal pressure response and the other an adiabatic response."
+    },
+    {
+      "id": "P15",
+      "module": 4,
+      "line": 164,
+      "quote": "Linear theory is therefore the theory of motions",
+      "diagnosis": "Definition is broader than the calculation supports.",
+      "rewrite": "For the acoustic perturbations considered here, linearisation requires a small velocity amplitude relative to the sound speed."
+    },
+    {
+      "id": "P16",
+      "module": 4,
+      "line": 147,
+      "quote": "the thermodynamics of an ionising gas is not developed in this book",
+      "diagnosis": "Stale whole-book statement; readers cannot rely on the navigation.",
+      "rewrite": "We postpone the thermodynamics of partial ionisation to Module 6. Here it identifies one limitation of the constant-γ closure."
+    },
+    {
+      "id": "P17",
+      "module": 5,
+      "line": 115,
+      "quote": "The gas now makes its own gravitational field",
+      "diagnosis": "Personification conceals what is new relative to Module 3.",
+      "rewrite": "The density perturbation now contributes to the gravitational field through Poisson’s equation."
+    },
+    {
+      "id": "P18",
+      "module": 5,
+      "line": 115,
+      "quote": "the question is when that field wins against the pressure",
+      "diagnosis": "A contest metaphor substitutes for the growth criterion.",
+      "rewrite": "We ask when the perturbed gravitational force exceeds the restoring effect of pressure, allowing a density disturbance to grow."
+    },
+    {
+      "id": "P19",
+      "module": 5,
+      "line": 534,
+      "quote": "which contains a star",
+      "diagnosis": "A source classification is overtranslated into a physical detection.",
+      "rewrite": "which the cited study classifies as star-forming because of evidence for inward gas motion"
+    },
+    {
+      "id": "P20",
+      "module": 5,
+      "line": 693,
+      "quote": "no mass statement about this cloud is better than that",
+      "diagnosis": "Universal claim where a local consistency result is intended.",
+      "rewrite": "The two reconstructions disagree by 13.4 per cent; this discrepancy should be resolved before either is presented as a precise mass estimate."
+    },
+    {
+      "id": "P21",
+      "module": 6,
+      "line": 188,
+      "quote": "where the premise is therefore spent",
+      "diagnosis": "The recurring financial metaphor gives a false binary verdict at Mach 0.427.",
+      "rewrite": "At this Mach number, pressure equilibration is less well separated from the parcel’s motion, so the approximation requires closer examination."
+    },
+    {
+      "id": "P22",
+      "module": 6,
+      "line": 512,
+      "quote": "No single mixing length describes both",
+      "diagnosis": "Ambiguous: a constant length and a constant mixing-length parameter are different claims.",
+      "rewrite": "The local turnover time varies strongly with depth. This is compatible with a mixing length proportional to the local pressure scale height."
+    },
+    {
+      "id": "P23",
+      "module": 6,
+      "line": 647,
+      "quote": "The isochoric runaway fires nowhere",
+      "diagnosis": "Unidiomatic personification.",
+      "rewrite": "The isochoric instability criterion is not satisfied anywhere in this table."
+    },
+    {
+      "id": "P24",
+      "module": 6,
+      "line": 754,
+      "quote": "one confirmed and one refuted, from the same source table",
+      "diagnosis": "Announces a predetermined dramatic structure instead of the physical questions.",
+      "rewrite": "We compare the two predictions with the same source table, stating the assumptions and uncertainties for each comparison."
+    },
+    {
+      "id": "P25",
+      "module": 7,
+      "line": 183,
+      "quote": "Their $k$-dependences are all different",
+      "diagnosis": "Direct contradiction: the displayed list contains k² twice.",
+      "rewrite": "The contributions scale as k, k² or k³. Their signs and coefficients determine which wavelengths are unstable."
+    },
+    {
+      "id": "P26",
+      "module": 7,
+      "line": 398,
+      "quote": "Gravity charges by volume and the shear pays by area",
+      "diagnosis": "Extended financial metaphor is harder to interpret than the dispersion relation.",
+      "rewrite": "For this interface, the stabilising gravity term is proportional to k, whereas the destabilising shear term is proportional to k². Gravity therefore dominates at sufficiently small k."
+    },
+    {
+      "id": "P27",
+      "module": 7,
+      "line": 449,
+      "quote": "marginal, and just interesting enough to believe",
+      "diagnosis": "The author’s appetite for a result replaces an evidential judgement.",
+      "rewrite": "The predicted growth is about one e-folding over the crossing time. The interface may amplify a disturbance, but this estimate does not establish nonlinear roll-up."
+    },
+    {
+      "id": "P28",
+      "module": 7,
+      "line": 505,
+      "quote": "Refuted: that the measurement settles the coefficient",
+      "diagnosis": "Labels a limitation of inference as the refutation of a physical prediction.",
+      "rewrite": "What the measurement constrains about the mixing coefficient"
+    },
+    {
+      "id": "P29",
+      "module": 8,
+      "line": 124,
+      "quote": "Against every other length in the problem that is zero",
+      "diagnosis": "A useful approximation is stated as a literal equality.",
+      "rewrite": "The estimated layer thickness is negligible compared with the macroscopic scales used in this calculation."
+    },
+    {
+      "id": "P30",
+      "module": 8,
+      "line": 591,
+      "quote": "a failed model, not a noisy measurement",
+      "diagnosis": "A rhetorical contrast excludes explanations the data have not excluded.",
+      "rewrite": "The residual trend requires investigation of both model inadequacy and systematic measurement effects."
+    },
+    {
+      "id": "P31",
+      "module": 8,
+      "line": 608,
+      "quote": "the energy — REFUTED at 3.8σ",
+      "diagnosis": "Verdict typography outruns the available uncertainty budget.",
+      "rewrite": "The inferred energy and the comparison yield disagree; the significance requires a fuller uncertainty budget."
+    },
+    {
+      "id": "P32",
+      "module": 8,
+      "line": 833,
+      "quote": "the whole of this section's theory",
+      "diagnosis": "Self-advertised brevity conceals an invalid change of assumptions.",
+      "rewrite": "The following calculation must account for the acceleration history before the planar mixing law can be applied to an expanding shell."
+    },
+    {
+      "id": "P33",
+      "module": 9,
+      "line": 122,
+      "quote": "This module does the thing neither of them did",
+      "diagnosis": "Vague “thing” and theatrical comparison with earlier chapters.",
+      "rewrite": "We solve the steady spherical-flow equations and examine how regular passage through a critical point constrains the solution."
+    },
+    {
+      "id": "P34",
+      "module": 9,
+      "line": 212,
+      "quote": "more constrained than it has any right to be",
+      "diagnosis": "Personification adds surprise without explaining the constraint.",
+      "rewrite": "Regularity at the sonic point restricts the allowed flow profiles."
+    },
+    {
+      "id": "P35",
+      "module": 9,
+      "line": 156,
+      "quote": "because the module's first draft got it wrong",
+      "diagnosis": "Draft history belongs in an editorial log, not the conceptual introduction.",
+      "rewrite": "The steady equations alone do not uniquely select the accretion rate; the transonic solution also requires a physical selection argument."
+    },
+    {
+      "id": "P36",
+      "module": 9,
+      "line": 433,
+      "quote": "the last column is where the answer lives",
+      "diagnosis": "Vague personification and an unnecessary promise.",
+      "rewrite": "The last column compares the predicted speed with the measured value."
+    },
+    {
+      "id": "P37",
+      "module": 10,
+      "line": 299,
+      "quote": "There is exactly one result in the theory of turbulence that is exact",
+      "diagnosis": "An unsupported superlative. Other exact balances and relations exist.",
+      "rewrite": "The four-fifths law is an exact relation derived from the Navier–Stokes equations under specified assumptions; its coefficient is not obtained from dimensional analysis."
+    },
+    {
+      "id": "P38",
+      "module": 10,
+      "line": 749,
+      "quote": "Supersonic turbulence has nothing else",
+      "diagnosis": "False exclusive claim; velocity, magnetic and energy statistics still matter.",
+      "rewrite": "Supersonic turbulence also develops large density fluctuations, whose distribution is important for star formation."
+    },
+    {
+      "id": "P39",
+      "module": 10,
+      "line": 864,
+      "quote": "Two fits, forty years apart",
+      "diagnosis": "Elementary chronology error: the cited papers are from 1981 and 1987.",
+      "rewrite": "Two linewidth–size fits published six years apart"
+    },
+    {
+      "id": "P40",
+      "module": 10,
+      "line": 872,
+      "quote": "did the measurement properly",
+      "diagnosis": "Dismissive and scientifically uninformative.",
+      "rewrite": "Solomon and colleagues used a single survey, distance scale and cloud-identification method for their sample of 273 molecular clouds."
+    },
+    {
+      "id": "P41",
+      "module": 11,
+      "line": 92,
+      "quote": "five decades inside the Bondi radius",
+      "diagnosis": "The stated radii differ by about 3.29 decades; five decades refers approximately to the horizon.",
+      "rewrite": "The circularisation radius is about 2,000 times smaller than the quoted Bondi radius."
+    },
+    {
+      "id": "P42",
+      "module": 11,
+      "line": 106,
+      "quote": "what holds the gas up? to what lets it down?",
+      "diagnosis": "Cute symmetry blurs orbital support and angular-momentum transport.",
+      "rewrite": "The question changes from radial infall to the transport of angular momentum through an orbiting disc."
+    },
+    {
+      "id": "P43",
+      "module": 11,
+      "line": 520,
+      "quote": "the repayment is this paragraph rather than an edit to a shipped page",
+      "diagnosis": "Production policy is presented as pedagogy; it preserves an erroneous earlier claim.",
+      "rewrite": "The comparison must use a bolometric luminosity and the mass flux reaching the emitting region before it can be interpreted as a radiative efficiency."
+    },
+    {
+      "id": "P44",
+      "module": 11,
+      "line": 570,
+      "quote": "the weakest imaginable magnetic field",
+      "diagnosis": "Hyperbole omits wavelength and non-ideal limits on MRI.",
+      "rewrite": "In ideal MHD, a sufficiently weak field can destabilise differential rotation when the unstable wavelengths fit within the disc; non-ideal effects can alter this conclusion."
+    },
+    {
+      "id": "P45",
+      "module": 12,
+      "line": 110,
+      "quote": "this module exists to pay them",
+      "diagnosis": "The introduction centres a promise ledger rather than the subject.",
+      "rewrite": "This module develops the magnetic stresses and induction equation, then applies them to waves, gravitational support, transport and disc instability."
+    },
+    {
+      "id": "P46",
+      "module": 12,
+      "line": 305,
+      "quote": "a draught, not a wind —, against",
+      "diagnosis": "Broken punctuation around an already overloaded parenthesis; the air-speed analogy distracts.",
+      "rewrite": "For the adopted 5 G photospheric field, the magnetic pressure is about 1 dyn cm⁻², much smaller than the adopted gas pressure."
+    },
+    {
+      "id": "P47",
+      "module": 12,
+      "line": 813,
+      "quote": "Gate D placed this return",
+      "diagnosis": "Internal workflow vocabulary has leaked into the textbook.",
+      "rewrite": "Pressure anisotropy lies outside the isotropic closure used in this module. We identify the missing physics here but do not derive its instability thresholds."
+    },
+    {
+      "id": "P48",
+      "module": 12,
+      "line": 819,
+      "quote": "Deriving them here would make a shipped module false",
+      "diagnosis": "The reason for excluding a topic is an editing constraint, not a learning objective.",
+      "rewrite": "Oblique MHD shock conditions are beyond this module’s scope. Applying the theory to a magnetised shock would require those conditions in addition to the results derived here."
+    }
+  ]
+}
