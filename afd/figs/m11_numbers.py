@@ -1020,6 +1020,27 @@ def _self_check():
     assert abs(np.log10(disc_luminosity(_Md, _Ms, _Rins)/M09_LX)
                - np.log10((1.0/12.0)/M09_ETA_RAD)) < 1e-9
 
+    # THE TRIVIAL LIMIT OF PROPOSITION 11, which the Module 12 editor
+    # pass asked every later dispersion-relation proof to carry.  Set the
+    # rotation to zero and the rotating sheet must become Module 5's
+    # non-rotating one: omega^2 = c_T^2 k^2 - 2 pi G Sigma k, unstable
+    # below k = 2 pi G Sigma/c_T^2 and stable above it, and Q = 0.
+    _cT, _Sig = 1.0e5, 1.0e2
+    assert toomre_q(_cT, 0.0, _Sig) == 0.0
+    _kJ = 2.0*np.pi*G*_Sig/_cT**2
+
+    def _omega2(k, kap):
+        return _cT**2*k**2 - 2.0*np.pi*G*_Sig*k + kap**2
+
+    assert _omega2(0.5*_kJ, 0.0) < 0.0, (
+        'a non-rotating sheet must be unstable below the Jeans wavenumber')
+    assert _omega2(1.5*_kJ, 0.0) > 0.0, 'and stable above it'
+    # and with rotation restored at exactly Q = 1 the minimum is zero.
+    _kap = TOOMRE_GAS_COEFF*G*_Sig/_cT
+    assert abs(toomre_q(_cT, _kap, _Sig) - 1.0) < 1e-12
+    _kmin = np.pi*G*_Sig/_cT**2
+    assert abs(_omega2(_kmin, _kap)) < 1e-12*(_cT*_kmin)**2
+
     # The three timescales must be ordered for a thin disc.
     cT_dn = isothermal_sound_speed(T_DN, MU_IONISED_H)
     H_dn = cT_dn/Om
