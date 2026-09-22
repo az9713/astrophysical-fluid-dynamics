@@ -3,7 +3,13 @@
 Open [COMPLETE_AUDIT_AND_REVISION_RECORD.html](COMPLETE_AUDIT_AND_REVISION_RECORD.html)
 for the signed, searchable history of the audits and rewrites across all fourteen
 modules. It distinguishes the completed Modules 1–12 edition from proposed
-changes to Modules 13–14.
+changes to Modules 13–14. That consolidated record predates the later separate
+Codex rewrites of Modules 13–14.
+
+The [20-rule textbook edition](textbook-edition-20-rule/index.html) now includes
+separate Codex versions of all fourteen modules. The new
+[Modules 13–14 editorial record](textbook-edition-20-rule/EDITORIAL_CERTIFICATION_13_14.md)
+explains their scientific and prose revisions and the preservation checks.
 
 Open [AUDIT_REPORT.html](AUDIT_REPORT.html) for the signed, navigable report.
 The [Markdown companion](AUDIT_REPORT.md) contains the same assessment and proposed wording.
@@ -34,7 +40,8 @@ Evidence files:
 - delivery-sha256.json — hashes of the finished report and principal evidence.
 
 The remaining scripts, reading extracts and screenshots document the audit process.
-All proposed changes remain inside this folder and have not been applied.
+Codex's rewritten pages remain inside this folder; none of the original `afd`
+module pages has been modified by this edition.
 
 Signed: Codex — OpenAI
 20 September 2026, America/Los_Angeles

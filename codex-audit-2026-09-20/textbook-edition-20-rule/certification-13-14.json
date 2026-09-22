@@ -1,0 +1,31 @@
+{
+  "edition": "Codex 20-rule edition, Modules 13–14",
+  "modules": [
+    {
+      "module": 13,
+      "original_sha256": "24531a38fe3b5376736861990ad846c5f57d1d6326cf2dfbec464f7a417235e9",
+      "codex_sha256": "3e1b2363aa5bf28740cd335874107553573fe1233e429c5c66b4c0f26041c353",
+      "anchors_preserved": true,
+      "displayed_mathematics_exact": true,
+      "figures": 5,
+      "tables": 6,
+      "sentences_over_50": 0,
+      "broken_local_links": [],
+      "production_or_verdict_hits": []
+    },
+    {
+      "module": 14,
+      "original_sha256": "2c42a22a6f3a452545719049ddd8178cc350c98281083c35b384ddda29ca8df3",
+      "codex_sha256": "8bc92edabcd9fa3df63a6620bef6c3ead205678af1684c8d9c4a082dc0e1c98b",
+      "anchors_preserved": true,
+      "displayed_mathematics_exact": true,
+      "figures": 5,
+      "tables": 4,
+      "sentences_over_50": 0,
+      "broken_local_links": [],
+      "production_or_verdict_hits": []
+    }
+  ],
+  "all_checks_pass": true,
+  "errors": []
+}
