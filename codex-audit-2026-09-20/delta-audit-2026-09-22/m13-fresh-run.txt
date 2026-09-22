@@ -1,0 +1,382 @@
+========================================================================
+MODULE 13 NUMBERS -- radiation hydrodynamics.  STEP 5 OF SIX.
+Gate D is .ignore/m13-gate-d.md.  Every published value below was
+read at step 2; the record is
+.ignore/m13-source-verification.md.  Every comparison against a
+SHIPPED PAGE of this book is final, because the page is on disk.
+========================================================================
+
+PART A.  The Eddington limit, derived and checked against the book
+------------------------------------------------------------------------
+  kappa_es, pure ionised hydrogen (X = 1)   = 0.39773 cm^2/g
+  kappa_es at X = 0.7583                     = 0.34966 cm^2/g
+  ratio                                      = 1.13746
+  The conventional round number is 0.2(1+X) = 0.3517 cm^2/g,
+    which differs from the exact value by 0.572 per cent.
+
+  MODULE 9 PROBLEM K2, module09.html:913, a 10 Msun hole:
+    L_Edd computed  = 1.257065e+39 erg/s
+    L_Edd in print  = 1.257000e+39 erg/s
+    ratio           = 1.000052
+    Mdot_Edd computed = 1.398674e+19 g/s  (eta_rad = 0.100)
+    Mdot_Edd in print = 1.399000e+19 g/s
+    ratio             = 0.999767
+    Bondi/Eddington computed = 3663.5
+    in print                 = 3664.0
+    ratio                    = 0.999856
+    M/Mdot at the Bondi rate = 1.2297e+04 yr  (in print: 1.23e+04 yr)
+    ratio                    = 0.9997
+    That is the doubling time AT CONSTANT Mdot, as m09_numbers.py:1545
+    computes it.  Bondi's Mdot grows as M^2, which halves it to
+    6.1484e+03 yr; an Eddington-limited Mdot ~ M gives ln 2 of it,
+    8.5235e+03 yr.  The page states no growth law.  Not a defect; a
+    sentence Module 13 may add when it discusses growth.
+
+  MODULE 9 PROBLEM K3, module09.html:921, Sgr A*:
+    L_Edd computed  = 5.405380e+44 erg/s   (in print 5.405000e+44)
+    ratio           = 1.000070
+    Mdot_Edd computed = 9.545153e-02 Msun/yr  (in print 9.545000e-02)
+    ratio             = 1.000016
+    (Mdot/Mdot_Edd)/(L_X/L_Edd) = 2.2716e+07 = 7.356 decades
+    module09.html:921 prints 7.4 orders of magnitude.
+    The efficiency that gap implies = 4.4021e-09
+    module09.html:847 prints eta_rad ~= 4.0e-09.
+    ratio = 1.101
+
+  MODULE 11 AGN CONFIGURATION, module11.html:370 and :666:
+    Mdot_Edd(1e8 Msun, eta = 0.1) = 1.398674e+26 g/s
+    Module 11 prints Mdot          = 1.398700e+25 g/s
+    fraction of Eddington          = 0.100002
+    module11.html:666 says "a tenth".  It is exact to 0.002 per cent.
+
+  THE BOOK CARRIES THREE VALUES OF eta_rad, AND Mdot_Edd CARRIES IT:
+    module09.html:944, assumed  eta = 0.100000  Mdot_Edd = 1.3987e+19 g/s  (-0.0% on print)
+    module11, Newtonian 1/12   eta = 0.083333  Mdot_Edd = 1.6784e+19 g/s  (+20.0% on print)
+    module11, Bardeen et al.   eta = 0.057191  Mdot_Edd = 2.4456e+19 g/s  (+74.8% on print)
+    Against the computed 0.1 value, Module 11's 1/12 would move
+    module09.html:913 by +20.0 per cent and the relativistic value
+    by +74.9; the table's +74.8 is against the rounded print.
+    RULED BY SIMON, 2026-09-21 (Gate D Q2): Mdot_Edd stays defined
+    at eta_rad = 0.1.  No shipped page moves; the module prints this
+    table so the reader sees what the convention costs.
+
+  CHECK 1.  THE COMPOSITION INSIDE module09.html:944's FORMULA.
+    L_Edd with kappa = sigma_T/m_p (X = 1)  = 1.2571e+39 erg/s
+    L_Edd at X = 0.7261 (BS05 initial)       = 1.4565e+39 erg/s  ratio 1.1587
+    L_Edd at X = 0.7583 (BS05 present surface) = 1.4299e+39 erg/s  ratio 1.1375
+    The limit scales as 2/(1+X): the m_p of module09.html:944 means
+    X = 1, PURE IONISED HYDROGEN, and no shipped page says so.
+    Gate D rules X = 0.7261 for accreted gas, so Module 9's value is
+    15.9 per cent BELOW the limit for protosolar gas.
+    Eddington's own Sun bound, p. 115: k < 13200; recomputed 13061,
+    ratio 0.9895.  His 1926 L and M were not read; the 1.1 per cent
+    is not traced.  CHECK 1 VERDICT: CONFIRMED as a reproduction.
+
+  Salpeter time at eta = 0.10, kappa = sigma_T/m_p: 4.5049e+07 yr
+  the same at 1e8 Msun                            : 4.5049e+07 yr
+  INDEPENDENT OF MASS, to 3.33e-16 relative -- which is the point.
+  the hole keeps (1 - eta) of Mdot, so M e-folds in t/(1 - eta) = 5.0054e+07 yr
+
+PART B.  Radiation pressure and the gas fraction
+------------------------------------------------------------------------
+  a_rad = 4 sigma_SB/c = 7.565733e-15 erg cm^-3 K^-4
+
+  MODULE 3 PROBLEM K3, module03.html:885, at 1 Msun:
+    quartic right side computed = 1.432799e-03
+    in print                    = 1.432900e-03
+    ratio                       = 0.999930
+    1 - beta computed           = 1.424652e-03
+    in print                    = 1.424700e-03
+    ratio                       = 0.999966
+
+  THE SUN'S CENTRE, from Module 3's TABULATED model, BS2005-AGS,OP:
+    rho_c = 150.50 g/cm^3, T_c = 1.5480e+07 K, P_c = 2.3380e+17  (module03.html:620)
+    1 - beta_c = P_rad/P_c   = 6.193970e-04
+    module03.html:628, (9.1) = 6.194000e-04
+    ratio                    = 0.999995
+    the same from rho_c, T_c at mu = 0.82851  = 6.190145e-04  (ratio 0.999382)
+    Eddington's standard model, module03.html:885 = 1.424700e-03
+    standard model / tabulated Sun = 2.3001
+    The standard model puts 2.30 times the tabulated radiation
+    share at the Sun's centre.  Both numbers are in print, and SO
+    IS THE RATIO: module03.html:885, Problem K3's solution, says
+    "Eddington's 1 Msun value is 2.30 times the tabulated central
+    value".  Gate D: CITED as Module 3's result, NOT a check here.
+
+    STEP 1's CHECK 4 read the n = 3 PREDICTION column of
+    module03.html:644-646 as the Sun.  From it, 1 - beta = 1.412917e-03,
+    which is 0.9917 of the standard model: Eddington against
+    Eddington, a check that could not fail.  Kept here as the
+    record of the defect, and never as a check.
+
+  gamma OF A GAS-PLUS-RADIATION MIXTURE, module02.html:688's debt:
+    beta = 1          Gamma_1 = 1.666667
+    beta = 0.99       Gamma_1 = 1.650997
+    beta = 0.9        Gamma_1 = 1.562745
+    beta = 0.5        Gamma_1 = 1.425926
+    beta = 0.1        Gamma_1 = 1.350228
+    beta = 0.01       Gamma_1 = 1.335002
+    beta = 1e-06      Gamma_1 = 1.333334
+    against Chandrasekhar (1939) Table 1, p. 59, three decimals:
+      1 - beta = 0.0   computed 1.6667   printed 1.667
+      1 - beta = 0.1   computed 1.5627   printed 1.563
+      1 - beta = 0.2   computed 1.5111   printed 1.511
+      1 - beta = 0.3   computed 1.4763   printed 1.476
+      1 - beta = 0.4   computed 1.4491   printed 1.449
+      1 - beta = 0.5   computed 1.4259   printed 1.426
+      1 - beta = 0.6   computed 1.4051   printed 1.405
+      1 - beta = 0.7   computed 1.3859   printed 1.386
+      1 - beta = 0.8   computed 1.3677   printed 1.368
+      1 - beta = 0.9   computed 1.3502   printed 1.350
+      1 - beta = 1.0   computed 1.3333   printed 1.333
+    largest difference = 3.44e-04, inside the 5e-4 of a three-decimal
+    table.  Eq. (131), p. 57, is the formula this file computes.
+    THE TRIVIAL LIMITS ARE THE CHECK: beta -> 1 gives exactly 5/3
+    and beta -> 0 gives exactly 4/3, which is what
+    module02.html:688 was promised in print.
+
+PART C.  Optical depth and the photosphere
+------------------------------------------------------------------------
+  Module 6 computed H and rho at the photosphere from four inputs,
+  one a pressure borrowed from a model atmosphere (module06.html:490),
+  and never wrote an opacity.  rho H = P/g is the column mass above
+  that level, so demanding tau = 2/3 gives the column MEAN opacity.
+    H   = 1.4290e+07 cm   (module06.html:496)
+    rho = 3.0631e-07 g/cm^3 (module06.html:497)
+    column-mean kappa above tau = 2/3, (2/3)/(rho H) = 0.15231 cm^2/g
+    electron scattering at X = 0.7583 would be 0.34966 cm^2/g,
+    which is 2.30 times larger.  For fully ionised gas every
+    kappa_nu >= kappa_es, so kappa_R >= kappa_es is a FLOOR, and a
+    column mean below the floor means the column is NOT fully
+    ionised.  What fills the opacity is H-minus, by the standard
+    attribution, and H-minus is atomic physics this book does not do.
+
+    THE TABULATED TARGET: Castelli's ATLAS9 solar model, data/castelli_atlas9_sun.dat
+      at tau_R = 0.6667: T = 5910.1 K, P = 1.0447e+05 dyn/cm^2,
+        rho = 2.6721e-07 g/cm^3, kappa_R = 0.4447 cm^2/g
+      at T = 5772 K: tau_R = 0.5430, rho = 2.5184e-07, kappa_R = 0.3596
+      hydrostatic check at the deepest layer, P/(g RHOX) = 0.9999
+    Module 6's rho / ATLAS9 rho at tau_R = 2/3 = 1.1463
+    ATLAS9 column mass above tau_R = 2/3   = 3.81230 g/cm^2
+    ATLAS9 column mass above T = 5772 K    = 3.50978 g/cm^2
+    ATLAS9 column mean tau_R/m, tau_R = 2/3 = 0.17487 cm^2/g
+    ATLAS9 column mean tau_R/m, T = 5772 K  = 0.15470 cm^2/g
+    column mean / inferred: 1.1482 at tau_R = 2/3, 1.0157 at T = Teff
+    column-mean ratio of the two levels   = 1.1304
+    TOLERANCE: rho ratio times level ratio = 1.2958
+    CHECK 2, THE ANCHOR.  VERDICT (Gate D addendum): CONFIRMED as
+    a column mean, low by 1.0157 to 1.1482, inside 1.2958.
+    Read as a LOCAL opacity it is low by 2.361 to 2.920: local
+    kappa_R at the foot over the column mean, which measures how
+    fast kappa_R rises with depth, not an error in the inference.
+
+    photon mean free path there = 2.1435e+07 cm = 214.4 km
+    one scale height            = 142.9 km
+    ratio                       = 1.5000
+    which is 1/tau = 1.5000, as it must be.
+
+    tau across a solar radius at photospheric rho = 7.4513e+03
+    random-walk steps to cross it = tau^2 = 5.5521e+07
+    THIS IS NOT THE SUN'S OPTICAL DEPTH.  It uses the photospheric
+    density over the whole radius, which is wrong by orders of
+    magnitude, and it is printed only to show the tau^2 scaling.
+    The module must label it as an illustration or drop it.
+
+PART D.  The criterion module04.html:429 deferred BY NAME
+------------------------------------------------------------------------
+  Module 4: "omega chi/c^2 << 1 ... That criterion is not evaluated
+  for the Sun in this module ... the size of the failure is a
+  subject of Module 13."  It is evaluated here.
+    chi at the photosphere      = 2.398397e+13 cm^2/s
+    omega at nu_max = 3090 microHz = 1.941504e-02 rad/s
+    c (module04.html:611)       = 8.0810e+05 cm/s
+    omega chi/c^2               = 7.130652e-01
+
+    THE CRITERION IS << 1, NOT < 1, AND 0.7131 IS NEITHER.
+    At order unity the compression leaks about one radian's worth
+    of heat per radian of oscillation, so the mode is neither
+    adiabatic nor isothermal.  module04.html:563 predicted exactly
+    this in print -- "fails near the photosphere where radiation
+    carries heat out of a compression within a period" -- and
+    0.7131 is that failure AT THE COLUMN-MEAN OPACITY OF PART C,
+    used as if it were local; the ATLAS9 values follow.
+    *** chi above carries the COLUMN-MEAN opacity of PART C, and
+    *** (4.4) needs the LOCAL one.  With the ATLAS9 kappa_R
+    *** and ATLAS9 rho at the same two levels (c_P and c held at
+    *** Module 6's and Module 4's values):
+    ***   T = Teff     chi = 1.5027e+13  omega chi/c^2 = 0.4468
+    ***   tau_R = 2/3  chi = 1.1587e+13  omega chi/c^2 = 0.3445
+    *** Both lie between 0.3445 and 0.4468: below 1, and not << 1.
+    *** CHECK 3 VERDICT (Gate D addendum): the adiabatic closure is
+    *** REFUTED at the photosphere, and module04.html:429's own
+    *** prediction that it fails there is CONFIRMED.  The module
+    *** prints BOTH levels; 0.7131 above is the column-mean value and
+    *** is superseded, printed only to show what CHECK 2 moved. ***
+
+    The same at the acoustic cutoff, nu_ac = 4497 microHz:
+      omega chi/c^2 = 1.037752e+00  (ratio to nu_max: 1.4553)
+
+    THE SAME NUMBER, READ AS TWO TIMES.  omega chi/c^2 is not a
+    scale-height statement at all: with a wavelength lam = c/nu,
+    the diffusion time across one wavelength divided by one period
+    is c^2/(nu chi), and omega chi/c^2 is 2 pi divided by it.  The
+    two must therefore satisfy one identity, which is the check:
+      wavelength at nu_max   = 2.6152e+08 cm = 2615.2 km
+      diffusion time across it = 2.8516e+03 s
+      the period               = 3.2362e+02 s
+      ratio (diffusion/period) = 8.8115e+00
+      2 pi/ratio               = 0.713065
+      omega chi/c^2            = 0.713065
+      IDENTICAL, so the two readings are one quantity.  Adiabatic
+      wants the ratio LARGE; 8.81 periods is not large.
+
+PART E.  Where radiation takes over
+------------------------------------------------------------------------
+  The density at which P_rad = P_gas, at mu = 0.832:
+    T = 1.00e+04 K   rho = 2.5236e-11 g/cm^3
+    T = 1.00e+05 K   rho = 2.5236e-08 g/cm^3
+    T = 1.00e+06 K   rho = 2.5236e-05 g/cm^3
+    T = 1.55e+07 K   rho = 9.3612e-02 g/cm^3
+    T = 1.00e+08 K   rho = 2.5236e+01 g/cm^3
+  The Sun's tabulated centre, at mu = 0.82851, sits at rho = 150.50
+  g/cm^3 against 9.3219e-02,
+  i.e. 1614.5 times denser than the crossover -- and that ratio is
+  beta/(1-beta) = 1614.5, the same statement as 1 - beta = 6.190e-04.
+
+  The Sun as a whole, against its own Eddington limit:
+    L_sun/L_Edd(1 Msun, kappa_es at X = 0.7583) = 2.6772e-05
+    i.e. at the surface, for an opacity of kappa_es, the radiative
+    FORCE is 2.68e-05 of gravity.  This is NOT what module03.html:795
+    owes: Module 3's (3.2) drops radiation PRESSURE, 1 - beta,
+    priced in PART B at the centre and in PART M at tau_R = 2/3.
+
+PART F.  CHECK 4: Eddington's grey atmosphere against ATLAS9
+------------------------------------------------------------------------
+  T(tau) = Teff [(3/4)(tau + 2/3)]^(1/4), Teff = 5777 K (the file's
+  own header; the book's IAU 5772 K is 0.087 per cent lower).
+    tau_R     ATLAS9 T    grey T    grey/ATLAS9
+    0.0100     4733.5    4876.0     1.0301
+    0.1000     5081.2    5030.6     0.9900
+    0.3000     5455.1    5330.7     0.9772
+    0.6667     5910.1    5777.0     0.9775
+    1.0000     6228.3    6108.4     0.9807
+    2.0000     6973.4    6870.0     0.9852
+    3.0000     7481.8    7439.4     0.9943
+    largest |grey/ATLAS9 - 1| = 0.0301 in T, 0.1259 in T^4.
+  The exact grey solution replaces 2/3 by the Hopf function q(tau):
+    q(0) = 0.57730 against 1/sqrt(3) = 0.57735
+    q(2/3) = 0.68876, which moves T at tau = 2/3 by 0.412 per cent.
+    ATLAS9 at tau_R = 2/3 is 5910.1 K, 2.30 per cent above Teff.
+    The closure accounts for 0.41 per cent of it; the rest is what
+    the grey model leaves out.  This check does not separate
+    non-grey opacity from ATLAS9's convection (l/H = 1.25).
+    At tau = 0.01 the other way round: Hopf multiplies grey T by
+    0.9697, so grey/ATLAS9 becomes 0.9988 -- the closure is the error.
+  CHECK 4 VERDICT (Gate D): CONFIRMED within 3.1 per cent in T.
+
+PART L.  The nine problems
+------------------------------------------------------------------------
+  C1 isotropic field, P_rad/u_rad        = 0.333333
+  C1 one open hemisphere, P_rad/u_rad    = 0.333333
+  C1 parallel beam, P_rad/u_rad          = 1.000000
+  C2 neutron-star mass, g               = 2.783774e+33
+  C2 L_Edd, pure hydrogen, erg/s        = 1.759891e+38
+  C2 L_Edd, protosolar X, erg/s         = 2.039153e+38
+  C2 Mdot_Edd, pure hydrogen, g/s       = 1.958143e+18
+  C2 Mdot_Edd, protosolar X, g/s        = 2.268864e+18
+  C2 ratio of the two limits            = 1.158681
+  C3 grey T at the surface, K = 4853.7
+  C3 grey T at the two-thirds, K = 5772.0
+  C3 grey T at the depth two, K = 6864.1
+  C3 surface T over Teff                = 0.840896
+  D1 Gamma_one, pure gas                = 1.666667
+  D1 Gamma_one, pure radiation          = 1.333333
+  D1 Gamma_one, half and half           = 1.425926
+  D1 dlnT/dlnrho, pure gas              = 0.666667
+  D1 dlnT/dlnrho, pure radiation        = 0.333333
+  D2 deep flux from the diffusion law over sigma Teff^4 = 1.000000
+  D3 Eddington opacity bound for the Sun, cm^2/g = 13060.8
+  D3 kappa_es over that bound            = 2.6772e-05
+  D3 L_sun/L_Edd from the limit          = 2.6772e-05
+  K1 e-folding time with the kept fraction, yr    = 5.0054e+07
+  K1 number of e-folds                            = 18.420681
+  K1 growth time with the kept fraction, yr       = 9.2204e+08
+  K1 growth time if all the inflow were kept, yr  = 8.2983e+08
+  K2 luminosity at the book efficiency, erg/s = 4.6052e+42
+  K2 that luminosity over L_Edd               = 3663.5
+  K2 efficiency that would sit at L_Edd       = 2.7297e-05
+  K3 chi from the stated inputs, cm^2/s  = 1.1588e+13
+  K3 adiabaticity parameter at the cutoff = 0.5014
+  K3 diffusion time over period at the cutoff = 12.532
+  K3 against the same level at nu_max, ratio = 1.4554
+
+PART M.  Numbers the draft prints that earlier parts did not
+------------------------------------------------------------------------
+  step 4 LOCAL pair, superseded: kappa_R level ratio = 1.2367
+  step 4 LOCAL pair, superseded: input spread      = 1.4176
+  ATLAS9 kappa_R at tau_R = 1, cm^2/g            = 0.7274
+  kappa_R rise from T = 5772 K to tau_R = 1       = 2.0228
+  electron density at tau_R = 2/3, ATLAS9, cm^-3 = 2.4815e+13
+  electron scattering with that n_e, cm^2/g      = 6.1780e-05
+  kappa_R over that electron scattering          = 7198.5
+  fully ionised kappa_es over it                  = 5659.8
+    PART C's floor argument stands (corrected at step 5; step 4
+    wrote here that it "does not survive CHECK 2", which read a
+    one-sided bound the wrong way).  kappa_es is a FLOOR on the
+    kappa_R of fully ionised gas.  Both column means lie below it:
+    inferred 0.15231 and ATLAS9 0.17487, against 0.34966.  ATLAS9's LOCAL
+    kappa_R = 0.4447 lies above the floor, which decides nothing.
+    The electron density above says the same thing directly.
+
+  STEP 5, CHECK 2 read as a column mean (m13-editor-report.md B1)
+    Module 6 inputs: P = 1.2000e+05 dyn/cm^2, g = 2.7420e+04 cm/s^2
+    rho H from the printed rho and H, g/cm^2      = 4.3772
+    P/g from the inputs, g/cm^2                  = 4.3764
+    (2/3) g/P from the inputs, cm^2/g            = 0.15233
+    Module 6 column mass over ATLAS9 at tau_R = 2/3 = 1.1482
+    Module 6 input P over ATLAS9 P at tau_R = 2/3   = 1.1487
+    ATLAS9 gravity 10^4.4377, cm/s^2              = 2.7397e+04
+    Module 6 gravity over ATLAS9 gravity          = 1.0008
+    rho H over P/g, the rounding of the printed rho, H = 1.0002
+    ATLAS9 kappa_R at tau_R = 0.01, cm^2/g        = 0.0424
+    kappa_R rise from tau_R = 0.01 to 2/3           = 10.48
+    thickness of tau_R = 0.543 to 1, km             = 32.6
+    that thickness over Module 6's H              = 0.23
+    ATLAS9 kappa_R at 2/3 over kappa_es at X = 0.7583 = 1.2719
+    L_sun/L_Edd with that kappa_R in place of kappa_es = 3.405e-05
+    Hopf correction at tau = 0.01, per cent        = 3.0
+    Fig. 5, centre over the drawn line (mu = 0.832)  = 1607.7
+    Fig. 5, centre above the drawn line, decades   = 3.21
+    Fig. 5, photosphere above the drawn line, decades = 4.71
+
+  photon mean free path at tau_R = 2/3, ATLAS9, km = 84.2
+  P_rad/P at tau_R = 2/3, ATLAS9                  = 2.9454e-05
+  ATLAS9 T at tau_R = 2/3 minus its Teff, K       = 133.1
+  the part of the 2/3 miss the closure leaves, per cent = 1.89
+  diffusion time over period, T = Teff level      = 14.06
+  diffusion time over period, tau_R = 2/3 level   = 18.24
+  Gamma_one at the Sun's centre, beta_c           = 1.665639
+  its shortfall below five-thirds                 = 1.0276e-03
+
+PART G.  What steps 2 and 3 settled, and what is still open
+------------------------------------------------------------------------
+  Read at step 2, each off the page:
+    1. kappa_R at the solar photosphere: ATLAS9, PART C.
+    2. Gamma_1: Chandrasekhar (1939) eq. (131) p. 57, Table 1 p. 59.
+    3. Eddington (1926): k < 4 pi c G M/L, sect. 82, p. 115.
+       His Sun bound is k < 13200; this file's constants give 13061.
+    4. BS2005-AGS,OP prints no 1 - beta; module03.html:628 does.
+  Ruled at Gate D: diffusion_time's factor 3 is derived, not
+  sourced.  Still open: no ULX (optional); Eddington's 1926
+  printing was not seen, only the 1930 reprint.
+  And three things the run has FOUND that are not about papers:
+    (a) module09.html:913's doubling time is M/Mdot, exact at
+        constant Mdot; the page states no growth law.  NOT a defect.
+    (b) module09.html:944's m_p is a COMPOSITION -- pure ionised
+        hydrogen -- and no shipped page says so.  CHECK 1.
+    (c) the book carries three values of eta_rad and Mdot_Edd
+        carries it.  Simon ruled 0.1 stays; nothing shipped moves.
+
+========================================================================
+END OF RUN.  All asserts passed.
+========================================================================

@@ -1,0 +1,116 @@
+========================================================================
+MODULE 14 NUMBERS -- numerical methods
+========================================================================
+
+PART A.  The Courant condition
+------------------------------------------------------------------------
+  upwind  C = 0.5   max |G(theta)| = 1.000000   |1 - 2C| = 0.000000
+  upwind  C = 0.9   max |G(theta)| = 1.000000   |1 - 2C| = 0.800000
+  upwind  C = 1.0   max |G(theta)| = 1.000000   |1 - 2C| = 1.000000
+  upwind  C = 1.1   max |G(theta)| = 1.200000   |1 - 2C| = 1.200000
+  FTCS    C = 0.5   max |G(theta)| = 1.118034   sqrt(1 + C^2) = 1.118034
+  FTCS    C = 1.0   max |G(theta)| = 1.414214   sqrt(1 + C^2) = 1.414214
+  sawtooth after 100 steps at C = 0.9: growth per step = 0.800000  (predicted |1 - 2C| = 0.800000)
+  sawtooth after 100 steps at C = 1.1: growth per step = 1.200000  (predicted |1 - 2C| = 1.200000)
+  smooth Gaussian, 200 cells, C = 1.1: |u| exceeds 1e3 after 210 steps
+    max|u| after 210 steps: float64 1159.2855264943; exact rational steps on the stored samples 1159.2855264943; 60-digit samples and steps 1159.2855264624
+    relative differences from float64: exact 1.0e-14, 60-digit -2.8e-11
+    end-cell value of the Gaussian 1.782e-11; amplitude of the samples at wavenumbers 91, 92, 93 of 200: 2.38e-15, 2.10e-15, 1.84e-15
+  Module 10 lab air: Ma_th = 0.0218; c_s/vbar = sqrt(pi gamma/8) = 0.7415 at gamma = 1.4
+    Mach number U/c_s = 0.0294
+    PUNCHLINE steps of a compressible explicit code per step assumed in module10 Prop. 4 = 1 + 1/M = 35.01
+  Module 10 cloud: U = 2.64 km/s, c_s(10 K, mu 2.33, 5/3) = 0.2439 km/s, M = 10.825, 1 + 1/M = 1.0924
+    cloud: extra steps of a compressible code, 100/M = 9.24 per cent
+
+PART B.  The numerical viscosity of the upwind scheme
+------------------------------------------------------------------------
+  C = 0.25: variance growth 2.343750e-04, predicted n C(1-C) dx^2 = 2.343750e-04, ratio 1.000000000
+  C = 0.50: variance growth 3.125000e-04, predicted n C(1-C) dx^2 = 3.125000e-04, ratio 1.000000000
+  C = 0.90: variance growth 1.125000e-04, predicted n C(1-C) dx^2 = 1.125000e-04, ratio 1.000000000
+  Re_num = 2N/(1-C): N =   256, C = 0.5: 1024
+  Re_num = 2N/(1-C): N =   256, C = 0.9: 5120
+  Re_num = 2N/(1-C): N =  1024, C = 0.5: 4096
+  Re_num = 2N/(1-C): N =  1024, C = 0.9: 2.048e+04
+  Re_num = 2N/(1-C): N =  4096, C = 0.5: 1.638e+04
+  Re_num = 2N/(1-C): N =  4096, C = 0.9: 8.192e+04
+  best-case Re with the dissipation scale at one cell, N^(4/3), N = 1024: 1.032e+04
+  best-case Re with the dissipation scale at one cell, N^(4/3), N = 4096: 6.554e+04
+  best-case Re with the dissipation scale at one cell, N^(4/3), N = 10048: 2.168e+05
+  cells per side for Re = 1e6 (Module 10): Re^(3/4) = 3.162e+04
+
+PART C.  The exact Riemann solver, Sod's problem, gamma = 1.4
+------------------------------------------------------------------------
+  p_star     = 0.303130
+  u_star     = 0.927453
+  rho_starL  = 0.426319
+  rho_starR  = 0.265574
+  S_R        = 1.752156
+  S_HL       = -1.183216
+  S_TL       = -0.070273
+  R-H residuals across the shock: mass -2.78e-17, momentum 8.33e-17
+  p/rho^gamma: left state 1.000000, star-left 1.000000
+
+PART D.  CHECK 2, THE ANCHOR.  Godunov on Sod, against PART C
+------------------------------------------------------------------------
+  t = 0.2; contact at 0.685491, shock at 0.850431, fan tail at 0.485945; regions split at 0.585718 and 0.767961
+  density jump at the contact = 0.160746
+  N =   100  L1 total 1.3856e-02  fan 7.9997e-03  contact 4.8555e-03  shock 1.0010e-03  | predicted contact 4.2997e-03  ratio 1.1293  <C_c> 0.3864  steps 48
+  N =   200  L1 total 8.9006e-03  fan 4.9806e-03  contact 3.4313e-03  shock 4.8875e-04  | predicted contact 3.0561e-03  ratio 1.1228  <C_c> 0.3825  steps 97
+  N =   400  L1 total 5.7318e-03  fan 3.0434e-03  contact 2.4252e-03  shock 2.6313e-04  | predicted contact 2.1674e-03  ratio 1.1190  <C_c> 0.3825  steps 194
+  N =   800  L1 total 3.6626e-03  fan 1.8194e-03  contact 1.6991e-03  shock 1.4409e-04  | predicted contact 1.5346e-03  ratio 1.1072  <C_c> 0.3815  steps 389
+  N =  1600  L1 total 2.3130e-03  fan 1.0667e-03  contact 1.1904e-03  shock 5.5939e-05  | predicted contact 1.0858e-03  ratio 1.0963  <C_c> 0.3810  steps 779
+  N =  3200  L1 total 1.4829e-03  fan 6.1547e-04  contact 8.3074e-04  shock 3.6693e-05  | predicted contact 7.6809e-04  ratio 1.0816  <C_c> 0.3810  steps 1558
+  N =  6400  L1 total 9.4406e-04  fan 3.5028e-04  contact 5.7898e-04  shock 1.4795e-05  | predicted contact 5.4321e-04  ratio 1.0659  <C_c> 0.3810  steps 3116
+  PUNCHLINE order of the total   error, N = 100 -> 6400: 0.646   (last doubling 0.651)
+  PUNCHLINE order of the fan     error, N = 100 -> 6400: 0.752   (last doubling 0.813)
+  PUNCHLINE order of the contact error, N = 100 -> 6400: 0.511   (last doubling 0.521)
+  PUNCHLINE order of the shock   error, N = 100 -> 6400: 1.013   (last doubling 1.310)
+  PUNCHLINE contact measured/predicted: N = 100 1.1293, N = 6400 1.0659
+  contact share of the total error: N = 100 35.0 per cent, N = 6400 61.3 per cent
+
+PART F.  CHECK 4.  One-dimensional SPH on Sod
+------------------------------------------------------------------------
+  exact thermal energy either side of the contact: 1.7776, 2.8535
+  alpha_u = 0,  200/unit length (113 in [0,1]): contact max|P-p*|/p* = 0.0893; plateau 0.0158; u max 3.0901; mean|rho-exact| 9.0355e-03
+  alpha_u = 0,  400/unit length (225 in [0,1]): contact max|P-p*|/p* = 0.0938; plateau 0.0115; u max 3.0939; mean|rho-exact| 5.7655e-03
+  alpha_u = 0,  800/unit length (450 in [0,1]): contact max|P-p*|/p* = 0.0942; plateau 0.0049; u max 3.0943; mean|rho-exact| 4.0975e-03
+  alpha_u = 1,  200/unit length (113 in [0,1]): contact max|P-p*|/p* = 0.0371; plateau 0.0201; u max 2.9140; mean|rho-exact| 9.8270e-03
+  alpha_u = 1,  400/unit length (225 in [0,1]): contact max|P-p*|/p* = 0.0310; plateau 0.0130; u max 2.9197; mean|rho-exact| 6.1763e-03
+  alpha_u = 1,  800/unit length (450 in [0,1]): contact max|P-p*|/p* = 0.0216; plateau 0.0057; u max 2.9073; mean|rho-exact| 4.3584e-03
+
+PART G.  Following a collapse: the Jeans condition
+------------------------------------------------------------------------
+  n(H2) = 1e+04: lambda_J = 0.19479 pc = 40178 AU, M_J = 2.658 Msun, dx <= 1.004e+04 AU
+  n(H2) = 1e+06: lambda_J = 0.019479 pc = 4017.8 AU, M_J = 0.2658 Msun, dx <= 1004 AU
+  n(H2) = 1e+08: lambda_J = 0.0019479 pc = 401.78 AU, M_J = 0.02658 Msun, dx <= 100.4 AU
+  n(H2) = 1e+10: lambda_J = 0.00019479 pc = 40.178 AU, M_J = 0.002658 Msun, dx <= 10.04 AU
+  a box of 4 lambda_J(1e4) = 0.77916 pc at the 1e10 resolution: 1.6e+04 cells per side, 4.096e+12 in 3D
+  refinement levels of factor 2 for a factor 1e3 in lambda_J: 9.966
+  Bate & Burkert, N_neigh = 50: largest particle mass that resolves M_J(1e10) = M_J/(2 N_neigh) = 2.66e-05 Msun
+
+PART E.  CHECK 3.  The Sedov problem of Kamm & Timmes, spherical
+------------------------------------------------------------------------
+  xi_0(gamma = 7/5) from the copied Module 8 routine = 1.032777  (module08.html:360 prints 1.032777)
+  K = 1/xi_0^5 = 0.851072 (Kamm & Timmes E = 0.851072)
+  exact shock radius at t = 1: 1.000000
+  n = 100: peak rho 3.0559 at r = 1.0020; half-height radius 1.02764, error +0.02764; energy drift 2.6e-16; steps 4524
+  n = 200: peak rho 3.7619 at r = 0.9930; half-height radius 1.01365, error +0.01365; energy drift -2.1e-15; steps 19156
+  n = 400: peak rho 4.4010 at r = 0.9945; half-height radius 1.00663, error +0.00663; energy drift -3.9e-16; steps 80935
+  jump ceiling (gamma+1)/(gamma-1) = 6.0
+  shortfall of the n = 400 peak below the ceiling: 26.65 per cent
+
+PART L.  The problems
+------------------------------------------------------------------------
+  C1  FTCS at C = 0.5: max |G| = 1.118034; steps to grow 1e3 = 61.91
+  C2  initial S_max = c_L = 1.183216; dt = 0.9 (1/400)/S_max = 1.901597e-03; steps to t = 0.2 at that dt = 105.17
+  C2  post-shock sound speed (1.4 p*/rho*R)^(1/2) = 1.264
+  C3  Re_num(N = 512, C = 0.8) = 5120.0; N^(4/3) = 4096.0
+  K1  123 problem: p* = 0.001894, u* = 0.000000, rho* = 0.021852 (both sides 0.021852)
+  K1  c = 0.748331; c_L + c_R = 1.496663; (4.2) left side 2(c_L + c_R)/(gamma - 1) = 7.483
+  K2  lambda_J(1e8) = 0.0019479 pc; cells per side = 1600.0; 3D = 4.096e+09
+  K3  contact order over the last doubling = 0.5209; N for L1 = 1e-4: 1.864e+05; 3D work ratio (N/6400)^4 = 7.19e+05
+  K3  error factor E(6400)/1e-4 = 5.79; first-order work ratio (E(6400)/1e-4)^4 = 1.12e+03
+
+========================================================================
+END OF RUN.  All asserts passed.
+========================================================================

@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Price (2008), Modelling discontinuities and Kelvin-Helmholtz instabilities in SPH",
+    "url": "https://arxiv.org/abs/0709.2772",
+    "used_for": [
+      "M14-C01"
+    ]
+  },
+  {
+    "title": "Banks, Aslam & Rider (2008), On sub-linear convergence for linearly degenerate waves",
+    "url": "https://www.osti.gov/servlets/purl/945128",
+    "used_for": [
+      "M14-C04"
+    ]
+  },
+  {
+    "title": "CERN Geant4 Physics Reference Manual, Compton scattering",
+    "url": "https://geant4.web.cern.ch/documentation/dev/prm_html/PhysicsReferenceManual/electromagnetic/gamma_incident/compton/compton.html",
+    "used_for": [
+      "M13-C02"
+    ]
+  },
+  {
+    "title": "Bahcall, Serenelli & Basu (2005), New Solar Opacities, Abundances, Helioseismology, and Neutrino Fluxes",
+    "url": "https://arxiv.org/abs/astro-ph/0412440",
+    "used_for": [
+      "M13-C04"
+    ]
+  }
+]

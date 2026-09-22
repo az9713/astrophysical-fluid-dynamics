@@ -1,0 +1,123 @@
+[
+  {
+    "id": "M13-C01",
+    "module": "afd/module13.html",
+    "line": 399,
+    "severity": "blocking",
+    "title": "A boundary-layer diffusion estimate is presented as a refutation of adiabatic oscillations",
+    "quote": "CHECK 3 — the adiabatic assumption is REFUTED at the photosphere",
+    "rubric": "Rules 9, 10, 12 and 14; scientific claim standard 1–4",
+    "analysis": "Equation (4.4) was derived after imposing the optically thick diffusion closure. The module itself says that this law fails at a stellar surface. The check nevertheless evaluates it at Rosseland optical depth 2/3. The local mean free path is 84.16 km and the acoustic wavelength is 2615 km, so the wavelength spans about 31 local optical depths; however, the outward boundary is only 2/3 optical depth away. A local diffusion estimate can show that heat leakage is plausibly important, but it does not solve the non-adiabatic transfer problem with the photospheric boundary condition. Values of 0.34–0.45 therefore show that the adiabatic limit is not well controlled under this estimate. They do not refute the complete adiabatic oscillation model.",
+    "replacement": "<div class=\"keyresult\"><b>CHECK 3 — radiative leakage may be important near the photosphere.</b> Using the local ATLAS9 opacity and density in the diffusion estimate gives $\\omega\\chi/c_{\\rm s}^2=0.4468$ at $T=5772$ K and $0.3445$ at $\\tau_{\\rm R}=2/3$. Neither value is much smaller than unity, so the adiabatic approximation is not asymptotically controlled in these layers. This calculation is only an estimate: radiative diffusion assumes an optically thick, nearly isotropic field, whereas the outward optical depth at the photosphere is $2/3$. A quantitative damping rate requires a non-adiabatic oscillation calculation coupled to radiative transfer and the surface boundary condition.</div>"
+  },
+  {
+    "id": "M13-C02",
+    "module": "afd/module13.html",
+    "line": 493,
+    "severity": "major",
+    "title": "The Thomson opacity is treated as a frequency-independent floor for every spectrum",
+    "quote": "For electron scattering, sigma_T does not depend on frequency ... whatever the spectrum",
+    "rubric": "Rules 9, 10 and 12; scientific limits and rescue cases",
+    "analysis": "The statement is valid only in the Thomson limit, $h\\nu\\ll m_ec^2$, for free non-relativistic electrons. At higher photon energies the Klein–Nishina cross-section falls below the Thomson value. Direct evaluation gives 0.963, 0.741 and 0.431 times $\\sigma_T$ at 10, 100 and 511 keV. Electron scattering therefore is not a spectrum-independent opacity floor for arbitrary radiation fields. The missing restriction matters in a chapter that applies the Eddington limit to compact objects.",
+    "replacement": "<p>For fully ionised gas illuminated by photons with $h\\nu\\ll m_ec^2$, scattering is in the Thomson regime and $\\sigma_T$ is effectively independent of frequency. In that limit, and when other opacities are negligible, $\\kappa_{\\rm F}=\\kappa_{\\rm es}=\\sigma_T(1+X)/(2m_p)$. At X-ray and gamma-ray energies the Klein–Nishina cross-section decreases with photon energy, so the flux-mean scattering opacity and the corresponding Eddington luminosity depend on the spectrum.</p>"
+  },
+  {
+    "id": "M13-C03",
+    "module": "afd/module13.html",
+    "line": 563,
+    "severity": "major",
+    "title": "Module 13 repeats an invalid Sgr A* refutation from Module 9",
+    "quote": "That refutation is Module 9's and is cited, not re-checked",
+    "rubric": "Rules 10, 14 and 18; evidence interpretation",
+    "analysis": "The earlier audit showed that Module 9 divides a 2–10 keV luminosity by the rest-mass power of the outer Bondi supply and calls the result a radiative efficiency. This compares a band luminosity with a supply rate at another radius and then compares the ratio with a bolometric thin-disc efficiency. Module 13 reproduces the arithmetic and imports the invalid inference. A cross-reference does not insulate a new chapter from a known error in the referenced chapter.",
+    "replacement": "<p>Sagittarius A* has a 2–10 keV luminosity of $3.70\\times10^{-12}L_{\\rm Edd}$ in the inputs used by Module 9, while its Bondi supply estimate is $8.405\\times10^{-5}\\dot M_{\\rm Edd}$. Their ratio is $4.40\\times10^{-9}$. This is a band-limited luminosity divided by the rest-mass power associated with an outer supply estimate; it is not a measured bolometric efficiency of gas reaching the black hole. Interpreting the ratio requires a bolometric correction and a model for mass loss between the Bondi radius and the emitting flow.</p>"
+  },
+  {
+    "id": "M13-C04",
+    "module": "afd/module13.html",
+    "line": 516,
+    "severity": "major",
+    "title": "A solar abundance is presented as the appropriate composition for black-hole accretion",
+    "quote": "X = 0.7261 ... is the apt value for gas a black hole accretes",
+    "rubric": "Rules 1, 10 and 12; precise statement and defined scope",
+    "analysis": "The initial solar hydrogen fraction is appropriate for protosolar gas, not for black-hole accretion in general. Accreted gas can be metal poor, enriched, hydrogen deficient, partially ionised, pair loaded or drawn from a stellar companion. The useful result is the parametric dependence $L_{\\rm Edd}\\propto2/(1+X)$ in the fully ionised Thomson limit. The worked solar-composition value should remain an example, not a default physical claim.",
+    "replacement": "<p>The pure-hydrogen formula corresponds to $X=1$. For fully ionised gas in the Thomson regime, composition enters through $\\kappa_{\\rm es}=\\sigma_T(1+X)/(2m_p)$, so $L_{\\rm Edd}\\propto2/(1+X)$. The value $X=0.7261$ is the initial hydrogen fraction in the cited solar model and provides one worked example. It is not a universal composition for black-hole accretion; the appropriate $X$ must be chosen for the gas being modelled.</p>"
+  },
+  {
+    "id": "M13-C05",
+    "module": "afd/module13.html",
+    "line": 322,
+    "severity": "major",
+    "title": "A post-hoc tolerance is used to label an opacity comparison confirmed",
+    "quote": "CONFIRMED as a column mean ... The tolerance ... was computed after the 1.1482 was known",
+    "rubric": "Rules 10, 11 and 14; evidence standard",
+    "analysis": "The text candidly states that the acceptance band was selected after the result was known. That prevents the band from functioning as a validation criterion. The comparison can still be reported: the inferred and ATLAS9 column means differ by factors 1.016 and 1.148, and the discrepancy traces mainly to the borrowed pressure. The word confirmed overstates what the calculation establishes.",
+    "replacement": "<div class=\"keyresult\"><b>CHECK 2 — comparison with an ATLAS9 column mean.</b> Equation (6.1) gives $\\bar\\kappa_{\\rm R}=0.15231\\ \\mathrm{cm^2\\,g^{-1}}$. The ATLAS9 column mean is 0.15470 at the layer where $T=5772$ K and 0.17487 at $\\tau_{\\rm R}=2/3$, giving ratios of 1.0157 and 1.1482. This agreement is descriptive because no acceptance tolerance was specified before the comparison. Read as a local opacity, equation (6.1) is low by factors 2.36–2.92; it is a column mean and should not be used as a local coefficient.</div>"
+  },
+  {
+    "id": "M14-C01",
+    "module": "afd/module14.html",
+    "line": 633,
+    "severity": "blocking",
+    "title": "A maximum-norm result is generalized into non-convergence",
+    "quote": "Standard SPH REFUTED as convergent there; the repair CONFIRMED",
+    "rubric": "Rules 10, 12 and 14; numerical convergence standard",
+    "analysis": "The module reports only the largest pressure error in a fixed neighbourhood of the contact. That error stays near 9%, which is evidence against uniform or maximum-norm convergence over the sampled resolutions. It does not establish non-convergence in other norms. Reintegrating the saved particle states gives relative $L_1$ errors of 0.05108, 0.02412 and 0.01289 at 200, 400 and 800 particles per unit length. Standard SPH therefore converges in this $L_1$ measure over the same runs. Artificial conductivity reduces the maximum error, but three resolutions do not establish a general asymptotic theorem for the repaired method.",
+    "replacement": "<div class=\"keyresult\"><b>CHECK 4 — pressure error at an SPH contact.</b> For standard SPH, the maximum relative pressure error within 0.05 of the contact is 0.0893, 0.0938 and 0.0942 at 200, 400 and 800 particles per unit length. These runs show no maximum-norm convergence over this resolution range. The corresponding volume-weighted relative $L_1$ errors are 0.0511, 0.0241 and 0.0129, so the integrated error does decrease. With Price's artificial conductivity, the maximum error falls to 0.0371, 0.0310 and 0.0216. The added conductivity improves this test, but the conclusion must specify the norm and the sampled resolutions.</div>"
+  },
+  {
+    "id": "M14-C02",
+    "module": "afd/module14.html",
+    "line": 655,
+    "severity": "major",
+    "title": "A one-cell scaling estimate is called a bound for any numerical scheme",
+    "quote": "A bound for any scheme. No scheme can represent a structure narrower than one cell",
+    "rubric": "Rules 9, 10 and 12; assumptions and limits",
+    "analysis": "The estimate assumes one characteristic degree of freedom per cell, a local grid scale $L/N$, Kolmogorov scaling, and the weak requirement that the dissipation scale occupy one cell. High-order finite-volume, discontinuous-Galerkin, spectral, interface-tracking and subcell methods do not fit the literal claim. Moreover, one cell across a dissipative structure is normally not an accuracy criterion. The $N^{4/3}$ relation is a useful dimensional scaling for a particular representation, not a universal theorem.",
+    "replacement": "<p><b>A grid-scale estimate.</b> Suppose a local discretisation has one characteristic spatial scale $\\Delta x=L/N$ and requires the Kolmogorov scale $\\eta$ to be no smaller than $\\Delta x$. Then $L/\\eta=\\mathrm{Re}^{3/4}$ gives the necessary estimate $\\mathrm{Re}\\lesssim N^{4/3}$. It yields $1.032\\times10^4$ for $N=1024$ and $6.554\\times10^4$ for $N=4096$. This is not a universal accuracy bound: practical calculations need several effective degrees of freedom across the smallest relevant structure, and the number depends on the method and error criterion.</p>"
+  },
+  {
+    "id": "M14-C03",
+    "module": "afd/module14.html",
+    "line": 569,
+    "severity": "major",
+    "title": "Conservation is said to fix the finite-resolution shock position",
+    "quote": "the position of the shock is fixed by conservation of energy and mass",
+    "rubric": "Rules 10, 12 and 14; numerical validation",
+    "analysis": "The measured half-height locations are 1.02764, 1.01365 and 1.00663 rather than the exact radius 1. Conservation gives the correct integral constraints and is essential for convergence to the weak solution, but it does not uniquely fix a numerical shock position at finite resolution. The data demonstrate first-order convergence of the chosen position estimator. They do not confirm an exact position.",
+    "replacement": "<div class=\"keyresult\"><b>CHECK 3 — convergence in the Sedov test.</b> The half-height estimate of the shock radius is 1.02764, 1.01365 and 1.00663 on 100, 200 and 400 cells. Its absolute error approximately halves when the resolution doubles, consistent with first-order convergence toward the exact radius 1. The peak density remains below the exact jump value because the shock is spread over several cells. Conservative updating preserves the integral balances that select the correct weak solution, but it does not make the finite-resolution shock position exact.</div>"
+  },
+  {
+    "id": "M14-C04",
+    "module": "afd/module14.html",
+    "line": 505,
+    "severity": "major",
+    "title": "The formal order of a scheme is said to be refuted by a discontinuous solution",
+    "quote": "the formal order REFUTED",
+    "rubric": "Rules 10 and 14; defined terms",
+    "analysis": "Formal order is defined for a specified scheme, regularity class and norm. A contact discontinuity violates the smoothness assumptions behind the usual first-order truncation estimate and can reduce global convergence. The experiment illustrates that distinction; it does not refute the scheme's formal order. The module's own contact-width derivation is useful once the verdict is corrected.",
+    "replacement": "<div class=\"keyresult\"><b>CHECK 2(b) — convergence is limited by the contact.</b> From $N=100$ to 6400, the density $L_1$ error falls with measured orders 1.013 at the shock, 0.511 at the contact, 0.752 in the fan and 0.646 overall. Equation (5.1) predicts the contact's $\\Delta x^{1/2}$ scaling without a fitted parameter. The result does not contradict the method's formal first-order accuracy for smooth solutions. It shows that a discontinuity can control the global error and reduce the observed convergence rate in this norm.</div>"
+  },
+  {
+    "id": "BOOK-C01",
+    "module": "afd/module01.html–afd/module14.html",
+    "line": null,
+    "severity": "major",
+    "title": "Simulation and model outputs are still labelled as measurements in older modules",
+    "quote": "Examples include module12.html:683, module08.html:878 and module05.html:703",
+    "rubric": "Rules 8, 10, 12 and 18; source and evidence standard",
+    "analysis": "Module 14's census correctly exposes an unresolved book-wide taxonomy problem. Examples include the Zhuravleva simulation comparison in Module 12, the Wang–Chevalier simulation width in Module 8, ATLAS9 outputs in Module 5, BS05 model quantities in Modules 3 and 6, and a simulation-derived velocity in Module 7. Listing the errors in Module 14 does not repair the original pages. Each occurrence should say measured, simulated, model-derived or inferred according to its provenance.",
+    "replacement": "<p>Use <b>measured</b> only for quantities directly constrained by observations or experiments. Use <b>model-derived</b> for atmosphere and stellar-structure tables, <b>simulation output</b> for numerical hydrodynamics, and <b>inferred by comparison with simulations</b> when an observation is interpreted through a simulation. State the inference chain beside the number.</p>"
+  },
+  {
+    "id": "BOOK-P01",
+    "module": "afd/module01.html–afd/module14.html",
+    "line": null,
+    "severity": "major",
+    "title": "The twenty-rule prose standard is not yet satisfied",
+    "quote": "The mechanical screen found 782 sentences above 35 words",
+    "rubric": "Rules 1–8 and 13–19",
+    "analysis": "The screen found 782 sentences longer than 35 words across the fourteen modules. Module 13 contains 60 and Module 14 contains 39. Length alone is not a quality verdict, but inspection confirms repeated clause chains, production history, courtroom labels, source-audit narration and paragraphs that carry several independent ideas. These features produce the same mechanical, non-human textbook voice identified in the first audit.",
+    "replacement": "<p>Rewrite the narrative paragraph by paragraph. Give each paragraph one physical idea, place assumptions beside the result they restrict, and reserve source disputes for notes. Replace CONFIRMED and REFUTED with the measured quantity, its uncertainty or error norm, and the inference that follows. Remove references to drafts, gates, plans, shipped pages, editors and debts from the teaching narrative.</p>"
+  }
+]

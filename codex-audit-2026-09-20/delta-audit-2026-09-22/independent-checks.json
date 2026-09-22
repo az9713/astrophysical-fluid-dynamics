@@ -1,0 +1,41 @@
+{
+  "module13": {
+    "photosphere_mean_free_path_km": 84.155046348518,
+    "acoustic_wavelength_km": 2615.2,
+    "optical_depth_across_wavelength": 31.075973616240002,
+    "optical_depth_to_surface_at_evaluation_point": 0.6666666666666666,
+    "kn_cross_section_over_thomson": {
+      "10_keV": 0.9627573754552299,
+      "100_keV": 0.7407016632458977,
+      "511_keV": 0.43072784191504315
+    }
+  },
+  "module14": {
+    "sph_contact_norms": [
+      {
+        "particles_per_unit_length": 200.0,
+        "max_relative_pressure_error": 0.08927025716813239,
+        "volume_weighted_relative_L1_near_contact": 0.05107797471875023,
+        "covered_length": 0.08657211549576076
+      },
+      {
+        "particles_per_unit_length": 400.0,
+        "max_relative_pressure_error": 0.09381109034736057,
+        "volume_weighted_relative_L1_near_contact": 0.02412482323408718,
+        "covered_length": 0.10115788034222038
+      },
+      {
+        "particles_per_unit_length": 800.0,
+        "max_relative_pressure_error": 0.09424051484639226,
+        "volume_weighted_relative_L1_near_contact": 0.012890548247769775,
+        "covered_length": 0.09764250387453532
+      }
+    ],
+    "reported_sedov_shock_location_errors": [
+      0.02764,
+      0.01365,
+      0.00663
+    ],
+    "note": "A persistent maximum error does not by itself rule out L1 convergence; convergence claims must name the norm."
+  }
+}

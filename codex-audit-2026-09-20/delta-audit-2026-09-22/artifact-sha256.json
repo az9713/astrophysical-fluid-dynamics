@@ -1,0 +1,20 @@
+{
+  "AUDIT_REPORT.html": "6a4b5364c84be2409376aca50c4752c94847dfb861014359f7733b7a7da6e894",
+  "AUDIT_REPORT.md": "ac02b7dc2c17a819f692a5ab4d9546b157543e2e35a591701e2cd1f58599e42f",
+  "build_delta_report.py": "d1e58297405e094099c141666932a5a33d2c2568194f879ba8e8c5bbb722af67",
+  "findings.json": "cf7d130dba5c7ebcf7ccfaab915dbf2ce2d2782b151a2607cb810dc25e1eee2a",
+  "independent-checks.json": "da7db94ff2738dffdadcdce08e99fa4ce612fc3337caeb202ccf46714d2286ef",
+  "independent_checks.py": "7a6d97d7fc52886b840c4f0804374baf738909dc04a5b2f1c6d6aca86602532b",
+  "integrity-verification.json": "0894341de088158f6263553326ea58a5aaabc14ffb580898fd7b2a5d85e3a0d2",
+  "m13-fresh-run.txt": "5f2f24d63eaf7c60b1f4d70d81db7310311a538696b21b3e4c09f9154627cfca",
+  "m14-fresh-run.txt": "c2ca4aa8477a831085a0a010e153a541bfcbf4bf7cd297deeeadbf54370cf94b",
+  "mechanical-rubric-checks.json": "c381942f8b84a7cd18ed7e7f518b75961a1a94f4c6c3bef5da57f607fbe90c14",
+  "module13-reading.txt": "4bafd73ba2bcde52c0082edf9af7d99ba5fc8d462240fb1a4bbff1ff406110bc",
+  "module14-reading.txt": "65ba9beac4a9df62248d60c28c2cd15fa87b9fdb5b6b7b15c704e938a67f6921",
+  "original-module-hashes.json": "5a7387c361646d88083c7ceebd171348e506ff244352d802b851d2107f7f0533",
+  "prepare_delta_audit.py": "ea5f661e6b4e87b70342090cad6a2bc5567ec10a4c765242e5999e3eaedbfbc1",
+  "README.md": "98b44d36b37853c3b1c64d6d1f17e6243034accfa4803e70b94c81dff274d1f4",
+  "report-validation.json": "d5cc253ebdd8198548789d932717f66ad2201e5ad7ab87d366d651fa12c39f90",
+  "source-manifest.json": "7841fe2783ef98193f338944a0da73b327bb0a388e3244f840ca58ac0e8ec5b7",
+  "verify_delta_audit.py": "cee6570698b2639dbe74277cc05dd5dbb4b4afe6e2b673119f0f3fafce25f9d7"
+}

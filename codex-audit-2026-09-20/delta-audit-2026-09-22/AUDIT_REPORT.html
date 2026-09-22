@@ -1,0 +1,675 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Codex delta audit — Modules 13–14</title><style>
+:root{color-scheme:dark;--bg:#09111f;--panel:#111d31;--ink:#e8eef8;--muted:#9eb0c8;--line:#2b3d58;--accent:#6ee7d8;--major:#fbbf24;--block:#fb7185}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 Georgia,'Times New Roman',serif}main{max-width:1040px;margin:auto;padding:48px 34px 90px}h1,h2,h3{font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.18}h1{font-size:2.7rem;margin-bottom:.25rem}h2{margin-top:2.5rem;border-top:1px solid var(--line);padding-top:1.1rem;color:var(--accent)}h3{margin-top:2rem}p,li{max-width:84ch}a{color:#8bd8ff}blockquote{margin:1rem 0;padding:.7rem 1rem;border-left:4px solid var(--major);background:var(--panel)}code{background:#17263d;padding:.08rem .3rem;border-radius:4px}pre{overflow:auto;background:#07101d;border:1px solid var(--line);padding:1rem;border-radius:8px;white-space:pre-wrap}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;margin:1.2rem 0}th,td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left;vertical-align:top}th{background:#17263d;font-family:Inter,Segoe UI,Arial,sans-serif}strong{color:#fff}@media(max-width:650px){main{padding:28px 18px 60px}h1{font-size:2rem}body{font-size:16px}}@media print{body{background:#fff;color:#111}main{max-width:none;padding:0}h2{color:#075985}a{color:#075985}pre,blockquote,th{background:#f2f4f7;color:#111}}
+</style><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></head><body><main><h1>Delta scientific and prose audit</h1>
+<p><em>Astrophysical Fluid Dynamics</em> · Modules 13–14, with a focused all-module pass</p>
+<p>Signed: <strong>Codex — OpenAI</strong> | 22 September 2026 | America/Los_Angeles</p>
+<h2>Verdict: not yet teachable</h2>
+<p>Modules 13 and 14 contain substantial useful material, including explicit assumptions, reproducible numerical runs, source lists, worked exercises and several careful derivations. They are not yet reliable textbook chapters. Module 13 overstates a photospheric diffusion estimate as a refutation and applies Thomson scattering outside its stated domain. Module 14 makes a false norm-independent claim about SPH convergence and presents a representation-dependent grid estimate as a bound on every numerical scheme.</p>
+<p>The prose has not yet met the twenty-rule standard. It remains dense, self-conscious and editorial. Much of it describes drafts, gates, plans, debts, checks and shipped pages. The reader is repeatedly asked to follow the history of manuscript production rather than the physical argument.</p>
+<h3>Module verdicts</h3>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Verdict</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>13 — Radiation hydrodynamics</td>
+<td><strong>Not yet teachable</strong></td>
+<td>The central photospheric verdict exceeds the validity of its diffusion closure; the Eddington discussion needs spectral and composition qualifications.</td>
+</tr>
+<tr>
+<td>14 — Numerical methods</td>
+<td><strong>Not yet teachable</strong></td>
+<td>The SPH convergence verdict is false without a norm, and the universal resolution bound is overclaimed.</td>
+</tr>
+<tr>
+<td>1–12 focused follow-up</td>
+<td><strong>Substantial revision still required</strong></td>
+<td>The new rubric confirms pervasive long-sentence load, production narration and unresolved evidence labels. This was a focused pass, not a second complete scientific audit.</td>
+</tr>
+</tbody>
+</table>
+<h2>Scope and method</h2>
+<p>The deep audit covers the scientific narrative, major claims, equations, numerical checks, figures, captions, conclusions and selected exercises of Modules 13 and 14. The all-module follow-up applies checks that became explicit in the twenty-rule rubric: sentence load, production narration, evidence-verdict language, evidence taxonomy, duplicate anchors and local links. It does not replace the full Modules 1–12 audit dated 20 September 2026.</p>
+<p>The module files were not edited. Baseline SHA-256 hashes were recorded for all fourteen modules. The original problem-check programs were rerun: Module 13 passed 83 checks and Module 14 passed 80. Module 14's full numerical generator also completed with all assertions passing. Passing the supplied assertions establishes internal reproducibility; it does not validate the interpretation of every result.</p>
+<p>Independent calculations tested the claims most likely to change a conclusion. They recomputed the photospheric optical-depth scales, the Klein–Nishina correction, SPH pressure errors in two norms and the reported Sedov shock-position errors. Full machine-readable results accompany this report.</p>
+<h2>Executive findings</h2>
+<ul>
+<li><strong>Two blocking findings:</strong> the Module 13 boundary-layer diffusion verdict and the Module 14 norm-free SPH non-convergence verdict.</li>
+<li><strong>Seven module-level major findings:</strong> Thomson-limit scope, inherited Sgr A* interpretation, composition scope, post-hoc validation, a universal grid bound, finite-resolution shock position, and misuse of formal order.</li>
+<li><strong>Two book-wide major findings:</strong> unresolved evidence labels and failure of the twenty-rule prose standard.</li>
+<li><strong>No structural HTML failures:</strong> no duplicate IDs and no broken local module links were found.</li>
+<li><strong>Originals preserved:</strong> the final integrity file compares all fourteen original module hashes with the baseline.</li>
+</ul>
+<h2>Ranked findings</h2>
+<h3>M13-C01 — Blocking: A boundary-layer diffusion estimate is presented as a refutation of adiabatic oscillations</h3>
+<p><strong>Location:</strong> afd/module13.html:399</p>
+<p><strong>Rubric:</strong> Rules 9, 10, 12 and 14; scientific claim standard 1–4</p>
+<blockquote>
+<p>CHECK 3 — the adiabatic assumption is REFUTED at the photosphere</p>
+</blockquote>
+<p>Equation (4.4) was derived after imposing the optically thick diffusion closure. The module itself says that this law fails at a stellar surface. The check nevertheless evaluates it at Rosseland optical depth 2/3. The local mean free path is 84.16 km and the acoustic wavelength is 2615 km, so the wavelength spans about 31 local optical depths; however, the outward boundary is only 2/3 optical depth away. A local diffusion estimate can show that heat leakage is plausibly important, but it does not solve the non-adiabatic transfer problem with the photospheric boundary condition. Values of 0.34–0.45 therefore show that the adiabatic limit is not well controlled under this estimate. They do not refute the complete adiabatic oscillation model.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;keyresult&quot;&gt;&lt;b&gt;CHECK 3 — radiative leakage may be important near the photosphere.&lt;/b&gt; Using the local ATLAS9 opacity and density in the diffusion estimate gives $\omega\chi/c_{\rm s}^2=0.4468$ at $T=5772$ K and $0.3445$ at $\tau_{\rm R}=2/3$. Neither value is much smaller than unity, so the adiabatic approximation is not asymptotically controlled in these layers. This calculation is only an estimate: radiative diffusion assumes an optically thick, nearly isotropic field, whereas the outward optical depth at the photosphere is $2/3$. A quantitative damping rate requires a non-adiabatic oscillation calculation coupled to radiative transfer and the surface boundary condition.&lt;/div&gt;
+</code></pre>
+<h3>M13-C02 — Major: The Thomson opacity is treated as a frequency-independent floor for every spectrum</h3>
+<p><strong>Location:</strong> afd/module13.html:493</p>
+<p><strong>Rubric:</strong> Rules 9, 10 and 12; scientific limits and rescue cases</p>
+<blockquote>
+<p>For electron scattering, sigma_T does not depend on frequency ... whatever the spectrum</p>
+</blockquote>
+<p>The statement is valid only in the Thomson limit, $h\nu\ll m_ec^2$, for free non-relativistic electrons. At higher photon energies the Klein–Nishina cross-section falls below the Thomson value. Direct evaluation gives 0.963, 0.741 and 0.431 times $\sigma_T$ at 10, 100 and 511 keV. Electron scattering therefore is not a spectrum-independent opacity floor for arbitrary radiation fields. The missing restriction matters in a chapter that applies the Eddington limit to compact objects.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;p&gt;For fully ionised gas illuminated by photons with $h\nu\ll m_ec^2$, scattering is in the Thomson regime and $\sigma_T$ is effectively independent of frequency. In that limit, and when other opacities are negligible, $\kappa_{\rm F}=\kappa_{\rm es}=\sigma_T(1+X)/(2m_p)$. At X-ray and gamma-ray energies the Klein–Nishina cross-section decreases with photon energy, so the flux-mean scattering opacity and the corresponding Eddington luminosity depend on the spectrum.&lt;/p&gt;
+</code></pre>
+<h3>M13-C03 — Major: Module 13 repeats an invalid Sgr A* refutation from Module 9</h3>
+<p><strong>Location:</strong> afd/module13.html:563</p>
+<p><strong>Rubric:</strong> Rules 10, 14 and 18; evidence interpretation</p>
+<blockquote>
+<p>That refutation is Module 9's and is cited, not re-checked</p>
+</blockquote>
+<p>The earlier audit showed that Module 9 divides a 2–10 keV luminosity by the rest-mass power of the outer Bondi supply and calls the result a radiative efficiency. This compares a band luminosity with a supply rate at another radius and then compares the ratio with a bolometric thin-disc efficiency. Module 13 reproduces the arithmetic and imports the invalid inference. A cross-reference does not insulate a new chapter from a known error in the referenced chapter.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;p&gt;Sagittarius A* has a 2–10 keV luminosity of $3.70\times10^{-12}L_{\rm Edd}$ in the inputs used by Module 9, while its Bondi supply estimate is $8.405\times10^{-5}\dot M_{\rm Edd}$. Their ratio is $4.40\times10^{-9}$. This is a band-limited luminosity divided by the rest-mass power associated with an outer supply estimate; it is not a measured bolometric efficiency of gas reaching the black hole. Interpreting the ratio requires a bolometric correction and a model for mass loss between the Bondi radius and the emitting flow.&lt;/p&gt;
+</code></pre>
+<h3>M13-C04 — Major: A solar abundance is presented as the appropriate composition for black-hole accretion</h3>
+<p><strong>Location:</strong> afd/module13.html:516</p>
+<p><strong>Rubric:</strong> Rules 1, 10 and 12; precise statement and defined scope</p>
+<blockquote>
+<p>X = 0.7261 ... is the apt value for gas a black hole accretes</p>
+</blockquote>
+<p>The initial solar hydrogen fraction is appropriate for protosolar gas, not for black-hole accretion in general. Accreted gas can be metal poor, enriched, hydrogen deficient, partially ionised, pair loaded or drawn from a stellar companion. The useful result is the parametric dependence $L_{\rm Edd}\propto2/(1+X)$ in the fully ionised Thomson limit. The worked solar-composition value should remain an example, not a default physical claim.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;p&gt;The pure-hydrogen formula corresponds to $X=1$. For fully ionised gas in the Thomson regime, composition enters through $\kappa_{\rm es}=\sigma_T(1+X)/(2m_p)$, so $L_{\rm Edd}\propto2/(1+X)$. The value $X=0.7261$ is the initial hydrogen fraction in the cited solar model and provides one worked example. It is not a universal composition for black-hole accretion; the appropriate $X$ must be chosen for the gas being modelled.&lt;/p&gt;
+</code></pre>
+<h3>M13-C05 — Major: A post-hoc tolerance is used to label an opacity comparison confirmed</h3>
+<p><strong>Location:</strong> afd/module13.html:322</p>
+<p><strong>Rubric:</strong> Rules 10, 11 and 14; evidence standard</p>
+<blockquote>
+<p>CONFIRMED as a column mean ... The tolerance ... was computed after the 1.1482 was known</p>
+</blockquote>
+<p>The text candidly states that the acceptance band was selected after the result was known. That prevents the band from functioning as a validation criterion. The comparison can still be reported: the inferred and ATLAS9 column means differ by factors 1.016 and 1.148, and the discrepancy traces mainly to the borrowed pressure. The word confirmed overstates what the calculation establishes.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;keyresult&quot;&gt;&lt;b&gt;CHECK 2 — comparison with an ATLAS9 column mean.&lt;/b&gt; Equation (6.1) gives $\bar\kappa_{\rm R}=0.15231\ \mathrm{cm^2\,g^{-1}}$. The ATLAS9 column mean is 0.15470 at the layer where $T=5772$ K and 0.17487 at $\tau_{\rm R}=2/3$, giving ratios of 1.0157 and 1.1482. This agreement is descriptive because no acceptance tolerance was specified before the comparison. Read as a local opacity, equation (6.1) is low by factors 2.36–2.92; it is a column mean and should not be used as a local coefficient.&lt;/div&gt;
+</code></pre>
+<h3>M14-C01 — Blocking: A maximum-norm result is generalized into non-convergence</h3>
+<p><strong>Location:</strong> afd/module14.html:633</p>
+<p><strong>Rubric:</strong> Rules 10, 12 and 14; numerical convergence standard</p>
+<blockquote>
+<p>Standard SPH REFUTED as convergent there; the repair CONFIRMED</p>
+</blockquote>
+<p>The module reports only the largest pressure error in a fixed neighbourhood of the contact. That error stays near 9%, which is evidence against uniform or maximum-norm convergence over the sampled resolutions. It does not establish non-convergence in other norms. Reintegrating the saved particle states gives relative $L_1$ errors of 0.05108, 0.02412 and 0.01289 at 200, 400 and 800 particles per unit length. Standard SPH therefore converges in this $L_1$ measure over the same runs. Artificial conductivity reduces the maximum error, but three resolutions do not establish a general asymptotic theorem for the repaired method.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;keyresult&quot;&gt;&lt;b&gt;CHECK 4 — pressure error at an SPH contact.&lt;/b&gt; For standard SPH, the maximum relative pressure error within 0.05 of the contact is 0.0893, 0.0938 and 0.0942 at 200, 400 and 800 particles per unit length. These runs show no maximum-norm convergence over this resolution range. The corresponding volume-weighted relative $L_1$ errors are 0.0511, 0.0241 and 0.0129, so the integrated error does decrease. With Price's artificial conductivity, the maximum error falls to 0.0371, 0.0310 and 0.0216. The added conductivity improves this test, but the conclusion must specify the norm and the sampled resolutions.&lt;/div&gt;
+</code></pre>
+<h3>M14-C02 — Major: A one-cell scaling estimate is called a bound for any numerical scheme</h3>
+<p><strong>Location:</strong> afd/module14.html:655</p>
+<p><strong>Rubric:</strong> Rules 9, 10 and 12; assumptions and limits</p>
+<blockquote>
+<p>A bound for any scheme. No scheme can represent a structure narrower than one cell</p>
+</blockquote>
+<p>The estimate assumes one characteristic degree of freedom per cell, a local grid scale $L/N$, Kolmogorov scaling, and the weak requirement that the dissipation scale occupy one cell. High-order finite-volume, discontinuous-Galerkin, spectral, interface-tracking and subcell methods do not fit the literal claim. Moreover, one cell across a dissipative structure is normally not an accuracy criterion. The $N^{4/3}$ relation is a useful dimensional scaling for a particular representation, not a universal theorem.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;p&gt;&lt;b&gt;A grid-scale estimate.&lt;/b&gt; Suppose a local discretisation has one characteristic spatial scale $\Delta x=L/N$ and requires the Kolmogorov scale $\eta$ to be no smaller than $\Delta x$. Then $L/\eta=\mathrm{Re}^{3/4}$ gives the necessary estimate $\mathrm{Re}\lesssim N^{4/3}$. It yields $1.032\times10^4$ for $N=1024$ and $6.554\times10^4$ for $N=4096$. This is not a universal accuracy bound: practical calculations need several effective degrees of freedom across the smallest relevant structure, and the number depends on the method and error criterion.&lt;/p&gt;
+</code></pre>
+<h3>M14-C03 — Major: Conservation is said to fix the finite-resolution shock position</h3>
+<p><strong>Location:</strong> afd/module14.html:569</p>
+<p><strong>Rubric:</strong> Rules 10, 12 and 14; numerical validation</p>
+<blockquote>
+<p>the position of the shock is fixed by conservation of energy and mass</p>
+</blockquote>
+<p>The measured half-height locations are 1.02764, 1.01365 and 1.00663 rather than the exact radius 1. Conservation gives the correct integral constraints and is essential for convergence to the weak solution, but it does not uniquely fix a numerical shock position at finite resolution. The data demonstrate first-order convergence of the chosen position estimator. They do not confirm an exact position.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;keyresult&quot;&gt;&lt;b&gt;CHECK 3 — convergence in the Sedov test.&lt;/b&gt; The half-height estimate of the shock radius is 1.02764, 1.01365 and 1.00663 on 100, 200 and 400 cells. Its absolute error approximately halves when the resolution doubles, consistent with first-order convergence toward the exact radius 1. The peak density remains below the exact jump value because the shock is spread over several cells. Conservative updating preserves the integral balances that select the correct weak solution, but it does not make the finite-resolution shock position exact.&lt;/div&gt;
+</code></pre>
+<h3>M14-C04 — Major: The formal order of a scheme is said to be refuted by a discontinuous solution</h3>
+<p><strong>Location:</strong> afd/module14.html:505</p>
+<p><strong>Rubric:</strong> Rules 10 and 14; defined terms</p>
+<blockquote>
+<p>the formal order REFUTED</p>
+</blockquote>
+<p>Formal order is defined for a specified scheme, regularity class and norm. A contact discontinuity violates the smoothness assumptions behind the usual first-order truncation estimate and can reduce global convergence. The experiment illustrates that distinction; it does not refute the scheme's formal order. The module's own contact-width derivation is useful once the verdict is corrected.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;keyresult&quot;&gt;&lt;b&gt;CHECK 2(b) — convergence is limited by the contact.&lt;/b&gt; From $N=100$ to 6400, the density $L_1$ error falls with measured orders 1.013 at the shock, 0.511 at the contact, 0.752 in the fan and 0.646 overall. Equation (5.1) predicts the contact's $\Delta x^{1/2}$ scaling without a fitted parameter. The result does not contradict the method's formal first-order accuracy for smooth solutions. It shows that a discontinuity can control the global error and reduce the observed convergence rate in this norm.&lt;/div&gt;
+</code></pre>
+<h3>BOOK-C01 — Major: Simulation and model outputs are still labelled as measurements in older modules</h3>
+<p><strong>Location:</strong> afd/module01.html–afd/module14.html</p>
+<p><strong>Rubric:</strong> Rules 8, 10, 12 and 18; source and evidence standard</p>
+<blockquote>
+<p>Examples include module12.html:683, module08.html:878 and module05.html:703</p>
+</blockquote>
+<p>Module 14's census correctly exposes an unresolved book-wide taxonomy problem. Examples include the Zhuravleva simulation comparison in Module 12, the Wang–Chevalier simulation width in Module 8, ATLAS9 outputs in Module 5, BS05 model quantities in Modules 3 and 6, and a simulation-derived velocity in Module 7. Listing the errors in Module 14 does not repair the original pages. Each occurrence should say measured, simulated, model-derived or inferred according to its provenance.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;p&gt;Use &lt;b&gt;measured&lt;/b&gt; only for quantities directly constrained by observations or experiments. Use &lt;b&gt;model-derived&lt;/b&gt; for atmosphere and stellar-structure tables, &lt;b&gt;simulation output&lt;/b&gt; for numerical hydrodynamics, and &lt;b&gt;inferred by comparison with simulations&lt;/b&gt; when an observation is interpreted through a simulation. State the inference chain beside the number.&lt;/p&gt;
+</code></pre>
+<h3>BOOK-P01 — Major: The twenty-rule prose standard is not yet satisfied</h3>
+<p><strong>Location:</strong> afd/module01.html–afd/module14.html</p>
+<p><strong>Rubric:</strong> Rules 1–8 and 13–19</p>
+<blockquote>
+<p>The mechanical screen found 782 sentences above 35 words</p>
+</blockquote>
+<p>The screen found 782 sentences longer than 35 words across the fourteen modules. Module 13 contains 60 and Module 14 contains 39. Length alone is not a quality verdict, but inspection confirms repeated clause chains, production history, courtroom labels, source-audit narration and paragraphs that carry several independent ideas. These features produce the same mechanical, non-human textbook voice identified in the first audit.</p>
+<p><strong>Proposed replacement — not applied:</strong></p>
+<pre><code class="language-html">&lt;p&gt;Rewrite the narrative paragraph by paragraph. Give each paragraph one physical idea, place assumptions beside the result they restrict, and reserve source disputes for notes. Replace CONFIRMED and REFUTED with the measured quantity, its uncertainty or error norm, and the inference that follows. Remove references to drafts, gates, plans, shipped pages, editors and debts from the teaching narrative.&lt;/p&gt;
+</code></pre>
+<h2>Independent numerical checks</h2>
+<h3>Module 13: photospheric locality</h3>
+<p>At the ATLAS9 $\tau_R=2/3$ point, the local photon mean free path is 84.155 km. The acoustic wavelength used by the module is 2615.2 km, giving an optical depth of 31.08 across one wavelength if the local opacity is held fixed. This supports using diffusion as a local scale estimate within the material. It does not remove the free-surface problem: the outward optical depth from the evaluation point is only 2/3. The report therefore does not say the numerical estimate is useless; it says its advertised refutation is too strong.</p>
+<h3>Module 13: energy dependence of electron scattering</h3>
+<p>The integrated Klein–Nishina formula gives the following total cross-sections per free electron:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Photon energy</th>
+<th style="text-align: right;">$\sigma_{KN}/\sigma_T$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">10 keV</td>
+<td style="text-align: right;">0.96276</td>
+</tr>
+<tr>
+<td style="text-align: right;">100 keV</td>
+<td style="text-align: right;">0.74070</td>
+</tr>
+<tr>
+<td style="text-align: right;">511 keV</td>
+<td style="text-align: right;">0.43073</td>
+</tr>
+</tbody>
+</table>
+<p>The Thomson value is the low-energy limit, not a spectrum-independent floor.</p>
+<h3>Module 14: SPH convergence depends on the norm</h3>
+<p>The independent calculation used the module's saved particle states and the same contact neighbourhood. It integrated the pressure error over particle volumes.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Particles per unit length</th>
+<th style="text-align: right;">Maximum relative error</th>
+<th style="text-align: right;">Volume-weighted relative $L_1$ error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">0.08927</td>
+<td style="text-align: right;">0.05108</td>
+</tr>
+<tr>
+<td style="text-align: right;">400</td>
+<td style="text-align: right;">0.09381</td>
+<td style="text-align: right;">0.02412</td>
+</tr>
+<tr>
+<td style="text-align: right;">800</td>
+<td style="text-align: right;">0.09424</td>
+<td style="text-align: right;">0.01289</td>
+</tr>
+</tbody>
+</table>
+<p>The maximum error does not fall, while the integrated error falls by nearly a factor of two per doubling. Both statements can be true because the pressure blip becomes narrower. A convergence claim must name the norm.</p>
+<h3>Module 14: Sedov location</h3>
+<p>The reported half-height radii differ from the exact radius by 0.02764, 0.01365 and 0.00663. The error nearly halves at each doubling, which is evidence for first-order convergence of that estimator. It is not evidence that conservation makes the finite-resolution position exact.</p>
+<h2>Twenty-rule compliance</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Rule</th>
+<th>Modules 13–14</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td>Fail</td>
+<td>Academic content is obscured by mechanical, editorial prose.</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>Fail</td>
+<td>Several paragraphs carry derivation, provenance, verdict and cross-module commentary at once.</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td>Fail</td>
+<td>Module 13 has 60 sentences above 35 words; Module 14 has 39.</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td>Fail</td>
+<td>Long semicolon, parenthesis and comma chains are common.</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td>Fail</td>
+<td>CONFIRMED, REFUTED, debts and punchline rhetoric recur.</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td>Partial</td>
+<td>Personification is less common than in earlier modules, but debt and repayment metaphors remain.</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td>Fail</td>
+<td>Drafts, gates, plans, editors, readers and shipped pages appear in the narrative.</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td>Fail</td>
+<td>Source criticism and editorial provenance interrupt physical exposition.</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td>Mostly pass</td>
+<td>Notation tables are strong, but some assumptions are supplied after conclusions.</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td>Fail</td>
+<td>Implementation checks, approximations and validation claims are repeatedly conflated.</td>
+</tr>
+<tr>
+<td style="text-align: right;">11</td>
+<td>Partial</td>
+<td>Some uncertainties are well named; other qualifications are rhetorical or post hoc.</td>
+</tr>
+<tr>
+<td style="text-align: right;">12</td>
+<td>Fail</td>
+<td>The Thomson and diffusion qualifications are not placed beside the claims they restrict.</td>
+</tr>
+<tr>
+<td style="text-align: right;">13</td>
+<td>Fail</td>
+<td>Announcements such as check, finding, verdict and what is refuted recur.</td>
+</tr>
+<tr>
+<td style="text-align: right;">14</td>
+<td>Fail</td>
+<td>The most serious scientific errors are framed as CONFIRMED or REFUTED.</td>
+</tr>
+<tr>
+<td style="text-align: right;">15</td>
+<td>Fail</td>
+<td>Transitions often follow the production plan or old-module debts.</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td>Partial</td>
+<td>Paragraphs are generally bounded, but several are much too dense.</td>
+</tr>
+<tr>
+<td style="text-align: right;">17</td>
+<td>Fail</td>
+<td>Read aloud, many paragraphs sound like an audit log rather than a textbook.</td>
+</tr>
+<tr>
+<td style="text-align: right;">18</td>
+<td>Partial</td>
+<td>Cross-links are extensive, but Module 13 inherits a known Module 9 error.</td>
+</tr>
+<tr>
+<td style="text-align: right;">19</td>
+<td>Fail</td>
+<td>Grammatically valid but unnatural sentences were retained in large numbers.</td>
+</tr>
+<tr>
+<td style="text-align: right;">20</td>
+<td>Pass</td>
+<td>This audit did not modify any original module HTML.</td>
+</tr>
+</tbody>
+</table>
+<h2>Representative prose rewrites</h2>
+<p>These examples address voice and structure in addition to the scientific replacements above. They are proposals only.</p>
+<h3>Module 13, line 98</h3>
+<p><strong>Current:</strong> “Photons carry momentum, and a fluid that is lit from inside feels it. This module derives the Eddington limit that five shipped pages have been quoting, prices the composition hidden in its proton mass, and evaluates the one computation the book deferred by name.”</p>
+<p><strong>Rewrite:</strong></p>
+<blockquote>
+<p>Radiation transports momentum as well as energy. This chapter derives the radiative force, the diffusion limit and the Eddington luminosity. It then examines how opacity and composition change those results in stellar atmospheres and accreting systems.</p>
+</blockquote>
+<h3>Module 13, line 208</h3>
+<p><strong>Current:</strong> The paragraph explains what a “step-1 generator” wrote and what “Gate D” required.</p>
+<p><strong>Rewrite:</strong></p>
+<blockquote>
+<p>The factor $1/3$ follows from the angular average in the diffusion closure. It is the radiative analogue of the factor in kinetic-theory transport coefficients. Consequently, photons with speed $c$ and mean free path $\lambda_{ph}$ have diffusion coefficient $D=c\lambda_{ph}/3$.</p>
+</blockquote>
+<h3>Module 13, line 313</h3>
+<p><strong>Rewrite:</strong></p>
+<blockquote>
+<p>Module 6 gives the photospheric pressure, density and scale height at optical depth $\tau=2/3$, but it does not state an opacity. Hydrostatic balance converts the pressure into a column mass. The condition $\tau=2/3$ then determines the column-averaged Rosseland opacity, which can be compared with an atmosphere model.</p>
+</blockquote>
+<h3>Module 14, line 147</h3>
+<p><strong>Rewrite:</strong></p>
+<blockquote>
+<p>Consider constant-speed advection, $\partial_tu+a\partial_xu=0$, with $a&gt;0$. Its exact solution is $u(x,t)=u_0(x-at)$. The upwind method takes the interface flux from the upstream cell, whereas FTCS averages the two adjacent states. Their amplification factors show why satisfying the Courant condition is necessary but not sufficient for stability.</p>
+</blockquote>
+<h3>Module 14, line 213</h3>
+<p><strong>Rewrite:</strong></p>
+<blockquote>
+<p>An explicit compressible solver is limited by the signal speed $|u|+c_s$, not by the flow speed alone. Its step count therefore exceeds the incompressible estimate by $1+1/M$, where $M=U/c_s$. The correction is 35.0 for the subsonic wind-tunnel example and 1.092 for the supersonic cloud. Module 10's work estimate is consequently a lower bound for an explicit compressible calculation.</p>
+</blockquote>
+<h3>Module 14, line 425</h3>
+<p>The present paragraph is 79 words in its longest sentence and develops several ideas at once. It should become a short sequence: first identify the contact as an upwind advection problem; then derive the variance; then invoke the Gaussian limit with its conditions; finally derive the $L_1$ error. The derivation is worth retaining, but its current packaging makes it unnecessarily difficult to follow.</p>
+<h2>Focused all-module prose screen</h2>
+<p>The sentence parser strips HTML and mathematics before splitting punctuation. It is approximate: abbreviations and displayed expressions can produce false splits. It is a triage instrument, not a prose score.</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th style="text-align: right;">Sentences</th>
+<th style="text-align: right;">15–25 words</th>
+<th style="text-align: right;">36–50 words</th>
+<th style="text-align: right;">Over 50</th>
+<th style="text-align: right;">Total over 35</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>module01.html</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">48</td>
+</tr>
+<tr>
+<td>module02.html</td>
+<td style="text-align: right;">299</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">34</td>
+</tr>
+<tr>
+<td>module03.html</td>
+<td style="text-align: right;">324</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr>
+<td>module04.html</td>
+<td style="text-align: right;">320</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr>
+<td>module05.html</td>
+<td style="text-align: right;">440</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">38</td>
+</tr>
+<tr>
+<td>module06.html</td>
+<td style="text-align: right;">501</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">88</td>
+</tr>
+<tr>
+<td>module07.html</td>
+<td style="text-align: right;">397</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">70</td>
+</tr>
+<tr>
+<td>module08.html</td>
+<td style="text-align: right;">558</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">92</td>
+</tr>
+<tr>
+<td>module09.html</td>
+<td style="text-align: right;">532</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr>
+<td>module10.html</td>
+<td style="text-align: right;">543</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">79</td>
+</tr>
+<tr>
+<td>module11.html</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr>
+<td>module12.html</td>
+<td style="text-align: right;">414</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">61</td>
+</tr>
+<tr>
+<td>module13.html</td>
+<td style="text-align: right;">319</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr>
+<td>module14.html</td>
+<td style="text-align: right;">351</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">39</td>
+</tr>
+</tbody>
+</table>
+<p>Total sentences above 35 words: <strong>782</strong>. The highest counts occur in Modules 9 (100), 8 (92), 6 (88) and 10 (79). This result confirms that the prose problem is book-wide. A mechanical split is not enough; each paragraph needs a human editorial pass that restores argument, emphasis and rhythm.</p>
+<h2>Evidence taxonomy in Modules 1–12</h2>
+<p>Module 14's census identifies genuine unresolved labels in older chapters. The following should be corrected when a revised edition is authorised:</p>
+<ul>
+<li>Module 12 lines 683, 690, 692 and 955: the Zhuravleva constraint depends on comparison with direct numerical simulations; it is not a direct viscosity measurement.</li>
+<li>Module 8 lines 878, 883 and 939: the quoted Tycho width is simulation-derived, although the table calls the widths observed.</li>
+<li>Module 1 lines 607 and 690: the Randall constraint is inferred through simulations, not directly observed.</li>
+<li>Module 5 lines 703, 709, 744 and 747: ATLAS9 quantities are atmosphere-model outputs.</li>
+<li>Module 6 lines 216, 342, 345 and 426: the BS05 slope is model-derived.</li>
+<li>Module 3 lines 182 and 630: values from a standard solar model should be labelled as model values.</li>
+<li>Module 7 line 516: the extracted coefficient uses a simulation velocity.</li>
+<li>Module 11 lines 211, 583 and 600: the claimed measured range $\alpha=0.1$–0.4 requires a verified primary-source chain.</li>
+</ul>
+<h2>What should be retained</h2>
+<p>Module 13's derivation of the column-mean opacity from $m=P/g$ is clear and physically useful once the post-hoc verdict is removed. Its distinction between local and column-mean opacity is essential. The definition of flux-mean opacity is also the right starting point for the Eddington force balance.</p>
+<p>Module 14's conservative finite-volume update, CFL necessity-versus-stability distinction, exact Sod solution and region-by-region error decomposition form a strong numerical-methods spine. The contact-width calculation is especially valuable when split into readable stages. The Jeans-resolution section clearly distinguishes an empirical criterion from a derived density scaling. The limitations table is unusually candid and should survive after production-history language is removed.</p>
+<h2>Source evidence map</h2>
+<table>
+<thead>
+<tr>
+<th>Finding</th>
+<th>Evidence read</th>
+<th>What it establishes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M13-C01</td>
+<td>Module 13's own Proposition 4 and surface discussion; independent optical-depth calculation</td>
+<td>Diffusion assumes an optically thick nearly isotropic field; the evaluation point has only 2/3 outward optical depth.</td>
+</tr>
+<tr>
+<td>M13-C02</td>
+<td>CERN Geant4 Physics Reference Manual, citing Klein &amp; Nishina (1929)</td>
+<td>Compton scattering depends on photon energy; Thomson scattering is a low-energy limit.</td>
+</tr>
+<tr>
+<td>M13-C03</td>
+<td>Existing signed audit of Module 9; Module 13's reproduced inputs</td>
+<td>The arithmetic is reproducible, but the band-luminosity interpretation is invalid.</td>
+</tr>
+<tr>
+<td>M13-C04</td>
+<td>Bahcall, Serenelli &amp; Basu (2005), Table 1</td>
+<td>$X=0.7261$ is a solar-model initial abundance, not a universal accretion composition.</td>
+</tr>
+<tr>
+<td>M14-C01</td>
+<td>Price (2008); independent integration of the saved SPH states</td>
+<td>Artificial conductivity addresses the pressure blip; convergence still requires a named norm.</td>
+</tr>
+<tr>
+<td>M14-C04</td>
+<td>Banks, Aslam &amp; Rider (2008)</td>
+<td>Captured linearly degenerate waves can converge sublinearly; this does not refute formal order for smooth solutions.</td>
+</tr>
+</tbody>
+</table>
+<p>Primary links: <a href="https://arxiv.org/abs/0709.2772">Price 2008</a>, <a href="https://www.osti.gov/servlets/purl/945128">Banks, Aslam &amp; Rider 2008</a>, <a href="https://geant4.web.cern.ch/documentation/dev/prm_html/PhysicsReferenceManual/electromagnetic/gamma_incident/compton/compton.html">CERN Geant4 Compton reference</a>, <a href="https://arxiv.org/abs/astro-ph/0412440">Bahcall, Serenelli &amp; Basu 2005</a>.</p>
+<h2>Production and preservation checks</h2>
+<ul>
+<li>Duplicate HTML IDs: <strong>0</strong>.</li>
+<li>Broken local links among module and index pages: <strong>0</strong>.</li>
+<li>Module 13 problem checker: <strong>83 checks, 0 failures</strong>.</li>
+<li>Module 14 problem checker: <strong>80 checks passed</strong>.</li>
+<li>Module 14 full generator: <strong>all assertions passed</strong>.</li>
+<li>Original module edits made by Codex: <strong>none</strong>.</li>
+</ul>
+<p>The HTML passed structural parsing, signature, finding-ID, duplicate-anchor and rubric-completeness checks. The in-app browser's security policy blocked opening this new local <code>file:</code> URL, so this delta report does not claim a fresh visual desktop/mobile rendering check. The earlier report's visual check cannot substitute for this file.</p>
+<p>The audit artifacts contain the baseline hashes, independent calculations, fresh-run logs, mechanical screen and final integrity comparison. The unrelated untracked file <code>afd-stem-textbook-runbook.html</code> was left untouched and is not part of the audit commit.</p>
+<h2>Recommended revision order</h2>
+<ol>
+<li>Correct M13-C01 and M14-C01 before using the chapters for instruction.</li>
+<li>Repair the other major scientific qualifications and remove the inherited Sgr A* verdict.</li>
+<li>Replace verdict rhetoric with quantities, assumptions, norms and limits.</li>
+<li>Move source disputes, production history and the evidence census into editorial appendices or provenance notes.</li>
+<li>Perform a paragraph-level human rewrite under all twenty rules, then rerun numerical and rendering checks.</li>
+<li>Apply the evidence taxonomy to Modules 1–12 in the separate revised edition only.</li>
+</ol>
+<h2>Signature</h2>
+<p>This report is independent work by <strong>Codex — OpenAI</strong>. It is not part of the Claude-authored textbook text and does not modify any original module.</p>
+<p>Signed: <strong>Codex — OpenAI</strong></p>
+<p>Date: <strong>22 September 2026</strong></p>
+<p>Place: <strong>America/Los_Angeles</strong></p>
+<h2>Appendix A — Full governing rubric</h2>
+<h3>Codex textbook audit rubric</h3>
+<p>This rubric governs the independent scientific and editorial audit of the <em>Astrophysical Fluid Dynamics</em> modules. It combines the twenty-rule prose standard with checks for scientific correctness, evidence, derivations, pedagogy, notation, and production quality.</p>
+<p>The audit must not modify existing module files. Findings, evidence, proposed replacements, and any later rewritten edition belong inside the <code>codex-audit-2026-09-20</code> folder.</p>
+<h2>A. Twenty-rule prose standard</h2>
+<ol>
+<li>Write in clear, natural academic English suitable for advanced undergraduate or beginning graduate readers.</li>
+<li>Give each paragraph one identifiable idea. State it, explain it, and identify its physical consequence.</li>
+<li>Prefer sentences of 15–25 words. Split sentences longer than about 35 words unless their structure is exceptionally clear.</li>
+<li>Do not combine independent claims using comma chains, semicolons, parentheses, or repeated dashes.</li>
+<li>Remove synthetic rhetoric, dramatic verdicts, slogans, fake suspense, and self-conscious commentary.</li>
+<li>Avoid personification such as “the answer lives here,” “the theory pays a debt,” or “the premise is spent.”</li>
+<li>Keep the writing and production process out of the textbook narrative.</li>
+<li>Separate physical exposition from source criticism and editorial provenance.</li>
+<li>Define every symbol before use and state assumptions before drawing conclusions.</li>
+<li>Distinguish derivations, approximations, empirical comparisons, interpretations, and conjectures.</li>
+<li>Use cautious language only for a specific, identifiable uncertainty.</li>
+<li>Place each qualification immediately beside the claim it restricts.</li>
+<li>Remove repetitive announcements such as “this is the result” or “this is the point.”</li>
+<li>Avoid casual claims that evidence “confirms” or “refutes” a theory. Present the comparison and justified inference.</li>
+<li>Base transitions on the scientific argument rather than the module-production process.</li>
+<li>Keep paragraphs reasonably short without creating choppy sequences of one-sentence paragraphs.</li>
+<li>Apply a read-aloud test and rewrite prose that sounds bureaucratic, mechanical, theatrical, or unnatural.</li>
+<li>Check adjacent modules for consistent terminology, notation, assumptions, and scientific conclusions.</li>
+<li>Retain an existing sentence only if it already meets the textbook standard, not merely because it is grammatical.</li>
+<li>Do not modify the existing module files. Any revised edition must be placed in a separate folder.</li>
+</ol>
+<h2>B. Scientific claim standard</h2>
+<p>Every substantive claim must satisfy five requirements:</p>
+<ol>
+<li><strong>Precise statement.</strong> State exactly what is claimed and under which conditions.</li>
+<li><strong>Defined terms.</strong> Define every variable, technical term, convention, and reference frame before use.</li>
+<li><strong>Visible mechanism.</strong> Derive the result in the smallest setting that reveals why it is true.</li>
+<li><strong>Limits and rescue cases.</strong> State where the result fails and what added physics modifies or restores it.</li>
+<li><strong>Concrete connection.</strong> Connect the claim to a calculation, observation, simulation, figure, or primary source.</li>
+</ol>
+<p>The audit also checks algebra, calculus, signs, factors, units, dimensions, substitutions, initial and boundary conditions, constitutive assumptions, closure relations, limiting cases, internal consistency, inequality directions, statistics, and consistency among equations, prose, tables, figures, captions, examples, exercises, and conclusions.</p>
+<h2>C. Sources and evidence</h2>
+<ul>
+<li>Read the primary source behind each important citation and verify the cited passage.</li>
+<li>Check numerical values against the source’s definitions, tables, and units.</li>
+<li>Distinguish measurements, model outputs, fitted parameters, reconstructed quantities, and assumptions.</li>
+<li>Flag citations that support only a weaker claim or cannot be verified.</li>
+<li>Do not repair citations from memory.</li>
+<li>Check whether the module’s calculations or later evidence contradict its interpretation.</li>
+<li>Preserve a source map connecting major findings to their evidence.</li>
+</ul>
+<h2>D. Derivations, calculations, and exercises</h2>
+<ul>
+<li>Reproduce important derivations independently and inspect intermediate steps.</li>
+<li>Test dimensions, signs, simple limits, and selected numerical examples.</li>
+<li>Check whether displayed numerical precision is justified.</li>
+<li>Confirm that exercises are solvable from the preceding text and verify worked solutions where supplied.</li>
+<li>Distinguish a code implementation check from independent scientific validation.</li>
+</ul>
+<h2>E. Pedagogy and structure</h2>
+<ul>
+<li>Open with a clear physical question and motivate concepts before formalism.</li>
+<li>Supply a nearby worked example for each major new concept.</li>
+<li>Keep dependencies backward-pointing or prove required material in place.</li>
+<li>Move coherently from assumptions through derivation to interpretation.</li>
+<li>Use scientifically motivated transitions.</li>
+<li>Close by stating what the reader can now calculate or understand.</li>
+<li>Arrange exercises in increasing difficulty and make them self-contained.</li>
+<li>Require every figure to add information and every caption to stand alone.</li>
+<li>Judge whether a quantitatively trained reader new to the subfield can learn from the module without hidden prerequisites.</li>
+</ul>
+<h2>F. Notation and cross-module consistency</h2>
+<ul>
+<li>Introduce each symbol before use and keep its meaning stable.</li>
+<li>Follow standard field conventions unless alternatives are explained.</li>
+<li>Distinguish vectors, tensors, scalars, averages, perturbations, and dimensionless quantities.</li>
+<li>Keep indices, subscripts, signs, coordinates, and normalizations consistent.</li>
+<li>Verify cross-references and prerequisite claims against adjacent modules.</li>
+<li>Flag silent reversals or overstatements of conclusions established elsewhere.</li>
+</ul>
+<h2>G. Figures, tables, HTML, and production quality</h2>
+<ul>
+<li>Validate HTML and MathJax delimiters.</li>
+<li>Detect malformed equations, duplicate anchors, and broken internal links.</li>
+<li>Preserve figures, tables, scripts, navigation, and accessibility text.</li>
+<li>Check figure labels, units, legends, captions, and table definitions.</li>
+<li>Check desktop and mobile rendering for overflow and JavaScript errors.</li>
+<li>Record original module hashes before the audit and verify them afterward.</li>
+</ul>
+<h2>H. Required audit deliverable</h2>
+<p>The signed report must contain:</p>
+<ol>
+<li>A module-level verdict: <strong>acceptable</strong>, <strong>acceptable after revision</strong>, or <strong>not yet teachable</strong>.</li>
+<li>Findings ranked as <strong>blocking</strong>, <strong>major</strong>, or <strong>minor</strong>.</li>
+<li>Exact <code>file:line</code> locations and quoted source text.</li>
+<li>The violated rubric item and an explanation of the defect.</li>
+<li>Full proposed replacement text rather than vague editing instructions.</li>
+<li>Representative prose rewrites.</li>
+<li>Structural and pedagogical recommendations.</li>
+<li>Independent numerical checks.</li>
+<li>A primary-source evidence map.</li>
+<li>Specific passages that already work and should be retained.</li>
+<li>A preservation record showing that original modules were not changed.</li>
+<li>A Codex signature distinguishing this audit from the original Claude-authored material.</li>
+</ol>
+<p>Signed: <strong>Codex — OpenAI</strong>
+Rubric recorded: 22 September 2026, America/Los_Angeles</p></main></body></html>
