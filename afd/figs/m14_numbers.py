@@ -319,8 +319,8 @@ def main():
         o2 = np.log(rows[-2, k]/rows[-1, k])/np.log(2.0)
         P(f'  PUNCHLINE order of the {name:7s} error, N = 100 -> 6400: '
           f'{o:.3f}   (last doubling {o2:.3f})')
-    P(f'  PUNCHLINE contact measured/predicted: N = 100 {rows[0, 3]/rows[0, 5]:.4f},'
-      f' N = 6400 {rows[-1, 3]/rows[-1, 5]:.4f}')
+    P(f'  PUNCHLINE contact measured/predicted: N = 100 '
+      f'{rows[0, 3]/rows[0, 5]:.4f}, N = 6400 {rows[-1, 3]/rows[-1, 5]:.4f}')
 
     # ------------------------------------------------------------------
     P('')

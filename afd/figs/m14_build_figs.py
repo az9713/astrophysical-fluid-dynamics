@@ -206,7 +206,7 @@ def build_sod(sph):
         text(s, lx + 28, y, lab, 11, col)
     text(s, px(0.685), py(0.2), 'contact', 10.5, MUT, "middle")
     text(s, px(0.850), py(0.05), 'shock', 10.5, MUT, "middle")
-    text(s, px(0.37), py(0.55), 'rarefaction fan', 10.5, MUT, "middle")
+    text(s, px(0.21), py(0.55), 'rarefaction fan', 10.5, MUT, "middle")
     text(s, (X0 + X1)/2, Y1 + 40, 'x', 11.5, FG, "middle")
     text(s, 22, (Y0 + Y1)/2, '&#961;', 12, FG, "middle")
     write('m14_fig_sod.svg', s)
@@ -285,7 +285,7 @@ def build_order():
         text(s, lx + 28, y, labs[i], 11, cols[i])
     y = py(-1.75) + 68
     swatch(s, lx, y, ACC2, "6 4")
-    text(s, lx + 28, y, 'contact predicted by (3.3), no fit', 11, ACC2)
+    text(s, lx + 28, y, 'contact predicted by (5.1), no fit', 11, ACC2)
     text(s, (X0 + X1)/2, Y1 + 40, 'cells N', 11.5, FG, "middle")
     text(s, 22, (Y0 + Y1)/2, 'L1', 11.5, FG, "middle")
     write('m14_fig_order.svg', s)
@@ -310,8 +310,8 @@ def build_sedov():
 
     lam, g = d['lam'], d['g']
     R = M.M08_XI0_14*M.KT_E**0.2
-    xs = np.concatenate((lam*R, [R, R, 1.2]))[::-1]
-    ys = np.concatenate((g, [6.0, 1.0, 1.0]))[::-1]
+    xs = np.concatenate((lam[::-1]*R, [R, R, 1.2]))
+    ys = np.concatenate((g[::-1], [6.0, 1.0, 1.0]))
     s = head(W, H, 'Density against radius at time 1 for the Sedov point '
              'blast of Kamm and Timmes. The exact profile rises steeply to '
              '6 at radius 1 and drops to 1 outside. The Godunov profiles '
@@ -387,12 +387,12 @@ def build_blip(runs):
         sel = (x > XLO) & (x < XHI) & (P > PLO) & (P < PHI)
         s.append(f'<path d="{path(px(x[sel]), py(P[sel]))}" fill="none" '
                  f'stroke="{col}" stroke-width="1.8"/>')
-    lx = px(0.47)
+    lx = px(0.52)
     for i, (col, dash, lab) in enumerate((
             (FG, "5 4", 'exact p* = 0.30313'),
             (RED, None, 'SPH, standard: +9.4 per cent at the contact'),
             (ACC2, None, 'SPH with conductivity: 2.2 per cent'))):
-        y = py(0.342) + 17*i
+        y = py(0.2765) + 17*i
         swatch(s, lx, y, col, dash)
         text(s, lx + 28, y, lab, 11, col)
     text(s, px(xc) + 5, Y1 - 8, 'contact', 10.5, MUT)
