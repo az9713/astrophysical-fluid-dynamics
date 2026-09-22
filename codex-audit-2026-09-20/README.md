@@ -1,5 +1,10 @@
 # Independent audit by Codex — OpenAI
 
+Open [COMPLETE_AUDIT_AND_REVISION_RECORD.html](COMPLETE_AUDIT_AND_REVISION_RECORD.html)
+for the signed, searchable history of the audits and rewrites across all fourteen
+modules. It distinguishes the completed Modules 1–12 edition from proposed
+changes to Modules 13–14.
+
 Open [AUDIT_REPORT.html](AUDIT_REPORT.html) for the signed, navigable report.
 The [Markdown companion](AUDIT_REPORT.md) contains the same assessment and proposed wording.
 
