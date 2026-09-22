@@ -1,0 +1,70 @@
+<svg class="setupfig" viewBox="0 0 680 420" width="100%" role="img" aria-label="L1 error of density against the number of cells from 100 to 6400, both axes logarithmic, for the whole domain and for three regions. The shock error falls with slope 1, the contact error with slope one half, the rarefaction error between them, and the total error with slope 0.646. A dashed line is the contact error predicted from the scheme's numerical diffusion with no fitted parameter; the measured contact points lie just above it and approach it.">
+<rect x="80" y="24" width="560" height="336" fill="none" stroke="#334155" stroke-width="1"/>
+<line x1="107.9" y1="360.0" x2="107.9" y2="365.0" stroke="#334155" stroke-width="1"/>
+<text x="107.9" y="378.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">100</text>
+<line x1="191.9" y1="360.0" x2="191.9" y2="365.0" stroke="#334155" stroke-width="1"/>
+<text x="191.9" y="378.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">200</text>
+<line x1="276.0" y1="360.0" x2="276.0" y2="365.0" stroke="#334155" stroke-width="1"/>
+<text x="276.0" y="378.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">400</text>
+<line x1="360.0" y1="360.0" x2="360.0" y2="365.0" stroke="#334155" stroke-width="1"/>
+<text x="360.0" y="378.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">800</text>
+<line x1="444.0" y1="360.0" x2="444.0" y2="365.0" stroke="#334155" stroke-width="1"/>
+<text x="444.0" y="378.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">1600</text>
+<line x1="528.1" y1="360.0" x2="528.1" y2="365.0" stroke="#334155" stroke-width="1"/>
+<text x="528.1" y="378.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">3200</text>
+<line x1="612.1" y1="360.0" x2="612.1" y2="365.0" stroke="#334155" stroke-width="1"/>
+<text x="612.1" y="378.0" font-size="10.5" text-anchor="middle" fill="#94a3b8">6400</text>
+<line x1="75.0" y1="360.0" x2="80.0" y2="360.0" stroke="#334155" stroke-width="1"/>
+<text x="72.0" y="364.0" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">&#8722;5</tspan></text>
+<line x1="75.0" y1="261.2" x2="80.0" y2="261.2" stroke="#334155" stroke-width="1"/>
+<text x="72.0" y="265.2" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">&#8722;4</tspan></text>
+<line x1="75.0" y1="162.4" x2="80.0" y2="162.4" stroke="#334155" stroke-width="1"/>
+<text x="72.0" y="166.4" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">&#8722;3</tspan></text>
+<line x1="75.0" y1="63.5" x2="80.0" y2="63.5" stroke="#334155" stroke-width="1"/>
+<text x="72.0" y="67.5" font-size="10.5" text-anchor="end" fill="#94a3b8">10<tspan baseline-shift="super" font-size="8">&#8722;2</tspan></text>
+<path d="M 107.9,99.8 L 191.9,114.4 L 276.0,129.2 L 360.0,144.0 L 444.0,158.8 L 528.1,173.7 L 612.1,188.5" fill="none" stroke="#2dd4bf" stroke-width="1.6" stroke-dasharray="6 4"/>
+<path d="M 107.9,49.5 L 191.9,68.5 L 276.0,87.4 L 360.0,106.6 L 444.0,126.4 L 528.1,145.4 L 612.1,164.8" fill="none" stroke="#cbd5e1" stroke-width="1.8"/>
+<circle cx="107.9" cy="49.5" r="3.2" fill="#cbd5e1"/>
+<circle cx="191.9" cy="68.5" r="3.2" fill="#cbd5e1"/>
+<circle cx="276.0" cy="87.4" r="3.2" fill="#cbd5e1"/>
+<circle cx="360.0" cy="106.6" r="3.2" fill="#cbd5e1"/>
+<circle cx="444.0" cy="126.4" r="3.2" fill="#cbd5e1"/>
+<circle cx="528.1" cy="145.4" r="3.2" fill="#cbd5e1"/>
+<circle cx="612.1" cy="164.8" r="3.2" fill="#cbd5e1"/>
+<path d="M 107.9,73.1 L 191.9,93.4 L 276.0,114.6 L 360.0,136.7 L 444.0,159.6 L 528.1,183.2 L 612.1,207.4" fill="none" stroke="#a78bfa" stroke-width="1.8"/>
+<circle cx="107.9" cy="73.1" r="3.2" fill="#a78bfa"/>
+<circle cx="191.9" cy="93.4" r="3.2" fill="#a78bfa"/>
+<circle cx="276.0" cy="114.6" r="3.2" fill="#a78bfa"/>
+<circle cx="360.0" cy="136.7" r="3.2" fill="#a78bfa"/>
+<circle cx="444.0" cy="159.6" r="3.2" fill="#a78bfa"/>
+<circle cx="528.1" cy="183.2" r="3.2" fill="#a78bfa"/>
+<circle cx="612.1" cy="207.4" r="3.2" fill="#a78bfa"/>
+<path d="M 107.9,94.5 L 191.9,109.4 L 276.0,124.3 L 360.0,139.6 L 444.0,154.9 L 528.1,170.3 L 612.1,185.8" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<circle cx="107.9" cy="94.5" r="3.2" fill="#2dd4bf"/>
+<circle cx="191.9" cy="109.4" r="3.2" fill="#2dd4bf"/>
+<circle cx="276.0" cy="124.3" r="3.2" fill="#2dd4bf"/>
+<circle cx="360.0" cy="139.6" r="3.2" fill="#2dd4bf"/>
+<circle cx="444.0" cy="154.9" r="3.2" fill="#2dd4bf"/>
+<circle cx="528.1" cy="170.3" r="3.2" fill="#2dd4bf"/>
+<circle cx="612.1" cy="185.8" r="3.2" fill="#2dd4bf"/>
+<path d="M 107.9,162.3 L 191.9,193.1 L 276.0,219.7 L 360.0,245.5 L 444.0,286.1 L 528.1,304.2 L 612.1,343.2" fill="none" stroke="#fb923c" stroke-width="1.8"/>
+<circle cx="107.9" cy="162.3" r="3.2" fill="#fb923c"/>
+<circle cx="191.9" cy="193.1" r="3.2" fill="#fb923c"/>
+<circle cx="276.0" cy="219.7" r="3.2" fill="#fb923c"/>
+<circle cx="360.0" cy="245.5" r="3.2" fill="#fb923c"/>
+<circle cx="444.0" cy="286.1" r="3.2" fill="#fb923c"/>
+<circle cx="528.1" cy="304.2" r="3.2" fill="#fb923c"/>
+<circle cx="612.1" cy="343.2" r="3.2" fill="#fb923c"/>
+<line x1="401.0" y1="34.8" x2="423.0" y2="34.8" stroke="#cbd5e1" stroke-width="2.2"/>
+<text x="429.0" y="38.8" font-size="11" text-anchor="start" fill="#cbd5e1">total, order 0.646</text>
+<line x1="401.0" y1="51.8" x2="423.0" y2="51.8" stroke="#a78bfa" stroke-width="2.2"/>
+<text x="429.0" y="55.8" font-size="11" text-anchor="start" fill="#a78bfa">rarefaction fan, 0.752</text>
+<line x1="401.0" y1="68.8" x2="423.0" y2="68.8" stroke="#2dd4bf" stroke-width="2.2"/>
+<text x="429.0" y="72.8" font-size="11" text-anchor="start" fill="#2dd4bf">contact, 0.511</text>
+<line x1="401.0" y1="85.8" x2="423.0" y2="85.8" stroke="#fb923c" stroke-width="2.2"/>
+<text x="429.0" y="89.8" font-size="11" text-anchor="start" fill="#fb923c">shock, 1.013</text>
+<line x1="401.0" y1="102.8" x2="423.0" y2="102.8" stroke="#2dd4bf" stroke-width="2.2" stroke-dasharray="6 4"/>
+<text x="429.0" y="106.8" font-size="11" text-anchor="start" fill="#2dd4bf">contact predicted by (3.3), no fit</text>
+<text x="360.0" y="400.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">cells N</text>
+<text x="22.0" y="192.0" font-size="11.5" text-anchor="middle" fill="#cbd5e1">L1</text>
+</svg>

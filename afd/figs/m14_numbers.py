@@ -27,12 +27,15 @@ h the SPH smoothing length, D_num the numerical diffusivity, N a cell or
 particle count.
 """
 
+import os
 import sys
 import numpy as np
+from scipy.integrate import solve_ivp
 
 import m14_solvers as S
 
 OUT = []
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 def P(s=''):
@@ -68,6 +71,105 @@ M05_MJ = 2.6584                  # module05.html:170, Msun
 
 # --- published values, filled in from .ignore/m14-sources-*.md ---------
 TRUELOVE_J = 0.25                # Truelove et al. (1997): J <= 1/4
+
+
+# =========================================================================
+# COPIED VERBATIM from m08_numbers.py (the Sedov similarity solution), not
+# retyped, so that CHECK 3 compares the code with Module 8's own xi_0.
+# =========================================================================
+
+# Write  lambda = r/R(t)  with  R ~ t^(2/5), and
+#
+#     v(r,t) = (r/t) u(lambda)
+#     rho(r,t) = rho_0 g(lambda)
+#     p(r,t) = rho_0 (r/t)^2 h(lambda)
+#
+# Substituting into the spherical Euler equations of Module 2 and using
+# d lambda/dt = -(2/5) lambda/t, d lambda/dr = lambda/r turns the three
+# partial differential equations into three ordinary ones in ln lambda.
+# Writing ' for d/d(ln lambda) and a = u - 2/5:
+#
+#     continuity  a g'/g + 3u + u' = 0
+#     momentum    a u' + u^2 - u + (h/g)(2 + h'/h) = 0
+#     entropy     a (h'/h - gamma g'/g) + 2(u - 1) = 0
+#
+# Eliminating g'/g and h'/h from the momentum equation gives u' explicitly.
+# The derivation is set out in module08.html; the algebra is reproduced in
+# sedov_rhs below so that the code and the prose cannot drift apart.
+
+def sedov_rhs(s, y, gamma):
+    """Right-hand side of the similarity system, in the variable s = ln lambda.
+
+    State vector is (u, ln g, ln h).  Logarithms are integrated because g
+    falls to zero and h rises without bound at the centre; both do so as
+    pure powers of lambda, so their logarithms are linear in s and the
+    integration stays well conditioned all the way in.
+    """
+    u, lg, lh = y
+    w = np.exp(lh - lg)             # h/g = p/(rho (r/t)^2) = c^2/(gamma (r/t)^2)
+    a = u - 0.4
+    den = a*a - gamma*w             # vanishes only at a sonic point
+    du = (a*(-u*u + u - 2.0*w) + w*((3.0*gamma + 2.0)*u - 2.0))/den
+    dlg = -(3.0*u + du)/a
+    dlh = gamma*dlg - 2.0*(u - 1.0)/a
+    return [du, dlg, dlh]
+
+
+def sedov_profile(gamma, s_min=-7.0, n_sample=200001):
+    """Integrate the similarity system inward from the shock.
+
+    The boundary values at lambda = 1 are the STRONG-SHOCK Rankine-Hugoniot
+    conditions of PART A, evaluated with the shock speed D = dR/dt =
+    (2/5) R/t that the similarity form itself supplies:
+
+        rho2 = rho_0 (gamma+1)/(gamma-1)   ->  g(1) = (gamma+1)/(gamma-1)
+        v2   = 2D/(gamma+1)                ->  u(1) = 4/(5(gamma+1))
+        p2   = 2 rho_0 D^2/(gamma+1)       ->  h(1) = 8/(25(gamma+1))
+
+    So PART B is not a new physical input.  It is PART A plus similarity.
+    Returns (lambda, u, g, h) sampled from the shock inward.
+
+    The integration stops at lambda = exp(s_min) = 9.1e-4 rather than at
+    the centre, and the reason is not laziness.  As lambda -> 0 the system
+    has the fixed point u = (2/5)/gamma with du/d(ln lambda) = -3(u - u*),
+    so a perturbation grows as lambda^-3 going inward: the physical
+    solution is the unstable one and rounding error overwhelms it below
+    about lambda = 1e-4.  Nothing is lost.  The energy integrand carries a
+    factor lambda^5, so everything inside lambda = 1e-3 contributes less
+    than 1e-15 of the total, and xi_0 is unchanged in its eighth digit
+    whether the integration stops at lambda = 6.7e-3 or at 3.4e-4.
+    """
+    u1 = 4.0/(5.0*(gamma + 1.0))
+    g1 = (gamma + 1.0)/(gamma - 1.0)
+    h1 = 8.0/(25.0*(gamma + 1.0))
+    sol = solve_ivp(sedov_rhs, [0.0, s_min], [u1, np.log(g1), np.log(h1)],
+                    args=(gamma,), rtol=1e-12, atol=1e-14,
+                    dense_output=True, max_step=0.01)
+    s = np.linspace(0.0, s_min, n_sample)
+    u, lg, lh = sol.sol(s)
+    return np.exp(s), u, np.exp(lg), np.exp(lh)
+
+
+def sedov_xi0(gamma):
+    """The Sedov constant xi_0 in R = xi_0 (E t^2/rho_0)^(1/5).
+
+    The total energy inside the shock is
+
+        E = int_0^R [rho v^2/2 + p/(gamma-1)] 4 pi r^2 dr
+          = 4 pi rho_0 (R^5/t^2) J,
+        J = int_0^1 lambda^4 [g u^2/2 + h/(gamma-1)] d lambda.
+
+    But R^5/t^2 = xi_0^5 E/rho_0 by the definition of xi_0, so the E on
+    both sides cancels and 1 = 4 pi xi_0^5 J.  The energy integral does not
+    determine the energy; it determines the CONSTANT.  Returns
+    (xi_0, J, K) with K = 1/xi_0^5 = 4 pi J, which is Taylor's K.
+    """
+    lam, u, g, h = sedov_profile(gamma)
+    s = np.log(lam)
+    integrand = lam**5*(g*u*u/2.0 + h/(gamma - 1.0))
+    J = -np.trapezoid(integrand, s)      # s runs from 0 downward
+    xi0 = (4.0*np.pi*J)**-0.2
+    return xi0, J, 4.0*np.pi*J
 
 
 def main():
@@ -210,6 +312,7 @@ def main():
           f'  ratio {E[2]/pred:.4f}  <C_c> {Cc.mean():.4f}  steps '
           f'{len(dts)}')
     rows = np.array(rows)
+    contact_rows = (rows[-2, 3], rows[-1, 3])
     names = ('total', 'fan', 'contact', 'shock')
     for k, name in enumerate(names, start=1):
         o = np.log(rows[0, k]/rows[-1, k])/np.log(rows[-1, 0]/rows[0, 0])
@@ -262,6 +365,68 @@ def main():
       f'{cells:.4g} cells per side, {cells**3:.4g} in 3D')
     P(f'  refinement levels of factor 2 for a factor 1e3 in lambda_J: '
       f'{np.log2(1e3):.3f}')
+
+    # ------------------------------------------------------------------
+    P('')
+    P('PART E.  CHECK 3.  The Sedov problem of Kamm & Timmes, spherical')
+    P('-' * 72)
+    xi0, J, K = sedov_xi0(1.4)
+    P(f'  xi_0(gamma = 7/5) from the copied Module 8 routine = {xi0:.6f}'
+      f'  (module08.html:360 prints {M08_XI0_14})')
+    assert abs(xi0 - M08_XI0_14) < 5e-7
+    P(f'  K = 1/xi_0^5 = {1/xi0**5:.6f} (Kamm & Timmes E = {KT_E})')
+    R_exact = xi0*(KT_E*1.0**2/1.0)**0.2
+    P(f'  exact shock radius at t = 1: {R_exact:.6f}')
+    lam, u_s, g_s, h_s = sedov_profile(1.4)
+    save = {'lam': lam[::50], 'g': g_s[::50]}
+    for n in (100, 200, 400):
+        rc, r, u, p, E = S.godunov_spherical(n, 1.2, KT_E, 1.0, 1e-6, 1.0,
+                                             1.4)
+        k = np.argmax(r)
+        half = 1.0 + 0.5*(r[k] - 1.0)
+        out = np.where((rc > rc[k]) & (r < half))[0][0]
+        x0, x1, y0, y1 = rc[out - 1], rc[out], r[out - 1], r[out]
+        Rs = x0 + (half - y0)*(x1 - x0)/(y1 - y0)
+        dE = (E[-1] - E[0])/E[0]
+        P(f'  n = {n:3d}: peak rho {r[k]:.4f} at r = {rc[k]:.4f}; '
+          f'half-height radius {Rs:.5f}, error {Rs - R_exact:+.5f}; '
+          f'energy drift {dE:.1e}; steps {len(E)}')
+        assert abs(dE) < 1e-12
+        save[f'r{n}'] = rc
+        save[f'rho{n}'] = r
+    P(f'  jump ceiling (gamma+1)/(gamma-1) = {2.4/0.4:.1f}')
+    np.savez(os.path.join(HERE, 'm14_sedov_profiles.npz'), **save)
+
+    # ------------------------------------------------------------------
+    P('')
+    P('PART L.  The problems')
+    P('-' * 72)
+    th = np.linspace(0.0, np.pi, 200001)
+    Gf = np.max(np.abs(S.amplification_ftcs(th, 0.5)))
+    P(f'  C1  FTCS at C = 0.5: max |G| = {Gf:.6f}; steps to grow 1e3 = '
+      f'{np.log(1e3)/np.log(Gf):.2f}')
+    cL = np.sqrt(1.4*SOD_L[2]/SOD_L[0])
+    P(f'  C2  initial S_max = c_L = {cL:.6f}; dt = 0.9 (1/400)/S_max = '
+      f'{0.9/400/cL:.6e}; steps to t = 0.2 at that dt = '
+      f'{0.2/(0.9/400/cL):.2f}')
+    P(f'  C3  Re_num(N = 512, C = 0.8) = {2*512/(1 - 0.8):.1f}; '
+      f'N^(4/3) = {512**(4/3):.1f}')
+    w2 = S.riemann_waves(1.0, -2.0, 0.4, 1.0, 2.0, 0.4, 1.4)
+    P(f'  K1  123 problem: p* = {w2["p_star"]:.6f}, u* = '
+      f'{w2["u_star"]:.6f}, rho* = {w2["rho_starL"]:.6f} (both sides '
+      f'{w2["rho_starR"]:.6f})')
+    lam8 = M05_LAMJ_PC*1e-2
+    cells = 4*M05_LAMJ_PC/(TRUELOVE_J*lam8)
+    P(f'  K2  lambda_J(1e8) = {lam8:.7f} pc; cells per side = {cells:.1f};'
+      f' 3D = {cells**3:.4g}')
+    # K3: contact law fitted on the last two rows of PART D
+    N1, N2 = 3200.0, 6400.0
+    E1, E2 = contact_rows
+    slope = np.log(E1/E2)/np.log(N2/N1)
+    Nt = N2*(E2/1e-4)**(1/slope)
+    P(f'  K3  contact order over the last doubling = {slope:.4f}; N for '
+      f'L1 = 1e-4: {Nt:.4g}; 3D work ratio (N/6400)^4 = '
+      f'{(Nt/N2)**4:.4g}')
 
     P('')
     P('=' * 72)
