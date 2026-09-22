@@ -387,7 +387,7 @@ def build_blip(runs):
         sel = (x > XLO) & (x < XHI) & (P > PLO) & (P < PHI)
         s.append(f'<path d="{path(px(x[sel]), py(P[sel]))}" fill="none" '
                  f'stroke="{col}" stroke-width="1.8"/>')
-    lx = px(0.52)
+    lx = px(0.462)
     for i, (col, dash, lab) in enumerate((
             (FG, "5 4", 'exact p* = 0.30313'),
             (RED, None, 'SPH, standard: +9.4 per cent at the contact'),

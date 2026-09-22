@@ -202,17 +202,46 @@ def main():
         P(f'  sawtooth after 100 steps at C = {C}: growth per step = '
           f'{rate:.6f}  (predicted |1 - 2C| = {abs(1 - 2*C):.6f})')
         assert abs(rate - abs(1 - 2*C)) < 1e-9
-    # random data at C = 1.1: the blow-up comes from rounding
-    rng = np.random.default_rng(1)
+    # a smooth Gaussian at C = 1.1.  The blow-up is NOT seeded by rounding:
+    # the Gaussian is not periodic on [0, 1] (its end cells hold 1.8e-11),
+    # and the sampled profile itself carries a small amplitude at the high
+    # wavenumbers, which grow by (2.3).  Checked below by repeating the
+    # same steps in exact rational arithmetic on the stored samples, and
+    # in 60-digit decimal arithmetic on samples computed to 60 digits.
     x = (np.arange(200) + 0.5)/200
-    u = np.exp(-((x - 0.5)/0.1)**2)
+    u0 = np.exp(-((x - 0.5)/0.1)**2)
+    u = u0.copy()
     for step in range(1, 2001):
         u = S.upwind_step(u, 1.1)
         if np.max(np.abs(u)) > 1e3:
             break
     P(f'  smooth Gaussian, 200 cells, C = 1.1: |u| exceeds 1e3 after '
       f'{step} steps')
-    del rng
+    from fractions import Fraction
+    import decimal
+    umax_f = np.max(np.abs(u))
+    Cq = Fraction(11, 10)
+    q = [Fraction(float(a)) for a in u0]
+    for _ in range(step):
+        q = [q[i] - Cq*(q[i] - q[i - 1]) for i in range(200)]
+    umax_q = float(max(abs(a) for a in q))
+    decimal.getcontext().prec = 60
+    D = decimal.Decimal
+    d = [(-(((D(i) + D('0.5'))/200 - D('0.5'))/D('0.1'))**2).exp()
+         for i in range(200)]
+    Cd = D('1.1')
+    for _ in range(step):
+        d = [d[i] - Cd*(d[i] - d[i - 1]) for i in range(200)]
+    umax_d = float(max(abs(a) for a in d))
+    P(f'    max|u| after {step} steps: float64 {umax_f:.10f}; exact '
+      f'rational steps on the stored samples {umax_q:.10f}; 60-digit '
+      f'samples and steps {umax_d:.10f}')
+    P(f'    relative differences from float64: exact {umax_q/umax_f - 1:.1e}'
+      f', 60-digit {umax_d/umax_f - 1:.1e}')
+    amp = np.abs(np.fft.fft(u0))/200
+    P(f'    end-cell value of the Gaussian {u0[0]:.3e}; amplitude of the '
+      f'samples at wavenumbers 91, 92, 93 of 200: {amp[91]:.2e}, '
+      f'{amp[92]:.2e}, {amp[93]:.2e}')
     # Module 10's step against an explicit compressible code's step
     Ma_to_M = np.sqrt(np.pi*1.4/8.0)     # c_s/vbar for gamma = 1.4
     M_lab = M10_MA_TH_LAB/Ma_to_M
@@ -225,6 +254,8 @@ def main():
     M_mc = 2.64e5/cs_mc
     P(f'  Module 10 cloud: U = 2.64 km/s, c_s(10 K, mu 2.33, 5/3) = '
       f'{cs_mc/1e5:.4f} km/s, M = {M_mc:.3f}, 1 + 1/M = {1 + 1/M_mc:.4f}')
+    P(f'    cloud: extra steps of a compressible code, 100/M = '
+      f'{100/M_mc:.2f} per cent')
 
     # ------------------------------------------------------------------
     P('')
@@ -321,6 +352,9 @@ def main():
           f'{o:.3f}   (last doubling {o2:.3f})')
     P(f'  PUNCHLINE contact measured/predicted: N = 100 '
       f'{rows[0, 3]/rows[0, 5]:.4f}, N = 6400 {rows[-1, 3]/rows[-1, 5]:.4f}')
+    P(f'  contact share of the total error: N = 100 '
+      f'{100*rows[0, 3]/rows[0, 1]:.1f} per cent, N = 6400 '
+      f'{100*rows[-1, 3]/rows[-1, 1]:.1f} per cent')
 
     # ------------------------------------------------------------------
     P('')
@@ -365,6 +399,8 @@ def main():
       f'{cells:.4g} cells per side, {cells**3:.4g} in 3D')
     P(f'  refinement levels of factor 2 for a factor 1e3 in lambda_J: '
       f'{np.log2(1e3):.3f}')
+    P(f'  Bate & Burkert, N_neigh = 50: largest particle mass that resolves'
+      f' M_J(1e10) = M_J/(2 N_neigh) = {M05_MJ*1e-3/100:.3g} Msun')
 
     # ------------------------------------------------------------------
     P('')
@@ -394,7 +430,10 @@ def main():
         assert abs(dE) < 1e-12
         save[f'r{n}'] = rc
         save[f'rho{n}'] = r
+        peak_last = r[k]
     P(f'  jump ceiling (gamma+1)/(gamma-1) = {2.4/0.4:.1f}')
+    P(f'  shortfall of the n = 400 peak below the ceiling: '
+      f'{100*(1 - peak_last/6.0):.2f} per cent')
     np.savez(os.path.join(HERE, 'm14_sedov_profiles.npz'), **save)
 
     # ------------------------------------------------------------------
@@ -409,12 +448,17 @@ def main():
     P(f'  C2  initial S_max = c_L = {cL:.6f}; dt = 0.9 (1/400)/S_max = '
       f'{0.9/400/cL:.6e}; steps to t = 0.2 at that dt = '
       f'{0.2/(0.9/400/cL):.2f}')
+    P(f'  C2  post-shock sound speed (1.4 p*/rho*R)^(1/2) = '
+      f'{np.sqrt(1.4*w["p_star"]/w["rho_starR"]):.4g}')
     P(f'  C3  Re_num(N = 512, C = 0.8) = {2*512/(1 - 0.8):.1f}; '
       f'N^(4/3) = {512**(4/3):.1f}')
     w2 = S.riemann_waves(1.0, -2.0, 0.4, 1.0, 2.0, 0.4, 1.4)
     P(f'  K1  123 problem: p* = {w2["p_star"]:.6f}, u* = '
       f'{w2["u_star"]:.6f}, rho* = {w2["rho_starL"]:.6f} (both sides '
       f'{w2["rho_starR"]:.6f})')
+    c123 = np.sqrt(1.4*0.4)
+    P(f'  K1  c = {c123:.6f}; c_L + c_R = {2*c123:.6f}; (4.2) left side '
+      f'2(c_L + c_R)/(gamma - 1) = {2*2*c123/0.4:.4g}')
     lam8 = M05_LAMJ_PC*1e-2
     cells = 4*M05_LAMJ_PC/(TRUELOVE_J*lam8)
     P(f'  K2  lambda_J(1e8) = {lam8:.7f} pc; cells per side = {cells:.1f};'
@@ -427,6 +471,8 @@ def main():
     P(f'  K3  contact order over the last doubling = {slope:.4f}; N for '
       f'L1 = 1e-4: {Nt:.4g}; 3D work ratio (N/6400)^4 = '
       f'{(Nt/N2)**4:.4g}')
+    P(f'  K3  error factor E(6400)/1e-4 = {E2/1e-4:.3g}; first-order work '
+      f'ratio (E(6400)/1e-4)^4 = {(E2/1e-4)**4:.3g}')
 
     P('')
     P('=' * 72)

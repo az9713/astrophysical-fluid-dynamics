@@ -108,7 +108,8 @@ check('C2 dt', 0.9/400/cL, grab(r'dt = 0.9 \(1/400\)/S_max = ([\d.e+-]+)'))
 check('C2 steps at that dt', 0.2/(0.9/400/cL),
       grab(r'steps to t = 0.2 at that dt = ([\d.]+)'))
 cs_post = math.sqrt(1.4*ps/rho_star(0.125, 0.1, ps, g))
-check('C2 post-shock c_s', cs_post, 1.264, rel=5e-4)
+check('C2 post-shock c_s', cs_post,
+      grab(r'C2  post-shock sound speed \(1.4 p\*/rho\*R\)\^\(1/2\) = ([\d.]+)'))
 # C3
 check('C3 Re_num', 2*512/0.2, grab(r'Re_num\(N = 512, C = 0.8\) = ([\d.]+)'))
 check('C3 N^(4/3)', 512**(4/3), grab(r'N\^\(4/3\) = ([\d.]+)'))
@@ -116,7 +117,10 @@ check('C3 N^(4/3)', 512**(4/3), grab(r'N\^\(4/3\) = ([\d.]+)'))
 p1, u1 = star(1, -2, 0.4, 1, 2, 0.4, g)
 check('K1 p*', p1, grab(r'K1  123 problem: p\* = ([\d.]+)'))
 check('K1 rho*', rho_star(1, 0.4, p1, g), grab(r'rho\* = ([\d.]+)'))
-check('K1 no-vacuum lhs', 5*2*math.sqrt(1.4*0.4), 7.483, rel=1e-4)
+check('K1 c', math.sqrt(1.4*0.4), grab(r'K1  c = ([\d.]+);'))
+check('K1 c_L + c_R', 2*math.sqrt(1.4*0.4), grab(r'c_L \+ c_R = ([\d.]+);'))
+check('K1 no-vacuum lhs', 5*2*math.sqrt(1.4*0.4),
+      grab(r'2\(c_L \+ c_R\)/\(gamma - 1\) = ([\d.]+)'))
 # K2
 lam8 = 0.19479*1e-2
 cells = 4*0.19479/(0.25*lam8)
@@ -131,20 +135,27 @@ Nt = 6400*(E64/1e-4)**(1/o)
 check('K3 N', Nt, grab(r'N for L1 = 1e-4: ([\d.e+]+)'))
 check('K3 work ratio', (Nt/6400)**4, grab(r'3D work ratio \(N/6400\)\^4 = '
                                           r'([\d.e+]+)'))
-check('K3 first-order ratio', (E64/1e-4)**4, 1.12e3, rel=5e-3)
+check('K3 error factor', E64/1e-4, grab(r'error factor E\(6400\)/1e-4 = ([\d.]+);'))
+check('K3 first-order ratio', (E64/1e-4)**4,
+      grab(r'first-order work ratio \(E\(6400\)/1e-4\)\^4 = ([\d.e+]+)'))
 # headline arithmetic printed in the prose
 E100 = grab(r'N =   100  L1 total ([\d.e-]+)')
 C100 = grab(r'N =   100  L1 total [\d.e-]+  fan [\d.e-]+  contact ([\d.e-]+)')
 T64 = grab(r'N =  6400  L1 total ([\d.e-]+)')
-check('contact share N=100', 100*C100/E100, 35.0, rel=2e-3)
-check('contact share N=6400', 100*E64/T64, 61.3, rel=2e-3)
+check('contact share N=100', 100*C100/E100,
+      grab(r'error: N = 100 ([\d.]+) per cent'))
+check('contact share N=6400', 100*E64/T64,
+      grab(r'N = 6400 ([\d.]+) per cent'))
 check('Sedov peak shortfall', 100*(6 - grab(r'n = 400: peak rho ([\d.]+)'))/6,
-      26.6, rel=2e-3)
+      grab(r'below the ceiling: ([\d.]+) per cent'))
 M = 0.0218/math.sqrt(math.pi*1.4/8)
 check('Module 10 Mach', M, grab(r'Mach number U/c_s = ([\d.]+)'))
 check('Module 10 step factor', 1 + 1/M, grab(r'= 1 \+ 1/M = ([\d.]+)'))
 csmc = math.sqrt(5/3*1.380649e-16*10/(2.33*1.66053906660e-24))
 check('cloud factor', 1 + csmc/2.64e5, grab(r'1 \+ 1/M = (1\.0\d+)'))
+check('cloud 100/M', 100*csmc/2.64e5, grab(r'100/M = ([\d.]+) per cent'))
+check('B&B particle mass', 2.6584e-3/100,
+      grab(r'M_J/\(2 N_neigh\) = ([\d.e+-]+) Msun'))
 check('Re_num N=1024 C=0.5', 2*1024/0.5,
       grab(r'N =  1024, C = 0.5: ([\d.]+)'))
 check('Re bound N=1024', 1024**(4/3), grab(r'N = 1024: ([\d.e+]+)'))
@@ -153,6 +164,9 @@ for v in ('35.01', '1.0924', '0.646', '0.511', '1.013', '0.752', '1.1293',
           '1.0659', '0.0893', '0.0938', '0.0942', '0.0371', '0.0310',
           '0.0216', '3.0559', '3.7619', '4.4010', '1.02764', '1.01365',
           '1.00663', '9.966', '4.096\\times10^{12}', '1.864\\times10^{5}',
-          '7.19\\times10^{5}'):
+          '7.19\\times10^{5}', '9.24', '35.0', '61.3', '26.65', '1.264',
+          '0.748331', '1.496663', '7.483', '5.79', '1.12\\times10^{3}',
+          '2.66\\times10^{-5}', '1159.2855264943', '1.782\\times10^{-11}',
+          '2.10\\times10^{-15}', '9.0355\\times10^{-3}'):
     in_html(v)
 print(f'{n_ok} checks passed')
