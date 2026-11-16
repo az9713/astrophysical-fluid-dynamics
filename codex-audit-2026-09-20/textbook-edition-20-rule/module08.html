@@ -97,9 +97,10 @@ window.MathJax = {
     ui-sans-serif,system-ui,sans-serif}
   .codex-revision b{color:#5eead4}.codex-revision a{color:#fde68a}
 </style><style>
-mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden}
-mjx-container:not([display="true"]){display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;vertical-align:middle}
+mjx-container[display="true"]{display:block!important;width:100%;min-width:0!important;max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container:not([display="true"]){display:inline-block;min-width:0!important;max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;vertical-align:middle}
 mjx-container:not([display="true"])::-webkit-scrollbar{display:none}
+@media(max-width:700px){table:has(mjx-container){display:block;max-width:100%;overflow-x:auto}}
 </style>
 </head>
 <body>
@@ -701,7 +702,7 @@ $$ R_{\rm PDS} = 14.0\ \mathrm{pc}, \qquad v_{\rm PDS} = 413\ \mathrm{km\,s^{-1}
 <figcaption>The double-shocked shell of a young remnant, drawn as a quarter section. The mushrooms on the contact discontinuity are Rayleigh–Taylor fingers of ejecta reaching towards the blast wave. The quantity this section tests is their <em>length</em> — how far beyond the smooth one-dimensional contact discontinuity they reach — and not the position of any one surface.</figcaption>
 </figure>
 <h3 id="tychosetup">8.1 Why the acceleration history matters</h3><p>The planar relation $h=\alpha Agt^2$ used in Module 7 assumes constant acceleration. A self-similar shell with $R=Ct^m$ has $g(t)=m(1-m)Ct^{m-2}$, so substituting the instantaneous value of $g$ into the constant-acceleration formula does not give a bound on the accumulated width.</p><p>For comparison, the history-dependent Read prescription quoted in Module 7 gives</p>
-<div class="equation">$$ \frac{h}{R}=\frac{4\alpha A(1-m)}{m}\left[1-\left(\frac{t_0}{t}\right)^{m/2}\right]^2,\qquad 0<m<1, $$</div>
+<div class="equation">$$ \frac{h}{R}=\frac{4\alpha A(1-m)}{m}\left[1-\left(\frac{t_0}{t}\right)^{m/2}\right]^2,\qquad 0&lt;m&lt;1, $$</div>
 <p>Here the integration begins at $t_0$. The result differs from $\alpha A m(1-m)$ and depends explicitly on the onset time. At $m=1/2$ and $t_0=0$, the two expressions differ by a factor of 16. A quantitative shell model must therefore retain the acceleration history, curvature, and density evolution.</p>
 <h3 id="tychoresult">8.2 What the Tycho comparison can establish</h3>
 <p>The published radii remain informative. A one-dimensional hydrodynamic calculation places the contact discontinuity near $0.77R_{\rm BW}$, a two-dimensional calculation places Rayleigh–Taylor fingers near $0.85R_{\rm BW}$, and the reported mean contact discontinuity in Tycho is near $0.93R_{\rm BW}$. These positions show that the real or simulated shell contains structure absent from the smooth one-dimensional profile.</p>

@@ -79,9 +79,10 @@ window.MathJax = {
   .navbar a{ color:var(--accent2); text-decoration:none; }
 </style>
 <style>
-mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden}
-mjx-container:not([display="true"]){display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;vertical-align:middle}
+mjx-container[display="true"]{display:block!important;width:100%;min-width:0!important;max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container:not([display="true"]){display:inline-block;min-width:0!important;max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;vertical-align:middle}
 mjx-container:not([display="true"])::-webkit-scrollbar{display:none}
+@media(max-width:700px){table:has(mjx-container){display:block;max-width:100%;overflow-x:auto}}
 </style>
 </head>
 <body>
