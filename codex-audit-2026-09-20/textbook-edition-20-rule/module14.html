@@ -91,7 +91,12 @@ window.MathJax = {
   .navbar{ font-size:.9rem; color:var(--muted); margin:.6rem 0 0; }
   .navbar a{ color:var(--accent2); text-decoration:none; }
 </style>
-<meta content="Codex — OpenAI" name="author"/></head>
+<meta content="Codex — OpenAI" name="author"/><style>
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container:not([display="true"]){display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;vertical-align:middle}
+mjx-container:not([display="true"])::-webkit-scrollbar{display:none}
+</style>
+</head>
 <body>
 <h1>14. Numerical Methods</h1>
 <p class="sub">Numerical methods approximate fluid equations on a finite grid or with particles. This chapter derives their stability and truncation limits, then tests both approaches against shock-tube and blast-wave solutions.</p><aside class="codex-revision" style="display:block;background:#102a2b;border-left:4px solid #2dd4bf;padding:.8rem 1rem;margin:1rem 0;color:#d5fffa"><b>Codex textbook edition.</b> This separate rewrite applies the twenty-rule prose standard and the scientific corrections documented in the <a href="../delta-audit-2026-09-22/AUDIT_REPORT.html">independent audit</a>. The <a href="../../afd/module14.html">original module</a> remains unchanged.</aside>
